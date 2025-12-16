@@ -1,0 +1,130 @@
+<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
+  <!-- Sidebar Slot -->
+  <app-sidebar slot="sidebar" (navigate)="onSidebarNavigate()"></app-sidebar>
+
+  <!-- Topbar Slot -->
+  <app-topbar slot="topbar" [title]="title() | translate" [userInitials]="'HC'" [userName]="'COTAHA'"
+    [userEmail]="'cotaha@email.com'" [notificationCount]="3" (toggleSidebar)="onToggleSidebar()" (logout)="onLogout()">
+    <!-- Theme Switcher in topbar -->
+    <app-theme-switcher></app-theme-switcher>
+  </app-topbar>
+
+  <!-- Main Content -->
+  <div class="content-sections">
+    <!-- Filters Panel -->
+    <app-panel [title]="'filters.title' | translate" icon="🔍" variant="default" padding="md" class="filters-panel">
+      <app-row columns="repeat(auto-fit, minmax(160px, 1fr))">
+        <app-select2 [options]="statusOptions" [(ngModel)]="filterStatus" [label]="'filters.status' | translate"
+          [searchable]="false">
+        </app-select2>
+        <app-floating-input variant="outline" type="number" [label]="'filters.rowCount' | translate"
+          [ngModel]="rowCount()" (ngModelChange)="updateRowCount($event)">
+        </app-floating-input>
+        <app-datepicker [(ngModel)]="filterDateStart" [label]="'filters.dateStart' | translate"
+          variant="outline"></app-datepicker>
+        <app-button variant="primary" class="justify-end">
+          <svg icon-left xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          {{ 'filters.filterBtn' | translate }}
+        </app-button>
+      </app-row>
+    </app-panel>
+
+    <!-- Table Panel -->
+    <app-panel [title]="'table.title' | translate" icon="📋" variant="default" padding="md" [showHeader]="false"
+      class="table-panel">
+      <app-scroll-overlay class="so-block w-full max-w-full" [minColumnWidth]="40" [maxBodyHeight]="450"
+        [lockColumnTemplate]="true"
+        [columnTemplate]="'70px minmax(120px, 1.5fr) minmax(150px, 2fr) minmax(80px, 1fr) minmax(80px, 1fr) minmax(70px, 0.8fr) minmax(80px, 1fr) minmax(80px, 1fr) 100px'">
+        <table class="rtc-table">
+          <thead class="rtc-header">
+            <tr>
+              <th class="rtc-text-center">{{ 'table.headers.id' | translate }}</th>
+              <th>{{ 'table.headers.name' | translate }}</th>
+              <th>{{ 'table.headers.email' | translate }}</th>
+              <th>{{ 'table.headers.date' | translate }}</th>
+              <th class="rtc-text-center">{{ 'table.headers.status' | translate }}</th>
+              <th>{{ 'table.headers.type' | translate }}</th>
+              <th>{{ 'table.headers.amount' | translate }}</th>
+              <th class="rtc-text-center">{{ 'table.headers.priority' | translate }}</th>
+              <th class="rtc-text-center">{{ 'table.headers.actions' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody class="rtc-body">
+            @for (row of tableData(); track row.col1) {
+            <tr class="rtc-row">
+              <td class="rtc-text-center" data-label="ID:">{{ row.col1 }}</td>
+              <td data-label="Nombre:">{{ row.col2 }}</td>
+              <td data-label="Email:">{{ row.col3 }}</td>
+              <td data-label="Fecha:">{{ row.col4 }}</td>
+              <td class="rtc-text-center" data-label="Estado:">
+                <span class="badge" [class]="'badge-' + row.statusVariant">
+                  {{ row.col5 | translate }}
+                </span>
+              </td>
+              <td data-label="Tipo:">{{ row.col6 | translate }}</td>
+              <td data-label="Monto:">{{ row.col7 }}</td>
+              <td class="rtc-text-center" data-label="Prioridad:">{{ row.col9 | translate }}</td>
+              <td class="rtc-actions rtc-text-center" data-label="Acciones:">
+                <app-table-actions (view)="onView(row)" (edit)="onEdit(row)" (delete)="onDelete(row)">
+                </app-table-actions>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </app-scroll-overlay>
+    </app-panel>
+
+    <!-- UI Examples -->
+    @defer (on viewport) {
+    <app-ui-showcase></app-ui-showcase>
+    } @placeholder {
+    <div class="p-8 text-center text-gray-500">
+      <p>Cargando ejemplos...</p>
+    </div>
+    }
+  </div>
+
+  <!-- Text Component Demo -->
+  <!-- Information Panels -->
+  <app-row columns="repeat(auto-fit, minmax(300px, 1fr))" gap="1rem" class="mt-6">
+    <!-- Project Info Panel -->
+    <app-panel [title]="'demo.project.title' | translate" variant="plain" padding="md" titleAlign="center"
+      titleWeight="bold">
+      <app-text variant="h3" weight="bold" class="mb-2">{{ 'demo.project.subtitle' | translate }}</app-text>
+      <app-text variant="body" class="mb-4">
+        {{ 'demo.project.description' | translate }}
+      </app-text>
+      <div class="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-800">
+        <app-text variant="caption" class="text-blue-700 dark:text-blue-300">
+          💡 {{ 'demo.project.tech' | translate }}
+        </app-text>
+      </div>
+    </app-panel>
+
+    <!-- Components Info Panel -->
+    <app-panel [title]="'demo.components.title' | translate" variant="floating" padding="md" titleAlign="center"
+      titleWeight="bold">
+      <app-text variant="h3" weight="bold" class="mb-2">{{ 'demo.components.subtitle' | translate }}</app-text>
+      <app-text variant="body">
+        {{ 'demo.components.description' | translate }}
+      </app-text>
+      <!-- Stack of badges/chips for visual flair -->
+      <div class="flex flex-wrap gap-2 mt-4">
+        <span
+          class="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">Atoms</span>
+        <span
+          class="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">Molecules</span>
+        <span
+          class="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">Organisms</span>
+      </div>
+    </app-panel>
+  </app-row>
+
+
+
+</app-layout-shell>

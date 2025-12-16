@@ -1,0 +1,31 @@
+/* =============================================================================
+   ESTILOS GLOBALES - Angular Scrollable Table
+   =============================================================================
+   📅 Actualizado: Diciembre 2025
+   🎨 Sistema de temas portable implementado
+   ============================================================================= */
+
+/* =============================================================================
+   SISTEMA DE TEMAS PORTABLE
+   =============================================================================
+   Para personalizar los colores de marca para otro proyecto:
+   1. Abre: src/styles/themes/_tokens-brand.css
+   2. Modifica los valores de --brand-primary-* y --brand-secondary-*
+   3. ¡Listo! Todo se actualiza automáticamente
+   ============================================================================= */
+/* Fonts (Local - @fontsource) */
+@import "@fontsource/open-sans/400.css";
+@import "@fontsource/open-sans/500.css";
+@import "@fontsource/open-sans/600.css";
+@import "@fontsource/open-sans/700.css";
+
+@import './styles/themes/index.css';
+@import './app/shared/ui/styles/responsive-table.css';
+@import './styles/components/buttons.css';
+@import './styles/components/badges.css';
+@import './styles/components/forms.css';
+
+/* Tailwind CSS - DEBE IR DESPUÉS DE LOS IMPORTS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -1,0 +1,264 @@
+/* ============================================
+   PANEL COMPONENT - Contenedor Base Universal
+   ============================================ */
+
+/* Host element takes full width by default */
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* === Base Structure === */
+.panel {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--surface-background, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: var(--radius-lg, 0.75rem);
+  overflow: visible;
+  /* Default Shadow */
+  box-shadow: var(--shadow-md);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* === 1. TOP VARIANTS (Best Options) === */
+
+/* Plain: Minimalist (No bg, no border, no header line) */
+.panel--plain {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.panel--plain .panel__header {
+  background: transparent;
+  border-bottom: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Floating: "Floating Glass" (Transparent + Border + Shadow) -> Now White Background */
+.panel--floating {
+  background: var(--surface-background, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.panel--floating .panel__header {
+  background: transparent;
+  border-bottom: none;
+}
+
+
+
+/* Elevated: Clean Lift (White + Shadow, No Border) */
+.panel--elevated,
+.panel--card {
+  /* Card is alias to Elevated but typically static */
+  border: none;
+  background: var(--surface-background, #ffffff);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.panel--elevated:hover {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Card specific: less interactive */
+.panel--card {
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.panel--card:hover {
+  transform: none;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* === 2. STANDARD VARIANTS === */
+
+/* Flat: Section grouping (Gray bg, no border) */
+.panel--flat {
+  border: none;
+  background: var(--surface-section, #f9fafb);
+  box-shadow: none;
+}
+
+/* Outlined: Content boundary (Transparent + Border) */
+.panel--outlined {
+  background: transparent;
+  border: 1px solid var(--border-color, #e5e7eb);
+  box-shadow: none;
+}
+
+.panel--outlined .panel__header {
+  background: var(--surface-section, #f9fafb);
+}
+
+/* Transparent: (Legacy alias for Plain but keeps header line logic option if needed) */
+.panel--transparent {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.panel--transparent .panel__header {
+  background: transparent;
+  border-bottom-color: var(--border-color-light, rgba(0, 0, 0, 0.1));
+}
+
+.panel--transparent .panel__footer:not(:empty) {
+  background: transparent;
+  border-top-color: var(--border-color-light, rgba(0, 0, 0, 0.1));
+}
+
+/* === PADDINGS === */
+.panel--padding-none .panel__body {
+  padding: 0;
+}
+
+.panel--padding-sm .panel__body {
+  padding: 0.75rem;
+}
+
+.panel--padding-md .panel__body {
+  padding: 1.5rem;
+}
+
+/* 24px */
+.panel--padding-lg .panel__body {
+  padding: 1.5rem 2rem;
+}
+
+/* === HEADER === */
+.panel__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  background: var(--surface-section, #f9fafb);
+}
+
+.panel__icon {
+  font-size: var(--icon-md);
+  line-height: 1;
+}
+
+.panel__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-color-secondary, #6b7280);
+  margin: 0;
+  flex: 1;
+}
+
+/* Title Modifiers */
+.panel__title--size-sm {
+  font-size: 0.75rem;
+}
+
+.panel__title--size-md {
+  font-size: 0.875rem;
+}
+
+.panel__title--size-lg {
+  font-size: 1rem;
+}
+
+.panel__title--size-xl {
+  font-size: 1.25rem;
+}
+
+.panel__title--weight-normal {
+  font-weight: 400;
+}
+
+.panel__title--weight-medium {
+  font-weight: 500;
+}
+
+.panel__title--weight-semibold {
+  font-weight: 600;
+}
+
+.panel__title--weight-bold {
+  font-weight: 700;
+}
+
+.panel__title--align-left {
+  text-align: left;
+}
+
+.panel__title--align-center {
+  text-align: center;
+}
+
+.panel__title--align-right {
+  text-align: right;
+}
+
+.panel__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* === BODY === */
+.panel__body {
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+}
+
+/* === FOOTER === */
+.panel__footer {
+  padding: 0;
+}
+
+.panel__footer:empty {
+  display: none;
+}
+
+.panel__footer:not(:empty) {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--border-color, #e5e7eb);
+  background: var(--surface-section, #f9fafb);
+}
+
+/* === DARK MODE === */
+:host-context(.dark) .panel--elevated,
+:host-context([data-theme="dark"]) .panel--elevated,
+:host-context(.dark) .panel--card,
+:host-context([data-theme="dark"]) .panel--card {
+  background: var(--surface-elevated, #374151);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .panel__header {
+    padding: 0.875rem 1rem;
+  }
+
+  .panel--padding-md .panel__body {
+    padding: 0.875rem 1rem;
+  }
+
+  .panel--padding-lg .panel__body {
+    padding: 1rem 1.25rem;
+  }
+}

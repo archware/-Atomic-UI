@@ -1,0 +1,67 @@
+.auth-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-section);
+  /* Optional: Add a subtle pattern or gradient using primary color */
+  background-image: radial-gradient(circle at 50% 0%, var(--primary-color-lighter) 0%, transparent 70%);
+  padding: 1rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--surface-background);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  animation: slideUp 0.3s ease-out;
+}
+
+.auth-header {
+  padding: 2rem 2rem 0 2rem;
+  text-align: center;
+}
+
+.auth-content {
+  padding: 2rem;
+}
+
+.auth-footer {
+  padding: 0 2rem 2rem 2rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-color-secondary);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark Mode support */
+:host-context(.dark) .auth-container,
+:host-context([data-theme="dark"]) .auth-container {
+  background-color: var(--surface-section);
+  background-image: radial-gradient(circle at 50% 0%, rgba(121, 53, 118, 0.15) 0%, transparent 70%);
+}
+
+:host-context(.dark) .auth-card,
+:host-context([data-theme="dark"]) .auth-card {
+  background-color: var(--surface-elevated);
+  border-color: var(--border-color);
+}
+
+:host-context(.dark) .auth-footer,
+:host-context([data-theme="dark"]) .auth-footer {
+  color: var(--text-color-secondary);
+}

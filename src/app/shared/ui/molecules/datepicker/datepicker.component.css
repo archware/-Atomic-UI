@@ -1,0 +1,208 @@
+:host {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+/* === TRIGGER AREA === */
+.datepicker-trigger {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Icon overrides for the input trigger */
+.calendar-icon-btn {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  z-index: 20;
+  /* Above input label */
+}
+
+.calendar-icon-btn:hover {
+  background-color: var(--hover-background-subtle);
+  color: var(--primary-color);
+}
+
+/* === DROPDOWN POPUP === */
+.datepicker-popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  margin-top: 0.5rem;
+  background: var(--surface-elevated, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
+  padding: 1rem;
+  width: 320px;
+  /* Fixed width for consistency */
+  box-sizing: border-box;
+  animation: slideDown 0.2s ease-out;
+  transform-origin: top left;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === HEADER (Month/Year Nav) === */
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.current-month {
+  font-weight: 600;
+  color: var(--text-color, #1f2937);
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-color-secondary);
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background-color: var(--hover-background);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* === CALENDAR GRID === */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.weekday-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-color-muted);
+  padding-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  /* Square cells */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s;
+  color: var(--text-color);
+  user-select: none;
+}
+
+.calendar-day:hover:not(.empty):not(.disabled) {
+  background-color: var(--hover-background);
+  color: var(--primary-color);
+}
+
+.calendar-day.empty {
+  cursor: default;
+}
+
+.calendar-day.today {
+  font-weight: 700;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.calendar-day.selected {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  /* Always white for contrast on primary */
+  font-weight: 600;
+}
+
+.calendar-day.disabled {
+  color: var(--text-color-disabled, #d1d5db);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Dark Mode Overrides (if variables aren't sufficient) */
+:host-context(.dark) .datepicker-popup,
+:host-context([data-theme="dark"]) .datepicker-popup {
+  background: var(--surface-elevated, #1f2937);
+  border-color: var(--border-color, #374151);
+}
+
+/* === MONTH / YEAR GRIDS === */
+.month-grid,
+.year-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.calendar-option {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-color);
+  transition: all 0.2s;
+  text-transform: capitalize;
+}
+
+.calendar-option:hover {
+  background-color: var(--hover-background);
+  color: var(--primary-color);
+}
+
+.calendar-option.selected {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.calendar-option.current {
+  color: var(--primary-color);
+  background-color: var(--hover-background);
+  font-weight: 700;
+  border: 1px solid var(--primary-color);
+}

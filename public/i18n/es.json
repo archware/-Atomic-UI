@@ -1,0 +1,79 @@
+{
+  "app": {
+    "title": "Tabla Scrollable"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "patients": "Pacientes",
+    "results": "Resultados",
+    "settings": "Configuración"
+  },
+  "user": {
+    "profile": "Mi Perfil",
+    "changePassword": "Cambiar Contraseña",
+    "logout": "Cerrar Sesión"
+  },
+  "filters": {
+    "title": "Filtros",
+    "status": "Estado",
+    "all": "Todos",
+    "active": "Activo",
+    "pending": "Pendiente",
+    "inactive": "Inactivo",
+    "rowCount": "N° Filas",
+    "startDate": "Fecha Inicio",
+    "filter": "Filtrar"
+  },
+  "table": {
+    "id": "ID",
+    "name": "Nombre",
+    "email": "Email",
+    "date": "Fecha",
+    "status": "Estado",
+    "type": "Tipo",
+    "amount": "Monto",
+    "priority": "Prioridad",
+    "actions": "Acciones"
+  },
+  "status": {
+    "active": "Activo",
+    "pending": "Pendiente",
+    "completed": "Completado",
+    "inReview": "En revisión",
+    "approved": "Aprobado"
+  },
+  "priority": {
+    "high": "Alta",
+    "medium": "Media",
+    "low": "Baja"
+  },
+  "actions": {
+    "view": "Ver",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "close": "Cerrar"
+  },
+  "theme": {
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema",
+    "switchToLight": "Cambiar a tema claro",
+    "switchToDark": "Cambiar a tema oscuro"
+  },
+  "language": {
+    "es": "Español",
+    "en": "Inglés",
+    "select": "Idioma"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "noData": "Sin datos",
+    "error": "Error",
+    "success": "Éxito",
+    "warning": "Advertencia",
+    "info": "Información"
+  }
+}

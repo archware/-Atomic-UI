@@ -1,0 +1,133 @@
+/* ============================================
+   FILTROS - Estilos específicos de los campos
+   (El contenedor ahora es manejado por PanelComponent)
+   ============================================ */
+
+/* Host styling */
+:host {
+  display: block;
+  max-width: 900px;
+  margin-bottom: 1.5rem;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  min-width: 0;
+}
+
+.filter-action {
+  justify-content: flex-end;
+}
+
+.filter-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-color-secondary, #6b7280);
+}
+
+.filter-input {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: var(--radius-md, 0.5rem);
+  background: var(--surface-background, #ffffff);
+  color: var(--text-color, #1f2937);
+  transition: all 200ms ease;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.filter-input:hover {
+  border-color: var(--primary-color, #793576);
+}
+
+.filter-input:focus {
+  border-color: var(--primary-color, #793576);
+  box-shadow: var(--focus-ring);
+}
+
+/* Input tipo fecha */
+.filter-date {
+  min-width: 140px;
+}
+
+.filter-date::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: var(--calendar-icon-filter, none);
+  opacity: 0.6;
+  transition: opacity 150ms ease;
+}
+
+.filter-date::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Select con estilos de tema */
+.filter-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4L6 8L10 4' stroke='%236b7280' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+}
+
+.filter-select option {
+  background: var(--surface-background, #ffffff);
+  color: var(--text-color, #1f2937);
+  padding: 0.5rem;
+}
+
+.filter-select option:hover,
+.filter-select option:checked {
+  background: var(--primary-color, #793576) !important;
+  color: white !important;
+}
+
+/* Botón filtrar */
+.filter-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--primary-color, #793576);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md, 0.5rem);
+  cursor: pointer;
+  transition: all 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  width: 100%;
+}
+
+.filter-btn:hover {
+  background: var(--primary-color-dark, #662863);
+  box-shadow: 0 4px 12px rgba(121, 53, 118, 0.3);
+}
+
+/* ============================================
+   DARK MODE Overrides
+   (Minimal overrides needed thanks to semantic vars)
+   ============================================ */
+:host-context(.dark) .filter-date::-webkit-calendar-picker-indicator,
+:host-context([data-theme="dark"]) .filter-date::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+:host-context(.dark) .filter-select,
+:host-context([data-theme="dark"]) .filter-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4L6 8L10 4' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
+}
+
+:host-context(.dark) .filter-btn:hover,
+:host-context([data-theme="dark"]) .filter-btn:hover {
+  background: var(--primary-color-light, #bc9abb);
+  color: #1f2937;
+}

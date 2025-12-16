@@ -1,0 +1,19 @@
+<div class="auth-container">
+  <!-- Optional Background Elements/Pattern can go here -->
+  <div class="auth-card">
+    <!-- Slot for Logo/Header -->
+    <div class="auth-header">
+      <ng-content select="[slot=header]"></ng-content>
+    </div>
+
+    <!-- Slot for Main Form Content -->
+    <div class="auth-content">
+      <ng-content></ng-content>
+    </div>
+
+    <!-- Slot for Footer/Links -->
+    <div class="auth-footer">
+      <ng-content select="[slot=footer]"></ng-content>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+.actions-container {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 150ms ease;
+  color: var(--text-color);
+}
+
+.action-btn:hover {
+  background: var(--surface-elevated);
+  border-color: var(--border-color);
+}
+
+.action-btn.view { 
+  color: var(--secondary-color); 
+}
+
+.action-btn.view:hover { 
+  color: var(--secondary-color);
+  background: var(--secondary-color-lighter);
+}
+
+.action-btn.edit { 
+  color: var(--primary-color); 
+}
+
+.action-btn.edit:hover { 
+  color: var(--primary-color);
+  background: var(--primary-color-lighter);
+}
+
+.action-btn.delete { 
+  color: var(--danger-color); 
+}
+
+.action-btn.delete:hover { 
+  color: var(--danger-color);
+  background: var(--danger-color-lighter);
+}
+
+/* Dark mode support via host context */
+:host-context(.dark) .action-btn:hover,
+:host-context([data-theme="dark"]) .action-btn:hover {
+  background: var(--surface-elevated);
+  border-color: var(--border-color);
+}
+
+:host-context(.dark) .action-btn.view:hover,
+:host-context([data-theme="dark"]) .action-btn.view:hover {
+  background: rgba(35, 167, 212, 0.15);
+}
+
+:host-context(.dark) .action-btn.edit:hover,
+:host-context([data-theme="dark"]) .action-btn.edit:hover {
+  background: rgba(188, 154, 187, 0.2);
+}
+
+:host-context(.dark) .action-btn.delete:hover,
+:host-context([data-theme="dark"]) .action-btn.delete:hover {
+  background: rgba(220, 38, 38, 0.15);
+}
+
+:host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

@@ -1,0 +1,31 @@
+<div class="sidebar-container">
+  <div class="sidebar-logo">
+    <i class="fa-solid fa-capsules logo-emoji"></i>
+    <span class="logo-text">Medi<span class="font-bold">App</span></span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul class="nav-list">
+      @for (item of menuItems; track item.label) {
+      <li class="nav-item">
+        <a href="javascript:void(0)" class="nav-link" [class.active]="item.active" (click)="onItemClick(item)">
+          <i [class]="item.icon + ' nav-icon'"></i>
+          <span class="nav-label">{{ item.label }}</span>
+        </a>
+      </li>
+      }
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-profile">
+      <div class="avatar">
+        <i class="fa-solid fa-user-doctor"></i>
+      </div>
+      <div class="user-info">
+        <span class="user-name">Dr. House</span>
+        <span class="user-role">Admin</span>
+      </div>
+    </div>
+  </div>
+</div>

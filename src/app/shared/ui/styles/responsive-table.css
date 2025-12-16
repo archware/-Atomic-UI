@@ -1,0 +1,439 @@
+/**
+ * DESCRIPCIÓN:
+ * Componente CSS portable que transforma tablas HTML en tarjetas (cards)
+ * responsivas cuando el viewport es menor al breakpoint definido.
+ * 
+ * COMPATIBILIDAD:
+ * ✓ HTML/CSS/JavaScript vanilla
+ * ✓ Angular (2+)
+ * ✓ ASP.NET MVC (Razor/CSHTML)
+ * ✓ React, Vue, y cualquier framework que use HTML estándar
+ */
+
+/* ============================================
+   CSS CUSTOM PROPERTIES (THEMING)
+   Integradas con el sistema de tokens semánticos
+   ============================================ */
+:root {
+    /* === Colores - Referenciando sistema de temas === */
+    --rtc-color-primary: var(--primary-color, #793576);
+    --rtc-color-border: var(--border-color, #e5e7eb);
+    --rtc-color-background: var(--surface-background, #ffffff);
+    --rtc-color-text: var(--text-color, #1f2937);
+    /* Stripe gris muy suave (casi imperceptible) */
+    --rtc-color-stripe: rgba(0, 0, 0, 0.02);
+    /* Borde inferior muy sutil para las filas (0.05 + 0.05 = 0.10) */
+    --rtc-color-border-light: rgba(0, 0, 0, 0.10);
+    /* Hover un poco más oscuro */
+    --rtc-color-row-hover: var(--surface-hover, #efe7ef);
+
+    /* === Header - Light Mode === */
+    --rtc-header-bg: var(--surface-background, #ffffff);
+    /* Fixed bg for sticky */
+    --rtc-header-color: var(--brand-primary-500);
+
+    /* Header Border Tokens (Strict Theme Usage) */
+    --rtc-header-border-width: 3px;
+    --rtc-header-border-style: solid;
+    --rtc-header-border-color: var(--primary-color, #793576);
+    --rtc-header-radius: var(--radius-md, 0.5rem);
+
+    /* === Espaciados === */
+    --rtc-border-radius: var(--radius-md, 0.5rem);
+    --rtc-cell-padding: 0.75rem 1rem;
+    /* 12px 16px using rem */
+    --rtc-card-padding: 1.125rem;
+    /* 18px */
+    --rtc-card-gap: 1rem;
+    --rtc-row-gap: 0px;
+
+    /* === Tipografía (Standard Tokens) === */
+    --rtc-font-family: inherit;
+    --rtc-font-size-base: var(--text-sm, 0.875rem);
+    /* Standard text-sm */
+    --rtc-font-size-mobile: var(--text-sm, 0.9375rem);
+    --rtc-font-size-header: var(--text-xs, 0.75rem);
+    --rtc-font-weight-label: 600;
+    --rtc-font-weight-header: 600;
+
+    /* === Sombras del sistema - Refinadas para anidación === */
+    /* Sombra reducida para evitar "doble elevación" dentro de paneles */
+    --rtc-shadow-row: 0 1px 2px rgba(0, 0, 0, 0.05);
+    /* Tokenize Shadow if possible */
+    --rtc-header-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+    --rtc-shadow-card: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.15));
+    --rtc-shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+    /* === Transiciones === */
+    --rtc-transition-duration: 0.2s;
+    --rtc-transition-timing: ease;
+
+    /* === Breakpoint === */
+    --rtc-breakpoint: 768px;
+}
+
+html.dark,
+[data-theme="dark"] {
+    --rtc-color-primary: var(--primary-color-light, #bc9abb);
+    --rtc-color-border: var(--border-color, #374151);
+    --rtc-color-background: var(--surface-section, #1f2937);
+    --rtc-color-text: var(--text-color, #f3f4f6);
+    --rtc-color-label: var(--secondary-color, #4bbfe5);
+    /* Stripes neutros muy sutiles para dark mode */
+    --rtc-color-stripe: rgba(255, 255, 255, 0.015);
+    --rtc-color-border-light: rgba(255, 255, 255, 0.10);
+    /* Hover con tinte morado suave */
+    --rtc-color-row-hover: rgba(188, 154, 187, 0.15);
+
+    /* Dark Mode Header Override */
+    --rtc-header-bg: var(--brand-primary-700, #381836);
+    --rtc-header-color: #ffffff;
+
+    /* Dark Mode - NO BORDER (As requested) */
+    --rtc-header-border-width: 0px;
+    --rtc-header-border-color: transparent;
+    /* Removed radius override so it stays rounded */
+
+    /* Sombras Dark Mode */
+    --rtc-shadow-row: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --rtc-header-shadow: none;
+    /* Removed shadow to prevent 'lines between columns' artifact */
+    --rtc-shadow-card: 0 4px 16px rgba(0, 0, 0, 0.5);
+    --rtc-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================
+   BASE TABLE STYLES (DESKTOP)
+   ============================================ */
+.rtc-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    /* Removed spacing to fix sticky gaps */
+    font-family: var(--rtc-font-family);
+    font-size: var(--rtc-font-size-base);
+    color: var(--rtc-color-text);
+}
+
+/* === Header === */
+.rtc-header {
+    display: table-header-group;
+    z-index: 10;
+}
+
+/* Sticky Header Implementation */
+.rtc-header th {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    /* Ensure header stays above rows */
+    padding: var(--rtc-cell-padding);
+    color: var(--rtc-header-color);
+    font-size: var(--rtc-font-size-header);
+    font-weight: var(--rtc-font-weight-header);
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+
+    /* Fondo */
+    background: var(--rtc-header-bg);
+
+    /* Borde "Cápsula" (Tokenized) */
+    border-top: var(--rtc-header-border-width) var(--rtc-header-border-style) var(--rtc-header-border-color);
+    border-bottom: var(--rtc-header-border-width) var(--rtc-header-border-style) var(--rtc-header-border-color);
+    border-left: none;
+    border-right: none;
+
+    /* Box shadow sutil */
+    box-shadow: var(--rtc-header-shadow);
+}
+
+.rtc-header th:first-child {
+    border-left: var(--rtc-header-border-width) var(--rtc-header-border-style) var(--rtc-header-border-color);
+    border-top-left-radius: var(--rtc-header-radius);
+    border-bottom-left-radius: var(--rtc-header-radius);
+}
+
+.rtc-header th:last-child {
+    border-right: var(--rtc-header-border-width) var(--rtc-header-border-style) var(--rtc-header-border-color);
+    border-top-right-radius: var(--rtc-header-radius);
+    border-bottom-right-radius: var(--rtc-header-radius);
+}
+
+/* Primary Color Border Indication (Removed conflicting override) */
+
+/* === Body === */
+.rtc-body {
+    display: table-row-group;
+}
+
+/* === Rows === */
+.rtc-row {
+    background-color: var(--rtc-color-background);
+    /* Default: No shadow on rows inside table to reduce noise, unless separate spacing is used */
+    transition: background-color var(--rtc-transition-duration) var(--rtc-transition-timing),
+        transform var(--rtc-transition-duration) var(--rtc-transition-timing);
+    border-bottom: 1px solid var(--rtc-color-border-light);
+}
+
+/* Zebra stripes - Filas alternadas */
+.rtc-body .rtc-row:nth-child(odd) {
+    background-color: var(--rtc-color-stripe, rgba(121, 53, 118, 0.03));
+}
+
+/* Hover effect simplified */
+.rtc-row:hover {
+    background-color: var(--rtc-color-row-hover);
+    z-index: 1;
+}
+
+/* === Cells === */
+.rtc-table td {
+    padding: var(--rtc-cell-padding);
+    border: none;
+    border-bottom: 1px solid var(--rtc-color-border-light);
+    /* Line divider instead of shadow */
+    vertical-align: middle;
+}
+
+/* Last row border removal */
+.rtc-row:last-child td {
+    border-bottom: none;
+}
+
+/* ============================================
+   MOBILE STYLES (CARDS)
+   ============================================ */
+@media screen and (max-width: 768px) {
+
+    /* Hide header on mobile - FORCE HIDDEN */
+    .rtc-header,
+    .rtc-header th {
+        display: none !important;
+    }
+
+    /* Body as block container */
+    .rtc-body {
+        display: block;
+        width: 100%;
+    }
+
+    /* Row becomes a card - Compact Sizing */
+    .rtc-row {
+        display: flex !important;
+        flex-direction: column !important;
+        position: relative;
+        width: 100%;
+        box-sizing: border-box;
+        background-color: var(--rtc-color-background);
+        border: 1px solid var(--rtc-color-border);
+        border-radius: var(--rtc-border-radius);
+        padding: 1rem !important;
+        /* Slightly more compact padding */
+        margin-bottom: 0.75rem !important;
+        /* Reduced gap */
+        box-shadow: var(--rtc-shadow-card);
+        min-height: 200px;
+        /* Tamaño mínimo para consistencia visual */
+    }
+
+    .rtc-row:hover {
+        transform: none;
+        background-color: var(--rtc-color-background) !important;
+        box-shadow: var(--rtc-shadow-card) !important;
+        z-index: auto;
+    }
+
+    /* Cell Styles - Compact Layout */
+    .rtc-table td {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        /* Align top for multi-line text */
+        justify-content: flex-start !important;
+        /* Left aligned content */
+        /* Push content to edges */
+        border: none !important;
+        border-bottom: 1px solid var(--rtc-color-border-light) !important;
+        /* Lighter separator */
+        border-radius: 0 !important;
+        padding: 0.5rem 0 !important;
+        /* Reduced vertical padding */
+        font-size: var(--rtc-font-size-mobile);
+        min-height: auto !important;
+    }
+
+    .rtc-table td:last-child {
+        border-bottom: none !important;
+        padding-bottom: 0 !important;
+    }
+
+    /* Label Styles - Cleaner Look */
+    .rtc-table td[data-label]::before {
+        content: attr(data-label);
+        display: block !important;
+        font-weight: var(--rtc-font-weight-label);
+        color: var(--rtc-color-label);
+        font-size: 0.8125rem;
+        width: 40%;
+        /* Percentage width for better responsiveness */
+        max-width: 140px;
+        flex-shrink: 0;
+        text-align: left;
+        padding-right: 0.5rem;
+    }
+
+    /* Value Styles - Left Aligned */
+    .rtc-table td[data-label]>*,
+    .rtc-table td[data-label]::after {
+        flex: 1;
+        text-align: left;
+        /* User requested Left Alignment */
+        /* Right align values creates a clean label-value split */
+        word-break: break-word;
+        /* Prevent overflow */
+    }
+
+    /* Legacy: data-title support */
+    .rtc-table td[data-title]:not([data-label])::before {
+        content: attr(data-title);
+        display: block !important;
+        font-weight: var(--rtc-font-weight-label);
+        color: var(--rtc-color-label);
+        font-size: 0.8125rem;
+        width: 40%;
+        max-width: 140px;
+        flex-shrink: 0;
+        text-align: left;
+        padding-right: 0.5rem;
+    }
+
+    /* Acciones con label visible */
+    .rtc-actions {
+        flex-direction: row !important;
+        justify-content: flex-end !important;
+        /* Align actions to right */
+        padding-top: 0.75rem !important;
+        margin-top: 0.5rem !important;
+        border-top: 1px solid var(--rtc-color-border) !important;
+        border-bottom: none !important;
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* === Visibility Utilities === */
+
+/* Show only on mobile */
+.rtc-mobile-only {
+    display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+    .rtc-mobile-only {
+        display: flex !important;
+    }
+}
+
+/* Show only on desktop */
+.rtc-desktop-only {
+    display: table-cell;
+}
+
+@media screen and (max-width: 768px) {
+    .rtc-desktop-only {
+        display: none !important;
+    }
+}
+
+/* === Actions Container === */
+.rtc-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+    .rtc-actions {
+        justify-content: center;
+        padding-top: 12px;
+        margin-top: 8px;
+        border-top: 1px solid var(--rtc-color-border);
+    }
+}
+
+/* === Text Alignment Utilities === */
+.rtc-text-center,
+.rtc-table td.rtc-text-center,
+.rtc-table th.rtc-text-center {
+    text-align: center;
+}
+
+.rtc-text-left {
+    text-align: left;
+}
+
+.rtc-text-right {
+    text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+
+    /* RESET MÓVIL: Forzar todo a la izquierda en vista de tarjetas */
+    .rtc-text-center,
+    .rtc-text-right,
+    .rtc-text-left {
+        text-align: left !important;
+    }
+}
+
+/* NOTA: Para badges de estado, usar ChipComponent de la UI Library */
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Focus styles for interactive elements */
+.rtc-table a:focus,
+.rtc-table button:focus {
+    outline: 2px solid var(--rtc-color-primary);
+    outline-offset: 2px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    .rtc-row {
+        transition: none;
+    }
+}
+
+/* ============================================
+   GLOBAL LOADING STATES - DARK MODE
+   ============================================ */
+
+/* Dark Mode Spinner - HIGH VISIBILITY */
+.dark .spinner,
+html.dark .spinner,
+[data-theme="dark"] .spinner {
+    border-color: var(--border-color-strong) !important;
+    border-top-color: var(--primary-color-lighter) !important;
+}
+
+/* Dark Mode Skeleton - Using CSS Variables */
+.dark .skeleton,
+html.dark .skeleton,
+[data-theme="dark"] .skeleton {
+    --skeleton-base: #8b9bb0;
+    --skeleton-highlight: #cbd5e1;
+}
+
+/* Loading container background for dark mode */
+.dark .loading-container,
+html.dark .loading-container,
+[data-theme="dark"] .loading-container {
+    background: transparent;
+}

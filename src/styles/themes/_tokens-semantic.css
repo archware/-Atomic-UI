@@ -1,0 +1,269 @@
+/* =============================================================================
+   TOKENS SEMÁNTICOS - MAPEO POR CONTEXTO DE USO
+   =============================================================================
+   Este archivo NO se modifica entre proyectos.
+   Los colores se derivan automáticamente de los tokens de marca.
+
+   📅 Última actualización: Diciembre 2025
+   ============================================================================= */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   🌞 TEMA CLARO (Light Theme) - DEFAULT
+   ───────────────────────────────────────────────────────────────────────────── */
+:root,
+[data-theme="light"],
+.theme-light {
+   color-scheme: light;
+
+   /* === SUPERFICIES === */
+   --surface-ground: var(--gray-100);
+   /* Fondo de página */
+   --surface-background: var(--gray-0);
+   /* Fondo de cards/contenedores */
+   --surface-section: var(--gray-50);
+   /* Secciones alternadas */
+   --surface-overlay: rgba(0, 0, 0, 0.4);
+   /* Modales overlay */
+   --surface-elevated: var(--gray-0);
+   /* Elementos elevados */
+   --surface-sunken: var(--gray-100);
+   /* Elementos hundidos */
+
+   /* === TEXTO === */
+   --text-color: var(--gray-900);
+   /* Texto principal */
+   --text-color-secondary: var(--gray-600);
+   /* Texto secundario */
+   --text-color-muted: var(--gray-500);
+   /* Texto deshabilitado/sutil */
+   --text-color-placeholder: var(--gray-400);
+   /* Placeholders */
+   --text-color-inverse: var(--gray-0);
+   /* Texto sobre fondos oscuros */
+   --text-color-on-primary: var(--gray-0);
+   /* Texto sobre color primario */
+   --text-color-on-secondary: var(--gray-0);
+   /* Texto sobre color secundario */
+
+   /* === BORDES === */
+   --border-color: var(--gray-300);
+   /* Borde por defecto */
+   --border-color-light: var(--gray-200);
+   /* Borde sutil */
+   --border-color-strong: var(--gray-400);
+   /* Borde enfatizado */
+   --border-color-focus: var(--brand-primary-500);
+   /* Borde en focus */
+
+   /* === COLORES DE MARCA (Contextuales) === */
+   --primary-color: var(--brand-primary-500);
+   --primary-color-light: var(--brand-primary-100);
+   --primary-color-lighter: var(--brand-primary-50);
+   --primary-color-dark: var(--brand-primary-700);
+   --primary-color-darker: var(--brand-primary-900);
+   --primary-color-text: var(--brand-primary-700);
+   --primary-color-hover: var(--brand-primary-600);
+   --primary-color-active: var(--brand-primary-700);
+
+   --secondary-color: var(--brand-secondary-500);
+   --secondary-color-light: var(--brand-secondary-100);
+   --secondary-color-lighter: var(--brand-secondary-50);
+   --secondary-color-dark: var(--brand-secondary-700);
+   --secondary-color-darker: var(--brand-secondary-900);
+   --secondary-color-text: var(--brand-secondary-700);
+   --secondary-color-hover: var(--brand-secondary-600);
+   --secondary-color-active: var(--brand-secondary-700);
+
+   --accent-color: var(--brand-accent-500);
+   --accent-color-light: var(--brand-accent-100);
+   --accent-color-dark: var(--brand-accent-700);
+
+   /* === ESTADOS SEMÁNTICOS === */
+   --success-color: var(--green-600);
+   --success-color-light: var(--green-100);
+   --success-color-lighter: var(--green-50);
+   --success-color-dark: var(--green-700);
+   --success-color-text: var(--green-700);
+
+   --warning-color: var(--yellow-500);
+   --warning-color-light: var(--yellow-100);
+   --warning-color-lighter: var(--yellow-50);
+   --warning-color-dark: var(--yellow-600);
+   --warning-color-text: var(--yellow-700);
+
+   --danger-color: var(--red-500);
+   --danger-color-light: var(--red-100);
+   --danger-color-lighter: var(--red-50);
+   --danger-color-dark: var(--red-600);
+   --danger-color-text: var(--red-700);
+
+   --info-color: var(--sky-500);
+   --info-color-light: var(--sky-100);
+   --info-color-lighter: var(--sky-50);
+   --info-color-dark: var(--sky-600);
+   --info-color-text: var(--sky-700);
+
+   /* === INTERACCIONES === */
+   --hover-background: var(--brand-primary-50);
+   --hover-background-subtle: var(--gray-100);
+   --active-background: var(--brand-primary-100);
+   --selected-background: var(--brand-primary-100);
+   --focus-ring-color: var(--brand-primary-500);
+   --focus-ring: 0 0 0 3px rgba(121, 53, 118, 0.2);
+
+   /* === SOMBRAS === */
+   --shadow-color: 220 3% 15%;
+   --shadow-xs: 0 1px 2px hsl(var(--shadow-color) / 0.1);
+   --shadow-sm: 0 1px 3px hsl(var(--shadow-color) / 0.15),
+      0 1px 2px hsl(var(--shadow-color) / 0.1);
+   --shadow-md: 0 4px 6px hsl(var(--shadow-color) / 0.15),
+      0 2px 4px hsl(var(--shadow-color) / 0.1);
+   --shadow-lg: 0 10px 15px hsl(var(--shadow-color) / 0.15),
+      0 4px 6px hsl(var(--shadow-color) / 0.1);
+   --shadow-xl: 0 20px 25px hsl(var(--shadow-color) / 0.2),
+      0 10px 10px hsl(var(--shadow-color) / 0.1);
+
+   /* === COMPATIBILIDAD LEGADO (variables antiguas) === */
+   --bg-primary: var(--surface-ground);
+   --bg-secondary: var(--surface-background);
+   --bg-tertiary: var(--brand-secondary-50);
+   --text-primary: var(--text-color);
+   --text-secondary: var(--text-color-secondary);
+   --text-muted: var(--text-color-muted);
+   --color-primary: var(--primary-color);
+   --color-primary-light: var(--primary-color-light);
+   --color-primary-lighter: var(--primary-color-lighter);
+   --color-primary-dark: var(--primary-color-dark);
+   --color-primary-darker: var(--primary-color-darker);
+   --color-secondary: var(--secondary-color);
+   --color-secondary-light: var(--secondary-color-light);
+   --color-secondary-lighter: var(--secondary-color-lighter);
+   --color-secondary-dark: var(--secondary-color-dark);
+   --color-secondary-darker: var(--secondary-color-darker);
+   --shadow-primary: rgba(121, 53, 118, 0.25);
+   --shadow-secondary: rgba(35, 167, 212, 0.2);
+   --accent-primary: var(--brand-primary-400);
+   --accent-secondary: var(--brand-secondary-400);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   🌙 TEMA OSCURO (Dark Theme)
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-theme="dark"],
+.theme-dark,
+html.dark {
+   color-scheme: dark;
+
+   /* === SUPERFICIES === */
+   --surface-ground: #0a0a0a;
+   --surface-background: #141414;
+   --surface-section: #1a1a1a;
+   --surface-overlay: rgba(0, 0, 0, 0.7);
+   --surface-elevated: #1f1f1f;
+   --surface-sunken: #0a0a0a;
+
+   /* === TEXTO === */
+   --text-color: var(--gray-100);
+   --text-color-secondary: var(--gray-400);
+   --text-color-muted: var(--gray-500);
+   --text-color-placeholder: var(--gray-500);
+   --text-color-inverse: var(--gray-900);
+   --text-color-on-primary: var(--gray-0);
+   --text-color-on-secondary: var(--gray-0);
+
+   /* === BORDES === */
+   --border-color: #333333;
+   --border-color-light: #262626;
+   --border-color-strong: #404040;
+   --border-color-focus: var(--brand-primary-400);
+
+   /* === COLORES DE MARCA (Ajustados para dark) === */
+   --primary-color: var(--brand-primary-400);
+   --primary-color-light: var(--brand-primary-900);
+   --primary-color-lighter: rgba(121, 53, 118, 0.15);
+   --primary-color-dark: var(--brand-primary-300);
+   --primary-color-darker: var(--brand-primary-200);
+   --primary-color-text: var(--brand-primary-300);
+   --primary-color-hover: var(--brand-primary-300);
+   --primary-color-active: var(--brand-primary-200);
+
+   --secondary-color: var(--brand-secondary-400);
+   --secondary-color-light: var(--brand-secondary-900);
+   --secondary-color-lighter: rgba(35, 167, 212, 0.15);
+   --secondary-color-dark: var(--brand-secondary-300);
+   --secondary-color-darker: var(--brand-secondary-200);
+   --secondary-color-text: var(--brand-secondary-300);
+   --secondary-color-hover: var(--brand-secondary-300);
+   --secondary-color-active: var(--brand-secondary-200);
+
+   --accent-color: var(--brand-accent-400);
+   --accent-color-light: var(--brand-accent-900);
+   --accent-color-dark: var(--brand-accent-300);
+
+   /* === ESTADOS SEMÁNTICOS (más brillantes) === */
+   --success-color: var(--green-500);
+   --success-color-light: rgba(34, 197, 94, 0.15);
+   --success-color-lighter: rgba(34, 197, 94, 0.1);
+   --success-color-dark: var(--green-400);
+   --success-color-text: var(--green-400);
+
+   --warning-color: var(--yellow-400);
+   --warning-color-light: rgba(234, 179, 8, 0.15);
+   --warning-color-lighter: rgba(234, 179, 8, 0.1);
+   --warning-color-dark: var(--yellow-300);
+   --warning-color-text: var(--yellow-300);
+
+   --danger-color: var(--red-400);
+   --danger-color-light: rgba(239, 68, 68, 0.15);
+   --danger-color-lighter: rgba(239, 68, 68, 0.1);
+   --danger-color-dark: var(--red-300);
+   --danger-color-text: var(--red-400);
+
+   --info-color: var(--sky-400);
+   --info-color-light: rgba(14, 165, 233, 0.15);
+   --info-color-lighter: rgba(14, 165, 233, 0.1);
+   --info-color-dark: var(--sky-300);
+   --info-color-text: var(--sky-400);
+
+   /* === INTERACCIONES === */
+   --hover-background: rgba(121, 53, 118, 0.2);
+   --hover-background-subtle: rgba(255, 255, 255, 0.05);
+   --active-background: rgba(121, 53, 118, 0.3);
+   --selected-background: rgba(121, 53, 118, 0.25);
+   --focus-ring-color: var(--brand-primary-400);
+   --focus-ring: 0 0 0 3px rgba(141, 83, 139, 0.3);
+
+   /* === SOMBRAS === */
+   --shadow-color: 220 40% 2%;
+   --shadow-xs: 0 1px 2px hsl(var(--shadow-color) / 0.4);
+   --shadow-sm: 0 1px 3px hsl(var(--shadow-color) / 0.5),
+      0 1px 2px hsl(var(--shadow-color) / 0.4);
+   --shadow-md: 0 4px 6px hsl(var(--shadow-color) / 0.5),
+      0 2px 4px hsl(var(--shadow-color) / 0.4);
+   --shadow-lg: 0 10px 15px hsl(var(--shadow-color) / 0.5),
+      0 4px 6px hsl(var(--shadow-color) / 0.4);
+   --shadow-xl: 0 20px 25px hsl(var(--shadow-color) / 0.5),
+      0 10px 10px hsl(var(--shadow-color) / 0.4);
+
+   /* === COMPATIBILIDAD LEGADO (variables antiguas) === */
+   --bg-primary: #0e0e14;
+   --bg-secondary: #1a1a24;
+   --bg-tertiary: #252534;
+   --text-primary: var(--gray-100);
+   --text-secondary: var(--gray-300);
+   --text-muted: var(--gray-400);
+   --color-primary: var(--brand-primary-300);
+   --color-primary-light: var(--brand-primary-200);
+   --color-primary-lighter: var(--brand-primary-100);
+   --color-primary-dark: var(--brand-primary-600);
+   --color-primary-darker: var(--brand-primary-900);
+   --color-secondary: var(--brand-secondary-400);
+   --color-secondary-light: var(--brand-secondary-300);
+   --color-secondary-lighter: var(--brand-secondary-200);
+   --color-secondary-dark: var(--brand-secondary-600);
+   --color-secondary-darker: var(--brand-secondary-950);
+   --shadow-primary: rgba(161, 114, 159, 0.3);
+   --shadow-secondary: rgba(75, 191, 229, 0.25);
+   --accent-primary: var(--brand-primary-200);
+   --accent-secondary: var(--brand-secondary-300);
+}

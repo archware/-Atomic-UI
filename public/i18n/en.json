@@ -1,0 +1,79 @@
+{
+  "app": {
+    "title": "Scrollable Table"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "patients": "Patients",
+    "results": "Results",
+    "settings": "Settings"
+  },
+  "user": {
+    "profile": "My Profile",
+    "changePassword": "Change Password",
+    "logout": "Log Out"
+  },
+  "filters": {
+    "title": "Filters",
+    "status": "Status",
+    "all": "All",
+    "active": "Active",
+    "pending": "Pending",
+    "inactive": "Inactive",
+    "rowCount": "Row Count",
+    "startDate": "Start Date",
+    "filter": "Filter"
+  },
+  "table": {
+    "id": "ID",
+    "name": "Name",
+    "email": "Email",
+    "date": "Date",
+    "status": "Status",
+    "type": "Type",
+    "amount": "Amount",
+    "priority": "Priority",
+    "actions": "Actions"
+  },
+  "status": {
+    "active": "Active",
+    "pending": "Pending",
+    "completed": "Completed",
+    "inReview": "In Review",
+    "approved": "Approved"
+  },
+  "priority": {
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "actions": {
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "switchToLight": "Switch to light theme",
+    "switchToDark": "Switch to dark theme"
+  },
+  "language": {
+    "es": "Spanish",
+    "en": "English",
+    "select": "Language"
+  },
+  "common": {
+    "loading": "Loading...",
+    "noData": "No data",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Information"
+  }
+}

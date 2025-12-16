@@ -1,0 +1,146 @@
+/* CSS Grid Layout */
+.layout-shell {
+  display: grid;
+  height: 100vh;
+  /* Use CSS variable for sidebar width (default 260px) */
+  --sidebar-width: 260px;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "sidebar header"
+    "sidebar content";
+  background-color: var(--surface-section);
+  color: var(--text-color);
+}
+
+/* Sidebar Area */
+.layout-sidebar {
+  grid-area: sidebar;
+  background-color: var(--surface-background);
+  border-right: 1px solid var(--border-color);
+  overflow-y: auto;
+  z-index: 10;
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  transition: width 0.3s ease, min-width 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Sidebar hidden state - desktop only */
+@media (min-width: 769px) {
+  .layout-shell.sidebar-hidden {
+    grid-template-columns: 0 1fr;
+  }
+
+  .layout-shell.sidebar-hidden .layout-sidebar {
+    width: 0;
+    min-width: 0;
+    overflow: hidden;
+    border-right: none;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/* Header Area */
+.layout-header {
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  /* Removed background and border so app-topbar handles it full width */
+  padding: 0;
+  /* Removed padding so app-topbar takes full space */
+  display: flex;
+  align-items: center;
+  height: 64px;
+}
+
+/* Content Area */
+.layout-content {
+  grid-area: content;
+  /* ScrollOverlay handles overflow now */
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure ScrollOverlay takes full space */
+.layout-content ::ng-deep app-scroll-overlay {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+}
+
+.content-wrapper {
+  width: 100%;
+  padding: 1.5rem;
+  /* 24px standard */
+  box-sizing: border-box;
+}
+
+/* Dark Mode support */
+:host-context(.dark) .layout-shell,
+:host-context([data-theme="dark"]) .layout-shell {
+  background-color: var(--surface-section);
+  color: var(--text-color);
+}
+
+:host-context(.dark) .layout-sidebar,
+:host-context([data-theme="dark"]) .layout-sidebar {
+  background-color: var(--surface-elevated);
+  border-right: 1px solid var(--border-color);
+}
+
+:host-context(.dark) .layout-header,
+:host-context([data-theme="dark"]) .layout-header {
+  /* Removed explicit bg color to defer to app-topbar */
+  border-bottom: none;
+}
+
+/* Responsive - Mobile/Tablet */
+@media (max-width: 768px) {
+  .layout-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: 64px 1fr;
+    grid-template-areas:
+      "header"
+      "content";
+  }
+
+  .layout-sidebar {
+    position: fixed;
+    top: 64px;
+    /* Debajo del header */
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: var(--shadow-xl);
+    z-index: 50;
+    /* Ensure it's above everything */
+  }
+
+  /* Cuando se activa el sidebar en móvil (clase toggleada) */
+  .layout-sidebar.active {
+    transform: translateX(0);
+  }
+
+  /* Overlay backdrop for mobile */
+  .layout-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    /* Below sidebar (50) but above everything else */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .layout-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
