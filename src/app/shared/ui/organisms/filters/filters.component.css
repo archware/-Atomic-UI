@@ -29,28 +29,6 @@
   color: var(--text-color-secondary, #6b7280);
 }
 
-.filter-input {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
-  border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: var(--radius-md, 0.5rem);
-  background: var(--surface-background, #ffffff);
-  color: var(--text-color, #1f2937);
-  transition: all 200ms ease;
-  outline: none;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.filter-input:hover {
-  border-color: var(--primary-color, #793576);
-}
-
-.filter-input:focus {
-  border-color: var(--primary-color, #793576);
-  box-shadow: var(--focus-ring);
-}
-
 /* Input tipo fecha */
 .filter-date {
   min-width: 140px;
@@ -67,31 +45,10 @@
   opacity: 1;
 }
 
-/* Select con estilos de tema */
-.filter-select {
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4L6 8L10 4' stroke='%236b7280' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  padding-right: 2rem;
-}
-
-.filter-select option {
-  background: var(--surface-background, #ffffff);
-  color: var(--text-color, #1f2937);
-  padding: 0.5rem;
-}
-
-.filter-select option:hover,
-.filter-select option:checked {
-  background: var(--button-primary-bg);
-  color: var(--button-primary-text);
-}
-
 /* Botón filtrar */
 .filter-btn {
-  padding: 0.5rem 1rem;
+  height: var(--control-height);
+  padding: 0 1rem;
   font-size: 0.875rem;
   font-weight: 500;
   background: var(--button-primary-bg);

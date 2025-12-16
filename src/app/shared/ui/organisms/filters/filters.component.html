@@ -2,17 +2,16 @@
   gridGap="1rem">
   <div class="filter-group">
     <label class="filter-label">Fecha Inicio</label>
-    <input type="date" class="filter-input filter-date" [ngModel]="dateStart"
+    <input type="date" class="form-input filter-date" [ngModel]="dateStart"
       (ngModelChange)="dateStartChange.emit($event)">
   </div>
   <div class="filter-group">
     <label class="filter-label">Fecha Fin</label>
-    <input type="date" class="filter-input filter-date" [ngModel]="dateEnd"
-      (ngModelChange)="dateEndChange.emit($event)">
+    <input type="date" class="form-input filter-date" [ngModel]="dateEnd" (ngModelChange)="dateEndChange.emit($event)">
   </div>
   <div class="filter-group">
     <label class="filter-label">Estado</label>
-    <select class="filter-input filter-select" [ngModel]="status" (ngModelChange)="statusChange.emit($event)">
+    <select class="form-select" [ngModel]="status" (ngModelChange)="statusChange.emit($event)">
       <option value="">Todos</option>
       <option value="Activo">Activo</option>
       <option value="Pendiente">Pendiente</option>

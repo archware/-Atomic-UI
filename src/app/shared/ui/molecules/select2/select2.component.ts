@@ -143,21 +143,20 @@ export interface Select2Option {
       position: relative;
       display: flex;
       align-items: center;
-      min-height: 2.875rem; /* 46px min */
-      padding: 0.5rem 0.875rem;
+      height: var(--control-height);
+      padding: 0.25rem 0.875rem;
       padding-right: 2.75rem;
       background: var(--input-bg);
-      border: 2px solid var(--input-border);
+      border: 1px solid var(--input-border);
       border-radius: 0.5rem;
       cursor: pointer;
       transition: all 200ms ease;
-      font-size: 1.0625rem;
+      font-size: 0.875rem;
       box-sizing: border-box; 
     }
 
     .select2-wrapper.has-label .select2-trigger {
-      padding-top: 0.875rem;
-      padding-bottom: 0.875rem; /* Symmetric padding for vertical centering */
+      padding: 0.25rem 0.875rem; /* Keep centered, remove top padding shift */
     }
 
     /* === FLOATING LABEL === */
@@ -166,7 +165,7 @@ export interface Select2Option {
       left: 0.875rem;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 1.0625rem;
+      font-size: 0.875rem;
       color: var(--input-placeholder);
       pointer-events: none;
       transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -186,11 +185,11 @@ export interface Select2Option {
 
     /* === MULTI-SELECT FIX === */
     .select2-wrapper.multiple .select2-trigger {
-      min-height: 2.875rem; /* 46px min, grows with content */
+      min-height: var(--control-height); /* grows with content */
       height: auto;
-      padding: 0.5rem 0.875rem;
+      padding: 0.25rem 0.875rem;
       padding-right: 2.75rem;
-      align-items: flex-start;
+      align-items: center; /* Center placeholder and tags vertically */
     }
 
     .select2-wrapper.focused .select2-trigger,
@@ -207,7 +206,7 @@ export interface Select2Option {
       align-items: center;
       gap: 0.5rem;
       flex: 1;
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
       color: var(--input-text);
       line-height: normal; /* Prevent height expansion */
     }

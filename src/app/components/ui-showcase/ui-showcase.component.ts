@@ -21,7 +21,9 @@ import { FloatingInputComponent } from '../../shared/ui/atoms/floating-input/flo
 import { Select2Component, Select2Option } from '../../shared/ui/molecules/select2/select2.component';
 import { RowComponent } from '../../shared/ui/atoms/row/row.component';
 import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
+import { DatepickerComponent } from '../../shared/ui/molecules/datepicker/datepicker.component';
 import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organisms/footer/footer.component';
+import { AuthLayoutComponent } from '../../shared/ui/templates/auth-layout/auth-layout.component';
 
 @Component({
   selector: 'app-ui-showcase',
@@ -51,7 +53,9 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
     Select2Component,
     RowComponent,
     ButtonComponent,
-    FooterComponent
+    DatepickerComponent,
+    FooterComponent,
+    AuthLayoutComponent
   ],
   template: `
     <app-panel title="UI Components Showcase" icon="🎨" variant="elevated" padding="lg">
@@ -225,13 +229,12 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
             [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
           
-          <app-floating-input 
+          <app-datepicker 
             variant="floating" 
             label="Fecha de nacimiento" 
-            type="date"
             [(ngModel)]="dateInputValue"
             [ngModelOptions]="{standalone: true}"
-          ></app-floating-input>
+          ></app-datepicker>
           
           <app-floating-input 
             variant="floating" 
@@ -345,7 +348,7 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
       <!-- FORMULARIO -->
       <section class="showcase-section">
         <h3 class="section-title">Formulario</h3>
-        <form class="demo-form">
+        <form class="showcase-form">
           <div class="form-group">
             <label class="form-label">Nombre completo</label>
             <input type="text" class="form-input" placeholder="Ingrese su nombre" [(ngModel)]="formData.name" name="name">
@@ -802,6 +805,17 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
           </div>
         </div>
       </section>
+
+      <!-- TEMPLATES -->
+      <section class="showcase-section">
+        <h3 class="section-title">Templates</h3>
+        <p class="text-sm text-gray-500 mb-4">Layouts completos reutilizables para diferentes secciones de la aplicación.</p>
+        <div class="button-grid">
+          <button class="btn btn-primary" (click)="showLoginLayout.set(true)">
+            🔐 Ver Login Layout
+          </button>
+        </div>
+      </section>
     </app-panel>
 
     @if (showModal()) {
@@ -879,6 +893,46 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
       </app-modal>
     }
 
+    @if (showLoginLayout()) {
+      <div class="login-preview-overlay" (click)="showLoginLayout.set(false)">
+        <button class="close-preview-btn" (click)="showLoginLayout.set(false)">✕ Cerrar</button>
+        <div class="login-preview-container" (click)="$event.stopPropagation()">
+          <app-auth-layout>
+            <div slot="header">
+              <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔐</div>
+              <h2 style="font-size: 1.5rem; font-weight: 700; color: var(--text-color); margin: 0;">Iniciar Sesión</h2>
+              <p style="font-size: 0.875rem; color: var(--text-color-secondary); margin-top: 0.5rem;">Ingresa tus credenciales para continuar</p>
+            </div>
+            
+            <form class="login-form">
+              <app-floating-input 
+                variant="floating" 
+                label="Correo electrónico" 
+                type="email">
+              </app-floating-input>
+              
+              <app-floating-input 
+                variant="floating" 
+                label="Contraseña" 
+                type="password">
+              </app-floating-input>
+              
+              <div class="login-options">
+                <app-checkbox label="Recordarme"></app-checkbox>
+                <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+              </div>
+              
+              <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+            </form>
+            
+            <div slot="footer">
+              <p>¿No tienes cuenta? <a href="#" class="register-link">Regístrate aquí</a></p>
+            </div>
+          </app-auth-layout>
+        </div>
+      </div>
+    }
+
     <app-toast></app-toast>
   `,
   styles: [`
@@ -886,15 +940,15 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
       padding: 2rem;
       max-width: 900px;
       margin: 2rem auto;
-      background: var(--surface-background, #ffffff);
+      background: var(--surface-background);
       border-radius: 1rem;
-      border: 1px solid var(--border-color, #e5e7eb);
+      border: 1px solid var(--border-color);
     }
 
     .showcase-title {
       font-size: 1.5rem;
       font-weight: 700;
-      color: var(--text-color, #111827);
+      color: var(--text-color);
       margin-bottom: 2rem;
       text-align: center;
     }
@@ -902,7 +956,7 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
     .showcase-section {
       margin-bottom: 2.5rem;
       padding-bottom: 2rem;
-      border-bottom: 1px solid var(--border-color-light, #f3f4f6);
+      border-bottom: 1px solid var(--border-color-light);
     }
 
     .showcase-section:last-child {
@@ -933,7 +987,96 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
       gap: 0.75rem;
     }
 
+    /* ========== FORM STYLES ========== */
+    .showcase-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 500px;
+    }
 
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .form-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 0.625rem 0.875rem;
+      font-size: 0.9375rem;
+      font-family: inherit;
+      color: var(--input-text, var(--text-color));
+      background-color: var(--input-bg, var(--surface-background));
+      border: 2px solid var(--input-border, var(--border-color));
+      border-radius: 0.5rem;
+      transition: all 0.15s ease;
+      outline: none;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--input-border-focus, var(--primary-color));
+      box-shadow: 0 0 0 3px var(--hover-background, rgba(121, 53, 118, 0.1));
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--input-placeholder, var(--text-color-muted));
+    }
+
+    .form-select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      padding-right: 2.5rem;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .checkbox-label,
+    .radio-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9375rem;
+      color: var(--text-color);
+      cursor: pointer;
+    }
+
+    .form-checkbox,
+    input[type="radio"] {
+      width: 1.125rem;
+      height: 1.125rem;
+      accent-color: var(--primary-color);
+      cursor: pointer;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
 
     .form-actions {
       display: flex;
@@ -950,25 +1093,25 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
     }
 
     .card {
-      background: var(--surface-section, #f9fafb);
-      border: 1px solid var(--border-color, #e5e7eb);
+      background: var(--surface-section);
+      border: 1px solid var(--border-color);
       border-radius: 0.75rem;
       padding: 1.25rem;
       transition: all 150ms ease;
     }
 
     .card:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      box-shadow: var(--shadow-md);
     }
 
     .card-elevated {
-      background: var(--surface-background, #ffffff);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      background: var(--surface-background);
+      box-shadow: var(--shadow-sm);
     }
 
     .card-success {
-      border-color: var(--success-color, #10b981);
-      background: linear-gradient(135deg, var(--surface-background, #ffffff) 0%, rgba(16, 185, 129, 0.05) 100%);
+      border-color: var(--success-color);
+      background: linear-gradient(135deg, var(--surface-background) 0%, var(--success-color-lighter) 100%);
     }
 
     .card-header {
@@ -992,13 +1135,13 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
     .card-title {
       font-size: 1rem;
       font-weight: 600;
-      color: var(--text-color, #111827);
+      color: var(--text-color);
       margin: 0;
     }
 
     .card-content {
       font-size: 0.875rem;
-      color: var(--text-color-secondary, #6b7280);
+      color: var(--text-color-secondary);
       margin: 0 0 1rem 0;
       line-height: 1.5;
     }
@@ -1032,27 +1175,27 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
     }
 
     .alert-info {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1e40af;
+      background: var(--alert-info-bg);
+      border: 1px solid var(--alert-info-border);
+      color: var(--alert-info-text);
     }
 
     .alert-success {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      color: #166534;
+      background: var(--alert-success-bg);
+      border: 1px solid var(--alert-success-border);
+      color: var(--alert-success-text);
     }
 
     .alert-warning {
-      background: #fffbeb;
-      border: 1px solid #fde68a;
-      color: #92400e;
+      background: var(--alert-warning-bg);
+      border: 1px solid var(--alert-warning-border);
+      color: var(--alert-warning-text);
     }
 
     .alert-danger {
-      background: #fef2f2;
-      border: 1px solid #fecaca;
-      color: #991b1b;
+      background: var(--alert-danger-bg);
+      border: 1px solid var(--alert-danger-border);
+      color: var(--alert-danger-text);
     }
 
     /* ========== MODAL ========== */
@@ -1097,7 +1240,7 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
     .modal-title {
       font-size: 1.125rem;
       font-weight: 600;
-      color: var(--text-color, #111827);
+      color: var(--text-color);
       margin: 0;
     }
 
@@ -1108,7 +1251,7 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
       align-items: center;
       justify-content: center;
       font-size: 1.5rem;
-      color: var(--text-color-secondary, #6b7280);
+      color: var(--text-color-secondary);
       background: transparent;
       border: none;
       border-radius: 0.375rem;
@@ -1117,8 +1260,8 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
     }
 
     .modal-close:hover {
-      background: var(--surface-section, #f3f4f6);
-      color: var(--text-color, #111827);
+      background: var(--surface-section);
+      color: var(--text-color);
     }
 
     .modal-body {
@@ -1127,7 +1270,7 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
 
     .modal-body p {
       margin: 0 0 1rem 0;
-      color: var(--text-color-secondary, #6b7280);
+      color: var(--text-color-secondary);
       line-height: 1.6;
     }
 
@@ -1142,7 +1285,7 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
       justify-content: flex-end;
       gap: 0.75rem;
       padding: 1rem 1.25rem;
-      border-top: 1px solid var(--border-color, #e5e7eb);
+      border-top: 1px solid var(--border-color);
     }
 
     /* ========== LOADING ========== */
@@ -1172,26 +1315,26 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
     .progress-bar {
       flex: 1;
       height: 0.5rem;
-      background: var(--surface-section, #e5e7eb);
+      background: var(--surface-section);
       border-radius: 9999px;
       overflow: hidden;
     }
 
     .progress-fill {
       height: 100%;
-      background: var(--primary-color, #793576);
+      background: var(--primary-color);
       border-radius: 9999px;
       transition: width 300ms ease;
     }
 
     .progress-success .progress-fill {
-      background: var(--success-color, #10b981);
+      background: var(--success-color);
     }
 
     .progress-label {
       font-size: 0.75rem;
       font-weight: 500;
-      color: var(--text-color-secondary, #6b7280);
+      color: var(--text-color-secondary);
       min-width: 70px;
     }
 
@@ -1350,56 +1493,110 @@ import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organism
     :host-context(html.dark),
     :host-context([data-theme="dark"]) {
       .showcase-container {
-        background: var(--surface-background, #1a1a24);
-        border-color: var(--border-color, #374151);
+        background: var(--surface-background);
+        border-color: var(--border-color);
       }
 
       .card {
-        background: var(--surface-section, #1f2937);
+        background: var(--surface-section);
       }
 
       .card-elevated {
-        background: var(--surface-elevated, #252534);
-      }
-
-      .alert-info {
-        background: rgba(59, 130, 246, 0.1);
-        border-color: rgba(59, 130, 246, 0.3);
-        color: #93c5fd;
-      }
-
-      .alert-success {
-        background: rgba(16, 185, 129, 0.1);
-        border-color: rgba(16, 185, 129, 0.3);
-        color: #6ee7b7;
-      }
-
-      .alert-warning {
-        background: rgba(245, 158, 11, 0.1);
-        border-color: rgba(245, 158, 11, 0.3);
-        color: #fcd34d;
-      }
-
-      .alert-danger {
-        background: rgba(239, 68, 68, 0.1);
-        border-color: rgba(239, 68, 68, 0.3);
-        color: #fca5a5;
+        background: var(--surface-elevated);
       }
 
       .modal {
-        background: var(--surface-section, #1f2937);
+        background: var(--surface-section);
       }
 
       .skeleton {
-        background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+        background: linear-gradient(90deg, var(--gray-700) 25%, var(--gray-600) 50%, var(--gray-700) 75%);
         background-size: 200% 100%;
       }
 
       .tooltip-trigger::after {
-        background: #f3f4f6;
-        color: #1f2937;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        background: var(--gray-100);
+        color: var(--gray-900);
+        box-shadow: var(--shadow-lg);
       }
+    }
+
+    /* Login Preview Overlay */
+    .login-preview-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .login-preview-container {
+      width: 100%;
+      max-width: 450px;
+      animation: slideUp 0.3s ease-out;
+    }
+
+    .close-preview-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 10000;
+    }
+
+    .close-preview-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Login Form Styles */
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .login-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.875rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .forgot-link,
+    .register-link {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+
+    .forgot-link:hover,
+    .register-link:hover {
+      color: var(--primary-color-hover);
+      text-decoration: underline;
     }
   `]
 })
@@ -1412,6 +1609,7 @@ export class UiShowcaseComponent {
   showBlockingModal = signal(false);
   showPopup = signal(false);
   showInfoPopup = signal(false);
+  showLoginLayout = signal(false);
   currentStep = signal(0);
   currentPage = signal(1);
   rating = 3;

@@ -2,9 +2,9 @@
 
 Librería de componentes Angular portables siguiendo **Atomic Design**.
 
-**Última actualización**: Diciembre 2024  
-**Versión**: 2.0.0  
-**Angular**: 17+
+**Última actualización**: Diciembre 2025  
+**Versión**: 3.0.0  
+**Angular**: 20+
 
 ---
 
@@ -469,16 +469,16 @@ steps = [
 | 800 | #5c2259 |
 | 900 | #491646 |
 
-### Paleta Secondary (Cyan)
+### Paleta Secondary (Ámbar/Dorado)
 | Tono | Hexadecimal |
 |------|-------------|
-| 50 | #f1fafe |
-| 200 | #c1e7f6 |
-| 300 | #85d3ef |
-| 400 | #4bbfe5 |
-| **500** | **#23a7d4** |
-| 600 | #1587b4 |
-| 700 | #126d92 |
+| 50 | #fffbed |
+| 200 | #ffe6ad |
+| 300 | #ffd275 |
+| 400 | #ffc400 |
+| **500** | **#FFB800** |
+| 600 | #e09600 |
+| 700 | #b37000 |
 
 ### Colores de Estado
 | Color | Hexadecimal | Uso |

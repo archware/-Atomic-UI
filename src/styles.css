@@ -26,6 +26,9 @@
 /* Estilos para tabla responsiva (usado por TableComponent) */
 @import './app/shared/ui/styles/responsive-table.css';
 
+/* Animaciones compartidas de la UI */
+@import './app/shared/ui/styles/animations.css';
+
 /* Tailwind CSS - DEBE IR DESPUÉS DE LOS IMPORTS */
 @tailwind base;
 @tailwind components;

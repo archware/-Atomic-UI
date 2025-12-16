@@ -38,11 +38,7 @@ export interface SelectOption {
             <option [value]="option.value">{{ option.label }}</option>
           }
         </select>
-        <span class="select-arrow">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </span>
+        <!-- Arrow handled by form-select background-image -->
       </div>
       @if (error) {
         <span class="select-error">{{ error }}</span>

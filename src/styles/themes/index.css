@@ -30,6 +30,8 @@
 @import './_tokens-brand.css';
 @import './_tokens-semantic.css';
 @import './_tokens-components.css';
+@import './_buttons.css';
+@import './_forms.css';
 
 /* =============================================================================
    ESTILOS BASE GLOBALES
@@ -178,35 +180,116 @@ a:focus-visible {
    ============================================================================= */
 
 /* Colores de texto */
-.text-primary { color: var(--text-color) !important; }
-.text-secondary { color: var(--text-color-secondary) !important; }
-.text-muted { color: var(--text-color-muted) !important; }
-.text-brand { color: var(--primary-color) !important; }
-.text-brand-secondary { color: var(--secondary-color) !important; }
-.text-success { color: var(--success-color-text) !important; }
-.text-warning { color: var(--warning-color-text) !important; }
-.text-danger { color: var(--danger-color-text) !important; }
-.text-info { color: var(--info-color-text) !important; }
+.text-primary {
+  color: var(--text-color) !important;
+}
+
+.text-secondary {
+  color: var(--text-color-secondary) !important;
+}
+
+.text-muted {
+  color: var(--text-color-muted) !important;
+}
+
+.text-brand {
+  color: var(--primary-color) !important;
+}
+
+.text-brand-secondary {
+  color: var(--secondary-color) !important;
+}
+
+.text-success {
+  color: var(--success-color-text) !important;
+}
+
+.text-warning {
+  color: var(--warning-color-text) !important;
+}
+
+.text-danger {
+  color: var(--danger-color-text) !important;
+}
+
+.text-info {
+  color: var(--info-color-text) !important;
+}
 
 /* Colores de fondo */
-.bg-ground { background-color: var(--surface-ground) !important; }
-.bg-surface { background-color: var(--surface-background) !important; }
-.bg-section { background-color: var(--surface-section) !important; }
-.bg-elevated { background-color: var(--surface-elevated) !important; }
-.bg-brand { background-color: var(--primary-color) !important; }
-.bg-brand-light { background-color: var(--primary-color-lighter) !important; }
-.bg-brand-secondary { background-color: var(--secondary-color) !important; }
-.bg-success { background-color: var(--success-color-lighter) !important; }
-.bg-warning { background-color: var(--warning-color-lighter) !important; }
-.bg-danger { background-color: var(--danger-color-lighter) !important; }
-.bg-info { background-color: var(--info-color-lighter) !important; }
+.bg-ground {
+  background-color: var(--surface-ground) !important;
+}
+
+.bg-surface {
+  background-color: var(--surface-background) !important;
+}
+
+.bg-section {
+  background-color: var(--surface-section) !important;
+}
+
+.bg-elevated {
+  background-color: var(--surface-elevated) !important;
+}
+
+.bg-brand {
+  background-color: var(--primary-color) !important;
+}
+
+.bg-brand-light {
+  background-color: var(--primary-color-lighter) !important;
+}
+
+.bg-brand-secondary {
+  background-color: var(--secondary-color) !important;
+}
+
+.bg-success {
+  background-color: var(--success-color-lighter) !important;
+}
+
+.bg-warning {
+  background-color: var(--warning-color-lighter) !important;
+}
+
+.bg-danger {
+  background-color: var(--danger-color-lighter) !important;
+}
+
+.bg-info {
+  background-color: var(--info-color-lighter) !important;
+}
 
 /* Colores de borde */
-.border-default { border-color: var(--border-color) !important; }
-.border-light { border-color: var(--border-color-light) !important; }
-.border-strong { border-color: var(--border-color-strong) !important; }
-.border-brand { border-color: var(--primary-color) !important; }
-.border-success { border-color: var(--success-color) !important; }
-.border-warning { border-color: var(--warning-color) !important; }
-.border-danger { border-color: var(--danger-color) !important; }
-.border-info { border-color: var(--info-color) !important; }
+.border-default {
+  border-color: var(--border-color) !important;
+}
+
+.border-light {
+  border-color: var(--border-color-light) !important;
+}
+
+.border-strong {
+  border-color: var(--border-color-strong) !important;
+}
+
+.border-brand {
+  border-color: var(--primary-color) !important;
+}
+
+.border-success {
+  border-color: var(--success-color) !important;
+}
+
+.border-warning {
+  border-color: var(--warning-color) !important;
+}
+
+.border-danger {
+  border-color: var(--danger-color) !important;
+}
+
+.border-info {
+  border-color: var(--info-color) !important;
+}

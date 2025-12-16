@@ -48,6 +48,8 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
         <button type="button" class="input-icon-btn" (click)="togglePassword()" tabindex="-1">
           <i class="fa-solid" [class.fa-eye]="!showPassword()" [class.fa-eye-slash]="showPassword()"></i>
         </button>
+      } @else if (iconClass) {
+        <span class="input-icon"><i [class]="iconClass"></i></span>
       } @else if (icon) {
         <span class="input-icon">{{ icon }}</span>
       }
@@ -73,10 +75,10 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     /* === BASE INPUT === */
     .floating-input {
       width: 100%;
-      height: 2.875rem; /* 46px */
-      padding: 0.5rem 0.875rem;
-      font-size: 1.0625rem;
-      font-weight: 400;
+      height: var(--control-height);
+      padding: 0 0.875rem;
+      line-height: calc(var(--control-height) - 2px); /* Robust vertical centering */
+      font-size: 0.875rem;
       color: var(--input-text);
       background: transparent;
       border: none;
@@ -89,7 +91,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     .floating-input[type="date"],
     .floating-input[type="number"] {
       line-height: normal; /* Reset line-height to prevent expansion */
-      height: 2.875rem; /* 46px */
+      height: var(--control-height);
       box-sizing: border-box;
       margin: 0;
     }
@@ -165,11 +167,12 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     /* === VARIANT: FLOATING === */
     .variant-floating .floating-input {
-      height: 2.875rem; /* 46px */
-      padding: 0.5rem 0.875rem;
-      border: 2px solid var(--input-border);
+      height: var(--control-height);
+      /* padding inherited from base: 0 0.875rem */
+      border: 1px solid var(--input-border);
       border-radius: 0.5rem;
       background: var(--input-bg);
+      font-size: 0.875rem;
     }
 
     .variant-floating .floating-label {
@@ -196,22 +199,23 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     /* === VARIANT: UNDERLINE === */
     .variant-underline .floating-input {
-      height: 2.875rem; /* 46px */
-      padding: 0.5rem 0;
-      padding-top: 1rem;
-      font-size: 1.125rem;
-      border-bottom: 2px solid var(--input-border);
+      height: var(--control-height);
+      padding: 0;
+      padding-top: 1.25rem; /* Increased for 46px height */
+      line-height: 1.5; /* Reset line-height for underline */
+      font-size: 0.875rem;
+      border-bottom: 1px solid var(--input-border);
     }
 
     .variant-underline .floating-label {
       left: 0;
-      font-size: 1.125rem;
+      font-size: 0.875rem;
     }
 
     .variant-underline.focused .floating-label,
     .variant-underline.has-value .floating-label {
       top: -0.25rem;
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
     }
 
     .variant-underline.focused .floating-input,
@@ -225,10 +229,11 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     /* === VARIANT: MATERIAL === */
     .variant-material .floating-input {
-      height: 2.875rem; /* 46px */
-      padding: 0.5rem 0;
-      padding-top: 1rem;
-      font-size: 1.125rem;
+      height: var(--control-height);
+      padding: 0;
+      padding-top: 1.25rem;
+      line-height: 1.5;
+      font-size: 0.875rem;
     }
 
     .variant-material.has-icon .floating-input {
@@ -237,23 +242,24 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     .variant-material .floating-label {
       left: 0;
-      font-size: 1.125rem;
+      font-size: 0.875rem;
     }
 
     .variant-material.focused .floating-label,
     .variant-material.has-value .floating-label {
       top: -0.25rem;
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       color: var(--primary-color);
       font-weight: 600;
     }
 
     /* === VARIANT: OUTLINE === */
     .variant-outline .floating-input {
-      height: 2.875rem; /* 46px */
-      padding: 0.5rem 0.875rem;
-      font-size: 1.0625rem;
-      border: 2px solid var(--input-border);
+      height: var(--control-height);
+      height: var(--control-height);
+      /* padding inherited from base: 0 0.875rem */
+      font-size: 0.875rem;
+      border: 1px solid var(--input-border);
       border-radius: 0.5rem;
     }
 
@@ -363,6 +369,7 @@ export class FloatingInputComponent implements ControlValueAccessor {
   @Input() readonly = false;
   @Input() width = ''; // Optional: e.g., '200px', '50%', 'auto'
   @Input() autocomplete = ''; // Optional: 'off', 'current-password', 'new-password', etc.
+  @Input() iconClass = '';
   @Output() iconClick = new EventEmitter<void>();
 
   @Input() value: string | number = '';

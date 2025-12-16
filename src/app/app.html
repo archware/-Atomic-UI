@@ -13,7 +13,7 @@
   <div class="content-sections">
     <!-- Filters Panel -->
     <app-panel [title]="'filters.title' | translate" icon="🔍" variant="default" padding="md" class="filters-panel">
-      <app-row columns="repeat(auto-fit, minmax(160px, 1fr))">
+      <app-row columns="repeat(3, minmax(180px, 1fr)) auto" verticalAlign="center">
         <app-select2 [options]="statusOptions" [(ngModel)]="filterStatus" [label]="'filters.status' | translate"
           [searchable]="false">
         </app-select2>
@@ -22,7 +22,7 @@
         </app-floating-input>
         <app-datepicker [(ngModel)]="filterDateStart" [label]="'filters.dateStart' | translate"
           variant="outline"></app-datepicker>
-        <app-button variant="primary" class="justify-end">
+        <app-button variant="primary" class="auto-size">
           <svg icon-left xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>

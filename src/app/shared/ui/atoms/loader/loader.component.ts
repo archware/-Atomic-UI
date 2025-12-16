@@ -106,12 +106,12 @@ export type LoaderSize = 'sm' | 'md' | 'lg';
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      /* Colores más claros y semi-transparentes como pidió el usuario */
-      --gradient-1: rgba(121, 53, 118, 0.7);   /* Primary 70% opacity */
-      --gradient-2: rgba(164, 74, 143, 0.7);   /* Magenta 70% */
-      --gradient-3: rgba(201, 90, 159, 0.7);   /* Fucsia 70% */
-      --gradient-4: rgba(94, 184, 201, 0.7);   /* Turquesa 70% */
-      --gradient-5: rgba(35, 167, 212, 0.7);   /* Secondary 70% */
+      /* Map local variables to global tokens */
+      --gradient-1: var(--loader-gradient-1);
+      --gradient-2: var(--loader-gradient-2);
+      --gradient-3: var(--loader-gradient-3);
+      --gradient-4: var(--loader-gradient-4);
+      --gradient-5: var(--loader-gradient-5);
     }
 
     /* Colores del gradiente SVG */
@@ -300,15 +300,6 @@ export type LoaderSize = 'sm' | 'md' | 'lg';
     /* ========== DARK MODE ========== */
     :host-context(html.dark),
     :host-context([data-theme="dark"]) {
-      .loader-container {
-        /* Colores pastel translúcidos para dark mode */
-        --gradient-1: rgba(188, 154, 187, 0.8);
-        --gradient-2: rgba(208, 106, 158, 0.8);
-        --gradient-3: rgba(224, 122, 175, 0.8);
-        --gradient-4: rgba(110, 202, 216, 0.8);
-        --gradient-5: rgba(75, 191, 229, 0.8);
-      }
-
       .spinner-track {
         stroke: var(--border-color, #374151);
       }

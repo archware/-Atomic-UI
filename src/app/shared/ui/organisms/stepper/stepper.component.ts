@@ -64,7 +64,7 @@ export interface Step {
 
     .step {
       display: flex;
-      align-items: center;
+      align-items: flex-start; /* Fix: Pin to top so indicator doesn't drop on wrap */
       gap: 1rem; /* More spacing */
       cursor: pointer;
       position: relative;
@@ -120,6 +120,8 @@ export interface Step {
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
+      min-height: 2.75rem; /* Match indicator height to center text */
+      justify-content: center;
     }
 
     .step-label {

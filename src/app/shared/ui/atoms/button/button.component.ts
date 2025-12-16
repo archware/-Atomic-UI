@@ -49,36 +49,54 @@ export type IconPosition = 'left' | 'right' | 'none';
       [class]="buttonClasses"
       (click)="onClick.emit($event)"
     >
-      <!-- Slot for custom icon (FA, SVG) on left -->
-      <span class="btn-icon btn-icon--left">
+      <!-- Custom Icon Link (Left) -->
+      <span class="btn-icon-wrapper btn-icon-wrapper--left">
         <ng-content select="[icon-left]"></ng-content>
       </span>
       
-      <!-- Emoji icon on left -->
-      @if (icon && iconPosition === 'left') {
-        <span class="btn-icon btn-icon--left btn-icon--emoji">{{ icon }}</span>
+      <!-- Configurable Icon (Left) -->
+      @if (iconPosition === 'left') {
+        @if (icon) {
+          <span class="btn-icon-wrapper btn-icon-wrapper--left btn-icon--emoji">{{ icon }}</span>
+        } @else if (iconClass) {
+          <span class="btn-icon-wrapper btn-icon-wrapper--left"><i [class]="iconClass"></i></span>
+        }
       }
       
-      <!-- Button text content -->
+      <!-- Button Content -->
       <ng-content></ng-content>
       
-      <!-- Emoji icon on right -->
-      @if (icon && iconPosition === 'right') {
-        <span class="btn-icon btn-icon--right btn-icon--emoji">{{ icon }}</span>
+      <!-- Configurable Icon (Right) -->
+      @if (iconPosition === 'right') {
+        @if (icon) {
+          <span class="btn-icon-wrapper btn-icon-wrapper--right btn-icon--emoji">{{ icon }}</span>
+        } @else if (iconClass) {
+          <span class="btn-icon-wrapper btn-icon-wrapper--right"><i [class]="iconClass"></i></span>
+        }
       }
       
-      <!-- Slot for custom icon (FA, SVG) on right -->
-      <span class="btn-icon btn-icon--right">
+      <!-- Custom Icon Link (Right) -->
+      <span class="btn-icon-wrapper btn-icon-wrapper--right">
         <ng-content select="[icon-right]"></ng-content>
       </span>
     </button>
   `,
   styles: [`
     :host {
+      display: block;
+    }
+
+    /* Use inline-block when explicitly needed */
+    :host(.inline) {
       display: inline-block;
     }
 
-    .btn-icon {
+    /* Allow button to control its own dimensions when in grid */
+    :host(.auto-size) {
+      display: contents;
+    }
+
+    .btn-icon-wrapper {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -86,25 +104,25 @@ export type IconPosition = 'left' | 'right' | 'none';
     }
 
     /* Hide empty slot containers */
-    .btn-icon:not(:has(*)) {
+    .btn-icon-wrapper:not(:has(*)) {
       display: none;
     }
 
     /* Apply margin only when slot has content */
-    .btn-icon--left:has(*) {
+    .btn-icon-wrapper--left:has(*) {
       margin-right: 0.5rem;
     }
 
-    .btn-icon--right:has(*) {
+    .btn-icon-wrapper--right:has(*) {
       margin-left: 0.5rem;
     }
 
     /* Size-specific icon adjustments */
-    :host-context(.btn-sm) .btn-icon {
+    :host-context(.btn-sm) .btn-icon-wrapper {
       font-size: var(--icon-xs); /* 12px */
     }
 
-    :host-context(.btn-lg) .btn-icon {
+    :host-context(.btn-lg) .btn-icon-wrapper {
       font-size: var(--icon-md); /* 24px */
     }
   `]
@@ -133,6 +151,12 @@ export class ButtonComponent {
    * For custom icons (SVG, FontAwesome), use content projection with `icon-left` or `icon-right` attribute.
    */
   @Input() icon: string = '';
+
+  /** 
+   * CSS class for font icons (e.g. 'fa-solid fa-save').
+   * Use this for font icons instead of content projection.
+   */
+  @Input() iconClass: string = '';
 
   /** 
    * Position of the emoji/text icon.
