@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, signal, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
@@ -40,7 +40,7 @@ export class TabComponent {
   imports: [CommonModule],
   template: `
     <div class="tabs-container">
-      <div class="tabs-header" role="tablist" aria-label="Tabs">
+      <div class="tabs-header" #tabsHeader role="tablist" aria-label="Tabs">
         @for (tab of tabs; track tab.label; let i = $index) {
           <button 
             type="button"
@@ -52,7 +52,7 @@ export class TabComponent {
             [attr.tabindex]="activeIndex() === i ? 0 : -1"
             [class.active]="activeIndex() === i"
             [class.disabled]="tab.disabled"
-            (click)="!tab.disabled && selectTab(i)"
+            (click)="!tab.disabled && selectTab(i, $event)"
           >
             @if (tab.iconClass) {
               <i [class]="tab.iconClass" class="tab-icon" aria-hidden="true"></i>
@@ -207,6 +207,44 @@ export class TabComponent {
       background: var(--surface-background);
       border-color: var(--border-color);
     }
+
+    /* RESPONSIVE: Compact scrollable tabs on mobile */
+    @media (max-width: 768px) {
+      .tabs-header {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        gap: 4px;
+        padding-bottom: 2px;
+      }
+
+      /* Hide scrollbar on mobile for cleaner look */
+      .tabs-header::-webkit-scrollbar {
+        height: 3px;
+      }
+
+      .tabs-header::-webkit-scrollbar-thumb {
+        background: var(--border-color);
+        border-radius: 3px;
+      }
+
+      .tab-button {
+        flex: 0 0 auto;
+        min-width: max-content;
+        padding: 0.625rem 0.875rem;
+        font-size: 0.875rem;
+        white-space: nowrap;
+      }
+
+      .tab-icon {
+        font-size: 1rem;
+      }
+
+      .tabs-content {
+        padding: 0.75rem;
+      }
+    }
   `]
 })
 export class TabsComponent implements AfterContentInit {
@@ -217,13 +255,29 @@ export class TabsComponent implements AfterContentInit {
   activeIndex = signal(0);
   tabs: TabComponent[] = [];
 
+  @ViewChild('tabsHeader', { static: false }) tabsHeader!: ElementRef<HTMLElement>;
+
   ngAfterContentInit() {
     this.tabs = this.tabComponents.toArray();
     this.activeIndex.set(this.defaultIndex);
   }
 
-  selectTab(index: number) {
+  selectTab(index: number, event?: MouseEvent) {
     this.activeIndex.set(index);
     this.tabChange.emit(index);
+
+    // Auto-scroll horizontalmente (sin afectar scroll vertical del padre)
+    if (event?.target && this.tabsHeader) {
+      const button = event.target as HTMLElement;
+      const container = this.tabsHeader.nativeElement;
+
+      // Calcular posición para centrar el botón
+      const scrollLeft = button.offsetLeft - (container.clientWidth / 2) + (button.clientWidth / 2);
+
+      container.scrollTo({
+        left: Math.max(0, scrollLeft),
+        behavior: 'smooth'
+      });
+    }
   }
 }

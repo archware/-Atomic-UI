@@ -162,8 +162,8 @@ export class LanguageSwitcherComponent {
 
   /** Available languages */
   readonly languages: Language[] = [
-    { code: 'es', name: 'Español', flag: '🇪🇸' },
-    { code: 'en', name: 'English', flag: '🇺🇸' }
+    { code: 'es', name: 'Español', flag: '' },
+    { code: 'en', name: 'English', flag: '' }
   ];
 
   isOpen = signal(false);

@@ -43,5 +43,11 @@
   "demo.project.tech": "The project leverages the latest Angular features: Standalone Components, Signals for reactive state management, and an architecture optimized for performance.",
   "demo.components.title": "Component Information",
   "demo.components.subtitle": "Component Architecture",
-  "demo.components.description": "Each component is independent, reusable, and customizable via Design Tokens (CSS Variables). This ensures absolute visual consistency and facilitates large-scale maintenance."
+  "demo.components.description": "Each component is independent, reusable, and customizable via Design Tokens (CSS Variables). This ensures absolute visual consistency and facilitates large-scale maintenance.",
+  "FOOTER.LEGAL": "Legal",
+  "FOOTER.FOLLOW_US": "Follow Us",
+  "FOOTER.ALL_RIGHTS_RESERVED": "All rights reserved.",
+  "FOOTER.TERMS": "Terms of Use",
+  "FOOTER.PRIVACY": "Privacy Policy",
+  "FOOTER.CONTACT": "Contact"
 }

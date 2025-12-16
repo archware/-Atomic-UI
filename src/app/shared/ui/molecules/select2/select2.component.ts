@@ -143,7 +143,7 @@ export interface Select2Option {
       position: relative;
       display: flex;
       align-items: center;
-      height: 2.875rem; /* 46px */
+      min-height: 2.875rem; /* 46px min */
       padding: 0.5rem 0.875rem;
       padding-right: 2.75rem;
       background: var(--input-bg);
@@ -186,13 +186,11 @@ export interface Select2Option {
 
     /* === MULTI-SELECT FIX === */
     .select2-wrapper.multiple .select2-trigger {
-      height: 2.875rem; /* 46px */
+      min-height: 2.875rem; /* 46px min, grows with content */
+      height: auto;
       padding: 0.5rem 0.875rem;
       padding-right: 2.75rem;
-    }
-
-    .select2-wrapper.multiple.has-label .select2-trigger {
-      padding-top: 1rem;
+      align-items: flex-start;
     }
 
     .select2-wrapper.focused .select2-trigger,
@@ -237,6 +235,7 @@ export interface Select2Option {
       flex-wrap: wrap;
       gap: 0.375rem;
       flex: 1;
+      padding: 0.125rem 0;
     }
 
     .select2-tag {

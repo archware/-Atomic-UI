@@ -227,6 +227,51 @@ export interface Step {
     :host-context([data-theme="dark"]) .step-connector.completed {
       background: var(--success-color, #34d399);
     }
+
+    /* RESPONSIVE: Compact mobile layout */
+    @media (max-width: 768px) {
+      .stepper {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+      }
+      
+      .stepper .step {
+        flex-direction: row;
+        gap: 0.75rem;
+        padding: 0.5rem 0;
+      }
+
+      /* Indicador más pequeño */
+      .stepper .step-indicator {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.875rem;
+      }
+
+      /* Etiquetas truncadas */
+      .stepper .step-label {
+        font-size: 0.875rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+      }
+
+      /* Ocultar descripción y opcional */
+      .stepper .step-description,
+      .stepper .step-optional {
+        display: none;
+      }
+
+      /* Conector vertical compacto */
+      .stepper .step-connector {
+        width: 3px;
+        height: 1.5rem;
+        min-width: 3px;
+        margin: 0 0 0 0.9375rem;
+      }
+    }
   `]
 })
 export class StepperComponent {

@@ -151,3 +151,35 @@
 :host-context([data-theme="dark"]) .topbar-action:hover {
   background: var(--surface-hover, #374151);
 }
+
+/* RESPONSIVE: Compact topbar on mobile */
+@media (max-width: 768px) {
+  .topbar-container {
+    padding: 0 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .topbar-left {
+    flex-shrink: 1;
+    min-width: 0;
+    gap: 0.5rem;
+  }
+
+  .page-title {
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+  }
+
+  .topbar-right {
+    flex-shrink: 0;
+    gap: 0.25rem;
+  }
+
+  /* Iconos más pequeños */
+  .topbar-right ::ng-deep app-icon-button {
+    transform: scale(0.9);
+  }
+}

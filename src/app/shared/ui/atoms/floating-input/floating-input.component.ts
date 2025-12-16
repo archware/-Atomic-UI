@@ -34,6 +34,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
         [disabled]="disabled"
         [readonly]="readonly"
         [value]="value"
+        [attr.autocomplete]="autocomplete || (type === 'password' ? 'current-password' : 'off')"
         (input)="onInput($event)"
         (focus)="onFocus()"
         (blur)="onBlur()"
@@ -361,6 +362,7 @@ export class FloatingInputComponent implements ControlValueAccessor {
   @Input() disabled = false;
   @Input() readonly = false;
   @Input() width = ''; // Optional: e.g., '200px', '50%', 'auto'
+  @Input() autocomplete = ''; // Optional: 'off', 'current-password', 'new-password', etc.
   @Output() iconClick = new EventEmitter<void>();
 
   @Input() value: string | number = '';

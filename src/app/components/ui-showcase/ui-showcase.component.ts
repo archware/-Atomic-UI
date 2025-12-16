@@ -21,6 +21,7 @@ import { FloatingInputComponent } from '../../shared/ui/atoms/floating-input/flo
 import { Select2Component, Select2Option } from '../../shared/ui/molecules/select2/select2.component';
 import { RowComponent } from '../../shared/ui/atoms/row/row.component';
 import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
+import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organisms/footer/footer.component';
 
 @Component({
   selector: 'app-ui-showcase',
@@ -49,7 +50,8 @@ import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
     FloatingInputComponent,
     Select2Component,
     RowComponent,
-    ButtonComponent
+    ButtonComponent,
+    FooterComponent
   ],
   template: `
     <app-panel title="UI Components Showcase" icon="🎨" variant="elevated" padding="lg">
@@ -170,13 +172,14 @@ import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
       </app-panel>
 
       <!-- FLOATING INPUTS -->
-      <section class="showcase-section">
+      <form class="showcase-section" (submit)="$event.preventDefault()">
         <h3 class="section-title">Floating Inputs</h3>
         <div class="input-variants-grid">
           <app-floating-input 
             variant="floating" 
             label="Nombre completo" 
             [(ngModel)]="floatingInputValue"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
           
           <app-floating-input 
@@ -184,6 +187,7 @@ import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
             label="Email" 
             type="email"
             [(ngModel)]="underlineInputValue"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
           
           <app-floating-input 
@@ -191,6 +195,7 @@ import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
             label="Contraseña" 
             type="password"
             [(ngModel)]="materialInputValue"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
           
           <app-floating-input 
@@ -198,6 +203,7 @@ import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
             label="Teléfono" 
             type="tel"
             [(ngModel)]="outlineInputValue"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
         </div>
         
@@ -208,6 +214,7 @@ import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
             label="Con error" 
             error="Este campo es requerido"
             [(ngModel)]="errorInputValue"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
           
           <app-floating-input 
@@ -215,6 +222,7 @@ import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
             label="Deshabilitado" 
             [disabled]="true"
             [ngModel]="'Valor deshabilitado'"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
           
           <app-floating-input 
@@ -222,6 +230,7 @@ import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
             label="Fecha de nacimiento" 
             type="date"
             [(ngModel)]="dateInputValue"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
           
           <app-floating-input 
@@ -229,6 +238,7 @@ import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
             label="Contraseña (con toggle)" 
             type="password"
             [(ngModel)]="passwordInputValue"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
         </div>
         
@@ -239,23 +249,27 @@ import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
             label="100px" 
             width="100px"
             [(ngModel)]="widthExample1"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
           <app-floating-input 
             variant="outline" 
             label="150px" 
             width="150px"
             [(ngModel)]="widthExample2"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
           <app-floating-input 
             variant="outline" 
             label="200px" 
             width="200px"
             [(ngModel)]="widthExample3"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
           <app-floating-input 
             variant="outline" 
             label="auto (default)"
             [(ngModel)]="widthExample4"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
         </app-row>
         
@@ -283,21 +297,24 @@ import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
             label="width=25%"
             width="25%"
             [(ngModel)]="widthPercent1"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
           <app-floating-input 
             variant="outline" 
             label="width=50%"
             width="50%"
             [(ngModel)]="widthPercent2"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
           <app-floating-input 
             variant="outline" 
             label="width=75%"
             width="75%"
             [(ngModel)]="widthPercent3"
+            [ngModelOptions]="{standalone: true}"
           ></app-floating-input>
         </div>
-      </section>
+      </form>
 
       <!-- SELECT2 -->
       <section class="showcase-section">
@@ -750,6 +767,38 @@ import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
             <app-rating [value]="3" [readonly]="true" size="sm"></app-rating>
             <app-rating [value]="3" [readonly]="true" size="md"></app-rating>
             <app-rating [value]="3" [readonly]="true" size="lg"></app-rating>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <section class="showcase-section">
+        <h3 class="section-title">Footer</h3>
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+          <div>
+            <h4 class="subsection-title">Simple (Copyright)</h4>
+            <app-footer variant="simple" companyName="Atomic UI"></app-footer>
+          </div>
+          
+          <div>
+            <h4 class="subsection-title">Inline (Redes + Links)</h4>
+            <app-footer 
+              variant="inline" 
+              companyName="Atomic UI"
+              [socialLinks]="footerSocialLinks"
+              [legalLinks]="footerLegalLinks">
+            </app-footer>
+          </div>
+          
+          <div>
+            <h4 class="subsection-title">Columns (Estilo Startup)</h4>
+            <app-footer 
+              variant="columns" 
+              companyName="Atomic UI"
+              description="Una librería de componentes UI moderna basada en Atomic Design para Angular."
+              [socialLinks]="footerSocialLinks"
+              [legalLinks]="footerLegalLinks">
+            </app-footer>
           </div>
         </div>
       </section>
@@ -1430,6 +1479,21 @@ export class UiShowcaseComponent {
     { value: 'co', label: 'Colombia', icon: '🇨🇴' },
     { value: 'ar', label: 'Argentina', icon: '🇦🇷' },
     { value: 'cl', label: 'Chile', icon: '🇨🇱' }
+  ];
+
+  // Footer demo data
+  footerSocialLinks: SocialLink[] = [
+    { platform: 'facebook', url: 'https://facebook.com' },
+    { platform: 'twitter', url: 'https://twitter.com' },
+    { platform: 'instagram', url: 'https://instagram.com' },
+    { platform: 'linkedin', url: 'https://linkedin.com' },
+    { platform: 'github', url: 'https://github.com' }
+  ];
+
+  footerLegalLinks: LegalLink[] = [
+    { label: 'FOOTER.TERMS', url: '/terms' },
+    { label: 'FOOTER.PRIVACY', url: '/privacy' },
+    { label: 'FOOTER.CONTACT', url: '/contact' }
   ];
 
   showToast(type: 'info' | 'success' | 'warning' | 'error') {

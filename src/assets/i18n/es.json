@@ -43,5 +43,11 @@
   "demo.project.tech": "El proyecto utiliza las últimas características de Angular: Standalone Components, Signals para la gestión de estado reactivo, y una arquitectura optimizada.",
   "demo.components.title": "Información de Componentes",
   "demo.components.subtitle": "Arquitectura de Componentes",
-  "demo.components.description": "Cada componente es independiente, reutilizable y personalizable mediante Tokens de Diseño (CSS Variables). Esto garantiza una consistencia visual absoluta y facilita el mantenimiento a gran escala."
+  "demo.components.description": "Cada componente es independiente, reutilizable y personalizable mediante Tokens de Diseño (CSS Variables). Esto garantiza una consistencia visual absoluta y facilita el mantenimiento a gran escala.",
+  "FOOTER.LEGAL": "Legal",
+  "FOOTER.FOLLOW_US": "Síguenos",
+  "FOOTER.ALL_RIGHTS_RESERVED": "Todos los derechos reservados.",
+  "FOOTER.TERMS": "Términos de uso",
+  "FOOTER.PRIVACY": "Política de privacidad",
+  "FOOTER.CONTACT": "Contacto"
 }

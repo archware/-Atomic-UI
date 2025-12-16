@@ -1,5 +1,5 @@
 /* =============================================================================
-   ESTILOS GLOBALES - Angular Scrollable Table
+   ESTILOS GLOBALES - Atomic UI
    =============================================================================
    📅 Actualizado: Diciembre 2025
    🎨 Sistema de temas portable implementado
@@ -13,17 +13,18 @@
    2. Modifica los valores de --brand-primary-* y --brand-secondary-*
    3. ¡Listo! Todo se actualiza automáticamente
    ============================================================================= */
+
 /* Fonts (Local - @fontsource) */
 @import "@fontsource/open-sans/400.css";
 @import "@fontsource/open-sans/500.css";
 @import "@fontsource/open-sans/600.css";
 @import "@fontsource/open-sans/700.css";
 
+/* Sistema de temas y tokens */
 @import './styles/themes/index.css';
+
+/* Estilos para tabla responsiva (usado por TableComponent) */
 @import './app/shared/ui/styles/responsive-table.css';
-@import './styles/components/buttons.css';
-@import './styles/components/badges.css';
-@import './styles/components/forms.css';
 
 /* Tailwind CSS - DEBE IR DESPUÉS DE LOS IMPORTS */
 @tailwind base;
