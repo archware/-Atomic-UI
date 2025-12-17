@@ -165,58 +165,8 @@ export type ChipSize = 'sm' | 'md' | 'lg';
       background: rgba(0, 0, 0, 0.1);
     }
 
-    /* Dark mode */
-    :host-context(html.dark) .chip-default,
-    :host-context([data-theme="dark"]) .chip-default {
-      background: var(--surface-section);
-    }
+    /* Dark mode overrides handled by semantic tokens */
 
-    :host-context(html.dark) .chip-primary,
-    :host-context([data-theme="dark"]) .chip-primary {
-      background: var(--primary-color-lighter);
-      color: var(--primary-color-light);
-    }
-
-    :host-context(html.dark) .chip-secondary,
-    :host-context([data-theme="dark"]) .chip-secondary {
-      background: rgba(35, 167, 212, 0.2);
-      color: #85d3ef;
-    }
-
-    :host-context(html.dark) .chip-success,
-    :host-context([data-theme="dark"]) .chip-success {
-      background: rgba(16, 185, 129, 0.2);
-      color: #6ee7b7;
-    }
-
-    :host-context(html.dark) .chip-warning,
-    :host-context([data-theme="dark"]) .chip-warning {
-      background: rgba(245, 158, 11, 0.2);
-      color: #fcd34d;
-    }
-
-    :host-context(html.dark) .chip-error,
-    :host-context([data-theme="dark"]) .chip-error {
-      background: rgba(239, 68, 68, 0.2);
-      color: #fca5a5;
-    }
-
-    :host-context(html.dark) .chip-info,
-    :host-context([data-theme="dark"]) .chip-info {
-      background: rgba(14, 165, 233, 0.2);
-      color: #7dd3fc;
-    }
-
-    :host-context(html.dark) .chip-outline,
-    :host-context([data-theme="dark"]) .chip-outline {
-      border-color: var(--border-color);
-    }
-
-    :host-context(html.dark) .chip-selected,
-    :host-context([data-theme="dark"]) .chip-selected {
-      background: var(--primary-color-light);
-      color: #1f2937;
-    }
   `]
 })
 export class ChipComponent {

@@ -134,6 +134,22 @@
   background-color: var(--button-ghost-hover-bg);
 }
 
+/* Link */
+.btn-link {
+  background-color: transparent;
+  color: var(--primary-color);
+  border-color: transparent;
+  padding: 0;
+  height: auto;
+  line-height: inherit;
+  font-weight: 500;
+}
+
+.btn-link:hover:not(:disabled) {
+  text-decoration: underline;
+  color: var(--primary-color-dark);
+}
+
 /* ─────────────────────────────────────────────────────────────────────────────
    TAMAÑOS
    ───────────────────────────────────────────────────────────────────────────── */

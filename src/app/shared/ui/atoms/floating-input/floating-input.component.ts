@@ -119,7 +119,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     .floating-label {
       position: absolute;
       left: 0.875rem;
-      top: 50%;
+      top: calc(var(--control-height) / 2);
       transform: translateY(-50%);
       font-size: 1.0625rem;
       color: var(--input-placeholder);
@@ -290,7 +290,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     .input-icon {
       position: absolute;
       right: 0.875rem;
-      top: 50%;
+      top: calc(var(--control-height) / 2);
       transform: translateY(-50%);
       color: var(--text-color-muted);
       font-size: 1rem;
@@ -305,7 +305,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     .input-icon-btn {
       position: absolute;
       right: 0.5rem;
-      top: 50%;
+      top: calc(var(--control-height) / 2);
       transform: translateY(-50%);
       width: 2.25rem;
       height: 2.25rem;

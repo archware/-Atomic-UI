@@ -1,0 +1,268 @@
+<app-panel class="crud-container">
+  <!-- ============================================ -->
+  <!-- HEADER -->
+  <!-- ============================================ -->
+  <!-- ============================================ -->
+  <!-- HEADER -->
+  <!-- ============================================ -->
+  <app-row justify="between" verticalAlign="center" class="mb-6">
+    <div class="header-title-group">
+      <app-text variant="h2" weight="bold">{{ TABLE_TITLE }}</app-text>
+      <app-text variant="body-sm" color="muted">{{ meta().total }} registros</app-text>
+    </div>
+    <app-button variant="primary" icon="➕" (onClick)="openCreateModal()">
+      Nuevo {{ ENTITY_NAME }}
+    </app-button>
+  </app-row>
+
+  <!-- ============================================ -->
+  <!-- FILTERS -->
+  <!-- ============================================ -->
+  <app-panel class="filters-panel mb-4">
+    <app-row gap="1rem" verticalAlign="center">
+      <div class="search-box-container" style="flex: 1; min-width: 250px;">
+        <app-input placeholder="Buscar por nombre o email..." iconClass="fa-solid fa-search" [ngModel]="searchTerm()"
+          (ngModelChange)="onSearch($event)">
+        </app-input>
+      </div>
+
+      <app-select2 [options]="statusOptions" [ngModel]="filters().status" placeholder="Estado"
+        (ngModelChange)="onStatusFilter($any($event))">
+      </app-select2>
+
+      <app-select2 [options]="roleOptions" [ngModel]="filters().role" placeholder="Rol"
+        (ngModelChange)="onRoleFilter($any($event))">
+      </app-select2>
+
+      @if (hasActiveFilters()) {
+      <app-button variant="ghost" size="sm" (onClick)="clearFilters()">
+        <i class="fa-solid fa-times"></i>
+        Limpiar
+      </app-button>
+      }
+    </app-row>
+  </app-panel>
+
+  <!-- ============================================ -->
+  <!-- BULK ACTIONS BAR -->
+  <!-- ============================================ -->
+  <!-- ============================================ -->
+  <!-- BULK ACTIONS BAR -->
+  <!-- ============================================ -->
+  @if (hasSelection()) {
+  <app-panel class="bulk-actions-bar mb-4"
+    style="background-color: var(--primary-50); border-color: var(--primary-200);">
+    <app-row justify="between" verticalAlign="center">
+      <app-text variant="body" weight="medium" color="primary">
+        {{ selectedCount() }} seleccionado(s)
+      </app-text>
+      <app-row gap="0.5rem">
+        <app-button variant="danger" size="sm" (onClick)="bulkDelete()">
+          <i class="fa-solid fa-trash"></i>
+          Eliminar
+        </app-button>
+        <app-button variant="outline" size="sm" (onClick)="bulkExport()">
+          <i class="fa-solid fa-download"></i>
+          Exportar
+        </app-button>
+        <app-button variant="ghost" size="sm" (onClick)="clearSelection()">
+          Cancelar
+        </app-button>
+      </app-row>
+    </app-row>
+  </app-panel>
+  }
+
+  <!-- ============================================ -->
+  <!-- TABLE -->
+  <!-- ============================================ -->
+  <div class="table-wrapper">
+    @if (listApi.loading()) {
+    <app-row justify="center" verticalAlign="center" class="p-5">
+      <app-loader variant="spinner" size="lg"></app-loader>
+      <app-text color="muted">Cargando datos...</app-text>
+    </app-row>
+    }
+
+    @if (listApi.hasError()) {
+    <app-row justify="center" verticalAlign="center" direction="column" class="p-5 text-center">
+      <i class="fa-solid fa-circle-exclamation text-danger text-2xl mb-2"></i>
+      <app-text weight="bold">Error al cargar los datos</app-text>
+      <app-text color="muted">{{ listApi.error()?.message }}</app-text>
+      <app-button variant="primary" (onClick)="loadData()" class="mt-2">
+        Reintentar
+      </app-button>
+    </app-row>
+    } @else {
+    <app-table>
+      <app-table-head>
+        <tr app-table-row>
+          <th app-table-header-cell class="w-12 text-center">
+            <input type="checkbox" [checked]="allSelected()" (change)="toggleSelectAll()" class="cursor-pointer">
+          </th>
+          <th app-table-header-cell>Nombre</th>
+          <th app-table-header-cell>Email</th>
+          <th app-table-header-cell>Rol</th>
+          <th app-table-header-cell>Estado</th>
+          <th app-table-header-cell>Creado</th>
+          <th app-table-header-cell class="text-right">Acciones</th>
+        </tr>
+      </app-table-head>
+      <tbody>
+        @if (items().length === 0 && !listApi.loading()) {
+        <tr app-table-row>
+          <td app-table-cell colspan="7">
+            <app-row justify="center" verticalAlign="center" direction="column" class="p-5 text-center">
+              <i class="fa-solid fa-inbox text-muted text-2xl mb-2"></i>
+              <app-text color="muted">No se encontraron registros</app-text>
+              @if (hasActiveFilters()) {
+              <app-button variant="outline" size="sm" (onClick)="clearFilters()" class="mt-2">
+                Limpiar filtros
+              </app-button>
+              }
+            </app-row>
+          </td>
+        </tr>
+        }
+
+        @for (item of items(); track item.id) {
+        <tr app-table-row [class.selected]="isSelected(item)">
+          <td app-table-cell class="text-center">
+            <input type="checkbox" [checked]="isSelected(item)" (change)="toggleSelect(item)" class="cursor-pointer">
+          </td>
+          <td app-table-cell>
+            <app-row verticalAlign="center" gap="0.75rem">
+              <div class="avatar-circle">
+                {{ item.name.charAt(0).toUpperCase() }}
+              </div>
+              <app-text>{{ item.name }}</app-text>
+            </app-row>
+          </td>
+          <td app-table-cell>{{ item.email }}</td>
+          <td app-table-cell>
+            <span class="role-badge">{{ item.role }}</span>
+          </td>
+          <td app-table-cell>
+            <app-chip [variant]="getStatusVariant(item.status)" size="sm">
+              {{ getStatusLabel(item.status) }}
+            </app-chip>
+          </td>
+          <td app-table-cell>{{ formatDate(item.createdAt) }}</td>
+          <td app-table-cell class="text-right">
+            <app-row justify="end" gap="0.25rem">
+              <app-icon-button size="sm" title="Editar" (onClick)="openEditModal(item)">
+                <i class="fa-solid fa-pen"></i>
+              </app-icon-button>
+              <app-icon-button size="sm" variant="ghost" title="Eliminar" (onClick)="openDeleteModal(item)">
+                <i class="fa-solid fa-trash text-danger"></i>
+              </app-icon-button>
+            </app-row>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </app-table>
+    }
+  </div>
+
+  <!-- ============================================ -->
+  <!-- PAGINATION -->
+  <!-- ============================================ -->
+  <!-- ============================================ -->
+  <!-- PAGINATION -->
+  <!-- ============================================ -->
+  @if (meta().totalPages > 1) {
+  <app-row justify="center" class="mt-4 pt-4 border-t">
+    <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="PAGE_SIZE"
+      (pageChange)="onPageChange($event)">
+    </app-pagination>
+  </app-row>
+  }
+</app-panel>
+
+<!-- ============================================ -->
+<!-- CREATE/EDIT MODAL -->
+<!-- ============================================ -->
+@if (showModal()) {
+<app-modal [title]="isEditMode() ? 'Editar ' + ENTITY_NAME : 'Nuevo ' + ENTITY_NAME" (close)="closeModal()">
+
+  <form [formGroup]="entityForm" (ngSubmit)="onSave()" class="flex flex-col gap-4">
+    <app-floating-input label="Nombre" formControlName="name" icon="fa-solid fa-user" [error]="getFieldError('name')">
+    </app-floating-input>
+
+    <app-floating-input label="Email" type="email" formControlName="email" icon="fa-solid fa-envelope"
+      [error]="getFieldError('email')">
+    </app-floating-input>
+
+    <app-select2 label="Rol" [options]="roleOptions.slice(1)" formControlName="role">
+    </app-select2>
+
+    <app-select2 label="Estado" [options]="statusOptions.slice(1)" formControlName="status">
+    </app-select2>
+
+    @if (saveApi.hasError()) {
+    <app-row verticalAlign="center" gap="0.5rem" class="p-3 bg-danger-50 border-danger-200 text-danger rounded-md">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <app-text color="danger">{{ saveApi.error()?.message }}</app-text>
+    </app-row>
+    }
+
+    <app-row justify="end" gap="0.75rem" class="mt-4 pt-4 border-t">
+      <app-button variant="ghost" type="button" (onClick)="closeModal()">
+        Cancelar
+      </app-button>
+      <app-button variant="primary" type="submit" [disabled]="saveApi.loading()">
+        @if (saveApi.loading()) {
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Guardando...
+        } @else {
+        {{ isEditMode() ? 'Actualizar' : 'Crear' }}
+        }
+      </app-button>
+    </app-row>
+  </form>
+</app-modal>
+}
+
+<!-- ============================================ -->
+<!-- DELETE CONFIRMATION MODAL -->
+<!-- ============================================ -->
+@if (showDeleteModal()) {
+<app-modal title="Confirmar Eliminación" (close)="closeDeleteModal()">
+
+  <app-row dir="column" verticalAlign="center" class="text-center py-4">
+    <div class="w-16 h-16 rounded-full bg-danger-50 flex items-center justify-center mb-4 text-danger">
+      <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
+    </div>
+
+    <app-text variant="body" weight="medium" class="mb-2">
+      ¿Estás seguro de eliminar a <strong>{{ itemToDelete()?.name }}</strong>?
+    </app-text>
+    <app-text variant="body-sm" color="muted" class="mb-4">
+      Esta acción no se puede deshacer.
+    </app-text>
+
+    @if (deleteApi.hasError()) {
+    <app-row verticalAlign="center" gap="0.5rem"
+      class="p-3 bg-danger-50 border-danger-200 text-danger rounded-md w-full mb-4">
+      <i class="fa-solid fa-circle-exclamation"></i>
+      <app-text color="danger">{{ deleteApi.error()?.message }}</app-text>
+    </app-row>
+    }
+
+    <app-row justify="end" gap="0.75rem" class="w-full">
+      <app-button variant="ghost" (onClick)="closeDeleteModal()">
+        Cancelar
+      </app-button>
+      <app-button variant="danger" [disabled]="deleteApi.loading()" (onClick)="confirmDelete()">
+        @if (deleteApi.loading()) {
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Eliminando...
+        } @else {
+        Eliminar
+        }
+      </app-button>
+    </app-row>
+  </app-row>
+</app-modal>
+}

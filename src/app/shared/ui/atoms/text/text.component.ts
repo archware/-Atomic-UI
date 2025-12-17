@@ -5,6 +5,8 @@ export type TextVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'body-lg' | 'body' | 'body
 export type TextWeight = 'normal' | 'medium' | 'semibold' | 'bold';
 export type TextColor = 'default' | 'primary' | 'secondary' | 'muted' | 'success' | 'warning' | 'danger' | 'white';
 
+export type TextAlign = 'left' | 'center' | 'right' | 'justify';
+
 @Component({
   selector: 'app-text',
   standalone: true,
@@ -30,6 +32,12 @@ export type TextColor = 'default' | 'primary' | 'secondary' | 'muted' | 'success
       padding: 0;
       line-height: 1.5;
     }
+
+    /* Alignment */
+    .align-left { text-align: left; }
+    .align-center { text-align: center; }
+    .align-right { text-align: right; }
+    .align-justify { text-align: justify; }
 
     /* Variants - Headings */
     .text-h1 { font-size: 2.25rem; letter-spacing: -0.025em; line-height: 1.2; margin-top: 2.25rem; margin-bottom: 0.75rem; }
@@ -79,6 +87,7 @@ export class TextComponent implements OnInit {
   @Input() variant: TextVariant = 'body';
   @Input() weight: TextWeight = 'normal';
   @Input() color: TextColor = 'default';
+  @Input() align: TextAlign = 'left';
 
   renderAs = 'p';
 
@@ -95,7 +104,8 @@ export class TextComponent implements OnInit {
     return {
       [`text-${this.variant}`]: true,
       [`weight-${this.weight}`]: true,
-      [`color-${this.color}`]: true
+      [`color-${this.color}`]: true,
+      [`align-${this.align}`]: true
     };
   }
 }

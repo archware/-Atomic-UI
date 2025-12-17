@@ -24,6 +24,12 @@ import { ButtonComponent } from '../../shared/ui/atoms/button/button.component';
 import { DatepickerComponent } from '../../shared/ui/molecules/datepicker/datepicker.component';
 import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organisms/footer/footer.component';
 import { AuthLayoutComponent } from '../../shared/ui/templates/auth-layout/auth-layout.component';
+import { TableComponent } from '../../shared/ui/atoms/table/table.component';
+import { TableHeadComponent } from '../../shared/ui/atoms/table/table-head.component';
+import { TableRowComponent } from '../../shared/ui/atoms/table/table-row.component';
+import { TableCellComponent } from '../../shared/ui/atoms/table/table-cell.component';
+import { FormRowComponent } from '../../shared/ui/atoms/form-row/form-row.component';
+import { DividerComponent } from '../../shared/ui/atoms/divider/divider.component';
 
 @Component({
   selector: 'app-ui-showcase',
@@ -55,7 +61,13 @@ import { AuthLayoutComponent } from '../../shared/ui/templates/auth-layout/auth-
     ButtonComponent,
     DatepickerComponent,
     FooterComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    TableComponent,
+    TableHeadComponent,
+    TableRowComponent,
+    TableCellComponent,
+    FormRowComponent,
+    DividerComponent
   ],
   template: `
     <app-panel title="UI Components Showcase" icon="🎨" variant="elevated" padding="lg">
@@ -70,6 +82,25 @@ import { AuthLayoutComponent } from '../../shared/ui/templates/auth-layout/auth-
           <app-text variant="body" weight="medium">Body text (Medium)</app-text>
           <app-text variant="caption" color="muted">Caption text</app-text>
         </div>
+      </app-panel>
+
+      <!-- DIVIDERS -->
+      <app-panel title="Dividers" variant="flat" padding="md" class="showcase-section">
+        <app-text variant="body">Párrafo superior</app-text>
+        <app-divider></app-divider>
+        <app-text variant="body">Párrafo inferior (Divider simple)</app-text>
+        
+        <br>
+        
+        <app-text variant="body">Sección A</app-text>
+        <app-divider text="O"></app-divider>
+        <app-text variant="body">Sección B (Divider con texto)</app-text>
+        
+        <br>
+        
+        <app-text variant="body">Inicio</app-text>
+        <app-divider text="Continuar" align="start"></app-divider>
+        <app-text variant="body">Fin (Divider alineado al inicio)</app-text>
       </app-panel>
 
       <!-- PANEL TITLE CUSTOMIZATION DEMO -->
@@ -173,6 +204,61 @@ import { AuthLayoutComponent } from '../../shared/ui/templates/auth-layout/auth-
             <app-button variant="ghost" icon="⚙️">Opciones</app-button>
           </div>
         </div>
+      </app-panel>
+
+      <!-- TABLAS -->
+      <app-panel title="Tablas (Atomic)" variant="flat" padding="md" class="showcase-section">
+        <app-table>
+          <app-table-head>
+            <tr app-table-row>
+              <th app-table-header-cell>Nombre</th>
+              <th app-table-header-cell>Rol</th>
+              <th app-table-header-cell>Estado</th>
+              <th app-table-header-cell class="text-right">Acciones</th>
+            </tr>
+          </app-table-head>
+          <tbody>
+            <tr app-table-row>
+              <td app-table-cell>
+                <app-row gap="0.5rem" verticalAlign="center">
+                  <app-avatar name="Juan Perez" size="sm"></app-avatar>
+                  <app-text>Juan Pérez</app-text>
+                </app-row>
+              </td>
+              <td app-table-cell>Desarrollador</td>
+              <td app-table-cell><app-chip variant="success" size="sm">Activo</app-chip></td>
+              <td app-table-cell class="text-right">
+                <app-button variant="ghost" size="sm" icon="✎"></app-button>
+              </td>
+            </tr>
+            <tr app-table-row [selected]="true">
+              <td app-table-cell>
+                <app-row gap="0.5rem" verticalAlign="center">
+                  <app-avatar name="Maria Garcia" size="sm"></app-avatar>
+                  <app-text>Maria García</app-text>
+                </app-row>
+              </td>
+              <td app-table-cell>Diseñadora</td>
+              <td app-table-cell><app-chip variant="warning" size="sm">Ausente</app-chip></td>
+              <td app-table-cell class="text-right">
+                <app-button variant="ghost" size="sm" icon="✎"></app-button>
+              </td>
+            </tr>
+            <tr app-table-row>
+              <td app-table-cell>
+                <app-row gap="0.5rem" verticalAlign="center">
+                  <app-avatar name="Carlos Lopez" size="sm"></app-avatar>
+                  <app-text>Carlos Lopez</app-text>
+                </app-row>
+              </td>
+              <td app-table-cell>Manager</td>
+              <td app-table-cell><app-chip variant="error" size="sm">Inactivo</app-chip></td>
+              <td app-table-cell class="text-right">
+                <app-button variant="ghost" size="sm" icon="✎"></app-button>
+              </td>
+            </tr>
+          </tbody>
+        </app-table>
       </app-panel>
 
       <!-- FLOATING INPUTS -->
@@ -359,7 +445,7 @@ import { AuthLayoutComponent } from '../../shared/ui/templates/auth-layout/auth-
             <input type="email" class="form-input" placeholder="ejemplo@correo.com" [(ngModel)]="formData.email" name="email">
           </div>
           
-          <div class="form-row">
+          <app-form-row>
             <div class="form-group">
               <label class="form-label">Teléfono</label>
               <input type="tel" class="form-input" placeholder="+1 234 567 890" [(ngModel)]="formData.phone" name="phone">
@@ -374,7 +460,7 @@ import { AuthLayoutComponent } from '../../shared/ui/templates/auth-layout/auth-
                 <option value="ar">Argentina</option>
               </select>
             </div>
-          </div>
+          </app-form-row>
           
           <div class="form-group">
             <label class="form-label">Mensaje</label>

@@ -1,0 +1,153 @@
+<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="closeSidebar()">
+
+  <!-- ============================================ -->
+  <!-- SIDEBAR (Atomic) -->
+  <!-- ============================================ -->
+  <app-sidebar slot="sidebar" [menuItems]="menuItems" [user]="sidebarUser()" [collapsed]="false"
+    (navigate)="onMenuItemClick($event)">
+  </app-sidebar>
+
+  <!-- ============================================ -->
+  <!-- TOPBAR (Atomic) -->
+  <!-- ============================================ -->
+  <app-topbar slot="topbar" [title]="'Dashboard'" [userInitials]="userInitials()"
+    [userName]="currentUser()?.name || 'Usuario'" [userEmail]="currentUser()?.email || 'usuario@email.com'"
+    [notificationCount]="3" (toggleSidebar)="toggleSidebar()" (userAction)="onUserAction($any($event))"
+    (logout)="onLogout()">
+    <app-theme-switcher></app-theme-switcher>
+  </app-topbar>
+
+  <!-- ============================================ -->
+  <!-- MAIN CONTENT (Atomic) -->
+  <!-- ============================================ -->
+  <!-- Page Header -->
+  <app-row justify="between" verticalAlign="center" class="mb-6">
+    <div class="header-text">
+      <app-text variant="h2" weight="bold">
+        Bienvenido, {{ (currentUser()?.name ?? 'Usuario').split(' ')[0] }} 👋
+      </app-text>
+      <app-text variant="body" color="muted">
+        Aquí está el resumen de tu actividad
+      </app-text>
+    </div>
+    <app-button variant="primary" icon="➕">
+      Nuevo Proyecto
+    </app-button>
+  </app-row>
+
+  <!-- Stats Grid -->
+  @if (statsApi.loading()) {
+  <app-row columns="repeat(auto-fit, minmax(240px, 1fr))" gap="1.5rem" class="mb-6">
+    @for (i of [1, 2, 3, 4]; track i) {
+    <app-panel class="stat-card">
+      <app-skeleton variant="avatar-text"></app-skeleton>
+    </app-panel>
+    }
+  </app-row>
+  } @else if (statsApi.hasError()) {
+  <app-panel class="mb-6">
+    <app-row align="center" justify="center" gap="1rem" style="padding: 2rem;">
+      <i class="fa-solid fa-circle-exclamation text-danger" style="font-size: 2rem;"></i>
+      <app-text variant="body" color="danger">Error al cargar estadísticas</app-text>
+      <app-button variant="outline" size="sm" (onClick)="loadDashboardStats()">
+        Reintentar
+      </app-button>
+    </app-row>
+  </app-panel>
+  } @else {
+  <app-row columns="repeat(auto-fit, minmax(240px, 1fr))" gap="1.5rem" class="mb-6">
+    <!-- Total Users -->
+    <app-panel>
+      <app-row align="center" justify="between">
+        <app-row align="center" gap="1rem">
+          <app-avatar size="md" variant="primary" icon="fa-solid fa-users" [rounded]="true"></app-avatar>
+          <div>
+            <app-text variant="label" color="muted" class="mb-1">Total Usuarios</app-text>
+            <app-text variant="h3" weight="bold">{{ formatNumber(statsApi.data()?.totalUsers || 0) }}</app-text>
+          </div>
+        </app-row>
+        <app-chip variant="success" size="sm">+12%</app-chip>
+      </app-row>
+    </app-panel>
+
+    <!-- Active Projects -->
+    <app-panel>
+      <app-row align="center" justify="between">
+        <app-row align="center" gap="1rem">
+          <app-avatar size="md" variant="secondary" icon="fa-solid fa-folder-open" [rounded]="true"></app-avatar>
+          <div>
+            <app-text variant="label" color="muted" class="mb-1">Proyectos Activos</app-text>
+            <app-text variant="h3" weight="bold">{{ statsApi.data()?.activeProjects || 0 }}</app-text>
+          </div>
+        </app-row>
+        <app-chip variant="info" size="sm">En curso</app-chip>
+      </app-row>
+    </app-panel>
+
+    <!-- Pending Tasks -->
+    <app-panel>
+      <app-row align="center" justify="between">
+        <app-row align="center" gap="1rem">
+          <app-avatar size="md" variant="warning" icon="fa-solid fa-clock" [rounded]="true"></app-avatar>
+          <div>
+            <app-text variant="label" color="muted" class="mb-1">Tareas Pendientes</app-text>
+            <app-text variant="h3" weight="bold">{{ statsApi.data()?.pendingTasks || 0 }}</app-text>
+          </div>
+        </app-row>
+        <app-chip variant="warning" size="sm">Pendiente</app-chip>
+      </app-row>
+    </app-panel>
+
+    <!-- Revenue -->
+    <app-panel>
+      <app-row align="center" justify="between">
+        <app-row align="center" gap="1rem">
+          <app-avatar size="md" variant="success" icon="fa-solid fa-dollar-sign" [rounded]="true"></app-avatar>
+          <div>
+            <app-text variant="label" color="muted" class="mb-1">Ingresos</app-text>
+            <app-text variant="h3" weight="bold">{{ formatCurrency(statsApi.data()?.revenue || 0) }}</app-text>
+          </div>
+        </app-row>
+        <app-chip variant="success" size="sm">+8.5%</app-chip>
+      </app-row>
+    </app-panel>
+  </app-row>
+  }
+
+  <!-- Content Panels -->
+  <app-row columns="2fr 1fr" gap="1.5rem" class="content-grid-row">
+    <!-- Recent Activity -->
+    <app-panel>
+      <app-row justify="between" align="center" class="mb-4">
+        <app-text variant="h4" weight="bold">Actividad Reciente</app-text>
+        <app-button variant="ghost" size="sm">Ver todo</app-button>
+      </app-row>
+      <app-row direction="column" gap="0.75rem">
+        @for (i of [1, 2, 3, 4, 5]; track i) {
+        <app-row align="center" gap="1rem" class="border-b pb-4 last:border-0 last:pb-0">
+          <app-avatar variant="default" icon="fa-solid fa-user" size="sm"></app-avatar>
+          <div style="flex: 1">
+            <app-text variant="body-sm">
+              <span class="font-bold">Usuario {{ i }}</span> completó una tarea en <strong>Proyecto A</strong>
+            </app-text>
+            <app-text variant="caption" color="muted">Hace {{ i * 5 }} minutos</app-text>
+          </div>
+        </app-row>
+        }
+      </app-row>
+    </app-panel>
+
+    <!-- Quick Actions -->
+    <app-panel>
+      <app-text variant="h4" weight="bold" class="mb-4">Acciones Rápidas</app-text>
+      <app-row direction="column" gap="0.75rem">
+        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-plus">Nuevo Usuario</app-button>
+        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-file-alt">Nuevo
+          Reporte</app-button>
+        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-gear">Configuración</app-button>
+        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-question-circle">Ayuda</app-button>
+      </app-row>
+    </app-panel>
+  </app-row>
+
+</app-layout-shell>

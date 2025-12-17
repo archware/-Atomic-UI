@@ -21,10 +21,13 @@ export { CheckboxComponent } from './atoms/checkbox/checkbox.component';
 export { ChipComponent } from './atoms/chip/chip.component';
 export type { ChipVariant, ChipSize } from './atoms/chip/chip.component';
 
+export { DividerComponent } from './atoms/divider/divider.component';
+
 export { FloatingInputComponent } from './atoms/floating-input/floating-input.component';
 export type { FloatingInputType, FloatingInputVariant } from './atoms/floating-input/floating-input.component';
 
 export { FormErrorComponent } from './atoms/form-error/form-error.component';
+export { FormRowComponent } from './atoms/form-row/form-row.component';
 
 export { IconButtonComponent } from './atoms/icon-button/icon-button.component';
 
@@ -47,6 +50,11 @@ export { SkeletonComponent } from './atoms/skeleton/skeleton.component';
 export { TextComponent } from './atoms/text/text.component';
 
 export { ToggleComponent } from './atoms/toggle/toggle.component';
+
+export { TableComponent } from './atoms/table/table.component';
+export { TableHeadComponent } from './atoms/table/table-head.component';
+export { TableRowComponent } from './atoms/table/table-row.component';
+export { TableCellComponent } from './atoms/table/table-cell.component';
 
 // ============================================
 // MOLECULES - Combinación de átomos
@@ -83,6 +91,7 @@ export type { SocialLink, LegalLink, FooterVariant } from './organisms/footer/fo
 export { ScrollOverlayComponent } from './organisms/scroll-overlay/scroll-overlay.component';
 
 export { SidebarComponent } from './organisms/sidebar/sidebar.component';
+export type { SidebarUser, SidebarMenuItem } from './organisms/sidebar/sidebar.component';
 
 export { StepperComponent } from './organisms/stepper/stepper.component';
 export type { Step } from './organisms/stepper/stepper.component';

@@ -1,7 +1,7 @@
-<div class="sidebar-container">
+<div class="sidebar-container" [class.collapsed]="collapsed">
   <div class="sidebar-logo">
-    <i class="fa-solid fa-capsules logo-emoji"></i>
-    <span class="logo-text">Medi<span class="font-bold">App</span></span>
+    <i class="fa-solid fa-rocket logo-icon"></i>
+    <span class="logo-text" *ngIf="!collapsed">Dashboard</span>
   </div>
 
   <nav class="sidebar-nav">
@@ -10,7 +10,10 @@
       <li class="nav-item">
         <a href="javascript:void(0)" class="nav-link" [class.active]="item.active" (click)="onItemClick(item)">
           <i [class]="item.icon + ' nav-icon'"></i>
-          <span class="nav-label">{{ item.label }}</span>
+          <span class="nav-label" *ngIf="!collapsed">
+            {{ item.label }}
+            @if(item.badge) { <span class="nav-badge">{{ item.badge }}</span> }
+          </span>
         </a>
       </li>
       }
@@ -19,12 +22,10 @@
 
   <div class="sidebar-footer">
     <div class="user-profile">
-      <div class="avatar">
-        <i class="fa-solid fa-user-doctor"></i>
-      </div>
-      <div class="user-info">
-        <span class="user-name">Dr. House</span>
-        <span class="user-role">Admin</span>
+      <app-avatar [name]="user?.name || 'User'" [initials]="user?.initials" [size]="'md'"></app-avatar>
+      <div class="user-info" *ngIf="!collapsed && user">
+        <span class="user-name">{{ user?.name }}</span>
+        <span class="user-role">{{ user?.role }}</span>
       </div>
     </div>
   </div>

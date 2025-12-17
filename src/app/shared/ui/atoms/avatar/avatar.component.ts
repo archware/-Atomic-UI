@@ -1,4 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy, computed, signal } from '@angular/core';
+import { CommonModule } from '@angular/common'; // Important for NgClass
 
 /** Avatar size options */
 export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -6,38 +7,26 @@ export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 /** Avatar online status indicator */
 export type AvatarStatus = 'online' | 'offline' | 'busy' | 'away';
 
-/**
- * Avatar component for displaying user profile images or initials.
- * Automatically generates initials from name and assigns consistent colors.
- * 
- * @example
- * ```html
- * <!-- With image -->
- * <app-avatar src="https://example.com/photo.jpg" name="John Doe" size="lg"></app-avatar>
- * 
- * <!-- With initials (auto-generated) -->
- * <app-avatar name="María García" status="online"></app-avatar>
- * 
- * <!-- With custom initials -->
- * <app-avatar initials="AB" size="xl"></app-avatar>
- * ```
- * 
- * @see {@link AvatarSize} for available sizes
- * @see {@link AvatarStatus} for status indicators
- */
+/** Avatar color variants (for icon or background) */
+export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
+
 @Component({
   selector: 'app-avatar',
   standalone: true,
+  imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div 
       class="avatar" 
       [class]="'avatar-' + size"
       [class.avatar-rounded]="rounded"
-      [style.background-color]="!src ? colorFromName() : null"
+      [class]="'avatar-' + variant"
+      [style.background-color]="!src && !icon && variant === 'default' ? colorFromName() : null"
     >
       @if (src && !imageFailed()) {
         <img [src]="src" [alt]="name" (error)="onImageError()">
+      } @else if (icon) {
+        <i [class]="icon"></i>
       } @else if (initials || name) {
         <span class="avatar-initials">{{ computedInitials() }}</span>
       } @else {
@@ -70,22 +59,39 @@ export type AvatarStatus = 'online' | 'offline' | 'busy' | 'away';
       border-radius: 0.5rem;
     }
 
+    /* Variants */
+    .avatar-primary { background-color: var(--primary-color-lighter); color: var(--primary-color); }
+    .avatar-secondary { background-color: var(--secondary-color-lighter); color: var(--secondary-color); }
+    .avatar-success { background-color: var(--success-color-lighter); color: var(--success-color); }
+    .avatar-warning { background-color: var(--warning-color-lighter); color: var(--warning-color); }
+    .avatar-danger { background-color: var(--danger-color-lighter); color: var(--danger-color); }
+    .avatar-info { background-color: var(--info-color-lighter); color: var(--info-color); }
+
     .avatar-xs { width: 1.5rem; height: 1.5rem; font-size: 0.625rem; }
     .avatar-sm { width: 2rem; height: 2rem; font-size: 0.75rem; }
     .avatar-md { width: 2.5rem; height: 2.5rem; font-size: 0.875rem; }
-    .avatar-lg { width: 3rem; height: 3rem; font-size: 1rem; }
-    .avatar-xl { width: 4rem; height: 4rem; font-size: 1.25rem; }
+    .avatar-lg { width: 3rem; height: 3rem; font-size: 1.25rem; }
+    .avatar-xl { width: 4rem; height: 4rem; font-size: 1.5rem; }
 
     .avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+    
+    .avatar i {
+      font-size: 1.2em;
+    }
 
     .avatar-initials {
       font-weight: 600;
       text-transform: uppercase;
       color: white;
+    }
+    
+    /* Ensure initials in colored variants contrast well (usually dark on light bg or vice versa) */
+    .avatar:not(.avatar-default) .avatar-initials {
+       color: currentColor;
     }
 
     .avatar-placeholder {
@@ -117,8 +123,8 @@ export type AvatarStatus = 'online' | 'offline' | 'busy' | 'away';
     .status-away { background: var(--warning-color); }
 
     /* Dark mode */
-    :host-context(html.dark) .avatar,
-    :host-context([data-theme="dark"]) .avatar {
+    :host-context(html.dark) .avatar-default,
+    :host-context([data-theme="dark"]) .avatar-default {
       background: var(--surface-section);
     }
 
@@ -135,6 +141,8 @@ export class AvatarComponent {
   @Input() size: AvatarSize = 'md';
   @Input() rounded = false;
   @Input() status?: AvatarStatus;
+  @Input() icon?: string; // New: Icon class support
+  @Input() variant: AvatarVariant = 'default'; // New: Color variant
 
   imageFailed = signal(false);
 

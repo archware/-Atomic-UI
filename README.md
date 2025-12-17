@@ -48,24 +48,36 @@ Sistema de diseño **Atomic Design** con temas **Light/Dark/System**, paleta de 
 
 ---
 
-## 🚀 Inicio Rápido
+## 🚀 Inicio Rápido (Recomendado)
 
-### Prerequisitos
+La forma más rápida de usar Atomic UI es generando un proyecto nuevo con nuestra herramienta CLI automatizada.
+
+### 1. Generar Proyecto
 
 ```bash
-Node.js >= 18.x
-npm >= 9.x
-Angular CLI >= 20.x
+# Desde la raíz de la librería
+npm run create:project mi-nuevo-proyecto
 ```
 
-### Instalación
+La herramienta te guiará para:
+- ✅ Elegir plantillas (Login, Dashboard, CRUD)
+- ✅ Configurar rutas y navegación
+- ✅ Instalar dependencias automáticamente
+- ✅ Configurar temas y estilos base
+
+### 2. Desarrollo
 
 ```bash
-npm install
+cd projects/mi-nuevo-proyecto
 npm start
 ```
 
-La aplicación estará disponible en `http://localhost:4200/`
+---
+
+## 📦 Integración Manual
+
+Si necesitas integrar Atomic UI en un proyecto ya existente (sin usar el generador), consulta la **[Guía de Integración Manual](docs/MANUAL_INTEGRATION.md)**.
+
 
 ---
 

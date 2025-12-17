@@ -21,7 +21,9 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
         <label class="form-label">{{ label }}</label>
       }
       <div class="input-container">
-        @if (icon) {
+        @if (iconClass) {
+          <i [class]="'input-icon ' + iconClass"></i>
+        } @else if (icon) {
           <span class="input-icon">{{ icon }}</span>
         }
         <input
@@ -45,6 +47,19 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
       width: 100%;
     }
 
+    /* Reuse form-group styles from global if available, or define local */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .form-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
     .input-container {
       position: relative;
       display: flex;
@@ -56,17 +71,53 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
       position: absolute;
       left: 0.875rem;
       font-size: 1rem;
-      color: var(--text-color-muted, #9ca3af);
+      color: var(--text-color-muted);
       pointer-events: none;
+      display: flex; /* Ensure centering */
+      align-items: center;
+      justify-content: center;
     }
 
+    /* When icon is present, add padding */
     .input-container:has(.input-icon) .form-input {
       padding-left: 2.5rem;
     }
 
+    .form-input {
+      width: 100%;
+      height: var(--control-height, 40px);
+      padding: 0 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background-color: var(--surface-background);
+      color: var(--text-color);
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px var(--primary-100);
+    }
+
+    .form-input:disabled {
+      background-color: var(--surface-hover);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    .has-error .form-input {
+      border-color: var(--danger-color);
+    }
+
+    .has-error .form-input:focus {
+      box-shadow: 0 0 0 3px var(--danger-100);
+    }
+
     .input-error {
       font-size: 0.75rem;
-      color: var(--error-color, #dc2626);
+      color: var(--danger-color);
     }
   `]
 })
@@ -75,6 +126,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() placeholder = '';
   @Input() icon = '';
+  @Input() iconClass = '';
   @Input() error = '';
   @Input() disabled = false;
 

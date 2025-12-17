@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
  * Available button color variants.
  * @remarks Each variant applies different colors from the design system.
  */
-export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'outline' | 'ghost';
+export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'outline' | 'ghost' | 'link';
 
 /** Button size options */
 export type ButtonSize = 'sm' | 'md' | 'lg';

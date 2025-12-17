@@ -1,0 +1,47 @@
+/* ============================================
+   LOGIN PAGE STYLES
+   ============================================ */
+
+/* Logo styling */
+.auth-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.logo-icon {
+  font-size: 3rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Form container */
+/* Utilities needed for atomic layout */
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+
+.w-full { width: 100%; }
+
+.text-center { text-align: center; }
+
+.inline { display: inline-block; }
+
+.link-inline {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.link-inline:hover {
+  text-decoration: underline;
+}
