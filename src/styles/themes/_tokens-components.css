@@ -210,7 +210,8 @@
 .theme-dark,
 html.dark {
    /* === NAVEGACIÓN === */
-   --nav-bg: var(--surface-elevated);
+   --nav-bg: var(--surface-section);
+   /* Sub BG: #2a3556 */
    --nav-text: var(--text-color);
    --nav-text-hover: var(--primary-color);
    --nav-border: var(--border-color);
@@ -220,7 +221,8 @@ html.dark {
    --nav-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 
    /* === SIDEBAR === */
-   --sidebar-bg: var(--surface-elevated);
+   --sidebar-bg: var(--surface-section);
+   /* Sub BG: #2a3556 */
    --sidebar-text: var(--text-color-secondary);
    --sidebar-heading: var(--text-color);
    --sidebar-border: var(--border-color);
@@ -228,7 +230,8 @@ html.dark {
    --sidebar-item-active: var(--primary-color-lighter);
 
    /* === CARDS === */
-   --card-bg: var(--surface-elevated);
+   --card-bg: var(--surface-background);
+   /* Layer BG: #1b2440 */
    --card-border: var(--border-color);
    --card-header-bg: var(--surface-section);
    --card-footer-bg: var(--surface-section);
@@ -236,7 +239,9 @@ html.dark {
 
    /* === TABLAS === */
    --table-bg: var(--surface-background);
+   /* Layer BG */
    --table-header-bg: var(--surface-section);
+   /* Sub BG */
    --table-header-text: var(--text-color);
    --table-header-start: var(--brand-primary-700);
    --table-header-end: var(--brand-secondary-700);
@@ -244,20 +249,26 @@ html.dark {
    --table-row-alt-bg: var(--surface-section);
    --table-row-hover: var(--hover-background);
    --table-row-selected: var(--selected-background);
-   --table-border: var(--brand-primary-800);
-   --table-stripe-bg: #1a1a24;
-   --table-stripe-alt: #1e2530;
-   --table-hover-bg: #2d1f2c;
-   --table-hover-secondary: #1a3344;
+   --table-border: var(--border-color-strong);
+   --table-stripe-bg: var(--surface-section);
+   /* Fixed hardcoded */
+   --table-stripe-alt: var(--surface-ground);
+   /* Fixed hardcoded */
+   --table-hover-bg: var(--hover-background);
+   /* Fixed hardcoded */
+   --table-hover-secondary: var(--hover-background-subtle);
+   /* Fixed hardcoded */
 
    /* === FORMULARIOS / INPUTS === */
-   --input-bg: var(--surface-section);
+   --input-bg: var(--surface-background);
+   /* Layer BG (Typical for inputs in dark) or Sub BG */
    --input-border: var(--border-color);
    --input-border-hover: var(--border-color-strong);
    --input-border-focus: var(--primary-color);
    --input-placeholder: var(--text-color-placeholder);
    --input-text: var(--text-color);
    --input-disabled-bg: var(--surface-sunken);
+   /* Disabled BG */
    --input-disabled-text: var(--gray-600);
 
    /* === BOTONES === */
@@ -278,27 +289,30 @@ html.dark {
    --button-ghost-hover-bg: var(--hover-background-subtle);
 
    /* === BADGES === */
-   --badge-secondary-bg: var(--gray-700);
-   --badge-secondary-text: var(--gray-200);
+   --badge-secondary-bg: var(--surface-section);
+   --badge-secondary-text: var(--text-color-secondary);
 
    /* === TOOLTIPS === */
-   --tooltip-bg: var(--gray-200);
-   --tooltip-text: var(--gray-900);
+   --tooltip-bg: var(--surface-section);
+   --tooltip-text: var(--text-color);
 
    /* === DROPDOWNS / SELECT === */
-   --dropdown-bg: var(--surface-elevated);
+   --dropdown-bg: var(--surface-section);
+   /* Sub BG often used for popovers */
    --dropdown-border: var(--border-color);
    --dropdown-shadow: var(--shadow-xl);
 
    /* === NG-SELECT === */
-   --ng-select-border: #404040;
+   --ng-select-border: var(--border-color-strong);
+   /* Fixed hardcoded #404040 */
    --ng-select-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
    --ng-select-hover-bg: var(--hover-background);
    --ng-select-hover-shadow: inset 0 0 0 2px var(--brand-primary-400);
    --ng-select-selected-bg: var(--selected-background);
 
    /* === MODALES === */
-   --modal-bg: var(--surface-elevated);
+   --modal-bg: var(--surface-background);
+   /* Layer BG */
    --modal-overlay: var(--surface-overlay);
    --modal-border: var(--border-color);
 
@@ -308,7 +322,8 @@ html.dark {
    --scrollbar-thumb-hover: rgba(161, 114, 159, 0.6);
 
    /* === LOADER / SPINNER === */
-   --loader-border: #404040;
+   --loader-border: var(--border-color-strong);
+   /* Fixed hardcoded #404040 */
    --loader-spinner: var(--brand-accent-400);
 
    /* Dark Mode Ramp: Lighter/Brighter variants */

@@ -37,9 +37,19 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
           class="theme-option"
           [class.active]="themeService.getSelectedTheme() === 'dark'"
           (click)="selectTheme('dark')"
-          title="Tema Oscuro"
+          title="Tema Oscuro Estándar"
         >
           <i class="fa-solid fa-moon option-icon"></i>
+        </button>
+
+        <button
+          class="theme-option"
+          [class.active]="themeService.getSelectedTheme() === 'brand-dark'"
+          (click)="selectTheme('brand-dark')"
+          title="Tema Oscuro Corporativo"
+        >
+          <!-- Using star for "Premium/Brand" -->
+          <i class="fa-solid fa-star option-icon"></i>
         </button>
 
         <button
@@ -68,27 +78,30 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
     }
 
     .icon-sun {
-      color: #f59e0b;
-      filter: drop-shadow(0 0 2px rgba(245, 158, 11, 0.3));
+      color: #FF9F0A;
+      /* System Orange */
+      filter: drop-shadow(0 0 2px rgba(255, 159, 10, 0.3));
     }
 
     :host-context(.dark) .icon-sun,
     :host-context(html.dark) .icon-sun,
     :host-context([data-theme="dark"]) .icon-sun {
-      color: #fbbf24;
-      filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.4));
+      color: #FF9F0A;
+      /* Keep System Orange in Dark Mode too, or adjust brightness if needed */
+      filter: drop-shadow(0 0 4px rgba(255, 159, 10, 0.4));
     }
 
     .icon-moon {
-      color: #6366f1;
-      filter: drop-shadow(0 0 2px rgba(99, 102, 241, 0.3));
+      color: #BF5AF2;
+      /* System Purple */
+      filter: drop-shadow(0 0 2px rgba(191, 90, 242, 0.3));
     }
 
     :host-context(.dark) .icon-moon,
     :host-context(html.dark) .icon-moon,
     :host-context([data-theme="dark"]) .icon-moon {
-      color: #a5b4fc;
-      filter: drop-shadow(0 0 4px rgba(165, 180, 252, 0.4));
+      color: #BF5AF2;
+      filter: drop-shadow(0 0 4px rgba(191, 90, 242, 0.4));
     }
 
     .icon.hidden {
@@ -177,19 +190,40 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
     }
 
     /* Colores de iconos */
-    .theme-option:first-child .option-icon {
+    .theme-option:nth-child(1) .option-icon {
       color: #f59e0b;
     }
-
-    :host-context(.dark) .theme-option:first-child .option-icon,
-    :host-context(html.dark) .theme-option:first-child .option-icon,
-    :host-context([data-theme="dark"]) .theme-option:first-child .option-icon {
-      color: #fcd34d;
-      filter: drop-shadow(0 0 6px rgba(252, 211, 77, 0.7))
-              drop-shadow(0 0 12px rgba(252, 211, 77, 0.4));
+    
+    :host-context(.dark) .theme-option:nth-child(1) .option-icon,
+    :host-context(html.dark) .theme-option:nth-child(1) .option-icon,
+    :host-context([data-theme="dark"]) .theme-option:nth-child(1) .option-icon {
+        color: #fcd34d;
+        filter: drop-shadow(0 0 6px rgba(252, 211, 77, 0.7));
     }
 
     .theme-option:nth-child(2) .option-icon {
+      color: #6366f1;
+    }
+
+    :host-context(.dark) .theme-option:nth-child(2) .option-icon,
+    :host-context(html.dark) .theme-option:nth-child(2) .option-icon,
+    :host-context([data-theme="dark"]) .theme-option:nth-child(2) .option-icon {
+        color: #a5b4fc;
+        filter: drop-shadow(0 0 6px rgba(165, 180, 252, 0.7));
+    }
+
+    /* Brand Dark Option (3rd child) */
+    .theme-option:nth-child(3) .option-icon {
+      color: var(--primary-color, #793576);
+    }
+    
+    :host-context(.dark) .theme-option:nth-child(3) .option-icon {
+        color: var(--primary-color, #a855f7);
+        filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.4));
+    }
+
+    /* System Option (4th child now) */
+    .theme-option:nth-child(4) .option-icon {
       color: #6366f1;
     }
 

@@ -156,23 +156,19 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    🌙 TEMA OSCURO (Dark Theme)
    ───────────────────────────────────────────────────────────────────────────── */
-[data-theme="dark"],
-.theme-dark,
-html.dark {
+/* ─────────────────────────────────────────────────────────────────────────────
+   🌙 TEMA OSCURO CORPORATIVO (Brand Dark) - Deep Blue
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-theme="brand-dark"] {
    color-scheme: dark;
 
    /* === SUPERFICIES (Deep Blue Theme) === */
    --surface-ground: #171a23;
-   /* Screen BG */
    --surface-background: #1b2440;
-   /* Layer BG */
    --surface-section: #2a3556;
-   /* Sub BG */
    --surface-overlay: rgba(23, 26, 35, 0.85);
    --surface-elevated: #202f61;
-   /* Selected BG (used for elevated/selected states in dark sometimes) */
    --surface-sunken: #29324d;
-   /* Disabled BG */
 
    /* === TEXTO === */
    --text-color: #ffffff;
@@ -185,16 +181,14 @@ html.dark {
 
    /* === BORDES === */
    --border-color: #2a3556;
-   /* Border matches Sub BG often */
    --border-color-light: #202f61;
    --border-color-strong: #404040;
    --border-color-focus: var(--brand-primary-400);
 
-   /* === COLORES DE MARCA (Ajustados para dark) === */
+   /* === COLORES DE MARCA === */
    --primary-color: var(--brand-primary-400);
    --primary-color-light: var(--brand-primary-900);
    --primary-color-lighter: #202f61;
-   /* Selected BG */
    --primary-color-dark: var(--brand-primary-300);
    --primary-color-darker: var(--brand-primary-200);
    --primary-color-text: var(--brand-primary-300);
@@ -214,30 +208,26 @@ html.dark {
    --accent-color-light: var(--brand-accent-900);
    --accent-color-dark: var(--brand-accent-300);
 
-   /* === ESTADOS SEMÁNTICOS (iOS Dark System Colors) === */
+   /* === ESTADOS SEMÁNTICOS === */
    --success-color: #30D158;
-   /* Green */
    --success-color-light: rgba(48, 209, 88, 0.15);
    --success-color-lighter: rgba(48, 209, 88, 0.1);
    --success-color-dark: #208b3a;
    --success-color-text: #208b3a;
 
    --warning-color: #FF9F0A;
-   /* Orange */
    --warning-color-light: rgba(255, 159, 10, 0.15);
    --warning-color-lighter: rgba(255, 159, 10, 0.1);
    --warning-color-dark: #cc7a00;
    --warning-color-text: #FF9F0A;
 
    --danger-color: #FF453A;
-   /* Red */
    --danger-color-light: rgba(255, 69, 58, 0.15);
    --danger-color-lighter: rgba(255, 69, 58, 0.1);
    --danger-color-dark: #cc251c;
    --danger-color-text: #FF453A;
 
    --info-color: #0A84FF;
-   /* Blue */
    --info-color-light: rgba(10, 132, 255, 0.15);
    --info-color-lighter: rgba(10, 132, 255, 0.1);
    --info-color-dark: #0066cc;
@@ -245,9 +235,7 @@ html.dark {
 
    /* === INTERACCIONES === */
    --hover-background: #202f61;
-   /* Selected BG */
    --hover-background-subtle: #29324d;
-   /* Disabled/Subtle */
    --active-background: #202f61;
    --selected-background: #202f61;
    --focus-ring-color: var(--brand-primary-400);
@@ -265,10 +253,130 @@ html.dark {
    --shadow-xl: 0 20px 25px hsl(var(--shadow-color) / 0.5),
       0 10px 10px hsl(var(--shadow-color) / 0.4);
 
-   /* === COMPATIBILIDAD LEGADO (variables antiguas) === */
+   /* === COMPATIBILIDAD LEGADO === */
    --bg-primary: #0e0e14;
    --bg-secondary: #1a1a24;
    --bg-tertiary: #252534;
+   /* ...legacy colors matched to brand... */
+   --text-primary: var(--gray-100);
+   --text-secondary: var(--gray-300);
+   --text-muted: var(--gray-400);
+   --color-primary: var(--brand-primary-300);
+   --color-primary-light: var(--brand-primary-200);
+   --color-primary-lighter: var(--brand-primary-100);
+   --color-primary-dark: var(--brand-primary-600);
+   --color-primary-darker: var(--brand-primary-900);
+   --color-secondary: var(--brand-secondary-400);
+   --color-secondary-light: var(--brand-secondary-300);
+   --color-secondary-lighter: var(--brand-secondary-200);
+   --color-secondary-dark: var(--brand-secondary-600);
+   --color-secondary-darker: var(--brand-secondary-950);
+   --shadow-primary: rgba(161, 114, 159, 0.3);
+   --shadow-secondary: rgba(75, 191, 229, 0.25);
+   --accent-primary: var(--brand-primary-200);
+   --accent-secondary: var(--brand-secondary-300);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   🌙 TEMA OSCURO ESTÁNDAR (Neutral Dark)
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-theme="dark"],
+.theme-dark,
+html.dark {
+   color-scheme: dark;
+
+   /* === SUPERFICIES (Neutral) === */
+   --surface-ground: #121212;
+   --surface-background: #1e1e1e;
+   --surface-section: #252525;
+   --surface-overlay: rgba(0, 0, 0, 0.8);
+   --surface-elevated: #2d2d2d;
+   --surface-sunken: #181818;
+
+   /* === TEXTO === */
+   --text-color: #e5e7eb;
+   --text-color-secondary: #9ca3af;
+   --text-color-muted: #6b7280;
+   --text-color-placeholder: #4b5563;
+   --text-color-inverse: #111827;
+   --text-color-on-primary: #ffffff;
+   --text-color-on-secondary: #ffffff;
+
+   /* === BORDES === */
+   --border-color: #374151;
+   --border-color-light: #2c2c2c;
+   --border-color-strong: #4b5563;
+   --border-color-focus: var(--brand-primary-400);
+
+   /* === COLORES DE MARCA (Igual que Brand Dark) === */
+   --primary-color: var(--brand-primary-400);
+   --primary-color-light: var(--brand-primary-900);
+   --primary-color-lighter: #2d2d2d;
+   --primary-color-dark: var(--brand-primary-300);
+   --primary-color-darker: var(--brand-primary-200);
+   --primary-color-text: var(--brand-primary-300);
+   --primary-color-hover: var(--brand-primary-300);
+   --primary-color-active: var(--brand-primary-200);
+
+   --secondary-color: var(--brand-secondary-400);
+   --secondary-color-light: var(--brand-secondary-900);
+   --secondary-color-lighter: rgba(35, 167, 212, 0.15);
+   --secondary-color-dark: var(--brand-secondary-300);
+   --secondary-color-darker: var(--brand-secondary-200);
+   --secondary-color-text: var(--brand-secondary-300);
+   --secondary-color-hover: var(--brand-secondary-300);
+   --secondary-color-active: var(--brand-secondary-200);
+
+   --accent-color: var(--brand-accent-400);
+   --accent-color-light: var(--brand-accent-900);
+   --accent-color-dark: var(--brand-accent-300);
+
+   /* === ESTADOS SEMÁNTICOS (Igual que Brand Dark) === */
+   --success-color: #30D158;
+   --success-color-light: rgba(48, 209, 88, 0.15);
+   --success-color-lighter: rgba(48, 209, 88, 0.1);
+   --success-color-dark: #208b3a;
+   --success-color-text: #208b3a;
+
+   --warning-color: #FF9F0A;
+   --warning-color-light: rgba(255, 159, 10, 0.15);
+   --warning-color-lighter: rgba(255, 159, 10, 0.1);
+   --warning-color-dark: #cc7a00;
+   --warning-color-text: #FF9F0A;
+
+   --danger-color: #FF453A;
+   --danger-color-light: rgba(255, 69, 58, 0.15);
+   --danger-color-lighter: rgba(255, 69, 58, 0.1);
+   --danger-color-dark: #cc251c;
+   --danger-color-text: #FF453A;
+
+   --info-color: #0A84FF;
+   --info-color-light: rgba(10, 132, 255, 0.15);
+   --info-color-lighter: rgba(10, 132, 255, 0.1);
+   --info-color-dark: #0066cc;
+   --info-color-text: #0A84FF;
+
+   /* === INTERACCIONES === */
+   --hover-background: #2d2d2d;
+   --hover-background-subtle: #252525;
+   --active-background: #2d2d2d;
+   --selected-background: #2d2d2d;
+   --focus-ring-color: var(--brand-primary-400);
+   --focus-ring: 0 0 0 3px rgba(141, 83, 139, 0.3);
+
+   /* === SOMBRAS === */
+   --shadow-color: 0 0% 0%;
+   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.6);
+   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.7);
+   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.7);
+   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.7);
+   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.8);
+
+   /* === COMPATIBILIDAD LEGADO === */
+   --bg-primary: #121212;
+   --bg-secondary: #1e1e1e;
+   --bg-tertiary: #252525;
+   /* ... */
    --text-primary: var(--gray-100);
    --text-secondary: var(--gray-300);
    --text-muted: var(--gray-400);
