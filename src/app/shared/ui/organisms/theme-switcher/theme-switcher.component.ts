@@ -2,27 +2,25 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeService, type Theme } from '../../services/theme.service';
 
+import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
+
 @Component({
   selector: 'app-theme-switcher',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, IconButtonComponent],
   template: `
     <div class="theme-switcher" [attr.data-theme]="themeService.getSelectedTheme()">
       <!-- Botón principal de alternancia -->
-      <button type="button"
-        class="theme-toggle-btn"
-        (click)="toggleMenu()"
-        (keydown.enter)="toggleMenu()"
-        (keydown.space)="toggleMenu()"
-        [attr.aria-label]="themeService.isDarkMode() ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
-        title="Alternar tema"
+      <app-icon-button
+        (clicked)="toggleMenu()"
+        [tooltip]="themeService.isDarkMode() ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
       >
         <!-- Ícono Sol (tema claro) -->
         <i class="fa-solid fa-sun icon icon-sun" [class.hidden]="themeService.isDarkMode()"></i>
 
         <!-- Ícono Luna (tema oscuro) -->
         <i class="fa-solid fa-moon icon icon-moon" [class.hidden]="!themeService.isDarkMode()"></i>
-      </button>
+      </app-icon-button>
 
       <!-- Menú desplegable de opciones -->
       <div class="theme-menu" [class.show]="menuOpen()">
@@ -61,54 +59,12 @@ import { ThemeService, type Theme } from '../../services/theme.service';
       display: inline-block;
     }
 
-    /* ========== BOTÓN PRINCIPAL ========== */
-    .theme-toggle-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: var(--control-height);
-      height: var(--control-height);
-      border-radius: 0.5rem;
-      border: none;
-      background: var(--surface-section);
-      color: var(--text-color-secondary);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      padding: 0;
-    }
-
-    .theme-toggle-btn:hover {
-      background: var(--surface-elevated);
-      color: var(--primary-color);
-      transform: scale(1.05);
-      box-shadow: 0 2px 8px rgba(121, 53, 118, 0.2);
-    }
-
-    :host-context(.dark) .theme-toggle-btn,
-    :host-context(html.dark) .theme-toggle-btn,
-    :host-context([data-theme="dark"]) .theme-toggle-btn {
-      background: var(--surface-elevated);
-      color: var(--text-color-secondary);
-    }
-
-    :host-context(.dark) .theme-toggle-btn:hover,
-    :host-context(html.dark) .theme-toggle-btn:hover,
-    :host-context([data-theme="dark"]) .theme-toggle-btn:hover {
-      background: #4b5563;
-      color: var(--primary-color);
-      box-shadow: 0 2px 8px rgba(188, 154, 187, 0.3);
-    }
-
-    .theme-toggle-btn:active {
-      transform: scale(0.96);
-    }
-
     /* ========== ICONOS ========== */
     .icon {
       font-size: 1.25rem;
       width: auto;
       height: auto;
-      transition: transform 250ms ease, color 200ms ease;
+      transition: color 200ms ease;
     }
 
     .icon-sun {
@@ -133,14 +89,6 @@ import { ThemeService, type Theme } from '../../services/theme.service';
     :host-context([data-theme="dark"]) .icon-moon {
       color: #a5b4fc;
       filter: drop-shadow(0 0 4px rgba(165, 180, 252, 0.4));
-    }
-
-    .theme-toggle-btn:hover .icon-sun {
-      transform: rotate(45deg);
-    }
-
-    .theme-toggle-btn:hover .icon-moon {
-      transform: rotate(-15deg);
     }
 
     .icon.hidden {

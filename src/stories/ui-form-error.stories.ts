@@ -4,7 +4,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormErrorComponent } from '../app/shared/ui/atoms/form-error/form-error.component';
 
 const meta: Meta<FormErrorComponent> = {
-  title: 'Atoms/FormError',
+  title: '1. Atoms/FormError',
   component: FormErrorComponent,
   decorators: [
     moduleMetadata({

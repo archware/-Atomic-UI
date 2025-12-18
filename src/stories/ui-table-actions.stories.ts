@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TableActionsComponent } from '../app/shared/ui/molecules/table-actions/table-actions.component';
 
 const meta: Meta<TableActionsComponent> = {
-  title: 'Molecules/TableActions',
+  title: '2. Molecules/TableActions',
   component: TableActionsComponent,
   tags: ['autodocs'],
   parameters: {

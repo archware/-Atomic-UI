@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { ThemeSwitcherComponent } from '../app/shared/ui/organisms/theme-switcher/theme-switcher.component';
 
 const meta: Meta<ThemeSwitcherComponent> = {
-  title: 'Organisms/ThemeSwitcher',
+  title: '3. Organisms/ThemeSwitcher',
   component: ThemeSwitcherComponent,
   tags: ['autodocs'],
   parameters: {

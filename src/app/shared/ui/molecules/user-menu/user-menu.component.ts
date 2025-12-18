@@ -184,15 +184,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
     }
 
     /* === Dark Mode === */
-    :host-context(.dark) .user-menu__trigger,
-    :host-context([data-theme="dark"]) .user-menu__trigger {
-      background: linear-gradient(135deg, var(--primary-color-light), var(--primary-color));
-    }
-
-    :host-context(.dark) .user-menu__trigger:hover,
-    :host-context([data-theme="dark"]) .user-menu__trigger:hover {
-      box-shadow: 0 2px 8px rgba(188, 154, 187, 0.3);
-    }
+    /* Avatar handles its own styling, no need to override trigger */
 
     :host-context(.dark) .user-menu__dropdown,
     :host-context([data-theme="dark"]) .user-menu__dropdown {

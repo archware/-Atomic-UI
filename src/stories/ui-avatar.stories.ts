@@ -3,7 +3,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { AvatarComponent } from '../app/shared/ui/atoms/avatar/avatar.component';
 
 const meta: Meta<AvatarComponent> = {
-  title: 'Atoms/Avatar',
+  title: '1. Atoms/Avatar',
   component: AvatarComponent,
   tags: ['autodocs'],
   decorators: [

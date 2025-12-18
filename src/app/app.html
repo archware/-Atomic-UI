@@ -1,6 +1,6 @@
 <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
   <!-- Sidebar Slot -->
-  <app-sidebar slot="sidebar" (navigate)="onSidebarNavigate()"></app-sidebar>
+  <app-sidebar slot="sidebar" [menuItems]="menuItems" (navigate)="onSidebarNavigate()"></app-sidebar>
 
   <!-- Topbar Slot -->
   <app-topbar slot="topbar" [title]="title() | translate" [userInitials]="'HC'" [userName]="'COTAHA'"

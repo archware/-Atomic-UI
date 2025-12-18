@@ -18,9 +18,7 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
   template: `
     <div 
       class="avatar" 
-      [class]="'avatar-' + size"
-      [class.avatar-rounded]="rounded"
-      [class]="'avatar-' + variant"
+      [ngClass]="['avatar-' + size, 'avatar-' + variant, rounded ? 'avatar-rounded' : '']"
       [style.background-color]="!src && !icon && variant === 'default' ? colorFromName() : null"
     >
       @if (src && !imageFailed()) {
@@ -53,6 +51,7 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
       color: var(--text-color);
       overflow: hidden;
       flex-shrink: 0;
+      aspect-ratio: 1;
     }
 
     .avatar-rounded {

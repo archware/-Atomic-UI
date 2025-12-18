@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { IconButtonComponent } from '../app/shared/ui/atoms/icon-button/icon-button.component';
 
 const meta: Meta<IconButtonComponent> = {
-  title: 'Atoms/IconButton',
+  title: '1. Atoms/IconButton',
   component: IconButtonComponent,
   tags: ['autodocs'],
 };

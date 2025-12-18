@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { PanelComponent } from '../app/shared/ui/surfaces/panel/panel.component';
 
 const meta: Meta<PanelComponent> = {
-  title: 'Surfaces/Panel',
+  title: '4. Surfaces/Panel',
   component: PanelComponent,
   tags: ['autodocs'],
 };

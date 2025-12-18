@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ToggleComponent } from '../app/shared/ui/atoms/toggle/toggle.component';
 
 const meta: Meta<ToggleComponent> = {
-  title: 'Atoms/Toggle',
+  title: '1. Atoms/Toggle',
   component: ToggleComponent,
   decorators: [
     moduleMetadata({

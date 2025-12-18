@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { RowComponent } from '../app/shared/ui/atoms/row/row.component';
 
 const meta: Meta<RowComponent> = {
-  title: 'Atoms/Row',
+  title: '1. Atoms/Row',
   component: RowComponent,
   tags: ['autodocs'],
   argTypes: {

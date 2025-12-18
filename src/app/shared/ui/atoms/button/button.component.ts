@@ -15,28 +15,6 @@ export type IconPosition = 'left' | 'right' | 'none';
 
 /**
  * Reusable button component with multiple variants, sizes, and icon support.
- * 
- * @example
- * ```html
- * <!-- Basic usage -->
- * <app-button variant="primary" (onClick)="handleClick()">
- *   Save
- * </app-button>
- * 
- * <!-- With emoji icon -->
- * <app-button variant="success" icon="✓" iconPosition="left">
- *   Confirm
- * </app-button>
- * 
- * <!-- With custom SVG icon -->
- * <app-button variant="danger">
- *   <svg icon-left>...</svg>
- *   Delete
- * </app-button>
- * ```
- * 
- * @see {@link ButtonVariant} for available color variants
- * @see {@link ButtonSize} for available sizes
  */
 @Component({
   selector: 'app-button',

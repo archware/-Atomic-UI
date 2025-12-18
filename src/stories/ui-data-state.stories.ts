@@ -4,7 +4,7 @@ import { DataStateComponent } from '../app/shared/ui/molecules/data-state/data-s
 import { LoaderComponent } from '../app/shared/ui/atoms/loader/loader.component';
 
 const meta: Meta<DataStateComponent> = {
-  title: 'Molecules/DataState',
+  title: '2. Molecules/DataState',
   component: DataStateComponent,
   decorators: [
     moduleMetadata({

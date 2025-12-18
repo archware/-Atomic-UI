@@ -3,7 +3,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { ChipComponent } from '../app/shared/ui/atoms/chip/chip.component';
 
 const meta: Meta<ChipComponent> = {
-  title: 'Atoms/Chip',
+  title: '1. Atoms/Chip',
   component: ChipComponent,
   tags: ['autodocs'],
   decorators: [

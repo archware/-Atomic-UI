@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { SidebarComponent } from '../app/shared/ui/organisms/sidebar/sidebar.component';
 
 const meta: Meta<SidebarComponent> = {
-  title: 'Organisms/Sidebar',
+  title: '3. Organisms/Sidebar',
   component: SidebarComponent,
   tags: ['autodocs'],
   parameters: {

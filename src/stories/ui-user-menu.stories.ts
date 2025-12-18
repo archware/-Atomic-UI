@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { UserMenuComponent } from '../app/shared/ui/molecules/user-menu/user-menu.component';
 
 const meta: Meta<UserMenuComponent> = {
-  title: 'Molecules/UserMenu',
+  title: '2. Molecules/UserMenu',
   component: UserMenuComponent,
   tags: ['autodocs'],
 };

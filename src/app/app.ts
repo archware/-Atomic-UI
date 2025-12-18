@@ -8,7 +8,7 @@ import { UiShowcaseComponent } from './components/ui-showcase/ui-showcase.compon
 
 import { PanelComponent } from './shared/ui/surfaces/panel/panel.component';
 import { LayoutShellComponent } from './shared/ui/templates/layout-shell/layout-shell.component';
-import { SidebarComponent } from './shared/ui/organisms/sidebar/sidebar.component';
+import { SidebarComponent, SidebarMenuItem } from './shared/ui/organisms/sidebar/sidebar.component';
 import { TopbarComponent } from './shared/ui/organisms/topbar/topbar.component';
 import { TableActionsComponent } from './shared/ui/molecules/table-actions/table-actions.component';
 import { FloatingInputComponent } from './shared/ui/atoms/floating-input/floating-input.component';
@@ -110,6 +110,12 @@ export class App {
 
   // Sidebar toggle - inicia oculto en móvil
   sidebarVisible = signal(this.getInitialSidebarState());
+
+  menuItems: SidebarMenuItem[] = [
+    { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/' },
+    { label: 'Showcase', icon: 'fa-solid fa-layer-group', route: '/showcase' },
+    { label: 'Settings', icon: 'fa-solid fa-gear', route: '/settings' }
+  ];
 
   private getInitialSidebarState(): boolean {
     if (isPlatformBrowser(this.platformId)) {

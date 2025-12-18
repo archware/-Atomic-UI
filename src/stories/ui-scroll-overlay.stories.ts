@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { ScrollOverlayComponent } from '../app/shared/ui/organisms/scroll-overlay/scroll-overlay.component';
 
 const meta: Meta<ScrollOverlayComponent> = {
-  title: 'Organisms/ScrollOverlay',
+  title: '3. Organisms/ScrollOverlay',
   component: ScrollOverlayComponent,
   tags: ['autodocs'],
   parameters: {

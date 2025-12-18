@@ -4,6 +4,7 @@ import { applicationConfig } from '@storybook/angular';
 import { provideHttpClient } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 import docJson from "../documentation.json";
 setCompodocJson(docJson);
 
@@ -12,7 +13,8 @@ const preview: Preview = {
     applicationConfig({
       providers: [
         provideHttpClient(),
-        importProvidersFrom(BrowserAnimationsModule)
+        importProvidersFrom(BrowserAnimationsModule),
+        importProvidersFrom(TranslateModule.forRoot())
       ],
     }),
   ],

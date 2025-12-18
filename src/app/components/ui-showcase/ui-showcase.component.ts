@@ -30,6 +30,7 @@ import { TableRowComponent } from '../../shared/ui/atoms/table/table-row.compone
 import { TableCellComponent } from '../../shared/ui/atoms/table/table-cell.component';
 import { FormRowComponent } from '../../shared/ui/atoms/form-row/form-row.component';
 import { DividerComponent } from '../../shared/ui/atoms/divider/divider.component';
+import { SidebarComponent, SidebarMenuItem } from '../../shared/ui/organisms/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-ui-showcase',
@@ -67,11 +68,35 @@ import { DividerComponent } from '../../shared/ui/atoms/divider/divider.componen
     TableRowComponent,
     TableCellComponent,
     FormRowComponent,
-    DividerComponent
+    DividerComponent,
+    SidebarComponent
   ],
   template: `
     <app-panel title="UI Components Showcase" icon="🎨" variant="elevated" padding="lg">
       
+      <!-- SIDEBAR -->
+      <app-panel title="Sidebar (Organism)" variant="flat" padding="md" class="showcase-section">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+          
+          <!-- Variant 1: Dashboard -->
+          <div style="height: 500px; border: 1px solid var(--border-color); border-radius: 0.5rem; overflow: hidden; position: relative; background-color: var(--surface-ground);">
+            <app-sidebar [menuItems]="variant1Items" [user]="exampleUser" [collapsed]="false"></app-sidebar>
+            <div style="position: absolute; top: 1rem; right: 1rem; background: rgba(0,0,0,0.1); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">
+              Variant 1: Main App
+            </div>
+          </div>
+
+          <!-- Variant 2: Settings/Simple -->
+          <div style="height: 500px; border: 1px solid var(--border-color); border-radius: 0.5rem; overflow: hidden; position: relative; background-color: var(--surface-ground);">
+             <app-sidebar [menuItems]="variant2Items" [collapsed]="false"></app-sidebar>
+             <div style="position: absolute; top: 1rem; right: 1rem; background: rgba(0,0,0,0.1); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">
+              Variant 2: Settings Context
+            </div>
+          </div>
+
+        </div>
+      </app-panel>
+
       <!-- TYPOGRAPHY -->
       <app-panel title="Tipografía" variant="flat" padding="md" class="showcase-section">
         <div style="display: flex; flex-direction: column; gap: 0.5rem;">
@@ -1797,4 +1822,26 @@ export class UiShowcaseComponent {
   nextStep() {
     this.currentStep.set(Math.min(this.steps.length - 1, this.currentStep() + 1));
   }
+
+  // Sidebar Variants
+  variant1Items: SidebarMenuItem[] = [
+    { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard', active: true },
+    { label: 'Proyectos', icon: 'fa-solid fa-folder', route: '/projects' },
+    { label: 'Reportes', icon: 'fa-solid fa-file-alt', route: '/reports', badge: 'New' },
+    { label: 'Equipo', icon: 'fa-solid fa-users', route: '/team', badge: 3 }
+  ];
+
+  variant2Items: SidebarMenuItem[] = [
+    { label: 'Mi Perfil', icon: 'fa-solid fa-user', route: '/profile' },
+    { label: 'Seguridad', icon: 'fa-solid fa-shield-alt', route: '/security' },
+    { label: 'Notificaciones', icon: 'fa-solid fa-bell', route: '/notifications' },
+    { label: 'Ayuda', icon: 'fa-solid fa-circle-question', route: '/help' },
+    { label: 'Cerrar Sesión', icon: 'fa-solid fa-right-from-bracket', route: '/logout' }
+  ];
+
+  exampleUser = {
+    name: 'Demo User',
+    role: 'Administrator',
+    initials: 'DU'
+  };
 }
