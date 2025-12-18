@@ -54,21 +54,21 @@ export interface Step {
   styles: [`
     .stepper {
       display: flex;
-      align-items: flex-start; /* Better alignment for labels */
+      align-items: flex-start;
     }
 
     .stepper-vertical {
       flex-direction: column;
-      align-items: stretch; /* Full width for content */
+      align-items: stretch;
     }
 
     .step {
       display: flex;
-      align-items: flex-start; /* Fix: Pin to top so indicator doesn't drop on wrap */
-      gap: 1rem; /* More spacing */
+      align-items: flex-start;
+      gap: var(--space-4);
       cursor: pointer;
       position: relative;
-      z-index: 1; /* Keep above connector */
+      z-index: 1;
     }
 
     .step.disabled {
@@ -78,40 +78,40 @@ export interface Step {
 
     /* STEP INDICATOR (CIRCLE) */
     .step-indicator {
-      width: 2.75rem; /* Larger */
+      width: 2.75rem;
       height: 2.75rem;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      background: var(--surface-background, #ffffff);
-      color: var(--text-color-secondary, #6b7280);
-      font-size: 1rem;
+      background: var(--surface-background);
+      color: var(--text-color-secondary);
+      font-size: var(--text-md);
       font-weight: 700;
-      border: 2px solid var(--border-color, #d1d5db);
+      border: 2px solid var(--border-color);
       transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
       flex-shrink: 0;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Subtle depth */
+      box-shadow: var(--shadow-xs);
     }
 
     /* Active State */
     .step.active .step-indicator {
-      background: var(--primary-color, #793576);
-      color: white;
-      border-color: var(--primary-color, #793576);
-      transform: scale(1.1); /* Slight pop */
-      box-shadow: 0 4px 12px rgba(121, 53, 118, 0.4); /* Glow effect */
+      background: var(--primary-color);
+      color: var(--text-color-on-primary);
+      border-color: var(--primary-color);
+      transform: scale(1.1);
+      box-shadow: var(--shadow-glow-primary);
     }
 
     /* Completed State */
     .step.completed .step-indicator {
-      background: var(--success-color, #10b981); /* Use success color for checkmark */
-      border-color: var(--success-color, #10b981);
-      color: white;
+      background: var(--success-color);
+      border-color: var(--success-color);
+      color: var(--text-color-on-primary);
     }
 
     .step-check {
-      font-size: 1rem;
+      font-size: var(--text-md);
       font-weight: 800;
     }
 
@@ -119,36 +119,36 @@ export interface Step {
     .step-content {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
-      min-height: 2.75rem; /* Match indicator height to center text */
+      gap: var(--space-1);
+      min-height: 2.75rem;
       justify-content: center;
     }
 
     .step-label {
-      font-size: 0.9375rem;
+      font-size: var(--text-md);
       font-weight: 600;
-      color: var(--text-color-secondary, #4b5563);
+      color: var(--text-color-secondary);
       transition: color 200ms ease;
     }
 
     .step.active .step-label {
-      color: var(--primary-color, #793576);
+      color: var(--primary-color);
       font-weight: 700;
     }
 
     .step.completed .step-label {
-      color: var(--text-color, #1f2937); /* Darker for finished steps */
+      color: var(--text-color);
     }
 
     .step-description {
-      font-size: 0.8125rem;
-      color: var(--text-color-muted, #9ca3af);
+      font-size: var(--text-sm);
+      color: var(--text-color-muted);
       line-height: 1.4;
     }
 
     .step-optional {
-      font-size: 0.75rem;
-      color: var(--text-color-muted, #9ca3af);
+      font-size: var(--text-xs);
+      color: var(--text-color-muted);
       font-style: italic;
       margin-top: -0.125rem;
     }
@@ -156,16 +156,16 @@ export interface Step {
     /* CONNECTOR LINES */
     .step-connector {
       flex: 1;
-      height: 3px; /* Thicker */
+      height: 3px;
       min-width: 3rem;
-      margin: 1.375rem 0.5rem 0; /* Align with center of 2.75rem indicator */
-      background: var(--border-color, #e5e7eb);
+      margin: 1.375rem var(--space-2) 0;
+      background: var(--border-color);
       transition: background 300ms ease;
       border-radius: 4px;
     }
 
     .step-connector.completed {
-      background: var(--success-color, #10b981); /* Green line for progress */
+      background: var(--success-color);
     }
 
     /* Vertical tweaks */
@@ -174,61 +174,17 @@ export interface Step {
     }
 
     .stepper-vertical .step-connector {
-      width: 3px; /* Thicker */
+      width: 3px;
       height: 2.5rem;
       min-width: 3px;
-      margin: 0.25rem 0 0.25rem 1.375rem; /* Center align with indicator */
+      margin: var(--space-1) 0 var(--space-1) 1.375rem;
     }
 
-    /* DARK MODE */
-    :host-context(html.dark) .step-indicator,
-    :host-context([data-theme="dark"]) .step-indicator {
-      background: var(--surface-section, #374151);
-      border-color: var(--border-color, #4b5563);
-      color: #9ca3af;
-      box-shadow: none;
-    }
-
-    :host-context(html.dark) .step.active .step-indicator,
-    :host-context([data-theme="dark"]) .step.active .step-indicator {
-      background: var(--primary-color, #bc9abb);
-      border-color: var(--primary-color, #bc9abb);
-      color: #1f2937;
-      box-shadow: 0 0 15px rgba(188, 154, 187, 0.4); /* Glow in dark */
-    }
-
-    :host-context(html.dark) .step.completed .step-indicator,
-    :host-context([data-theme="dark"]) .step.completed .step-indicator {
-      background: var(--success-color, #34d399);
-      border-color: var(--success-color, #34d399);
-      color: #064e3b;
-    }
-
-    :host-context(html.dark) .step-label,
-    :host-context([data-theme="dark"]) .step-label {
-      color: #9ca3af;
-    }
-
-    :host-context(html.dark) .step.active .step-label,
-    :host-context([data-theme="dark"]) .step.active .step-label {
-      color: #ffffff; /* Pop active text */
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-
-    :host-context(html.dark) .step.completed .step-label,
-    :host-context([data-theme="dark"]) .step.completed .step-label {
-      color: #e5e7eb;
-    }
-
-    :host-context(html.dark) .step-connector,
-    :host-context([data-theme="dark"]) .step-connector {
-      background: #4b5563;
-    }
-
-    :host-context(html.dark) .step-connector.completed,
-    :host-context([data-theme="dark"]) .step-connector.completed {
-      background: var(--success-color, #34d399);
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --surface-background, --border-color, --primary-color, --shadow-glow-primary
+     * ya tienen valores apropiados para temas oscuros.
+     */
 
     /* RESPONSIVE: Compact mobile layout */
     @media (max-width: 768px) {
@@ -240,33 +196,29 @@ export interface Step {
       
       .stepper .step {
         flex-direction: row;
-        gap: 0.75rem;
-        padding: 0.5rem 0;
+        gap: var(--space-3);
+        padding: var(--space-2) 0;
       }
 
-      /* Indicador más pequeño */
       .stepper .step-indicator {
         width: 2rem;
         height: 2rem;
-        font-size: 0.875rem;
+        font-size: var(--text-sm);
       }
 
-      /* Etiquetas truncadas */
       .stepper .step-label {
-        font-size: 0.875rem;
+        font-size: var(--text-sm);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 200px;
       }
 
-      /* Ocultar descripción y opcional */
       .stepper .step-description,
       .stepper .step-optional {
         display: none;
       }
 
-      /* Conector vertical compacto */
       .stepper .step-connector {
         width: 3px;
         height: 1.5rem;

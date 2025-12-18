@@ -79,19 +79,16 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
       transform: scale(1.05);
     }
 
-
-
     /* === Dropdown === */
     .user-menu__dropdown {
       position: absolute;
-      top: calc(100% + 0.5rem);
+      top: calc(100% + var(--space-2));
       right: 0;
       min-width: 220px;
       background: var(--surface-background);
       border: 1px solid var(--border-color);
-      border-radius: 0.75rem;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
-                  0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-dropdown);
       opacity: 0;
       visibility: hidden;
       transform: translateY(-8px);
@@ -110,19 +107,19 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
     .user-menu__header {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 1rem;
+      gap: var(--space-3);
+      padding: var(--space-4);
     }
 
     .user-menu__info {
       display: flex;
       flex-direction: column;
-      gap: 0.125rem;
+      gap: var(--space-1);
       min-width: 0;
     }
 
     .user-menu__name {
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       font-weight: 600;
       color: var(--text-color);
       white-space: nowrap;
@@ -131,7 +128,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
     }
 
     .user-menu__email {
-      font-size: 0.75rem;
+      font-size: var(--text-xs);
       color: var(--text-color-secondary);
       white-space: nowrap;
       overflow: hidden;
@@ -149,20 +146,20 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
     .user-menu__item {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: var(--space-3);
       width: 100%;
-      padding: 0.75rem 1rem;
+      padding: var(--space-3) var(--space-4);
       background: transparent;
       border: none;
       color: var(--text-color);
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       cursor: pointer;
       transition: background 0.15s ease;
       text-align: left;
     }
 
     .user-menu__item:hover {
-      background: var(--surface-section);
+      background: var(--surface-hover);
     }
 
     .user-menu__item--danger {
@@ -174,7 +171,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
     }
 
     .user-menu__item-icon {
-      font-size: 1rem;
+      font-size: var(--text-md);
       width: 20px;
       text-align: center;
     }
@@ -183,40 +180,11 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
       flex: 1;
     }
 
-    /* === Dark Mode === */
-    /* Avatar handles its own styling, no need to override trigger */
-
-    :host-context(.dark) .user-menu__dropdown,
-    :host-context([data-theme="dark"]) .user-menu__dropdown {
-      background: var(--surface-elevated);
-      border-color: var(--border-color);
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-    }
-
-    :host-context(.dark) .user-menu__name,
-    :host-context([data-theme="dark"]) .user-menu__name {
-      color: var(--text-color);
-    }
-
-    :host-context(.dark) .user-menu__email,
-    :host-context([data-theme="dark"]) .user-menu__email {
-      color: var(--text-color-secondary);
-    }
-
-    :host-context(.dark) .user-menu__divider,
-    :host-context([data-theme="dark"]) .user-menu__divider {
-      background: var(--border-color);
-    }
-
-    :host-context(.dark) .user-menu__item,
-    :host-context([data-theme="dark"]) .user-menu__item {
-      color: var(--text-color);
-    }
-
-    :host-context(.dark) .user-menu__item:hover,
-    :host-context([data-theme="dark"]) .user-menu__item:hover {
-      background: var(--surface-section);
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --surface-background, --border-color, --shadow-dropdown, --surface-hover
+     * ya tienen valores apropiados para temas oscuros.
+     */
   `]
 })
 export class UserMenuComponent {

@@ -46,11 +46,11 @@ interface ToastItem extends ToastConfig {
     :host {
       position: fixed;
       top: 5rem;
-      right: 1rem;
+      right: var(--space-4);
       z-index: 9999;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: var(--space-2);
       max-width: 360px;
       pointer-events: none;
     }
@@ -58,13 +58,13 @@ interface ToastItem extends ToastConfig {
     .toast {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.875rem 1rem;
-      border-radius: var(--radius-md, 0.5rem);
-      background: var(--surface-elevated, #ffffff);
-      border: 1px solid var(--border-color, #e5e7eb);
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-color);
       box-shadow: var(--shadow-lg);
-      color: var(--text-color, #1f2937);
+      color: var(--text-color);
       animation: slideIn 300ms ease;
       pointer-events: auto;
     }
@@ -74,10 +74,10 @@ interface ToastItem extends ToastConfig {
     }
 
     .toast-icon {
-      font-size: 1rem;
+      font-size: var(--text-md);
       font-weight: bold;
-      width: 1.5rem;
-      height: 1.5rem;
+      width: var(--icon-md);
+      height: var(--icon-md);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -86,21 +86,21 @@ interface ToastItem extends ToastConfig {
     }
 
     /* Semantic Status Colors */
-    .toast-info .toast-icon { background: var(--info-color-light, #dbeafe); color: var(--info-color-dark, #2563eb); }
-    .toast-success .toast-icon { background: var(--success-color-light, #d1fae5); color: var(--success-color-dark, #059669); }
-    .toast-warning .toast-icon { background: var(--warning-color-light, #fef3c7); color: var(--warning-color-dark, #d97706); }
-    .toast-error .toast-icon { background: var(--danger-color-light, #fee2e2); color: var(--danger-color-dark, #dc2626); }
+    .toast-info .toast-icon { background: var(--info-color-light); color: var(--info-color-dark); }
+    .toast-success .toast-icon { background: var(--success-color-light); color: var(--success-color-dark); }
+    .toast-warning .toast-icon { background: var(--warning-color-light); color: var(--warning-color-dark); }
+    .toast-error .toast-icon { background: var(--danger-color-light); color: var(--danger-color-dark); }
 
     .toast-message {
       flex: 1;
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
     }
 
     .toast-close {
       background: none;
       border: none;
-      font-size: 1.25rem;
-      color: var(--text-color-secondary, #9ca3af);
+      font-size: var(--text-xl);
+      color: var(--text-color-secondary);
       cursor: pointer;
       padding: 0;
       line-height: 1;
@@ -108,7 +108,7 @@ interface ToastItem extends ToastConfig {
     }
 
     .toast-close:hover {
-      color: var(--text-color, #1f2937);
+      color: var(--text-color);
     }
 
     @keyframes slideIn {
@@ -121,12 +121,11 @@ interface ToastItem extends ToastConfig {
       to { transform: translateX(100%); opacity: 0; }
     }
 
-    /* Dark mode overrides (minimal needed due to semantic vars) */
-    :host-context(html.dark) .toast,
-    :host-context([data-theme="dark"]) .toast {
-      background: var(--surface-elevated, #1f2937);
-      border-color: var(--border-color, #374151);
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --surface-elevated, --border-color, --*-color-light/dark
+     * ya tienen valores apropiados para temas oscuros.
+     */
   `]
 })
 export class ToastComponent {

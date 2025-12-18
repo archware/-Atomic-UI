@@ -71,37 +71,20 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
 
     /* ========== ICONOS ========== */
     .icon {
-      font-size: 1.25rem;
+      font-size: var(--text-xl);
       width: auto;
       height: auto;
       transition: color 200ms ease;
     }
 
     .icon-sun {
-      color: #FF9F0A;
-      /* System Orange */
-      filter: drop-shadow(0 0 2px rgba(255, 159, 10, 0.3));
-    }
-
-    :host-context(.dark) .icon-sun,
-    :host-context(html.dark) .icon-sun,
-    :host-context([data-theme="dark"]) .icon-sun {
-      color: #FF9F0A;
-      /* Keep System Orange in Dark Mode too, or adjust brightness if needed */
-      filter: drop-shadow(0 0 4px rgba(255, 159, 10, 0.4));
+      color: var(--icon-sun-color);
+      filter: drop-shadow(0 0 2px var(--shadow-glow-primary));
     }
 
     .icon-moon {
-      color: #BF5AF2;
-      /* System Purple */
-      filter: drop-shadow(0 0 2px rgba(191, 90, 242, 0.3));
-    }
-
-    :host-context(.dark) .icon-moon,
-    :host-context(html.dark) .icon-moon,
-    :host-context([data-theme="dark"]) .icon-moon {
-      color: #BF5AF2;
-      filter: drop-shadow(0 0 4px rgba(191, 90, 242, 0.4));
+      color: var(--icon-moon-color);
+      filter: drop-shadow(0 0 2px var(--shadow-glow-primary));
     }
 
     .icon.hidden {
@@ -111,28 +94,18 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
     /* ========== MENÚ DESPLEGABLE ========== */
     .theme-menu {
       position: absolute;
-      top: calc(100% + 0.5rem);
+      top: calc(100% + var(--space-2));
       right: 0;
-      background: var(--surface-background, #ffffff);
-      border: 1px solid var(--border-color, #e5e7eb);
-      border-radius: 0.75rem;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
-                  0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      background: var(--surface-background);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-dropdown);
       opacity: 0;
       visibility: hidden;
       transform: translateY(-8px);
       transition: all 200ms ease;
       z-index: 1000;
       overflow: hidden;
-    }
-
-    :host-context(.dark) .theme-menu,
-    :host-context(html.dark) .theme-menu,
-    :host-context([data-theme="dark"]) .theme-menu {
-      background: var(--surface-section, #1f2937);
-      border-color: var(--border-color, #374151);
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4),
-                  0 8px 10px -6px rgba(0, 0, 0, 0.3);
     }
 
     .theme-menu.show {
@@ -151,36 +124,18 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
       padding: 0;
       border: none;
       background: transparent;
-      color: var(--text-color-secondary, #6b7280);
+      color: var(--text-color-secondary);
       cursor: pointer;
       transition: all 150ms ease;
       position: relative;
     }
 
-    :host-context(.dark) .theme-option,
-    :host-context(html.dark) .theme-option,
-    :host-context([data-theme="dark"]) .theme-option {
-      color: var(--text-color-secondary, #9ca3af);
-    }
-
     .theme-option:hover {
-      background: var(--surface-elevated, #f3f4f6);
-    }
-
-    :host-context(.dark) .theme-option:hover,
-    :host-context(html.dark) .theme-option:hover,
-    :host-context([data-theme="dark"]) .theme-option:hover {
-      background: var(--surface-elevated, #374151);
+      background: var(--surface-hover);
     }
 
     .theme-option.active {
-      background: var(--primary-color-lighter, #efe7ef);
-    }
-
-    :host-context(.dark) .theme-option.active,
-    :host-context(html.dark) .theme-option.active,
-    :host-context([data-theme="dark"]) .theme-option.active {
-      background: rgba(188, 154, 187, 0.2);
+      background: var(--primary-color-lighter);
     }
 
     .option-icon {
@@ -189,63 +144,11 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
       transition: transform 150ms ease;
     }
 
-    /* Colores de iconos */
-    .theme-option:nth-child(1) .option-icon {
-      color: #f59e0b;
-    }
-    
-    :host-context(.dark) .theme-option:nth-child(1) .option-icon,
-    :host-context(html.dark) .theme-option:nth-child(1) .option-icon,
-    :host-context([data-theme="dark"]) .theme-option:nth-child(1) .option-icon {
-        color: #fcd34d;
-        filter: drop-shadow(0 0 6px rgba(252, 211, 77, 0.7));
-    }
-
-    .theme-option:nth-child(2) .option-icon {
-      color: #6366f1;
-    }
-
-    :host-context(.dark) .theme-option:nth-child(2) .option-icon,
-    :host-context(html.dark) .theme-option:nth-child(2) .option-icon,
-    :host-context([data-theme="dark"]) .theme-option:nth-child(2) .option-icon {
-        color: #a5b4fc;
-        filter: drop-shadow(0 0 6px rgba(165, 180, 252, 0.7));
-    }
-
-    /* Brand Dark Option (3rd child) */
-    .theme-option:nth-child(3) .option-icon {
-      color: var(--primary-color, #793576);
-    }
-    
-    :host-context(.dark) .theme-option:nth-child(3) .option-icon {
-        color: var(--primary-color, #a855f7);
-        filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.4));
-    }
-
-    /* System Option (4th child now) */
-    .theme-option:nth-child(4) .option-icon {
-      color: #6366f1;
-    }
-
-    :host-context(.dark) .theme-option:nth-child(2) .option-icon,
-    :host-context(html.dark) .theme-option:nth-child(2) .option-icon,
-    :host-context([data-theme="dark"]) .theme-option:nth-child(2) .option-icon {
-      color: #c7d2fe;
-      filter: drop-shadow(0 0 6px rgba(199, 210, 254, 0.7))
-              drop-shadow(0 0 12px rgba(199, 210, 254, 0.4));
-    }
-
-    .theme-option:nth-child(3) .option-icon {
-      color: var(--primary-color, #793576);
-    }
-
-    :host-context(.dark) .theme-option:nth-child(3) .option-icon,
-    :host-context(html.dark) .theme-option:nth-child(3) .option-icon,
-    :host-context([data-theme="dark"]) .theme-option:nth-child(3) .option-icon {
-      color: #f0d4ef;
-      filter: drop-shadow(0 0 6px rgba(240, 212, 239, 0.7))
-              drop-shadow(0 0 12px rgba(240, 212, 239, 0.4));
-    }
+    /* Colores de iconos usando tokens */
+    .theme-option:nth-child(1) .option-icon { color: var(--icon-sun-color); }
+    .theme-option:nth-child(2) .option-icon { color: var(--icon-moon-color); }
+    .theme-option:nth-child(3) .option-icon { color: var(--icon-star-color); }
+    .theme-option:nth-child(4) .option-icon { color: var(--icon-moon-color); }
 
     /* Hover transforms */
     .theme-option:first-child:hover .option-icon {
@@ -269,14 +172,8 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
       transform: translateY(-50%);
       width: 3px;
       height: 60%;
-      background: var(--primary-color, #793576);
+      background: var(--primary-color);
       border-radius: 0 2px 2px 0;
-    }
-
-    :host-context(.dark) .theme-option.active::before,
-    :host-context(html.dark) .theme-option.active::before,
-    :host-context([data-theme="dark"]) .theme-option.active::before {
-      background: var(--primary-color-light, #bc9abb);
     }
 
     /* Separadores sutiles */
@@ -284,17 +181,20 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
       content: '';
       position: absolute;
       bottom: 0;
-      left: 0.5rem;
-      right: 0.5rem;
+      left: var(--space-2);
+      right: var(--space-2);
       height: 1px;
-      background: var(--border-color-light, #f3f4f6);
+      background: var(--border-color-light);
     }
 
-    :host-context(.dark) .theme-option:not(:last-child)::after,
-    :host-context(html.dark) .theme-option:not(:last-child)::after,
-    :host-context([data-theme="dark"]) .theme-option:not(:last-child)::after {
-      background: var(--border-color, #374151);
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --surface-background, --shadow-dropdown, --primary-color
+     * ya tienen valores apropiados para temas oscuros.
+     * 
+     * Los efectos de glow en iconos son específicos del diseño del tema
+     * y se mantienen con :host-context para efectos visuales únicos.
+     */
   `],
   host: {
     '[attr.data-theme-switcher]': 'true'

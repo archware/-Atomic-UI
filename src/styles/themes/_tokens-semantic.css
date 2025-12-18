@@ -16,8 +16,8 @@
    color-scheme: light;
 
    /* === SUPERFICIES === */
-   --surface-ground: #efeff4;
-   /* Fondo de página (iOS Light Gray) */
+   --surface-ground: var(--gray-75);
+   /* Fondo de página - derivado de gray-75 */
    --surface-background: #ffffff;
    /* Fondo de cards/contenedores */
    --surface-section: #efeff4;
@@ -80,43 +80,45 @@
    --accent-color-dark: var(--brand-accent-700);
 
    /* === ESTADOS SEMÁNTICOS === */
-   --success-color: #34C759;
-   /* iOS Green */
-   --success-color-light: #F0FDF4;
-   --success-color-lighter: #F0FDF4;
-   --success-color-dark: #15803D;
-   --success-color-text: #15803D;
+   --success-color: var(--ios-green);
+   --success-color-light: var(--green-100);
+   --success-color-lighter: var(--green-50);
+   --success-color-dark: var(--green-700);
+   --success-color-text: var(--green-700);
+   --success-color-hover: var(--green-600);
 
-   --warning-color: #FF9500;
-   /* iOS Orange */
-   --warning-color-light: #FEF9C3;
-   --warning-color-lighter: #FEFCE8;
-   --warning-color-dark: #CA8A04;
-   --warning-color-text: #A16207;
+   --warning-color: var(--ios-orange);
+   --warning-color-light: var(--yellow-100);
+   --warning-color-lighter: var(--yellow-50);
+   --warning-color-dark: var(--yellow-600);
+   --warning-color-text: var(--yellow-700);
+   --warning-color-hover: var(--orange-600);
 
-   --danger-color: #FF3B30;
-   /* iOS Red */
-   --danger-color-light: #FEE2E2;
-   --danger-color-lighter: #FEF2F2;
-   --danger-color-dark: #B91C1C;
-   --danger-color-text: #991B1B;
+   --danger-color: var(--ios-red);
+   --danger-color-light: var(--red-100);
+   --danger-color-lighter: var(--red-50);
+   --danger-color-dark: var(--red-700);
+   --danger-color-text: var(--red-800);
+   --danger-color-hover: var(--red-600);
 
-   --info-color: #007AFF;
-   /* iOS Blue */
-   --info-color-light: #dbf1ff;
-   --info-color-lighter: #007AFF10;
-   --info-color-dark: #0056b3;
-   --info-color-text: #004085;
+   --info-color: var(--ios-blue);
+   --info-color-light: var(--blue-100);
+   --info-color-lighter: var(--blue-50);
+   --info-color-dark: var(--blue-700);
+   --info-color-text: var(--blue-900);
+   --info-color-hover: var(--blue-700);
+
+   /* === TEXTO DESHABILITADO === */
+   --text-color-disabled: var(--gray-400);
 
    /* === INTERACCIONES === */
-   --hover-background: #e8f0fe;
-   /* Selected BG */
-   --hover-background-subtle: #F0F0F0;
-   /* Disabled/Sunken */
-   --active-background: #e8f0fe;
-   --selected-background: #e8f0fe;
+   --hover-background: var(--primary-color-lighter);
+   --hover-background-subtle: var(--gray-100);
+   --active-background: var(--primary-color-lighter);
+   --selected-background: var(--primary-color-lighter);
+   --surface-hover: var(--gray-100);
    --focus-ring-color: var(--brand-primary-500);
-   --focus-ring: 0 0 0 3px rgba(121, 53, 118, 0.2);
+   --focus-ring: 0 0 0 3px rgba(95, 41, 92, 0.2);
 
    /* === SOMBRAS === */
    --shadow-color: 220 3% 15%;
@@ -129,6 +131,39 @@
       0 4px 6px hsl(var(--shadow-color) / 0.1);
    --shadow-xl: 0 20px 25px hsl(var(--shadow-color) / 0.2),
       0 10px 10px hsl(var(--shadow-color) / 0.1);
+
+   /* Sombras de Focus */
+   --shadow-focus-primary: 0 0 0 3px rgba(95, 41, 92, 0.2);
+   --shadow-focus-secondary: 0 0 0 3px rgba(35, 167, 212, 0.2);
+
+   /* Sombras de Glow (para estados activos) */
+   --shadow-glow-primary: 0 4px 12px rgba(95, 41, 92, 0.4);
+   --shadow-glow-success: 0 4px 12px rgba(52, 199, 89, 0.4);
+
+   /* Sombras de Dropdown/Popover */
+   --shadow-dropdown: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+      0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+   /* Overlay de Modal */
+   --overlay-backdrop: rgba(0, 0, 0, 0.5);
+
+   /* === COMPONENTES ESPECÍFICOS === */
+
+   /* Skeleton Gradients */
+   --skeleton-gradient-start: #e2e8f0;
+   --skeleton-gradient-mid: #cbd5e1;
+   --skeleton-card-bg: #ffffff;
+   --skeleton-card-border: #e5e7eb;
+
+   /* Rating Stars */
+   --rating-star-empty: var(--border-color);
+   --rating-star-filled: #fbbf24;
+   --rating-star-hover: #f59e0b;
+
+   /* Theme Switcher Icons */
+   --icon-sun-color: #f59e0b;
+   --icon-moon-color: #6366f1;
+   --icon-star-color: var(--primary-color);
 
    /* === COMPATIBILIDAD LEGADO (variables antiguas) === */
    --bg-primary: var(--surface-ground);
@@ -209,35 +244,43 @@
    --accent-color-dark: var(--brand-accent-300);
 
    /* === ESTADOS SEMÁNTICOS === */
-   --success-color: #30D158;
+   --success-color: var(--ios-green-dark);
    --success-color-light: rgba(48, 209, 88, 0.15);
    --success-color-lighter: rgba(48, 209, 88, 0.1);
    --success-color-dark: #208b3a;
-   --success-color-text: #208b3a;
+   --success-color-text: var(--ios-green-dark);
+   --success-color-hover: var(--green-400);
 
-   --warning-color: #FF9F0A;
+   --warning-color: var(--ios-orange-dark);
    --warning-color-light: rgba(255, 159, 10, 0.15);
    --warning-color-lighter: rgba(255, 159, 10, 0.1);
    --warning-color-dark: #cc7a00;
-   --warning-color-text: #FF9F0A;
+   --warning-color-text: var(--ios-orange-dark);
+   --warning-color-hover: var(--orange-400);
 
-   --danger-color: #FF453A;
+   --danger-color: var(--ios-red-dark);
    --danger-color-light: rgba(255, 69, 58, 0.15);
    --danger-color-lighter: rgba(255, 69, 58, 0.1);
    --danger-color-dark: #cc251c;
-   --danger-color-text: #FF453A;
+   --danger-color-text: var(--ios-red-dark);
+   --danger-color-hover: var(--red-400);
 
-   --info-color: #0A84FF;
+   --info-color: var(--ios-blue-dark);
    --info-color-light: rgba(10, 132, 255, 0.15);
    --info-color-lighter: rgba(10, 132, 255, 0.1);
    --info-color-dark: #0066cc;
-   --info-color-text: #0A84FF;
+   --info-color-text: var(--ios-blue-dark);
+   --info-color-hover: var(--blue-400);
+
+   /* === TEXTO DESHABILITADO === */
+   --text-color-disabled: var(--gray-600);
 
    /* === INTERACCIONES === */
    --hover-background: #202f61;
    --hover-background-subtle: #29324d;
    --active-background: #202f61;
    --selected-background: #202f61;
+   --surface-hover: var(--surface-elevated);
    --focus-ring-color: var(--brand-primary-400);
    --focus-ring: 0 0 0 3px rgba(141, 83, 139, 0.3);
 
@@ -252,6 +295,39 @@
       0 4px 6px hsl(var(--shadow-color) / 0.4);
    --shadow-xl: 0 20px 25px hsl(var(--shadow-color) / 0.5),
       0 10px 10px hsl(var(--shadow-color) / 0.4);
+
+   /* Sombras de Focus (dark) */
+   --shadow-focus-primary: 0 0 0 3px rgba(188, 154, 187, 0.3);
+   --shadow-focus-secondary: 0 0 0 3px rgba(35, 167, 212, 0.3);
+
+   /* Sombras de Glow (dark) */
+   --shadow-glow-primary: 0 0 15px rgba(188, 154, 187, 0.4);
+   --shadow-glow-success: 0 0 15px rgba(48, 209, 88, 0.4);
+
+   /* Sombras de Dropdown (dark) */
+   --shadow-dropdown: 0 10px 25px -5px rgba(0, 0, 0, 0.4),
+      0 8px 10px -6px rgba(0, 0, 0, 0.3);
+
+   /* Overlay de Modal (dark) */
+   --overlay-backdrop: rgba(0, 0, 0, 0.7);
+
+   /* === COMPONENTES ESPECÍFICOS (dark) === */
+
+   /* Skeleton Gradients */
+   --skeleton-gradient-start: #64748b;
+   --skeleton-gradient-mid: #94a3b8;
+   --skeleton-card-bg: #334155;
+   --skeleton-card-border: #64748b;
+
+   /* Rating Stars */
+   --rating-star-empty: var(--border-color);
+   --rating-star-filled: #fcd34d;
+   --rating-star-hover: #fbbf24;
+
+   /* Theme Switcher Icons */
+   --icon-sun-color: #fcd34d;
+   --icon-moon-color: #a5b4fc;
+   --icon-star-color: var(--primary-color);
 
    /* === COMPATIBILIDAD LEGADO === */
    --bg-primary: #0e0e14;
@@ -332,35 +408,43 @@ html.dark {
    --accent-color-dark: var(--brand-accent-300);
 
    /* === ESTADOS SEMÁNTICOS (Igual que Brand Dark) === */
-   --success-color: #30D158;
+   --success-color: var(--ios-green-dark);
    --success-color-light: rgba(48, 209, 88, 0.15);
    --success-color-lighter: rgba(48, 209, 88, 0.1);
    --success-color-dark: #208b3a;
-   --success-color-text: #208b3a;
+   --success-color-text: var(--ios-green-dark);
+   --success-color-hover: var(--green-400);
 
-   --warning-color: #FF9F0A;
+   --warning-color: var(--ios-orange-dark);
    --warning-color-light: rgba(255, 159, 10, 0.15);
    --warning-color-lighter: rgba(255, 159, 10, 0.1);
    --warning-color-dark: #cc7a00;
-   --warning-color-text: #FF9F0A;
+   --warning-color-text: var(--ios-orange-dark);
+   --warning-color-hover: var(--orange-400);
 
-   --danger-color: #FF453A;
+   --danger-color: var(--ios-red-dark);
    --danger-color-light: rgba(255, 69, 58, 0.15);
    --danger-color-lighter: rgba(255, 69, 58, 0.1);
    --danger-color-dark: #cc251c;
-   --danger-color-text: #FF453A;
+   --danger-color-text: var(--ios-red-dark);
+   --danger-color-hover: var(--red-400);
 
-   --info-color: #0A84FF;
+   --info-color: var(--ios-blue-dark);
    --info-color-light: rgba(10, 132, 255, 0.15);
    --info-color-lighter: rgba(10, 132, 255, 0.1);
    --info-color-dark: #0066cc;
-   --info-color-text: #0A84FF;
+   --info-color-text: var(--ios-blue-dark);
+   --info-color-hover: var(--blue-400);
+
+   /* === TEXTO DESHABILITADO === */
+   --text-color-disabled: var(--gray-600);
 
    /* === INTERACCIONES === */
    --hover-background: #2d2d2d;
    --hover-background-subtle: #252525;
    --active-background: #2d2d2d;
    --selected-background: #2d2d2d;
+   --surface-hover: var(--surface-elevated);
    --focus-ring-color: var(--brand-primary-400);
    --focus-ring: 0 0 0 3px rgba(141, 83, 139, 0.3);
 
@@ -371,6 +455,39 @@ html.dark {
    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.7);
    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.7);
    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.8);
+
+   /* Sombras de Focus (dark) */
+   --shadow-focus-primary: 0 0 0 3px rgba(188, 154, 187, 0.3);
+   --shadow-focus-secondary: 0 0 0 3px rgba(35, 167, 212, 0.3);
+
+   /* Sombras de Glow (dark) */
+   --shadow-glow-primary: 0 0 15px rgba(188, 154, 187, 0.4);
+   --shadow-glow-success: 0 0 15px rgba(48, 209, 88, 0.4);
+
+   /* Sombras de Dropdown (dark) */
+   --shadow-dropdown: 0 10px 25px -5px rgba(0, 0, 0, 0.5),
+      0 8px 10px -6px rgba(0, 0, 0, 0.4);
+
+   /* Overlay de Modal (dark) */
+   --overlay-backdrop: rgba(0, 0, 0, 0.7);
+
+   /* === COMPONENTES ESPECÍFICOS (dark) === */
+
+   /* Skeleton Gradients */
+   --skeleton-gradient-start: #64748b;
+   --skeleton-gradient-mid: #94a3b8;
+   --skeleton-card-bg: #334155;
+   --skeleton-card-border: #64748b;
+
+   /* Rating Stars */
+   --rating-star-empty: var(--border-color);
+   --rating-star-filled: #fcd34d;
+   --rating-star-hover: #fbbf24;
+
+   /* Theme Switcher Icons */
+   --icon-sun-color: #fcd34d;
+   --icon-moon-color: #a5b4fc;
+   --icon-star-color: var(--primary-color);
 
    /* === COMPATIBILIDAD LEGADO === */
    --bg-primary: #121212;

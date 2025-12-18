@@ -126,7 +126,7 @@ export interface Select2Option {
     .select2-wrapper {
       position: relative;
       width: 100%;
-      min-width: 15rem; /* 240px minimum */
+      min-width: 15rem;
     }
 
     .select2-wrapper.disabled {
@@ -135,7 +135,7 @@ export interface Select2Option {
     }
 
     .select2-wrapper.has-label {
-      margin-top: 0.75rem;
+      margin-top: var(--space-3);
     }
 
     /* === TRIGGER === */
@@ -144,33 +144,33 @@ export interface Select2Option {
       display: flex;
       align-items: center;
       height: var(--control-height);
-      padding: 0.25rem 0.875rem;
+      padding: var(--space-1) var(--space-3);
       padding-right: 2.75rem;
       background: var(--input-bg);
       border: 1px solid var(--input-border);
-      border-radius: 0.5rem;
+      border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 200ms ease;
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       box-sizing: border-box; 
     }
 
     .select2-wrapper.has-label .select2-trigger {
-      padding: 0.25rem 0.875rem; /* Keep centered, remove top padding shift */
+      padding: var(--space-1) var(--space-3);
     }
 
     /* === FLOATING LABEL === */
     .floating-label {
       position: absolute;
-      left: 0.875rem;
+      left: var(--space-3);
       top: 50%;
       transform: translateY(-50%);
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       color: var(--input-placeholder);
       pointer-events: none;
       transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
       background: var(--input-bg);
-      padding: 0 0.5rem;
+      padding: 0 var(--space-2);
       white-space: nowrap;
     }
 
@@ -178,18 +178,18 @@ export interface Select2Option {
     .select2-wrapper.has-value .floating-label {
       top: -0.625rem;
       transform: translateY(0);
-      font-size: 0.8125rem;
+      font-size: var(--text-xs);
       font-weight: 500;
       color: var(--primary-color);
     }
 
     /* === MULTI-SELECT FIX === */
     .select2-wrapper.multiple .select2-trigger {
-      min-height: var(--control-height); /* grows with content */
+      min-height: var(--control-height);
       height: auto;
-      padding: 0.25rem 0.875rem;
+      padding: var(--space-1) var(--space-3);
       padding-right: 2.75rem;
-      align-items: center; /* Center placeholder and tags vertically */
+      align-items: center;
     }
 
     .select2-wrapper.focused .select2-trigger,
@@ -198,17 +198,17 @@ export interface Select2Option {
     }
 
     .select2-wrapper.focused .select2-trigger {
-      box-shadow: 0 0 0 3px var(--hover-background);
+      box-shadow: var(--shadow-focus-primary);
     }
 
     .select2-value {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: var(--space-2);
       flex: 1;
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       color: var(--input-text);
-      line-height: normal; /* Prevent height expansion */
+      line-height: normal;
     }
 
     .placeholder {
@@ -217,7 +217,7 @@ export interface Select2Option {
 
     .select2-arrow {
       position: absolute;
-      right: 0.75rem;
+      right: var(--space-3);
       top: 50%;
       transform: translateY(-50%);
       color: var(--text-color-secondary);
@@ -232,20 +232,20 @@ export interface Select2Option {
     .select2-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.375rem;
+      gap: var(--space-1);
       flex: 1;
-      padding: 0.125rem 0;
+      padding: var(--space-1) 0;
     }
 
     .select2-tag {
       display: inline-flex;
       align-items: center;
-      gap: 0.25rem;
-      padding: 0.25rem 0.5rem;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-2);
       background: var(--primary-color-lighter);
       color: var(--primary-color);
-      border-radius: 9999px;
-      font-size: 0.8125rem;
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
       font-weight: 500;
     }
 
@@ -259,7 +259,7 @@ export interface Select2Option {
       background: none;
       border: none;
       border-radius: 50%;
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       color: var(--primary-color);
       cursor: pointer;
       transition: all 150ms ease;
@@ -270,7 +270,6 @@ export interface Select2Option {
     }
 
     /* === DROPDOWN === */
-    /* === DROPDOWN === */
     .select2-dropdown {
       position: absolute;
       top: calc(100% + 4px);
@@ -278,8 +277,8 @@ export interface Select2Option {
       right: 0;
       background: var(--dropdown-bg);
       border: 1px solid var(--dropdown-border);
-      border-radius: 0.5rem;
-      box-shadow: var(--dropdown-shadow);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-dropdown);
       z-index: 10000;
       animation: dropdownSlide 200ms ease;
       overflow: hidden;
@@ -293,17 +292,17 @@ export interface Select2Option {
     /* === SEARCH === */
     .select2-search {
       position: relative;
-      padding: 0.5rem;
+      padding: var(--space-2);
       border-bottom: 1px solid var(--dropdown-border);
     }
 
     .search-input {
       width: 100%;
-      padding: 0.625rem 0.75rem;
+      padding: var(--space-2) var(--space-3);
       padding-left: 2.25rem;
-      font-size: 0.9375rem;
+      font-size: var(--text-md);
       border: 1px solid var(--input-border);
-      border-radius: 0.375rem;
+      border-radius: var(--radius-sm);
       background: var(--input-bg);
       color: var(--input-text);
       outline: none;
@@ -317,10 +316,10 @@ export interface Select2Option {
 
     .search-icon {
       position: absolute;
-      left: 1rem;
+      left: var(--space-4);
       top: 50%;
       transform: translateY(-50%);
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
     }
 
     /* === OPTIONS === */
@@ -332,9 +331,9 @@ export interface Select2Option {
     .select2-option {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1rem;
-      font-size: 0.9375rem;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-md);
       color: var(--dropdown-text, var(--text-color));
       cursor: pointer;
       transition: background 100ms ease;
@@ -356,7 +355,7 @@ export interface Select2Option {
     }
 
     .option-icon {
-      font-size: 1rem;
+      font-size: var(--text-md);
     }
 
     .option-label {
@@ -369,10 +368,10 @@ export interface Select2Option {
     }
 
     .select2-no-results {
-      padding: 1rem;
+      padding: var(--space-4);
       text-align: center;
       color: var(--text-color-muted);
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
     }
 
     /* Dark mode handled automatically by CSS variables */

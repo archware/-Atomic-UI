@@ -12,9 +12,9 @@
 .panel {
   width: 100%;
   box-sizing: border-box;
-  background: var(--surface-background, #ffffff);
-  border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: var(--radius-lg, 0.75rem);
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
   overflow: visible;
   /* Default Shadow */
   box-shadow: var(--shadow-md);
@@ -40,11 +40,9 @@
 
 /* Floating: "Floating Glass" (Transparent + Border + Shadow) -> Now White Background */
 .panel--floating {
-  background: var(--surface-background, #ffffff);
-  border: 1px solid var(--border-color, #e5e7eb);
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
 }
 
 .panel--floating .panel__header {
@@ -57,33 +55,24 @@
 /* Elevated: Clean Lift (White + Shadow, No Border) */
 .panel--elevated,
 .panel--card {
-  /* Card is alias to Elevated but typically static */
   border: none;
-  background: var(--surface-background, #ffffff);
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  background: var(--surface-background);
+  box-shadow: var(--shadow-md);
 }
 
 .panel--elevated:hover {
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
   transform: translateY(-2px);
 }
 
 /* Card specific: less interactive */
 .panel--card {
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.12),
-    0 1px 2px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-sm);
 }
 
 .panel--card:hover {
   transform: none;
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.12),
-    0 1px 2px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-sm);
 }
 
 /* === 2. STANDARD VARIANTS === */
@@ -91,19 +80,19 @@
 /* Flat: Section grouping (Gray bg, no border) */
 .panel--flat {
   border: none;
-  background: var(--surface-section, #f9fafb);
+  background: var(--surface-section);
   box-shadow: none;
 }
 
 /* Outlined: Content boundary (Transparent + Border) */
 .panel--outlined {
   background: transparent;
-  border: 1px solid var(--border-color, #e5e7eb);
+  border: 1px solid var(--border-color);
   box-shadow: none;
 }
 
 .panel--outlined .panel__header {
-  background: var(--surface-section, #f9fafb);
+  background: var(--surface-section);
 }
 
 /* Transparent: (Legacy alias for Plain but keeps header line logic option if needed) */
@@ -146,10 +135,10 @@
 .panel__header {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--border-color, #e5e7eb);
-  background: var(--surface-section, #f9fafb);
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border-color);
+  background: var(--surface-section);
 }
 
 .panel__icon {
@@ -158,11 +147,11 @@
 }
 
 .panel__title {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--text-color-secondary, #6b7280);
+  color: var(--text-color-secondary);
   margin: 0;
   flex: 1;
 }
@@ -235,18 +224,16 @@
 }
 
 .panel__footer:not(:empty) {
-  padding: 1rem 1.25rem;
-  border-top: 1px solid var(--border-color, #e5e7eb);
-  background: var(--surface-section, #f9fafb);
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--border-color);
+  background: var(--surface-section);
 }
 
-/* === DARK MODE === */
-:host-context(.dark) .panel--elevated,
-:host-context([data-theme="dark"]) .panel--elevated,
-:host-context(.dark) .panel--card,
-:host-context([data-theme="dark"]) .panel--card {
-  background: var(--surface-elevated, #374151);
-}
+/* 
+ * Dark mode se maneja automáticamente via tokens semánticos.
+ * --surface-background, --surface-section, --border-color
+ * ya tienen valores apropiados para temas oscuros.
+ */
 
 /* === RESPONSIVE === */
 @media (max-width: 768px) {

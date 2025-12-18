@@ -5,16 +5,15 @@
   align-items: center;
   justify-content: center;
   background-color: var(--surface-section);
-  /* Optional: Add a subtle pattern or gradient using primary color */
   background-image: radial-gradient(circle at 50% 0%, var(--primary-color-lighter) 0%, transparent 70%);
-  padding: 1rem;
+  padding: var(--space-4);
 }
 
 .auth-card {
   width: 100%;
   max-width: 400px;
   background-color: var(--surface-background);
-  border-radius: 1rem;
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xl);
   border: 1px solid var(--border-color);
   overflow: hidden;
@@ -22,18 +21,18 @@
 }
 
 .auth-header {
-  padding: 2rem 2rem 0 2rem;
+  padding: var(--space-8) var(--space-8) 0 var(--space-8);
   text-align: center;
 }
 
 .auth-content {
-  padding: 2rem;
+  padding: var(--space-8);
 }
 
 .auth-footer {
-  padding: 0 2rem 2rem 2rem;
+  padding: 0 var(--space-8) var(--space-8) var(--space-8);
   text-align: center;
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--text-color-secondary);
 }
 
@@ -48,20 +47,8 @@
   }
 }
 
-/* Dark Mode support */
-:host-context(.dark) .auth-container,
-:host-context([data-theme="dark"]) .auth-container {
-  background-color: var(--surface-section);
-  background-image: radial-gradient(circle at 50% 0%, rgba(121, 53, 118, 0.15) 0%, transparent 70%);
-}
-
-:host-context(.dark) .auth-card,
-:host-context([data-theme="dark"]) .auth-card {
-  background-color: var(--surface-elevated);
-  border-color: var(--border-color);
-}
-
-:host-context(.dark) .auth-footer,
-:host-context([data-theme="dark"]) .auth-footer {
-  color: var(--text-color-secondary);
-}
+/* 
+ * Dark mode se maneja automáticamente via tokens semánticos.
+ * --surface-section, --surface-background, --text-color-secondary, etc.
+ * ya tienen valores apropiados para temas oscuros.
+ */

@@ -47,9 +47,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  /* Removed background and border so app-topbar handles it full width */
   padding: 0;
-  /* Removed padding so app-topbar takes full space */
   display: flex;
   align-items: center;
   height: 64px;
@@ -58,7 +56,6 @@
 /* Content Area */
 .layout-content {
   grid-area: content;
-  /* ScrollOverlay handles overflow now */
   overflow: hidden;
   padding: 0;
   display: flex;
@@ -74,29 +71,15 @@
 
 .content-wrapper {
   width: 100%;
-  padding: 1.5rem;
-  /* 24px standard */
+  padding: var(--space-6);
   box-sizing: border-box;
 }
 
-/* Dark Mode support */
-:host-context(.dark) .layout-shell,
-:host-context([data-theme="dark"]) .layout-shell {
-  background-color: var(--surface-section);
-  color: var(--text-color);
-}
-
-:host-context(.dark) .layout-sidebar,
-:host-context([data-theme="dark"]) .layout-sidebar {
-  background-color: var(--surface-elevated);
-  border-right: 1px solid var(--border-color);
-}
-
-:host-context(.dark) .layout-header,
-:host-context([data-theme="dark"]) .layout-header {
-  /* Removed explicit bg color to defer to app-topbar */
-  border-bottom: none;
-}
+/* 
+ * Dark mode se maneja automáticamente via tokens semánticos.
+ * --surface-section, --surface-background, --border-color, etc.
+ * ya tienen valores apropiados para temas oscuros.
+ */
 
 /* Responsive - Mobile/Tablet */
 @media (max-width: 768px) {
@@ -111,7 +94,6 @@
   .layout-sidebar {
     position: fixed;
     top: 64px;
-    /* Debajo del header */
     left: 0;
     bottom: 0;
     width: 260px;
@@ -119,7 +101,6 @@
     transition: transform 0.3s ease;
     box-shadow: var(--shadow-xl);
     z-index: 50;
-    /* Ensure it's above everything */
   }
 
   /* Cuando se activa el sidebar en móvil (clase toggleada) */
@@ -131,9 +112,8 @@
   .layout-overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--overlay-backdrop);
     z-index: 40;
-    /* Below sidebar (50) but above everything else */
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;

@@ -49,18 +49,18 @@ import { CommonModule } from '@angular/common';
 
     .skeleton {
       background: linear-gradient(90deg, 
-        #e2e8f0 25%, 
-        #cbd5e1 50%, 
-        #e2e8f0 75%
+        var(--skeleton-gradient-start) 25%, 
+        var(--skeleton-gradient-mid) 50%, 
+        var(--skeleton-gradient-start) 75%
       );
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite ease-in-out;
-      border-radius: 0.25rem;
+      border-radius: var(--radius-sm);
     }
 
     .skeleton-text {
       height: 1rem;
-      border-radius: 0.25rem;
+      border-radius: var(--radius-sm);
     }
 
     .skeleton-circular {
@@ -68,33 +68,33 @@ import { CommonModule } from '@angular/common';
     }
 
     .skeleton-rectangular {
-      border-radius: 0.5rem;
+      border-radius: var(--radius-md);
     }
 
     .skeleton-card {
-      background: var(--surface-background, #ffffff);
-      border: 1px solid var(--border-color, #e5e7eb);
-      border-radius: 0.75rem;
+      background: var(--skeleton-card-bg);
+      border: 1px solid var(--skeleton-card-border);
+      border-radius: var(--radius-lg);
       overflow: hidden;
     }
 
     .skeleton-card-content {
-      padding: 1rem;
+      padding: var(--space-4);
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: var(--space-2);
     }
 
     .skeleton-avatar-text {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: var(--space-3);
     }
 
     .skeleton-text-group {
       display: flex;
       flex-direction: column;
-      gap: 0.375rem;
+      gap: var(--space-1);
     }
 
     @keyframes shimmer {
@@ -102,24 +102,11 @@ import { CommonModule } from '@angular/common';
       100% { background-position: -200% 0; }
     }
 
-    /* Dark mode - HIGH VISIBILITY */
-    :host-context(.dark) .skeleton,
-    :host-context(html.dark) .skeleton,
-    :host-context([data-theme="dark"]) .skeleton {
-      background: linear-gradient(90deg, 
-        #64748b 25%, 
-        #94a3b8 50%, 
-        #64748b 75%
-      );
-      background-size: 200% 100%;
-    }
-
-    :host-context(.dark) .skeleton-card,
-    :host-context(html.dark) .skeleton-card,
-    :host-context([data-theme="dark"]) .skeleton-card {
-      background: #334155;
-      border-color: #64748b;
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --skeleton-gradient-start/mid y --skeleton-card-bg/border
+     * ya tienen valores apropiados para temas oscuros.
+     */
   `]
 })
 export class SkeletonComponent {

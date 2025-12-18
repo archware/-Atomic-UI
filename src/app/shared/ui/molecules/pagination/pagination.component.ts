@@ -59,21 +59,21 @@ import { CommonModule } from '@angular/common';
     .pagination {
       display: flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: var(--space-1);
     }
 
     .page-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 2rem;
-      height: 2rem;
-      padding: 0 0.5rem;
-      background: var(--surface-background, #ffffff);
-      border: 1px solid var(--border-color, #e5e7eb);
-      border-radius: 0.375rem;
-      font-size: 0.875rem;
-      color: var(--text-color, #1f2937);
+      min-width: var(--control-height-sm);
+      height: var(--control-height-sm);
+      padding: 0 var(--space-2);
+      background: var(--surface-background);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      color: var(--text-color);
       cursor: pointer;
       transition: all 150ms ease;
     }
@@ -81,18 +81,18 @@ import { CommonModule } from '@angular/common';
     .pagination-sm .page-btn {
       min-width: 1.75rem;
       height: 1.75rem;
-      font-size: 0.75rem;
+      font-size: var(--text-xs);
     }
 
     .pagination-lg .page-btn {
       min-width: 2.5rem;
       height: 2.5rem;
-      font-size: 1rem;
+      font-size: var(--text-md);
     }
 
     .page-btn:hover:not(:disabled):not(.active) {
-      background: var(--surface-elevated, #f3f4f6);
-      border-color: var(--primary-color, #793576);
+      background: var(--surface-hover);
+      border-color: var(--primary-color);
     }
 
     .page-btn:disabled {
@@ -101,39 +101,25 @@ import { CommonModule } from '@angular/common';
     }
 
     .page-btn.active {
-      background: var(--primary-color, #793576);
-      border-color: var(--primary-color, #793576);
-      color: white;
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: var(--text-color-on-primary);
     }
 
     .page-ellipsis {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 2rem;
-      color: var(--text-color-muted, #9ca3af);
-      font-size: 0.875rem;
+      width: var(--control-height-sm);
+      color: var(--text-color-muted);
+      font-size: var(--text-sm);
     }
 
-    /* Dark mode */
-    :host-context(html.dark) .page-btn,
-    :host-context([data-theme="dark"]) .page-btn {
-      background: var(--surface-section, #1f2937);
-      border-color: var(--border-color, #374151);
-    }
-
-    :host-context(html.dark) .page-btn:hover:not(:disabled):not(.active),
-    :host-context([data-theme="dark"]) .page-btn:hover:not(:disabled):not(.active) {
-      background: var(--surface-elevated, #374151);
-      border-color: var(--primary-color-light, #bc9abb);
-    }
-
-    :host-context(html.dark) .page-btn.active,
-    :host-context([data-theme="dark"]) .page-btn.active {
-      background: var(--primary-color-light, #bc9abb);
-      border-color: var(--primary-color-light, #bc9abb);
-      color: #1f2937;
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --surface-background, --border-color, --primary-color, --surface-hover
+     * ya tienen valores apropiados para temas oscuros.
+     */
   `]
 })
 export class PaginationComponent {

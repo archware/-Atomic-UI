@@ -38,7 +38,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     .toggle-wrapper {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: var(--space-3);
       cursor: pointer;
       user-select: none;
     }
@@ -69,9 +69,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       display: block;
       width: 24px;
       height: 24px;
-      background: white;
+      background: var(--surface-background);
       border-radius: 50%;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-sm);
       transition: transform 200ms ease;
     }
 
@@ -91,50 +91,20 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
     /* Focus */
     .toggle-input:focus-visible + .toggle-track {
-      box-shadow: 0 0 0 3px rgba(121, 53, 118, 0.2);
+      box-shadow: var(--shadow-focus-primary);
     }
 
     .toggle-label {
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       color: var(--text-color);
       line-height: 1.4;
     }
 
-    /* Dark Mode */
-    :host-context(.dark) .toggle-track,
-    :host-context([data-theme="dark"]) .toggle-track {
-      background: var(--border-color);
-    }
-
-    :host-context(.dark) .toggle-thumb,
-    :host-context([data-theme="dark"]) .toggle-thumb {
-      background: var(--surface-background);
-    }
-
-    :host-context(.dark) .toggle-wrapper:hover:not(.disabled) .toggle-track,
-    :host-context([data-theme="dark"]) .toggle-wrapper:hover:not(.disabled) .toggle-track {
-      background: var(--text-color-secondary);
-    }
-
-    :host-context(.dark) .toggle-input:checked + .toggle-track,
-    :host-context([data-theme="dark"]) .toggle-input:checked + .toggle-track {
-      background: var(--primary-color-light);
-    }
-
-    :host-context(.dark) .toggle-input:checked + .toggle-track .toggle-thumb,
-    :host-context([data-theme="dark"]) .toggle-input:checked + .toggle-track .toggle-thumb {
-      background: #1f2937;
-    }
-
-    :host-context(.dark) .toggle-input:focus-visible + .toggle-track,
-    :host-context([data-theme="dark"]) .toggle-input:focus-visible + .toggle-track {
-      box-shadow: 0 0 0 3px rgba(188, 154, 187, 0.3);
-    }
-
-    :host-context(.dark) .toggle-label,
-    :host-context([data-theme="dark"]) .toggle-label {
-      color: var(--text-color);
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --border-color, --surface-background, --primary-color, --shadow-focus-primary
+     * ya tienen valores apropiados para temas oscuros.
+     */
   `]
 })
 export class ToggleComponent implements ControlValueAccessor {

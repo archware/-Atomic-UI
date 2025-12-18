@@ -158,8 +158,14 @@ export class AvatarComponent {
   });
 
   private readonly colors = [
-    '#793576', '#23a7d4', '#10b981', '#f59e0b',
-    '#6366f1', '#ec4899', '#8b5cf6', '#14b8a6'
+    'var(--purple-600)',
+    'var(--sky-500)',
+    'var(--green-500)',
+    'var(--yellow-500)',
+    'var(--blue-500)',
+    'var(--pink-500)',
+    'var(--purple-500)',
+    'var(--teal-500)'
   ];
 
   colorFromName = computed(() => {

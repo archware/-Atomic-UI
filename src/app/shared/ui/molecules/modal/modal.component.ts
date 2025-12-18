@@ -44,7 +44,7 @@ import { CommonModule } from '@angular/common';
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: var(--overlay-backdrop);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -58,10 +58,10 @@ import { CommonModule } from '@angular/common';
     }
 
     .modal {
-      background: var(--surface-background, #ffffff);
-      border-radius: 0.75rem;
+      background: var(--surface-background);
+      border-radius: var(--radius-lg);
       width: 90%;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      box-shadow: var(--shadow-xl);
       animation: slideUp 200ms ease;
       display: flex;
       flex-direction: column;
@@ -82,66 +82,55 @@ import { CommonModule } from '@angular/common';
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 1.25rem;
-      border-bottom: 1px solid var(--border-color, #e5e7eb);
+      padding: var(--space-4) var(--space-5);
+      border-bottom: 1px solid var(--border-color);
     }
 
     .modal-title {
-      font-size: 1.125rem;
+      font-size: var(--text-lg);
       font-weight: 600;
-      color: var(--text-color, #111827);
+      color: var(--text-color);
       margin: 0;
     }
 
     .modal-close {
-      width: 2rem;
-      height: 2rem;
+      width: var(--control-height-sm);
+      height: var(--control-height-sm);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
-      color: var(--text-color-secondary, #6b7280);
+      font-size: var(--text-2xl);
+      color: var(--text-color-secondary);
       background: transparent;
       border: none;
-      border-radius: 0.375rem;
+      border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 150ms ease;
     }
 
     .modal-close:hover {
-      background: var(--surface-section, #f3f4f6);
-      color: var(--text-color, #111827);
+      background: var(--surface-hover);
+      color: var(--text-color);
     }
 
     .modal-body {
-      padding: 1.25rem;
+      padding: var(--space-5);
       overflow-y: auto;
     }
 
     .modal-footer {
       display: flex;
       justify-content: flex-end;
-      gap: 0.75rem;
-      padding: 1rem 1.25rem;
-      border-top: 1px solid var(--border-color, #e5e7eb);
+      gap: var(--space-3);
+      padding: var(--space-4) var(--space-5);
+      border-top: 1px solid var(--border-color);
     }
 
-    /* Dark Mode */
-    :host-context(.dark) .modal,
-    :host-context([data-theme="dark"]) .modal {
-      background: var(--surface-section, #1f2937);
-    }
-
-    :host-context(.dark) .modal-close:hover,
-    :host-context([data-theme="dark"]) .modal-close:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #f3f4f6;
-    }
-
-    :host-context(.dark) .modal-title,
-    :host-context([data-theme="dark"]) .modal-title {
-      color: #f3f4f6;
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --surface-background, --overlay-backdrop, --surface-hover
+     * ya tienen valores apropiados para temas oscuros.
+     */
   `]
 })
 export class ModalComponent {

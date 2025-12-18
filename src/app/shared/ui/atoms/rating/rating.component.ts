@@ -31,7 +31,7 @@ import { CommonModule } from '@angular/common';
     .rating {
       display: inline-flex;
       align-items: center;
-      gap: 0.125rem;
+      gap: var(--space-1);
     }
 
     .rating-sm .star { width: 1rem; height: 1rem; }
@@ -42,22 +42,23 @@ import { CommonModule } from '@angular/common';
       padding: 0;
       background: none;
       border: none;
-      color: var(--border-color, #d1d5db);
+      color: var(--rating-star-empty);
       cursor: pointer;
       transition: all 150ms ease;
     }
 
     .star:hover:not(:disabled) {
       transform: scale(1.1);
+      color: var(--rating-star-hover);
     }
 
     .star.filled {
-      color: #fbbf24;
+      color: var(--rating-star-filled);
     }
 
     .star.half {
       position: relative;
-      color: var(--border-color, #d1d5db);
+      color: var(--rating-star-empty);
     }
 
     .star.half::before {
@@ -68,7 +69,7 @@ import { CommonModule } from '@angular/common';
       width: 50%;
       height: 100%;
       overflow: hidden;
-      color: #fbbf24;
+      color: var(--rating-star-filled);
     }
 
     .star svg {
@@ -82,22 +83,17 @@ import { CommonModule } from '@angular/common';
     }
 
     .rating-value {
-      margin-left: 0.5rem;
-      font-size: 0.875rem;
+      margin-left: var(--space-2);
+      font-size: var(--text-sm);
       font-weight: 500;
-      color: var(--text-color-secondary, #6b7280);
+      color: var(--text-color-secondary);
     }
 
-    /* Dark mode */
-    :host-context(html.dark) .star,
-    :host-context([data-theme="dark"]) .star {
-      color: var(--border-color, #4b5563);
-    }
-
-    :host-context(html.dark) .star.filled,
-    :host-context([data-theme="dark"]) .star.filled {
-      color: #fcd34d;
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --rating-star-empty/filled/hover ya tienen valores apropiados
+     * para temas oscuros.
+     */
   `]
 })
 export class RatingComponent {

@@ -55,8 +55,8 @@
    --table-hover-secondary: var(--brand-secondary-50);
 
    /* === FORMULARIOS / INPUTS === */
-   --control-height: 2.875rem;
-   /* 46px standard */
+   --control-height: var(--control-height-md);
+   /* Derivado de primitivos - 46px standard */
    --input-bg: var(--surface-background);
    --input-border: var(--border-color);
    --input-border-hover: var(--border-color-strong);

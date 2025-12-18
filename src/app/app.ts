@@ -16,6 +16,7 @@ import { Select2Component, Select2Option } from './shared/ui/molecules/select2/s
 import { RowComponent } from './shared/ui/atoms/row/row.component';
 import { ButtonComponent } from './shared/ui/atoms/button/button.component';
 import { TextComponent } from './shared/ui/atoms/text/text.component';
+import { ChipComponent } from './shared/ui/atoms/chip/chip.component';
 import { DatepickerComponent } from './shared/ui/molecules/datepicker/datepicker.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -53,6 +54,7 @@ interface TableRow {
     ButtonComponent,
     TextComponent,
     DatepickerComponent,
+    ChipComponent,
     TranslateModule
   ],
   templateUrl: './app.html',

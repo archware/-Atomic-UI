@@ -83,48 +83,41 @@
     @defer (on viewport) {
     <app-ui-showcase></app-ui-showcase>
     } @placeholder {
-    <div class="p-8 text-center text-gray-500">
-      <p>Cargando ejemplos...</p>
+    <div class="loading-placeholder">
+      <app-text variant="body" color="muted">Cargando ejemplos...</app-text>
     </div>
     }
   </div>
 
-  <!-- Text Component Demo -->
   <!-- Information Panels -->
-  <app-row columns="repeat(auto-fit, minmax(300px, 1fr))" gap="1rem" class="mt-6">
+  <app-row columns="repeat(auto-fit, minmax(300px, 1fr))" gap="1rem" class="info-row">
     <!-- Project Info Panel -->
     <app-panel [title]="'demo.project.title' | translate" variant="plain" padding="md" titleAlign="center"
       titleWeight="bold">
-      <app-text variant="h3" weight="bold" class="mb-2">{{ 'demo.project.subtitle' | translate }}</app-text>
-      <app-text variant="body" class="mb-4">
+      <app-text variant="h3" weight="bold" class="mb-sm">{{ 'demo.project.subtitle' | translate }}</app-text>
+      <app-text variant="body" class="mb-md">
         {{ 'demo.project.description' | translate }}
       </app-text>
-      <div class="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-800">
-        <app-text variant="caption" class="text-blue-700 dark:text-blue-300">
+      <app-panel variant="flat" padding="sm" class="tech-panel">
+        <app-text variant="caption" color="primary">
           💡 {{ 'demo.project.tech' | translate }}
         </app-text>
-      </div>
+      </app-panel>
     </app-panel>
 
     <!-- Components Info Panel -->
     <app-panel [title]="'demo.components.title' | translate" variant="floating" padding="md" titleAlign="center"
       titleWeight="bold">
-      <app-text variant="h3" weight="bold" class="mb-2">{{ 'demo.components.subtitle' | translate }}</app-text>
+      <app-text variant="h3" weight="bold" class="mb-sm">{{ 'demo.components.subtitle' | translate }}</app-text>
       <app-text variant="body">
         {{ 'demo.components.description' | translate }}
       </app-text>
       <!-- Stack of badges/chips for visual flair -->
-      <div class="flex flex-wrap gap-2 mt-4">
-        <span
-          class="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">Atoms</span>
-        <span
-          class="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">Molecules</span>
-        <span
-          class="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">Organisms</span>
-      </div>
+      <app-row gap="0.5rem" class="mt-md" wrap="wrap">
+        <app-chip label="Atoms" variant="default" size="sm"></app-chip>
+        <app-chip label="Molecules" variant="default" size="sm"></app-chip>
+        <app-chip label="Organisms" variant="default" size="sm"></app-chip>
+      </app-row>
     </app-panel>
   </app-row>
-
-
-
 </app-layout-shell>
