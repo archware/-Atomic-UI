@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, forwardRef, signal } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -30,6 +30,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       <input
         #inputEl
         class="floating-input"
+        [id]="inputId()"
         [type]="actualType()"
         [disabled]="disabled"
         [readonly]="readonly"
@@ -40,7 +41,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
         (blur)="onBlur()"
         [attr.placeholder]="variant === 'floating' || variant === 'material' ? ' ' : placeholder"
       />
-      <label class="floating-label">{{ label }}</label>
+      <label class="floating-label" [attr.for]="inputId()">{{ label }}</label>
       <span class="input-line"></span>
       
       <!-- Icon button (password toggle or custom icon) -->
@@ -169,10 +170,11 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     .variant-floating .floating-input {
       height: var(--control-height);
       /* padding inherited from base: 0 0.875rem */
-      border: 1px solid var(--input-border);
+      border: var(--input-border-width, 1.5px) solid var(--input-border);
       border-radius: 0.5rem;
       background: var(--input-bg);
       font-size: 0.875rem;
+      box-shadow: var(--input-shadow);
     }
 
     .variant-floating .floating-label {
@@ -209,7 +211,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     .variant-underline .floating-label {
       left: 0;
-      font-size: 0.875rem;
+      /* font-size hereda de .floating-label base (1.0625rem) */
     }
 
     .variant-underline.focused .floating-label,
@@ -259,8 +261,9 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       height: var(--control-height);
       /* padding inherited from base: 0 0.875rem */
       font-size: 0.875rem;
-      border: 1px solid var(--input-border);
+      border: var(--input-border-width, 1.5px) solid var(--input-border);
       border-radius: 0.5rem;
+      box-shadow: var(--input-shadow);
     }
 
     .variant-outline .floating-label {
@@ -375,6 +378,10 @@ export class FloatingInputComponent implements ControlValueAccessor {
   @Input() value: string | number = '';
   isFocused = signal(false);
   showPassword = signal(false);
+
+  // Generate unique ID for accessibility (label-for association)
+  private static instanceCounter = 0;
+  readonly inputId = computed(() => `floating-input-${FloatingInputComponent.instanceCounter++}`);
 
   onChange: (value: string | number) => void = () => { /* noop */ };
   onTouched: () => void = () => { /* noop */ };

@@ -51,6 +51,12 @@ export { TextComponent } from './atoms/text/text.component';
 
 export { ToggleComponent } from './atoms/toggle/toggle.component';
 
+export { TextareaComponent } from './atoms/textarea/textarea.component';
+export type { TextareaVariant } from './atoms/textarea/textarea.component';
+
+export { RadioComponent } from './atoms/radio/radio.component';
+export type { RadioOption } from './atoms/radio/radio.component';
+
 export { TableComponent } from './atoms/table/table.component';
 export { TableHeadComponent } from './atoms/table/table-head.component';
 export { TableRowComponent } from './atoms/table/table-row.component';
@@ -59,6 +65,9 @@ export { TableCellComponent } from './atoms/table/table-cell.component';
 // ============================================
 // MOLECULES - Combinación de átomos
 // ============================================
+export { CardComponent } from './molecules/card/card.component';
+export type { CardVariant, CardSize } from './molecules/card/card.component';
+
 export { DatepickerComponent } from './molecules/datepicker/datepicker.component';
 
 export { DropdownComponent } from './molecules/dropdown/dropdown.component';
@@ -75,6 +84,16 @@ export { TableActionsComponent } from './molecules/table-actions/table-actions.c
 
 export { ToastComponent } from './molecules/toast/toast.component';
 export type { ToastConfig, ToastType } from './molecules/toast/toast.component';
+export { ToastService } from './services/toast.service';
+export type { ToastItem } from './services/toast.service';
+
+export { PopupContainerComponent } from './molecules/popup/popup-container.component';
+export { PopupService } from './services/popup.service';
+export type { PopupConfig, PopupItem, PopupButton, PopupSize, PopupType } from './services/popup.service';
+
+export { ModalContainerComponent } from './molecules/modal/modal-container.component';
+export { ModalService } from './services/modal.service';
+export type { ModalConfig, ModalItem, ModalButton, ModalSize } from './services/modal.service';
 
 export { UserMenuComponent } from './molecules/user-menu/user-menu.component';
 

@@ -18,6 +18,9 @@ import { ButtonComponent } from './shared/ui/atoms/button/button.component';
 import { TextComponent } from './shared/ui/atoms/text/text.component';
 import { ChipComponent } from './shared/ui/atoms/chip/chip.component';
 import { DatepickerComponent } from './shared/ui/molecules/datepicker/datepicker.component';
+import { ToastComponent } from './shared/ui/molecules/toast/toast.component';
+import { PopupContainerComponent } from './shared/ui/molecules/popup/popup-container.component';
+import { ModalContainerComponent } from './shared/ui/molecules/modal/modal-container.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 interface TableRow {
@@ -55,6 +58,9 @@ interface TableRow {
     TextComponent,
     DatepickerComponent,
     ChipComponent,
+    ToastComponent,
+    PopupContainerComponent,
+    ModalContainerComponent,
     TranslateModule
   ],
   templateUrl: './app.html',
@@ -156,9 +162,9 @@ export class App {
     alert('Cerrando sesión...');
   }
 
-  onView(row: TableRow) { }
-  onEdit(row: TableRow) { }
-  onDelete(row: TableRow) { }
+  onView(_row: TableRow) { }
+  onEdit(_row: TableRow) { }
+  onDelete(_row: TableRow) { }
 
   // Datos de ejemplo con claves de traducción
   private nombres = ['Juan Pérez', 'María García', 'Carlos López', 'Ana Martínez', 'Pedro Sánchez', 'Laura Torres', 'Diego Ramírez', 'Sofia Herrera'];

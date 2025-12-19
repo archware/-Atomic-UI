@@ -157,11 +157,11 @@ export interface Step {
     .step-connector {
       flex: 1;
       height: 3px;
-      min-width: 3rem;
-      margin: 1.375rem var(--space-2) 0;
+      min-width: var(--space-12, 3rem);
+      margin: var(--space-5, 1.375rem) var(--space-2) 0;
       background: var(--border-color);
       transition: background 300ms ease;
-      border-radius: 4px;
+      border-radius: var(--radius-xs, 4px);
     }
 
     .step-connector.completed {
@@ -175,9 +175,9 @@ export interface Step {
 
     .stepper-vertical .step-connector {
       width: 3px;
-      height: 2.5rem;
+      height: var(--space-10, 2.5rem);
       min-width: 3px;
-      margin: var(--space-1) 0 var(--space-1) 1.375rem;
+      margin: var(--space-1) 0 var(--space-1) var(--space-5, 1.375rem);
     }
 
     /* 
@@ -221,9 +221,9 @@ export interface Step {
 
       .stepper .step-connector {
         width: 3px;
-        height: 1.5rem;
+        height: var(--space-6);
         min-width: 3px;
-        margin: 0 0 0 0.9375rem;
+        margin: 0 0 0 var(--space-4, 0.9375rem);
       }
     }
   `]

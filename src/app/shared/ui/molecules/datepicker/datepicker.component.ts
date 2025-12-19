@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, forwardRef, signal, computed, ElementRef, HostListener } from '@angular/core';
+import { Component, Input, forwardRef, signal, computed, ElementRef, HostListener, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FloatingInputComponent, FloatingInputVariant } from '../../atoms/floating-input/floating-input.component';
@@ -41,7 +41,8 @@ export class DatepickerComponent implements ControlValueAccessor {
   onChange: (value: Date | null) => void = () => { };
   onTouched: () => void = () => { };
 
-  constructor(private elementRef: ElementRef, private datePipe: DatePipe) { }
+  private readonly elementRef = inject(ElementRef);
+  private readonly datePipe = inject(DatePipe);
 
   // Computed Properties
   formattedValue = computed(() => {
@@ -191,7 +192,7 @@ export class DatepickerComponent implements ControlValueAccessor {
   }
 
   // CVA Implementation
-  writeValue(obj: any): void {
+  writeValue(obj: Date | string | null): void {
     if (obj instanceof Date) {
       this.value.set(obj);
     } else if (typeof obj === 'string') {
@@ -206,11 +207,11 @@ export class DatepickerComponent implements ControlValueAccessor {
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: Date | null) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 

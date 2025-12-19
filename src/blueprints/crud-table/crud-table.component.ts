@@ -18,8 +18,6 @@ import {
   ModalComponent,
   FloatingInputComponent,
   LoaderComponent,
-  ToastComponent,
-  ThemeService,
   ApiService,
   useApi
 } from '@shared/ui';
@@ -129,6 +127,8 @@ export class CrudTableComponent implements OnInit {
   // ============================================
   // STATE
   // ============================================
+
+  private _searchTimeout?: ReturnType<typeof setTimeout>;
 
   /** List API state */
   listApi = useApi<PaginatedResponse<Entity>>();
@@ -272,8 +272,8 @@ export class CrudTableComponent implements OnInit {
     this.searchTerm.set(input.value);
 
     // Debounce search
-    clearTimeout((this as any)._searchTimeout);
-    (this as any)._searchTimeout = setTimeout(() => {
+    clearTimeout(this._searchTimeout);
+    this._searchTimeout = setTimeout(() => {
       this.filters.update(f => ({ ...f, search: input.value }));
       this.currentPage.set(1);
       this.loadData();
@@ -442,15 +442,15 @@ export class CrudTableComponent implements OnInit {
     const ids = Array.from(this.selectedItems());
     if (ids.length === 0) return;
 
-    // @customize Implement bulk delete API call
-    console.log('Bulk delete:', ids);
+    // TODO: Implement bulk delete API call
+    // Example: this.api.post('/bulk-delete', { ids }).subscribe(() => this.loadData());
     this.clearSelection();
   }
 
   bulkExport(): void {
-    const ids = Array.from(this.selectedItems());
-    console.log('Export:', ids.length > 0 ? ids : 'all');
-    // @customize Implement export functionality
+    const _ids = Array.from(this.selectedItems());
+    // TODO: Implement export functionality
+    // Example: this.api.downloadFile('/export', { ids: ids.length > 0 ? ids : 'all' });
   }
 
   // ============================================

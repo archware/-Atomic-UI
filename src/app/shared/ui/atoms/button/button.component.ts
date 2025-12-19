@@ -88,11 +88,11 @@ export type IconPosition = 'left' | 'right' | 'none';
 
     /* Apply margin only when slot has content */
     .btn-icon-wrapper--left:has(*) {
-      margin-right: 0.5rem;
+      margin-right: var(--space-2);
     }
 
     .btn-icon-wrapper--right:has(*) {
-      margin-left: 0.5rem;
+      margin-left: var(--space-2);
     }
 
     /* Size-specific icon adjustments */
@@ -128,13 +128,13 @@ export class ButtonComponent {
    * Emoji or text icon to display.
    * For custom icons (SVG, FontAwesome), use content projection with `icon-left` or `icon-right` attribute.
    */
-  @Input() icon: string = '';
+  @Input() icon = '';
 
   /** 
    * CSS class for font icons (e.g. 'fa-solid fa-save').
    * Use this for font icons instead of content projection.
    */
-  @Input() iconClass: string = '';
+  @Input() iconClass = '';
 
   /** 
    * Position of the emoji/text icon.
@@ -146,12 +146,13 @@ export class ButtonComponent {
    * Whether the button is disabled.
    * @default false
    */
-  @Input() disabled: boolean = false;
+  @Input() disabled = false;
 
   /** 
    * Emits when the button is clicked.
    * Does not emit when disabled.
    */
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() onClick = new EventEmitter<MouseEvent>();
 
   /** @internal */

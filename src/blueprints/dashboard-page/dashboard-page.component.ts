@@ -45,7 +45,7 @@ interface DashboardStats {
  * Menu item interface for sidebar navigation
  */
 interface MenuItem {
-  id: string;
+  id?: string;
   label: string;
   icon: string;
   route?: string;
@@ -248,6 +248,7 @@ export class DashboardPageComponent implements OnInit {
     this.sidebarVisible.set(false);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onMenuItemClick(item: any): void {
     this.activeMenuItem.set(item.id || item.label);
 
@@ -281,7 +282,8 @@ export class DashboardPageComponent implements OnInit {
         this.router.navigate(['/dashboard/change-password']);
         break;
       default:
-        console.log('Unknown action:', action);
+        // TODO: Implementar logging service para acciones desconocidas
+        break;
     }
   }
 

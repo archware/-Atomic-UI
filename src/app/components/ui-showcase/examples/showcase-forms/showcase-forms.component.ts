@@ -7,6 +7,10 @@ import { DatepickerComponent } from '../../../../shared/ui/molecules/datepicker/
 import { FormRowComponent } from '../../../../shared/ui/atoms/form-row/form-row.component';
 import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
 import { DropdownComponent, DropdownOption } from '../../../../shared/ui/molecules/dropdown/dropdown.component';
+import { TextareaComponent } from '../../../../shared/ui/atoms/textarea/textarea.component';
+import { RadioComponent, RadioOption } from '../../../../shared/ui/atoms/radio/radio.component';
+import { CheckboxComponent } from '../../../../shared/ui/atoms/checkbox/checkbox.component';
+import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.component';
 
 @Component({
   selector: 'app-showcase-forms',
@@ -19,7 +23,11 @@ import { DropdownComponent, DropdownOption } from '../../../../shared/ui/molecul
     DatepickerComponent,
     FormRowComponent,
     RowComponent,
-    DropdownComponent
+    DropdownComponent,
+    TextareaComponent,
+    RadioComponent,
+    CheckboxComponent,
+    ButtonComponent
   ],
   template: `
     <!-- FLOATING INPUTS -->
@@ -205,69 +213,77 @@ import { DropdownComponent, DropdownOption } from '../../../../shared/ui/molecul
 
     <!-- FORMULARIO -->
     <section class="showcase-section">
-      <h3 class="section-title">Formulario</h3>
+      <h3 class="section-title">Formulario con Componentes Atomic</h3>
       <form class="showcase-form">
-        <div class="form-group">
-          <label class="form-label">Nombre completo</label>
-          <input type="text" class="form-input" placeholder="Ingrese su nombre" [(ngModel)]="formData.name" name="name">
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Correo electrónico</label>
-          <input type="email" class="form-input" placeholder="ejemplo@correo.com" [(ngModel)]="formData.email" name="email">
-        </div>
-        
+        <!-- Fila 1: Nombre y Email -->
         <app-form-row>
-          <div class="form-group">
-            <label class="form-label">Teléfono</label>
-            <input type="tel" class="form-input" placeholder="+1 234 567 890" [(ngModel)]="formData.phone" name="phone">
-          </div>
-          <div class="form-group">
-            <label class="form-label">País</label>
-            <select class="form-select" [(ngModel)]="formData.country" name="country">
-              <option value="">Seleccionar...</option>
-              <option value="mx">México</option>
-              <option value="us">Estados Unidos</option>
-              <option value="es">España</option>
-              <option value="ar">Argentina</option>
-            </select>
-          </div>
+          <app-floating-input 
+            variant="floating" 
+            label="Nombre completo" 
+            [(ngModel)]="formData.name"
+            name="name"
+          ></app-floating-input>
+          
+          <app-floating-input 
+            variant="floating" 
+            label="Correo electrónico" 
+            type="email"
+            [(ngModel)]="formData.email"
+            name="email"
+          ></app-floating-input>
         </app-form-row>
         
-        <div class="form-group">
-          <label class="form-label">Mensaje</label>
-          <textarea class="form-textarea" rows="3" placeholder="Escriba su mensaje..." [(ngModel)]="formData.message" name="message"></textarea>
-        </div>
+        <!-- Fila 2: Teléfono y País -->
+        <app-form-row>
+          <app-floating-input 
+            variant="floating" 
+            label="Teléfono" 
+            type="tel"
+            [(ngModel)]="formData.phone"
+            name="phone"
+          ></app-floating-input>
+          
+          <app-select2 
+            label="País"
+            [options]="formSelect2Options" 
+            [(ngModel)]="formData.country"
+            name="country"
+            placeholder="Seleccionar..."
+          ></app-select2>
+        </app-form-row>
         
-        <div class="form-group">
-          <label class="checkbox-label">
-            <input type="checkbox" class="form-checkbox" [(ngModel)]="formData.terms" name="terms">
-            <span>Acepto los términos y condiciones</span>
-          </label>
-        </div>
+        <!-- Mensaje -->
+        <app-textarea 
+          label="Mensaje" 
+          variant="floating"
+          [rows]="4"
+          [maxlength]="500"
+          [(ngModel)]="formData.message"
+          name="message"
+        ></app-textarea>
         
-        <div class="form-group">
-          <label class="form-label">Preferencias</label>
-          <div class="radio-group">
-            <label class="radio-label">
-              <input type="radio" name="preference" value="email" [(ngModel)]="formData.preference">
-              <span>Email</span>
-            </label>
-            <label class="radio-label">
-              <input type="radio" name="preference" value="phone" [(ngModel)]="formData.preference">
-              <span>Teléfono</span>
-            </label>
-            <label class="radio-label">
-              <input type="radio" name="preference" value="both" [(ngModel)]="formData.preference">
-              <span>Ambos</span>
-            </label>
-          </div>
-        </div>
+        <!-- Checkbox y Radio en fila -->
+        <app-form-row>
+          <app-checkbox 
+            label="Acepto los términos y condiciones" 
+            [(ngModel)]="formData.terms"
+            name="terms"
+          ></app-checkbox>
+          
+          <app-radio 
+            label="Preferencia de contacto"
+            name="preference"
+            [options]="preferenceOptions"
+            direction="horizontal"
+            [(ngModel)]="formData.preference"
+          ></app-radio>
+        </app-form-row>
         
-        <div class="form-actions">
-          <button type="button" class="btn btn-outline">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Enviar</button>
-        </div>
+        <!-- Botones -->
+        <app-row columns="auto auto" gap="1rem" align="right">
+          <app-button variant="outline" (onClick)="onCancel()">Cancelar</app-button>
+          <app-button variant="primary" type="submit" (onClick)="onSubmit()">Enviar</app-button>
+        </app-row>
       </form>
     </section>
   `,
@@ -337,6 +353,33 @@ export class ShowcaseFormsComponent {
     { value: 'cl', label: 'Chile', icon: '🇨🇱' }
   ];
 
+  // Radio options
+  preferenceOptions: RadioOption[] = [
+    { value: 'email', label: 'Email' },
+    { value: 'phone', label: 'Teléfono' },
+    { value: 'both', label: 'Ambos' }
+  ];
+
+  // Country options for form (sin iconos)
+  formCountryOptions: DropdownOption[] = [
+    { value: 'pe', label: 'Perú' },
+    { value: 'mx', label: 'México' },
+    { value: 'co', label: 'Colombia' },
+    { value: 'ar', label: 'Argentina' },
+    { value: 'es', label: 'España' },
+    { value: 'us', label: 'Estados Unidos' }
+  ];
+
+  // Country options for form (Select2 format)
+  formSelect2Options: Select2Option[] = [
+    { value: 'pe', label: 'Perú' },
+    { value: 'mx', label: 'México' },
+    { value: 'co', label: 'Colombia' },
+    { value: 'ar', label: 'Argentina' },
+    { value: 'es', label: 'España' },
+    { value: 'us', label: 'Estados Unidos' }
+  ];
+
   // Form Data
   formData = {
     name: '',
@@ -347,4 +390,21 @@ export class ShowcaseFormsComponent {
     terms: false,
     preference: 'email'
   };
+
+  onCancel(): void {
+    // Reset form
+    this.formData = {
+      name: '',
+      email: '',
+      phone: '',
+      country: '',
+      message: '',
+      terms: false,
+      preference: 'email'
+    };
+  }
+
+  onSubmit(): void {
+    console.log('Formulario enviado:', this.formData);
+  }
 }

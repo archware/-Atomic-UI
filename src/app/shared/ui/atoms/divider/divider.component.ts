@@ -30,7 +30,7 @@ import { CommonModule } from '@angular/common';
     :host {
       display: block;
       width: 100%;
-      margin: 1.5rem 0;
+      margin: var(--space-6) 0;
     }
 
     .divider {
@@ -49,8 +49,8 @@ import { CommonModule } from '@angular/common';
     }
 
     .divider-text {
-      padding: 0 0.75rem;
-      font-size: 0.75rem;
+      padding: 0 var(--space-3);
+      font-size: var(--text-xs);
       font-weight: 500;
       color: var(--text-color-secondary);
       text-transform: uppercase;

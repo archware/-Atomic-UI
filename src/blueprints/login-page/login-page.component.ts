@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -124,8 +124,8 @@ export class LoginPageComponent {
   // ============================================
 
   loginForm = this.fb.group({
-    email: ['demo@example.com', [Validators.required, Validators.email]],
-    password: ['123456', [Validators.required, Validators.minLength(6)]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
     rememberMe: [false]
   });
 
@@ -188,7 +188,7 @@ export class LoginPageComponent {
       return;
     }
 
-    const { email, password, rememberMe } = this.loginForm.value;
+    const { email, rememberMe } = this.loginForm.value;
 
     // MOCK LOGIN FOR DEMO PURPOSE (Enable real API by uncommenting line below)
     this.loginApi.execute(
@@ -208,17 +208,15 @@ export class LoginPageComponent {
       // this.api.post<LoginResponse>('/auth/login', { email, password })
     );
 
-    // Handle successful login
-    // Note: In production, use effect() or subscribe to handle async response
-    const checkLogin = setInterval(() => {
+    // Handle successful login using effect() for automatic cleanup
+    effect(() => {
       if (this.loginApi.success()) {
-        clearInterval(checkLogin);
         const response = this.loginApi.data();
         if (response) {
           this.handleLoginSuccess(response, rememberMe ?? false);
         }
       }
-    }, 100);
+    });
   }
 
   onRegister(): void {
@@ -253,16 +251,15 @@ export class LoginPageComponent {
       this.api.post<ForgotPasswordResponse>('/auth/forgot-password', { email })
     );
 
-    // Handle success
-    const checkForgot = setInterval(() => {
+    // Handle success using effect() for automatic cleanup
+    effect(() => {
       if (this.forgotApi.success()) {
-        clearInterval(checkForgot);
         const response = this.forgotApi.data();
         if (response) {
           this.forgotSuccessMessage.set(response.message || 'Se ha enviado un correo con instrucciones');
         }
       }
-    }, 100);
+    });
   }
 
   // ============================================
@@ -270,7 +267,8 @@ export class LoginPageComponent {
   // ============================================
 
   private handleLoginSuccess(response: LoginResponse, rememberMe: boolean): void {
-    // Store token
+    // TODO: SECURITY - Migrar a cookies HttpOnly cuando el backend lo soporte
+    // Los tokens en localStorage son vulnerables a ataques XSS
     const storage = rememberMe ? localStorage : sessionStorage;
     storage.setItem(this.TOKEN_KEY, response.token);
 

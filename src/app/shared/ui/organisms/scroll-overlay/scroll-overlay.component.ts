@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 
 type ListenerUnsubscriber = () => void;
 
@@ -186,7 +186,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   private _disableVertical = false;
   private _disableHorizontal = false;
 
-  constructor(private readonly elementRef: ElementRef<HTMLElement>) { }
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
   ngAfterViewInit(): void {
     if (!this.isBrowser) {
@@ -275,7 +275,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     this.updateVerticalMaxHeight(value);
   }
 
-  private resolveScrollElements(isInitial = false): void {
+  private resolveScrollElements(_isInitial = false): void {
     const host = this.elementRef.nativeElement;
     host.querySelectorAll('[data-so-horizontal-temp]').forEach((el) => {
       el.removeAttribute('data-so-horizontal');
@@ -391,8 +391,8 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
   private attachListeners(): void {
     const host = this.hostEl;
-    const barY = this.barYRef.nativeElement;
-    const barX = this.barXRef.nativeElement;
+    const _barY = this.barYRef.nativeElement;
+    const _barX = this.barXRef.nativeElement;
     const thumbY = this.thumbYRef.nativeElement;
     const thumbX = this.thumbXRef.nativeElement;
 
@@ -931,7 +931,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     event.preventDefault();
   }
 
-  private endDragY(event: PointerEvent): void {
+  private endDragY(_event: PointerEvent): void {
     if (!this.draggingY) {
       return;
     }
@@ -972,7 +972,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     event.preventDefault();
   }
 
-  private endDragX(event: PointerEvent): void {
+  private endDragX(_event: PointerEvent): void {
     if (!this.draggingX) {
       return;
     }

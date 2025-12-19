@@ -55,7 +55,7 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
     }
 
     .avatar-rounded {
-      border-radius: 0.5rem;
+      border-radius: var(--radius-md);
     }
 
     /* Variants */
@@ -66,11 +66,11 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
     .avatar-danger { background-color: var(--danger-color-lighter); color: var(--danger-color); }
     .avatar-info { background-color: var(--info-color-lighter); color: var(--info-color); }
 
-    .avatar-xs { width: 1.5rem; height: 1.5rem; font-size: 0.625rem; }
-    .avatar-sm { width: 2rem; height: 2rem; font-size: 0.75rem; }
-    .avatar-md { width: 2.5rem; height: 2.5rem; font-size: 0.875rem; }
-    .avatar-lg { width: 3rem; height: 3rem; font-size: 1.25rem; }
-    .avatar-xl { width: 4rem; height: 4rem; font-size: 1.5rem; }
+    .avatar-xs { width: var(--avatar-size-xs, 1.5rem); height: var(--avatar-size-xs, 1.5rem); font-size: var(--text-xs); }
+    .avatar-sm { width: var(--avatar-size-sm, 2rem); height: var(--avatar-size-sm, 2rem); font-size: var(--text-xs); }
+    .avatar-md { width: var(--avatar-size-md, 2.5rem); height: var(--avatar-size-md, 2.5rem); font-size: var(--text-sm); }
+    .avatar-lg { width: var(--avatar-size-lg, 3rem); height: var(--avatar-size-lg, 3rem); font-size: var(--text-lg); }
+    .avatar-xl { width: var(--avatar-size-xl, 4rem); height: var(--avatar-size-xl, 4rem); font-size: var(--text-xl); }
 
     .avatar img {
       width: 100%;
@@ -110,9 +110,9 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
       right: 0;
       width: 25%;
       height: 25%;
-      min-width: 8px;
-      min-height: 8px;
-      border-radius: 50%;
+      min-width: var(--space-2);
+      min-height: var(--space-2);
+      border-radius: var(--radius-full);
       border: 2px solid var(--surface-background);
     }
 
@@ -169,7 +169,7 @@ export class AvatarComponent {
   ];
 
   colorFromName = computed(() => {
-    if (!this.name) return '#6b7280';
+    if (!this.name) return 'var(--gray-500)';
     let hash = 0;
     for (let i = 0; i < this.name.length; i++) {
       hash = this.name.charCodeAt(i) + ((hash << 5) - hash);

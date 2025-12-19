@@ -76,8 +76,9 @@ npm start
 
 ## 📦 Integración Manual
 
-Si necesitas integrar Atomic UI en un proyecto ya existente (sin usar el generador), consulta la **[Guía de Integración Manual](docs/MANUAL_INTEGRATION.md)**.
-
+Si necesitas integrar Atomic UI en un proyecto ya existente, consulta los workflows en `.agent/workflows/`:
+- `/integration` - Guía paso a paso de integración
+- `/development` - Desarrollo con hot-reload
 
 ---
 
@@ -87,8 +88,8 @@ Si necesitas integrar Atomic UI en un proyecto ya existente (sin usar el generad
 
 | Capa | Componentes | Descripción |
 |------|-------------|-------------|
-| **Atoms (16)** | Avatar, Button, Checkbox, Chip, FloatingInput, FormError, IconButton, Input, LanguageSwitcher, Loader, Rating, Row, Select, Skeleton, Text, Toggle | Elementos básicos e indivisibles |
-| **Molecules (9)** | DataState, Datepicker, Dropdown, Modal, Pagination, Select2, TableActions, Toast, UserMenu | Combinaciones de átomos con funcionalidad |
+| **Atoms (18)** | Avatar, Button, Checkbox, Chip, FloatingInput, FormError, FormRow, IconButton, Input, LanguageSwitcher, Loader, Radio, Rating, Row, Select, Skeleton, Text, Textarea, Toggle | Elementos básicos e indivisibles |
+| **Molecules (10)** | Card, DataState, Datepicker, Dropdown, Modal, Pagination, Select2, TableActions, Toast, UserMenu | Combinaciones de átomos con funcionalidad |
 | **Organisms (9)** | Accordion, Filters, Footer, ScrollOverlay, Sidebar, Stepper, Tabs, ThemeSwitcher, Topbar | Secciones complejas de UI |
 | **Surfaces (1)** | Panel | Contenedores y superficies |
 | **Templates (2)** | AuthLayout, LayoutShell | Layouts de página completos |

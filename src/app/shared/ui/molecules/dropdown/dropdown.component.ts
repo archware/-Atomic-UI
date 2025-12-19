@@ -131,7 +131,7 @@ export interface DropdownOption {
 
     .dropdown-menu {
       position: absolute;
-      top: calc(100% + 4px);
+      top: calc(100% + var(--space-1));
       left: 0;
       right: 0;
       background: var(--surface-background);

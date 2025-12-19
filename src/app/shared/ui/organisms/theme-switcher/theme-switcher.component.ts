@@ -119,8 +119,8 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 2.75rem;
-      height: 2.75rem;
+      width: var(--space-11, 2.75rem);
+      height: var(--space-11, 2.75rem);
       padding: 0;
       border: none;
       background: transparent;
@@ -139,8 +139,8 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
     }
 
     .option-icon {
-      width: 1.125rem;
-      height: 1.125rem;
+      width: var(--text-lg);
+      height: var(--text-lg);
       transition: transform 150ms ease;
     }
 

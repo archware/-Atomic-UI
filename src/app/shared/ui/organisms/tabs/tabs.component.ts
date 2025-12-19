@@ -117,8 +117,8 @@ export class TabComponent {
 
     /* Pressed state effects */
     .tab-button:active {
-      box-shadow: inset 0 1px 0 hsl(224, 84%, 74%), 
-                  0 1px 3px hsla(0, 0%, 0%, 0.2);
+      box-shadow: inset 0 1px 0 color-mix(in srgb, var(--primary-color), transparent 30%), 
+                  0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
     .tab-button.active {
@@ -167,8 +167,8 @@ export class TabComponent {
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: thin;
-        gap: 4px;
-        padding-bottom: 2px;
+        gap: var(--space-1);
+        padding-bottom: var(--space-0);
       }
 
       .tabs-header::-webkit-scrollbar {
@@ -177,7 +177,7 @@ export class TabComponent {
 
       .tabs-header::-webkit-scrollbar-thumb {
         background: var(--border-color);
-        border-radius: 3px;
+        border-radius: var(--radius-xs);
       }
 
       .tab-button {

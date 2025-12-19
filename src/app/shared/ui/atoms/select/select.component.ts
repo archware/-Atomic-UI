@@ -21,10 +21,11 @@ export interface SelectOption {
   template: `
     <div class="form-group" [class.has-error]="error" [class.disabled]="disabled">
       @if (label) {
-        <label class="form-label">{{ label }}</label>
+        <label class="form-label" [attr.for]="selectId">{{ label }}</label>
       }
       <div class="select-container">
         <select
+          [id]="selectId"
           class="form-select"
           [disabled]="disabled"
           [value]="value"
@@ -60,15 +61,15 @@ export interface SelectOption {
 
     .select-arrow {
       position: absolute;
-      right: 0.875rem;
-      color: var(--text-color-muted, #9ca3af);
+      right: var(--space-3);
+      color: var(--text-color-muted);
       pointer-events: none;
       transition: transform 200ms ease;
     }
 
     .select-error {
-      font-size: 0.75rem;
-      color: var(--error-color, #dc2626);
+      font-size: var(--text-xs);
+      color: var(--danger-color);
     }
   `]
 })
@@ -78,6 +79,8 @@ export class SelectComponent implements ControlValueAccessor {
   @Input() placeholder = '';
   @Input() error = '';
   @Input() disabled = false;
+  private static idCounter = 0;
+  readonly selectId = `app-select-${++SelectComponent.idCounter}`;
 
   value: string | number = '';
   onChange: (value: string | number) => void = () => { /* noop */ };

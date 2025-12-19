@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -15,7 +15,8 @@ import { CommonModule } from '@angular/common';
       aria-label="Cerrar modal"
     >
       <div class="modal" 
-        (click)="$event.stopPropagation()" 
+        (click)="$event.stopPropagation()"
+        (keydown)="$event.stopPropagation()"
         role="dialog"
         aria-modal="true"
         [class.modal-sm]="size === 'sm'"
@@ -34,9 +35,11 @@ import { CommonModule } from '@angular/common';
         </div>
 
         <!-- Footer -->
-        <div class="modal-footer" *ngIf="hasFooter">
+        @if (hasFooter) {
+        <div class="modal-footer">
           <ng-content select="[slot=footer]"></ng-content>
         </div>
+        }
       </div>
     </div>
   `,

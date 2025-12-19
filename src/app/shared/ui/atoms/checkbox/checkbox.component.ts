@@ -58,8 +58,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
 
     .checkbox-box {
-      width: 24px;
-      height: 24px;
+      width: var(--checkbox-size, 1.5rem);
+      height: var(--checkbox-size, 1.5rem);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -71,8 +71,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
 
     .checkbox-check {
-      width: 14px;
-      height: 14px;
+      width: var(--checkbox-icon-size, 0.875rem);
+      height: var(--checkbox-icon-size, 0.875rem);
       color: var(--text-color-on-primary);
       opacity: 0;
       transform: scale(0.5);

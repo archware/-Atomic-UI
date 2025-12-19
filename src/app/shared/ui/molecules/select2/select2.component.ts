@@ -1,6 +1,6 @@
 import {
   Component, Input, Output, EventEmitter, signal, HostListener,
-  ElementRef, forwardRef, inject, ChangeDetectionStrategy
+  ElementRef, forwardRef, inject, ChangeDetectionStrategy, computed
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
@@ -35,9 +35,19 @@ export interface Select2Option {
       [class.has-label]="label"
       [style.width]="width || null"
     >
-      <div class="select2-trigger" (click)="toggleDropdown()">
+      <div class="select2-trigger" 
+        (click)="toggleDropdown()" 
+        (keydown.enter)="toggleDropdown()" 
+        (keydown.space)="toggleDropdown(); $event.preventDefault()"
+        [attr.aria-labelledby]="label ? selectId() : null"
+        [attr.aria-controls]="listboxId()"
+        tabindex="0"
+        role="combobox"
+        [attr.aria-expanded]="isOpen()"
+      >
         @if (label) {
-          <label class="floating-label">{{ label }}</label>
+          <!-- eslint-disable-next-line @angular-eslint/template/label-has-associated-control -->
+          <label class="floating-label" [id]="selectId()">{{ label }}</label>
         }
         <!-- Single value display -->
         @if (!multiple) {
@@ -93,13 +103,17 @@ export interface Select2Option {
           }
           
           <!-- Options list -->
-          <div class="select2-options">
+          <div class="select2-options" role="listbox" [id]="listboxId()">
             @for (option of filteredOptions(); track option.value) {
               <div 
                 class="select2-option"
                 [class.selected]="isSelected(option)"
                 [class.disabled]="option.disabled"
                 (click)="!option.disabled && selectOption(option)"
+                (keydown.enter)="!option.disabled && selectOption(option)"
+                tabindex="0"
+                role="option"
+                [attr.aria-selected]="isSelected(option)"
               >
                 @if (option.icon) {
                   <span class="option-icon">{{ option.icon }}</span>
@@ -147,12 +161,13 @@ export interface Select2Option {
       padding: var(--space-1) var(--space-3);
       padding-right: 2.75rem;
       background: var(--input-bg);
-      border: 1px solid var(--input-border);
+      border: var(--input-border-width, 1.5px) solid var(--input-border);
       border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 200ms ease;
       font-size: var(--text-sm);
-      box-sizing: border-box; 
+      box-sizing: border-box;
+      box-shadow: var(--input-shadow);
     }
 
     .select2-wrapper.has-label .select2-trigger {
@@ -391,6 +406,11 @@ export class Select2Component implements ControlValueAccessor {
   searchTerm = signal('');
   selectedOption = signal<Select2Option | null>(null);
   selectedOptions = signal<Select2Option[]>([]);
+
+  // Generate unique ID for accessibility (aria-labelledby)
+  private static instanceCounter = 0;
+  readonly selectId = computed(() => `select2-label-${Select2Component.instanceCounter}`);
+  readonly listboxId = computed(() => `select2-listbox-${Select2Component.instanceCounter++}`);
 
   private readonly elementRef = inject(ElementRef);
   private onChange: (value: unknown) => void = () => { /* noop */ };

@@ -88,7 +88,7 @@ html.dark,
 
     /* Dark Mode Header Override */
     --rtc-header-bg: var(--brand-primary-700, #381836);
-    --rtc-header-color: #ffffff;
+    --rtc-header-color: var(--gray-0);
 
     /* Dark Mode - NO BORDER (As requested) */
     --rtc-header-border-width: 0px;
@@ -427,8 +427,8 @@ html.dark .spinner,
 .dark .skeleton,
 html.dark .skeleton,
 [data-theme="dark"] .skeleton {
-    --skeleton-base: #8b9bb0;
-    --skeleton-highlight: #cbd5e1;
+    --skeleton-base: var(--gray-400);
+    --skeleton-highlight: var(--gray-300);
 }
 
 /* Loading container background for dark mode */

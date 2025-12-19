@@ -7,8 +7,8 @@ import { catchError, retry } from 'rxjs/operators';
  * Configuración de request HTTP
  */
 export interface ApiRequestOptions {
-  headers?: HttpHeaders | { [header: string]: string | string[] };
-  params?: HttpParams | { [param: string]: string | string[] };
+  headers?: HttpHeaders | Record<string, string | string[]>;
+  params?: HttpParams | Record<string, string | string[]>;
   withCredentials?: boolean;
   retryCount?: number;
 }
@@ -66,7 +66,7 @@ export interface ApiError {
 export class ApiService {
   private readonly http = inject(HttpClient);
   private baseUrl = '';
-  private defaultHeaders: { [key: string]: string } = {
+  private defaultHeaders: Record<string, string> = {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
   };
@@ -88,7 +88,7 @@ export class ApiService {
   /**
    * Agrega headers por defecto a todas las peticiones
    */
-  setDefaultHeaders(headers: { [key: string]: string }): void {
+  setDefaultHeaders(headers: Record<string, string>): void {
     this.defaultHeaders = { ...this.defaultHeaders, ...headers };
   }
 
@@ -203,7 +203,7 @@ export class ApiService {
   /**
    * Construye los headers de la petición
    */
-  private buildHeaders(customHeaders?: HttpHeaders | { [header: string]: string | string[] }): HttpHeaders {
+  private buildHeaders(customHeaders?: HttpHeaders | Record<string, string | string[]>): HttpHeaders {
     let headers = new HttpHeaders(this.defaultHeaders);
 
     if (customHeaders) {

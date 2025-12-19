@@ -1,9 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { TabsComponent, TabComponent } from '../../../../shared/ui/organisms/tabs/tabs.component';
 import { AccordionComponent, AccordionItemComponent } from '../../../../shared/ui/organisms/accordion/accordion.component';
 import { SidebarComponent, SidebarMenuItem } from '../../../../shared/ui/organisms/sidebar/sidebar.component';
+import { StepperComponent, Step } from '../../../../shared/ui/organisms/stepper/stepper.component';
 
 @Component({
   selector: 'app-showcase-navigation',
@@ -15,7 +16,8 @@ import { SidebarComponent, SidebarMenuItem } from '../../../../shared/ui/organis
     TabComponent,
     AccordionComponent,
     AccordionItemComponent,
-    SidebarComponent
+    SidebarComponent,
+    StepperComponent
   ],
   template: `
     <!-- SIDEBAR -->
@@ -70,6 +72,17 @@ import { SidebarComponent, SidebarMenuItem } from '../../../../shared/ui/organis
         </app-accordion-item>
       </app-accordion>
     </app-panel>
+
+    <!-- STEPPER -->
+    <app-panel title="Stepper" variant="flat" padding="md" class="showcase-section">
+      <p style="margin-bottom: 1rem; color: var(--text-color-secondary);">Horizontal Stepper:</p>
+      <app-stepper [steps]="stepperSteps" [activeStep]="currentStep"></app-stepper>
+      
+      <div style="margin-top: 2rem;">
+        <p style="margin-bottom: 1rem; color: var(--text-color-secondary);">Vertical Stepper:</p>
+        <app-stepper [steps]="stepperSteps" [activeStep]="1" [vertical]="true"></app-stepper>
+      </div>
+    </app-panel>
   `,
   styles: [`
     .showcase-section {
@@ -99,4 +112,13 @@ export class ShowcaseNavigationComponent {
     role: 'Administrator',
     initials: 'DU'
   };
+
+  stepperSteps: Step[] = [
+    { label: 'Datos Personales', description: 'Información básica', icon: '👤' },
+    { label: 'Verificación', description: 'Confirmar email' },
+    { label: 'Pago', description: 'Método de pago', optional: true },
+    { label: 'Confirmación', description: 'Revisar pedido' }
+  ];
+
+  currentStep = 1;
 }

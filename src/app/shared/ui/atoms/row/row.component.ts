@@ -89,10 +89,10 @@ export type RowVerticalAlign = 'top' | 'center' | 'bottom' | 'stretch' | 'baseli
 })
 export class RowComponent {
   /** CSS Grid template columns (e.g., '1fr 1fr', 'repeat(3, 1fr)') */
-  @Input() columns: string = '1fr';
+  @Input() columns = '1fr';
 
   /** Gap between columns (default 24px desktop, 12px mobile) */
-  @Input() gap: string = '1.5rem'; /* 24px */
+  @Input() gap = '1.5rem'; /* 24px */
 
   /** Horizontal column content alignment */
   @Input() align: RowAlign = 'stretch';

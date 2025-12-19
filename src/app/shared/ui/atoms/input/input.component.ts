@@ -18,7 +18,7 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
   template: `
     <div class="form-group" [class.has-error]="error" [class.disabled]="disabled">
       @if (label) {
-        <label class="form-label">{{ label }}</label>
+        <label class="form-label" [attr.for]="inputId">{{ label }}</label>
       }
       <div class="input-container">
         @if (iconClass) {
@@ -27,6 +27,7 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
           <span class="input-icon">{{ icon }}</span>
         }
         <input
+          [id]="inputId"
           class="form-input"
           [type]="type"
           [placeholder]="placeholder"
@@ -51,11 +52,11 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: var(--space-1);
     }
 
     .form-label {
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       font-weight: 500;
       color: var(--text-color);
     }
@@ -69,8 +70,8 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
 
     .input-icon {
       position: absolute;
-      left: 0.875rem;
-      font-size: 1rem;
+      left: var(--space-3);
+      font-size: var(--text-md);
       color: var(--text-color-muted);
       pointer-events: none;
       display: flex; /* Ensure centering */
@@ -80,29 +81,30 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
 
     /* When icon is present, add padding */
     .input-container:has(.input-icon) .form-input {
-      padding-left: 2.5rem;
+      padding-left: var(--space-10, 2.5rem);
     }
 
     .form-input {
       width: 100%;
-      height: var(--control-height, 40px);
-      padding: 0 1rem;
-      border: 1px solid var(--border-color);
+      height: var(--control-height);
+      padding: 0 var(--space-4);
+      border: var(--input-border-width, 1px) solid var(--input-border);
       border-radius: var(--radius-md);
-      background-color: var(--surface-background);
-      color: var(--text-color);
-      font-size: 0.875rem;
+      background-color: var(--input-bg);
+      color: var(--input-text);
+      font-size: var(--text-sm);
+      box-shadow: var(--input-shadow);
       transition: all 0.2s ease;
     }
 
     .form-input:focus {
       outline: none;
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px var(--primary-100);
+      border-color: var(--input-border-focus);
+      box-shadow: var(--input-shadow-focus);
     }
 
     .form-input:disabled {
-      background-color: var(--surface-hover);
+      background-color: var(--input-disabled-bg);
       cursor: not-allowed;
       opacity: 0.7;
     }
@@ -112,11 +114,11 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
     }
 
     .has-error .form-input:focus {
-      box-shadow: 0 0 0 3px var(--danger-100);
+      box-shadow: 0 0 0 3px var(--danger-color-lighter);
     }
 
     .input-error {
-      font-size: 0.75rem;
+      font-size: var(--text-xs);
       color: var(--danger-color);
     }
   `]
@@ -129,6 +131,8 @@ export class InputComponent implements ControlValueAccessor {
   @Input() iconClass = '';
   @Input() error = '';
   @Input() disabled = false;
+  private static idCounter = 0;
+  readonly inputId = `app-input-${++InputComponent.idCounter}`;
 
   value: string | number = '';
   onChange: (value: string | number) => void = () => { /* noop */ };

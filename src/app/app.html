@@ -114,10 +114,19 @@
       </app-text>
       <!-- Stack of badges/chips for visual flair -->
       <app-row gap="0.5rem" class="mt-md" wrap="wrap">
-        <app-chip label="Atoms" variant="default" size="sm"></app-chip>
-        <app-chip label="Molecules" variant="default" size="sm"></app-chip>
-        <app-chip label="Organisms" variant="default" size="sm"></app-chip>
+        <app-chip variant="default" size="sm">Atoms</app-chip>
+        <app-chip variant="default" size="sm">Molecules</app-chip>
+        <app-chip variant="default" size="sm">Organisms</app-chip>
       </app-row>
     </app-panel>
   </app-row>
 </app-layout-shell>
+
+<!-- Toast Container (nivel raíz para z-index correcto) -->
+<app-toast></app-toast>
+
+<!-- Popup Container (modales dinámicos) -->
+<app-popup-container></app-popup-container>
+
+<!-- Modal Container (modales dinámicos via ModalService) -->
+<app-modal-container></app-modal-container>

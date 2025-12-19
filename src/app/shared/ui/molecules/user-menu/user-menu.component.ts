@@ -172,7 +172,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
 
     .user-menu__item-icon {
       font-size: var(--text-md);
-      width: 20px;
+      width: var(--space-5);
       text-align: center;
     }
 

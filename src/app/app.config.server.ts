@@ -7,7 +7,7 @@ import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 
 export class ServerTranslateLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<any> {
+  getTranslation(_lang: string): Observable<Record<string, string>> {
     return of({});
   }
 }

@@ -58,11 +58,17 @@
    --control-height: var(--control-height-md);
    /* Derivado de primitivos - 46px standard */
    --input-bg: var(--surface-background);
-   --input-border: var(--border-color);
-   --input-border-hover: var(--border-color-strong);
+   --input-border: var(--gray-300);
+   /* Más oscuro para contraste */
+   --input-border-width: 2.5px;
+   /* Grosor óptimo para visibilidad */
+   --input-border-hover: var(--gray-400);
    --input-border-focus: var(--primary-color);
    --input-placeholder: var(--text-color-placeholder);
    --input-text: var(--text-color);
+   --input-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+   /* Sombra sutil */
+   --input-shadow-focus: var(--shadow-focus-primary);
    --input-disabled-bg: var(--gray-100);
    --input-disabled-text: var(--gray-400);
 
@@ -262,11 +268,16 @@ html.dark {
    /* === FORMULARIOS / INPUTS === */
    --input-bg: var(--surface-background);
    /* Layer BG (Typical for inputs in dark) or Sub BG */
-   --input-border: var(--border-color);
-   --input-border-hover: var(--border-color-strong);
+   --input-border: var(--gray-600);
+   /* Más visible en oscuro */
+   --input-border-width: 2.5px;
+   --input-border-hover: var(--gray-500);
    --input-border-focus: var(--primary-color);
    --input-placeholder: var(--text-color-placeholder);
    --input-text: var(--text-color);
+   --input-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+   /* Sombra más pronunciada */
+   --input-shadow-focus: 0 0 0 3px rgba(var(--brand-primary-500-rgb, 139, 92, 246), 0.3);
    --input-disabled-bg: var(--surface-sunken);
    /* Disabled BG */
    --input-disabled-text: var(--gray-600);

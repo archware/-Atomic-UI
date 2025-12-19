@@ -1,15 +1,14 @@
-import { Component, signal, ViewChild } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalComponent } from '../../../../shared/ui/molecules/modal/modal.component';
-import { ToastComponent } from '../../../../shared/ui/molecules/toast/toast.component';
+import { ToastService } from '../../../../shared/ui/services/toast.service';
+import { PopupService } from '../../../../shared/ui/services/popup.service';
+import { ModalService } from '../../../../shared/ui/services/modal.service';
 
 @Component({
   selector: 'app-showcase-feedback',
   standalone: true,
   imports: [
-    CommonModule,
-    ModalComponent,
-    ToastComponent
+    CommonModule
   ],
   template: `
     <!-- ALERTS -->
@@ -46,8 +45,9 @@ import { ToastComponent } from '../../../../shared/ui/molecules/toast/toast.comp
       <h3 class="section-title">Modales</h3>
       <p class="text-sm text-gray-500 mb-4">Diálogos modales que bloquean la interacción con el resto de la página.</p>
       <div class="button-grid">
-        <button class="btn btn-primary" (click)="showModal.set(true)">Modal de Confirmación</button>
-        <button class="btn btn-danger" (click)="showBlockingModal.set(true)">Modal Bloqueante</button>
+        <button class="btn btn-primary" (click)="openConfirmModal()">Modal de Confirmación</button>
+        <button class="btn btn-danger" (click)="openBlockingModal()">Modal Bloqueante</button>
+        <button class="btn btn-outline" (click)="openAlertModal()">Modal Alerta</button>
       </div>
     </section>
 
@@ -56,8 +56,10 @@ import { ToastComponent } from '../../../../shared/ui/molecules/toast/toast.comp
       <h3 class="section-title">Popups</h3>
       <p class="text-sm text-gray-500 mb-4">Ventanas emergentes informativas o de promoción.</p>
       <div class="button-grid">
-        <button class="btn btn-secondary" (click)="showPopup.set(true)">Abrir Popup Promocional</button>
-        <button class="btn btn-outline" (click)="showInfoPopup.set(true)">Abrir Popup Informativo</button>
+        <button class="btn btn-secondary" (click)="showPromoPopup()">Popup Promocional</button>
+        <button class="btn btn-outline" (click)="showInfoPop()">Popup Informativo</button>
+        <button class="btn btn-success" (click)="showSuccessPopup()">Popup Éxito</button>
+        <button class="btn btn-danger" (click)="showConfirmPopup()">Popup Confirmación</button>
       </div>
     </section>
     
@@ -81,24 +83,6 @@ import { ToastComponent } from '../../../../shared/ui/molecules/toast/toast.comp
         <button class="btn btn-danger" (click)="showToast('error')">Error</button>
       </div>
     </section>
-    
-    <!-- MODALS COMPONENTS (Hidden by default) -->
-    <app-modal *ngIf="showModal()" (close)="showModal.set(false)" title="Confirmar Acción">
-      <p>¿Estás seguro de que deseas continuar con esta acción? Esta operación es irreversible.</p>
-      <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
-        <button class="btn btn-ghost" (click)="showModal.set(false)">Cancelar</button>
-        <button class="btn btn-primary" (click)="showModal.set(false)">Confirmar</button>
-      </div>
-    </app-modal>
-
-    <app-modal *ngIf="showBlockingModal()" (close)="showBlockingModal.set(false)" title="Atención Requerida" [closeOnBackdrop]="false">
-      <p>Esta es una modal bloqueante. El usuario debe tomar una decisión explícita para continuar.</p>
-      <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
-        <button class="btn btn-danger" (click)="showBlockingModal.set(false)">Entendido</button>
-      </div>
-    </app-modal>
-
-    <app-toast></app-toast>
   `,
   styles: [`
     .showcase-section { margin-bottom: 2rem; display: block; }
@@ -141,12 +125,9 @@ import { ToastComponent } from '../../../../shared/ui/molecules/toast/toast.comp
   `]
 })
 export class ShowcaseFeedbackComponent {
-  @ViewChild(ToastComponent) toast?: ToastComponent;
-
-  showModal = signal(false);
-  showBlockingModal = signal(false);
-  showPopup = signal(false);
-  showInfoPopup = signal(false);
+  private readonly toast = inject(ToastService);
+  private readonly popup = inject(PopupService);
+  private readonly modal = inject(ModalService);
 
   showToast(type: 'info' | 'success' | 'warning' | 'error') {
     const messages = {
@@ -155,6 +136,68 @@ export class ShowcaseFeedbackComponent {
       warning: 'Atención: revise los datos ingresados',
       error: 'Error: no se pudo completar la acción'
     };
-    this.toast?.show({ message: messages[type], type });
+    this.toast.show({ message: messages[type], type });
+  }
+
+  // === POPUP METHODS ===
+  showPromoPopup() {
+    this.popup.show({
+      title: '¡Oferta Especial!',
+      message: 'Obtén un 20% de descuento en todos nuestros productos. ¡Oferta válida solo hoy!',
+      type: 'success',
+      icon: 'fa-solid fa-gift',
+      buttons: [
+        { label: 'No gracias', variant: 'ghost', action: () => this.popup.close(this.popup.popups()[0]?.id ?? 0) },
+        { label: '¡Lo quiero!', variant: 'primary', action: () => { this.toast.success('¡Cupón aplicado!'); this.popup.close(this.popup.popups()[0]?.id ?? 0); } }
+      ]
+    });
+  }
+
+  showInfoPop() {
+    this.popup.info('Información', 'Este es un popup informativo que muestra datos importantes al usuario.');
+  }
+
+  showSuccessPopup() {
+    this.popup.success('¡Guardado!', 'Los cambios se han guardado correctamente en el sistema.');
+  }
+
+  showConfirmPopup() {
+    this.popup.confirm({
+      title: '¿Eliminar elemento?',
+      message: 'Esta acción no se puede deshacer. ¿Estás seguro de continuar?',
+      confirmLabel: 'Sí, eliminar',
+      cancelLabel: 'Cancelar',
+      onConfirm: () => this.toast.success('Elemento eliminado'),
+      onCancel: () => this.toast.info('Operación cancelada')
+    });
+  }
+
+  // === MODAL METHODS ===
+  openConfirmModal() {
+    this.modal.confirm({
+      title: 'Confirmar Acción',
+      message: '¿Estás seguro de que deseas continuar con esta acción? Esta operación es irreversible.',
+      confirmLabel: 'Confirmar',
+      cancelLabel: 'Cancelar',
+      onConfirm: () => this.toast.success('Acción confirmada'),
+      onCancel: () => this.toast.info('Acción cancelada')
+    });
+  }
+
+  openBlockingModal() {
+    this.modal.open({
+      title: 'Atención Requerida',
+      message: 'Esta es una modal bloqueante. El usuario debe tomar una decisión explícita para continuar.',
+      size: 'md',
+      closeOnBackdrop: false,
+      closable: false,
+      buttons: [
+        { label: 'Entendido', variant: 'danger', action: () => { this.toast.warning('Modal cerrada'); this.modal.modals().forEach(m => this.modal.close(m.id)); } }
+      ]
+    });
+  }
+
+  openAlertModal() {
+    this.modal.alert('Información Importante', 'Este es un mensaje de alerta simple con un solo botón de acción.');
   }
 }

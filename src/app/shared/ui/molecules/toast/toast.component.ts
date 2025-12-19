@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { ToastService } from '../../services/toast.service';
 
 export type ToastType = 'info' | 'success' | 'warning' | 'error';
 
@@ -9,17 +10,30 @@ export interface ToastConfig {
   dismissible?: boolean;
 }
 
-interface ToastItem extends ToastConfig {
-  id: number;
-  exiting?: boolean;
-}
-
+/**
+ * Componente visual para mostrar toasts.
+ * Debe colocarse en el nivel raíz del app (app.component o app.html).
+ * Usa ToastService para recibir y mostrar notificaciones.
+ * 
+ * @example
+ * ```html
+ * <!-- En app.html o app.component -->
+ * <app-toast></app-toast>
+ * ```
+ * 
+ * @example
+ * ```typescript
+ * // En cualquier componente
+ * toast = inject(ToastService);
+ * this.toast.success('¡Guardado!');
+ * ```
+ */
 @Component({
   selector: 'app-toast',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @for (toast of toasts(); track toast.id) {
+    @for (toast of toastService.toasts(); track toast.id) {
       <div 
         class="toast" 
         [class]="'toast-' + toast.type"
@@ -37,7 +51,7 @@ interface ToastItem extends ToastConfig {
         </span>
         <span class="toast-message">{{ toast.message }}</span>
         @if (toast.dismissible) {
-          <button type="button" class="toast-close" (click)="dismiss(toast.id)" (keydown.enter)="dismiss(toast.id)" (keydown.space)="dismiss(toast.id)" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+          <button type="button" class="toast-close" (click)="toastService.dismiss(toast.id)" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
         }
       </div>
     }
@@ -45,7 +59,7 @@ interface ToastItem extends ToastConfig {
   styles: [`
     :host {
       position: fixed;
-      top: 5rem;
+      top: calc(var(--header-height, 64px) + var(--space-4));
       right: var(--space-4);
       z-index: 9999;
       display: flex;
@@ -53,6 +67,17 @@ interface ToastItem extends ToastConfig {
       gap: var(--space-2);
       max-width: 360px;
       pointer-events: none;
+    }
+
+    /* Responsive: mobile ajuste */
+    @media (max-width: 768px) {
+      :host {
+        top: auto;
+        bottom: var(--space-4);
+        left: var(--space-4);
+        right: var(--space-4);
+        max-width: none;
+      }
     }
 
     .toast {
@@ -120,45 +145,8 @@ interface ToastItem extends ToastConfig {
       from { transform: translateX(0); opacity: 1; }
       to { transform: translateX(100%); opacity: 0; }
     }
-
-    /* 
-     * Dark mode se maneja automáticamente via tokens semánticos.
-     * --surface-elevated, --border-color, --*-color-light/dark
-     * ya tienen valores apropiados para temas oscuros.
-     */
   `]
 })
 export class ToastComponent {
-  private toastId = 0;
-  toasts = signal<ToastItem[]>([]);
-
-  show(config: ToastConfig) {
-    const id = ++this.toastId;
-    const toast: ToastItem = {
-      ...config,
-      id,
-      type: config.type || 'info',
-      dismissible: config.dismissible ?? true
-    };
-
-    this.toasts.update(t => [...t, toast]);
-
-    if (config.duration !== 0) {
-      setTimeout(() => this.dismiss(id), config.duration || 4000);
-    }
-  }
-
-  dismiss(id: number) {
-    this.toasts.update(t =>
-      t.map(toast => toast.id === id ? { ...toast, exiting: true } : toast)
-    );
-    setTimeout(() => {
-      this.toasts.update(t => t.filter(toast => toast.id !== id));
-    }, 300);
-  }
-
-  /** Cerrar todos los toasts */
-  clear() {
-    this.toasts.set([]);
-  }
+  protected readonly toastService = inject(ToastService);
 }

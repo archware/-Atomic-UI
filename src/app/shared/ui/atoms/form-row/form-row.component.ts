@@ -60,11 +60,11 @@ export class FormRowComponent {
    * CSS Grid template columns.
    * @default '1fr 1fr' (Two equal columns)
    */
-  @Input() columns: string = '1fr 1fr';
+  @Input() columns = '1fr 1fr';
 
   /** 
    * Gap between fields.
    * Matches standard form spacing (1.25rem = 20px).
    */
-  @Input() gap: string = '1.25rem';
+  @Input() gap = '1.25rem';
 }

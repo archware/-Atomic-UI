@@ -1,6 +1,6 @@
-import { Injectable, signal, computed, inject } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { ApiService, ApiError } from './api.service';
+import { ApiError } from './api.service';
 
 /**
  * Estado de una petición API
