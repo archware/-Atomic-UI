@@ -1,4 +1,5 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -93,6 +94,7 @@ interface MenuItem {
 export class DashboardPageComponent implements OnInit {
   private api = inject(ApiService);
   private router = inject(Router);
+  private platformId = inject(PLATFORM_ID);
 
   // ============================================
   // CONFIGURATION - Customize these values
@@ -206,6 +208,8 @@ export class DashboardPageComponent implements OnInit {
   // ============================================
 
   private loadUserFromStorage(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     const userJson = localStorage.getItem('user') || sessionStorage.getItem('user');
     if (userJson) {
       try {
@@ -217,6 +221,8 @@ export class DashboardPageComponent implements OnInit {
   }
 
   private setupAuthToken(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     const token = localStorage.getItem(this.TOKEN_KEY) || sessionStorage.getItem(this.TOKEN_KEY);
     if (token) {
       this.api.setAuthToken(token);
@@ -257,7 +263,7 @@ export class DashboardPageComponent implements OnInit {
     }
 
     // Close sidebar on mobile
-    if (window.innerWidth <= 768) {
+    if (isPlatformBrowser(this.platformId) && window.innerWidth <= 768) {
       this.closeSidebar();
     }
   }
@@ -289,10 +295,12 @@ export class DashboardPageComponent implements OnInit {
 
   onLogout(): void {
     // Clear stored data
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem('user');
-    sessionStorage.removeItem(this.TOKEN_KEY);
-    sessionStorage.removeItem('user');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(this.TOKEN_KEY);
+      localStorage.removeItem('user');
+      sessionStorage.removeItem(this.TOKEN_KEY);
+      sessionStorage.removeItem('user');
+    }
 
     // Clear API auth
     this.api.clearAuthToken();
