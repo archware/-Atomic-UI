@@ -152,3 +152,20 @@ export type { ApiState, UseApiResult } from './services/use-api.service';
 // ============================================
 export { DataStateComponent } from './molecules/data-state/data-state.component';
 
+// ============================================
+// AUTHENTICATION - Services, Guards, Interceptors
+// ============================================
+export { TokenService } from './services/token.service';
+export type { TokenConfig, JwtPayload } from './services/token.service';
+
+export { AuthService } from './services/auth.service';
+export type {
+    UserProfile,
+    LoginRequest,
+    LoginResponse,
+    RefreshTokenRequest
+} from './services/auth.service';
+
+export { authGuard, guestGuard, passwordChangeGuard } from './guards/auth.guard';
+
+export { authInterceptor } from './interceptors/auth.interceptor';

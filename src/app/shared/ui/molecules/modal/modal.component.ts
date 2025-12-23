@@ -26,7 +26,7 @@ import { CommonModule } from '@angular/common';
         <!-- Header -->
         <div class="modal-header">
           <h3 class="modal-title">{{ title }}</h3>
-          <button class="modal-close" (click)="close.emit()" type="button" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+          <button class="modal-close" (click)="closed.emit()" type="button" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
         <!-- Body -->
@@ -142,17 +142,17 @@ export class ModalComponent {
   @Input() closeOnBackdrop = true;
   @Input() hasFooter = true;
 
-  @Output() close = new EventEmitter<void>();
+  @Output() closed = new EventEmitter<void>();
 
   onBackdropClick() {
     if (this.closeOnBackdrop) {
-      this.close.emit();
+      this.closed.emit();
     }
   }
 
   onEscape() {
     if (this.closeOnBackdrop) {
-      this.close.emit();
+      this.closed.emit();
     }
   }
 }

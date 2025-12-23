@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PopupService, PopupItem, PopupButton } from '../../services/popup.service';
+import { PopupService, PopupItem } from '../../services/popup.service';
 
 /**
  * Contenedor de popups global.
@@ -34,6 +34,7 @@ import { PopupService, PopupItem, PopupButton } from '../../services/popup.servi
           [class]="'popup-' + popup.size + ' popup-type-' + popup.type"
           (click)="$event.stopPropagation()"
           (keydown)="$event.stopPropagation()"
+          tabindex="-1"
         >
           <!-- Header -->
           <div class="popup-header">

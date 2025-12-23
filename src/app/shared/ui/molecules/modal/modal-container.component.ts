@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalService, ModalItem, ModalButton } from '../../services/modal.service';
+import { ModalService, ModalItem } from '../../services/modal.service';
 
 /**
  * Contenedor de modales global.
@@ -35,6 +35,7 @@ import { ModalService, ModalItem, ModalButton } from '../../services/modal.servi
           [class.modal-exit]="modal.closing"
           (click)="$event.stopPropagation()"
           (keydown)="$event.stopPropagation()"
+          tabindex="-1"
         >
           <!-- Header -->
           <div class="modal-header">
