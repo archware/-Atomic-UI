@@ -1,7 +1,8 @@
 <div class="datepicker-container" (clickOutside)="close()">
 
   <!-- Trigger Input -->
-  <div class="datepicker-trigger" (click)="toggle()">
+  <div class="datepicker-trigger" (click)="toggle()" (keydown.enter)="toggle()" (keydown.space)="toggle()" tabindex="0"
+    role="button" aria-label="Abrir calendario">
     <app-floating-input [label]="label" [value]="formattedValue()" [variant]="variant" [disabled]="disabled"
       [readonly]="true" [error]="error" class="pointer-events-none"></app-floating-input>
 
@@ -70,7 +71,8 @@
       <!-- Days -->
       @for (day of daysInMonth(); track $index) {
       <div class="calendar-day" [class.today]="isToday(day)" [class.selected]="isSelected(day)"
-        (click)="selectDate(day)">
+        (click)="selectDate(day)" (keydown.enter)="selectDate(day)" (keydown.space)="selectDate(day)" tabindex="0"
+        role="button" [attr.aria-label]="'Seleccionar ' + day.getDate()">
         {{ day.getDate() }}
       </div>
       }

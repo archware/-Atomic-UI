@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -6,10 +6,11 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content></ng-content>`,
   styles: [`
     td[app-table-cell], th[app-table-header-cell] {
-      padding: 0.875rem 1rem;
+      padding: var(--space-3) var(--space-4);
       vertical-align: middle;
       color: var(--text-color);
       font-size: 0.875rem;

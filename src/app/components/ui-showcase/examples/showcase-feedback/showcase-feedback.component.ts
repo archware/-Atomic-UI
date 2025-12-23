@@ -1,4 +1,4 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../../../shared/ui/services/toast.service';
 import { PopupService } from '../../../../shared/ui/services/popup.service';

@@ -5,7 +5,8 @@
   </aside>
 
   <!-- Mobile Overlay -->
-  <div class="layout-overlay" [class.active]="sidebarVisible" (click)="onOverlayClick()"></div>
+  <div class="layout-overlay" [class.active]="sidebarVisible" (click)="onOverlayClick()"
+    (keydown.escape)="onOverlayClick()" tabindex="-1" role="presentation"></div>
 
   <!-- Topbar Slot -->
   <header class="layout-header">

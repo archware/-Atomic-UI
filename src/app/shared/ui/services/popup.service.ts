@@ -1,4 +1,4 @@
-import { Injectable, signal, TemplateRef, Type } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 export type PopupSize = 'sm' | 'md' | 'lg';
 export type PopupType = 'info' | 'success' | 'warning' | 'error' | 'confirm';
