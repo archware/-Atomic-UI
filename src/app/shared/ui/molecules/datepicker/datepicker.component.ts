@@ -168,19 +168,93 @@ export class DatepickerComponent implements ControlValueAccessor {
     // Let's stick to Month view for now so user confirms month.
   }
 
+  onKeyDown(event: KeyboardEvent, day?: Date): void {
+    if (this.disabled) return;
+
+    if (!this.isOpen()) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        this.toggle();
+        event.preventDefault();
+      }
+      return;
+    }
+
+    if (this.currentView() !== 'day') {
+      if (event.key === 'Escape') {
+        this.close();
+        this.elementRef.nativeElement.querySelector('.datepicker-trigger')?.focus();
+      }
+      return;
+    }
+
+    const d = new Date(day || this.value() || new Date());
+
+    switch (event.key) {
+      case 'ArrowLeft':
+        d.setDate(d.getDate() - 1);
+        this.updateViewAndFocus(d);
+        event.preventDefault();
+        break;
+      case 'ArrowRight':
+        d.setDate(d.getDate() + 1);
+        this.updateViewAndFocus(d);
+        event.preventDefault();
+        break;
+      case 'ArrowUp':
+        d.setDate(d.getDate() - 7);
+        this.updateViewAndFocus(d);
+        event.preventDefault();
+        break;
+      case 'ArrowDown':
+        d.setDate(d.getDate() + 7);
+        this.updateViewAndFocus(d);
+        event.preventDefault();
+        break;
+      case 'Enter':
+      case ' ':
+        if (day) {
+          this.selectDate(day);
+          event.preventDefault();
+        }
+        break;
+      case 'Escape':
+        this.close();
+        this.elementRef.nativeElement.querySelector('.datepicker-trigger')?.focus();
+        event.preventDefault();
+        break;
+    }
+  }
+
+  private updateViewAndFocus(date: Date): void {
+    // If month changed, update view date
+    if (date.getMonth() !== this.currentViewDate().getMonth() ||
+      date.getFullYear() !== this.currentViewDate().getFullYear()) {
+      this.currentViewDate.set(new Date(date.getFullYear(), date.getMonth(), 1));
+    }
+
+    // Focus the new date after re-render
+    setTimeout(() => {
+      const dayEl = this.elementRef.nativeElement.querySelector(
+        `.calendar-day[data-date="${date.getDate()}"]:not(.empty)`
+      );
+      if (dayEl) dayEl.focus();
+    }, 0);
+  }
+
+  isSameDay(d1: Date, d2: Date): boolean {
+    return d1.getDate() === d2.getDate() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getFullYear() === d2.getFullYear();
+  }
+
   isSelected(date: Date): boolean {
     const v = this.value();
     if (!v) return false;
-    return v.getDate() === date.getDate() &&
-      v.getMonth() === date.getMonth() &&
-      v.getFullYear() === date.getFullYear();
+    return this.isSameDay(v, date);
   }
 
   isToday(date: Date): boolean {
-    const today = new Date();
-    return today.getDate() === date.getDate() &&
-      today.getMonth() === date.getMonth() &&
-      today.getFullYear() === date.getFullYear();
+    return this.isSameDay(new Date(), date);
   }
 
   // Click Outside Handling

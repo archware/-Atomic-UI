@@ -37,10 +37,10 @@ export interface Select2Option {
     >
       <div class="select2-trigger" 
         (click)="toggleDropdown()" 
-        (keydown.enter)="toggleDropdown()" 
-        (keydown.space)="toggleDropdown(); $event.preventDefault()"
+        (keydown)="handleKeydown($event)"
         [attr.aria-labelledby]="label ? selectId() : null"
         [attr.aria-controls]="listboxId()"
+        [attr.aria-activedescendant]="highlightedIndex() >= 0 ? optionId(highlightedIndex()) : null"
         tabindex="0"
         role="combobox"
         [attr.aria-expanded]="isOpen()"
@@ -97,6 +97,7 @@ export interface Select2Option {
                 [ngModel]="searchTerm()"
                 (ngModelChange)="searchTerm.set($event)"
                 (click)="$event.stopPropagation()"
+                (keydown)="handleKeydown($event)"
               />
               <span class="search-icon">🔍</span>
             </div>
@@ -104,14 +105,16 @@ export interface Select2Option {
           
           <!-- Options list -->
           <div class="select2-options" role="listbox" [id]="listboxId()">
-            @for (option of filteredOptions(); track option.value) {
+            @for (option of filteredOptions(); track option.value; let i = $index) {
               <div 
+                [id]="optionId(i)"
                 class="select2-option"
                 [class.selected]="isSelected(option)"
+                [class.highlighted]="highlightedIndex() === i"
                 [class.disabled]="option.disabled"
                 (click)="!option.disabled && selectOption(option)"
-                (keydown.enter)="!option.disabled && selectOption(option)"
-                tabindex="0"
+                (keydown)="handleKeydown($event)"
+                tabindex="-1"
                 role="option"
                 [attr.aria-selected]="isSelected(option)"
               >
@@ -354,7 +357,8 @@ export interface Select2Option {
       transition: background 100ms ease;
     }
 
-    .select2-option:hover:not(.disabled) {
+    .select2-option:hover:not(.disabled),
+    .select2-option.highlighted:not(.disabled) {
       background: var(--dropdown-item-hover);
     }
 
@@ -406,12 +410,14 @@ export class Select2Component implements ControlValueAccessor {
   searchTerm = signal('');
   selectedOption = signal<Select2Option | null>(null);
   selectedOptions = signal<Select2Option[]>([]);
+  highlightedIndex = signal(-1);
 
   // Generate unique ID for accessibility (aria-labelledby)
   private static instanceCounter = 0;
   private readonly _instanceId = ++Select2Component.instanceCounter;
   readonly selectId = () => `select2-label-${this._instanceId}`;
   readonly listboxId = () => `select2-listbox-${this._instanceId}`;
+  readonly optionId = (index: number) => `select2-option-${this._instanceId}-${index}`;
 
   private readonly elementRef = inject(ElementRef);
   private onChange: (value: unknown) => void = () => { /* noop */ };
@@ -437,10 +443,81 @@ export class Select2Component implements ControlValueAccessor {
   toggleDropdown(): void {
     if (!this.disabled) {
       this.isOpen.update(v => !v);
-      if (!this.isOpen()) {
+      if (this.isOpen()) {
+        this.highlightedIndex.set(0);
+        // Focus search input if searchable
+        if (this.searchable) {
+          setTimeout(() => {
+            const searchInput = this.elementRef.nativeElement.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+          }, 0);
+        }
+      } else {
         this.searchTerm.set('');
+        this.highlightedIndex.set(-1);
         this.onTouched();
       }
+    }
+  }
+
+  handleKeydown(event: KeyboardEvent): void {
+    if (this.disabled) return;
+
+    const options = this.filteredOptions();
+    const maxIndex = options.length - 1;
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        if (!this.isOpen()) {
+          this.toggleDropdown();
+        } else {
+          this.highlightedIndex.update(i => (i < maxIndex ? i + 1 : i));
+          this.scrollToHighlighted();
+        }
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.highlightedIndex.update(i => (i > 0 ? i - 1 : 0));
+        this.scrollToHighlighted();
+        break;
+      case 'Enter':
+      case ' ':
+        if (event.key === ' ' && this.searchTerm() !== '') return; // Allow space in search
+        event.preventDefault();
+        if (!this.isOpen()) {
+          this.toggleDropdown();
+        } else if (this.highlightedIndex() >= 0) {
+          const option = options[this.highlightedIndex()];
+          if (option && !option.disabled) {
+            this.selectOption(option);
+          }
+        }
+        break;
+      case 'Escape':
+        if (this.isOpen()) {
+          event.stopPropagation();
+          this.isOpen.set(false);
+          this.searchTerm.set('');
+          this.highlightedIndex.set(-1);
+          this.elementRef.nativeElement.querySelector('.select2-trigger')?.focus();
+        }
+        break;
+      case 'Tab':
+        if (this.isOpen()) {
+          this.isOpen.set(false);
+          this.searchTerm.set('');
+          this.highlightedIndex.set(-1);
+        }
+        break;
+    }
+  }
+
+  private scrollToHighlighted(): void {
+    const listbox = this.elementRef.nativeElement.querySelector('.select2-options');
+    const highlighted = listbox?.querySelectorAll('.select2-option')[this.highlightedIndex()];
+    if (highlighted) {
+      highlighted.scrollIntoView({ block: 'nearest' });
     }
   }
 
@@ -461,6 +538,9 @@ export class Select2Component implements ControlValueAccessor {
       this.valueChange.emit(option.value);
       this.isOpen.set(false);
       this.searchTerm.set('');
+      this.highlightedIndex.set(-1);
+      // Return focus to trigger
+      this.elementRef.nativeElement.querySelector('.select2-trigger')?.focus();
     }
   }
 
@@ -479,6 +559,7 @@ export class Select2Component implements ControlValueAccessor {
       if (this.isOpen()) {
         this.isOpen.set(false);
         this.searchTerm.set('');
+        this.highlightedIndex.set(-1);
       }
     }
   }

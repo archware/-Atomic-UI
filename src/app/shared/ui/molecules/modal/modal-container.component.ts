@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, ViewChildren, QueryList, ElementRef, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalService, ModalItem } from '../../services/modal.service';
 
@@ -19,29 +19,31 @@ import { ModalService, ModalItem } from '../../services/modal.service';
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @for (modal of modalService.modals(); track modal.id) {
+    @for (modal of modalService.modals(); track modal.id; let first = $first) {
       <div 
         class="modal-overlay" 
         [class.modal-closing]="modal.closing"
         (click)="onBackdropClick(modal)"
         (keydown.escape)="onEscape(modal)"
-        tabindex="0"
-        role="dialog"
-        aria-modal="true"
+        tabindex="-1"
       >
         <div 
+          #modalElement
           class="modal" 
           [class]="'modal-' + modal.size"
           [class.modal-exit]="modal.closing"
           (click)="$event.stopPropagation()"
           (keydown)="$event.stopPropagation()"
+          role="dialog"
+          aria-modal="true"
+          [attr.aria-labelledby]="'modal-title-' + modal.id"
           tabindex="-1"
         >
           <!-- Header -->
           <div class="modal-header">
-            <h3 class="modal-title">{{ modal.title }}</h3>
+            <h3 class="modal-title" [id]="'modal-title-' + modal.id">{{ modal.title }}</h3>
             @if (modal.closable) {
-              <button class="modal-close" (click)="modalService.close(modal.id)" type="button" aria-label="Cerrar">
+              <button #closeButton class="modal-close" (click)="modalService.close(modal.id)" type="button" aria-label="Cerrar">
                 <i class="fa-solid fa-xmark"></i>
               </button>
             }
@@ -242,6 +244,33 @@ import { ModalService, ModalItem } from '../../services/modal.service';
 })
 export class ModalContainerComponent {
   protected readonly modalService = inject(ModalService);
+
+  @ViewChildren('modalElement') modalElements!: QueryList<ElementRef<HTMLElement>>;
+
+  constructor() {
+    // Effect to focus the newest modal when the list changes
+    effect(() => {
+      const modalList = this.modalService.modals();
+      if (modalList.length > 0) {
+        // Wait for next tick to ensure DOM is updated
+        setTimeout(() => {
+          const newestModal = this.modalElements.last;
+          if (newestModal) {
+            // Find first focusable element (close button or first action button)
+            const focusable = newestModal.nativeElement.querySelector(
+              'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            ) as HTMLElement;
+
+            if (focusable) {
+              focusable.focus();
+            } else {
+              newestModal.nativeElement.focus();
+            }
+          }
+        }, 0);
+      }
+    });
+  }
 
   onBackdropClick(modal: ModalItem): void {
     if (modal.closeOnBackdrop) {

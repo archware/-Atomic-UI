@@ -254,8 +254,7 @@ export class DashboardPageComponent implements OnInit {
     this.sidebarVisible.set(false);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onMenuItemClick(item: any): void {
+  onMenuItemClick(item: MenuItem): void {
     this.activeMenuItem.set(item.id || item.label);
 
     if (item.route) {

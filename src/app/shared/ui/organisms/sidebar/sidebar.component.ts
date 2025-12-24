@@ -38,7 +38,36 @@ export class SidebarComponent {
   /** Event emitted when a menu item is clicked */
   @Output() navigate = new EventEmitter<SidebarMenuItem>();
 
+  focusedIndex = -1;
+
   onItemClick(item: SidebarMenuItem) {
     this.navigate.emit(item);
+  }
+
+  handleKeydown(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'ArrowDown':
+        this.focusedIndex = (this.focusedIndex + 1) % this.menuItems.length;
+        this.focusItem(this.focusedIndex);
+        event.preventDefault();
+        break;
+      case 'ArrowUp':
+        this.focusedIndex = (this.focusedIndex - 1 + this.menuItems.length) % this.menuItems.length;
+        this.focusItem(this.focusedIndex);
+        event.preventDefault();
+        break;
+      case 'Enter':
+      case ' ':
+        if (this.focusedIndex >= 0) {
+          this.onItemClick(this.menuItems[this.focusedIndex]);
+          event.preventDefault();
+        }
+        break;
+    }
+  }
+
+  private focusItem(index: number) {
+    const items = document.querySelectorAll('.sidebar-nav .nav-link');
+    (items[index] as HTMLElement)?.focus();
   }
 }

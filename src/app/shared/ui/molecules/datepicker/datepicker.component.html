@@ -1,8 +1,9 @@
 <div class="datepicker-container" (clickOutside)="close()">
 
   <!-- Trigger Input -->
-  <div class="datepicker-trigger" (click)="toggle()" (keydown.enter)="toggle()" (keydown.space)="toggle()" tabindex="0"
-    role="button" aria-label="Abrir calendario">
+  <!-- Trigger Input -->
+  <div class="datepicker-trigger" (click)="toggle()" (keydown)="onKeyDown($event)" tabindex="0" role="button"
+    aria-haspopup="grid" [attr.aria-expanded]="isOpen()" aria-label="Abrir calendario">
     <app-floating-input [label]="label" [value]="formattedValue()" [variant]="variant" [disabled]="disabled"
       [readonly]="true" [error]="error" class="pointer-events-none"></app-floating-input>
 
@@ -26,10 +27,10 @@
 
   <!-- Popup Calendar -->
   @if (isOpen()) {
-  <div class="datepicker-popup">
+  <div class="datepicker-popup" role="grid" [attr.aria-label]="(currentViewDate() | date:'MMMM yyyy')">
     <!-- Header -->
     <div class="calendar-header">
-      <button class="nav-btn" (click)="prev($event)">
+      <button class="nav-btn" (click)="prev($event)" aria-label="Mes anterior">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m15 18-6-6 6-6" />
@@ -38,16 +39,16 @@
 
       <div class="current-month">
         <!-- Month Button -->
-        <button type="button" class="calendar-option" (click)="setView('month', $event)">
+        <button type="button" class="calendar-option" (click)="setView('month', $event)" aria-label="Cambiar mes">
           {{ currentViewDate() | date:'MMMM' }}
         </button>
         <!-- Year Button -->
-        <button type="button" class="calendar-option" (click)="setView('year', $event)">
+        <button type="button" class="calendar-option" (click)="setView('year', $event)" aria-label="Cambiar año">
           {{ currentViewDate() | date:'yyyy' }}
         </button>
       </div>
 
-      <button class="nav-btn" (click)="next($event)">
+      <button class="nav-btn" (click)="next($event)" aria-label="Mes siguiente">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m9 18 6-6-6-6" />
@@ -60,7 +61,7 @@
     <div class="calendar-grid">
       <!-- Weekdays -->
       @for (day of weekDays; track day) {
-      <div class="weekday-label">{{ day }}</div>
+      <div class="weekday-label" role="columnheader" [attr.aria-label]="day">{{ day }}</div>
       }
 
       <!-- Empty Slots -->
@@ -71,8 +72,8 @@
       <!-- Days -->
       @for (day of daysInMonth(); track $index) {
       <div class="calendar-day" [class.today]="isToday(day)" [class.selected]="isSelected(day)"
-        (click)="selectDate(day)" (keydown.enter)="selectDate(day)" (keydown.space)="selectDate(day)" tabindex="0"
-        role="button" [attr.aria-label]="'Seleccionar ' + day.getDate()">
+        [attr.data-date]="day.getDate()" (click)="selectDate(day)" (keydown)="onKeyDown($event, day)" tabindex="0"
+        role="gridcell" [attr.aria-selected]="isSelected(day)" [attr.aria-label]="(day | date:'fullDate')">
         {{ day.getDate() }}
       </div>
       }
