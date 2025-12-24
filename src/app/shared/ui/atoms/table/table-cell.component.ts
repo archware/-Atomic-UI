@@ -10,15 +10,16 @@ import { CommonModule } from '@angular/common';
   template: `<ng-content></ng-content>`,
   styles: [`
     td[app-table-cell], th[app-table-header-cell] {
-      padding: var(--space-3) var(--space-4);
+      /* Usando tokens RTC */
+      padding: var(--rtc-cell-padding);
       vertical-align: middle;
-      color: var(--text-color);
-      font-size: 0.875rem;
+      color: var(--rtc-color-text);
+      font-size: var(--rtc-font-size-base);
     }
 
     th[app-table-header-cell] {
       text-align: left;
-      font-weight: 600;
+      font-weight: var(--rtc-font-weight-header);
     }
     
     td[app-table-cell].align-center, th[app-table-header-cell].align-center {

@@ -62,6 +62,10 @@
     --rtc-transition-duration: 0.2s;
     --rtc-transition-timing: ease;
 
+    /* === Efecto Hover Elevado === */
+    --rtc-row-hover-shadow: var(--table-row-hover-shadow, 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04));
+    --rtc-row-hover-transform: var(--table-row-hover-transform, translateY(-2px));
+
     /* === Breakpoint === */
     --rtc-breakpoint: 768px;
 }
@@ -92,6 +96,10 @@ html.dark,
     --rtc-header-shadow: none;
     --rtc-shadow-card: var(--shadow-lg);
     --rtc-shadow-hover: var(--shadow-xl);
+
+    /* Efecto Hover Elevado (Dark) */
+    --rtc-row-hover-shadow: var(--table-row-hover-shadow, 0 4px 16px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2));
+    --rtc-row-hover-transform: var(--table-row-hover-transform, translateY(-2px));
 }
 
 /* ============================================
@@ -161,9 +169,11 @@ html.dark,
 
 /* === Rows === */
 .rtc-row {
+    position: relative;
     background-color: var(--rtc-color-background);
-    /* Default: No shadow on rows inside table to reduce noise, unless separate spacing is used */
-    transition: background-color var(--rtc-transition-duration) var(--rtc-transition-timing),
+    transition:
+        background-color var(--rtc-transition-duration) var(--rtc-transition-timing),
+        box-shadow var(--rtc-transition-duration) var(--rtc-transition-timing),
         transform var(--rtc-transition-duration) var(--rtc-transition-timing);
     border-bottom: 1px solid var(--rtc-color-border-light);
 }
@@ -173,9 +183,11 @@ html.dark,
     background-color: var(--rtc-color-stripe);
 }
 
-/* Hover effect simplified */
+/* Hover effect - Elevación */
 .rtc-row:hover {
     background-color: var(--rtc-color-row-hover);
+    box-shadow: var(--rtc-row-hover-shadow);
+    transform: var(--rtc-row-hover-transform);
     z-index: 1;
 }
 

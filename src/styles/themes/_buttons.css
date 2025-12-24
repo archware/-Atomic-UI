@@ -79,7 +79,7 @@
 /* Success */
 .btn-success {
   background-color: var(--success-color);
-  color: #ffffff;
+  color: var(--text-color-on-primary);
   border-color: var(--success-color);
 }
 
@@ -91,7 +91,7 @@
 /* Warning */
 .btn-warning {
   background-color: var(--warning-color);
-  color: #1f2937;
+  color: var(--text-color-inverse);
   border-color: var(--warning-color);
 }
 
@@ -103,7 +103,7 @@
 /* Danger */
 .btn-danger {
   background-color: var(--danger-color);
-  color: #ffffff;
+  color: var(--text-color-on-primary);
   border-color: var(--danger-color);
 }
 

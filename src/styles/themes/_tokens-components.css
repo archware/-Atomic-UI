@@ -54,6 +54,11 @@
    --table-hover-bg: var(--brand-primary-50);
    --table-hover-secondary: var(--brand-secondary-50);
 
+   /* Efecto hover elevado para filas */
+   --table-row-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+   --table-row-hover-transform: translateY(-2px);
+   --table-row-transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
    /* === FORMULARIOS / INPUTS === */
    --control-height: var(--control-height-md);
    /* Derivado de primitivos - 46px standard */
@@ -265,6 +270,11 @@ html.dark {
    --table-hover-secondary: var(--hover-background-subtle);
    /* Fixed hardcoded */
 
+   /* Efecto hover elevado para filas (dark) */
+   --table-row-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2);
+   --table-row-hover-transform: translateY(-2px);
+   --table-row-transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
    /* === FORMULARIOS / INPUTS === */
    --input-bg: var(--surface-background);
    /* Layer BG (Typical for inputs in dark) or Sub BG */
@@ -338,6 +348,157 @@ html.dark {
    --loader-spinner: var(--brand-accent-400);
 
    /* Dark Mode Ramp: Lighter/Brighter variants */
+   --loader-gradient-1: var(--brand-primary-400);
+   --loader-gradient-2: var(--brand-primary-300);
+   --loader-gradient-3: var(--brand-accent-300);
+   --loader-gradient-4: var(--brand-secondary-300);
+   --loader-gradient-5: var(--brand-secondary-400);
+
+   /* === TABS === */
+   --tab-bg: transparent;
+   --tab-text: var(--text-color-secondary);
+   --tab-hover-bg: var(--hover-background-subtle);
+   --tab-active-bg: var(--surface-elevated);
+   --tab-active-text: var(--primary-color);
+   --tab-active-border: var(--primary-color);
+   --tab-border: var(--border-color);
+
+   /* === PAGINATION === */
+   --pagination-bg: var(--surface-elevated);
+   --pagination-hover-bg: var(--hover-background-subtle);
+   --pagination-active-bg: var(--brand-primary-600);
+
+   /* === PROGRESS BAR === */
+   --progress-bg: var(--gray-700);
+   --progress-fill: var(--primary-color);
+
+   /* === SWITCH / TOGGLE === */
+   --switch-bg-off: var(--gray-600);
+   --switch-bg-on: var(--brand-primary-500);
+   --switch-disabled-bg: var(--gray-700);
+
+   /* === AVATAR === */
+   --avatar-bg: var(--hover-background);
+   --avatar-text: var(--primary-color);
+
+   /* === SKELETON === */
+   --skeleton-bg: var(--gray-700);
+   --skeleton-shimmer: var(--gray-600);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   🌙 TEMA OSCURO CORPORATIVO - Componentes
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-theme="brand-dark"] {
+   /* === NAVEGACIÓN === */
+   --nav-bg: var(--surface-section);
+   --nav-text: var(--text-color);
+   --nav-text-hover: var(--primary-color);
+   --nav-border: var(--border-color);
+   --nav-item-hover-bg: var(--hover-background-subtle);
+   --nav-item-active-bg: var(--primary-color-lighter);
+   --nav-item-active-text: var(--primary-color-text);
+   --nav-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+
+   /* === SIDEBAR === */
+   --sidebar-bg: var(--surface-section);
+   --sidebar-text: var(--text-color-secondary);
+   --sidebar-heading: var(--text-color);
+   --sidebar-border: var(--border-color);
+   --sidebar-item-hover: var(--hover-background-subtle);
+   --sidebar-item-active: var(--primary-color-lighter);
+
+   /* === CARDS === */
+   --card-bg: var(--surface-background);
+   --card-border: var(--border-color);
+   --card-header-bg: var(--surface-section);
+   --card-footer-bg: var(--surface-section);
+   --card-shadow: var(--shadow-lg);
+
+   /* === TABLAS === */
+   --table-bg: var(--surface-background);
+   --table-header-bg: var(--surface-section);
+   --table-header-text: var(--text-color);
+   --table-header-start: var(--brand-primary-700);
+   --table-header-end: var(--brand-secondary-700);
+   --table-cell-text: var(--text-color-secondary);
+   --table-row-alt-bg: var(--surface-section);
+   --table-row-hover: var(--hover-background);
+   --table-row-selected: var(--selected-background);
+   --table-border: var(--border-color-strong);
+   --table-stripe-bg: var(--surface-section);
+   --table-stripe-alt: var(--surface-ground);
+   --table-hover-bg: var(--hover-background);
+   --table-hover-secondary: var(--hover-background-subtle);
+
+   /* Efecto hover elevado para filas (brand-dark) */
+   --table-row-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
+   --table-row-hover-transform: translateY(-2px);
+   --table-row-transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+   /* === FORMULARIOS / INPUTS === */
+   --input-bg: var(--surface-background);
+   --input-border: var(--gray-600);
+   --input-border-width: 2.5px;
+   --input-border-hover: var(--gray-500);
+   --input-border-focus: var(--primary-color);
+   --input-placeholder: var(--text-color-placeholder);
+   --input-text: var(--text-color);
+   --input-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+   --input-shadow-focus: 0 0 0 3px rgba(var(--brand-primary-500-rgb), 0.3);
+   --input-disabled-bg: var(--surface-sunken);
+   --input-disabled-text: var(--gray-600);
+
+   /* === BOTONES === */
+   --button-primary-bg: var(--brand-primary-500);
+   --button-primary-bg-hover: var(--brand-primary-400);
+   --button-primary-bg-active: var(--brand-primary-300);
+   --button-primary-text: var(--gray-0);
+
+   --button-secondary-bg: var(--brand-secondary-600);
+   --button-secondary-bg-hover: var(--brand-secondary-500);
+   --button-secondary-text: var(--gray-0);
+
+   --button-outline-border: var(--primary-color);
+   --button-outline-text: var(--primary-color);
+   --button-outline-hover-bg: var(--hover-background);
+
+   --button-ghost-text: var(--primary-color);
+   --button-ghost-hover-bg: var(--hover-background-subtle);
+
+   /* === BADGES === */
+   --badge-secondary-bg: var(--surface-section);
+   --badge-secondary-text: var(--text-color-secondary);
+
+   /* === TOOLTIPS === */
+   --tooltip-bg: var(--surface-section);
+   --tooltip-text: var(--text-color);
+
+   /* === DROPDOWNS / SELECT === */
+   --dropdown-bg: var(--surface-section);
+   --dropdown-border: var(--border-color);
+   --dropdown-shadow: var(--shadow-xl);
+
+   /* === NG-SELECT === */
+   --ng-select-border: var(--border-color-strong);
+   --ng-select-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+   --ng-select-hover-bg: var(--hover-background);
+   --ng-select-hover-shadow: inset 0 0 0 2px var(--brand-primary-400);
+   --ng-select-selected-bg: var(--selected-background);
+
+   /* === MODALES === */
+   --modal-bg: var(--surface-background);
+   --modal-overlay: var(--surface-overlay);
+   --modal-border: var(--border-color);
+
+   /* === SCROLLBAR === */
+   --scrollbar-track: rgba(161, 114, 159, 0.1);
+   --scrollbar-thumb: rgba(161, 114, 159, 0.4);
+   --scrollbar-thumb-hover: rgba(161, 114, 159, 0.6);
+
+   /* === LOADER / SPINNER === */
+   --loader-border: var(--border-color-strong);
+   --loader-spinner: var(--brand-accent-400);
    --loader-gradient-1: var(--brand-primary-400);
    --loader-gradient-2: var(--brand-primary-300);
    --loader-gradient-3: var(--brand-accent-300);
