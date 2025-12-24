@@ -2,21 +2,16 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
- * Layout component specifically designed for arranging form fields in a grid.
- * Repalces legacy .form-row CSS class with a robust CSS Grid implementation.
+ * @deprecated Use `<app-row variant="form">` instead.
+ * This component will be removed in a future version.
  * 
- * @example
+ * Migration:
  * ```html
- * <!-- Two columns (default) -->
- * <app-form-row>
- *   <app-floating-input ...></app-floating-input>
- *   <app-floating-input ...></app-floating-input>
- * </app-form-row>
+ * <!-- Before -->
+ * <app-form-row columns="1fr 1fr 1fr">...</app-form-row>
  * 
- * <!-- Three columns -->
- * <app-form-row columns="1fr 1fr 1fr">
- *   ...
- * </app-form-row>
+ * <!-- After -->
+ * <app-row variant="form" columns="1fr 1fr 1fr">...</app-row>
  * ```
  */
 @Component({
@@ -37,16 +32,15 @@ import { CommonModule } from '@angular/common';
     :host {
       display: block;
       width: 100%;
-      margin-bottom: 1.25rem; /* Standard form group spacing */
+      margin-bottom: 1.25rem;
     }
 
     .form-row-grid {
       display: grid;
       width: 100%;
-      align-items: start; /* Align fields to top to handle validation message expansion safely */
+      align-items: start;
     }
 
-    /* Responsive: Stack on mobile */
     @media (max-width: 640px) {
       .form-row-grid {
         grid-template-columns: 1fr !important;
@@ -56,15 +50,9 @@ import { CommonModule } from '@angular/common';
   `]
 })
 export class FormRowComponent {
-  /** 
-   * CSS Grid template columns.
-   * @default '1fr 1fr' (Two equal columns)
-   */
+  /** @deprecated Use app-row variant="form" instead */
   @Input() columns = '1fr 1fr';
 
-  /** 
-   * Gap between fields.
-   * Matches standard form spacing (1.25rem = 20px).
-   */
+  /** @deprecated Use app-row variant="form" instead */
   @Input() gap = '1.25rem';
 }

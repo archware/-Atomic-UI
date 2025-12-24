@@ -33,6 +33,31 @@
       </app-row>
     </app-panel>
 
+    <section class="showcase-section">
+      <h3 class="section-title">Filtro</h3>
+      <form class="showcase-form">
+        <!-- Filtros con auto-wrap responsive -->
+        <app-row [responsive]="true" minColumnWidth="180px" gap="1rem" verticalAlign="bottom">
+          <app-select2 [options]="statusOptions" [(ngModel)]="filterStatus" name="filterStatus"
+            [label]="'filters.status' | translate" [searchable]="false">
+          </app-select2>
+          <app-floating-input variant="outline" type="number" [label]="'filters.rowCount' | translate"
+            [ngModel]="rowCount()" (ngModelChange)="updateRowCount($event)" name="rowCount">
+          </app-floating-input>
+          <app-datepicker [(ngModel)]="filterDateStart" name="filterDateStart" [label]="'filters.dateStart' | translate"
+            variant="outline"></app-datepicker>
+          <app-button variant="primary" class="auto-size">
+            <svg icon-left xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            {{ 'filters.filterBtn' | translate }}
+          </app-button>
+        </app-row>
+      </form>
+    </section>
+
     <!-- Table Panel -->
     <app-panel [title]="'table.title' | translate" icon="📋" variant="default" padding="md" [showHeader]="false"
       class="table-panel">

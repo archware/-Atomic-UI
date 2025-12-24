@@ -26,7 +26,7 @@ export type IconPosition = 'left' | 'right' | 'none';
       [type]="type"
       [disabled]="disabled"
       [class]="buttonClasses"
-      (click)="onClick.emit($event)"
+      (click)="buttonClick.emit($event)"
     >
       <!-- Custom Icon Link (Left) -->
       <span class="btn-icon-wrapper btn-icon-wrapper--left">
@@ -153,8 +153,7 @@ export class ButtonComponent {
    * Emits when the button is clicked.
    * Does not emit when disabled.
    */
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() onClick = new EventEmitter<MouseEvent>();
+  @Output() buttonClick = new EventEmitter<MouseEvent>();
 
   /** @internal */
   get buttonClasses(): string {

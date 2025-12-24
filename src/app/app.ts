@@ -5,7 +5,6 @@ import { ScrollOverlayComponent } from './shared/ui/organisms/scroll-overlay/scr
 import { ThemeSwitcherComponent } from './shared/ui/organisms/theme-switcher/theme-switcher.component';
 import { UiShowcaseComponent } from './components/ui-showcase/ui-showcase.component';
 
-
 import { PanelComponent } from './shared/ui/surfaces/panel/panel.component';
 import { LayoutShellComponent } from './shared/ui/templates/layout-shell/layout-shell.component';
 import { SidebarComponent, SidebarMenuItem } from './shared/ui/organisms/sidebar/sidebar.component';
@@ -44,7 +43,6 @@ interface TableRow {
     ScrollOverlayComponent,
     ThemeSwitcherComponent,
     UiShowcaseComponent,
-
 
     PanelComponent,
     TableActionsComponent,

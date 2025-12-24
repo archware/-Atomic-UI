@@ -1,6 +1,6 @@
 import {
   Component, Input, Output, EventEmitter, signal, HostListener,
-  ElementRef, forwardRef, inject, ChangeDetectionStrategy, computed
+  ElementRef, forwardRef, inject, ChangeDetectionStrategy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
@@ -409,8 +409,9 @@ export class Select2Component implements ControlValueAccessor {
 
   // Generate unique ID for accessibility (aria-labelledby)
   private static instanceCounter = 0;
-  readonly selectId = computed(() => `select2-label-${Select2Component.instanceCounter}`);
-  readonly listboxId = computed(() => `select2-listbox-${Select2Component.instanceCounter++}`);
+  private readonly _instanceId = ++Select2Component.instanceCounter;
+  readonly selectId = () => `select2-label-${this._instanceId}`;
+  readonly listboxId = () => `select2-listbox-${this._instanceId}`;
 
   private readonly elementRef = inject(ElementRef);
   private onChange: (value: unknown) => void = () => { /* noop */ };

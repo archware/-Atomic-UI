@@ -38,7 +38,7 @@
             Recordarme
           </app-checkbox>
 
-          <app-button variant="link" (onClick)="showForgot()">
+          <app-button variant="link" (buttonClick)="showForgot()">
             ¿Olvidaste tu contraseña?
           </app-button>
         </app-row>
@@ -62,7 +62,7 @@
 
       <app-text variant="body-sm" color="muted" align="center">
         ¿No tienes cuenta?
-        <app-button variant="link" (onClick)="showRegister()" class="inline">
+        <app-button variant="link" (buttonClick)="showRegister()" class="inline">
           Regístrate aquí
         </app-button>
       </app-text>
@@ -129,7 +129,7 @@
       <div class="mt-4 text-center">
         <app-text variant="body-sm" color="muted" align="center">
           ¿Ya tienes cuenta?
-          <app-button variant="link" (onClick)="showLogin()" class="inline">
+          <app-button variant="link" (buttonClick)="showLogin()" class="inline">
             Inicia sesión
           </app-button>
         </app-text>
@@ -175,14 +175,14 @@
           <i class="fa-solid fa-envelope-circle-check"></i>
         </div>
         <p class="success-text">{{ forgotSuccessMessage() }}</p>
-        <app-button variant="outline" (onClick)="showLogin()">
+        <app-button variant="outline" (buttonClick)="showLogin()">
           Volver al Login
         </app-button>
       </div>
       }
 
       <div class="mt-6 text-center">
-        <app-button variant="link" iconClass="fa-solid fa-arrow-left" iconPosition="left" (onClick)="showLogin()">
+        <app-button variant="link" iconClass="fa-solid fa-arrow-left" iconPosition="left" (buttonClick)="showLogin()">
           Volver al inicio de sesión
         </app-button>
       </div>

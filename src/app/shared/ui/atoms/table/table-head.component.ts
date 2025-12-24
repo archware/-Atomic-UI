@@ -1,6 +1,11 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+/**
+ * TableHeadComponent - Cabecera de tabla atómica
+ * 
+ * Usa tokens centralizados --table-* de table-tokens.css
+ */
 @Component({
   selector: 'app-table-head',
   standalone: true,
@@ -18,7 +23,7 @@ import { CommonModule } from '@angular/common';
       display: contents;
     }
 
-    /* Thead con estilos RTC */
+    /* Thead con estilos usando tokens --table-* */
     .atomic-thead {
       display: table-header-group;
       z-index: 10;
@@ -29,7 +34,7 @@ import { CommonModule } from '@angular/common';
       display: table-row;
     }
     
-    /* Celdas del header - Usando tokens RTC */
+    /* Celdas del header - Usando tokens --table-* */
     .atomic-thead th,
     .atomic-thead th[app-table-header-cell] {
       display: table-cell;
@@ -37,40 +42,40 @@ import { CommonModule } from '@angular/common';
       top: 0;
       z-index: 20;
       
-      /* Padding y tipografía - tokens RTC */
-      padding: var(--rtc-cell-padding);
-      color: var(--rtc-header-color);
-      font-size: var(--rtc-font-size-header);
-      font-weight: var(--rtc-font-weight-header);
+      /* Padding y tipografía */
+      padding: var(--table-cell-padding);
+      color: var(--table-header-color);
+      font-size: var(--table-font-size-header);
+      font-weight: var(--table-font-weight-header);
       text-align: left;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       white-space: nowrap;
       
-      /* Fondo - token RTC */
-      background: var(--rtc-header-bg);
+      /* Fondo */
+      background: var(--table-header-bg);
       
-      /* Borde "cápsula" - tokens RTC */
-      border-top: var(--rtc-header-border-width) var(--rtc-header-border-style) var(--rtc-header-border-color);
-      border-bottom: var(--rtc-header-border-width) var(--rtc-header-border-style) var(--rtc-header-border-color);
+      /* Borde "cápsula" */
+      border-top: var(--table-header-border-width) var(--table-header-border-style) var(--table-header-border-color);
+      border-bottom: var(--table-header-border-width) var(--table-header-border-style) var(--table-header-border-color);
       border-left: none;
       border-right: none;
       
       /* Sombra */
-      box-shadow: var(--rtc-header-shadow);
+      box-shadow: var(--table-header-shadow);
     }
     
     /* Bordes redondeados en primera y última celda */
     .atomic-thead th:first-child {
-      border-left: var(--rtc-header-border-width) var(--rtc-header-border-style) var(--rtc-header-border-color);
-      border-top-left-radius: var(--rtc-header-radius);
-      border-bottom-left-radius: var(--rtc-header-radius);
+      border-left: var(--table-header-border-width) var(--table-header-border-style) var(--table-header-border-color);
+      border-top-left-radius: var(--table-header-radius);
+      border-bottom-left-radius: var(--table-header-radius);
     }
     
     .atomic-thead th:last-child {
-      border-right: var(--rtc-header-border-width) var(--rtc-header-border-style) var(--rtc-header-border-color);
-      border-top-right-radius: var(--rtc-header-radius);
-      border-bottom-right-radius: var(--rtc-header-radius);
+      border-right: var(--table-header-border-width) var(--table-header-border-style) var(--table-header-border-color);
+      border-top-right-radius: var(--table-header-radius);
+      border-bottom-right-radius: var(--table-header-radius);
     }
     
     /* Alineación */

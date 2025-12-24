@@ -8,98 +8,23 @@
  * ✓ Angular (2+)
  * ✓ ASP.NET MVC (Razor/CSHTML)
  * ✓ React, Vue, y cualquier framework que use HTML estándar
+ * 
+ * TOKENS:
+ * Los tokens --rtc-* son alias de --table-* definidos en:
+ * tokens/table-tokens.css (Single Source of Truth)
  */
 
 /* ============================================
-   CSS CUSTOM PROPERTIES (THEMING)
-   Integradas con el sistema de tokens semánticos
+   TOKENS: Importados desde archivo centralizado
+   Los tokens --rtc-* son alias de --table-*
+   Ver: tokens/table-tokens.css
    ============================================ */
+@import url('./tokens/table-tokens.css');
+
+/* Tokens adicionales específicos de responsive-table (no compartidos) */
 :root {
-    /* === Colores - Referenciando sistema de temas === */
-    --rtc-color-primary: var(--primary-color);
-    --rtc-color-border: var(--border-color);
-    --rtc-color-background: var(--surface-background);
-    --rtc-color-text: var(--text-color);
-    /* Stripe usando token hover muy sutil */
-    --rtc-color-stripe: var(--hover-background-subtle);
-    /* Borde inferior sutil para filas */
-    --rtc-color-border-light: var(--border-color-light, var(--border-color));
-    /* Hover */
-    --rtc-color-row-hover: var(--hover-background);
-
-    /* === Header - Light Mode === */
-    --rtc-header-bg: var(--surface-background);
-    --rtc-header-color: var(--brand-primary-500, var(--primary-color));
-
-    /* Header Border Tokens (Strict Theme Usage) */
-    --rtc-header-border-width: 3px;
-    --rtc-header-border-style: solid;
-    --rtc-header-border-color: var(--primary-color);
-    --rtc-header-radius: var(--radius-md);
-
-    /* === Espaciados === */
-    --rtc-border-radius: var(--radius-md);
-    --rtc-cell-padding: var(--space-3) var(--space-4);
-    --rtc-card-padding: var(--space-4);
-    --rtc-card-gap: var(--space-4);
     --rtc-row-gap: 0;
-
-    /* === Tipografía (Standard Tokens) === */
-    --rtc-font-family: inherit;
-    --rtc-font-size-base: var(--text-sm);
-    --rtc-font-size-mobile: var(--text-sm);
-    --rtc-font-size-header: var(--text-xs);
-    --rtc-font-weight-label: 600;
-    --rtc-font-weight-header: 600;
-
-    /* === Sombras del sistema === */
-    --rtc-shadow-row: var(--shadow-xs, 0 1px 2px var(--shadow-color, rgba(0, 0, 0, 0.05)));
-    --rtc-header-shadow: var(--shadow-xs, 0 1px 2px var(--shadow-color, rgba(0, 0, 0, 0.05)));
-    --rtc-shadow-card: var(--shadow-md);
-    --rtc-shadow-hover: var(--shadow-lg);
-
-    /* === Transiciones === */
-    --rtc-transition-duration: 0.2s;
-    --rtc-transition-timing: ease;
-
-    /* === Efecto Hover Elevado === */
-    --rtc-row-hover-shadow: var(--table-row-hover-shadow, 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04));
-    --rtc-row-hover-transform: var(--table-row-hover-transform, translateY(-2px));
-
-    /* === Breakpoint === */
     --rtc-breakpoint: 768px;
-}
-
-html.dark,
-[data-theme="dark"] {
-    --rtc-color-primary: var(--primary-color-light);
-    --rtc-color-border: var(--border-color);
-    --rtc-color-background: var(--surface-section);
-    --rtc-color-text: var(--text-color);
-    --rtc-color-label: var(--secondary-color);
-    /* Stripes sutiles para dark mode */
-    --rtc-color-stripe: var(--hover-background-subtle);
-    --rtc-color-border-light: var(--border-color-light, var(--border-color));
-    /* Hover con tinte primario */
-    --rtc-color-row-hover: var(--hover-background);
-
-    /* Dark Mode Header Override */
-    --rtc-header-bg: var(--brand-primary-700, var(--primary-color-darker));
-    --rtc-header-color: var(--gray-0);
-
-    /* Dark Mode - NO BORDER */
-    --rtc-header-border-width: 0;
-    --rtc-header-border-color: transparent;
-
-    /* Sombras Dark Mode */
-    --rtc-shadow-row: var(--shadow-sm);
-    --rtc-header-shadow: none;
-    --rtc-shadow-card: var(--shadow-lg);
-    --rtc-shadow-hover: var(--shadow-xl);
-
-    /* Efecto Hover Elevado (Dark) */
-    --rtc-row-hover-shadow: var(--table-row-hover-shadow, 0 4px 16px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2));
-    --rtc-row-hover-transform: var(--table-row-hover-transform, translateY(-2px));
 }
 
 /* ============================================
@@ -283,10 +208,7 @@ html.dark,
     .rtc-table td[data-label]::after {
         flex: 1;
         text-align: left;
-        /* User requested Left Alignment */
-        /* Right align values creates a clean label-value split */
         word-break: break-word;
-        /* Prevent overflow */
     }
 
     /* Legacy: data-title support */

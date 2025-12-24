@@ -10,7 +10,7 @@
       <app-text variant="h2" weight="bold">{{ TABLE_TITLE }}</app-text>
       <app-text variant="body-sm" color="muted">{{ meta().total }} registros</app-text>
     </div>
-    <app-button variant="primary" icon="➕" (onClick)="openCreateModal()">
+    <app-button variant="primary" icon="➕" (buttonClick)="openCreateModal()">
       Nuevo {{ ENTITY_NAME }}
     </app-button>
   </app-row>
@@ -35,7 +35,7 @@
       </app-select2>
 
       @if (hasActiveFilters()) {
-      <app-button variant="ghost" size="sm" (onClick)="clearFilters()">
+      <app-button variant="ghost" size="sm" (buttonClick)="clearFilters()">
         <i class="fa-solid fa-times"></i>
         Limpiar
       </app-button>
@@ -57,15 +57,15 @@
         {{ selectedCount() }} seleccionado(s)
       </app-text>
       <app-row gap="0.5rem">
-        <app-button variant="danger" size="sm" (onClick)="bulkDelete()">
+        <app-button variant="danger" size="sm" (buttonClick)="bulkDelete()">
           <i class="fa-solid fa-trash"></i>
           Eliminar
         </app-button>
-        <app-button variant="outline" size="sm" (onClick)="bulkExport()">
+        <app-button variant="outline" size="sm" (buttonClick)="bulkExport()">
           <i class="fa-solid fa-download"></i>
           Exportar
         </app-button>
-        <app-button variant="ghost" size="sm" (onClick)="clearSelection()">
+        <app-button variant="ghost" size="sm" (buttonClick)="clearSelection()">
           Cancelar
         </app-button>
       </app-row>
@@ -89,7 +89,7 @@
       <i class="fa-solid fa-circle-exclamation text-danger text-2xl mb-2"></i>
       <app-text weight="bold">Error al cargar los datos</app-text>
       <app-text color="muted">{{ listApi.error()?.message }}</app-text>
-      <app-button variant="primary" (onClick)="loadData()" class="mt-2">
+      <app-button variant="primary" (buttonClick)="loadData()" class="mt-2">
         Reintentar
       </app-button>
     </app-row>
@@ -116,7 +116,7 @@
               <i class="fa-solid fa-inbox text-muted text-2xl mb-2"></i>
               <app-text color="muted">No se encontraron registros</app-text>
               @if (hasActiveFilters()) {
-              <app-button variant="outline" size="sm" (onClick)="clearFilters()" class="mt-2">
+              <app-button variant="outline" size="sm" (buttonClick)="clearFilters()" class="mt-2">
                 Limpiar filtros
               </app-button>
               }
@@ -150,10 +150,10 @@
           <td app-table-cell>{{ formatDate(item.createdAt) }}</td>
           <td app-table-cell class="text-right">
             <app-row justify="end" gap="0.25rem">
-              <app-icon-button size="sm" title="Editar" (onClick)="openEditModal(item)">
+              <app-icon-button size="sm" title="Editar" (clicked)="openEditModal(item)">
                 <i class="fa-solid fa-pen"></i>
               </app-icon-button>
-              <app-icon-button size="sm" variant="ghost" title="Eliminar" (onClick)="openDeleteModal(item)">
+              <app-icon-button size="sm" variant="ghost" title="Eliminar" (clicked)="openDeleteModal(item)">
                 <i class="fa-solid fa-trash text-danger"></i>
               </app-icon-button>
             </app-row>
@@ -208,7 +208,7 @@
     }
 
     <app-row justify="end" gap="0.75rem" class="mt-4 pt-4 border-t">
-      <app-button variant="ghost" type="button" (onClick)="closeModal()">
+      <app-button variant="ghost" type="button" (buttonClick)="closeModal()">
         Cancelar
       </app-button>
       <app-button variant="primary" type="submit" [disabled]="saveApi.loading()">
@@ -251,10 +251,10 @@
     }
 
     <app-row justify="end" gap="0.75rem" class="w-full">
-      <app-button variant="ghost" (onClick)="closeDeleteModal()">
+      <app-button variant="ghost" (buttonClick)="closeDeleteModal()">
         Cancelar
       </app-button>
-      <app-button variant="danger" [disabled]="deleteApi.loading()" (onClick)="confirmDelete()">
+      <app-button variant="danger" [disabled]="deleteApi.loading()" (buttonClick)="confirmDelete()">
         @if (deleteApi.loading()) {
         <i class="fa-solid fa-spinner fa-spin"></i>
         Eliminando...

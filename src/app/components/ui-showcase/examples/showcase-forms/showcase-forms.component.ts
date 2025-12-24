@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { FloatingInputComponent } from '../../../../shared/ui/atoms/floating-input/floating-input.component';
 import { Select2Component, Select2Option } from '../../../../shared/ui/molecules/select2/select2.component';
 import { DatepickerComponent } from '../../../../shared/ui/molecules/datepicker/datepicker.component';
-import { FormRowComponent } from '../../../../shared/ui/atoms/form-row/form-row.component';
 import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
 import { DropdownComponent, DropdownOption } from '../../../../shared/ui/molecules/dropdown/dropdown.component';
 import { TextareaComponent } from '../../../../shared/ui/atoms/textarea/textarea.component';
@@ -21,7 +20,6 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
     FloatingInputComponent,
     Select2Component,
     DatepickerComponent,
-    FormRowComponent,
     RowComponent,
     DropdownComponent,
     TextareaComponent,
@@ -216,7 +214,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
       <h3 class="section-title">Formulario con Componentes Atomic</h3>
       <form class="showcase-form">
         <!-- Fila 1: Nombre y Email -->
-        <app-form-row>
+        <app-row variant="form">
           <app-floating-input 
             variant="floating" 
             label="Nombre completo" 
@@ -231,10 +229,10 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
             [(ngModel)]="formData.email"
             name="email"
           ></app-floating-input>
-        </app-form-row>
+        </app-row>
         
         <!-- Fila 2: Teléfono y País -->
-        <app-form-row>
+        <app-row variant="form">
           <app-floating-input 
             variant="floating" 
             label="Teléfono" 
@@ -250,20 +248,23 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
             name="country"
             placeholder="Seleccionar..."
           ></app-select2>
-        </app-form-row>
+        </app-row>
         
-        <!-- Mensaje -->
-        <app-textarea 
+        <!-- Mensaje - fila completa -->
+        <app-row variant="form" columns="1fr">
+          <app-textarea 
           label="Mensaje" 
           variant="floating"
           [rows]="4"
           [maxlength]="500"
           [(ngModel)]="formData.message"
           name="message"
-        ></app-textarea>
+          ></app-textarea>
+        </app-row>
+        
         
         <!-- Checkbox y Radio en fila -->
-        <app-form-row>
+        <app-row variant="form">
           <app-checkbox 
             label="Acepto los términos y condiciones" 
             [(ngModel)]="formData.terms"
@@ -277,12 +278,12 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
             direction="horizontal"
             [(ngModel)]="formData.preference"
           ></app-radio>
-        </app-form-row>
+        </app-row>
         
         <!-- Botones -->
         <app-row columns="auto auto" gap="1rem" align="right">
-          <app-button variant="outline" (onClick)="onCancel()">Cancelar</app-button>
-          <app-button variant="primary" type="submit" (onClick)="onSubmit()">Enviar</app-button>
+          <app-button variant="outline" (buttonClick)="onCancel()">Cancelar</app-button>
+          <app-button variant="primary" type="submit" (buttonClick)="onSubmit()">Enviar</app-button>
         </app-row>
       </form>
     </section>
@@ -408,3 +409,4 @@ export class ShowcaseFormsComponent {
     console.log('Formulario enviado:', this.formData);
   }
 }
+

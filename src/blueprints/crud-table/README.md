@@ -139,7 +139,7 @@ departmentOptions = [
   icon="fa-solid fa-eye"
   size="sm"
   title="Ver detalles"
-  (onClick)="viewDetails(item)">
+  (clicked)="viewDetails(item)">
 </app-icon-button>
 ```
 

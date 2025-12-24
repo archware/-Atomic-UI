@@ -100,7 +100,7 @@ Agrega botones después del divider "o":
 
 ```html
 <div class="social-buttons">
-  <app-button variant="outline" (onClick)="loginWithGoogle()">
+  <app-button variant="outline" (buttonClick)="loginWithGoogle()">
     <i class="fa-brands fa-google" icon-left></i>
     Google
   </app-button>

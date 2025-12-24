@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, forwardRef, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -259,9 +259,9 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     /* === VARIANT: OUTLINE === */
     .variant-outline .floating-input {
       height: var(--control-height);
-      height: var(--control-height);
       /* padding inherited from base: 0 0.875rem */
       font-size: 0.875rem;
+      background: var(--input-bg);
       border: var(--input-border-width, 1.5px) solid var(--input-border);
       border-radius: 0.5rem;
       box-shadow: var(--input-shadow);
@@ -382,7 +382,8 @@ export class FloatingInputComponent implements ControlValueAccessor {
 
   // Generate unique ID for accessibility (label-for association)
   private static instanceCounter = 0;
-  readonly inputId = computed(() => `floating-input-${FloatingInputComponent.instanceCounter++}`);
+  private readonly _inputId = `floating-input-${++FloatingInputComponent.instanceCounter}`;
+  readonly inputId = () => this._inputId;
 
   onChange: (value: string | number) => void = () => { /* noop */ };
   onTouched: () => void = () => { /* noop */ };

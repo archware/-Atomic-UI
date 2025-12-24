@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /** Horizontal alignment options */
@@ -10,6 +10,26 @@ export type RowJustify = 'start' | 'center' | 'end' | 'between' | 'around';
 /** Vertical alignment options */
 export type RowVerticalAlign = 'top' | 'center' | 'bottom' | 'stretch' | 'baseline';
 
+/** Layout variant */
+export type RowVariant = 'default' | 'form';
+
+/**
+ * RowComponent - Unified layout component for grids
+ * 
+ * Replaces both legacy app-row and app-form-row with a single component.
+ * 
+ * @example
+ * ```html
+ * <!-- Default grid -->
+ * <app-row columns="1fr 1fr 1fr">...</app-row>
+ * 
+ * <!-- Form layout (2 columns, form spacing) -->
+ * <app-row variant="form">...</app-row>
+ * 
+ * <!-- Responsive auto-wrap -->
+ * <app-row [responsive]="true" minColumnWidth="200px">...</app-row>
+ * ```
+ */
 @Component({
   selector: 'app-row',
   standalone: true,
@@ -17,6 +37,8 @@ export type RowVerticalAlign = 'top' | 'center' | 'bottom' | 'stretch' | 'baseli
   template: `
     <div 
       class="row"
+      [class.row--variant-form]="variant === 'form'"
+      [class.row--responsive]="responsive"
       [class.row--align-left]="align === 'left'"
       [class.row--align-center]="align === 'center'"
       [class.row--align-right]="align === 'right'"
@@ -31,8 +53,9 @@ export type RowVerticalAlign = 'top' | 'center' | 'bottom' | 'stretch' | 'baseli
       [class.row--valign-bottom]="verticalAlign === 'bottom'"
       [class.row--valign-stretch]="verticalAlign === 'stretch'"
       [class.row--valign-baseline]="verticalAlign === 'baseline'"
-      [style.grid-template-columns]="columns"
-      [style.gap]="gap"
+      [class.row--wrap]="wrap === 'wrap'"
+      [style.grid-template-columns]="computedColumns"
+      [style.gap]="computedGap"
     >
       <ng-content></ng-content>
     </div>
@@ -43,11 +66,36 @@ export type RowVerticalAlign = 'top' | 'center' | 'bottom' | 'stretch' | 'baseli
       width: 100%;
     }
 
+    /* Form variant: add margin-bottom for form spacing */
+    :host:has(.row--variant-form) {
+      margin-bottom: 1.25rem;
+    }
+
     .row {
       display: grid;
       width: 100%;
       box-sizing: border-box;
-      align-items: stretch; /* Default: stretch to fill height */
+      align-items: stretch;
+    }
+
+    /* === Form Variant === */
+    .row--variant-form {
+      align-items: start; /* Align fields to top for validation messages */
+    }
+
+    /* === Responsive Mode === */
+    .row--responsive {
+      /* Handled via computedColumns with auto-fit */
+    }
+
+    /* === Wrap Mode (Flexbox) === */
+    .row--wrap {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .row--wrap > * {
+      flex: 1 1 auto;
     }
 
     /* === Horizontal Alignment (justify-items) === */
@@ -80,19 +128,22 @@ export type RowVerticalAlign = 'top' | 'center' | 'bottom' | 'stretch' | 'baseli
 
     /* === Responsive: Stack on mobile === */
     @media (max-width: 640px) {
-      .row {
+      .row:not(.row--responsive) {
         grid-template-columns: 1fr !important;
-        gap: 1.25rem !important; /* 20px on mobile */
+        gap: 1.25rem !important;
       }
     }
   `]
 })
 export class RowComponent {
-  /** CSS Grid template columns (e.g., '1fr 1fr', 'repeat(3, 1fr)') */
-  @Input() columns = '1fr';
+  /** 
+   * CSS Grid template columns (e.g., '1fr 1fr', 'repeat(3, 1fr)')
+   * When not specified, form variant uses '1fr 1fr', others use '1fr'
+   */
+  @Input() columns?: string;
 
-  /** Gap between columns (default 24px desktop, 12px mobile) */
-  @Input() gap = '1.5rem'; /* 24px */
+  /** Gap between columns */
+  @Input() gap = '1.5rem';
 
   /** Horizontal column content alignment */
   @Input() align: RowAlign = 'stretch';
@@ -102,4 +153,58 @@ export class RowComponent {
 
   /** Justify content across the row */
   @Input() justify: RowJustify = 'start';
+
+  /** 
+   * Layout variant
+   * - 'default': Standard grid layout
+   * - 'form': Form layout (1fr 1fr, gap 1.25rem, margin-bottom)
+   */
+  @Input() variant: RowVariant = 'default';
+
+  /** 
+   * Enable responsive auto-fit wrapping
+   * When true, uses CSS auto-fit to wrap columns automatically
+   */
+  @Input() responsive = false;
+
+  /** 
+   * Minimum column width for responsive mode
+   * Only used when responsive=true
+   */
+  @Input() minColumnWidth = '200px';
+
+  /** 
+   * Flex wrap mode (uses flexbox instead of grid)
+   * Values: 'nowrap' | 'wrap'
+   */
+  @Input() wrap: 'nowrap' | 'wrap' = 'nowrap';
+
+  /** Computed grid-template-columns based on variant and responsive settings */
+  get computedColumns(): string {
+    // Responsive mode: use auto-fit for wrapping
+    if (this.responsive) {
+      return `repeat(auto-fit, minmax(${this.minColumnWidth}, 1fr))`;
+    }
+
+    // If columns was explicitly set, always use it (highest priority)
+    if (this.columns !== undefined) {
+      return this.columns;
+    }
+
+    // Form variant default: 2 equal columns
+    if (this.variant === 'form') {
+      return '1fr 1fr';
+    }
+
+    // Default: single column
+    return '1fr';
+  }
+
+  /** Computed gap based on variant */
+  get computedGap(): string {
+    if (this.variant === 'form') {
+      return '1.25rem';
+    }
+    return this.gap;
+  }
 }

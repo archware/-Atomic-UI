@@ -1,6 +1,11 @@
-import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+/**
+ * TableRowComponent - Fila de tabla atómica
+ * 
+ * Usa tokens centralizados --table-* de table-tokens.css
+ */
 @Component({
   selector: 'tr[app-table-row]',
   standalone: true,
@@ -8,13 +13,16 @@ import { CommonModule } from '@angular/common';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content></ng-content>`,
+  host: {
+    '[class.selected]': 'selected'
+  },
   styles: [`
     tr[app-table-row] {
-      border-bottom: 1px solid var(--rtc-color-border-light);
+      border-bottom: 1px solid var(--table-color-border-light);
       transition: 
-        background-color var(--rtc-transition-duration) var(--rtc-transition-timing),
-        box-shadow var(--rtc-transition-duration) var(--rtc-transition-timing),
-        transform var(--rtc-transition-duration) var(--rtc-transition-timing);
+        background-color var(--table-transition-duration) var(--table-transition-timing),
+        box-shadow var(--table-transition-duration) var(--table-transition-timing),
+        transform var(--table-transition-duration) var(--table-transition-timing);
       position: relative;
     }
 
@@ -22,16 +30,16 @@ import { CommonModule } from '@angular/common';
       border-bottom: none;
     }
 
-    /* Hover elevado - tokens RTC */
+    /* Hover elevado */
     tr[app-table-row]:hover {
-      background-color: var(--rtc-color-row-hover);
-      box-shadow: var(--rtc-row-hover-shadow);
-      transform: var(--rtc-row-hover-transform);
+      background-color: var(--table-color-hover);
+      box-shadow: var(--table-row-hover-shadow);
+      transform: var(--table-row-hover-transform);
       z-index: 1;
     }
 
     tr[app-table-row].selected {
-      background-color: var(--primary-50);
+      background-color: var(--primary-50, var(--table-color-hover));
     }
 
     /* Asegurar que las celdas mantengan el efecto visual */
@@ -41,5 +49,6 @@ import { CommonModule } from '@angular/common';
   `]
 })
 export class TableRowComponent {
+  /** Indica si la fila está seleccionada */
   @Input() selected = false;
 }

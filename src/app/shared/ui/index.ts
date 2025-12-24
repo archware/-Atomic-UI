@@ -82,6 +82,9 @@ export type { Select2Option } from './molecules/select2/select2.component';
 
 export { TableActionsComponent } from './molecules/table-actions/table-actions.component';
 
+export { ActionGroupComponent } from './molecules/action-group/action-group.component';
+export type { ActionItem } from './molecules/action-group/action-group.component';
+
 export { ToastComponent } from './molecules/toast/toast.component';
 export type { ToastConfig, ToastType } from './molecules/toast/toast.component';
 export { ToastService } from './services/toast.service';
