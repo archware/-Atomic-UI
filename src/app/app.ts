@@ -5,10 +5,9 @@ import { ScrollOverlayComponent } from './shared/ui/organisms/scroll-overlay/scr
 import { ThemeSwitcherComponent } from './shared/ui/organisms/theme-switcher/theme-switcher.component';
 import { UiShowcaseComponent } from './components/ui-showcase/ui-showcase.component';
 
-
 import { PanelComponent } from './shared/ui/surfaces/panel/panel.component';
 import { LayoutShellComponent } from './shared/ui/templates/layout-shell/layout-shell.component';
-import { SidebarComponent } from './shared/ui/organisms/sidebar/sidebar.component';
+import { SidebarComponent, SidebarMenuItem } from './shared/ui/organisms/sidebar/sidebar.component';
 import { TopbarComponent } from './shared/ui/organisms/topbar/topbar.component';
 import { TableActionsComponent } from './shared/ui/molecules/table-actions/table-actions.component';
 import { FloatingInputComponent } from './shared/ui/atoms/floating-input/floating-input.component';
@@ -16,7 +15,11 @@ import { Select2Component, Select2Option } from './shared/ui/molecules/select2/s
 import { RowComponent } from './shared/ui/atoms/row/row.component';
 import { ButtonComponent } from './shared/ui/atoms/button/button.component';
 import { TextComponent } from './shared/ui/atoms/text/text.component';
+import { ChipComponent } from './shared/ui/atoms/chip/chip.component';
 import { DatepickerComponent } from './shared/ui/molecules/datepicker/datepicker.component';
+import { ToastComponent } from './shared/ui/molecules/toast/toast.component';
+import { PopupContainerComponent } from './shared/ui/molecules/popup/popup-container.component';
+import { ModalContainerComponent } from './shared/ui/molecules/modal/modal-container.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 interface TableRow {
@@ -41,7 +44,6 @@ interface TableRow {
     ThemeSwitcherComponent,
     UiShowcaseComponent,
 
-
     PanelComponent,
     TableActionsComponent,
     LayoutShellComponent,
@@ -53,6 +55,10 @@ interface TableRow {
     ButtonComponent,
     TextComponent,
     DatepickerComponent,
+    ChipComponent,
+    ToastComponent,
+    PopupContainerComponent,
+    ModalContainerComponent,
     TranslateModule
   ],
   templateUrl: './app.html',
@@ -111,6 +117,12 @@ export class App {
   // Sidebar toggle - inicia oculto en móvil
   sidebarVisible = signal(this.getInitialSidebarState());
 
+  menuItems: SidebarMenuItem[] = [
+    { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/' },
+    { label: 'Showcase', icon: 'fa-solid fa-layer-group', route: '/showcase' },
+    { label: 'Settings', icon: 'fa-solid fa-gear', route: '/settings' }
+  ];
+
   private getInitialSidebarState(): boolean {
     if (isPlatformBrowser(this.platformId)) {
       return window.innerWidth > this.MOBILE_BREAKPOINT;
@@ -148,9 +160,9 @@ export class App {
     alert('Cerrando sesión...');
   }
 
-  onView(row: TableRow) { }
-  onEdit(row: TableRow) { }
-  onDelete(row: TableRow) { }
+  onView(_row: TableRow) { }
+  onEdit(_row: TableRow) { }
+  onDelete(_row: TableRow) { }
 
   // Datos de ejemplo con claves de traducción
   private nombres = ['Juan Pérez', 'María García', 'Carlos López', 'Ana Martínez', 'Pedro Sánchez', 'Laura Torres', 'Diego Ramírez', 'Sofia Herrera'];

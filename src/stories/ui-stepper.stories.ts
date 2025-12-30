@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { StepperComponent } from '../app/shared/ui/organisms/stepper/stepper.component';
 
 const meta: Meta<StepperComponent> = {
-  title: 'Organisms/Stepper',
+  title: '3. Organisms/Stepper',
   component: StepperComponent,
   tags: ['autodocs'],
 };

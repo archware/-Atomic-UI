@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AccordionComponent, AccordionItemComponent } from '../app/shared/ui/organisms/accordion/accordion.component';
+import { AccordionComponent } from '../app/shared/ui/organisms/accordion/accordion.component';
 
 const meta: Meta<AccordionComponent> = {
-  title: 'Organisms/Accordion',
+  title: '3. Organisms/Accordion',
   component: AccordionComponent,
   tags: ['autodocs'],
 };

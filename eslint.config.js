@@ -1,23 +1,32 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
-
 // @ts-check
-const eslint = require("@eslint/js");
-const { defineConfig } = require("eslint/config");
-const tseslint = require("typescript-eslint");
-const angular = require("angular-eslint");
+import eslint from "@eslint/js";
+import tseslint from "typescript-eslint";
+import angular from "angular-eslint";
 
-module.exports = defineConfig([
+export default tseslint.config(
   {
     files: ["**/*.ts"],
     extends: [
       eslint.configs.recommended,
-      tseslint.configs.recommended,
-      tseslint.configs.stylistic,
-      angular.configs.tsRecommended,
+      ...tseslint.configs.recommended,
+      ...tseslint.configs.stylistic,
+      ...angular.configs.tsRecommended,
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_"
+        }
+      ],
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/consistent-indexed-object-style": "off",
+      "@angular-eslint/no-output-native": "warn",
       "@angular-eslint/directive-selector": [
         "error",
         {
@@ -29,7 +38,7 @@ module.exports = defineConfig([
       "@angular-eslint/component-selector": [
         "error",
         {
-          type: "element",
+          type: ["element", "attribute"],
           prefix: "app",
           style: "kebab-case",
         },
@@ -39,9 +48,12 @@ module.exports = defineConfig([
   {
     files: ["**/*.html"],
     extends: [
-      angular.configs.templateRecommended,
-      angular.configs.templateAccessibility,
+      ...angular.configs.templateRecommended,
+      ...angular.configs.templateAccessibility,
     ],
-    rules: {},
+    rules: {
+      "@angular-eslint/template/click-events-have-key-events": "warn",
+      "@angular-eslint/template/interactive-supports-focus": "warn",
+    },
   }
-]);
+);

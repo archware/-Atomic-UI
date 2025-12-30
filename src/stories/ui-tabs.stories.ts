@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { TabsComponent, TabComponent } from '../app/shared/ui/organisms/tabs/tabs.component';
+import { TabsComponent } from '../app/shared/ui/organisms/tabs/tabs.component';
 
 const meta: Meta<TabsComponent> = {
-  title: 'Organisms/Tabs',
+  title: '3. Organisms/Tabs',
   component: TabsComponent,
   tags: ['autodocs'],
 };

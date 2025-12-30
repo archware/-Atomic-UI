@@ -14,7 +14,7 @@ class FakeTranslateLoader implements TranslateLoader {
 }
 
 const meta: Meta<TopbarComponent> = {
-  title: 'Organisms/Topbar',
+  title: '3. Organisms/Topbar',
   component: TopbarComponent,
   decorators: [
     moduleMetadata({

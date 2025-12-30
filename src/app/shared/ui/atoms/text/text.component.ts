@@ -5,6 +5,8 @@ export type TextVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'body-lg' | 'body' | 'body
 export type TextWeight = 'normal' | 'medium' | 'semibold' | 'bold';
 export type TextColor = 'default' | 'primary' | 'secondary' | 'muted' | 'success' | 'warning' | 'danger' | 'white';
 
+export type TextAlign = 'left' | 'center' | 'right' | 'justify';
+
 @Component({
   selector: 'app-text',
   standalone: true,
@@ -31,11 +33,17 @@ export type TextColor = 'default' | 'primary' | 'secondary' | 'muted' | 'success
       line-height: 1.5;
     }
 
-    /* Variants - Headings */
-    .text-h1 { font-size: 2.25rem; letter-spacing: -0.025em; line-height: 1.2; margin-top: 2.25rem; margin-bottom: 0.75rem; }
-    .text-h2 { font-size: 1.875rem; letter-spacing: -0.025em; line-height: 1.25; margin-top: 2.25rem; margin-bottom: 0.75rem; }
-    .text-h3 { font-size: 1.5rem; letter-spacing: -0.025em; line-height: 1.3; margin-top: 2.25rem; margin-bottom: 0.75rem; }
-    .text-h4 { font-size: 1.25rem; letter-spacing: -0.015em; line-height: 1.4; margin-top: 2.25rem; margin-bottom: 0.75rem; }
+    /* Alignment */
+    .align-left { text-align: left; }
+    .align-center { text-align: center; }
+    .align-right { text-align: right; }
+    .align-justify { text-align: justify; }
+
+    /* Variants - Headings (Escala tipográfica base del sistema) */
+    .text-h1 { font-size: var(--text-4xl, 2.25rem); letter-spacing: -0.025em; line-height: 1.2; margin-top: var(--space-9); margin-bottom: var(--space-3); }
+    .text-h2 { font-size: var(--text-3xl, 1.875rem); letter-spacing: -0.025em; line-height: 1.25; margin-top: var(--space-9); margin-bottom: var(--space-3); }
+    .text-h3 { font-size: var(--text-2xl, 1.5rem); letter-spacing: -0.025em; line-height: 1.3; margin-top: var(--space-9); margin-bottom: var(--space-3); }
+    .text-h4 { font-size: var(--text-xl, 1.25rem); letter-spacing: -0.015em; line-height: 1.4; margin-top: var(--space-9); margin-bottom: var(--space-3); }
     
     /* First heading in container should not have top margin */
     :host(:first-child) .text-h1,
@@ -45,12 +53,12 @@ export type TextColor = 'default' | 'primary' | 'secondary' | 'muted' | 'success
       margin-top: 0;
     }
     
-    .text-body-lg { font-size: 1.125rem; }
-    .text-body { font-size: 1rem; }
-    .text-body-sm { font-size: 0.875rem; }
+    .text-body-lg { font-size: var(--text-lg); }
+    .text-body { font-size: var(--text-md); }
+    .text-body-sm { font-size: var(--text-sm); }
     
-    .text-caption { font-size: 0.75rem; letter-spacing: 0.02em; }
-    .text-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .text-caption { font-size: var(--text-xs); letter-spacing: 0.02em; }
+    .text-label { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; }
 
     /* Weights */
     .weight-normal { font-weight: 400; }
@@ -58,27 +66,28 @@ export type TextColor = 'default' | 'primary' | 'secondary' | 'muted' | 'success
     .weight-semibold { font-weight: 600; }
     .weight-bold { font-weight: 700; }
 
-    /* Colors */
-    .color-default { color: var(--text-color, #111827); }
-    .color-primary { color: var(--primary-color, #793576); }
-    .color-secondary { color: var(--secondary-color, #23a7d4); }
-    .color-muted { color: var(--text-color-secondary, #6b7280); }
-    .color-success { color: var(--success-color, #10b981); }
-    .color-warning { color: var(--warning-color, #f59e0b); }
-    .color-danger { color: var(--danger-color, #ef4444); }
-    .color-white { color: #ffffff; }
+    /* Colors - Tokens without fallbacks */
+    .color-default { color: var(--text-color); }
+    .color-primary { color: var(--primary-color); }
+    .color-secondary { color: var(--secondary-color); }
+    .color-muted { color: var(--text-color-secondary); }
+    .color-success { color: var(--success-color); }
+    .color-warning { color: var(--warning-color); }
+    .color-danger { color: var(--danger-color); }
+    .color-white { color: var(--white, #ffffff); }
 
-    /* Dark Mode Adjustments handled by CSS variables normally, but specific overrides here if needed */
-    :host-context(.dark) .color-default,
-    :host-context([data-theme="dark"]) .color-default {
-      color: var(--text-color, #f3f4f6);
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --text-color, --primary-color, etc. ya tienen valores apropiados
+     * para temas oscuros.
+     */
   `]
 })
 export class TextComponent implements OnInit {
   @Input() variant: TextVariant = 'body';
   @Input() weight: TextWeight = 'normal';
   @Input() color: TextColor = 'default';
+  @Input() align: TextAlign = 'left';
 
   renderAs = 'p';
 
@@ -95,7 +104,8 @@ export class TextComponent implements OnInit {
     return {
       [`text-${this.variant}`]: true,
       [`weight-${this.weight}`]: true,
-      [`color-${this.color}`]: true
+      [`color-${this.color}`]: true,
+      [`align-${this.align}`]: true
     };
   }
 }

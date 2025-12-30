@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { ModalComponent } from '../app/shared/ui/molecules/modal/modal.component';
 
 const meta: Meta<ModalComponent> = {
-  title: 'Molecules/Modal',
+  title: '2. Molecules/Modal',
   component: ModalComponent,
   tags: ['autodocs'],
 };

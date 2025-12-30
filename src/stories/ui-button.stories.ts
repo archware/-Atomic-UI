@@ -3,7 +3,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
 
 const meta: Meta<ButtonComponent> = {
-  title: 'Atoms/Button',
+  title: '1. Atoms/Button',
   component: ButtonComponent,
   tags: ['autodocs'],
   decorators: [

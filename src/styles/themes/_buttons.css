@@ -85,37 +85,37 @@
 /* Success */
 .btn-success {
   background-color: var(--success-color);
-  color: #ffffff;
+  color: var(--text-color-on-primary);
   border-color: var(--success-color);
 }
 
 .btn-success:hover:not(:disabled) {
-  background-color: var(--success-color-hover, #059669);
-  border-color: var(--success-color-hover, #059669);
+  background-color: var(--success-color-hover);
+  border-color: var(--success-color-hover);
 }
 
 /* Warning */
 .btn-warning {
   background-color: var(--warning-color);
-  color: #1f2937;
+  color: var(--text-color-inverse);
   border-color: var(--warning-color);
 }
 
 .btn-warning:hover:not(:disabled) {
-  background-color: var(--warning-color-hover, #d97706);
-  border-color: var(--warning-color-hover, #d97706);
+  background-color: var(--warning-color-hover);
+  border-color: var(--warning-color-hover);
 }
 
 /* Danger */
 .btn-danger {
   background-color: var(--danger-color);
-  color: #ffffff;
+  color: var(--text-color-on-primary);
   border-color: var(--danger-color);
 }
 
 .btn-danger:hover:not(:disabled) {
-  background-color: var(--danger-color-hover, #dc2626);
-  border-color: var(--danger-color-hover, #dc2626);
+  background-color: var(--danger-color-hover);
+  border-color: var(--danger-color-hover);
 }
 
 /* Outline */
@@ -138,6 +138,22 @@
 
 .btn-ghost:hover:not(:disabled) {
   background-color: var(--button-ghost-hover-bg);
+}
+
+/* Link */
+.btn-link {
+  background-color: transparent;
+  color: var(--primary-color);
+  border-color: transparent;
+  padding: 0;
+  height: auto;
+  line-height: inherit;
+  font-weight: 500;
+}
+
+.btn-link:hover:not(:disabled) {
+  text-decoration: underline;
+  color: var(--primary-color-dark);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────

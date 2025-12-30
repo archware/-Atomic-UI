@@ -8,99 +8,23 @@
  * ✓ Angular (2+)
  * ✓ ASP.NET MVC (Razor/CSHTML)
  * ✓ React, Vue, y cualquier framework que use HTML estándar
+ * 
+ * TOKENS:
+ * Los tokens --rtc-* son alias de --table-* definidos en:
+ * tokens/table-tokens.css (Single Source of Truth)
  */
 
 /* ============================================
-   CSS CUSTOM PROPERTIES (THEMING)
-   Integradas con el sistema de tokens semánticos
+   TOKENS: Importados desde archivo centralizado
+   Los tokens --rtc-* son alias de --table-*
+   Ver: tokens/table-tokens.css
    ============================================ */
+@import url('./tokens/table-tokens.css');
+
+/* Tokens adicionales específicos de responsive-table (no compartidos) */
 :root {
-    /* === Colores - Referenciando sistema de temas === */
-    --rtc-color-primary: var(--primary-color, #793576);
-    --rtc-color-border: var(--border-color, #e5e7eb);
-    --rtc-color-background: var(--surface-background, #ffffff);
-    --rtc-color-text: var(--text-color, #1f2937);
-    /* Stripe gris muy suave (casi imperceptible) */
-    --rtc-color-stripe: rgba(0, 0, 0, 0.02);
-    /* Borde inferior muy sutil para las filas (0.05 + 0.05 = 0.10) */
-    --rtc-color-border-light: rgba(0, 0, 0, 0.10);
-    /* Hover un poco más oscuro */
-    --rtc-color-row-hover: var(--surface-hover, #efe7ef);
-
-    /* === Header - Light Mode === */
-    --rtc-header-bg: var(--surface-background, #ffffff);
-    /* Fixed bg for sticky */
-    --rtc-header-color: var(--brand-primary-500);
-
-    /* Header Border Tokens (Strict Theme Usage) */
-    --rtc-header-border-width: 3px;
-    --rtc-header-border-style: solid;
-    --rtc-header-border-color: var(--primary-color, #793576);
-    --rtc-header-radius: var(--radius-md, 0.5rem);
-
-    /* === Espaciados === */
-    --rtc-border-radius: var(--radius-md, 0.5rem);
-    --rtc-cell-padding: 0.75rem 1rem;
-    /* 12px 16px using rem */
-    --rtc-card-padding: 1.125rem;
-    /* 18px */
-    --rtc-card-gap: 1rem;
-    --rtc-row-gap: 0px;
-
-    /* === Tipografía (Standard Tokens) === */
-    --rtc-font-family: inherit;
-    --rtc-font-size-base: var(--text-sm, 0.875rem);
-    /* Standard text-sm */
-    --rtc-font-size-mobile: var(--text-sm, 0.9375rem);
-    --rtc-font-size-header: var(--text-xs, 0.75rem);
-    --rtc-font-weight-label: 600;
-    --rtc-font-weight-header: 600;
-
-    /* === Sombras del sistema - Refinadas para anidación === */
-    /* Sombra reducida para evitar "doble elevación" dentro de paneles */
-    --rtc-shadow-row: 0 1px 2px rgba(0, 0, 0, 0.05);
-    /* Tokenize Shadow if possible */
-    --rtc-header-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-
-    --rtc-shadow-card: var(--shadow-md, 0 4px 12px rgba(0, 0, 0, 0.15));
-    --rtc-shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
-    /* === Transiciones === */
-    --rtc-transition-duration: 0.2s;
-    --rtc-transition-timing: ease;
-
-    /* === Breakpoint === */
+    --rtc-row-gap: 0;
     --rtc-breakpoint: 768px;
-}
-
-html.dark,
-[data-theme="dark"] {
-    --rtc-color-primary: var(--primary-color-light, #bc9abb);
-    --rtc-color-border: var(--border-color, #374151);
-    --rtc-color-background: var(--surface-section, #1f2937);
-    --rtc-color-text: var(--text-color, #f3f4f6);
-    --rtc-color-label: var(--secondary-color, #4bbfe5);
-    /* Stripes neutros muy sutiles para dark mode */
-    --rtc-color-stripe: rgba(255, 255, 255, 0.015);
-    --rtc-color-border-light: rgba(255, 255, 255, 0.10);
-    /* Hover con tinte morado suave */
-    --rtc-color-row-hover: rgba(188, 154, 187, 0.15);
-
-    /* Dark Mode Header Override */
-    --rtc-header-bg: var(--brand-primary-700, #381836);
-    --rtc-header-color: #ffffff;
-
-    /* Dark Mode - NO BORDER (As requested) */
-    --rtc-header-border-width: 0px;
-    --rtc-header-border-color: transparent;
-    /* Removed radius override so it stays rounded */
-
-    /* Sombras Dark Mode */
-    --rtc-shadow-row: 0 1px 3px rgba(0, 0, 0, 0.3);
-    --rtc-header-shadow: none;
-    /* Removed shadow to prevent 'lines between columns' artifact */
-    --rtc-shadow-card: 0 4px 16px rgba(0, 0, 0, 0.5);
-    --rtc-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* ============================================
@@ -170,21 +94,25 @@ html.dark,
 
 /* === Rows === */
 .rtc-row {
+    position: relative;
     background-color: var(--rtc-color-background);
-    /* Default: No shadow on rows inside table to reduce noise, unless separate spacing is used */
-    transition: background-color var(--rtc-transition-duration) var(--rtc-transition-timing),
+    transition:
+        background-color var(--rtc-transition-duration) var(--rtc-transition-timing),
+        box-shadow var(--rtc-transition-duration) var(--rtc-transition-timing),
         transform var(--rtc-transition-duration) var(--rtc-transition-timing);
     border-bottom: 1px solid var(--rtc-color-border-light);
 }
 
 /* Zebra stripes - Filas alternadas */
 .rtc-body .rtc-row:nth-child(odd) {
-    background-color: var(--rtc-color-stripe, rgba(121, 53, 118, 0.03));
+    background-color: var(--rtc-color-stripe);
 }
 
-/* Hover effect simplified */
+/* Hover effect - Elevación */
 .rtc-row:hover {
     background-color: var(--rtc-color-row-hover);
+    box-shadow: var(--rtc-row-hover-shadow);
+    transform: var(--rtc-row-hover-transform);
     z-index: 1;
 }
 
@@ -229,13 +157,10 @@ html.dark,
         background-color: var(--rtc-color-background);
         border: 1px solid var(--rtc-color-border);
         border-radius: var(--rtc-border-radius);
-        padding: 1rem !important;
-        /* Slightly more compact padding */
-        margin-bottom: 0.75rem !important;
-        /* Reduced gap */
+        padding: var(--space-4) !important;
+        margin-bottom: var(--space-3) !important;
         box-shadow: var(--rtc-shadow-card);
         min-height: 200px;
-        /* Tamaño mínimo para consistencia visual */
     }
 
     .rtc-row:hover {
@@ -250,16 +175,11 @@ html.dark,
         display: flex !important;
         flex-direction: row !important;
         align-items: flex-start !important;
-        /* Align top for multi-line text */
         justify-content: flex-start !important;
-        /* Left aligned content */
-        /* Push content to edges */
         border: none !important;
         border-bottom: 1px solid var(--rtc-color-border-light) !important;
-        /* Lighter separator */
         border-radius: 0 !important;
-        padding: 0.5rem 0 !important;
-        /* Reduced vertical padding */
+        padding: var(--space-2) 0 !important;
         font-size: var(--rtc-font-size-mobile);
         min-height: auto !important;
     }
@@ -275,13 +195,12 @@ html.dark,
         display: block !important;
         font-weight: var(--rtc-font-weight-label);
         color: var(--rtc-color-label);
-        font-size: 0.8125rem;
+        font-size: var(--text-sm);
         width: 40%;
-        /* Percentage width for better responsiveness */
         max-width: 140px;
         flex-shrink: 0;
         text-align: left;
-        padding-right: 0.5rem;
+        padding-right: var(--space-2);
     }
 
     /* Value Styles - Left Aligned */
@@ -289,10 +208,7 @@ html.dark,
     .rtc-table td[data-label]::after {
         flex: 1;
         text-align: left;
-        /* User requested Left Alignment */
-        /* Right align values creates a clean label-value split */
         word-break: break-word;
-        /* Prevent overflow */
     }
 
     /* Legacy: data-title support */
@@ -301,21 +217,20 @@ html.dark,
         display: block !important;
         font-weight: var(--rtc-font-weight-label);
         color: var(--rtc-color-label);
-        font-size: 0.8125rem;
+        font-size: var(--text-sm);
         width: 40%;
         max-width: 140px;
         flex-shrink: 0;
         text-align: left;
-        padding-right: 0.5rem;
+        padding-right: var(--space-2);
     }
 
     /* Acciones con label visible */
     .rtc-actions {
         flex-direction: row !important;
         justify-content: flex-end !important;
-        /* Align actions to right */
-        padding-top: 0.75rem !important;
-        margin-top: 0.5rem !important;
+        padding-top: var(--space-3) !important;
+        margin-top: var(--space-2) !important;
         border-top: 1px solid var(--rtc-color-border) !important;
         border-bottom: none !important;
     }
@@ -352,7 +267,7 @@ html.dark,
 /* === Actions Container === */
 .rtc-actions {
     display: flex;
-    gap: 8px;
+    gap: var(--space-2);
     align-items: center;
     justify-content: center;
 }
@@ -360,8 +275,8 @@ html.dark,
 @media screen and (max-width: 768px) {
     .rtc-actions {
         justify-content: center;
-        padding-top: 12px;
-        margin-top: 8px;
+        padding-top: var(--space-3);
+        margin-top: var(--space-2);
         border-top: 1px solid var(--rtc-color-border);
     }
 }
@@ -427,8 +342,8 @@ html.dark .spinner,
 .dark .skeleton,
 html.dark .skeleton,
 [data-theme="dark"] .skeleton {
-    --skeleton-base: #8b9bb0;
-    --skeleton-highlight: #cbd5e1;
+    --skeleton-base: var(--gray-400);
+    --skeleton-highlight: var(--gray-300);
 }
 
 /* Loading container background for dark mode */

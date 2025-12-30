@@ -35,9 +35,19 @@ export interface Select2Option {
       [class.has-label]="label"
       [style.width]="width || null"
     >
-      <div class="select2-trigger" (click)="toggleDropdown()">
+      <div class="select2-trigger" 
+        (click)="toggleDropdown()" 
+        (keydown)="handleKeydown($event)"
+        [attr.aria-labelledby]="label ? selectId() : null"
+        [attr.aria-controls]="listboxId()"
+        [attr.aria-activedescendant]="highlightedIndex() >= 0 ? optionId(highlightedIndex()) : null"
+        tabindex="0"
+        role="combobox"
+        [attr.aria-expanded]="isOpen()"
+      >
         @if (label) {
-          <label class="floating-label">{{ label }}</label>
+          <!-- eslint-disable-next-line @angular-eslint/template/label-has-associated-control -->
+          <label class="floating-label" [id]="selectId()">{{ label }}</label>
         }
         <!-- Single value display -->
         @if (!multiple) {
@@ -87,19 +97,26 @@ export interface Select2Option {
                 [ngModel]="searchTerm()"
                 (ngModelChange)="searchTerm.set($event)"
                 (click)="$event.stopPropagation()"
+                (keydown)="handleKeydown($event)"
               />
               <span class="search-icon">🔍</span>
             </div>
           }
           
           <!-- Options list -->
-          <div class="select2-options">
-            @for (option of filteredOptions(); track option.value) {
+          <div class="select2-options" role="listbox" [id]="listboxId()">
+            @for (option of filteredOptions(); track option.value; let i = $index) {
               <div 
+                [id]="optionId(i)"
                 class="select2-option"
                 [class.selected]="isSelected(option)"
+                [class.highlighted]="highlightedIndex() === i"
                 [class.disabled]="option.disabled"
                 (click)="!option.disabled && selectOption(option)"
+                (keydown)="handleKeydown($event)"
+                tabindex="-1"
+                role="option"
+                [attr.aria-selected]="isSelected(option)"
               >
                 @if (option.icon) {
                   <span class="option-icon">{{ option.icon }}</span>
@@ -126,7 +143,7 @@ export interface Select2Option {
     .select2-wrapper {
       position: relative;
       width: 100%;
-      min-width: 15rem; /* 240px minimum */
+      min-width: 15rem;
     }
 
     .select2-wrapper.disabled {
@@ -135,7 +152,7 @@ export interface Select2Option {
     }
 
     .select2-wrapper.has-label {
-      margin-top: 0.75rem;
+      margin-top: var(--space-3);
     }
 
     /* === TRIGGER === */
@@ -144,33 +161,34 @@ export interface Select2Option {
       display: flex;
       align-items: center;
       height: var(--control-height);
-      padding: 0.25rem 0.875rem;
+      padding: var(--space-1) var(--space-3);
       padding-right: 2.75rem;
       background: var(--input-bg);
-      border: 1px solid var(--input-border);
-      border-radius: 0.5rem;
+      border: var(--input-border-width, 1.5px) solid var(--input-border);
+      border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 200ms ease;
-      font-size: 0.875rem;
-      box-sizing: border-box; 
+      font-size: var(--text-sm);
+      box-sizing: border-box;
+      box-shadow: var(--input-shadow);
     }
 
     .select2-wrapper.has-label .select2-trigger {
-      padding: 0.25rem 0.875rem; /* Keep centered, remove top padding shift */
+      padding: var(--space-1) var(--space-3);
     }
 
     /* === FLOATING LABEL === */
     .floating-label {
       position: absolute;
-      left: 0.875rem;
+      left: var(--space-3);
       top: 50%;
       transform: translateY(-50%);
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       color: var(--input-placeholder);
       pointer-events: none;
       transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
       background: var(--input-bg);
-      padding: 0 0.5rem;
+      padding: 0 var(--space-2);
       white-space: nowrap;
     }
 
@@ -178,18 +196,18 @@ export interface Select2Option {
     .select2-wrapper.has-value .floating-label {
       top: -0.625rem;
       transform: translateY(0);
-      font-size: 0.8125rem;
+      font-size: var(--text-xs);
       font-weight: 500;
       color: var(--primary-color);
     }
 
     /* === MULTI-SELECT FIX === */
     .select2-wrapper.multiple .select2-trigger {
-      min-height: var(--control-height); /* grows with content */
+      min-height: var(--control-height);
       height: auto;
-      padding: 0.25rem 0.875rem;
+      padding: var(--space-1) var(--space-3);
       padding-right: 2.75rem;
-      align-items: center; /* Center placeholder and tags vertically */
+      align-items: center;
     }
 
     .select2-wrapper.focused .select2-trigger,
@@ -198,17 +216,17 @@ export interface Select2Option {
     }
 
     .select2-wrapper.focused .select2-trigger {
-      box-shadow: 0 0 0 3px var(--hover-background);
+      box-shadow: var(--shadow-focus-primary);
     }
 
     .select2-value {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: var(--space-2);
       flex: 1;
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       color: var(--input-text);
-      line-height: normal; /* Prevent height expansion */
+      line-height: normal;
     }
 
     .placeholder {
@@ -217,7 +235,7 @@ export interface Select2Option {
 
     .select2-arrow {
       position: absolute;
-      right: 0.75rem;
+      right: var(--space-3);
       top: 50%;
       transform: translateY(-50%);
       color: var(--text-color-secondary);
@@ -232,20 +250,20 @@ export interface Select2Option {
     .select2-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.375rem;
+      gap: var(--space-1);
       flex: 1;
-      padding: 0.125rem 0;
+      padding: var(--space-1) 0;
     }
 
     .select2-tag {
       display: inline-flex;
       align-items: center;
-      gap: 0.25rem;
-      padding: 0.25rem 0.5rem;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-2);
       background: var(--primary-color-lighter);
       color: var(--primary-color);
-      border-radius: 9999px;
-      font-size: 0.8125rem;
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
       font-weight: 500;
     }
 
@@ -259,7 +277,7 @@ export interface Select2Option {
       background: none;
       border: none;
       border-radius: 50%;
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       color: var(--primary-color);
       cursor: pointer;
       transition: all 150ms ease;
@@ -270,7 +288,6 @@ export interface Select2Option {
     }
 
     /* === DROPDOWN === */
-    /* === DROPDOWN === */
     .select2-dropdown {
       position: absolute;
       top: calc(100% + 4px);
@@ -278,8 +295,8 @@ export interface Select2Option {
       right: 0;
       background: var(--dropdown-bg);
       border: 1px solid var(--dropdown-border);
-      border-radius: 0.5rem;
-      box-shadow: var(--dropdown-shadow);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-dropdown);
       z-index: 10000;
       animation: dropdownSlide 200ms ease;
       overflow: hidden;
@@ -293,17 +310,17 @@ export interface Select2Option {
     /* === SEARCH === */
     .select2-search {
       position: relative;
-      padding: 0.5rem;
+      padding: var(--space-2);
       border-bottom: 1px solid var(--dropdown-border);
     }
 
     .search-input {
       width: 100%;
-      padding: 0.625rem 0.75rem;
+      padding: var(--space-2) var(--space-3);
       padding-left: 2.25rem;
-      font-size: 0.9375rem;
+      font-size: var(--text-md);
       border: 1px solid var(--input-border);
-      border-radius: 0.375rem;
+      border-radius: var(--radius-sm);
       background: var(--input-bg);
       color: var(--input-text);
       outline: none;
@@ -317,10 +334,10 @@ export interface Select2Option {
 
     .search-icon {
       position: absolute;
-      left: 1rem;
+      left: var(--space-4);
       top: 50%;
       transform: translateY(-50%);
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
     }
 
     /* === OPTIONS === */
@@ -332,15 +349,16 @@ export interface Select2Option {
     .select2-option {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1rem;
-      font-size: 0.9375rem;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-md);
       color: var(--dropdown-text, var(--text-color));
       cursor: pointer;
       transition: background 100ms ease;
     }
 
-    .select2-option:hover:not(.disabled) {
+    .select2-option:hover:not(.disabled),
+    .select2-option.highlighted:not(.disabled) {
       background: var(--dropdown-item-hover);
     }
 
@@ -356,7 +374,7 @@ export interface Select2Option {
     }
 
     .option-icon {
-      font-size: 1rem;
+      font-size: var(--text-md);
     }
 
     .option-label {
@@ -369,10 +387,10 @@ export interface Select2Option {
     }
 
     .select2-no-results {
-      padding: 1rem;
+      padding: var(--space-4);
       text-align: center;
       color: var(--text-color-muted);
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
     }
 
     /* Dark mode handled automatically by CSS variables */
@@ -392,6 +410,14 @@ export class Select2Component implements ControlValueAccessor {
   searchTerm = signal('');
   selectedOption = signal<Select2Option | null>(null);
   selectedOptions = signal<Select2Option[]>([]);
+  highlightedIndex = signal(-1);
+
+  // Generate unique ID for accessibility (aria-labelledby)
+  private static instanceCounter = 0;
+  private readonly _instanceId = ++Select2Component.instanceCounter;
+  readonly selectId = () => `select2-label-${this._instanceId}`;
+  readonly listboxId = () => `select2-listbox-${this._instanceId}`;
+  readonly optionId = (index: number) => `select2-option-${this._instanceId}-${index}`;
 
   private readonly elementRef = inject(ElementRef);
   private onChange: (value: unknown) => void = () => { /* noop */ };
@@ -417,10 +443,81 @@ export class Select2Component implements ControlValueAccessor {
   toggleDropdown(): void {
     if (!this.disabled) {
       this.isOpen.update(v => !v);
-      if (!this.isOpen()) {
+      if (this.isOpen()) {
+        this.highlightedIndex.set(0);
+        // Focus search input if searchable
+        if (this.searchable) {
+          setTimeout(() => {
+            const searchInput = this.elementRef.nativeElement.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+          }, 0);
+        }
+      } else {
         this.searchTerm.set('');
+        this.highlightedIndex.set(-1);
         this.onTouched();
       }
+    }
+  }
+
+  handleKeydown(event: KeyboardEvent): void {
+    if (this.disabled) return;
+
+    const options = this.filteredOptions();
+    const maxIndex = options.length - 1;
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        if (!this.isOpen()) {
+          this.toggleDropdown();
+        } else {
+          this.highlightedIndex.update(i => (i < maxIndex ? i + 1 : i));
+          this.scrollToHighlighted();
+        }
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.highlightedIndex.update(i => (i > 0 ? i - 1 : 0));
+        this.scrollToHighlighted();
+        break;
+      case 'Enter':
+      case ' ':
+        if (event.key === ' ' && this.searchTerm() !== '') return; // Allow space in search
+        event.preventDefault();
+        if (!this.isOpen()) {
+          this.toggleDropdown();
+        } else if (this.highlightedIndex() >= 0) {
+          const option = options[this.highlightedIndex()];
+          if (option && !option.disabled) {
+            this.selectOption(option);
+          }
+        }
+        break;
+      case 'Escape':
+        if (this.isOpen()) {
+          event.stopPropagation();
+          this.isOpen.set(false);
+          this.searchTerm.set('');
+          this.highlightedIndex.set(-1);
+          this.elementRef.nativeElement.querySelector('.select2-trigger')?.focus();
+        }
+        break;
+      case 'Tab':
+        if (this.isOpen()) {
+          this.isOpen.set(false);
+          this.searchTerm.set('');
+          this.highlightedIndex.set(-1);
+        }
+        break;
+    }
+  }
+
+  private scrollToHighlighted(): void {
+    const listbox = this.elementRef.nativeElement.querySelector('.select2-options');
+    const highlighted = listbox?.querySelectorAll('.select2-option')[this.highlightedIndex()];
+    if (highlighted) {
+      highlighted.scrollIntoView({ block: 'nearest' });
     }
   }
 
@@ -441,6 +538,9 @@ export class Select2Component implements ControlValueAccessor {
       this.valueChange.emit(option.value);
       this.isOpen.set(false);
       this.searchTerm.set('');
+      this.highlightedIndex.set(-1);
+      // Return focus to trigger
+      this.elementRef.nativeElement.querySelector('.select2-trigger')?.focus();
     }
   }
 
@@ -459,6 +559,7 @@ export class Select2Component implements ControlValueAccessor {
       if (this.isOpen()) {
         this.isOpen.set(false);
         this.searchTerm.set('');
+        this.highlightedIndex.set(-1);
       }
     }
   }

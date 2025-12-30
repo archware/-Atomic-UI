@@ -19,7 +19,7 @@ class FakeTranslateLoader implements TranslateLoader {
 }
 
 const meta: Meta<FooterComponent> = {
-  title: 'Organisms/Footer',
+  title: '3. Organisms/Footer',
   component: FooterComponent,
   decorators: [
     moduleMetadata({

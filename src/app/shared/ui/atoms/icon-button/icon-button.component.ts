@@ -35,7 +35,7 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
       padding: 0;
       background: transparent;
       border: none;
-      border-radius: 0.5rem;
+      border-radius: var(--radius-md);
       color: var(--text-color-secondary);
       cursor: pointer;
       transition: all 0.2s ease;
@@ -43,7 +43,7 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
     }
 
     .icon-btn:hover {
-      background: var(--surface-section);
+      background: var(--surface-hover);
       color: var(--primary-color);
     }
 
@@ -61,13 +61,13 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
     .icon-btn--avatar {
       background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
       border-radius: 50%;
-      color: white;
+      color: var(--text-color-on-primary);
     }
 
     .icon-btn--avatar:hover {
       background: linear-gradient(135deg, var(--primary-color-dark), var(--primary-color));
       transform: scale(1.05);
-      box-shadow: 0 2px 8px rgba(121, 53, 118, 0.3);
+      box-shadow: var(--shadow-glow-primary);
     }
 
     /* Badge */
@@ -80,9 +80,9 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
       padding: 0 4px;
       font-size: 0.625rem;
       font-weight: 600;
-      color: white;
+      color: var(--text-color-on-primary);
       background: var(--danger-color);
-      border-radius: 9999px;
+      border-radius: var(--radius-full);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -94,26 +94,11 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
       height: 20px;
     }
 
-    :host-context(.dark) .icon-btn,
-    :host-context([data-theme="dark"]) .icon-btn {
-      color: var(--text-color-secondary);
-    }
-
-    :host-context(.dark) .icon-btn:hover,
-    :host-context([data-theme="dark"]) .icon-btn:hover {
-      background: var(--surface-elevated);
-      color: var(--primary-color-light);
-    }
-
-    :host-context(.dark) .icon-btn--avatar,
-    :host-context([data-theme="dark"]) .icon-btn--avatar {
-      background: linear-gradient(135deg, var(--primary-color-light), var(--primary-color));
-    }
-
-    :host-context(.dark) .icon-btn--avatar:hover,
-    :host-context([data-theme="dark"]) .icon-btn--avatar:hover {
-      box-shadow: 0 2px 8px rgba(188, 154, 187, 0.3);
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --surface-hover, --primary-color, --shadow-glow-primary
+     * ya tienen valores apropiados para temas oscuros.
+     */
   `]
 })
 export class IconButtonComponent {

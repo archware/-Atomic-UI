@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CheckboxComponent } from '../app/shared/ui/atoms/checkbox/checkbox.component';
 
 const meta: Meta<CheckboxComponent> = {
-  title: 'Atoms/Checkbox',
+  title: '1. Atoms/Checkbox',
   component: CheckboxComponent,
   decorators: [
     moduleMetadata({

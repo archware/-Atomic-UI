@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { FloatingInputComponent } from '../app/shared/ui/atoms/floating-input/floating-input.component';
 
 const meta: Meta<FloatingInputComponent> = {
-  title: 'Atoms/FloatingInput',
+  title: '1. Atoms/FloatingInput',
   component: FloatingInputComponent,
   decorators: [
     moduleMetadata({

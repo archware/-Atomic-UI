@@ -278,9 +278,27 @@ shared/ui/
 
 ---
 
-## 📱 Responsive Table → Cards
+## 📱 Responsive Table → Cards (RTC)
 
-CSS puro que transforma tablas en cards en móvil (< 768px).
+CSS puro que transforma tablas en **tarjetas (cards)** en móvil (< 768px).
+
+### ¿Qué es RTC?
+
+**RTC = "Responsive Table Cards"**
+
+| Desktop | Móvil |
+|---------|-------|
+| Tabla tradicional (filas/columnas) | Cada fila → una tarjeta (card) |
+| Header visible | Header oculto, labels en cada celda |
+
+```
+Desktop:              Móvil:
+┌──┬──────┬──────┐    ┌────────────────┐
+│ID│Nombre│Email │    │ ID: 1          │
+├──┼──────┼──────┤    │ Nombre: Juan   │
+│1 │Juan  │j@... │    │ Email: j@...   │
+└──┴──────┴──────┘    └────────────────┘
+```
 
 ### Importar
 ```scss
@@ -321,10 +339,112 @@ CSS puro que transforma tablas en cards en móvil (< 768px).
 | `.rtc-actions` | Contenedor de botones |
 | `.rtc-mobile-only` | Solo visible en móvil |
 | `.rtc-desktop-only` | Solo visible en desktop |
-| `.rtc-status--success/warning/danger/info` | Badges de estado |
 
-### Dark mode automático
-Usa los tokens semánticos del sistema, el dark mode funciona automáticamente.
+---
+
+## 🔄 Tabla Atomic (Componentes Angular)
+
+Componentes Angular que implementan una tabla con Atomic Design.
+
+### Uso
+```html
+<app-table [striped]="true">
+  <app-table-head>
+    <tr>
+      <th app-table-header-cell>Nombre</th>
+      <th app-table-header-cell>Rol</th>
+    </tr>
+  </app-table-head>
+  <tbody>
+    <tr app-table-row>
+      <td app-table-cell data-label="Nombre:">Juan</td>
+      <td app-table-cell data-label="Rol:">Dev</td>
+    </tr>
+  </tbody>
+</app-table>
+```
+
+### Componentes
+| Componente | Selector | Descripción |
+|------------|----------|-------------|
+| `TableComponent` | `app-table` | Contenedor con zebra stripes y responsive |
+| `TableHeadComponent` | `app-table-head` | Header con sticky |
+| `TableRowComponent` | `tr[app-table-row]` | Fila con hover elevado |
+| `TableCellComponent` | `td[app-table-cell]` | Celda con estilos |
+
+### Features
+- ✅ Cards en móvil (< 768px)
+- ✅ Zebra stripes (`[striped]="true"`)
+- ✅ Sticky header
+- ✅ Hover elevado (lift effect)
+- ✅ Tokenización completa
+
+---
+
+## ⚡ Conceptos Técnicos
+
+### ChangeDetectionStrategy.OnPush
+
+Estrategia de Angular para **optimizar rendimiento**.
+
+```typescript
+// Sin OnPush (Default):
+// Angular revisa el componente en CADA ciclo de detección
+// (cada clic, evento, timeout...)
+
+// Con OnPush:
+changeDetection: ChangeDetectionStrategy.OnPush
+// Angular SOLO revisa cuando:
+// 1. Un @Input() cambia
+// 2. Se dispara un evento del componente
+// 3. Se usa async pipe
+```
+
+**Beneficio:** En tablas con 100+ filas = **mejor rendimiento**.
+
+### Sticky Header
+
+El header de la tabla se **"pega" arriba** cuando haces scroll.
+
+```css
+.atomic-table-head th {
+  position: sticky;  /* Se pega */
+  top: 0;            /* Arriba del todo */
+  z-index: 10;       /* Por encima del contenido */
+}
+```
+
+**Sin sticky:** Al scrollear, el header desaparece.
+**Con sticky:** El header siempre visible mientras scrolleas.
+
+### Hover Elevado (Lift Effect)
+
+Efecto visual donde la fila se **"eleva"** al hacer hover.
+
+```css
+.rtc-row:hover {
+  transform: translateY(-2px);  /* Se eleva 2px */
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);  /* Sombra */
+}
+```
+
+---
+
+## 📊 RTC vs Atomic: ¿Cuál usar?
+
+| Aspecto | RTC (CSS) | Atomic (Componentes) |
+|---------|-----------|----------------------|
+| **Tipo** | Clases CSS | Componentes Angular |
+| **Integración** | Importar CSS | Importar componentes |
+| **Responsive** | ✅ Nativo | ✅ Nativo |
+| **Sticky Header** | ✅ | ✅ |
+| **Hover Elevado** | ✅ | ✅ |
+| **Con scroll-overlay** | ✅ Mejor | ⚠️ Compatible |
+| **Reusabilidad** | Requiere clases | Encapsulado |
+
+**Recomendación:**
+- Usa **RTC** con `scroll-overlay` para tablas con mucho contenido
+- Usa **Atomic** para tablas simples o cuando necesites componentes
 
 ---
 

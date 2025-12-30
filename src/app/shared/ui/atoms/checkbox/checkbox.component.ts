@@ -40,7 +40,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     .checkbox-wrapper {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: var(--space-3);
       cursor: pointer;
       user-select: none;
     }
@@ -58,22 +58,22 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
 
     .checkbox-box {
-      width: 24px;
-      height: 24px;
+      width: var(--checkbox-size, 1.5rem);
+      height: var(--checkbox-size, 1.5rem);
       display: flex;
       align-items: center;
       justify-content: center;
       border: 2px solid var(--border-color);
-      border-radius: 0.375rem;
+      border-radius: var(--radius-md);
       background: var(--surface-background);
       transition: all 200ms ease;
       flex-shrink: 0;
     }
 
     .checkbox-check {
-      width: 14px;
-      height: 14px;
-      color: white;
+      width: var(--checkbox-icon-size, 0.875rem);
+      height: var(--checkbox-icon-size, 0.875rem);
+      color: var(--text-color-on-primary);
       opacity: 0;
       transform: scale(0.5);
       transition: all 200ms ease;
@@ -97,47 +97,20 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
     /* Focus */
     .checkbox-input:focus-visible + .checkbox-box {
-      box-shadow: 0 0 0 3px rgba(121, 53, 118, 0.2);
+      box-shadow: var(--shadow-focus-primary);
     }
 
     .checkbox-label {
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       color: var(--text-color);
       line-height: 1.4;
     }
 
-    /* Dark Mode */
-    :host-context(.dark) .checkbox-box,
-    :host-context([data-theme="dark"]) .checkbox-box {
-      background: var(--surface-elevated);
-      border-color: var(--border-color);
-    }
-
-    :host-context(.dark) .checkbox-wrapper:hover:not(.disabled) .checkbox-box,
-    :host-context([data-theme="dark"]) .checkbox-wrapper:hover:not(.disabled) .checkbox-box {
-      border-color: var(--primary-color-light);
-    }
-
-    :host-context(.dark) .checkbox-input:checked + .checkbox-box,
-    :host-context([data-theme="dark"]) .checkbox-input:checked + .checkbox-box {
-      background: var(--primary-color-light);
-      border-color: var(--primary-color-light);
-    }
-
-    :host-context(.dark) .checkbox-input:checked + .checkbox-box .checkbox-check,
-    :host-context([data-theme="dark"]) .checkbox-input:checked + .checkbox-box .checkbox-check {
-      color: #1f2937;
-    }
-
-    :host-context(.dark) .checkbox-input:focus-visible + .checkbox-box,
-    :host-context([data-theme="dark"]) .checkbox-input:focus-visible + .checkbox-box {
-      box-shadow: 0 0 0 3px rgba(188, 154, 187, 0.3);
-    }
-
-    :host-context(.dark) .checkbox-label,
-    :host-context([data-theme="dark"]) .checkbox-label {
-      color: var(--text-color);
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --surface-background, --border-color, --primary-color, --shadow-focus-primary
+     * ya tienen valores apropiados para temas oscuros.
+     */
   `]
 })
 export class CheckboxComponent implements ControlValueAccessor {

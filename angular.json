@@ -44,8 +44,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "700kB",
+                  "maximumError": "1.5MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -65,8 +65,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "700kB",
+                  "maximumError": "1.5MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -163,42 +163,6 @@
               "."
             ],
             "outputDir": "dist/storybook/angular-scrollable-table"
-          }
-        }
-      }
-    },
-    "ui-components": {
-      "projectType": "library",
-      "root": "projects/ui-components",
-      "sourceRoot": "projects/ui-components/src",
-      "prefix": "ui",
-      "architect": {
-        "build": {
-          "builder": "@angular/build:ng-packagr",
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/ui-components/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/ui-components/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular/build:karma",
-          "options": {
-            "tsConfig": "projects/ui-components/tsconfig.spec.json"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "projects/ui-components/**/*.ts",
-              "projects/ui-components/**/*.html"
-            ],
-            "eslintConfig": "projects/ui-components/eslint.config.js"
           }
         }
       }

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { DatepickerComponent } from '../app/shared/ui/molecules/datepicker/datepicker.component';
 
 const meta: Meta<DatepickerComponent> = {
-  title: 'Molecules/Datepicker',
+  title: '2. Molecules/Datepicker',
   component: DatepickerComponent,
   decorators: [
     moduleMetadata({

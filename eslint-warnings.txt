@@ -1,0 +1,28 @@
+(node:2184) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/COTAHA/Music/Atomic/-Atomic-UI/eslint.config.js?mtime=1766103639099 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to C:\Users\COTAHA\Music\Atomic\-Atomic-UI\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\app.config.server.ts
+  10:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\shared\ui\atoms\floating-input\floating-input.component.spec.ts
+  153:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\shared\ui\molecules\datepicker\datepicker.component.ts
+  195:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  210:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  214:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\shared\ui\molecules\modal\modal.component.ts
+  144:13  warning  Output bindings, including aliases, should not be named as standard DOM events          @angular-eslint/no-output-native
+   17:7   warning  click must be accompanied by either keyup, keydown or keypress event for accessibility  @angular-eslint/template/click-events-have-key-events
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\shared\ui\molecules\select2\select2.component.ts
+  38:7   warning  click must be accompanied by either keyup, keydown or keypress event for accessibility  @angular-eslint/template/click-events-have-key-events
+  38:7   warning  Elements with interaction handlers must be focusable                                    @angular-eslint/template/interactive-supports-focus
+  99:15  warning  click must be accompanied by either keyup, keydown or keypress event for accessibility  @angular-eslint/template/click-events-have-key-events
+  99:15  warning  Elements with interaction handlers must be focusable                                    @angular-eslint/template/interactive-supports-focus
+
+Ô£û 11 problems (0 errors, 11 warnings)
+

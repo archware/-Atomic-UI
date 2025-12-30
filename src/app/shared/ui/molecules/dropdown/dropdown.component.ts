@@ -91,11 +91,11 @@ export interface DropdownOption {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.625rem 0.875rem;
+      padding: var(--space-2) var(--space-3);
       background: var(--surface-background);
       border: 1px solid var(--border-color);
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
       color: var(--text-color);
       cursor: pointer;
       transition: all 150ms ease;
@@ -107,13 +107,13 @@ export interface DropdownOption {
 
     .dropdown.open .dropdown-trigger {
       border-color: var(--primary-color);
-      box-shadow: var(--focus-ring);
+      box-shadow: var(--shadow-focus-primary);
     }
 
     .dropdown-value {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: var(--space-2);
     }
 
     .placeholder {
@@ -131,13 +131,13 @@ export interface DropdownOption {
 
     .dropdown-menu {
       position: absolute;
-      top: calc(100% + 4px);
+      top: calc(100% + var(--space-1));
       left: 0;
       right: 0;
       background: var(--surface-background);
       border: 1px solid var(--border-color);
-      border-radius: 0.5rem;
-      box-shadow: var(--shadow-lg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-dropdown);
       z-index: 100;
       max-height: 240px;
       overflow-y: auto;
@@ -148,11 +148,11 @@ export interface DropdownOption {
       width: 100%;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.625rem 0.875rem;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
       background: none;
       border: none;
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       color: var(--text-color);
       cursor: pointer;
       transition: background 100ms ease;
@@ -160,12 +160,13 @@ export interface DropdownOption {
     }
 
     .dropdown-option:hover:not(.disabled) {
-      background: var(--surface-elevated);
+      background: var(--surface-hover);
     }
 
     .dropdown-option.selected {
       color: var(--primary-color);
       font-weight: 500;
+      background: var(--primary-color-lighter);
     }
 
     .dropdown-option.disabled {
@@ -174,7 +175,7 @@ export interface DropdownOption {
     }
 
     .option-icon {
-      font-size: 1rem;
+      font-size: var(--text-md);
     }
 
     .check-icon {
@@ -187,74 +188,11 @@ export interface DropdownOption {
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Dark mode - improved */
-    :host-context(.dark) .dropdown-trigger,
-    :host-context(html.dark) .dropdown-trigger,
-    :host-context([data-theme="dark"]) .dropdown-trigger {
-      background: #1f2937;
-      border-color: #4b5563;
-      color: #e5e7eb;
-    }
-
-    :host-context(.dark) .dropdown-trigger:hover:not(:disabled),
-    :host-context(html.dark) .dropdown-trigger:hover:not(:disabled),
-    :host-context([data-theme="dark"]) .dropdown-trigger:hover:not(:disabled) {
-      border-color: #bc9abb;
-    }
-
-    :host-context(.dark) .dropdown.open .dropdown-trigger,
-    :host-context(html.dark) .dropdown.open .dropdown-trigger,
-    :host-context([data-theme="dark"]) .dropdown.open .dropdown-trigger {
-      border-color: #bc9abb;
-      box-shadow: 0 0 0 3px rgba(188, 154, 187, 0.2);
-    }
-
-    :host-context(.dark) .placeholder,
-    :host-context(html.dark) .placeholder,
-    :host-context([data-theme="dark"]) .placeholder {
-      color: #6b7280;
-    }
-
-    :host-context(.dark) .dropdown-arrow,
-    :host-context(html.dark) .dropdown-arrow,
-    :host-context([data-theme="dark"]) .dropdown-arrow {
-      color: #9ca3af;
-    }
-
-    :host-context(.dark) .dropdown-menu,
-    :host-context(html.dark) .dropdown-menu,
-    :host-context([data-theme="dark"]) .dropdown-menu {
-      background: #1f2937;
-      border-color: #4b5563;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(188, 154, 187, 0.1);
-    }
-
-    :host-context(.dark) .dropdown-option,
-    :host-context(html.dark) .dropdown-option,
-    :host-context([data-theme="dark"]) .dropdown-option {
-      color: #d1d5db;
-    }
-
-    :host-context(.dark) .dropdown-option:hover:not(.disabled),
-    :host-context(html.dark) .dropdown-option:hover:not(.disabled),
-    :host-context([data-theme="dark"]) .dropdown-option:hover:not(.disabled) {
-      background: #374151;
-      color: #ffffff;
-    }
-
-    :host-context(.dark) .dropdown-option.selected,
-    :host-context(html.dark) .dropdown-option.selected,
-    :host-context([data-theme="dark"]) .dropdown-option.selected {
-      color: #d8b4d8;
-      background: rgba(188, 154, 187, 0.1);
-    }
-
-    :host-context(.dark) .check-icon,
-    :host-context(html.dark) .check-icon,
-    :host-context([data-theme="dark"]) .check-icon {
-      color: #d8b4d8;
-      text-shadow: 0 0 10px rgba(188, 154, 187, 0.5);
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --surface-background, --border-color, --primary-color, --shadow-dropdown
+     * ya tienen valores apropiados para temas oscuros.
+     */
   `]
 })
 export class DropdownComponent implements OnChanges, ControlValueAccessor {

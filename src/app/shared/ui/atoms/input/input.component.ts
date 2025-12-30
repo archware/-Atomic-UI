@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -8,6 +8,7 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
   selector: 'app-input',
   standalone: true,
   imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -18,13 +19,16 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
   template: `
     <div class="form-group" [class.has-error]="error" [class.disabled]="disabled">
       @if (label) {
-        <label class="form-label">{{ label }}</label>
+        <label class="form-label" [attr.for]="inputId">{{ label }}</label>
       }
       <div class="input-container">
-        @if (icon) {
+        @if (iconClass) {
+          <i [class]="'input-icon ' + iconClass"></i>
+        } @else if (icon) {
           <span class="input-icon">{{ icon }}</span>
         }
         <input
+          [id]="inputId"
           class="form-input"
           [type]="type"
           [placeholder]="placeholder"
@@ -45,6 +49,19 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
       width: 100%;
     }
 
+    /* Reuse form-group styles from global if available, or define local */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .form-label {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
     .input-container {
       position: relative;
       display: flex;
@@ -54,19 +71,56 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
 
     .input-icon {
       position: absolute;
-      left: 0.875rem;
-      font-size: 1rem;
-      color: var(--text-color-muted, #9ca3af);
+      left: var(--space-3);
+      font-size: var(--text-md);
+      color: var(--text-color-muted);
       pointer-events: none;
+      display: flex; /* Ensure centering */
+      align-items: center;
+      justify-content: center;
     }
 
+    /* When icon is present, add padding */
     .input-container:has(.input-icon) .form-input {
-      padding-left: 2.5rem;
+      padding-left: var(--space-10, 2.5rem);
+    }
+
+    .form-input {
+      width: 100%;
+      height: var(--control-height);
+      padding: 0 var(--space-4);
+      border: var(--input-border-width, 1px) solid var(--input-border);
+      border-radius: var(--radius-md);
+      background-color: var(--input-bg);
+      color: var(--input-text);
+      font-size: var(--text-sm);
+      box-shadow: var(--input-shadow);
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--input-border-focus);
+      box-shadow: var(--input-shadow-focus);
+    }
+
+    .form-input:disabled {
+      background-color: var(--input-disabled-bg);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    .has-error .form-input {
+      border-color: var(--danger-color);
+    }
+
+    .has-error .form-input:focus {
+      box-shadow: 0 0 0 3px var(--danger-color-lighter);
     }
 
     .input-error {
-      font-size: 0.75rem;
-      color: var(--error-color, #dc2626);
+      font-size: var(--text-xs);
+      color: var(--danger-color);
     }
   `]
 })
@@ -75,8 +129,11 @@ export class InputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() placeholder = '';
   @Input() icon = '';
+  @Input() iconClass = '';
   @Input() error = '';
   @Input() disabled = false;
+  private static idCounter = 0;
+  readonly inputId = `app-input-${++InputComponent.idCounter}`;
 
   value: string | number = '';
   onChange: (value: string | number) => void = () => { /* noop */ };

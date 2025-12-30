@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { SkeletonComponent } from '../app/shared/ui/atoms/skeleton/skeleton.component';
 
 const meta: Meta<SkeletonComponent> = {
-  title: 'Atoms/Skeleton',
+  title: '1. Atoms/Skeleton',
   component: SkeletonComponent,
   tags: ['autodocs'],
 };

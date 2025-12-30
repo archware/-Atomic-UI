@@ -1,0 +1,197 @@
+<app-auth-layout>
+  <!-- Header slot with logo -->
+  <div slot="header">
+    <div class="auth-logo">
+      <!-- @customize Replace with your logo -->
+      <span class="logo-icon">🔐</span>
+      <h1 class="logo-text">Tu Empresa</h1>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="auth-forms">
+    <!-- ============================================ -->
+    <!-- LOGIN FORM -->
+    <!-- ============================================ -->
+    <!-- ============================================ -->
+    <!-- LOGIN FORM -->
+    <!-- ============================================ -->
+    @if (activeView() === 'login') {
+    <app-panel padding="lg" @fadeSlide>
+      <app-text variant="h2" align="center" class="mb-2">Iniciar Sesión</app-text>
+      <app-text variant="body-sm" color="muted" align="center" class="mb-6">Ingresa tus credenciales para
+        continuar</app-text>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <app-form-row columns="1fr">
+          <app-floating-input label="Correo electrónico" type="email" formControlName="email"
+            iconClass="fa-solid fa-envelope" [error]="getFieldError('login', 'email')">
+          </app-floating-input>
+
+          <app-floating-input label="Contraseña" type="password" formControlName="password" iconClass="fa-solid fa-lock"
+            [error]="getFieldError('login', 'password')">
+          </app-floating-input>
+        </app-form-row>
+
+        <app-row justify="between" align="center" class="mb-4">
+          <app-checkbox formControlName="rememberMe">
+            Recordarme
+          </app-checkbox>
+
+          <app-button variant="link" (buttonClick)="showForgot()">
+            ¿Olvidaste tu contraseña?
+          </app-button>
+        </app-row>
+
+        <!-- Error message -->
+        @if (loginApi.hasError()) {
+        <app-form-error [customMessage]="loginApi.error()?.message"></app-form-error>
+        }
+
+        <app-button type="submit" variant="primary" [disabled]="loginApi.loading()" class="w-full">
+          @if (loginApi.loading()) {
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          Ingresando...
+          } @else {
+          Iniciar Sesión
+          }
+        </app-button>
+      </form>
+
+      <app-divider text="o"></app-divider>
+
+      <app-text variant="body-sm" color="muted" align="center">
+        ¿No tienes cuenta?
+        <app-button variant="link" (buttonClick)="showRegister()" class="inline">
+          Regístrate aquí
+        </app-button>
+      </app-text>
+    </app-panel>
+    }
+
+    <!-- ============================================ -->
+    <!-- REGISTER FORM -->
+    <!-- ============================================ -->
+    @if (activeView() === 'register') {
+    <app-panel padding="lg" @fadeSlide>
+      <app-text variant="h2" align="center" class="mb-2">Crear Cuenta</app-text>
+      <app-text variant="body-sm" color="muted" align="center" class="mb-6">Completa el formulario para
+        registrarte</app-text>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <app-form-row columns="1fr">
+          <app-floating-input label="Nombre completo" type="text" formControlName="name" iconClass="fa-solid fa-user"
+            [error]="getFieldError('register', 'name')">
+          </app-floating-input>
+
+          <app-floating-input label="Correo electrónico" type="email" formControlName="email"
+            iconClass="fa-solid fa-envelope" [error]="getFieldError('register', 'email')">
+          </app-floating-input>
+
+          <app-floating-input label="Contraseña" type="password" formControlName="password" iconClass="fa-solid fa-lock"
+            [error]="getFieldError('register', 'password')">
+          </app-floating-input>
+
+          <app-floating-input label="Confirmar contraseña" type="password" formControlName="confirmPassword"
+            iconClass="fa-solid fa-lock" [error]="getFieldError('register', 'confirmPassword')">
+          </app-floating-input>
+        </app-form-row>
+
+        <div class="mb-4">
+          <app-checkbox formControlName="acceptTerms">
+            Acepto los <a href="/terms" class="link-inline">términos y condiciones</a>
+          </app-checkbox>
+        </div>
+
+        <!-- Error message -->
+        @if (registerApi.hasError()) {
+        <app-form-error [customMessage]="registerApi.error()?.message"></app-form-error>
+        }
+
+        <!-- Success message -->
+        @if (registerApi.success()) {
+        <div class="success-message mb-4">
+          <i class="fa-solid fa-circle-check"></i>
+          {{ registerApi.data()?.message || 'Cuenta creada exitosamente' }}
+        </div>
+        }
+
+        <app-button type="submit" variant="primary" [disabled]="registerApi.loading()" class="w-full">
+          @if (registerApi.loading()) {
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          Registrando...
+          } @else {
+          Crear Cuenta
+          }
+        </app-button>
+      </form>
+
+      <div class="mt-4 text-center">
+        <app-text variant="body-sm" color="muted" align="center">
+          ¿Ya tienes cuenta?
+          <app-button variant="link" (buttonClick)="showLogin()" class="inline">
+            Inicia sesión
+          </app-button>
+        </app-text>
+      </div>
+    </app-panel>
+    }
+
+    <!-- ============================================ -->
+    <!-- FORGOT PASSWORD FORM -->
+    <!-- ============================================ -->
+    @if (activeView() === 'forgot') {
+    <app-panel padding="lg" @fadeSlide>
+      <app-text variant="h2" align="center" class="mb-2">Recuperar Contraseña</app-text>
+      <app-text variant="body-sm" color="muted" align="center" class="mb-6">Ingresa tu correo para recibir
+        instrucciones</app-text>
+
+      @if (!forgotSuccessMessage()) {
+      <form [formGroup]="forgotForm" (ngSubmit)="onForgotPassword()">
+        <app-form-row columns="1fr">
+          <app-floating-input label="Correo electrónico" type="email" formControlName="email"
+            iconClass="fa-solid fa-envelope" [error]="getFieldError('forgot', 'email')">
+          </app-floating-input>
+        </app-form-row>
+
+        <!-- Error message -->
+        @if (forgotApi.hasError()) {
+        <app-form-error [customMessage]="forgotApi.error()?.message"></app-form-error>
+        }
+
+        <app-button type="submit" variant="primary" [disabled]="forgotApi.loading()" class="w-full mt-4">
+          @if (forgotApi.loading()) {
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          Enviando...
+          } @else {
+          Enviar Instrucciones
+          }
+        </app-button>
+      </form>
+      } @else {
+      <!-- Success state -->
+      <div class="success-state">
+        <div class="success-icon">
+          <i class="fa-solid fa-envelope-circle-check"></i>
+        </div>
+        <p class="success-text">{{ forgotSuccessMessage() }}</p>
+        <app-button variant="outline" (buttonClick)="showLogin()">
+          Volver al Login
+        </app-button>
+      </div>
+      }
+
+      <div class="mt-6 text-center">
+        <app-button variant="link" iconClass="fa-solid fa-arrow-left" iconPosition="left" (buttonClick)="showLogin()">
+          Volver al inicio de sesión
+        </app-button>
+      </div>
+    </app-panel>
+    }
+  </div>
+
+  <!-- Footer slot -->
+  <app-text slot="footer" variant="caption" color="muted" align="center">
+    © 2025 Tu Empresa. Todos los derechos reservados.
+  </app-text>
+</app-auth-layout>

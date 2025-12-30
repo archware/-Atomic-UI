@@ -66,18 +66,18 @@ export type ChipSize = 'sm' | 'md' | 'lg';
     .chip {
       display: inline-flex;
       align-items: center;
-      gap: 0.375rem;
-      padding: 0.25rem 0.625rem;
-      border-radius: 9999px;
-      font-size: 0.75rem;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
       font-weight: 500;
       transition: all 150ms ease;
       border: 1px solid transparent;
     }
 
-    .chip-sm { padding: 0.125rem 0.5rem; font-size: 0.6875rem; }
-    .chip-md { padding: 0.25rem 0.625rem; font-size: 0.75rem; }
-    .chip-lg { padding: 0.375rem 0.75rem; font-size: 0.8125rem; }
+    .chip-sm { padding: var(--space-0) var(--space-2); font-size: var(--text-xs); }
+    .chip-md { padding: var(--space-1) var(--space-2); font-size: var(--text-xs); }
+    .chip-lg { padding: var(--space-1) var(--space-3); font-size: var(--text-sm); }
 
     .chip-default {
       background: var(--surface-elevated);
@@ -135,25 +135,25 @@ export type ChipSize = 'sm' | 'md' | 'lg';
 
     .chip-selected {
       background: var(--primary-color);
-      color: white;
+      color: var(--gray-0);
     }
 
     .chip-icon {
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
     }
 
     .chip-remove {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 1rem;
-      height: 1rem;
-      margin-left: 0.125rem;
+      width: var(--space-4);
+      height: var(--space-4);
+      margin-left: var(--space-0);
       padding: 0;
       background: none;
       border: none;
-      border-radius: 50%;
-      font-size: 0.875rem;
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
       color: currentColor;
       opacity: 0.7;
       cursor: pointer;
@@ -162,61 +162,11 @@ export type ChipSize = 'sm' | 'md' | 'lg';
 
     .chip-remove:hover {
       opacity: 1;
-      background: rgba(0, 0, 0, 0.1);
+      background: var(--hover-background-subtle);
     }
 
-    /* Dark mode */
-    :host-context(html.dark) .chip-default,
-    :host-context([data-theme="dark"]) .chip-default {
-      background: var(--surface-section);
-    }
+    /* Dark mode overrides handled by semantic tokens */
 
-    :host-context(html.dark) .chip-primary,
-    :host-context([data-theme="dark"]) .chip-primary {
-      background: var(--primary-color-lighter);
-      color: var(--primary-color-light);
-    }
-
-    :host-context(html.dark) .chip-secondary,
-    :host-context([data-theme="dark"]) .chip-secondary {
-      background: rgba(35, 167, 212, 0.2);
-      color: #85d3ef;
-    }
-
-    :host-context(html.dark) .chip-success,
-    :host-context([data-theme="dark"]) .chip-success {
-      background: rgba(16, 185, 129, 0.2);
-      color: #6ee7b7;
-    }
-
-    :host-context(html.dark) .chip-warning,
-    :host-context([data-theme="dark"]) .chip-warning {
-      background: rgba(245, 158, 11, 0.2);
-      color: #fcd34d;
-    }
-
-    :host-context(html.dark) .chip-error,
-    :host-context([data-theme="dark"]) .chip-error {
-      background: rgba(239, 68, 68, 0.2);
-      color: #fca5a5;
-    }
-
-    :host-context(html.dark) .chip-info,
-    :host-context([data-theme="dark"]) .chip-info {
-      background: rgba(14, 165, 233, 0.2);
-      color: #7dd3fc;
-    }
-
-    :host-context(html.dark) .chip-outline,
-    :host-context([data-theme="dark"]) .chip-outline {
-      border-color: var(--border-color);
-    }
-
-    :host-context(html.dark) .chip-selected,
-    :host-context([data-theme="dark"]) .chip-selected {
-      background: var(--primary-color-light);
-      color: #1f2937;
-    }
   `]
 })
 export class ChipComponent {

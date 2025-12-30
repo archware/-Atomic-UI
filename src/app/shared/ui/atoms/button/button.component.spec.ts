@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
-import { ButtonComponent, ButtonVariant, ButtonSize } from './button.component';
+import { ButtonComponent, ButtonVariant } from './button.component';
 
 describe('ButtonComponent', () => {
   let component: ButtonComponent;

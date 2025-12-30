@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Select2Component } from '../app/shared/ui/molecules/select2/select2.component';
 
 const meta: Meta<Select2Component> = {
-  title: 'Molecules/Select2',
+  title: '2. Molecules/Select2',
   component: Select2Component,
   decorators: [
     moduleMetadata({

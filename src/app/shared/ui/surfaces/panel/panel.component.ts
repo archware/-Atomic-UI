@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /** Available panel visual styles */
@@ -21,7 +21,8 @@ export type PanelTitleAlign = 'left' | 'center' | 'right';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './panel.component.html',
-  styleUrl: './panel.component.css'
+  styleUrl: './panel.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PanelComponent {
   /** Panel variant style */

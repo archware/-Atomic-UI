@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RatingComponent } from '../app/shared/ui/atoms/rating/rating.component';
 
 const meta: Meta<RatingComponent> = {
-  title: 'Atoms/Rating',
+  title: '1. Atoms/Rating',
   component: RatingComponent,
   decorators: [
     moduleMetadata({

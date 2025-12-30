@@ -65,13 +65,13 @@ export interface Language {
     .language-btn {
       display: flex;
       align-items: center;
-      gap: 0.375rem;
-      padding: 0.5rem 0.75rem;
+      gap: var(--space-1);
+      padding: var(--space-2) var(--space-3);
       background: transparent;
       border: 1px solid var(--border-color);
-      border-radius: 0.5rem;
+      border-radius: var(--radius-md);
       color: var(--text-color);
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       font-weight: 500;
       cursor: pointer;
       transition: all 150ms ease;
@@ -83,7 +83,7 @@ export interface Language {
     }
 
     .language-flag {
-      font-size: 1rem;
+      font-size: var(--text-md);
     }
 
     .language-code {
@@ -91,7 +91,7 @@ export interface Language {
     }
 
     .chevron {
-      font-size: 0.625rem;
+      font-size: var(--text-xs);
       color: var(--text-color-muted);
       transition: transform 200ms ease;
     }
@@ -102,12 +102,12 @@ export interface Language {
 
     .language-dropdown {
       position: absolute;
-      top: calc(100% + 0.5rem);
+      top: calc(100% + var(--space-2));
       right: 0;
       min-width: 140px;
       background: var(--surface-overlay);
       border: 1px solid var(--border-color);
-      border-radius: 0.5rem;
+      border-radius: var(--radius-md);
       box-shadow: var(--shadow-lg);
       overflow: hidden;
       z-index: 100;
@@ -122,13 +122,13 @@ export interface Language {
     .language-option {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: var(--space-2);
       width: 100%;
-      padding: 0.625rem 0.875rem;
+      padding: var(--space-2) var(--space-3);
       background: transparent;
       border: none;
       color: var(--text-color);
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       text-align: left;
       cursor: pointer;
       transition: background 150ms ease;

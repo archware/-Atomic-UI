@@ -1,0 +1,48 @@
+(node:8308) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/COTAHA/Music/Atomic/-Atomic-UI/eslint.config.js?mtime=1766103639099 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to C:\Users\COTAHA\Music\Atomic\-Atomic-UI\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\app.config.server.ts
+  10:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\components\ui-showcase\examples\showcase-feedback\showcase-feedback.component.ts
+  86:17  error  Use built-in control flow instead of directive ngIf  @angular-eslint/template/prefer-control-flow
+  94:17  error  Use built-in control flow instead of directive ngIf  @angular-eslint/template/prefer-control-flow
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\examples\theme-examples.component.ts
+  297:9  error  A label component must be associated with a form element  @angular-eslint/template/label-has-associated-control
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\shared\ui\atoms\button\button.component.ts
+  155:13  error  Output bindings, including aliases, should not be named "on", nor prefixed with it (https://angular.dev/guide/components/outputs#choosing-event-names)  @angular-eslint/no-output-on-prefix
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\shared\ui\atoms\floating-input\floating-input.component.spec.ts
+  153:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\shared\ui\atoms\floating-input\floating-input.component.ts
+  43:7  error  A label component must be associated with a form element  @angular-eslint/template/label-has-associated-control
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\shared\ui\molecules\datepicker\datepicker.component.ts
+   44:15  error    Prefer using the inject() function over constructor parameter injection. Use Angular's migration schematic to automatically refactor: ng generate @angular/core:inject  @angular-eslint/prefer-inject
+   44:47  error    Prefer using the inject() function over constructor parameter injection. Use Angular's migration schematic to automatically refactor: ng generate @angular/core:inject  @angular-eslint/prefer-inject
+  194:19  warning  Unexpected any. Specify a different type                                                                                                                                @typescript-eslint/no-explicit-any
+  209:24  warning  Unexpected any. Specify a different type                                                                                                                                @typescript-eslint/no-explicit-any
+  213:25  warning  Unexpected any. Specify a different type                                                                                                                                @typescript-eslint/no-explicit-any
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\shared\ui\molecules\modal\modal.component.ts
+  142:13  warning  Output bindings, including aliases, should not be named as standard DOM events          @angular-eslint/no-output-native
+   17:7   warning  click must be accompanied by either keyup, keydown or keypress event for accessibility  @angular-eslint/template/click-events-have-key-events
+   37:36  error    Use built-in control flow instead of directive ngIf                                     @angular-eslint/template/prefer-control-flow
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\shared\ui\molecules\select2\select2.component.ts
+  38:7   warning  click must be accompanied by either keyup, keydown or keypress event for accessibility  @angular-eslint/template/click-events-have-key-events
+  38:7   warning  Elements with interaction handlers must be focusable                                    @angular-eslint/template/interactive-supports-focus
+  40:11  error    A label component must be associated with a form element                                @angular-eslint/template/label-has-associated-control
+  98:15  warning  click must be accompanied by either keyup, keydown or keypress event for accessibility  @angular-eslint/template/click-events-have-key-events
+  98:15  warning  Elements with interaction handlers must be focusable                                    @angular-eslint/template/interactive-supports-focus
+
+C:\Users\COTAHA\Music\Atomic\-Atomic-UI\src\app\shared\ui\organisms\scroll-overlay\scroll-overlay.component.ts
+  189:15  error  Prefer using the inject() function over constructor parameter injection. Use Angular's migration schematic to automatically refactor: ng generate @angular/core:inject  @angular-eslint/prefer-inject
+
+Ô£û 21 problems (10 errors, 11 warnings)
+

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { PaginationComponent } from '../app/shared/ui/molecules/pagination/pagination.component';
 
 const meta: Meta<PaginationComponent> = {
-  title: 'Molecules/Pagination',
+  title: '2. Molecules/Pagination',
   component: PaginationComponent,
   tags: ['autodocs'],
 };

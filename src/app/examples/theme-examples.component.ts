@@ -262,12 +262,10 @@ export class ExampleListenerComponent implements OnDestroy {
   lastThemeChange = signal<string>('Nunca');
   changeCount = signal<number>(0);
 
-  private themeChangeHandler = (event: Event) => {
-    const customEvent = event as CustomEvent<{ theme: string; effectiveTheme: string }>;
+  private themeChangeHandler = (_event: Event) => {
     const now = new Date();
     this.lastThemeChange.set(now.toLocaleTimeString());
     this.changeCount.update(count => count + 1);
-    // console.log('Tema cambió:', customEvent.detail);
   };
 
   constructor() {
@@ -296,8 +294,8 @@ export class ExampleListenerComponent implements OnDestroy {
       <h3>⚙️ Panel de Configuración</h3>
 
       <div class="setting-group">
-        <label>Preferencia de Tema</label>
-        <select [value]="themeService.getSelectedTheme()"
+        <label for="theme-select">Preferencia de Tema</label>
+        <select id="theme-select" [value]="themeService.getSelectedTheme()"
           (change)="onThemeChange($event)">
           <option value="light">☀️ Claro</option>
           <option value="dark">🌙 Oscuro</option>

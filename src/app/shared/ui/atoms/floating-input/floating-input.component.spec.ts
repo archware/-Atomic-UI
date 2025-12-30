@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FloatingInputComponent, FloatingInputVariant, FloatingInputType } from './floating-input.component';
+import { FloatingInputComponent, FloatingInputVariant } from './floating-input.component';
 
 describe('FloatingInputComponent', () => {
   let component: FloatingInputComponent;
@@ -150,7 +150,7 @@ describe('FloatingInputComponent', () => {
     });
 
     it('should handle null value', () => {
-      component.writeValue(null as any);
+      component.writeValue(null as unknown as string);
       expect(component.value).toBe('');
     });
 

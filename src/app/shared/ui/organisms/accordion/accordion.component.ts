@@ -28,7 +28,7 @@ import { CommonModule } from '@angular/common';
       >
         <span class="accordion-title">{{ title }}</span>
         <span class="accordion-icon" aria-hidden="true">
-          <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem;"></i>
+          <i class="fa-solid fa-chevron-down"></i>
         </span>
       </button>
       <div 
@@ -45,10 +45,10 @@ import { CommonModule } from '@angular/common';
   `,
   styles: [`
     .accordion-item {
-      border: 1px solid var(--border-color, #e5e7eb);
-      border-radius: 0.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
       overflow: hidden;
-      background: var(--surface-background, #ffffff);
+      background: var(--surface-background);
     }
 
     .accordion-header {
@@ -56,42 +56,43 @@ import { CommonModule } from '@angular/common';
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem;
-      background: var(--surface-section, #f3f4f6); /* Slightly darker than content */
+      padding: var(--space-4);
+      background: var(--surface-section);
       border: none;
-      border-bottom: 1px solid transparent; /* Prepare for transition */
+      border-bottom: 1px solid transparent;
       cursor: pointer;
-      font-size: 0.9375rem; /* Reverted size as requested */
+      font-size: var(--text-md);
       font-weight: 600;
-      color: #000000;
+      color: var(--text-color);
       transition: all 150ms ease;
     }
 
     .accordion-item.open .accordion-header {
-      border-bottom-color: var(--border-color, #e5e7eb);
-      background: #e5e7eb; /* Darker background (~10% darker than previous #f3f4f6) */
-      color: var(--primary-color, #793576);
+      border-bottom-color: var(--border-color);
+      background: var(--hover-background);
+      color: var(--primary-color);
     }
 
     .accordion-header:hover {
-      background: #e5e7eb;
+      background: var(--hover-background);
     }
 
     .accordion-icon {
-      color: var(--text-color-muted, #6b7280);
+      font-size: var(--text-xs);
+      color: var(--text-color-muted);
       transition: transform 300ms ease;
     }
 
     .accordion-item.open .accordion-icon {
       transform: rotate(180deg);
-      color: var(--primary-color, #793576);
+      color: var(--primary-color);
     }
 
     .accordion-content {
       max-height: 0;
       overflow: hidden;
       transition: max-height 300ms ease;
-      background: var(--surface-background, #ffffff);
+      background: var(--surface-background);
     }
 
     .accordion-item.open .accordion-content {
@@ -99,46 +100,17 @@ import { CommonModule } from '@angular/common';
     }
 
     .accordion-body {
-      padding: 1.25rem;
-      font-size: 0.875rem;
-      color: var(--text-color-secondary, #4b5563);
+      padding: var(--space-5);
+      font-size: var(--text-sm);
+      color: var(--text-color-secondary);
       line-height: 1.6;
     }
 
-    /* Dark mode */
-    :host-context(html.dark) .accordion-item,
-    :host-context([data-theme="dark"]) .accordion-item {
-      border-color: var(--border-color);
-      background: var(--surface-background);
-    }
-
-    :host-context(html.dark) .accordion-content,
-    :host-context([data-theme="dark"]) .accordion-content {
-      background: var(--surface-background);
-    }
-
-    :host-context(html.dark) .accordion-header,
-    :host-context([data-theme="dark"]) .accordion-header {
-      background: var(--surface-section);
-      color: var(--text-color);
-    }
-
-    :host-context(html.dark) .accordion-item.open .accordion-header,
-    :host-context([data-theme="dark"]) .accordion-item.open .accordion-header {
-      border-bottom-color: var(--border-color);
-      background: var(--hover-background);
-      color: var(--primary-color);
-    }
-
-    :host-context(html.dark) .accordion-header:hover,
-    :host-context([data-theme="dark"]) .accordion-header:hover {
-      background: var(--hover-background);
-    }
-
-    :host-context(html.dark) .accordion-body,
-    :host-context([data-theme="dark"]) .accordion-body {
-      color: var(--text-color);
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --surface-background, --border-color, --hover-background, --primary-color
+     * ya tienen valores apropiados para temas oscuros.
+     */
   `]
 })
 export class AccordionItemComponent {
@@ -173,7 +145,7 @@ export class AccordionItemComponent {
     .accordion {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: var(--space-2);
     }
 
     .accordion-flush {

@@ -74,8 +74,6 @@ export class TabComponent {
     </div>
   `,
   styles: [`
-    /* ... (previous styles omitted) ... */
-    
     .tabs-container {
       width: 100%;
     }
@@ -83,22 +81,22 @@ export class TabComponent {
     .tabs-header {
       display: flex;
       position: relative;
-      border-bottom: 1px solid var(--border-color, #e5e7eb);
-      margin-bottom: 1.5rem;
-      gap: 6px; /* User Request: 6px gap */
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: var(--space-6);
+      gap: 6px;
     }
 
     .tab-button {
       flex: 1;
-      padding: 1rem 1.25rem;
+      padding: var(--space-4) var(--space-5);
       
-      /* Base Style (Inactive): Visible background to show gap */
-      background: var(--surface-ground, #f9fafb); 
-      border: 1px solid var(--border-color-strong, #9ca3af); /* Stronger border */
-      border-bottom: none; 
+      /* Base Style (Inactive) */
+      background: var(--surface-ground);
+      border: 1px solid var(--border-color-strong);
+      border-bottom: none;
       
       margin-bottom: -1px;
-      font-size: 1rem;
+      font-size: var(--text-md);
       font-weight: 500;
       color: var(--text-color-secondary);
       cursor: pointer;
@@ -106,8 +104,8 @@ export class TabComponent {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      border-radius: 0.5rem 0.5rem 0 0;
+      gap: var(--space-2);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
     }
 
     /* Hover state */
@@ -117,10 +115,10 @@ export class TabComponent {
       border-color: var(--primary-color);
     }
 
-    /* Pressed state effects (User Request) */
+    /* Pressed state effects */
     .tab-button:active {
-      box-shadow: inset 0 1px 0 hsl(224, 84%, 74%), 
-                  0 1px 3px hsla(0, 0%, 0%, 0.2);
+      box-shadow: inset 0 1px 0 color-mix(in srgb, var(--primary-color), transparent 30%), 
+                  0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
     .tab-button.active {
@@ -132,12 +130,11 @@ export class TabComponent {
       border-top: 3px solid var(--primary-color);
       border-left: 1px solid var(--border-color);
       border-right: 1px solid var(--border-color);
-      border-bottom: 1px solid var(--surface-background); /* Merge with content */
+      border-bottom: 1px solid var(--surface-background);
     }
 
     .tab-button.disabled {
       cursor: not-allowed;
-      /* Disabled: Distinct gray background + Border */
       background: var(--surface-section);
       border: 1px solid var(--border-color);
       border-bottom: none;
@@ -146,67 +143,22 @@ export class TabComponent {
     }
 
     .tab-icon {
-      font-size: 1.125rem;
+      font-size: var(--text-lg);
     }
 
     .tabs-content {
-      padding: 1rem;
+      padding: var(--space-4);
       background: var(--surface-background);
-      border-radius: 0 0 0.5rem 0.5rem;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
       border: 1px solid var(--border-color);
       border-top: none;
     }
 
-    /* Dark mode overrides (Tokenized) */
-    :host-context(.dark) .tabs-header,
-    :host-context(html.dark) .tabs-header,
-    :host-context([data-theme="dark"]) .tabs-header {
-      border-color: var(--border-color);
-    }
-
-    :host-context(.dark) .tab-button,
-    :host-context(html.dark) .tab-button,
-    :host-context([data-theme="dark"]) .tab-button {
-      color: var(--text-color-secondary);
-      background: var(--surface-sunken);
-      border-color: var(--border-color-strong); /* Stronger border in dark mode */
-    }
-
-    :host-context(.dark) .tab-button:not(.disabled):not(.active):hover,
-    :host-context(html.dark) .tab-button:not(.disabled):not(.active):hover,
-    :host-context([data-theme="dark"]) .tab-button:not(.disabled):not(.active):hover {
-      color: var(--primary-color);
-      background: var(--hover-background-subtle);
-      border-color: var(--primary-color);
-    }
-
-    :host-context(.dark) .tab-button.active,
-    :host-context(html.dark) .tab-button.active,
-    :host-context([data-theme="dark"]) .tab-button.active {
-      color: var(--text-color);
-      background: var(--surface-background);
-      
-      border-top-color: var(--primary-color);
-      border-left-color: var(--border-color);
-      border-right-color: var(--border-color);
-      border-bottom-color: var(--surface-background);
-    }
-    
-    :host-context(.dark) .tab-button.disabled,
-    :host-context(html.dark) .tab-button.disabled,
-    :host-context([data-theme="dark"]) .tab-button.disabled {
-       background: var(--surface-section);
-       border-color: var(--border-color);
-       color: var(--text-color-muted);
-    }
-
-    :host-context(.dark) .tabs-content,
-    :host-context(html.dark) .tabs-content,
-    :host-context([data-theme="dark"]) .tabs-content {
-      color: var(--text-color);
-      background: var(--surface-background);
-      border-color: var(--border-color);
-    }
+    /* 
+     * Dark mode se maneja automáticamente via tokens semánticos.
+     * --surface-ground, --surface-background, --border-color, --primary-color
+     * ya tienen valores apropiados para temas oscuros.
+     */
 
     /* RESPONSIVE: Compact scrollable tabs on mobile */
     @media (max-width: 768px) {
@@ -215,34 +167,33 @@ export class TabComponent {
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: thin;
-        gap: 4px;
-        padding-bottom: 2px;
+        gap: var(--space-1);
+        padding-bottom: var(--space-0);
       }
 
-      /* Hide scrollbar on mobile for cleaner look */
       .tabs-header::-webkit-scrollbar {
         height: 3px;
       }
 
       .tabs-header::-webkit-scrollbar-thumb {
         background: var(--border-color);
-        border-radius: 3px;
+        border-radius: var(--radius-xs);
       }
 
       .tab-button {
         flex: 0 0 auto;
         min-width: max-content;
-        padding: 0.625rem 0.875rem;
-        font-size: 0.875rem;
+        padding: var(--space-2) var(--space-3);
+        font-size: var(--text-sm);
         white-space: nowrap;
       }
 
       .tab-icon {
-        font-size: 1rem;
+        font-size: var(--text-md);
       }
 
       .tabs-content {
-        padding: 0.75rem;
+        padding: var(--space-3);
       }
     }
   `]

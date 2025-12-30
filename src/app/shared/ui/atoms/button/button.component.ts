@@ -1,11 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /** 
  * Available button color variants.
  * @remarks Each variant applies different colors from the design system.
  */
-export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'outline' | 'ghost';
+export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'outline' | 'ghost' | 'link';
 
 /** Button size options */
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -15,39 +15,18 @@ export type IconPosition = 'left' | 'right' | 'none';
 
 /**
  * Reusable button component with multiple variants, sizes, and icon support.
- * 
- * @example
- * ```html
- * <!-- Basic usage -->
- * <app-button variant="primary" (onClick)="handleClick()">
- *   Save
- * </app-button>
- * 
- * <!-- With emoji icon -->
- * <app-button variant="success" icon="✓" iconPosition="left">
- *   Confirm
- * </app-button>
- * 
- * <!-- With custom SVG icon -->
- * <app-button variant="danger">
- *   <svg icon-left>...</svg>
- *   Delete
- * </app-button>
- * ```
- * 
- * @see {@link ButtonVariant} for available color variants
- * @see {@link ButtonSize} for available sizes
  */
 @Component({
   selector: 'app-button',
   standalone: true,
   imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <button 
       [type]="type"
       [disabled]="disabled"
       [class]="buttonClasses"
-      (click)="onClick.emit($event)"
+      (click)="buttonClick.emit($event)"
     >
       <!-- Custom Icon Link (Left) -->
       <span class="btn-icon-wrapper btn-icon-wrapper--left">
@@ -110,11 +89,11 @@ export type IconPosition = 'left' | 'right' | 'none';
 
     /* Apply margin only when slot has content */
     .btn-icon-wrapper--left:has(*) {
-      margin-right: 0.5rem;
+      margin-right: var(--space-2);
     }
 
     .btn-icon-wrapper--right:has(*) {
-      margin-left: 0.5rem;
+      margin-left: var(--space-2);
     }
 
     /* Size-specific icon adjustments */
@@ -150,13 +129,13 @@ export class ButtonComponent {
    * Emoji or text icon to display.
    * For custom icons (SVG, FontAwesome), use content projection with `icon-left` or `icon-right` attribute.
    */
-  @Input() icon: string = '';
+  @Input() icon = '';
 
   /** 
    * CSS class for font icons (e.g. 'fa-solid fa-save').
    * Use this for font icons instead of content projection.
    */
-  @Input() iconClass: string = '';
+  @Input() iconClass = '';
 
   /** 
    * Position of the emoji/text icon.
@@ -168,13 +147,13 @@ export class ButtonComponent {
    * Whether the button is disabled.
    * @default false
    */
-  @Input() disabled: boolean = false;
+  @Input() disabled = false;
 
   /** 
    * Emits when the button is clicked.
    * Does not emit when disabled.
    */
-  @Output() onClick = new EventEmitter<MouseEvent>();
+  @Output() buttonClick = new EventEmitter<MouseEvent>();
 
   /** @internal */
   get buttonClasses(): string {

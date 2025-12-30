@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { LanguageSwitcherComponent } from '../app/shared/ui/atoms/language-switcher/language-switcher.component';
 
 const meta: Meta<LanguageSwitcherComponent> = {
-  title: 'Atoms/LanguageSwitcher',
+  title: '1. Atoms/LanguageSwitcher',
   component: LanguageSwitcherComponent,
   tags: ['autodocs'],
   parameters: {

@@ -48,24 +48,37 @@ Sistema de diseño **Atomic Design** con temas **Light/Dark/System**, paleta de 
 
 ---
 
-## 🚀 Inicio Rápido
+## 🚀 Inicio Rápido (Recomendado)
 
-### Prerequisitos
+La forma más rápida de usar Atomic UI es generando un proyecto nuevo con nuestra herramienta CLI automatizada.
+
+### 1. Generar Proyecto
 
 ```bash
-Node.js >= 18.x
-npm >= 9.x
-Angular CLI >= 20.x
+# Desde la raíz de la librería
+npm run create:project mi-nuevo-proyecto
 ```
 
-### Instalación
+La herramienta te guiará para:
+- ✅ Elegir plantillas (Login, Dashboard, CRUD)
+- ✅ Configurar rutas y navegación
+- ✅ Instalar dependencias automáticamente
+- ✅ Configurar temas y estilos base
+
+### 2. Desarrollo
 
 ```bash
-npm install
+cd projects/mi-nuevo-proyecto
 npm start
 ```
 
-La aplicación estará disponible en `http://localhost:4200/`
+---
+
+## 📦 Integración Manual
+
+Si necesitas integrar Atomic UI en un proyecto ya existente, consulta los workflows en `.agent/workflows/`:
+- `/integration` - Guía paso a paso de integración
+- `/development` - Desarrollo con hot-reload
 
 ---
 
@@ -75,8 +88,8 @@ La aplicación estará disponible en `http://localhost:4200/`
 
 | Capa | Componentes | Descripción |
 |------|-------------|-------------|
-| **Atoms (16)** | Avatar, Button, Checkbox, Chip, FloatingInput, FormError, IconButton, Input, LanguageSwitcher, Loader, Rating, Row, Select, Skeleton, Text, Toggle | Elementos básicos e indivisibles |
-| **Molecules (9)** | DataState, Datepicker, Dropdown, Modal, Pagination, Select2, TableActions, Toast, UserMenu | Combinaciones de átomos con funcionalidad |
+| **Atoms (18)** | Avatar, Button, Checkbox, Chip, FloatingInput, FormError, FormRow, IconButton, Input, LanguageSwitcher, Loader, Radio, Rating, Row, Select, Skeleton, Text, Textarea, Toggle | Elementos básicos e indivisibles |
+| **Molecules (10)** | Card, DataState, Datepicker, Dropdown, Modal, Pagination, Select2, TableActions, Toast, UserMenu | Combinaciones de átomos con funcionalidad |
 | **Organisms (9)** | Accordion, Filters, Footer, ScrollOverlay, Sidebar, Stepper, Tabs, ThemeSwitcher, Topbar | Secciones complejas de UI |
 | **Surfaces (1)** | Panel | Contenedores y superficies |
 | **Templates (2)** | AuthLayout, LayoutShell | Layouts de página completos |

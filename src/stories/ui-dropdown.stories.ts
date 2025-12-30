@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { DropdownComponent } from '../app/shared/ui/molecules/dropdown/dropdown.component';
 
 const meta: Meta<DropdownComponent> = {
-  title: 'Molecules/Dropdown',
+  title: '2. Molecules/Dropdown',
   component: DropdownComponent,
   tags: ['autodocs'],
 };

@@ -21,10 +21,13 @@ export { CheckboxComponent } from './atoms/checkbox/checkbox.component';
 export { ChipComponent } from './atoms/chip/chip.component';
 export type { ChipVariant, ChipSize } from './atoms/chip/chip.component';
 
+export { DividerComponent } from './atoms/divider/divider.component';
+
 export { FloatingInputComponent } from './atoms/floating-input/floating-input.component';
 export type { FloatingInputType, FloatingInputVariant } from './atoms/floating-input/floating-input.component';
 
 export { FormErrorComponent } from './atoms/form-error/form-error.component';
+export { FormRowComponent } from './atoms/form-row/form-row.component';
 
 export { IconButtonComponent } from './atoms/icon-button/icon-button.component';
 
@@ -48,9 +51,23 @@ export { TextComponent } from './atoms/text/text.component';
 
 export { ToggleComponent } from './atoms/toggle/toggle.component';
 
+export { TextareaComponent } from './atoms/textarea/textarea.component';
+export type { TextareaVariant } from './atoms/textarea/textarea.component';
+
+export { RadioComponent } from './atoms/radio/radio.component';
+export type { RadioOption } from './atoms/radio/radio.component';
+
+export { TableComponent } from './atoms/table/table.component';
+export { TableHeadComponent } from './atoms/table/table-head.component';
+export { TableRowComponent } from './atoms/table/table-row.component';
+export { TableCellComponent } from './atoms/table/table-cell.component';
+
 // ============================================
 // MOLECULES - Combinación de átomos
 // ============================================
+export { CardComponent } from './molecules/card/card.component';
+export type { CardVariant, CardSize } from './molecules/card/card.component';
+
 export { DatepickerComponent } from './molecules/datepicker/datepicker.component';
 
 export { DropdownComponent } from './molecules/dropdown/dropdown.component';
@@ -65,8 +82,21 @@ export type { Select2Option } from './molecules/select2/select2.component';
 
 export { TableActionsComponent } from './molecules/table-actions/table-actions.component';
 
+export { ActionGroupComponent } from './molecules/action-group/action-group.component';
+export type { ActionItem } from './molecules/action-group/action-group.component';
+
 export { ToastComponent } from './molecules/toast/toast.component';
 export type { ToastConfig, ToastType } from './molecules/toast/toast.component';
+export { ToastService } from './services/toast.service';
+export type { ToastItem } from './services/toast.service';
+
+export { PopupContainerComponent } from './molecules/popup/popup-container.component';
+export { PopupService } from './services/popup.service';
+export type { PopupConfig, PopupItem, PopupButton, PopupSize, PopupType } from './services/popup.service';
+
+export { ModalContainerComponent } from './molecules/modal/modal-container.component';
+export { ModalService } from './services/modal.service';
+export type { ModalConfig, ModalItem, ModalButton, ModalSize } from './services/modal.service';
 
 export { UserMenuComponent } from './molecules/user-menu/user-menu.component';
 
@@ -83,6 +113,7 @@ export type { SocialLink, LegalLink, FooterVariant } from './organisms/footer/fo
 export { ScrollOverlayComponent } from './organisms/scroll-overlay/scroll-overlay.component';
 
 export { SidebarComponent } from './organisms/sidebar/sidebar.component';
+export type { SidebarUser, SidebarMenuItem } from './organisms/sidebar/sidebar.component';
 
 export { StepperComponent } from './organisms/stepper/stepper.component';
 export type { Step } from './organisms/stepper/stepper.component';
@@ -124,3 +155,20 @@ export type { ApiState, UseApiResult } from './services/use-api.service';
 // ============================================
 export { DataStateComponent } from './molecules/data-state/data-state.component';
 
+// ============================================
+// AUTHENTICATION - Services, Guards, Interceptors
+// ============================================
+export { TokenService } from './services/token.service';
+export type { TokenConfig, JwtPayload } from './services/token.service';
+
+export { AuthService } from './services/auth.service';
+export type {
+    UserProfile,
+    LoginRequest,
+    LoginResponse,
+    RefreshTokenRequest
+} from './services/auth.service';
+
+export { authGuard, guestGuard, passwordChangeGuard } from './guards/auth.guard';
+
+export { authInterceptor } from './interceptors/auth.interceptor';

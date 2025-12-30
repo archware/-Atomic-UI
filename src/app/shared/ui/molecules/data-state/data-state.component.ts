@@ -124,18 +124,18 @@ import { ApiError } from '../../services/api.service';
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
+      padding: var(--space-8);
       min-height: 150px;
     }
 
     /* Loading */
     .data-state--loading {
-      gap: 1rem;
+      gap: var(--space-4);
     }
 
     .loading-text {
       margin: 0;
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       color: var(--text-color-secondary);
     }
 
@@ -145,25 +145,25 @@ import { ApiError } from '../../services/api.service';
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 0.75rem;
+      gap: var(--space-3);
       max-width: 400px;
     }
 
     .error-icon {
-      font-size: 2.5rem;
-      color: var(--danger-color, #ef4444);
+      font-size: var(--text-3xl);
+      color: var(--danger-color);
     }
 
     .error-title {
       margin: 0;
-      font-size: 1.125rem;
+      font-size: var(--text-lg);
       font-weight: 600;
       color: var(--text-color);
     }
 
     .error-message {
       margin: 0;
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       color: var(--text-color-secondary);
       line-height: 1.5;
     }
@@ -171,22 +171,22 @@ import { ApiError } from '../../services/api.service';
     .retry-button {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1rem;
-      margin-top: 0.5rem;
-      font-size: 0.875rem;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      margin-top: var(--space-2);
+      font-size: var(--text-sm);
       font-weight: 500;
       color: var(--primary-color);
       background: var(--primary-color-lighter);
       border: none;
-      border-radius: 0.5rem;
+      border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 150ms ease;
     }
 
     .retry-button:hover {
       background: var(--primary-color);
-      color: white;
+      color: var(--gray-0);
     }
 
     /* Empty */
@@ -194,17 +194,17 @@ import { ApiError } from '../../services/api.service';
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.75rem;
+      gap: var(--space-3);
     }
 
     .empty-icon {
-      font-size: 3rem;
+      font-size: var(--text-4xl);
       color: var(--text-color-muted);
     }
 
     .empty-text {
       margin: 0;
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       color: var(--text-color-secondary);
     }
   `]
