@@ -83,6 +83,11 @@
    --button-ghost-text: var(--primary-color);
    --button-ghost-hover-bg: var(--hover-background-subtle);
 
+   /* Button Shadows */
+   --button-shadow-inset: inset 0 1px 0 hsl(224, 84%, 74%);
+   --button-shadow-outer: 0 1px 3px hsla(0, 0%, 0%, 0.2);
+   --button-shadow: var(--button-shadow-inset), var(--button-shadow-outer);
+
    /* === BADGES === */
    --badge-primary-bg: var(--primary-color);
    --badge-primary-text: var(--text-color-on-primary);
@@ -276,6 +281,11 @@ html.dark {
 
    --button-ghost-text: var(--primary-color);
    --button-ghost-hover-bg: var(--hover-background-subtle);
+
+   /* Button Shadows (Dark Mode - more subtle) */
+   --button-shadow-inset: inset 0 1px 0 hsla(224, 60%, 70%, 0.4);
+   --button-shadow-outer: 0 1px 4px hsla(0, 0%, 0%, 0.4);
+   --button-shadow: var(--button-shadow-inset), var(--button-shadow-outer);
 
    /* === BADGES === */
    --badge-secondary-bg: var(--gray-700);
