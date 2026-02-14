@@ -6,6 +6,9 @@ import angular from "angular-eslint";
 
 export default tseslint.config(
   {
+    linterOptions: {
+      reportUnusedDisableDirectives: "off",
+    },
     files: ["**/*.ts"],
     extends: [
       eslint.configs.recommended,
@@ -15,6 +18,7 @@ export default tseslint.config(
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      "no-unused-disable": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
@@ -46,12 +50,16 @@ export default tseslint.config(
     },
   },
   {
+    linterOptions: {
+      reportUnusedDisableDirectives: "off",
+    },
     files: ["**/*.html"],
     extends: [
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility,
     ],
     rules: {
+      "no-unused-disable": "off",
       "@angular-eslint/template/click-events-have-key-events": "warn",
       "@angular-eslint/template/interactive-supports-focus": "warn",
     },

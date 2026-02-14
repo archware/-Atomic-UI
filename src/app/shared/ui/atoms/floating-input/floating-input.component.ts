@@ -47,13 +47,33 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       
       <!-- Icon button (password toggle or custom icon) -->
       @if (type === 'password') {
-        <button type="button" class="input-icon-btn" (click)="togglePassword()" tabindex="-1">
+        <button type="button" class="input-icon-btn" (click)="onPasswordToggleClick($event)" tabindex="-1">
           <i class="fa-solid" [class.fa-eye]="!showPassword()" [class.fa-eye-slash]="showPassword()"></i>
         </button>
       } @else if (iconClass) {
-        <span class="input-icon"><i [class]="iconClass"></i></span>
+        <button
+          type="button"
+          class="input-icon-btn input-icon-btn--static"
+          (click)="emitIconClick($event)"
+          (keydown.enter)="emitIconClick($event)"
+          (keydown.space)="emitIconClick($event); $event.preventDefault()"
+          tabindex="0"
+          [attr.aria-label]="label || 'Input icon action'"
+        >
+          <i [class]="iconClass"></i>
+        </button>
       } @else if (icon) {
-        <span class="input-icon">{{ icon }}</span>
+        <button
+          type="button"
+          class="input-icon-btn input-icon-btn--static"
+          (click)="emitIconClick($event)"
+          (keydown.enter)="emitIconClick($event)"
+          (keydown.space)="emitIconClick($event); $event.preventDefault()"
+          tabindex="0"
+          [attr.aria-label]="label || 'Input icon action'"
+        >
+          {{ icon }}
+        </button>
       }
       
       @if (error) {
@@ -329,6 +349,12 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       color: var(--primary-color);
     }
 
+    .input-icon-btn--static {
+      width: 1.75rem;
+      height: 1.75rem;
+      right: 0.75rem;
+    }
+
     .input-icon-btn i {
       font-size: 1rem;
     }
@@ -397,6 +423,17 @@ export class FloatingInputComponent implements ControlValueAccessor {
 
   togglePassword(): void {
     this.showPassword.update(v => !v);
+  }
+
+  onPasswordToggleClick(event: Event): void {
+    event.stopPropagation();
+    this.togglePassword();
+    this.iconClick.emit();
+  }
+
+  emitIconClick(event: Event): void {
+    event.stopPropagation();
+    this.iconClick.emit();
   }
 
   hasValue(): boolean {

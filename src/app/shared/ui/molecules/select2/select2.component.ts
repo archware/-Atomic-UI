@@ -397,7 +397,14 @@ export interface Select2Option {
   `]
 })
 export class Select2Component implements ControlValueAccessor {
-  @Input() options: Select2Option[] = [];
+  @Input()
+  set options(value: Select2Option[]) {
+    this._options = value || [];
+    this.reconcilePendingValue();
+  }
+  get options(): Select2Option[] {
+    return this._options;
+  }
   @Input() label = '';
   @Input() placeholder = 'Seleccionar...';
   @Input() disabled = false;
@@ -411,6 +418,8 @@ export class Select2Component implements ControlValueAccessor {
   selectedOption = signal<Select2Option | null>(null);
   selectedOptions = signal<Select2Option[]>([]);
   highlightedIndex = signal(-1);
+  private _options: Select2Option[] = [];
+  private pendingValue: unknown = null;
 
   // Generate unique ID for accessibility (aria-labelledby)
   private static instanceCounter = 0;
@@ -532,6 +541,7 @@ export class Select2Component implements ControlValueAccessor {
       const values = this.selectedOptions().map(o => o.value);
       this.onChange(values);
       this.valueChange.emit(values);
+      this.onTouched();
     } else {
       this.selectedOption.set(option);
       this.onChange(option.value);
@@ -541,6 +551,7 @@ export class Select2Component implements ControlValueAccessor {
       this.highlightedIndex.set(-1);
       // Return focus to trigger
       this.elementRef.nativeElement.querySelector('.select2-trigger')?.focus();
+      this.onTouched();
     }
   }
 
@@ -551,6 +562,7 @@ export class Select2Component implements ControlValueAccessor {
     const values = this.selectedOptions().map(o => o.value);
     this.onChange(values);
     this.valueChange.emit(values);
+    this.onTouched();
   }
 
   @HostListener('document:click', ['$event'])
@@ -560,20 +572,19 @@ export class Select2Component implements ControlValueAccessor {
         this.isOpen.set(false);
         this.searchTerm.set('');
         this.highlightedIndex.set(-1);
+        this.onTouched();
       }
     }
   }
 
   writeValue(value: unknown): void {
-    if (this.multiple) {
-      const values = value as (string | number)[];
-      if (Array.isArray(values)) {
-        this.selectedOptions.set(this.options.filter(o => values.includes(o.value)));
-      }
-    } else {
-      const option = this.options.find(o => o.value === value);
-      this.selectedOption.set(option || null);
+    if (!this.options.length) {
+      // Guarda el valor hasta que lleguen las opciones (carga asíncrona)
+      this.pendingValue = value;
+      this.clearSelection();
+      return;
     }
+    this.applyIncomingValue(value);
   }
 
   registerOnChange(fn: (value: unknown) => void): void {
@@ -586,5 +597,48 @@ export class Select2Component implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+  }
+
+  /** Limpia selecciones actuales */
+  private clearSelection(): void {
+    this.selectedOption.set(null);
+    this.selectedOptions.set([]);
+  }
+
+  /** Aplica un valor entrante respetando los modos single/multiple */
+  private applyIncomingValue(value: unknown, emit = false): void {
+    if (this.multiple) {
+      const values = Array.isArray(value) ? value as (string | number)[] : [];
+      const validOptions = this.options.filter(o => values.includes(o.value));
+      this.selectedOptions.set(validOptions);
+      if (emit) {
+        this.onChange(validOptions.map(o => o.value));
+        this.valueChange.emit(validOptions.map(o => o.value));
+      }
+    } else {
+      const option = this.options.find(o => o.value === value);
+      this.selectedOption.set(option || null);
+      if (emit && option) {
+        this.onChange(option.value);
+        this.valueChange.emit(option.value);
+      }
+    }
+  }
+
+  /** Rehidrata selección cuando cambian las opciones */
+  private reconcilePendingValue(): void {
+    if (this.pendingValue !== null) {
+      this.applyIncomingValue(this.pendingValue);
+      this.pendingValue = null;
+      return;
+    }
+
+    // Revalida selección actual por si alguna opción desapareció
+    if (this.multiple) {
+      const currentValues = this.selectedOptions().map(o => o.value);
+      this.applyIncomingValue(currentValues);
+    } else {
+      this.applyIncomingValue(this.selectedOption()?.value);
+    }
   }
 }

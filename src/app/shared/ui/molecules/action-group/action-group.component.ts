@@ -520,25 +520,55 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
     if (!moreBtn) return;
 
     const rect = moreBtn.getBoundingClientRect();
-    const menuHeight = 180;
-    const menuWidth = 160;
+    const menuRect = this.menuElement.getBoundingClientRect();
+    const menuHeight = menuRect.height || 180;
+    const menuWidth = menuRect.width || 160;
 
     const spaceBelow = window.innerHeight - rect.bottom;
     const spaceRight = window.innerWidth - rect.right;
 
-    // Calcular top
-    let top = spaceBelow >= menuHeight
-      ? rect.bottom + 4
-      : rect.top - menuHeight - 4;
+    const preferredPosition = this.menuPosition;
+    const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max));
 
-    // Calcular left
-    let left = spaceRight >= menuWidth
-      ? rect.right - menuWidth
-      : rect.left;
+    const computeAutoVertical = () => spaceBelow >= menuHeight ? 'bottom' : 'top';
+    const computeAutoHorizontal = () => spaceRight >= menuWidth ? 'right' : 'left';
+
+    const positionToUse = preferredPosition === 'auto'
+      ? computeAutoVertical()
+      : preferredPosition;
+
+    let top: number;
+    let left: number;
+
+    switch (positionToUse) {
+      case 'top':
+        top = rect.top - menuHeight - 4;
+        left = rect.left;
+        break;
+      case 'bottom':
+        top = rect.bottom + 4;
+        left = rect.left;
+        break;
+      case 'left':
+        top = rect.top + (rect.height - menuHeight) / 2;
+        left = rect.left - menuWidth - 4;
+        break;
+      case 'right':
+        top = rect.top + (rect.height - menuHeight) / 2;
+        left = rect.right + 4;
+        break;
+      default: {
+        // Fallback: decide vertical first, then horizontal to keep menu visible
+        const vertical = computeAutoVertical();
+        const horizontal = computeAutoHorizontal();
+        top = vertical === 'bottom' ? rect.bottom + 4 : rect.top - menuHeight - 4;
+        left = horizontal === 'right' ? rect.right - menuWidth : rect.left;
+      }
+    }
 
     // Asegurar que no se salga de la pantalla
-    top = Math.max(8, Math.min(top, window.innerHeight - menuHeight - 8));
-    left = Math.max(8, Math.min(left, window.innerWidth - menuWidth - 8));
+    top = clamp(top, 8, window.innerHeight - menuHeight - 8);
+    left = clamp(left, 8, window.innerWidth - menuWidth - 8);
 
     // Aplicar estilos directamente al elemento
     this.renderer.setStyle(this.menuElement, 'top', `${top}px`);

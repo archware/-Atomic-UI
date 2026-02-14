@@ -6,12 +6,13 @@
     }
   </div>
 
-  <nav class="sidebar-nav" (keydown)="handleKeydown($event)" tabindex="-1">
+  <nav class="sidebar-nav" (keydown)="handleKeydown($event)" tabindex="0">
     <ul class="nav-list" role="menu">
       @for (item of menuItems; track item.label; let i = $index) {
       <li class="nav-item" role="none">
-        <a href="javascript:void(0)" class="nav-link" [class.active]="item.active" (click)="onItemClick(item)"
-          role="menuitem" [attr.aria-current]="item.active ? 'page' : null" [tabindex]="i === 0 ? 0 : -1">
+        <button type="button" class="nav-link" [class.active]="item.active" (click)="onItemClick(item, i)"
+          role="menuitem" [attr.aria-current]="item.active ? 'page' : null"
+          [attr.tabindex]="focusedIndex === i ? 0 : -1">
           <i [class]="item.icon + ' nav-icon'"></i>
           @if (!collapsed) {
           <span class="nav-label">
@@ -19,7 +20,7 @@
             @if(item.badge) { <span class="nav-badge">{{ item.badge }}</span> }
           </span>
           }
-        </a>
+        </button>
       </li>
       }
     </ul>

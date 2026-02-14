@@ -47,6 +47,10 @@
   border-radius: var(--radius-md);
   color: var(--text-color-secondary);
   text-decoration: none;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
   transition: all 200ms ease;
   font-weight: 500;
 }

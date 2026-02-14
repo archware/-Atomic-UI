@@ -50,7 +50,7 @@ interface MenuItem {
   label: string;
   icon: string;
   route?: string;
-  badge?: number;
+  badge?: number | string;
   children?: MenuItem[];
 }
 

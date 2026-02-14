@@ -145,6 +145,7 @@ export class DatepickerComponent implements ControlValueAccessor {
     this.value.set(date);
     this.onChange(date);
     this.isOpen.set(false);
+    this.onTouched();
   }
 
   selectMonth(monthIndex: number) {
