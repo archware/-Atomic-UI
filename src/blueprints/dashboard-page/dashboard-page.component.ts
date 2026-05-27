@@ -1,6 +1,6 @@
 import { Component, inject, signal, computed, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 import {
   LayoutShellComponent,
@@ -14,9 +14,11 @@ import {
   ButtonComponent,
   ChipComponent,
   SkeletonComponent,
+  MetricsGridComponent,
   ThemeSwitcherComponent,
   ApiService,
-  useApi
+  useApi,
+  KpiMetric
 } from '@shared/ui';
 
 /**
@@ -56,7 +58,7 @@ interface MenuItem {
 
 /**
  * Dashboard Page Blueprint
- * 
+ *
  * Features:
  * - LayoutShell with responsive sidebar
  * - Topbar with user menu and notifications
@@ -64,7 +66,7 @@ interface MenuItem {
  * - Stats cards with API integration
  * - Loading states and error handling
  * - Dark mode support
- * 
+ *
  * @usage
  * 1. Copy this folder to your project's pages directory
  * 2. Update imports to match your project structure
@@ -75,7 +77,6 @@ interface MenuItem {
   selector: 'app-dashboard-page',
   standalone: true,
   imports: [
-    CommonModule,
     LayoutShellComponent,
     TopbarComponent,
     SidebarComponent,
@@ -86,8 +87,9 @@ interface MenuItem {
     ButtonComponent,
     ChipComponent,
     SkeletonComponent,
+    MetricsGridComponent,
     ThemeSwitcherComponent
-  ],
+],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.css'
 })
@@ -121,6 +123,58 @@ export class DashboardPageComponent implements OnInit {
 
   /** Dashboard stats API hook */
   statsApi = useApi<DashboardStats>();
+
+  /** Metrics dataset for dashboard indicators */
+  metrics = computed<KpiMetric[]>(() => {
+    const stats = this.statsApi.data();
+    return [
+      {
+        title: 'Total Usuarios',
+        subtitle: 'Base acumulada',
+        value: stats?.totalUsers ?? 0,
+        format: 'compact',
+        trend: 'up',
+        trendValue: '+12%',
+        comparisonLabel: 'vs. mes pasado',
+        iconClass: 'fa-solid fa-users',
+        series: [8.4, 8.7, 9.1, 9.4, 9.8, 10.1, 10.6],
+      },
+      {
+        title: 'Proyectos Activos',
+        subtitle: 'Sprint vigente',
+        value: stats?.activeProjects ?? 0,
+        format: 'number',
+        trend: 'up',
+        trendValue: '+4',
+        comparisonLabel: 'nuevos esta semana',
+        iconClass: 'fa-solid fa-folder-open',
+        series: [17, 18, 19, 19, 20, 21, 22],
+      },
+      {
+        title: 'Tareas Pendientes',
+        subtitle: 'Backlog operativo',
+        value: stats?.pendingTasks ?? 0,
+        format: 'number',
+        trend: 'down',
+        trendValue: '-9%',
+        comparisonLabel: 'mejorando SLA',
+        iconClass: 'fa-solid fa-clock',
+        series: [56, 52, 49, 45, 44, 41, 39],
+      },
+      {
+        title: 'Ingresos',
+        subtitle: 'Facturación mensual',
+        value: stats?.revenue ?? 0,
+        format: 'currency',
+        currency: 'PEN',
+        trend: 'up',
+        trendValue: '+8.5%',
+        comparisonLabel: 'objetivo trimestral',
+        iconClass: 'fa-solid fa-sack-dollar',
+        series: [180, 195, 202, 215, 228, 235, 244],
+      },
+    ];
+  });
 
   // ============================================
   // MENU CONFIGURATION

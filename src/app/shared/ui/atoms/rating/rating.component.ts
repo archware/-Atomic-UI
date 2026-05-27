@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-rating',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="rating" [class]="'rating-' + size" [class.readonly]="readonly">
       @for (star of stars; track $index; let i = $index) {

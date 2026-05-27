@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject, ViewChildren, QueryList, ElementRef, effect } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ModalService, ModalItem } from '../../services/modal.service';
 
 /**
@@ -16,7 +16,7 @@ import { ModalService, ModalItem } from '../../services/modal.service';
 @Component({
   selector: 'app-modal-container',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @for (modal of modalService.modals(); track modal.id; let first = $first) {

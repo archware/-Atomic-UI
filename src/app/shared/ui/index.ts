@@ -1,9 +1,9 @@
 /**
  * UI Component Library - Barrel Exports
- * 
+ *
  * Importar componentes desde aquí:
  * import { AvatarComponent, ChipComponent } from '@shared/ui';
- * 
+ *
  * Configurar path alias en tsconfig.json:
  * "paths": { "@shared/ui": ["src/app/shared/ui"] }
  */
@@ -20,6 +20,12 @@ export { CheckboxComponent } from './atoms/checkbox/checkbox.component';
 
 export { ChipComponent } from './atoms/chip/chip.component';
 export type { ChipVariant, ChipSize } from './atoms/chip/chip.component';
+
+export { BadgeComponent } from './atoms/badge/badge.component';
+export type { BadgeVariant, BadgeSize, BadgePosition } from './atoms/badge/badge.component';
+
+export { BreadcrumbComponent } from './atoms/breadcrumb/breadcrumb.component';
+export type { BreadcrumbItem } from './atoms/breadcrumb/breadcrumb.component';
 
 export { DividerComponent } from './atoms/divider/divider.component';
 
@@ -62,6 +68,19 @@ export { TableHeadComponent } from './atoms/table/table-head.component';
 export { TableRowComponent } from './atoms/table/table-row.component';
 export { TableCellComponent } from './atoms/table/table-cell.component';
 
+export { FileInputComponent } from './atoms/file-input/file-input.component';
+export type { FileInputFile } from './atoms/file-input/file-input.component';
+
+export { NumberInputComponent } from './atoms/number-input/number-input.component';
+
+export { ProgressComponent } from './atoms/progress/progress.component';
+export type { ProgressVariant, ProgressSize } from './atoms/progress/progress.component';
+
+export { SpinnerComponent } from './atoms/spinner/spinner.component';
+export type { SpinnerSize, SpinnerVariant } from './atoms/spinner/spinner.component';
+
+export { TooltipDirective } from './atoms/tooltip/tooltip.directive';
+
 // ============================================
 // MOLECULES - Combinación de átomos
 // ============================================
@@ -90,6 +109,9 @@ export type { ToastConfig, ToastType } from './molecules/toast/toast.component';
 export { ToastService } from './services/toast.service';
 export type { ToastItem } from './services/toast.service';
 
+export { KpiCardComponent } from './molecules/kpi-card/kpi-card.component';
+export type { KpiTrend, KpiFormat } from './molecules/kpi-card/kpi-card.component';
+
 export { PopupContainerComponent } from './molecules/popup/popup-container.component';
 export { PopupService } from './services/popup.service';
 export type { PopupConfig, PopupItem, PopupButton, PopupSize, PopupType } from './services/popup.service';
@@ -99,6 +121,21 @@ export { ModalService } from './services/modal.service';
 export type { ModalConfig, ModalItem, ModalButton, ModalSize } from './services/modal.service';
 
 export { UserMenuComponent } from './molecules/user-menu/user-menu.component';
+
+export { AlertComponent } from './molecules/alert/alert.component';
+export type { AlertVariant, AlertSize } from './molecules/alert/alert.component';
+
+export { TagInputComponent } from './molecules/tag-input/tag-input.component';
+export type { TagInputOption } from './molecules/tag-input/tag-input.component';
+
+export { ComboboxComponent } from './molecules/combobox/combobox.component';
+export type { ComboboxOption } from './molecules/combobox/combobox.component';
+
+export { TimelineComponent } from './molecules/timeline/timeline.component';
+export type { TimelineItem, TimelineItemStatus } from './molecules/timeline/timeline.component';
+
+export { AvatarGroupComponent } from './molecules/avatar-group/avatar-group.component';
+export type { AvatarGroupItem } from './molecules/avatar-group/avatar-group.component';
 
 // ============================================
 // ORGANISMS - Estructuras complejas
@@ -124,6 +161,12 @@ export { ThemeSwitcherComponent } from './organisms/theme-switcher/theme-switche
 
 export { TopbarComponent } from './organisms/topbar/topbar.component';
 
+export { NavBarComponent } from './organisms/navbar/navbar.component';
+export type { NavBarItem, NavBarBrand } from './organisms/navbar/navbar.component';
+
+export { MetricsGridComponent } from './organisms/metrics-grid/metrics-grid.component';
+export type { KpiMetric } from './organisms/metrics-grid/metrics-grid.component';
+
 // ============================================
 // SURFACES
 // ============================================
@@ -140,6 +183,14 @@ export { AuthLayoutComponent } from './templates/auth-layout/auth-layout.compone
 // SERVICES
 // ============================================
 export { ThemeService } from './services/theme.service';
+
+export { GlobalErrorHandlerService } from './services/error-handler.service';
+
+export { cacheInterceptor, invalidateCache } from './interceptors/cache.interceptor';
+
+export { PermissionDirective } from './directives/permission.directive';
+
+export { FormBuilderHelper } from './helpers/form-builder.helper';
 
 export { ValidationService, DEFAULT_VALIDATION_MESSAGES } from './services/validation.service';
 export type { ValidationMessage } from './services/validation.service';

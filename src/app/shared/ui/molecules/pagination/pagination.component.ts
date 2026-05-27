@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 /**
  * Pagination component for navigating through pages of data.
@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-pagination',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <nav class="pagination" [class]="'pagination-' + size" aria-label="Paginación">
       <button type="button"

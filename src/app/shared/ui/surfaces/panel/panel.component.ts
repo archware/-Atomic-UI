@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 /** Available panel visual styles */
 export type PanelVariant = 'default' | 'elevated' | 'floating' | 'card' | 'flat' | 'outlined' | 'transparent' | 'plain';
@@ -19,7 +19,7 @@ export type PanelTitleAlign = 'left' | 'center' | 'right';
 @Component({
   selector: 'app-panel',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './panel.component.html',
   styleUrl: './panel.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

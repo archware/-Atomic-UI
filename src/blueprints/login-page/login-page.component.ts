@@ -1,5 +1,5 @@
 import { Component, inject, signal, effect } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -70,7 +70,6 @@ interface ForgotPasswordResponse {
   selector: 'app-login-page',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     AuthLayoutComponent,
     FloatingInputComponent,
@@ -82,7 +81,7 @@ interface ForgotPasswordResponse {
     RowComponent,
     FormRowComponent,
     DividerComponent
-  ],
+],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css'
 })

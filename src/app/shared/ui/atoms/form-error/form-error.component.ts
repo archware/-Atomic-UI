@@ -1,5 +1,5 @@
 import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { AbstractControl } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
 
@@ -18,7 +18,7 @@ import { ValidationService } from '../../services/validation.service';
 @Component({
   selector: 'app-form-error',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (showError) {

@@ -1,0 +1,127 @@
+<app-auth-layout>
+  <app-panel variant="elevated" padding="lg" class="register-panel">
+
+    <!-- Header -->
+    <div class="register-header">
+      <app-text variant="h2" weight="bold">Crear cuenta</app-text>
+      <app-text variant="body" color="muted">Completa los datos para registrarte</app-text>
+    </div>
+
+    <!-- Éxito -->
+    @if (registered()) {
+      <app-alert
+        variant="success"
+        title="¡Registro exitoso!"
+        message="Tu cuenta fue creada. Ya puedes iniciar sesión."
+        [closable]="false"
+      ></app-alert>
+      <app-button variant="primary" class="full-width" (click)="goToLogin()">
+        Ir al inicio de sesión
+      </app-button>
+    } @else {
+
+      <!-- Error global de API -->
+      @if (registerApi.hasError()) {
+        <app-alert
+          variant="danger"
+          [title]="'Error al registrar'"
+          [message]="registerApi.error()?.message || 'Intente nuevamente'"
+          [closable]="false"
+        ></app-alert>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- Nombre y Apellido -->
+        <app-row columns="1fr 1fr" gap="1rem">
+          <app-form-row>
+            <app-floating-input
+              formControlName="firstName"
+              label="Nombre"
+              variant="outline"
+              [error]="f['firstName'].invalid && f['firstName'].touched ? 'Nombre requerido (mín. 2 caracteres)' : ''"
+            ></app-floating-input>
+          </app-form-row>
+          <app-form-row>
+            <app-floating-input
+              formControlName="lastName"
+              label="Apellido"
+              variant="outline"
+              [error]="f['lastName'].invalid && f['lastName'].touched ? 'Apellido requerido (mín. 2 caracteres)' : ''"
+            ></app-floating-input>
+          </app-form-row>
+        </app-row>
+
+        <!-- Email -->
+        <app-form-row>
+          <app-floating-input
+            formControlName="email"
+            label="Correo electrónico"
+            type="email"
+            variant="outline"
+            [error]="f['email'].invalid && f['email'].touched ? 'Ingresa un email válido' : ''"
+          ></app-floating-input>
+        </app-form-row>
+
+        <!-- Contraseña -->
+        <app-form-row>
+          <app-floating-input
+            formControlName="password"
+            label="Contraseña"
+            type="password"
+            variant="outline"
+            [error]="f['password'].invalid && f['password'].touched ? 'Mínimo 8 caracteres' : ''"
+          ></app-floating-input>
+        </app-form-row>
+
+        <!-- Confirmar contraseña -->
+        <app-form-row>
+          <app-floating-input
+            formControlName="confirm"
+            label="Confirmar contraseña"
+            type="password"
+            variant="outline"
+            [error]="form.hasError('passwordMismatch') && f['confirm'].touched ? 'Las contraseñas no coinciden' : ''"
+          ></app-floating-input>
+        </app-form-row>
+
+        <app-divider></app-divider>
+
+        <!-- Términos -->
+        <app-form-row>
+          <app-checkbox formControlName="terms">
+            Acepto los <a href="/terms" target="_blank" class="terms-link">términos y condiciones</a>
+          </app-checkbox>
+          @if (f['terms'].invalid && f['terms'].touched) {
+            <app-form-error message="Debes aceptar los términos para continuar"></app-form-error>
+          }
+        </app-form-row>
+
+        <!-- Submit -->
+        <app-button
+          type="submit"
+          variant="primary"
+          class="full-width"
+          [disabled]="registerApi.loading()"
+        >
+          @if (registerApi.loading()) {
+            Registrando...
+          } @else {
+            Crear cuenta
+          }
+        </app-button>
+
+      </form>
+
+    }
+
+    <app-divider></app-divider>
+
+    <!-- Link a Login -->
+    <div class="login-link">
+      <app-text variant="body-sm" color="muted">¿Ya tienes cuenta?</app-text>
+      <app-button variant="ghost" (click)="goToLogin()">Iniciar sesión</app-button>
+    </div>
+
+  </app-panel>
+</app-auth-layout>

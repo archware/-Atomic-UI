@@ -1,26 +1,30 @@
 import { Component, signal, ChangeDetectionStrategy, HostListener, inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ScrollOverlayComponent } from './shared/ui/organisms/scroll-overlay/scroll-overlay.component';
-import { ThemeSwitcherComponent } from './shared/ui/organisms/theme-switcher/theme-switcher.component';
-import { UiShowcaseComponent } from './components/ui-showcase/ui-showcase.component';
-
-import { PanelComponent } from './shared/ui/surfaces/panel/panel.component';
-import { LayoutShellComponent } from './shared/ui/templates/layout-shell/layout-shell.component';
-import { SidebarComponent, SidebarMenuItem } from './shared/ui/organisms/sidebar/sidebar.component';
-import { TopbarComponent } from './shared/ui/organisms/topbar/topbar.component';
-import { TableActionsComponent } from './shared/ui/molecules/table-actions/table-actions.component';
-import { FloatingInputComponent } from './shared/ui/atoms/floating-input/floating-input.component';
-import { Select2Component, Select2Option } from './shared/ui/molecules/select2/select2.component';
-import { RowComponent } from './shared/ui/atoms/row/row.component';
-import { ButtonComponent } from './shared/ui/atoms/button/button.component';
-import { TextComponent } from './shared/ui/atoms/text/text.component';
-import { ChipComponent } from './shared/ui/atoms/chip/chip.component';
-import { DatepickerComponent } from './shared/ui/molecules/datepicker/datepicker.component';
-import { ToastComponent } from './shared/ui/molecules/toast/toast.component';
-import { PopupContainerComponent } from './shared/ui/molecules/popup/popup-container.component';
-import { ModalContainerComponent } from './shared/ui/molecules/modal/modal-container.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { UiShowcaseComponent } from './components/ui-showcase/ui-showcase.component';
+import {
+  ScrollOverlayComponent,
+  ThemeSwitcherComponent,
+  PanelComponent,
+  LayoutShellComponent,
+  SidebarComponent,
+  SidebarMenuItem,
+  TopbarComponent,
+  TableActionsComponent,
+  FloatingInputComponent,
+  Select2Component,
+  Select2Option,
+  RowComponent,
+  ButtonComponent,
+  TextComponent,
+  ChipComponent,
+  DatepickerComponent,
+  ToastComponent,
+  PopupContainerComponent,
+  ModalContainerComponent,
+  FiltersComponent,
+} from '@shared/ui';
 
 interface TableRow {
   col1: string;
@@ -38,12 +42,10 @@ interface TableRow {
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     ScrollOverlayComponent,
     ThemeSwitcherComponent,
     UiShowcaseComponent,
-
     PanelComponent,
     TableActionsComponent,
     LayoutShellComponent,
@@ -59,8 +61,9 @@ interface TableRow {
     ToastComponent,
     PopupContainerComponent,
     ModalContainerComponent,
+    FiltersComponent,
     TranslateModule
-  ],
+],
   templateUrl: './app.html',
   styleUrl: './app.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -114,6 +117,13 @@ export class App {
     // Filtering logic
   }
 
+  onClear() {
+    this.filterStatus = '';
+    this.filterDateStart = '';
+    this.filterDateEnd = '';
+    this.floatingInputValue = '';
+  }
+
   // Sidebar toggle - inicia oculto en móvil
   sidebarVisible = signal(this.getInitialSidebarState());
 
@@ -149,7 +159,7 @@ export class App {
 
   onSidebarNavigate() {
     // Only auto-close on mobile (breakpoint 768px matches CSS)
-    if (window.innerWidth <= 768) {
+    if (isPlatformBrowser(this.platformId) && window.innerWidth <= 768) {
       this.sidebarVisible.set(false);
     }
   }

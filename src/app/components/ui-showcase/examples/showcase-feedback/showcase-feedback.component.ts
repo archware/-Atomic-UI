@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ToastService } from '../../../../shared/ui/services/toast.service';
 import { PopupService } from '../../../../shared/ui/services/popup.service';
 import { ModalService } from '../../../../shared/ui/services/modal.service';
@@ -7,9 +7,7 @@ import { ModalService } from '../../../../shared/ui/services/modal.service';
 @Component({
   selector: 'app-showcase-feedback',
   standalone: true,
-  imports: [
-    CommonModule
-  ],
+  imports: [],
   template: `
     <!-- ALERTS -->
     <section class="showcase-section">

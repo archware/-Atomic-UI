@@ -1,12 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
 
 @Component({
   selector: 'app-icon-button',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <button 
       class="icon-btn"

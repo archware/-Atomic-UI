@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
 import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.component';
@@ -8,11 +8,10 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
   selector: 'app-showcase-actions',
   standalone: true,
   imports: [
-    CommonModule,
     PanelComponent,
     TextComponent,
     ButtonComponent
-  ],
+],
   template: `
     <!-- BOTONES -->
     <app-panel title="Botones" variant="flat" padding="md" class="showcase-section">

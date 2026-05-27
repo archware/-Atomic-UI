@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 /** Horizontal alignment options */
 export type RowAlign = 'left' | 'center' | 'right' | 'stretch';
@@ -33,7 +33,7 @@ export type RowVariant = 'default' | 'form';
 @Component({
   selector: 'app-row',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div 
       class="row"

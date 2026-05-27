@@ -1,5 +1,5 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import {
   PanelComponent,
@@ -81,7 +81,6 @@ export interface FilterOptions {
   selector: 'app-crud-table',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     PanelComponent,
@@ -100,7 +99,7 @@ export interface FilterOptions {
     TableCellComponent,
     RowComponent,
     TextComponent
-  ],
+],
   templateUrl: './crud-table.component.html',
   styleUrl: './crud-table.component.css'
 })

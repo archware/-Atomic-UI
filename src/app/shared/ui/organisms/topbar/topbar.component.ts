@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 import { UserMenuComponent, UserMenuAction } from '../../molecules/user-menu/user-menu.component';
 import { LanguageSwitcherComponent } from '../../atoms/language-switcher/language-switcher.component';
@@ -7,7 +7,7 @@ import { LanguageSwitcherComponent } from '../../atoms/language-switcher/languag
 @Component({
   selector: 'app-topbar',
   standalone: true,
-  imports: [CommonModule, IconButtonComponent, UserMenuComponent, LanguageSwitcherComponent],
+  imports: [IconButtonComponent, UserMenuComponent, LanguageSwitcherComponent],
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.css'
 })

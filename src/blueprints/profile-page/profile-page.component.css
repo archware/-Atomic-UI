@@ -1,0 +1,51 @@
+:host { display: block; }
+
+.profile-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+  .profile-aside {
+    order: -1;
+  }
+}
+
+/* Avatar section */
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+}
+
+/* Account info rows */
+.account-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Form actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-4);
+}
+
+.mt-panel {
+  margin-top: var(--space-6);
+}

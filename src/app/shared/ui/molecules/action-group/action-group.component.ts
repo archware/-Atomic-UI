@@ -3,7 +3,7 @@ import {
   ElementRef, ChangeDetectionStrategy, inject,
   ViewEncapsulation, OnInit, OnDestroy, Renderer2
 } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 
 /**
  * Representa una acción individual en el grupo
@@ -48,7 +48,7 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
 @Component({
   selector: 'app-action-group',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `

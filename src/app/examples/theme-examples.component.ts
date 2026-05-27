@@ -1,5 +1,5 @@
 import { Component, inject, computed, signal, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ThemeService } from '../shared/ui/services/theme.service';
 
 /**
@@ -16,7 +16,7 @@ import { ThemeService } from '../shared/ui/services/theme.service';
 @Component({
   selector: 'app-example-basic',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="card">
       <h3>Tema Dinámico Básico</h3>
@@ -67,7 +67,7 @@ export class ExampleBasicComponent {
 @Component({
   selector: 'app-example-conditional',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div [class.dark-mode]="themeService.isDarkMode()">
       <h3>Estilos Condicionados</h3>
@@ -115,7 +115,7 @@ export class ExampleConditionalComponent {
 @Component({
   selector: 'app-example-computed',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="info-box">
       <h3>Información Computada del Tema</h3>
@@ -207,7 +207,7 @@ export class ExampleComputedComponent {
 @Component({
   selector: 'app-example-listener',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="event-box">
       <h3>Escuchar Cambios de Tema</h3>
@@ -288,7 +288,7 @@ export class ExampleListenerComponent implements OnDestroy {
 @Component({
   selector: 'app-example-settings',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="settings-panel">
       <h3>⚙️ Panel de Configuración</h3>
@@ -381,7 +381,7 @@ export class ExampleSettingsComponent {
 @Component({
   selector: 'app-example-advanced-styles',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="advanced-card">
       <h3>Estilos Avanzados</h3>
@@ -444,14 +444,13 @@ export class ExampleAdvancedStylesComponent { }
   selector: 'app-examples-all',
   standalone: true,
   imports: [
-    CommonModule,
     ExampleBasicComponent,
     ExampleConditionalComponent,
     ExampleComputedComponent,
     ExampleListenerComponent,
     ExampleSettingsComponent,
     ExampleAdvancedStylesComponent
-  ],
+],
   template: `
     <div class="examples-container">
       <h1>📚 Ejemplos de Uso del Servicio de Temas</h1>

@@ -23,7 +23,7 @@ Sistema de diseño **Atomic Design** con temas **Light/Dark/System**, paleta de 
 ## ✨ Características
 
 ### 🧩 **Sistema Atómico Completo**
-- ✅ **37 Componentes** organizados en 5 capas (Atoms, Molecules, Organisms, Surfaces, Templates)
+- ✅ **57 Componentes** organizados en 5 capas (Atoms, Molecules, Organisms, Surfaces, Templates)
 - ✅ **Altura Estándar Global**: 46px (`var(--control-height)`) para todos los controles de formulario
 - ✅ **Standalone Components**: Todos los componentes son standalone y reutilizables
 - ✅ **ControlValueAccessor**: Integración completa con Angular Forms
@@ -88,9 +88,9 @@ Si necesitas integrar Atomic UI en un proyecto ya existente, consulta los workfl
 
 | Capa | Componentes | Descripción |
 |------|-------------|-------------|
-| **Atoms (18)** | Avatar, Button, Checkbox, Chip, FloatingInput, FormError, FormRow, IconButton, Input, LanguageSwitcher, Loader, Radio, Rating, Row, Select, Skeleton, Text, Textarea, Toggle | Elementos básicos e indivisibles |
-| **Molecules (10)** | Card, DataState, Datepicker, Dropdown, Modal, Pagination, Select2, TableActions, Toast, UserMenu | Combinaciones de átomos con funcionalidad |
-| **Organisms (9)** | Accordion, Filters, Footer, ScrollOverlay, Sidebar, Stepper, Tabs, ThemeSwitcher, Topbar | Secciones complejas de UI |
+| **Atoms (27)** | Avatar, Badge, Breadcrumb, Button, Checkbox, Chip, Divider, FileInput, FloatingInput, FormError, FormRow, IconButton, Input, LanguageSwitcher, Loader, NumberInput, Progress, Radio, Rating, Row, Select, Skeleton, Spinner, Table, Text, Textarea, Toggle | Elementos básicos e indivisibles |
+| **Molecules (17)** | ActionGroup, Alert, AvatarGroup, Card, Combobox, DataState, Datepicker, Dropdown, Modal, Pagination, Popup, Select2, TableActions, TagInput, Timeline, Toast, UserMenu | Combinaciones de átomos con funcionalidad |
+| **Organisms (10)** | Accordion, Filters, Footer, NavBar, ScrollOverlay, Sidebar, Stepper, Tabs, ThemeSwitcher, Topbar | Secciones complejas de UI |
 | **Surfaces (1)** | Panel | Contenedores y superficies |
 | **Templates (2)** | AuthLayout, LayoutShell | Layouts de página completos |
 
@@ -194,9 +194,9 @@ src/
 │   │   └── ui-showcase/          # Demo de todos los componentes
 │   └── shared/
 │       └── ui/
-│           ├── atoms/            # 16 componentes básicos
-│           ├── molecules/        # 9 componentes compuestos
-│           ├── organisms/        # 9 componentes complejos
+│           ├── atoms/            # 27 componentes básicos
+│           ├── molecules/        # 17 componentes compuestos
+│           ├── organisms/        # 10 componentes complejos
 │           ├── surfaces/         # 1 contenedor (Panel)
 │           ├── templates/        # 2 layouts
 │           ├── services/         # ThemeService, ToastService, etc.
@@ -251,7 +251,7 @@ Este proyecto está bajo la Licencia MIT.
 
 ---
 
-**Versión:** 3.0 (Atomic Design System)  
-**Última Actualización:** Diciembre 2025  
+**Versión:** 4.0.0 (Atomic Design System)  
+**Última Actualización:** Mayo 2026  
 **Angular Version:** 20+  
 **TypeScript:** 5.0+

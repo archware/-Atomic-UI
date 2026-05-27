@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, forwardRef, signal, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export type FloatingInputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel' | 'datetime-local' | 'time';
@@ -8,7 +8,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 @Component({
   selector: 'app-floating-input',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {

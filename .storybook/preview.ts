@@ -19,6 +19,11 @@ const preview: Preview = {
     }),
   ],
   parameters: {
+    a11y: {
+      // Ejecuta auditoria automaticamente sobre el root de cada story
+      element: '#storybook-root',
+      manual: false,
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

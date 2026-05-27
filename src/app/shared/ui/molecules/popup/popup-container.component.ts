@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PopupService, PopupItem } from '../../services/popup.service';
 
 /**
@@ -16,7 +16,7 @@ import { PopupService, PopupItem } from '../../services/popup.service';
 @Component({
   selector: 'app-popup-container',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @for (popup of popupService.popups(); track popup.id) {

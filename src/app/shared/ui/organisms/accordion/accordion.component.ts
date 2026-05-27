@@ -1,5 +1,5 @@
 import { Component, Input, signal, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 /**
  * Individual accordion item with collapsible content.
@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-accordion-item',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="accordion-item" [class.open]="isOpen()">
       <button 
@@ -135,7 +135,7 @@ export class AccordionItemComponent {
   selector: 'app-accordion',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="accordion" [class.accordion-flush]="flush">
       <ng-content></ng-content>

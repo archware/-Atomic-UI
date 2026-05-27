@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 export type CardVariant = 'default' | 'elevated' | 'outlined' | 'filled' | 'interactive';
 export type CardSize = 'sm' | 'md' | 'lg';
@@ -20,7 +20,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <article 

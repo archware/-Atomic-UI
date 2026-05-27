@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export interface RadioOption {
@@ -27,7 +27,7 @@ export interface RadioOption {
 @Component({
   selector: 'app-radio',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

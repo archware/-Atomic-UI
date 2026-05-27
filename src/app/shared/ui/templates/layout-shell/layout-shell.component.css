@@ -75,7 +75,13 @@
   box-sizing: border-box;
 }
 
-/* 
+@media (max-width: 1024px) {
+  .content-wrapper {
+    padding: var(--space-4);
+  }
+}
+
+/*
  * Dark mode se maneja automáticamente via tokens semánticos.
  * --surface-section, --surface-background, --border-color, etc.
  * ya tienen valores apropiados para temas oscuros.
@@ -122,5 +128,9 @@
   .layout-overlay.active {
     opacity: 1;
     pointer-events: auto;
+  }
+
+  .content-wrapper {
+    padding: var(--space-3);
   }
 }

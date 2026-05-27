@@ -1,5 +1,5 @@
 import { Component, Input, forwardRef, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export type TextareaVariant = 'floating' | 'outline' | 'material';
@@ -20,7 +20,7 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
 @Component({
   selector: 'app-textarea',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

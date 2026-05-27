@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { LoaderComponent } from '../../../../shared/ui/atoms/loader/loader.component';
 import { SkeletonComponent } from '../../../../shared/ui/atoms/skeleton/skeleton.component';
 
@@ -7,10 +7,9 @@ import { SkeletonComponent } from '../../../../shared/ui/atoms/skeleton/skeleton
   selector: 'app-showcase-status',
   standalone: true,
   imports: [
-    CommonModule,
     LoaderComponent,
     SkeletonComponent
-  ],
+],
   template: `
     <!-- LOADERS -->
     <section class="showcase-section">

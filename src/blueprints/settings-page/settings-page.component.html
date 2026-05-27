@@ -1,0 +1,254 @@
+<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
+
+  <!-- Sidebar -->
+  <app-sidebar slot="sidebar" [menuItems]="menuItems" (navigate)="onToggleSidebar()"></app-sidebar>
+
+  <!-- Topbar -->
+  <app-topbar
+    slot="topbar"
+    title="Configuración"
+    userInitials="AU"
+    userName="Admin Usuario"
+    userEmail="admin@empresa.com"
+    (toggleSidebar)="onToggleSidebar()"
+    (logout)="onLogout()"
+  >
+    <app-theme-switcher></app-theme-switcher>
+  </app-topbar>
+
+  <!-- Contenido principal -->
+  <div class="settings-layout">
+
+    <!-- Mensajes globales -->
+    @if (successMessage()) {
+      <app-alert variant="success" [closable]="true" (closed)="successMessage.set(null)">
+        <i class="fa-solid fa-circle-check" icon></i>
+        {{ successMessage() }}
+      </app-alert>
+    }
+    @if (errorMessage()) {
+      <app-alert variant="danger" [closable]="true" (closed)="errorMessage.set(null)">
+        <i class="fa-solid fa-circle-xmark" icon></i>
+        {{ errorMessage() }}
+      </app-alert>
+    }
+
+    <!-- ========================================================
+         TAB: PERFIL
+         ======================================================== -->
+    <app-tabs>
+
+      <app-tab label="Perfil" icon="fa-solid fa-user">
+        <app-panel title="Información personal" icon="👤" variant="default" padding="lg">
+          <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+
+            <!-- Avatar -->
+            <div class="avatar-section">
+              <app-avatar size="xl" initials="AU" status="online"></app-avatar>
+              <div class="avatar-info">
+                <app-text variant="body" weight="medium">Foto de perfil</app-text>
+                <app-text variant="body-sm" color="muted">
+                  JPG, PNG o GIF. Máximo 2 MB.
+                </app-text>
+                <app-button variant="ghost" size="sm" type="button">
+                  <i class="fa-solid fa-upload" icon-left></i>
+                  Cambiar foto
+                </app-button>
+              </div>
+            </div>
+
+            <app-divider spacing="lg"></app-divider>
+
+            <!-- Campos -->
+            <app-row columns="1fr 1fr" gap="1.5rem" class="responsive-fields">
+              <app-floating-input
+                formControlName="firstName"
+                label="Nombre"
+                variant="outline"
+                [error]="profileForm.get('firstName')?.touched && profileForm.get('firstName')?.hasError('required') ? 'Campo requerido' : ''"
+              ></app-floating-input>
+              <app-floating-input
+                formControlName="lastName"
+                label="Apellido"
+                variant="outline"
+                [error]="profileForm.get('lastName')?.touched && profileForm.get('lastName')?.hasError('required') ? 'Campo requerido' : ''"
+              ></app-floating-input>
+            </app-row>
+
+            <app-row columns="1fr 1fr" gap="1.5rem" class="responsive-fields">
+              <app-floating-input
+                formControlName="email"
+                type="email"
+                label="Email"
+                variant="outline"
+                [error]="profileForm.get('email')?.touched && profileForm.get('email')?.invalid ? 'Email inválido' : ''"
+              ></app-floating-input>
+              <app-floating-input
+                formControlName="phone"
+                type="tel"
+                label="Teléfono"
+                variant="outline"
+              ></app-floating-input>
+            </app-row>
+
+            <app-floating-input
+              formControlName="bio"
+              label="Biografía"
+              variant="outline"
+            ></app-floating-input>
+
+            <div class="form-actions">
+              <app-button variant="primary" type="submit" [disabled]="profileForm.invalid || saving()">
+                @if (saving()) {
+                  <i class="fa-solid fa-spinner fa-spin" icon-left></i>
+                } @else {
+                  <i class="fa-solid fa-floppy-disk" icon-left></i>
+                }
+                Guardar cambios
+              </app-button>
+            </div>
+
+          </form>
+        </app-panel>
+      </app-tab>
+
+      <!-- ========================================================
+           TAB: SEGURIDAD
+           ======================================================== -->
+      <app-tab label="Seguridad" icon="fa-solid fa-shield-halved">
+        <app-panel title="Cambiar contraseña" icon="🔐" variant="default" padding="lg">
+          <form [formGroup]="passwordForm" (ngSubmit)="savePassword()">
+
+            <app-alert variant="info">
+              <i class="fa-solid fa-circle-info" icon></i>
+              La nueva contraseña debe tener al menos 8 caracteres, incluir mayúsculas y números.
+            </app-alert>
+
+            <div class="password-fields">
+              <app-floating-input
+                formControlName="currentPassword"
+                type="password"
+                label="Contraseña actual"
+                variant="outline"
+              ></app-floating-input>
+
+              <app-floating-input
+                formControlName="newPassword"
+                type="password"
+                label="Nueva contraseña"
+                variant="outline"
+                [error]="passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.hasError('minlength') ? 'Mínimo 8 caracteres' : ''"
+              ></app-floating-input>
+
+              <app-floating-input
+                formControlName="confirmPassword"
+                type="password"
+                label="Confirmar nueva contraseña"
+                variant="outline"
+              ></app-floating-input>
+            </div>
+
+            <div class="form-actions">
+              <app-button variant="primary" type="submit" [disabled]="passwordForm.invalid || saving()">
+                <i class="fa-solid fa-key" icon-left></i>
+                Actualizar contraseña
+              </app-button>
+            </div>
+
+          </form>
+        </app-panel>
+      </app-tab>
+
+      <!-- ========================================================
+           TAB: NOTIFICACIONES
+           ======================================================== -->
+      <app-tab label="Notificaciones" icon="fa-solid fa-bell">
+        <app-panel title="Preferencias de notificaciones" icon="🔔" variant="default" padding="lg">
+
+          <div class="notif-list">
+
+            <div class="notif-item">
+              <div class="notif-info">
+                <app-text variant="body" weight="medium">Notificaciones por email</app-text>
+                <app-text variant="body-sm" color="muted">Recibe alertas importantes en tu correo.</app-text>
+              </div>
+              <app-toggle [ngModel]="notifEmail()" (ngModelChange)="notifEmail.set($event)"></app-toggle>
+            </div>
+
+            <app-divider></app-divider>
+
+            <div class="notif-item">
+              <div class="notif-info">
+                <app-text variant="body" weight="medium">Notificaciones push</app-text>
+                <app-text variant="body-sm" color="muted">Alertas en el navegador en tiempo real.</app-text>
+              </div>
+              <app-toggle [ngModel]="notifPush()" (ngModelChange)="notifPush.set($event)"></app-toggle>
+            </div>
+
+            <app-divider></app-divider>
+
+            <div class="notif-item">
+              <div class="notif-info">
+                <app-text variant="body" weight="medium">Resumen semanal</app-text>
+                <app-text variant="body-sm" color="muted">Recibe un resumen de actividad cada semana.</app-text>
+              </div>
+              <app-toggle [ngModel]="notifWeekly()" (ngModelChange)="notifWeekly.set($event)"></app-toggle>
+            </div>
+
+            <app-divider></app-divider>
+
+            <div class="notif-item">
+              <div class="notif-info">
+                <app-text variant="body" weight="medium">Alertas del sistema</app-text>
+                <app-text variant="body-sm" color="muted">Mantenimientos, actualizaciones y eventos críticos.</app-text>
+              </div>
+              <app-toggle [ngModel]="notifSystem()" (ngModelChange)="notifSystem.set($event)"></app-toggle>
+            </div>
+
+          </div>
+
+          <div class="form-actions">
+            <app-button variant="primary" (click)="saveNotifications()">
+              <i class="fa-solid fa-floppy-disk" icon-left></i>
+              Guardar preferencias
+            </app-button>
+          </div>
+
+        </app-panel>
+      </app-tab>
+
+      <!-- ========================================================
+           TAB: APARIENCIA
+           ======================================================== -->
+      <app-tab label="Apariencia" icon="fa-solid fa-palette">
+        <app-panel title="Tema y apariencia" icon="🎨" variant="default" padding="lg">
+
+          <div class="appearance-section">
+            <app-text variant="body" weight="medium">Tema de la aplicación</app-text>
+            <app-text variant="body-sm" color="muted">Selecciona entre modo claro, oscuro o automático.</app-text>
+            <div class="theme-switcher-wrapper">
+              <app-theme-switcher></app-theme-switcher>
+            </div>
+          </div>
+
+          <app-divider spacing="lg"></app-divider>
+
+          <div class="appearance-section">
+            <app-text variant="body" weight="medium">Idioma de la interfaz</app-text>
+            <app-text variant="body-sm" color="muted">Selecciona el idioma en que se muestra la aplicación.</app-text>
+            <app-select
+              [options]="languageOptions"
+              [ngModel]="selectedLanguage()"
+              (ngModelChange)="selectedLanguage.set($event)"
+              label="Idioma"
+            ></app-select>
+          </div>
+
+        </app-panel>
+      </app-tab>
+
+    </app-tabs>
+
+  </div>
+
+</app-layout-shell>

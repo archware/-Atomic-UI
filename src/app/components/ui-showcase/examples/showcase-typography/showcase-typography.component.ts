@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
 
@@ -7,10 +7,9 @@ import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
   selector: 'app-showcase-typography',
   standalone: true,
   imports: [
-    CommonModule,
     PanelComponent,
     TextComponent
-  ],
+],
   template: `
     <!-- TYPOGRAPHY -->
     <app-panel title="Tipografía" variant="flat" padding="md" class="showcase-section">

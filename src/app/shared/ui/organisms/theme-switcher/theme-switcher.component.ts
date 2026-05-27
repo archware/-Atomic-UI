@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ThemeService } from '../../services/theme.service';
 
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
@@ -7,7 +7,7 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
 @Component({
   selector: 'app-theme-switcher',
   standalone: true,
-  imports: [CommonModule, IconButtonComponent],
+  imports: [IconButtonComponent],
   template: `
     <div class="theme-switcher">
       <!-- Botón de alternancia simple Light/Dark -->

@@ -128,7 +128,7 @@
   text-transform: uppercase;
 }
 
-/* 
+/*
  * Dark mode se maneja automáticamente via tokens semánticos.
  * --surface-background, --border-color, --surface-hover, etc.
  * ya tienen valores apropiados para temas oscuros.
@@ -152,7 +152,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 120px;
+    max-width: 160px;
   }
 
   .topbar-right {
@@ -163,5 +163,15 @@
   /* Iconos más pequeños */
   .topbar-right ::ng-deep app-icon-button {
     transform: scale(0.9);
+  }
+}
+
+@media (max-width: 560px) {
+  .topbar-right ::ng-deep app-language-switcher {
+    display: none;
+  }
+
+  .page-title {
+    max-width: 120px;
   }
 }

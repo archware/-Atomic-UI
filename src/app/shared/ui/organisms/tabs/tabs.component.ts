@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, signal, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 /**
  * Individual tab content panel.
@@ -37,7 +37,7 @@ export class TabComponent {
 @Component({
   selector: 'app-tabs',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="tabs-container">
       <div class="tabs-header" #tabsHeader role="tablist" aria-label="Tabs">

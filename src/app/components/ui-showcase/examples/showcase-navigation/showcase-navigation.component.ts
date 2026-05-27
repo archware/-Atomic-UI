@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { TabsComponent, TabComponent } from '../../../../shared/ui/organisms/tabs/tabs.component';
 import { AccordionComponent, AccordionItemComponent } from '../../../../shared/ui/organisms/accordion/accordion.component';
@@ -10,7 +10,6 @@ import { StepperComponent, Step } from '../../../../shared/ui/organisms/stepper/
   selector: 'app-showcase-navigation',
   standalone: true,
   imports: [
-    CommonModule,
     PanelComponent,
     TabsComponent,
     TabComponent,
@@ -18,7 +17,7 @@ import { StepperComponent, Step } from '../../../../shared/ui/organisms/stepper/
     AccordionItemComponent,
     SidebarComponent,
     StepperComponent
-  ],
+],
   template: `
     <!-- SIDEBAR -->
     <app-panel title="Sidebar (Organism)" variant="flat" padding="md" class="showcase-section">

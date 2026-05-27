@@ -55,67 +55,11 @@
     </app-row>
   </app-panel>
   } @else {
-  <app-row columns="repeat(auto-fit, minmax(240px, 1fr))" gap="1.5rem" class="mb-6">
-    <!-- Total Users -->
-    <app-panel>
-      <app-row align="center" justify="between">
-        <app-row align="center" gap="1rem">
-          <app-avatar size="md" variant="primary" icon="fa-solid fa-users" [rounded]="true"></app-avatar>
-          <div>
-            <app-text variant="label" color="muted" class="mb-1">Total Usuarios</app-text>
-            <app-text variant="h3" weight="bold">{{ formatNumber(statsApi.data()?.totalUsers || 0) }}</app-text>
-          </div>
-        </app-row>
-        <app-chip variant="success" size="sm">+12%</app-chip>
-      </app-row>
-    </app-panel>
-
-    <!-- Active Projects -->
-    <app-panel>
-      <app-row align="center" justify="between">
-        <app-row align="center" gap="1rem">
-          <app-avatar size="md" variant="secondary" icon="fa-solid fa-folder-open" [rounded]="true"></app-avatar>
-          <div>
-            <app-text variant="label" color="muted" class="mb-1">Proyectos Activos</app-text>
-            <app-text variant="h3" weight="bold">{{ statsApi.data()?.activeProjects || 0 }}</app-text>
-          </div>
-        </app-row>
-        <app-chip variant="info" size="sm">En curso</app-chip>
-      </app-row>
-    </app-panel>
-
-    <!-- Pending Tasks -->
-    <app-panel>
-      <app-row align="center" justify="between">
-        <app-row align="center" gap="1rem">
-          <app-avatar size="md" variant="warning" icon="fa-solid fa-clock" [rounded]="true"></app-avatar>
-          <div>
-            <app-text variant="label" color="muted" class="mb-1">Tareas Pendientes</app-text>
-            <app-text variant="h3" weight="bold">{{ statsApi.data()?.pendingTasks || 0 }}</app-text>
-          </div>
-        </app-row>
-        <app-chip variant="warning" size="sm">Pendiente</app-chip>
-      </app-row>
-    </app-panel>
-
-    <!-- Revenue -->
-    <app-panel>
-      <app-row align="center" justify="between">
-        <app-row align="center" gap="1rem">
-          <app-avatar size="md" variant="success" icon="fa-solid fa-dollar-sign" [rounded]="true"></app-avatar>
-          <div>
-            <app-text variant="label" color="muted" class="mb-1">Ingresos</app-text>
-            <app-text variant="h3" weight="bold">{{ formatCurrency(statsApi.data()?.revenue || 0) }}</app-text>
-          </div>
-        </app-row>
-        <app-chip variant="success" size="sm">+8.5%</app-chip>
-      </app-row>
-    </app-panel>
-  </app-row>
+  <app-metrics-grid [metrics]="metrics()" minCardWidth="240px" class="mb-6"></app-metrics-grid>
   }
 
   <!-- Content Panels -->
-  <app-row columns="2fr 1fr" gap="1.5rem" class="content-grid-row">
+  <app-row [responsive]="true" minColumnWidth="320px" gap="1.5rem" class="content-grid-row">
     <!-- Recent Activity -->
     <app-panel>
       <app-row justify="between" align="center" class="mb-4">

@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 /**
  * TableComponent - Tabla atómica con scroll opcional
@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

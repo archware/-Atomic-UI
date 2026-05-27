@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, signal, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 export interface UserMenuAction {
   id: string;
@@ -13,7 +13,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
 @Component({
   selector: 'app-user-menu',
   standalone: true,
-  imports: [CommonModule, AvatarComponent],
+  imports: [AvatarComponent],
   template: `
     <div class="user-menu" [class.open]="isOpen()">
       <!-- Avatar Button -->

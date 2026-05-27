@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { TableComponent } from '../../../../shared/ui/atoms/table/table.component';
 import { TableHeadComponent } from '../../../../shared/ui/atoms/table/table-head.component';
@@ -15,7 +15,6 @@ import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecule
   selector: 'app-showcase-data-display',
   standalone: true,
   imports: [
-    CommonModule,
     PanelComponent,
     TableComponent,
     TableHeadComponent,
@@ -26,7 +25,7 @@ import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecule
     RowComponent,
     TextComponent,
     ActionGroupComponent
-  ],
+],
   template: `
     <!-- TABLAS CON ACTION GROUP -->
     <app-panel title="Tablas (Atomic) con ActionGroup" variant="flat" padding="md" class="showcase-section">

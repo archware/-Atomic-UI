@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, Output, EventEmitter, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { AvatarComponent } from '../../atoms/avatar/avatar.component';
 
 export interface SidebarMenuItem {
@@ -21,11 +21,13 @@ export interface SidebarUser {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, AvatarComponent],
+  imports: [AvatarComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
+  private readonly platformId = inject(PLATFORM_ID);
+
   /** Menu items to display */
   @Input() menuItems: SidebarMenuItem[] = [];
 
@@ -72,6 +74,7 @@ export class SidebarComponent {
   }
 
   private focusItem(index: number) {
+    if (!isPlatformBrowser(this.platformId)) return;
     const items = document.querySelectorAll('.sidebar-nav .nav-link');
     (items[index] as HTMLElement)?.focus();
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PanelComponent } from '../../shared/ui/surfaces/panel/panel.component';
 import { FooterComponent, SocialLink, LegalLink } from '../../shared/ui/organisms/footer/footer.component';
 
@@ -17,7 +17,6 @@ import { ShowcaseStatusComponent } from './examples/showcase-status/showcase-sta
   selector: 'app-ui-showcase',
   standalone: true,
   imports: [
-    CommonModule,
     PanelComponent,
     FooterComponent,
     ShowcaseTypographyComponent,
@@ -28,7 +27,7 @@ import { ShowcaseStatusComponent } from './examples/showcase-status/showcase-sta
     ShowcaseDataDisplayComponent,
     ShowcaseFeedbackComponent,
     ShowcaseStatusComponent
-  ],
+],
   template: `
     <app-panel title="UI Components Showcase (Refactorizado)" icon="🎨" variant="elevated" padding="lg">
       

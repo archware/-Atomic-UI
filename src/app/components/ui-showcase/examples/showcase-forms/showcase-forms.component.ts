@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { FloatingInputComponent } from '../../../../shared/ui/atoms/floating-input/floating-input.component';
 import { Select2Component, Select2Option } from '../../../../shared/ui/molecules/select2/select2.component';
@@ -15,7 +15,6 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
   selector: 'app-showcase-forms',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     FloatingInputComponent,
     Select2Component,
@@ -26,7 +25,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
     RadioComponent,
     CheckboxComponent,
     ButtonComponent
-  ],
+],
   template: `
     <!-- FLOATING INPUTS -->
     <form class="showcase-section" (submit)="$event.preventDefault()">

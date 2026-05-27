@@ -2,7 +2,7 @@ import {
   Component, Input, Output, EventEmitter, signal, HostListener,
   ElementRef, forwardRef, inject, ChangeDetectionStrategy
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -17,7 +17,7 @@ export interface Select2Option {
   // Standalone component for Select2 dropdown
   selector: 'app-select2',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule],
+  imports: [FormsModule, TranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
