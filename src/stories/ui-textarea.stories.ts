@@ -21,9 +21,8 @@ const meta: Meta<TextareaComponent> = {
     label: { control: 'text' },
     placeholder: { control: 'text' },
     rows: { control: 'number', description: 'Número de filas visibles' },
-    maxLength: { control: 'number', description: 'Máximo de caracteres' },
+    maxlength: { control: 'number', description: 'Máximo de caracteres' },
     showCounter: { control: 'boolean', description: 'Mostrar contador de caracteres' },
-    resizable: { control: 'boolean', description: 'Permitir redimensionar' },
     disabled: { control: 'boolean' },
     error: { control: 'text' },
   },
@@ -41,10 +40,10 @@ export const Default: Story = {
 };
 
 export const WithCounter: Story = {
-  args: { label: 'Comentario', placeholder: 'Máximo 200 caracteres...', maxLength: 200, showCounter: true, rows: 4 },
+  args: { label: 'Comentario', placeholder: 'Máximo 200 caracteres...', maxlength: 200, showCounter: true, rows: 4 },
   render: (args) => ({
     props: args,
-    template: `<app-textarea [label]="label" [placeholder]="placeholder" [maxLength]="maxLength" [showCounter]="showCounter" [rows]="rows"></app-textarea>`,
+    template: `<app-textarea [label]="label" [placeholder]="placeholder" [maxlength]="maxlength" [showCounter]="showCounter" [rows]="rows"></app-textarea>`,
   }),
 };
 

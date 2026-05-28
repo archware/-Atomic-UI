@@ -45,7 +45,12 @@ export interface NavBarBrand {
   imports: [RouterModule, BadgeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <nav class="navbar" role="navigation" [attr.aria-label]="ariaLabel">
+    <nav class="navbar"
+         [class.navbar--sticky]="sticky"
+         [class.navbar--dark]="variant === 'dark'"
+         [class.navbar--primary]="variant === 'primary'"
+         [class.navbar--transparent]="variant === 'transparent'"
+         role="navigation" [attr.aria-label]="ariaLabel">
       <!-- Brand -->
       @if (brand) {
         <div class="navbar__brand">
@@ -136,6 +141,33 @@ export interface NavBarBrand {
       border-bottom: 1px solid var(--border-color);
       position: relative;
       z-index: 100;
+    }
+
+    .navbar--sticky { position: sticky; top: 0; }
+
+    .navbar--dark {
+      background: var(--surface-dark, #1f2937);
+      border-color: transparent;
+    }
+    .navbar--dark .navbar__brand-name,
+    .navbar--dark .navbar__link { color: rgba(255,255,255,.9); }
+    .navbar--dark .navbar__link:hover { background: rgba(255,255,255,.1); color: #fff; }
+    .navbar--dark .navbar__link--active { background: rgba(255,255,255,.15); color: #fff; }
+    .navbar--dark .navbar__mobile-toggle { color: rgba(255,255,255,.9); }
+
+    .navbar--primary {
+      background: var(--primary-color);
+      border-color: transparent;
+    }
+    .navbar--primary .navbar__brand-name,
+    .navbar--primary .navbar__link { color: rgba(255,255,255,.9); }
+    .navbar--primary .navbar__link:hover { background: rgba(255,255,255,.15); color: #fff; }
+    .navbar--primary .navbar__link--active { background: rgba(255,255,255,.25); color: #fff; }
+    .navbar--primary .navbar__mobile-toggle { color: rgba(255,255,255,.9); }
+
+    .navbar--transparent {
+      background: transparent;
+      border-color: transparent;
     }
 
     /* Brand */
@@ -259,6 +291,8 @@ export class NavBarComponent {
   @Input() brand?: NavBarBrand;
   @Input() items: NavBarItem[] = [];
   @Input() activeId = '';
+  @Input() sticky = false;
+  @Input() variant: 'light' | 'dark' | 'primary' | 'transparent' = 'light';
   @Input() ariaLabel = 'Navegación principal';
 
   @Output() navigate = new EventEmitter<NavBarItem>();

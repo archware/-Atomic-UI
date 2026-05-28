@@ -74,6 +74,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       @if (hint) {
         <span class="number-input__hint">{{ hint }}</span>
       }
+      @if (error) {
+        <span class="number-input__error" role="alert">{{ error }}</span>
+      }
     </div>
   `,
   styles: [`
@@ -88,19 +91,21 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
 
     .number-input__control {
-      display: inline-flex;
+      display: flex;        /* Cambiado de inline-flex a flex para ocupar ancho del contenedor */
       align-items: stretch;
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
       overflow: hidden;
       background: var(--surface-background);
+      width: 100%;
     }
 
     .number-input__btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 36px;
+      width: 2.25rem;       /* 36px → 2.25rem: respeta zoom de accesibilidad */
+      flex-shrink: 0;       /* No se comprime aunque el campo crezca */
       background: var(--surface-section);
       border: none;
       cursor: pointer;
@@ -118,7 +123,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
 
     .number-input__field {
-      width: 64px;
+      flex: 1;              /* Ocupa el espacio sobrante entre los botones */
+      min-width: 3rem;      /* Mínimo usable (48px) para poder escribir números */
       border: none;
       border-left: 1px solid var(--border-color);
       border-right: 1px solid var(--border-color);
@@ -144,11 +150,19 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       font-size: var(--text-xs);
       color: var(--text-color-muted);
     }
+
+    .number-input__error {
+      display: block;
+      margin-top: var(--space-1);
+      font-size: var(--text-xs);
+      color: var(--color-error, #ef4444);
+    }
   `],
 })
 export class NumberInputComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() hint = '';
+  @Input() error = '';
   @Input() min = 0;
   @Input() max = 9999;
   @Input() step = 1;

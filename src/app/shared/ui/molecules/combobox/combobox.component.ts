@@ -61,7 +61,7 @@ export interface ComboboxOption {
           [attr.aria-autocomplete]="'list'"
           aria-haspopup="listbox"
         />
-        @if (inputValue() && !disabled) {
+        @if (inputValue() && !disabled && clearable) {
           <button type="button" class="combobox-clear" (click)="clear()" aria-label="Limpiar">
             <i class="fa-solid fa-xmark"></i>
           </button>
@@ -229,6 +229,7 @@ export class ComboboxComponent implements ControlValueAccessor {
   @Input() label = '';
   @Input() placeholder = 'Buscar...';
   @Input() disabled = false;
+  @Input() clearable = true;
   @Input() error = '';
 
   @Output() optionSelected = new EventEmitter<ComboboxOption>();

@@ -10,7 +10,6 @@ const meta: Meta<ProgressComponent> = {
     variant: { control: 'select', options: ['default', 'primary', 'success', 'warning', 'danger'] },
     size:    { control: 'select', options: ['sm', 'md', 'lg'] },
     showLabel: { control: 'boolean' },
-    animated:  { control: 'boolean' },
   },
 };
 
@@ -18,7 +17,7 @@ export default meta;
 type Story = StoryObj<ProgressComponent>;
 
 export const Default: Story = {
-  args: { value: 60, variant: 'primary', size: 'md', showLabel: true, animated: false },
+  args: { value: 60, variant: 'primary', size: 'md', showLabel: true },
 };
 
 export const Variantes: Story = {
@@ -50,5 +49,5 @@ export const Tamaños: Story = {
 };
 
 export const Animado: Story = {
-  args: { value: 75, variant: 'primary', size: 'md', showLabel: true, animated: true },
+  args: { value: 75, variant: 'primary', size: 'md', showLabel: true },
 };

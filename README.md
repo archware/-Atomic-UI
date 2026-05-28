@@ -23,24 +23,28 @@ Sistema de diseño **Atomic Design** con temas **Light/Dark/System**, paleta de 
 ## ✨ Características
 
 ### 🧩 **Sistema Atómico Completo**
+
 - ✅ **57 Componentes** organizados en 5 capas (Atoms, Molecules, Organisms, Surfaces, Templates)
 - ✅ **Altura Estándar Global**: 46px (`var(--control-height)`) para todos los controles de formulario
 - ✅ **Standalone Components**: Todos los componentes son standalone y reutilizables
 - ✅ **ControlValueAccessor**: Integración completa con Angular Forms
 
 ### 🎨 **Sistema de Temas Completo**
+
 - ✅ **3 modos**: Light, Dark, System (automático según SO)
 - ✅ **Persistencia**: LocalStorage para recordar preferencia
 - ✅ **Transiciones suaves**: Animaciones CSS optimizadas
 - ✅ **SSR compatible**: Detección de entorno servidor/cliente
 
 ### 🌈 **Paleta de Colores Profesional**
+
 - ✅ **Primary (Púrpura Profundo)**: `#5F295C` - Elegante, Serio, Premium
 - ✅ **Secondary (Dorado/Ámbar)**: `#FFB800` - Contraste, Lujo, Llamativo
 - ✅ **Accent (Rosa)**: `#f5368a` - CTAs, Elementos especiales
 - ✅ **100+ Variables CSS**: Sistema centralizado y reutilizable
 
 ### ♿ **Accesibilidad WCAG 2.1**
+
 - ✅ **Contrastes validados**: Ratios 6.8:1 - 7.2:1 (AAA Normal)
 - ✅ **Navegación por teclado** completa
 - ✅ **ARIA labels** descriptivos
@@ -48,7 +52,7 @@ Sistema de diseño **Atomic Design** con temas **Light/Dark/System**, paleta de 
 
 ---
 
-## 🚀 Inicio Rápido (Recomendado)
+## 🚀 Inicio Rápido
 
 La forma más rápida de usar Atomic UI es generando un proyecto nuevo con nuestra herramienta CLI automatizada.
 
@@ -60,6 +64,7 @@ npm run create:project mi-nuevo-proyecto
 ```
 
 La herramienta te guiará para:
+
 - ✅ Elegir plantillas (Login, Dashboard, CRUD)
 - ✅ Configurar rutas y navegación
 - ✅ Instalar dependencias automáticamente
@@ -77,6 +82,7 @@ npm start
 ## 📦 Integración Manual
 
 Si necesitas integrar Atomic UI en un proyecto ya existente, consulta los workflows en `.agent/workflows/`:
+
 - `/integration` - Guía paso a paso de integración
 - `/development` - Desarrollo con hot-reload
 
@@ -87,7 +93,7 @@ Si necesitas integrar Atomic UI en un proyecto ya existente, consulta los workfl
 ### Inventario de Componentes
 
 | Capa | Componentes | Descripción |
-|------|-------------|-------------|
+| ------ | ----------- | ----------- |
 | **Atoms (27)** | Avatar, Badge, Breadcrumb, Button, Checkbox, Chip, Divider, FileInput, FloatingInput, FormError, FormRow, IconButton, Input, LanguageSwitcher, Loader, NumberInput, Progress, Radio, Rating, Row, Select, Skeleton, Spinner, Table, Text, Textarea, Toggle | Elementos básicos e indivisibles |
 | **Molecules (17)** | ActionGroup, Alert, AvatarGroup, Card, Combobox, DataState, Datepicker, Dropdown, Modal, Pagination, Popup, Select2, TableActions, TagInput, Timeline, Toast, UserMenu | Combinaciones de átomos con funcionalidad |
 | **Organisms (10)** | Accordion, Filters, Footer, NavBar, ScrollOverlay, Sidebar, Stepper, Tabs, ThemeSwitcher, Topbar | Secciones complejas de UI |
@@ -122,7 +128,7 @@ import { ButtonComponent, FloatingInputComponent, Select2Component } from '@shar
 
 ### Estructura de Archivos
 
-```
+```text
 src/styles/themes/
 ├── _tokens-primitives.css  # Escala de grises, radios, sombras
 ├── _tokens-brand.css       # Colores de marca: Primary, Secondary, Accent
@@ -136,7 +142,7 @@ src/styles/themes/
 ### Tokens de Marca (Brand)
 
 | Token | Light Mode | Dark Mode | Uso |
-|-------|------------|-----------|-----|
+| ------- | ---------- | --------- | --- |
 | `--brand-primary-500` | `#5F295C` | - | Color principal |
 | `--brand-secondary-500` | `#FFB800` | - | Color secundario (Dorado) |
 | `--brand-accent-500` | `#f5368a` | - | Acentos y CTAs |
@@ -187,7 +193,7 @@ themeService.getSelectedTheme(); // Signal<'light' | 'dark' | 'system'>
 
 ## 📂 Estructura del Proyecto
 
-```
+```text
 src/
 ├── app/
 │   ├── components/
@@ -208,7 +214,7 @@ src/
 
 ---
 
-## 🛠️ Comandos CLI
+## � Comandos CLI
 
 ```bash
 # Desarrollo
@@ -232,12 +238,13 @@ ng e2e                    # E2E tests
 ### Contrastes WCAG 2.1 Validados
 
 | Combinación | Ratio | Cumplimiento |
-|-------------|-------|--------------|
+| ----------- | ----- | ------------ |
 | `#5F295C` / `#ffffff` | 8.5:1 | ✅ AAA |
 | `#FFB800` / `#1a1a24` | 10.2:1 | ✅ AAA |
 | `#f5368a` / `#ffffff` | 4.1:1 | ✅ AA Large |
 
 ### Características
+
 - ✅ ARIA labels en todos los controles interactivos
 - ✅ Focus visible en navegación por teclado
 - ✅ Anuncios de cambios de tema para lectores de pantalla

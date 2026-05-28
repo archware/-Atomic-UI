@@ -54,7 +54,7 @@ export const routes: Routes = [
 ## Dependencias
 
 | Componente | Descripción |
-|---|---|
+| --- | --- |
 | `AuthLayoutComponent` | Layout centrado para páginas de autenticación |
 | `FloatingInputComponent` | Inputs con label flotante |
 | `ButtonComponent` | Botones de acción |

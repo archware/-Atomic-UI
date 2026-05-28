@@ -37,8 +37,8 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
 
         <!-- Menu Items -->
         @for (action of menuActions; track action.id) {
-          <button type="button" 
-            class="user-menu__item" 
+          <button type="button"
+            class="user-menu__item"
             [class.user-menu__item--danger]="action.danger"
             (click)="onAction(action)"
             (keydown.enter)="onAction(action)"
@@ -84,7 +84,9 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
       position: absolute;
       top: calc(100% + var(--space-2));
       right: 0;
-      min-width: 220px;
+      /* min() evita que el dropdown desborde el viewport en pantallas pequeñas */
+      min-width: min(220px, calc(100vw - 2rem));
+      max-width: calc(100vw - 1rem);
       background: var(--surface-background);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
@@ -180,7 +182,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
       flex: 1;
     }
 
-    /* 
+    /*
      * Dark mode se maneja automáticamente via tokens semánticos.
      * --surface-background, --border-color, --shadow-dropdown, --surface-hover
      * ya tienen valores apropiados para temas oscuros.

@@ -3,12 +3,12 @@ import { Component, Input, Output, EventEmitter, signal, computed } from '@angul
 
 /**
  * Pagination component for navigating through pages of data.
- * 
+ *
  * @example
  * ```html
- * <app-pagination 
- *   [total]="100" 
- *   [pageSize]="10" 
+ * <app-pagination
+ *   [total]="100"
+ *   [pageSize]="10"
  *   [page]="currentPage"
  *   (pageChange)="onPageChange($event)">
  * </app-pagination>
@@ -60,6 +60,26 @@ import { Component, Input, Output, EventEmitter, signal, computed } from '@angul
       display: flex;
       align-items: center;
       gap: var(--space-1);
+    }
+
+    /* En móvil con muchas páginas, el nav hace scroll horizontal */
+    @media (max-width: 639px) {
+      :host {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: var(--space-1); /* Espacio para la barra de scroll */
+      }
+
+      .pagination {
+        width: max-content; /* Evita que el flex container comprima los botones */
+        min-width: 100%;
+      }
+
+      .page-btn,
+      .page-ellipsis {
+        flex-shrink: 0;
+      }
     }
 
     .page-btn {
@@ -115,7 +135,7 @@ import { Component, Input, Output, EventEmitter, signal, computed } from '@angul
       font-size: var(--text-sm);
     }
 
-    /* 
+    /*
      * Dark mode se maneja automáticamente via tokens semánticos.
      * --surface-background, --border-color, --primary-color, --surface-hover
      * ya tienen valores apropiados para temas oscuros.

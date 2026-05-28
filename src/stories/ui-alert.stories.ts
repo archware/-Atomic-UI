@@ -11,7 +11,6 @@ const meta: Meta<AlertComponent> = {
     title:      { control: 'text' },
     message:    { control: 'text' },
     closable:   { control: 'boolean' },
-    icon:       { control: 'text' },
   },
 };
 

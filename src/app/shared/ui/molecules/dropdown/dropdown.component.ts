@@ -23,7 +23,7 @@ export interface DropdownOption {
   template: `
     <div class="dropdown" [class.open]="isOpen()" [class.disabled]="disabled">
       <button type="button"
-        class="dropdown-trigger" 
+        class="dropdown-trigger"
         (click)="toggleDropdown()"
         (keydown.enter)="toggleDropdown()"
         (keydown.space)="toggleDropdown()"
@@ -47,7 +47,7 @@ export interface DropdownOption {
           </svg>
         </span>
       </button>
-      
+
       @if (isOpen()) {
         <div class="dropdown-menu" role="listbox">
           @for (option of options; track option.value) {
@@ -77,8 +77,8 @@ export interface DropdownOption {
   styles: [`
     .dropdown {
       position: relative;
-      display: inline-block;
-      min-width: 180px;
+      display: block;
+      width: 100%;
     }
 
     .dropdown.disabled {
@@ -188,7 +188,7 @@ export interface DropdownOption {
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 
+    /*
      * Dark mode se maneja automáticamente via tokens semánticos.
      * --surface-background, --border-color, --primary-color, --shadow-dropdown
      * ya tienen valores apropiados para temas oscuros.

@@ -1,7 +1,8 @@
 /* CSS Grid Layout */
 .layout-shell {
   display: grid;
-  height: 100vh;
+  height: 100vh;   /* Fallback para navegadores sin soporte dvh */
+  height: 100dvh;  /* Dynamic viewport height: corrige iOS Safari (barra inferior del navegador) */
   /* Use CSS variable for sidebar width (default 260px) */
   --sidebar-width: 260px;
   grid-template-columns: var(--sidebar-width) 1fr;

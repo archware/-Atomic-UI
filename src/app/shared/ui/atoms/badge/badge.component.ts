@@ -33,15 +33,20 @@ export type BadgePosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-
   imports: [CommonModule, NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <span
-      class="badge"
-      [ngClass]="badgeClasses"
-      [attr.aria-label]="ariaLabel || (count ? count + ' notificaciones' : null)"
-    >
-      @if (!dot) {
-        {{ displayCount }}
-      }
-    </span>
+    @if (visible) {
+      <span
+        class="badge"
+        [ngClass]="badgeClasses"
+        [attr.aria-label]="ariaLabel || (count ? count + ' notificaciones' : null)"
+      >
+        @if (!dot) {
+          {{ displayCount }}
+        }
+      </span>
+    }
+    @if (!visible && overlay) {
+      <ng-content></ng-content>
+    }
   `,
   styles: [`
     :host { display: inline-flex; }
@@ -112,6 +117,9 @@ export class BadgeComponent {
 
   /** Corner position when overlay is true */
   @Input() position: BadgePosition = 'top-right';
+
+  /** Show or hide the badge */
+  @Input() visible = true;
 
   /** Custom aria-label */
   @Input() ariaLabel = '';

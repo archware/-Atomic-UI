@@ -52,7 +52,7 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
       }
     </article>
   `,
-  styles: [``
+  styles: [`
     :host {
       display: block;
       width: 100%;
@@ -183,7 +183,7 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
         padding: var(--space-3);
       }
     }
-  ``]
+  `]
 })
 export class KpiCardComponent {
   @Input() title = 'Metrica';

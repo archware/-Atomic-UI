@@ -40,6 +40,9 @@ export interface FileInputFile {
       @if (label) {
         <label class="file-label">{{ label }}</label>
       }
+      @if (hint) {
+        <p class="file-hint">{{ hint }}</p>
+      }
       <div
         class="drop-zone"
         (click)="fileInput.click()"
@@ -132,6 +135,12 @@ export interface FileInputFile {
 
     .file-hidden { display: none; }
 
+    .file-hint {
+      margin: 0 0 0.5rem;
+      font-size: var(--text-xs);
+      color: var(--text-color-muted);
+    }
+
     .file-error {
       display: flex; align-items: center; gap: 0.375rem;
       margin: 0.5rem 0 0;
@@ -179,6 +188,7 @@ export class FileInputComponent implements ControlValueAccessor {
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
   @Input() label = '';
+  @Input() hint = '';
   @Input() accept = '';
   @Input() multiple = false;
   @Input() maxSizeMB?: number;

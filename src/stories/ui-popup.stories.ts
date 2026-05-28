@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata, applicationConfig } from '@storybook/angular';
 import { Component, inject } from '@angular/core';
 import { provideZonelessChangeDetection } from '@angular/core';
-import { PopupContainerComponent } from '../app/shared/ui/organisms/popup-container/popup-container.component';
+import { PopupContainerComponent } from '../app/shared/ui/molecules/popup/popup-container.component';
 import { PopupService } from '../app/shared/ui/services/popup.service';
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
 
@@ -72,6 +72,7 @@ type Story = StoryObj;
 
 export const AllTypes: Story = {
   render: () => ({
-    component: PopupDemoComponent,
+    template: '<sb-popup-demo></sb-popup-demo>',
+    imports: [PopupDemoComponent],
   }),
 };

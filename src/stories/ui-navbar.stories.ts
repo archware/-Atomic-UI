@@ -23,7 +23,7 @@ type Story = StoryObj<NavBarComponent>;
 
 export const Default: Story = {
   args: {
-    brand: { name: 'Mi App', logoUrl: '' },
+    brand: { name: 'Mi App', logo: '' },
     items: [
       { label: 'Inicio',     route: '/' },
       { label: 'Productos',  route: '/productos' },
@@ -37,7 +37,7 @@ export const Default: Story = {
 
 export const Sticky: Story = {
   args: {
-    brand: { name: 'Mi App', logoUrl: '' },
+    brand: { name: 'Mi App', logo: '' },
     items: [
       { label: 'Dashboard', route: '/' },
       { label: 'Reportes',  route: '/reportes' },
@@ -50,7 +50,7 @@ export const Sticky: Story = {
 
 export const Oscuro: Story = {
   args: {
-    brand: { name: 'Atomic UI', logoUrl: '' },
+    brand: { name: 'Atomic UI', logo: '' },
     items: [
       { label: 'Componentes', route: '/' },
       { label: 'Blueprints',  route: '/blueprints' },
@@ -63,7 +63,7 @@ export const Oscuro: Story = {
 
 export const ConIconos: Story = {
   args: {
-    brand: { name: 'Portal', logoUrl: '' },
+    brand: { name: 'Portal', logo: '' },
     items: [
       { label: 'Inicio',    route: '/', icon: 'fa-solid fa-house' },
       { label: 'Analítica', route: '/analytics', icon: 'fa-solid fa-chart-bar', badge: '3' },

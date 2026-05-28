@@ -159,6 +159,36 @@
   min-width: 150px;
 }
 
+/* En móvil los filtros se apilan verticalmente */
+@media (max-width: 639px) {
+  .crud-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .filters-bar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.75rem 1rem;
+  }
+
+  .search-box {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .filter-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-group app-select2 {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
 /* Bulk Actions Bar */
 .bulk-actions-bar {
   display: flex;
@@ -167,6 +197,8 @@
   padding: 0.75rem 1.5rem;
   background-color: var(--primary-50);
   border-bottom: 1px solid var(--primary-200);
+  flex-wrap: wrap; /* evita overflow en móvil con varios botones */
+  gap: 0.75rem;
 }
 
 .selection-count {
@@ -184,6 +216,14 @@
 .table-container {
   position: relative;
   overflow-x: auto;
+}
+
+/* Table Wrapper — scroll horizontal en móvil para tablas anchas */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Indica visualmente que hay más contenido hacia la derecha */
+  overscroll-behavior-x: contain;
 }
 
 /* Loading Overlay */
@@ -450,26 +490,8 @@
   background-color: rgba(239, 68, 68, 0.1);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .crud-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .filters-bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .search-box {
-    max-width: none;
-  }
-  
-  .filter-group {
-    justify-content: flex-start;
-  }
-  
+/* Responsive: columnas opcionales se ocultan en tablet (640–1024px) */
+@media (max-width: 1024px) {
   .col-email,
   .col-date {
     display: none;

@@ -54,7 +54,7 @@ interface UserProfile {
 ## Dependencias
 
 | Componente | Descripción |
-|---|---|
+| --- | --- |
 | `LayoutShellComponent` | Shell principal con sidebar + topbar |
 | `AvatarComponent` | Avatar del usuario |
 | `FloatingInputComponent` | Campos del formulario |

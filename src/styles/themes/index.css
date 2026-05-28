@@ -44,7 +44,7 @@
    1. Add .theme-transitioning class to html during theme switch
    2. Only then apply transitions
    3. Remove class after animation completes
-   
+
    This prevents layout thrashing and improves performance significantly.
    ============================================================================ */
 
@@ -75,6 +75,49 @@ body,
 html {
   background-color: var(--surface-ground);
   color: var(--text-color);
+  /* Breakpoints del sistema de diseño:
+     Mobile:  < 640px
+     Tablet:  640px – 1024px
+     Desktop: > 1024px
+  */
+}
+
+/* Evita que el contenido siga reduciéndose por debajo del ancho mínimo móvil.
+   A < 320px el navegador mostrará scroll horizontal en lugar de comprimir todo. */
+body {
+  min-width: 320px;
+}
+
+/* =============================================================================
+   WCAG 2.1 AA — FOCO VISIBLE
+   Garantiza un indicador de foco consistente para navegación por teclado.
+   :focus-visible solo se activa con teclado, no con clic (UX limpio).
+   ============================================================================= */
+:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm, 2px);
+}
+
+/* Elimina el outline del navegador en clics, manteniéndolo solo para teclado */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* =============================================================================
+   ACCESIBILIDAD — PREFERS-REDUCED-MOTION
+   Respeta la preferencia del sistema operativo: usuarios con vestibular
+   disorders, epilepsia u otras condiciones solicitan menos movimiento.
+   ============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* =============================================================================

@@ -18,7 +18,7 @@ import { Component, Input } from '@angular/core';
       }
       @case ('card') {
         <div class="skeleton-card">
-          <div class="skeleton skeleton-rectangular" style="height: 140px"></div>
+          <div class="skeleton skeleton-rectangular" style="height: 8.75rem"></div>
           <div class="skeleton-card-content">
             <div class="skeleton skeleton-text" style="width: 80%; height: 1rem"></div>
             <div class="skeleton skeleton-text" style="width: 60%; height: 0.75rem"></div>
@@ -30,8 +30,8 @@ import { Component, Input } from '@angular/core';
         <div class="skeleton-avatar-text">
           <div class="skeleton skeleton-circular" style="width: 2.5rem; height: 2.5rem"></div>
           <div class="skeleton-text-group">
-            <div class="skeleton skeleton-text" style="width: 120px; height: 0.875rem"></div>
-            <div class="skeleton skeleton-text" style="width: 80px; height: 0.75rem"></div>
+            <div class="skeleton skeleton-text" style="width: 7.5rem; height: 0.875rem"></div>
+            <div class="skeleton skeleton-text" style="width: 5rem; height: 0.75rem"></div>
           </div>
         </div>
       }
@@ -48,9 +48,9 @@ import { Component, Input } from '@angular/core';
     }
 
     .skeleton {
-      background: linear-gradient(90deg, 
-        var(--skeleton-gradient-start) 25%, 
-        var(--skeleton-gradient-mid) 50%, 
+      background: linear-gradient(90deg,
+        var(--skeleton-gradient-start) 25%,
+        var(--skeleton-gradient-mid) 50%,
         var(--skeleton-gradient-start) 75%
       );
       background-size: 200% 100%;
@@ -102,7 +102,7 @@ import { Component, Input } from '@angular/core';
       100% { background-position: -200% 0; }
     }
 
-    /* 
+    /*
      * Dark mode se maneja automáticamente via tokens semánticos.
      * --skeleton-gradient-start/mid y --skeleton-card-bg/border
      * ya tienen valores apropiados para temas oscuros.

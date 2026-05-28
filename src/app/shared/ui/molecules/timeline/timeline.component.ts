@@ -217,8 +217,36 @@ export interface TimelineItem {
       font-size: var(--text-xs);
       color: var(--text-color-muted);
     }
-  `]
-})
+
+    /* En móvil el timeline horizontal colapsa a vertical para evitar
+       que el contenido se comprima o desborde en pantallas pequeñas */
+    @media (max-width: 639px) {
+      .timeline-horizontal {
+        flex-direction: column;
+      }
+
+      .timeline-horizontal .timeline-item {
+        grid-template-columns: 32px 1fr;
+        grid-template-rows: auto;
+        align-items: start;
+        flex: unset;
+      }
+
+      .timeline-horizontal .timeline-connector {
+        left: 15px;
+        top: 32px;
+        bottom: 0;
+        right: auto;
+        width: 2px;
+        height: auto;
+      }
+
+      .timeline-horizontal .timeline-content {
+        padding-top: var(--space-1);
+        padding-bottom: var(--space-5);
+        text-align: left;
+      }
+    }
 export class TimelineComponent {
   /** Items to display in the timeline */
   @Input() items: TimelineItem[] = [];

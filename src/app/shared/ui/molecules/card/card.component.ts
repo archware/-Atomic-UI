@@ -7,7 +7,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
 /**
  * Card component - Contenedor visual para agrupar contenido relacionado.
  * Sigue Atomic Design Guide: 100% tokenizado, OnPush, accesible.
- * 
+ *
  * @example
  * ```html
  * <app-card title="Mi Tarjeta" subtitle="Descripción">
@@ -23,8 +23,8 @@ export type CardSize = 'sm' | 'md' | 'lg';
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <article 
-      class="card" 
+    <article
+      class="card"
       [class]="'card--' + variant + ' card--' + size"
       [class.card--clickable]="clickable"
       [class.card--horizontal]="horizontal"
@@ -75,8 +75,24 @@ export type CardSize = 'sm' | 'md' | 'lg';
       background: var(--surface-background);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
-      overflow: hidden;
+      /* overflow: visible para que tooltips y dropdowns dentro de la card no queden cortados.
+         La imagen se clips con overflow: hidden en .card__image directamente. */
+      overflow: visible;
       transition: all 200ms ease;
+      /* Container query: la card es su propio contexto de contenedor.
+         Los hijos pueden adaptar su layout basándose en el ancho de la card,
+         no en el viewport (@container en lugar de @media). */
+      container-type: inline-size;
+      container-name: card;
+    }
+
+    /* Footer se apila verticalmente cuando la card es muy angosta (< 280px) */
+    @container card (max-width: 280px) {
+      .card__footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-2);
+      }
     }
 
     /* === Variants === */
@@ -148,6 +164,8 @@ export type CardSize = 'sm' | 'md' | 'lg';
     .card__image {
       width: 100%;
       overflow: hidden;
+      /* Clip la imagen a las esquinas redondeadas de la card (necesario por overflow: visible en .card) */
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     }
 
     .card__image:empty {

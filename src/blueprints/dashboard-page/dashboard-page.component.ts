@@ -12,7 +12,6 @@ import {
   AvatarComponent,
   TextComponent,
   ButtonComponent,
-  ChipComponent,
   SkeletonComponent,
   MetricsGridComponent,
   ThemeSwitcherComponent,
@@ -85,7 +84,6 @@ interface MenuItem {
     AvatarComponent,
     TextComponent,
     ButtonComponent,
-    ChipComponent,
     SkeletonComponent,
     MetricsGridComponent,
     ThemeSwitcherComponent

@@ -11,7 +11,6 @@ const meta: Meta<AvatarGroupComponent> = {
       options: ['sm', 'md', 'lg'],
     },
     max: { control: { type: 'number', min: 1, max: 20 } },
-    overlap: { control: 'boolean' },
   },
 };
 export default meta;
@@ -29,52 +28,47 @@ const TEAM = [
 
 export const Default: Story = {
   args: {
-    avatars: TEAM.slice(0, 4),
+    items: TEAM.slice(0, 4),
     max: 4,
     size: 'md',
-    overlap: true,
   },
 };
 
 export const WithOverflow: Story = {
   args: {
-    avatars: TEAM,
+    items: TEAM,
     max: 4,
     size: 'md',
-    overlap: true,
   },
 };
 
 export const SmallSize: Story = {
   args: {
-    avatars: TEAM.slice(0, 5),
+    items: TEAM.slice(0, 5),
     max: 5,
     size: 'sm',
-    overlap: true,
   },
 };
 
 export const LargeSize: Story = {
   args: {
-    avatars: TEAM.slice(0, 3),
+    items: TEAM.slice(0, 3),
     max: 5,
     size: 'lg',
-    overlap: true,
   },
 };
 
 export const NoOverlap: Story = {
   args: {
-    avatars: TEAM.slice(0, 5),
+    items: TEAM.slice(0, 5),
     max: 6,
     size: 'md',
-    overlap: false,
   },
 };
 
 export const WithPhotos: Story = {
   args: {
-    avatars: [
+    items: [
       { name: 'Ana García', photo: 'https://i.pravatar.cc/150?img=1' },
       { name: 'Carlos López', photo: 'https://i.pravatar.cc/150?img=2' },
       { name: 'María Rodríguez', photo: 'https://i.pravatar.cc/150?img=3' },
@@ -82,6 +76,5 @@ export const WithPhotos: Story = {
     ],
     max: 3,
     size: 'md',
-    overlap: true,
   },
 };

@@ -54,7 +54,6 @@ interface TableRow {
     FloatingInputComponent,
     Select2Component,
     RowComponent,
-    ButtonComponent,
     TextComponent,
     DatepickerComponent,
     ChipComponent,

@@ -57,10 +57,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
 
     .toggle-track {
-      width: 48px;
-      height: 28px;
+      width: 3rem;          /* 48px → 3rem: respeta zoom de accesibilidad */
+      height: 1.75rem;      /* 28px → 1.75rem */
       background: var(--border-color);
-      border-radius: 14px;
+      border-radius: 0.875rem; /* 14px → 0.875rem */
       padding: var(--space-0, 2px);
       transition: all 200ms ease;
       flex-shrink: 0;
@@ -68,8 +68,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
     .toggle-thumb {
       display: block;
-      width: 24px;
-      height: 24px;
+      width: 1.5rem;        /* 24px → 1.5rem */
+      height: 1.5rem;       /* 24px → 1.5rem */
       background: var(--surface-background);
       border-radius: 50%;
       box-shadow: var(--shadow-sm);
@@ -87,7 +87,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
 
     .toggle-input:checked + .toggle-track .toggle-thumb {
-      transform: translateX(20px);
+      transform: translateX(1.25rem); /* 20px → 1.25rem: track(3rem) - thumb(1.5rem) - padding(2*2px) ≈ 1.25rem */
     }
 
     /* Focus */
@@ -101,7 +101,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       line-height: 1.4;
     }
 
-    /* 
+    /*
      * Dark mode se maneja automáticamente via tokens semánticos.
      * --border-color, --surface-background, --primary-color, --shadow-focus-primary
      * ya tienen valores apropiados para temas oscuros.

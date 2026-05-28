@@ -18,7 +18,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     }
   ],
   template: `
-    <div 
+    <div
       class="floating-input-wrapper"
       [class]="'variant-' + variant"
       [class.focused]="isFocused()"
@@ -44,7 +44,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       />
       <label class="floating-label" [attr.for]="inputId()">{{ label }}</label>
       <span class="input-line"></span>
-      
+
       <!-- Icon button (password toggle or custom icon) -->
       @if (type === 'password') {
         <button type="button" class="input-icon-btn" (click)="onPasswordToggleClick($event)" tabindex="-1">
@@ -75,7 +75,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
           {{ icon }}
         </button>
       }
-      
+
       @if (error) {
         <span class="input-error">{{ error }}</span>
       }
@@ -90,7 +90,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     .floating-input-wrapper {
       position: relative;
       width: 100%;
-      min-width: 15rem; /* 240px minimum */
+      min-width: 8rem; /* Mínimo usable (128px). El ancho real lo controla el contenedor padre. */
       margin-top: 0.75rem;
     }
 
@@ -117,13 +117,13 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       box-sizing: border-box;
       margin: 0;
     }
-    
+
     /* Reset native date picker indicator spacing */
     .floating-input::-webkit-calendar-picker-indicator {
       margin: 0;
       padding: 0;
     }
-    
+
     /* Reveal mask only when focused or has value to prevent label overlap */
     .floating-input-wrapper:not(.focused):not(.has-value) .floating-input::-webkit-datetime-edit {
       color: transparent;
@@ -132,7 +132,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     .has-icon .floating-input {
       padding-right: 3rem;
     }
-    
+
     .floating-input::placeholder {
       color: transparent;
     }
@@ -384,7 +384,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       font-size: 0.8125rem;
       color: var(--danger-color);
     }
-    
+
     /* Dark mode handled automatically by CSS variables */
   `]
 })

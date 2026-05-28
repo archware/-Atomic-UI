@@ -5,19 +5,13 @@ const meta: Meta<TimelineComponent> = {
   title: '2. Molecules/Timeline',
   component: TimelineComponent,
   tags: ['autodocs'],
-  argTypes: {
-    variant: {
-      control: { type: 'select' },
-      options: ['default', 'compact', 'centered'],
-    },
-  },
+  argTypes: {},
 };
 export default meta;
 type Story = StoryObj<TimelineComponent>;
 
 export const Default: Story = {
   args: {
-    variant: 'default',
     items: [
       {
         id: '1',
@@ -65,7 +59,6 @@ export const Default: Story = {
 
 export const Compact: Story = {
   args: {
-    variant: 'compact',
     items: [
       { id: '1', title: 'Usuario registrado', date: '01/01/2026', status: 'completed' },
       { id: '2', title: 'Email verificado', date: '02/01/2026', status: 'completed' },
@@ -77,7 +70,6 @@ export const Compact: Story = {
 
 export const WithErrors: Story = {
   args: {
-    variant: 'default',
     items: [
       { id: '1', title: 'Pago iniciado', date: '15/03/2026', status: 'completed', icon: '💳' },
       { id: '2', title: 'Procesando pago', date: '15/03/2026', status: 'error', description: 'Error al procesar: tarjeta rechazada.', icon: '❌' },

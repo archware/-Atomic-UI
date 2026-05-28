@@ -4,7 +4,7 @@ import { Component, Input, signal, ChangeDetectionStrategy } from '@angular/core
 /**
  * Individual accordion item with collapsible content.
  * Must be used as child of `app-accordion`.
- * 
+ *
  * @example
  * ```html
  * <app-accordion-item title="Question 1" [open]="true">
@@ -19,9 +19,9 @@ import { Component, Input, signal, ChangeDetectionStrategy } from '@angular/core
   imports: [],
   template: `
     <div class="accordion-item" [class.open]="isOpen()">
-      <button 
-        type="button" 
-        class="accordion-header" 
+      <button
+        type="button"
+        class="accordion-header"
         [attr.aria-expanded]="isOpen()"
         [attr.aria-controls]="'accordion-content-' + id"
         (click)="toggle()"
@@ -31,7 +31,7 @@ import { Component, Input, signal, ChangeDetectionStrategy } from '@angular/core
           <i class="fa-solid fa-chevron-down"></i>
         </span>
       </button>
-      <div 
+      <div
         class="accordion-content"
         [id]="'accordion-content-' + id"
         role="region"
@@ -89,24 +89,26 @@ import { Component, Input, signal, ChangeDetectionStrategy } from '@angular/core
     }
 
     .accordion-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 300ms ease;
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 300ms ease;
       background: var(--surface-background);
     }
 
     .accordion-item.open .accordion-content {
-      max-height: 500px;
+      grid-template-rows: 1fr;
     }
 
     .accordion-body {
+      overflow: hidden;
+      min-height: 0;
       padding: var(--space-5);
       font-size: var(--text-sm);
       color: var(--text-color-secondary);
       line-height: 1.6;
     }
 
-    /* 
+    /*
      * Dark mode se maneja automáticamente via tokens semánticos.
      * --surface-background, --border-color, --hover-background, --primary-color
      * ya tienen valores apropiados para temas oscuros.

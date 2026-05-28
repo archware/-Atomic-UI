@@ -16,10 +16,10 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div 
-      class="avatar" 
+    <div
+      class="avatar"
       [ngClass]="['avatar-' + size, 'avatar-' + variant, rounded ? 'avatar-rounded' : '']"
-      [style.background-color]="!src && !icon && variant === 'default' ? colorFromName() : null"
+      [style.background-color]="color ?? (!src && !icon && variant === 'default' ? colorFromName() : null)"
     >
       @if (src && !imageFailed()) {
         <img [src]="src" [alt]="name" (error)="onImageError()">
@@ -77,7 +77,7 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
       height: 100%;
       object-fit: cover;
     }
-    
+
     .avatar i {
       font-size: 1.2em;
     }
@@ -87,7 +87,7 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
       text-transform: uppercase;
       color: white;
     }
-    
+
     /* Ensure initials in colored variants contrast well (usually dark on light bg or vice versa) */
     .avatar:not(.avatar-default) .avatar-initials {
        color: currentColor;
@@ -137,6 +137,7 @@ export class AvatarComponent {
   @Input() src?: string;
   @Input() name = '';
   @Input() initials?: string;
+  @Input() color?: string;
   @Input() size: AvatarSize = 'md';
   @Input() rounded = false;
   @Input() status?: AvatarStatus;

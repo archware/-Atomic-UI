@@ -21,7 +21,7 @@ cp -r blueprints/settings-page src/app/pages/settings
 ## Secciones
 
 | Tab | Funcionalidad |
-|---|---|
+| --- | --- |
 | **Perfil** | Nombre, email, teléfono, bio, foto de avatar |
 | **Seguridad** | Cambio de contraseña con validación |
 | **Notificaciones** | Toggles para email, push, resumen semanal, sistema |

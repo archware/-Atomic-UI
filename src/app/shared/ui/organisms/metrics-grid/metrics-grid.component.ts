@@ -38,7 +38,7 @@ export interface KpiMetric {
       }
     </section>
   `,
-  styles: [``
+  styles: [`
     :host {
       display: block;
       width: 100%;
@@ -57,7 +57,7 @@ export interface KpiMetric {
         gap: var(--space-3);
       }
     }
-  ``]
+  `]
 })
 export class MetricsGridComponent {
   @Input() metrics: KpiMetric[] = [];

@@ -28,9 +28,9 @@ const meta: Meta<BadgeComponent> = {
       description: 'Posición cuando se usa como overlay (standalone=false)',
     },
     count: { control: 'number', description: 'Número a mostrar (null = solo punto)' },
-    maxCount: { control: 'number', description: 'Máximo antes de mostrar N+' },
+    max: { control: 'number', description: 'Máximo antes de mostrar N+' },
     dot: { control: 'boolean', description: 'Mostrar solo punto sin número' },
-    standalone: { control: 'boolean', description: 'Modo independiente (no overlay)' },
+    overlay: { control: 'boolean', description: 'Modo overlay sobre contenido' },
     visible: { control: 'boolean', description: 'Mostrar u ocultar el badge' },
   },
 };
@@ -39,19 +39,19 @@ export default meta;
 type Story = StoryObj<BadgeComponent>;
 
 export const Standalone: Story = {
-  args: { count: 5, variant: 'primary', size: 'md', standalone: true },
+  args: { count: 5, variant: 'primary', size: 'md', overlay: false },
   render: (args) => ({
     props: args,
-    template: `<app-badge [count]="count" [variant]="variant" [size]="size" [standalone]="standalone"></app-badge>`,
+    template: `<app-badge [count]="count" [variant]="variant" [size]="size" [overlay]="overlay"></app-badge>`,
   }),
 };
 
 export const Overlay: Story = {
-  args: { count: 12, variant: 'danger', position: 'top-right', standalone: false },
+  args: { count: 12, variant: 'danger', position: 'top-right', overlay: true },
   render: (args) => ({
     props: args,
     template: `
-      <app-badge [count]="count" [variant]="variant" [position]="position" [standalone]="standalone">
+      <app-badge [count]="count" [variant]="variant" [position]="position" [overlay]="overlay">
         <button style="padding:0.5rem 1rem; background:#e5e7eb; border:none; border-radius:6px; cursor:pointer; font-size:1rem;">
           🔔 Notificaciones
         </button>
@@ -61,11 +61,11 @@ export const Overlay: Story = {
 };
 
 export const DotIndicator: Story = {
-  args: { dot: true, variant: 'success', position: 'top-right', standalone: false },
+  args: { dot: true, variant: 'success', position: 'top-right', overlay: true },
   render: (args) => ({
     props: args,
     template: `
-      <app-badge [dot]="dot" [variant]="variant" [position]="position" [standalone]="standalone">
+      <app-badge [dot]="dot" [variant]="variant" [position]="position" [overlay]="overlay">
         <span style="display:inline-block; width:32px; height:32px; background:#e5e7eb; border-radius:50%; line-height:32px; text-align:center;">👤</span>
       </app-badge>
     `,
@@ -73,10 +73,10 @@ export const DotIndicator: Story = {
 };
 
 export const MaxCount: Story = {
-  args: { count: 150, maxCount: 99, variant: 'danger', size: 'md', standalone: true },
+  args: { count: 150, max: 99, variant: 'danger', size: 'md', overlay: false },
   render: (args) => ({
     props: args,
-    template: `<app-badge [count]="count" [maxCount]="maxCount" [variant]="variant" [size]="size" [standalone]="standalone"></app-badge>`,
+    template: `<app-badge [count]="count" [max]="max" [variant]="variant" [size]="size" [overlay]="overlay"></app-badge>`,
   }),
 };
 

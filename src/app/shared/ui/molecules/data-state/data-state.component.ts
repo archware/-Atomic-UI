@@ -6,7 +6,7 @@ import { ApiError } from '../../services/api.service';
 /**
  * Componente para manejar estados de carga de datos.
  * Muestra automáticamente: loading, error, o contenido según el estado.
- * 
+ *
  * @example
  * ```html
  * <app-data-state [loading]="usersApi.loading()" [error]="usersApi.error()">
@@ -17,14 +17,14 @@ import { ApiError } from '../../services/api.service';
  *   </ng-template>
  * </app-data-state>
  * ```
- * 
+ *
  * @example Con templates personalizados
  * ```html
  * <app-data-state [loading]="loading()" [error]="error()">
  *   <ng-template #loadingTemplate>
  *     <div class="custom-loader">Cargando usuarios...</div>
  *   </ng-template>
- *   
+ *
  *   <ng-template #errorTemplate let-error>
  *     <div class="custom-error">
  *       <h3>¡Ups! Algo salió mal</h3>
@@ -32,20 +32,20 @@ import { ApiError } from '../../services/api.service';
  *       <button (click)="retry()">Reintentar</button>
  *     </div>
  *   </ng-template>
- *   
+ *
  *   <ng-template #content>
  *     <!-- Contenido con datos -->
  *   </ng-template>
  * </app-data-state>
  * ```
- * 
+ *
  * @example Con empty state
  * ```html
  * <app-data-state [loading]="loading()" [error]="error()" [isEmpty]="data()?.length === 0">
  *   <ng-template #emptyTemplate>
  *     <p>No hay datos disponibles</p>
  *   </ng-template>
- *   
+ *
  *   <ng-template #content>
  *     <!-- Contenido -->
  *   </ng-template>
@@ -71,7 +71,7 @@ import { ApiError } from '../../services/api.service';
         }
       </div>
     }
-    
+
     <!-- Error State -->
     @else if (error) {
       <div class="data-state data-state--error">
@@ -94,7 +94,7 @@ import { ApiError } from '../../services/api.service';
         }
       </div>
     }
-    
+
     <!-- Empty State -->
     @else if (isEmpty) {
       <div class="data-state data-state--empty">
@@ -110,7 +110,7 @@ import { ApiError } from '../../services/api.service';
         }
       </div>
     }
-    
+
     <!-- Content -->
     @else {
       @if (contentTemplate) {
@@ -146,7 +146,8 @@ import { ApiError } from '../../services/api.service';
       align-items: center;
       text-align: center;
       gap: var(--space-3);
-      max-width: 400px;
+      width: 100%;      /* Ocupa el ancho disponible en pantallas pequeñas */
+      max-width: 400px; /* Limita en pantallas grandes */
     }
 
     .error-icon {

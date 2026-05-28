@@ -5,7 +5,7 @@ Flujo completo de recuperación de contraseña en 4 pasos.
 ## Pasos del flujo
 
 | Paso | Estado | Descripción |
-|---|---|---|
+| --- | --- | --- |
 | 1 | `request` | El usuario ingresa su email |
 | 2 | `sent` | Confirmación de que el correo fue enviado |
 | 3 | `reset` | El usuario ingresa código + nueva contraseña |
@@ -41,7 +41,7 @@ const RESET_ENDPOINT  = '/Authentication/ResetPassword';  // ← código + nueva
 ## Dependencias
 
 | Componente | Descripción |
-|---|---|
+| --- | --- |
 | `AuthLayoutComponent` | Layout centrado |
 | `FloatingInputComponent` | Campos del formulario |
 | `AlertComponent` | Errores de API |

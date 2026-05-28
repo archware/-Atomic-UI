@@ -7,7 +7,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="modal-overlay" 
+    <div class="modal-overlay"
       (click)="onBackdropClick()"
       (keydown.escape)="onEscape()"
       (keydown.enter)="onBackdropClick()"
@@ -16,7 +16,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
       role="button"
       aria-label="Cerrar modal"
     >
-      <div class="modal" 
+      <div class="modal"
         (click)="$event.stopPropagation()"
         (keydown.enter)="$event.stopPropagation()"
         (keydown.space)="$event.stopPropagation()"
@@ -79,6 +79,28 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
     .modal-md { max-width: 550px; }
     .modal-lg { max-width: 800px; }
 
+    /* En móvil el modal ocupa casi todo el ancho y se ancla al fondo */
+    @media (max-width: 479px) {
+      .modal-overlay {
+        align-items: flex-end;
+        padding: 0;
+      }
+
+      .modal {
+        width: 100%;
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        max-height: 90dvh;
+        max-height: 90vh; /* fallback */
+        max-height: 90dvh;
+      }
+
+      .modal-sm,
+      .modal-md,
+      .modal-lg {
+        max-width: 100%;
+      }
+    }
+
     @keyframes slideUp {
       from { transform: translateY(20px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
@@ -132,7 +154,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
       border-top: 1px solid var(--border-color);
     }
 
-    /* 
+    /*
      * Dark mode se maneja automáticamente via tokens semánticos.
      * --surface-background, --overlay-backdrop, --surface-hover
      * ya tienen valores apropiados para temas oscuros.

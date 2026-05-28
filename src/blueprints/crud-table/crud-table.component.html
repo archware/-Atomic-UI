@@ -2,9 +2,6 @@
   <!-- ============================================ -->
   <!-- HEADER -->
   <!-- ============================================ -->
-  <!-- ============================================ -->
-  <!-- HEADER -->
-  <!-- ============================================ -->
   <app-row justify="between" verticalAlign="center" class="mb-6">
     <div class="header-title-group">
       <app-text variant="h2" weight="bold">{{ TABLE_TITLE }}</app-text>
@@ -20,7 +17,7 @@
   <!-- ============================================ -->
   <app-panel class="filters-panel mb-4">
     <app-row gap="1rem" verticalAlign="center">
-      <div class="search-box-container" style="flex: 1; min-width: 250px;">
+      <div class="search-box-container" style="flex: 1;">
         <app-input placeholder="Buscar por nombre o email..." iconClass="fa-solid fa-search" [ngModel]="searchTerm()"
           (ngModelChange)="onSearch($event)">
         </app-input>
@@ -45,7 +42,6 @@
 
   <!-- ============================================ -->
   <!-- BULK ACTIONS BAR -->
-  <!-- ============================================ -->
   <!-- ============================================ -->
   <!-- BULK ACTIONS BAR -->
   <!-- ============================================ -->

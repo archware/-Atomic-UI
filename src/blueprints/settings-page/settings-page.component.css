@@ -32,6 +32,7 @@
   flex-direction: column;
   gap: var(--space-3);
   max-width: 480px;
+  width: 100%;   /* Ocupa el ancho disponible en pantallas estrechas */
   margin: var(--space-4) 0;
 }
 
@@ -55,6 +56,7 @@
   align-items: center;
   padding: var(--space-3) 0;
   gap: var(--space-4);
+  flex-wrap: wrap; /* El toggle cae debajo del texto en pantallas muy estrechas */
 }
 
 .notif-info {
@@ -74,8 +76,10 @@
   margin-top: var(--space-2);
 }
 
-@media (max-width: 600px) {
+/* app-row ya colapsa columns a 1fr en @media (max-width: 640px) automáticamente.
+   Esta regla es un fallback explícito para elementos de grid manuales. */
+@media (max-width: 640px) {
   .responsive-fields {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr;
   }
 }
