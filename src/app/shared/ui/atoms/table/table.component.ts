@@ -3,14 +3,14 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@a
 
 /**
  * TableComponent - Tabla atómica con scroll opcional
- * 
+ *
  * Usa tokens centralizados de table-tokens.css
- * 
+ *
  * @example
  * ```html
  * <!-- Tabla simple -->
  * <app-table [striped]="true">...</app-table>
- * 
+ *
  * <!-- Tabla con altura máxima y scroll -->
  * <app-table [maxHeight]="350">...</app-table>
  * ```
@@ -22,8 +22,8 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@a
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div 
-      class="atomic-table-container" 
+    <div
+      class="atomic-table-container"
       [class.atomic-table-striped]="striped"
       [style.max-height]="maxHeight ? maxHeight + 'px' : null"
       [class.atomic-table-scrollable]="!!maxHeight">
@@ -68,7 +68,7 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@a
       top: 0;
       background: var(--table-header-bg, var(--surface-background));
     }
-    
+
     .atomic-table {
       width: 100%;
       display: table;
@@ -103,7 +103,7 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@a
       .atomic-table-container {
         border: none;
         border-radius: 0;
-        overflow: visible;
+        overflow: auto;
         max-height: none !important;
       }
 

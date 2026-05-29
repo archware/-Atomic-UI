@@ -45,18 +45,18 @@ import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecule
         <tbody>
           @for (user of tableUsers; track user.id) {
             <tr app-table-row [selected]="user.selected">
-              <td app-table-cell>
-                <app-row gap="0.5rem" verticalAlign="center">
+              <td app-table-cell [dataLabel]="'Nombre:'">
+                <app-row gap="0.5rem" verticalAlign="center" columns="auto 1fr">
                   <app-avatar [name]="user.name" size="sm"></app-avatar>
                   <app-text>{{ user.name }}</app-text>
                 </app-row>
               </td>
-              <td app-table-cell>{{ user.role }}</td>
-              <td app-table-cell>
+              <td app-table-cell [dataLabel]="'Rol:'">{{ user.role }}</td>
+              <td app-table-cell [dataLabel]="'Estado:'">
                 <app-chip [variant]="user.chipVariant" size="sm">{{ user.status }}</app-chip>
               </td>
-              <td app-table-cell>{{ user.date }}</td>
-              <td app-table-cell class="text-right">
+              <td app-table-cell [dataLabel]="'Fecha:'">{{ user.date }}</td>
+              <td app-table-cell class="actions-cell">
                 <app-action-group
                   [actions]="tableActions"
                   [maxVisible]="user.maxVisible"
@@ -69,7 +69,7 @@ import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecule
           }
         </tbody>
       </app-table>
-      
+
       <h4 class="subsection-title">Variantes de ActionGroup</h4>
       <div class="action-variants">
         <div class="variant-item">
@@ -85,7 +85,7 @@ import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecule
           <app-action-group [actions]="tableActions" [compact]="true"></app-action-group>
         </div>
       </div>
-      
+
       <h4 class="subsection-title">Tamaños</h4>
       <div class="action-variants">
         <div class="variant-item">
@@ -156,7 +156,7 @@ import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecule
     .section-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-color); }
     .subsection-title { font-size: 1rem; font-weight: 500; margin: 1rem 0 0.5rem; color: var(--text-color-secondary); }
     .avatar-grid, .chip-grid { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
-    
+
     /* Badges styles */
     .badge-container { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .badge { padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; background: var(--surface-hover); color: var(--text-color); }
@@ -166,11 +166,22 @@ import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecule
     .badge-warning { background: var(--warning-color); color: white; }
     .badge-danger { background: var(--danger-color); color: white; }
     .badge-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); }
-    
+
     /* Action variants */
     .action-variants { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1rem; }
-    .variant-item { display: flex; align-items: center; gap: 0.75rem; }
-    .variant-label { color: var(--text-color-secondary); font-size: 0.875rem; min-width: 80px; }
+    .variant-item { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
+    .variant-label { color: var(--text-color-secondary); font-size: 0.875rem; min-width: 80px; flex-shrink: 0; }
+
+    /* Mobile: actions cell no muestra label, usa toda la fila */
+    @media screen and (max-width: 768px) {
+      .actions-cell {
+        justify-content: flex-end;
+        border-bottom: none !important;
+        padding-top: var(--space-3) !important;
+      }
+      .action-variants { gap: 1rem; }
+      .variant-item { flex-wrap: wrap; }
+    }
   `]
 })
 export class ShowcaseDataDisplayComponent {
