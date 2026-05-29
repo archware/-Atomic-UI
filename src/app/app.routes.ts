@@ -1,16 +1,24 @@
 import { Routes } from '@angular/router';
 import { authGuard, guestGuard } from '@shared/ui';
-import { ErrorPagesComponent } from '../blueprints/error-pages/error-pages.component';
 
 /**
  * Rutas principales de la aplicación con lazy loading y auth guards.
  *
- * Para usar en app.config.ts:
- *   provideRouter(routes, withPreloading(PreloadAllModules))
+ * Configuración en app.config.ts:
+ *   provideRouter(routes, withPreloading(PreloadAllModules), withScrollPositionRestoration('enabled'))
  */
 export const routes: Routes = [
-  // Redireccion raíz
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  // Redireccion raíz → showcase (landing page de la librería de componentes)
+  { path: '', redirectTo: 'showcase', pathMatch: 'full' },
+
+  // ===================================================
+  // Showcase — página pública de demostración
+  // ===================================================
+  {
+    path: 'showcase',
+    loadComponent: () =>
+      import('./pages/showcase/showcase-page.component').then(m => m.ShowcasePageComponent),
+  },
 
   // ===================================================
   // Rutas PÚBLICAS (solo usuarios no autenticados)
@@ -55,6 +63,12 @@ export const routes: Routes = [
       import('../blueprints/settings-page/settings-page.component').then(m => m.SettingsPageComponent),
     canActivate: [authGuard],
   },
+  {
+    path: 'crud',
+    loadComponent: () =>
+      import('../blueprints/crud-table/crud-table.component').then(m => m.CrudTableComponent),
+    canActivate: [authGuard],
+  },
 
   // ===================================================
   // Rutas de ERROR
@@ -78,6 +92,11 @@ export const routes: Routes = [
     data: { code: 500 },
   },
 
-  // Catch-all → 404
-  { path: '**', component: ErrorPagesComponent, data: { code: 404 } },
+  // Catch-all → 404 (lazy, coherente con las demás rutas de error)
+  {
+    path: '**',
+    loadComponent: () =>
+      import('../blueprints/error-pages/error-pages.component').then(m => m.ErrorPagesComponent),
+    data: { code: 404 },
+  },
 ];

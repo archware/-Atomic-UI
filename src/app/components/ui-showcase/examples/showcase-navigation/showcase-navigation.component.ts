@@ -21,20 +21,20 @@ import { StepperComponent, Step } from '../../../../shared/ui/organisms/stepper/
   template: `
     <!-- SIDEBAR -->
     <app-panel title="Sidebar (Organism)" variant="flat" padding="md" class="showcase-section">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-        
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; width: 100%; box-sizing: border-box;">
+
         <!-- Variant 1: Dashboard -->
-        <div style="height: 500px; border: 1px solid var(--border-color); border-radius: 0.5rem; overflow: hidden; position: relative; background-color: var(--surface-ground);">
+        <div style="height: 500px; min-width: 0; border: 1px solid var(--border-color); border-radius: 0.75rem; overflow: hidden; position: relative; background-color: var(--surface-ground);">
           <app-sidebar [menuItems]="variant1Items" [user]="exampleUser" [collapsed]="false"></app-sidebar>
-          <div style="position: absolute; top: 1rem; right: 1rem; background: rgba(0,0,0,0.1); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">
+          <div style="position: absolute; top: 0.75rem; right: 0.75rem; background: rgba(0,0,0,0.45); backdrop-filter: blur(4px); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; color: #e5e7eb; letter-spacing: 0.02em;">
             Variant 1: Main App
           </div>
         </div>
 
         <!-- Variant 2: Settings/Simple -->
-        <div style="height: 500px; border: 1px solid var(--border-color); border-radius: 0.5rem; overflow: hidden; position: relative; background-color: var(--surface-ground);">
-           <app-sidebar [menuItems]="variant2Items" [collapsed]="false"></app-sidebar>
-           <div style="position: absolute; top: 1rem; right: 1rem; background: rgba(0,0,0,0.1); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">
+        <div style="height: 500px; min-width: 0; border: 1px solid var(--border-color); border-radius: 0.75rem; overflow: hidden; position: relative; background-color: var(--surface-ground);">
+          <app-sidebar [menuItems]="variant2Items" [collapsed]="false"></app-sidebar>
+          <div style="position: absolute; top: 0.75rem; right: 0.75rem; background: rgba(0,0,0,0.45); backdrop-filter: blur(4px); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; color: #e5e7eb; letter-spacing: 0.02em;">
             Variant 2: Settings Context
           </div>
         </div>
@@ -76,7 +76,7 @@ import { StepperComponent, Step } from '../../../../shared/ui/organisms/stepper/
     <app-panel title="Stepper" variant="flat" padding="md" class="showcase-section">
       <p style="margin-bottom: 1rem; color: var(--text-color-secondary);">Horizontal Stepper:</p>
       <app-stepper [steps]="stepperSteps" [activeStep]="currentStep"></app-stepper>
-      
+
       <div style="margin-top: 2rem;">
         <p style="margin-bottom: 1rem; color: var(--text-color-secondary);">Vertical Stepper:</p>
         <app-stepper [steps]="stepperSteps" [activeStep]="1" [vertical]="true"></app-stepper>
