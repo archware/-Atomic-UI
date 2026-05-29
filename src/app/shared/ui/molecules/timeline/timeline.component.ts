@@ -247,6 +247,8 @@ export interface TimelineItem {
         text-align: left;
       }
     }
+  `]
+})
 export class TimelineComponent {
   /** Items to display in the timeline */
   @Input() items: TimelineItem[] = [];
