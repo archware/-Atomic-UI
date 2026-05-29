@@ -58,7 +58,7 @@ export const PasoEnviado: Story = {
   decorators: [
     applicationConfig({ providers: [provideRouter([]), provideHttpClient()] }),
   ],
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement: _canvasElement }) => {
     // En una prueba real podrías simular el flujo aquí
   },
 };

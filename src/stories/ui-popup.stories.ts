@@ -7,7 +7,7 @@ import { PopupService } from '../app/shared/ui/services/popup.service';
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
 
 @Component({
-  selector: 'sb-popup-demo',
+  selector: 'app-popup-demo',
   standalone: true,
   imports: [PopupContainerComponent, ButtonComponent],
   template: `

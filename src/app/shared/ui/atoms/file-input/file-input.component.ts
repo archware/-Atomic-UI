@@ -38,7 +38,7 @@ export interface FileInputFile {
   template: `
     <div class="file-input-wrapper" [class.disabled]="disabled" [class.drag-over]="isDragging()">
       @if (label) {
-        <label class="file-label">{{ label }}</label>
+        <label class="file-label" [for]="inputId">{{ label }}</label>
       }
       @if (hint) {
         <p class="file-hint">{{ hint }}</p>
@@ -63,6 +63,7 @@ export interface FileInputFile {
 
       <input
         #fileInput
+        [id]="inputId"
         type="file"
         class="file-hidden"
         [accept]="accept"
@@ -184,6 +185,7 @@ export interface FileInputFile {
 })
 export class FileInputComponent implements ControlValueAccessor {
   private readonly platformId = inject(PLATFORM_ID);
+  readonly inputId = 'file-input-' + Math.random().toString(36).slice(2, 8);
 
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 

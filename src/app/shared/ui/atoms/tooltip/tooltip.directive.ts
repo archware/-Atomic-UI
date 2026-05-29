@@ -1,5 +1,5 @@
 import {
-  Directive, input, signal, HostListener,
+  Directive, input, HostListener,
   ElementRef, inject, OnDestroy, PLATFORM_ID,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';

@@ -45,10 +45,10 @@ export class PermissionDirective implements OnInit {
   private auth = inject(AuthService);
 
   /** Rol o lista de roles permitidos */
-  @Input('appPermission') requiredRoles: string | string[] = [];
+  @Input() appPermission: string | string[] = [];
 
   /** Template alternativo cuando no tiene permiso */
-  @Input('appPermissionElse') elseTemplate?: TemplateRef<unknown>;
+  @Input() appPermissionElse?: TemplateRef<unknown>;
 
   ngOnInit(): void {
     this.updateView();
@@ -59,8 +59,8 @@ export class PermissionDirective implements OnInit {
 
     if (this.hasPermission()) {
       this.vcr.createEmbeddedView(this.tpl);
-    } else if (this.elseTemplate) {
-      this.vcr.createEmbeddedView(this.elseTemplate);
+    } else if (this.appPermissionElse) {
+      this.vcr.createEmbeddedView(this.appPermissionElse);
     }
   }
 
@@ -75,9 +75,9 @@ export class PermissionDirective implements OnInit {
     const userRole = user['role'] as string | undefined;
     if (!userRole) return false;
 
-    const roles = Array.isArray(this.requiredRoles)
-      ? this.requiredRoles
-      : [this.requiredRoles];
+    const roles = Array.isArray(this.appPermission)
+      ? this.appPermission
+      : [this.appPermission];
 
     // 'superadmin' tiene acceso a todo
     if (userRole === 'superadmin') return true;

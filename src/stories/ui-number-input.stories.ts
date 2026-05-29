@@ -22,7 +22,7 @@ type Story = StoryObj<NumberInputComponent>;
 export const Default: Story = {
   args: { label: 'Cantidad', min: 0, max: 100, step: 1 },
   decorators: [
-    (story) => ({
+    (_story) => ({
       props: { value: 5 },
       moduleMetadata: { imports: [FormsModule] },
       template: `<app-number-input label="Cantidad" [min]="0" [max]="100" [step]="1" [(ngModel)]="value"></app-number-input><p style="margin-top:.5rem;font-size:.85rem;color:var(--text-color-secondary)">Valor: {{ value }}</p>`,

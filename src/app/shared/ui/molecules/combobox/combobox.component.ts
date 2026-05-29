@@ -41,11 +41,12 @@ export interface ComboboxOption {
   template: `
     <div class="combobox" [class.combobox-open]="isOpen()" [class.combobox-disabled]="disabled">
       @if (label) {
-        <label class="combobox-label">{{ label }}</label>
+        <label class="combobox-label" [for]="inputId">{{ label }}</label>
       }
       <div class="combobox-control" #controlRef>
         <input
           #inputRef
+          [id]="inputId"
           class="combobox-input"
           type="text"
           [placeholder]="placeholder"
@@ -59,6 +60,7 @@ export interface ComboboxOption {
           role="combobox"
           [attr.aria-expanded]="isOpen()"
           [attr.aria-autocomplete]="'list'"
+          [attr.aria-controls]="listboxId"
           aria-haspopup="listbox"
         />
         @if (inputValue() && !disabled && clearable) {
@@ -71,7 +73,7 @@ export interface ComboboxOption {
       </div>
 
       @if (isOpen() && filteredOptions().length > 0) {
-        <ul class="combobox-dropdown" role="listbox">
+        <ul class="combobox-dropdown" role="listbox" [id]="listboxId">
           @for (option of filteredOptions(); track option.value; let i = $index) {
             <li
               class="combobox-option"
@@ -224,6 +226,8 @@ export interface ComboboxOption {
 })
 export class ComboboxComponent implements ControlValueAccessor {
   private readonly platformId = inject(PLATFORM_ID);
+  readonly inputId = 'combobox-input-' + Math.random().toString(36).slice(2, 8);
+  readonly listboxId = 'combobox-list-' + Math.random().toString(36).slice(2, 8);
 
   @Input() options: ComboboxOption[] = [];
   @Input() label = '';

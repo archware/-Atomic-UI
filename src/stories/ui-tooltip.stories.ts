@@ -4,7 +4,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { TooltipDirective } from '../app/shared/ui/atoms/tooltip/tooltip.directive';
 
 @Component({
-  selector: 'tooltip-demo',
+  selector: 'app-tooltip-demo',
   standalone: true,
   imports: [TooltipDirective],
   template: `
@@ -59,7 +59,7 @@ type Story = StoryObj<TooltipDemoComponent>;
 export const AllPositions: Story = {};
 
 @Component({
-  selector: 'tooltip-long-demo',
+  selector: 'app-tooltip-long-demo',
   standalone: true,
   imports: [TooltipDirective],
   template: `

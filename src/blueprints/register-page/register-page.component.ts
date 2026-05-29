@@ -2,7 +2,6 @@ import { Component, inject, signal, effect } from '@angular/core';
 
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import {
   AuthLayoutComponent,
   FloatingInputComponent,

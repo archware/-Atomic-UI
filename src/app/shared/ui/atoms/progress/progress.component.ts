@@ -3,7 +3,6 @@ import {
   Input,
   ChangeDetectionStrategy,
   computed,
-  signal,
 } from '@angular/core';
 
 

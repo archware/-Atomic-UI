@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { signal } from '@angular/core';
 import { moduleMetadata } from '@storybook/angular';
 import { LayoutShellComponent } from '../app/shared/ui/templates/layout-shell/layout-shell.component';
 import { SidebarComponent, SidebarMenuItem, SidebarUser } from '../app/shared/ui/organisms/sidebar/sidebar.component';

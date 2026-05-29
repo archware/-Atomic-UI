@@ -36,7 +36,7 @@ export class FormBuilderHelper {
   static emailValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value as string;
     if (!value) return null;
-    const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(value) ? null : { email: true };
   }
 

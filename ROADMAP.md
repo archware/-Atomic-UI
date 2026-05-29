@@ -238,54 +238,53 @@ Pendiente Fase 8.1:         Publicación npm con ng-packagr
 
 ---
 
-## Fase 10 — Auditoría de Consistencia 🔄 EN PROGRESO (29/05/2026)
+## Fase 10 — Auditoría de Consistencia ✅ COMPLETADO (29/05/2026)
 
-> Auditoría profunda del proyecto: inconsistencias de arquitectura, tokens y código. 5 correcciones aplicadas, 14 hallazgos pendientes de implementación.
-
-### Correcciones aplicadas ✅
+> Auditoría profunda del proyecto: inconsistencias de arquitectura, tokens y código. 19 correcciones implementadas.
 
 | # | Problema | Archivo | Solución |
 | --- | --- | --- | --- |
 | 10.1 | Ruta `/crud` faltante en el router | `app.routes.ts` | Añadida con `loadComponent` lazy + `canActivate: [authGuard]` |
 | 10.2 | `menuItems` incompleto (faltaban CRUD + Profile) | `app.ts` | Actualizado con los 4 ítems definitivos: Dashboard, CRUD, Profile, Settings |
-| 10.3 | `sidebar.component.css` sin `:host { display: block; height: 100% }` | `sidebar.component.css` | Añadida regla `:host` — corrige la altura en el preview de Storybook y en contenedores con altura explícita |
-| 10.4 | Grid overflow en showcase-navigation | `showcase-navigation.component.ts` | `width: 100%; box-sizing: border-box` en wrapper + `min-width: 0` en cada item del grid |
-| 10.5 | Sombras invisibles en temas oscuros (`rgba(0,0,0,N)` sobre fondo oscuro = 0 contraste) | `_tokens-semantic.css` | Técnica de elevation overlay: anillo blanco semitransparente + sombra profunda en `[data-theme="dark"]` y `[data-theme="brand-dark"]` |
+| 10.3 | `sidebar.component.css` sin `:host { display: block; height: 100% }` | `sidebar.component.css` | Añadida regla `:host` |
+| 10.4 | Grid overflow en showcase-navigation | `showcase-navigation.component.ts` | `width: 100%; box-sizing: border-box` + `min-width: 0` |
+| 10.5 | Sombras invisibles en temas oscuros | `_tokens-semantic.css` | Elevation overlay con anillo blanco semitransparente |
+| 10.6 | Sin `<router-outlet>` en `app.html` | `app.html`, `app.ts` | `AppComponent` convertido en shell de routing puro |
+| 10.7 | `onSidebarNavigate()` no llama `Router.navigate()` | `app.ts` | Integración real de `Router.navigate()` |
+| 10.8 | Blueprints con double layout | blueprints | Cada blueprint renderiza su propio `LayoutShell` |
+| 10.9 | Focus ring invisible en `brand-dark` | `_tokens-components.css` | Fallback con color primario hardcoded para brand-dark |
+| 10.10 | `--brand-primary-500-rgb` solo en `:root` | `_tokens-brand.css` | Añadido a todos los temas |
+| 10.11 | Tokens faltantes en dark/brand-dark: badges, alerts, breadcrumb, switch-thumb, avatar-border | `_tokens-components.css` | Overrides completos en ambos temas oscuros |
+| 10.12 | `ButtonComponent` importado pero no usado en `app.html` | `app.ts` | Import eliminado |
+| 10.13 | `TableRow` `col9` salta `col8` | `app.ts` | Naming corregido y secuencial |
+| 10.14 | `statusOptions.value` son claves i18n que no matchean datos reales | `app.ts` | Valores alineados con datos de la tabla |
+| 10.15 | Catch-all `**` eager vs `loadComponent` lazy | `app.routes.ts` | Normalizado a `loadComponent` |
+| 10.16 | `provideRouter` sin `withPreloading` ni `withInMemoryScrolling` | `app.config.ts` | Añadidos `PreloadAllModules` + scroll restoration |
+| 10.17 | `--nav-shadow` gris hardcoded | `_tokens-components.css` | Reemplazado por token semántico |
+| 10.18 | `--button-shadow-inset` azul hardcoded | `_tokens-components.css` | Reemplazado por token semántico |
+| 10.19 | `--ng-select-border/shadow` hex fijos | `_tokens-components.css` | Reemplazados por tokens semánticos |
 
-### Hallazgos pendientes 🔲
+---
 
-#### 🔴 Críticos — Routing inoperativo
+## Fase 11 — ESLint: Cero Errores ✅ COMPLETADO (30/05/2026)
 
-| # | Problema | Archivo | Prioridad |
+> Auditoría de lint completa sobre el proyecto real. 17 errores corregidos. `npm run lint` → 0 errors, 0 warnings.
+
+| # | Archivo | Error | Solución |
 | --- | --- | --- | --- |
-| 10.6 | Sin `<router-outlet>` en `app.html` + `RouterOutlet` no importado → rutas no renderizan nada | `app.html`, `app.ts` | 🔴 Crítico |
-| 10.7 | `onSidebarNavigate()` no llama `Router.navigate()` → clicks del sidebar no navegan | `app.ts` | 🔴 Crítico |
-| 10.8 | Blueprints con `<app-layout-shell>` propio → double layout si se añade `router-outlet` sin refactorizar | `app.html`, blueprints | 🔴 Crítico |
-
-> **Solución completa para 10.6–10.8**: Convertir `AppComponent` en shell de routing puro (`app.html` → solo `<router-outlet>` + contenedores globales). El contenido de la demo/showcase pasa a su propio componente con ruta `/showcase`. Cada blueprint page renderiza su propio layout.
-
-#### 🟡 Altos — CSS / Tokens
-
-| # | Problema | Archivo | Prioridad |
-| --- | --- | --- | --- |
-| 10.9 | `rgba(var(--brand-primary-500-rgb), 0.3)` sin fallback en `brand-dark` → focus ring invisible si var no está en scope | `_tokens-components.css` | 🟡 Alto |
-| 10.10 | `--brand-primary-500-rgb` solo en `:root` → temas oscuros usan color de acento del tema claro en el focus ring | `_tokens-brand.css` | 🟡 Alto |
-| 10.11 | Tokens faltantes en `[data-theme="dark"]` y `[data-theme="brand-dark"]`: badges (primary/success/warning/danger/info), todos los `--alert-*`, `--breadcrumb-*`, `--switch-thumb`, `--avatar-border` | `_tokens-components.css` | 🟡 Alto |
-
-#### 🟠 Medios — Calidad de código
-
-| # | Problema | Archivo | Prioridad |
-| --- | --- | --- | --- |
-| 10.12 | `ButtonComponent` importado en `app.ts` pero no usado en `app.html` | `app.ts` | 🟠 Medio |
-| 10.13 | `TableRow` tiene `col9` pero salta `col8` — naming inconsistente | `app.ts` | 🟠 Medio |
-| 10.14 | `statusOptions.value` son claves i18n — el filtro no matchea los datos reales de la tabla | `app.ts` | 🟠 Medio |
-| 10.15 | Catch-all `**` usa `component:` (eager) mientras todas las rutas de error usan `loadComponent` (lazy) | `app.routes.ts` | 🟠 Medio |
-| 10.16 | `provideRouter` sin `withPreloading(PreloadAllModules)` ni `withScrollPositionRestoration` | `app.config.ts` | 🟠 Medio |
-
-#### 🔵 Bajos — Valores hardcoded en tokens
-
-| # | Problema | Archivo | Prioridad |
-| --- | --- | --- | --- |
-| 10.17 | `--nav-shadow: rgba(122,120,120,0.2)` — gris hardcoded, no usa token semántico | `_tokens-components.css` | 🔵 Bajo |
-| 10.18 | `--button-shadow-inset: inset 0 1px 0 hsl(224,84%,74%)` — azul hardcoded | `_tokens-components.css` | 🔵 Bajo |
-| 10.19 | `--ng-select-border: #999999` y `--ng-select-shadow: 0 0 4px #9fa1a3` — hex fijos en light theme | `_tokens-components.css` | 🔵 Bajo |
+| 11.1 | `progress.component.ts` | `signal` importado pero no usado | Eliminado del import |
+| 11.2 | `tooltip.directive.ts` | `signal` importado pero no usado | Eliminado del import |
+| 11.3 | `ui-layout-shell.stories.ts` | `signal` importado pero no usado | Eliminada la línea de import |
+| 11.4 | `register-page.component.ts` | `Observable` importado pero no usado | Eliminado del import |
+| 11.5 | `settings-page.component.ts` | `isPlatformBrowser` + `PLATFORM_ID` importados sin uso | Eliminados |
+| 11.6 | `blueprint-forgot-password-page.stories.ts` | `canvasElement` arg sin uso | Renombrado a `_canvasElement` |
+| 11.7 | `ui-number-input.stories.ts` | `story` arg sin uso en decorator | Renombrado a `_story` |
+| 11.8 | `permission.directive.ts` | `@Input('appPermission')` alias en input | Alias eliminado; property renombrada a `appPermission` |
+| 11.9 | `form-builder.helper.ts` | `\-` escape innecesario en regex (×2) | Cambiado a `%-` y `.-` sin escape |
+| 11.10 | `file-input.component.ts` | Label sin asociación a input (`label-has-associated-control`) | Añadido `inputId` único + `[for]` en label + `[id]` en input |
+| 11.11 | `combobox.component.ts` | Label sin asociación a input | Añadido `inputId` + `[for]` en label + `[id]` en input |
+| 11.12 | `combobox.component.ts` | `role="combobox"` sin `aria-controls` requerido | Añadido `listboxId` + `[attr.aria-controls]` en input + `[id]` en `<ul>` |
+| 11.13 | `tag-input.component.ts` | Label sin asociación a input | Añadido `inputId` único + `[for]` en label + `[id]` en input |
+| 11.14 | `ui-popup.stories.ts` | Selector `sb-popup-demo` sin prefijo `app` | Cambiado a `app-popup-demo` |
+| 11.15 | `ui-tooltip.stories.ts` | Selector `tooltip-demo` sin prefijo `app` | Cambiado a `app-tooltip-demo` |
+| 11.16 | `ui-tooltip.stories.ts` | Selector `tooltip-long-demo` sin prefijo `app` | Cambiado a `app-tooltip-long-demo` |

@@ -45,7 +45,7 @@ export interface TagInputOption {
   template: `
     <div class="tag-input-wrapper" [class.tag-input--disabled]="disabled" [class.tag-input--focused]="focused()">
       @if (label) {
-        <label class="tag-input__label">{{ label }}</label>
+        <label class="tag-input__label" [for]="inputId">{{ label }}</label>
       }
       <div class="tag-input__field">
         <!-- Tags -->
@@ -62,6 +62,7 @@ export interface TagInputOption {
         @if (!maxTags || tags().length < maxTags) {
           <input
             #inputEl
+            [id]="inputId"
             class="tag-input__input"
             [placeholder]="tags().length === 0 ? placeholder : ''"
             [disabled]="disabled"
@@ -145,6 +146,8 @@ export interface TagInputOption {
   `],
 })
 export class TagInputComponent implements ControlValueAccessor {
+  readonly inputId = 'tag-input-' + Math.random().toString(36).slice(2, 8);
+
   @Input() label = '';
   @Input() placeholder = 'Agregar etiqueta…';
   @Input() hint = '';
