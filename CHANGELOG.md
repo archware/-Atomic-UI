@@ -5,6 +5,90 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [4.3.0] - 2026-05-29
+
+### Auditoría de Consistencia — Correcciones visuales, routing y tokens
+
+#### Added
+
+- **`app.routes.ts`**: Ruta `/crud` registrada con `loadComponent` lazy y `canActivate: [authGuard]`, completando el conjunto de rutas de blueprints navegables desde el sidebar.
+- **`app.ts`**: `menuItems` actualizado con cuatro ítems definitivos — Dashboard, CRUD, Profile, Settings — con iconos Font Awesome y rutas correctas.
+
+#### Fixed — Visual / UI
+
+- **`sidebar.component.css`**: Añadida regla `:host { display: block; height: 100%; }` — sin ella, `.sidebar-container { height: 100% }` no podía heredar la altura del contenedor padre (500px en el preview de Storybook), haciendo que el sidebar quedara sin altura visible.
+- **`showcase-navigation.component.ts`**: Grid wrapper con `width: 100%; box-sizing: border-box` y cada preview con `min-width: 0` — corrige el desbordamiento del grid cuando los items exceden el ancho disponible (CSS Grid tiene `min-width: auto` por defecto, que ignora el ancho del contenedor).
+- **`showcase-navigation.component.ts`**: Labels de preview con `backdrop-filter: blur(4px)` y `border-radius: 0.75rem` — mejoran la legibilidad sobre fondos con mucho contraste.
+
+#### Fixed — Temas oscuros (elevación / sombras)
+
+- **`_tokens-semantic.css`** `[data-theme="dark"]`: Reemplazadas sombras `rgba(0,0,0,0.7)` puras por técnica de **elevation overlay** — anillo blanco semitransparente `0 0 0 1px rgba(255,255,255,0.04–0.11)` + sombra profunda. Las sombras eran completamente invisibles sobre fondos `#1e1e1e` (negro sobre negro).
+- **`_tokens-semantic.css`** `[data-theme="brand-dark"]`: Misma técnica de elevation overlay con anillo blanco `rgba(255,255,255,0.05–0.12)` + shadow con `--shadow-color: 220 40% 2%` adaptado al fondo azul profundo del tema.
+
+---
+
+### Auditoría técnica — Inconsistencias identificadas (pendientes de Fase 10)
+
+> Hallazgos documentados para implementación en la siguiente fase.
+
+#### 🔴 Críticos — Routing completamente inoperativo
+
+| # | Problema | Archivo |
+| --- | --- | --- |
+| A1 | Sin `<router-outlet>` en `app.html` ni `RouterOutlet` importado en `app.ts` — las rutas definidas no renderizan nada | `app.html`, `app.ts` |
+| A2 | `onSidebarNavigate()` solo cierra el sidebar en móvil; nunca llama `Router.navigate()` — los clicks del sidebar no navegan | `app.ts` |
+| A3 | Los blueprints tienen su propio `<app-layout-shell>` — si se añade `router-outlet` sin refactorizar `app.html`, se producirá doble layout anidado | `app.html`, blueprints |
+
+#### 🟡 Altos — CSS / Tokens
+
+| # | Problema | Archivo | Línea |
+| --- | --- | --- | --- |
+| A4 | `rgba(var(--brand-primary-500-rgb), 0.3)` sin valor de fallback en `brand-dark` — si la variable no está en scope, el focus ring desaparece silenciosamente | `_tokens-components.css` | 458 |
+| A5 | `--brand-primary-500-rgb` definido solo en `:root` — temas oscuros usan el color del tema claro para el anillo de focus de inputs | `_tokens-brand.css` | 31 |
+| A6 | Tokens faltantes en `[data-theme="dark"]` y `[data-theme="brand-dark"]`: todas las variantes de `--badge-*`, todos los `--alert-*`, `--breadcrumb-*`, `--switch-thumb`, `--avatar-border` | `_tokens-components.css` | variado |
+
+#### 🟠 Medios — Calidad de código
+
+| # | Problema | Archivo |
+| --- | --- | --- |
+| A7 | `ButtonComponent` importado en `app.ts` pero ausente en `app.html` — import sin uso | `app.ts` |
+| A8 | `TableRow` tiene `col9` pero salta `col8` — inconsistencia en naming de columnas | `app.ts` |
+| A9 | `statusOptions` values son claves i18n (`'data.status.active'`) — el filtro por value nunca coincide con los datos reales de la tabla | `app.ts` |
+| A10 | Catch-all `{ path: '**', component: ErrorPagesComponent }` usa carga eager mientras todas las demás rutas de error usan `loadComponent` (lazy) | `app.routes.ts` |
+| A11 | `provideRouter(routes)` sin `withPreloading(PreloadAllModules)` ni `withScrollPositionRestoration` — el propio comentario del archivo indica que debería usarse | `app.config.ts` |
+
+#### 🔵 Bajos — Valores hardcoded en tokens
+
+| # | Problema | Archivo |
+| --- | --- | --- |
+| A12 | `--nav-shadow: rgba(122,120,120,0.2)` — gris hardcoded, debería usar variable semántica de sombra | `_tokens-components.css` |
+| A13 | `--button-shadow-inset: inset 0 1px 0 hsl(224,84%,74%)` — azul hardcoded, no sigue el sistema de tokens | `_tokens-components.css` |
+| A14 | `--ng-select-border: #999999` y `--ng-select-shadow: 0 0 4px #9fa1a3` en light theme — hex fijos que no respetan el sistema de design tokens | `_tokens-components.css` |
+
+---
+
+### Lecciones Aprendidas
+
+#### Arquitectura Angular
+
+- **Una aplicación Angular con routing real debe tener `<router-outlet>` como elemento raíz de `app.html`.** Si `app.html` contiene un layout estático (showcase, tabla de demo, etc.), ese contenido debe moverse a un componente con su propia ruta — por ejemplo `/showcase`. El componente raíz `AppComponent` solo debe orquestar el router outlet más los contenedores globales fuera del flujo de routing (toast, modal, popup).
+
+- **Los blueprint pages diseñados para routing deben ser páginas completas independientes**, con su propio `<app-layout-shell>`. Nunca deben diseñarse para ser embebidos dentro del layout del `AppComponent`. Si se embeben, se produce doble shell (sidebar + topbar duplicados).
+
+- **El evento `(navigate)` del sidebar debe llamar a `Router.navigate([item.route])`.** Emitir el evento y manejarlo solo para cerrar el sidebar en móvil es insuficiente; el guard de autenticación y el historial del navegador solo funcionan si la navegación pasa por el Router de Angular.
+
+#### CSS / Design Tokens
+
+- **`rgba(var(--mi-variable), 0.3)` funciona solo si la variable contiene exclusivamente los valores RGB sin paréntesis** (`95, 41, 92`). Si la variable no tiene fallback y no está definida en el scope del tema oscuro, el resultado es `rgba(, 0.3)` — inválido, sin error visible. Siempre incluir fallback: `rgba(var(--mi-var, 95, 41, 92), 0.3)`.
+
+- **Los tokens de color de foco (`:focus-visible`, input shadow focus) deben redefinirse en cada bloque de tema.** Un `--brand-primary-500-rgb` definido solo en `:root` hace que todos los temas usen el mismo color de acento del tema claro. Cada tema oscuro necesita su propia redefinición de los tokens RGB.
+
+- **La técnica de "elevation overlay" es la correcta para sombras en temas oscuros.** Una sombra `rgba(0,0,0,N)` sobre fondo oscuro tiene contraste cero. La solución: `box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 Xpx Ypx rgba(0,0,0,0.85)` — el anillo blanco semitransparente define el borde del elemento y la sombra oscura crea la profundidad.
+
+- **Los tokens de componente (`_tokens-components.css`) deben definir explícitamente TODOS los valores en cada bloque de tema**, incluso si el valor es idéntico al tema claro. La herencia CSS de `:root` a `[data-theme="dark"]` no es garantizada cuando el tema se aplica a un elemento antecesor distinto. Tokens faltantes = componentes con colores del tema equivocado en modo oscuro.
+
+---
+
 ## [4.2.0] - 2026-05-28
 
 ### Blueprint Responsive Audit — Revisión profunda 1:1 de todos los blueprints

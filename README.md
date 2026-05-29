@@ -258,7 +258,7 @@ Este proyecto está bajo la Licencia MIT.
 
 ---
 
-**Versión:** 4.0.0 (Atomic Design System)  
+**Versión:** 4.3.0 (Atomic Design System)  
 **Última Actualización:** Mayo 2026  
-**Angular Version:** 20+  
+**Angular Version:** 21+  
 **TypeScript:** 5.0+

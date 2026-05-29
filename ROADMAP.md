@@ -231,5 +231,61 @@
 Después de Fase 6:          ~97% del roadmap operativo
 Después de Fase 7:          ~99% — responsive completo + accesibilidad base
 Después de Fase 8 y 9:      ~100% — backlog completado + blueprints responsive 1:1
-Pendiente:                  Fase 8.1 — publicación npm con ng-packagr
+Después de Fase 10 (actual): correcciones visuales + auditoría de consistencia
+Pendiente Fase 10:          Refactor arquitectura routing + tokens faltantes dark
+Pendiente Fase 8.1:         Publicación npm con ng-packagr
 ```
+
+---
+
+## Fase 10 — Auditoría de Consistencia 🔄 EN PROGRESO (29/05/2026)
+
+> Auditoría profunda del proyecto: inconsistencias de arquitectura, tokens y código. 5 correcciones aplicadas, 14 hallazgos pendientes de implementación.
+
+### Correcciones aplicadas ✅
+
+| # | Problema | Archivo | Solución |
+| --- | --- | --- | --- |
+| 10.1 | Ruta `/crud` faltante en el router | `app.routes.ts` | Añadida con `loadComponent` lazy + `canActivate: [authGuard]` |
+| 10.2 | `menuItems` incompleto (faltaban CRUD + Profile) | `app.ts` | Actualizado con los 4 ítems definitivos: Dashboard, CRUD, Profile, Settings |
+| 10.3 | `sidebar.component.css` sin `:host { display: block; height: 100% }` | `sidebar.component.css` | Añadida regla `:host` — corrige la altura en el preview de Storybook y en contenedores con altura explícita |
+| 10.4 | Grid overflow en showcase-navigation | `showcase-navigation.component.ts` | `width: 100%; box-sizing: border-box` en wrapper + `min-width: 0` en cada item del grid |
+| 10.5 | Sombras invisibles en temas oscuros (`rgba(0,0,0,N)` sobre fondo oscuro = 0 contraste) | `_tokens-semantic.css` | Técnica de elevation overlay: anillo blanco semitransparente + sombra profunda en `[data-theme="dark"]` y `[data-theme="brand-dark"]` |
+
+### Hallazgos pendientes 🔲
+
+#### 🔴 Críticos — Routing inoperativo
+
+| # | Problema | Archivo | Prioridad |
+| --- | --- | --- | --- |
+| 10.6 | Sin `<router-outlet>` en `app.html` + `RouterOutlet` no importado → rutas no renderizan nada | `app.html`, `app.ts` | 🔴 Crítico |
+| 10.7 | `onSidebarNavigate()` no llama `Router.navigate()` → clicks del sidebar no navegan | `app.ts` | 🔴 Crítico |
+| 10.8 | Blueprints con `<app-layout-shell>` propio → double layout si se añade `router-outlet` sin refactorizar | `app.html`, blueprints | 🔴 Crítico |
+
+> **Solución completa para 10.6–10.8**: Convertir `AppComponent` en shell de routing puro (`app.html` → solo `<router-outlet>` + contenedores globales). El contenido de la demo/showcase pasa a su propio componente con ruta `/showcase`. Cada blueprint page renderiza su propio layout.
+
+#### 🟡 Altos — CSS / Tokens
+
+| # | Problema | Archivo | Prioridad |
+| --- | --- | --- | --- |
+| 10.9 | `rgba(var(--brand-primary-500-rgb), 0.3)` sin fallback en `brand-dark` → focus ring invisible si var no está en scope | `_tokens-components.css` | 🟡 Alto |
+| 10.10 | `--brand-primary-500-rgb` solo en `:root` → temas oscuros usan color de acento del tema claro en el focus ring | `_tokens-brand.css` | 🟡 Alto |
+| 10.11 | Tokens faltantes en `[data-theme="dark"]` y `[data-theme="brand-dark"]`: badges (primary/success/warning/danger/info), todos los `--alert-*`, `--breadcrumb-*`, `--switch-thumb`, `--avatar-border` | `_tokens-components.css` | 🟡 Alto |
+
+#### 🟠 Medios — Calidad de código
+
+| # | Problema | Archivo | Prioridad |
+| --- | --- | --- | --- |
+| 10.12 | `ButtonComponent` importado en `app.ts` pero no usado en `app.html` | `app.ts` | 🟠 Medio |
+| 10.13 | `TableRow` tiene `col9` pero salta `col8` — naming inconsistente | `app.ts` | 🟠 Medio |
+| 10.14 | `statusOptions.value` son claves i18n — el filtro no matchea los datos reales de la tabla | `app.ts` | 🟠 Medio |
+| 10.15 | Catch-all `**` usa `component:` (eager) mientras todas las rutas de error usan `loadComponent` (lazy) | `app.routes.ts` | 🟠 Medio |
+| 10.16 | `provideRouter` sin `withPreloading(PreloadAllModules)` ni `withScrollPositionRestoration` | `app.config.ts` | 🟠 Medio |
+
+#### 🔵 Bajos — Valores hardcoded en tokens
+
+| # | Problema | Archivo | Prioridad |
+| --- | --- | --- | --- |
+| 10.17 | `--nav-shadow: rgba(122,120,120,0.2)` — gris hardcoded, no usa token semántico | `_tokens-components.css` | 🔵 Bajo |
+| 10.18 | `--button-shadow-inset: inset 0 1px 0 hsl(224,84%,74%)` — azul hardcoded | `_tokens-components.css` | 🔵 Bajo |
+| 10.19 | `--ng-select-border: #999999` y `--ng-select-shadow: 0 0 4px #9fa1a3` — hex fijos en light theme | `_tokens-components.css` | 🔵 Bajo |
