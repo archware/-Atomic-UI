@@ -49,6 +49,9 @@ import { ButtonComponent } from '../../atoms/button/button.component';
       flex-wrap: wrap;
       align-items: flex-end;
       gap: 1rem;
+      /* Anula min-width interno de componentes para permitir flex shrinking */
+      --select2-min-width: 0;
+      --fi-min-width: 0;
     }
 
     /* Cada campo proyectado crece pero no baja de 160px */
@@ -63,12 +66,6 @@ import { ButtonComponent } from '../../atoms/button/button.component';
       display: flex;
       gap: var(--space-2);
       align-items: center;
-    }
-
-    /* Permite que los wrappers internos encojan en flex containers */
-    .filter-bar ::ng-deep .select2-wrapper,
-    .filter-bar ::ng-deep .floating-input-wrapper {
-      min-width: 0;
     }
 
     /* Móvil: stack vertical completo */

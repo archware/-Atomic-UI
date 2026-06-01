@@ -90,7 +90,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     .floating-input-wrapper {
       position: relative;
       width: 100%;
-      min-width: 8rem; /* Mínimo usable (128px). El ancho real lo controla el contenedor padre. */
+      min-width: var(--fi-min-width, 8rem); /* Controlable desde el contenedor padre. */
       margin-top: 0.75rem;
     }
 

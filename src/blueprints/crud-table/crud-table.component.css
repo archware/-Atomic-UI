@@ -153,10 +153,14 @@
   gap: 0.75rem;
   align-items: center;
   flex-wrap: wrap;
+  /* Permite que app-select2 y app-floating-input encojan */
+  --select2-min-width: 0;
+  --fi-min-width: 0;
 }
 
 .filter-group app-select2 {
   min-width: 150px;
+  flex: 1 1 150px;
 }
 
 /* En móvil los filtros se apilan verticalmente */

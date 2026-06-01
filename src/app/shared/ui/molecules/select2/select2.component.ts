@@ -143,7 +143,7 @@ export interface Select2Option {
     .select2-wrapper {
       position: relative;
       width: 100%;
-      min-width: 15rem;
+      min-width: var(--select2-min-width, 15rem);
     }
 
     .select2-wrapper.disabled {
