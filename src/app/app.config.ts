@@ -1,5 +1,6 @@
 import { ApplicationConfig, ErrorHandler, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, importProvidersFrom } from '@angular/core';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withFetch, withInterceptors, HttpClient } from '@angular/common/http';
 import { PreloadAllModules, provideRouter, withPreloading, withInMemoryScrolling } from '@angular/router';
 import { TranslateLoader, TranslateModule, TranslationObject } from '@ngx-translate/core';
@@ -30,6 +31,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
+    provideAnimationsAsync(),
     provideClientHydration(withEventReplay()),
     provideRouter(routes, withPreloading(PreloadAllModules), withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor, cacheInterceptor])),
