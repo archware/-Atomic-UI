@@ -52,7 +52,7 @@ interface ForgotPasswordResponse {
 
 /**
  * Login Page Blueprint
- * 
+ *
  * Features:
  * - Login form with email/password
  * - Register form with validation
@@ -60,7 +60,7 @@ interface ForgotPasswordResponse {
  * - Remember me checkbox
  * - API integration with loading states
  * - Error handling and display
- * 
+ *
  * @usage
  * 1. Copy this folder to your project's pages directory
  * 2. Update imports to match your project structure

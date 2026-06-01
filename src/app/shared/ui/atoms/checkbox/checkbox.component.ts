@@ -27,9 +27,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
           <path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </span>
-      @if (label) {
-        <span class="checkbox-label">{{ label }}</span>
-      }
+      <span class="checkbox-label">{{ label }}<ng-content></ng-content></span>
     </label>
   `,
   styles: [`
@@ -106,7 +104,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       line-height: 1.4;
     }
 
-    /* 
+    /*
      * Dark mode se maneja automáticamente via tokens semánticos.
      * --surface-background, --border-color, --primary-color, --shadow-focus-primary
      * ya tienen valores apropiados para temas oscuros.

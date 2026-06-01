@@ -25,7 +25,7 @@ export interface Select2Option {
     multi: true
   }],
   template: `
-    <div 
+    <div
       class="select2-wrapper"
       [class.open]="isOpen()"
       [class.disabled]="disabled"
@@ -35,8 +35,8 @@ export interface Select2Option {
       [class.has-label]="label"
       [style.width]="width || null"
     >
-      <div class="select2-trigger" 
-        (click)="toggleDropdown()" 
+      <div class="select2-trigger"
+        (click)="toggleDropdown()"
         (keydown)="handleKeydown($event)"
         [attr.aria-labelledby]="label ? selectId() : null"
         [attr.aria-controls]="listboxId()"
@@ -62,7 +62,7 @@ export interface Select2Option {
             }
           </span>
         }
-        
+
         <!-- Multiple values as tags -->
         @if (multiple) {
           <div class="select2-tags">
@@ -77,7 +77,7 @@ export interface Select2Option {
             }
           </div>
         }
-        
+
         <span class="select2-arrow">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -90,9 +90,9 @@ export interface Select2Option {
           <!-- Search box -->
           @if (searchable) {
             <div class="select2-search">
-              <input 
-                type="text" 
-                class="search-input" 
+              <input
+                type="text"
+                class="search-input"
                 placeholder="Buscar..."
                 [ngModel]="searchTerm()"
                 (ngModelChange)="searchTerm.set($event)"
@@ -102,11 +102,11 @@ export interface Select2Option {
               <span class="search-icon">🔍</span>
             </div>
           }
-          
+
           <!-- Options list -->
           <div class="select2-options" role="listbox" [id]="listboxId()">
             @for (option of filteredOptions(); track option.value; let i = $index) {
-              <div 
+              <div
                 [id]="optionId(i)"
                 class="select2-option"
                 [class.selected]="isSelected(option)"
