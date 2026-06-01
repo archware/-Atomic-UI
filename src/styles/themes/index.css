@@ -37,37 +37,70 @@
    ESTILOS BASE GLOBALES
    ============================================================================= */
 
-/* ============================================================================
-   OPTIMIZED THEME TRANSITIONS
-   ============================================================================
-   Instead of transitioning ALL elements, we use a class-based approach:
-   1. Add .theme-transitioning class to html during theme switch
-   2. Only then apply transitions
-   3. Remove class after animation completes
+/* =============================================================================
+   TRANSICIÓN DE TEMA — SISTEMA DUAL
+   ─────────────────────────────────────────────────────────────────────────────
+   1. View Transitions API (Chrome/Edge/Safari ≥ 2024):
+      Circle-reveal desde el punto de click. Fluido, nativo, sin layout jank.
+   2. Fallback CSS (Firefox + resto):
+      Transición rápida solo en superficies estructurales (no en *todo* el DOM).
+   ============================================================================= */
 
-   This prevents layout thrashing and improves performance significantly.
-   ============================================================================ */
+/* ── 1. View Transitions API ────────────────────────────────────────────── */
 
-/* Only apply transitions when theme is actively changing */
-html.theme-transitioning,
-html.theme-transitioning *,
-html.theme-transitioning *::before,
-html.theme-transitioning *::after {
-  transition:
-    background-color 150ms ease-out,
-    border-color 150ms ease-out,
-    color 150ms ease-out,
-    box-shadow 150ms ease-out !important;
+/* El snapshot antiguo queda estático debajo */
+::view-transition-old(root) {
+  animation: none;
+  z-index: 1;
 }
 
-/* Exclude heavy elements from transitions */
-html.theme-transitioning video,
-html.theme-transitioning canvas,
-html.theme-transitioning img,
-html.theme-transitioning iframe,
-html.theme-transitioning .no-theme-transition,
-html.theme-transitioning .no-theme-transition * {
-  transition: none !important;
+/* El nuevo tema se revela con un círculo que expande desde --vt-x / --vt-y */
+::view-transition-new(root) {
+  z-index: 2;
+  animation: 380ms cubic-bezier(0.4, 0, 0.2, 1) both theme-reveal;
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0% at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+  to {
+    clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+}
+
+/* Movimiento reducido → cross-fade simple (accesibilidad) */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 150ms;
+    animation-name: theme-fade;
+  }
+
+  @keyframes theme-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+}
+
+/* ── 2. Fallback CSS (navegadores sin VT API) ────────────────────────────── */
+/* Solo superficies estructurales — evita transicionar cada nodo del DOM */
+html.theme-transitioning,
+html.theme-transitioning body,
+html.theme-transitioning header,
+html.theme-transitioning nav,
+html.theme-transitioning main,
+html.theme-transitioning aside,
+html.theme-transitioning footer,
+html.theme-transitioning [class*="card"],
+html.theme-transitioning [class*="panel"],
+html.theme-transitioning [class*="surface"],
+html.theme-transitioning [class*="sidebar"],
+html.theme-transitioning [class*="topbar"] {
+  transition:
+    background-color 200ms ease-out,
+    border-color 200ms ease-out,
+    color 200ms ease-out !important;
 }
 
 /* Aplicar colores base al body */

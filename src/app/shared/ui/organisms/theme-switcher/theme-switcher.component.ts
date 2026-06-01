@@ -12,7 +12,7 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
     <div class="theme-switcher">
       <!-- Botón de alternancia simple Light/Dark -->
       <app-icon-button
-        (clicked)="toggleTheme()"
+        (clicked)="toggleTheme($event)"
         [tooltip]="themeService.isDarkMode() ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
       >
         <!-- Ícono Sol (tema claro) - visible cuando está en modo oscuro -->
@@ -68,9 +68,13 @@ export class ThemeSwitcherComponent {
   themeService = inject(ThemeService);
 
   /**
-   * Alterna entre tema claro (light) y oscuro corporativo (brand-dark)
+   * Alterna entre tema claro (light) y oscuro corporativo (brand-dark).
+   * Captura la posición del click para el circle-reveal de View Transitions.
    */
-  toggleTheme(): void {
+  toggleTheme(event?: MouseEvent): void {
+    if (event) {
+      this.themeService.setTransitionOrigin(event.clientX, event.clientY);
+    }
     if (this.themeService.isDarkMode()) {
       this.themeService.setLightTheme();
     } else {

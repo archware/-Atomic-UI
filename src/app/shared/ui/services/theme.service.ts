@@ -21,6 +21,12 @@ export class ThemeService {
     this.effectiveTheme() === 'dark' || this.effectiveTheme() === 'brand-dark'
   );
 
+  // Origen del círculo de transición visual (posición del último click)
+  private readonly transitionOrigin = signal<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  // Tema efectivo previo: null = carga inicial (sin animación)
+  private previousEffectiveTheme: string | null = null;
+
   constructor() {
     // Aplicar tema inicial inmediatamente
     if (typeof window !== 'undefined' && typeof document !== 'undefined') {
@@ -87,7 +93,16 @@ export class ThemeService {
   }
 
   /**
-   * Aplica el tema en el DOM y localStorage
+   * Establece el origen visual de la transición (posición del click del usuario).
+   */
+  setTransitionOrigin(x: number, y: number): void {
+    this.transitionOrigin.set({ x, y });
+  }
+
+  /**
+   * Aplica el tema en el DOM y localStorage.
+   * Usa View Transitions API para un circle-reveal fluido desde el punto de click.
+   * Fallback CSS para navegadores sin soporte.
    */
   private applyTheme(theme: Theme): void {
     if (typeof window === 'undefined' || typeof document === 'undefined') {
@@ -95,38 +110,52 @@ export class ThemeService {
     }
 
     const htmlElement = document.documentElement;
-    let effectiveTheme: 'light' | 'dark' | 'brand-dark';
+    const effectiveTheme: 'light' | 'dark' | 'brand-dark' =
+      theme === 'system' ? this.getEffectiveTheme() : theme;
 
-    if (theme === 'system') {
-      effectiveTheme = this.getEffectiveTheme();
-    } else {
-      effectiveTheme = theme;
+    const doApply = (): void => {
+      if (effectiveTheme === 'dark') {
+        htmlElement.classList.add(this.DARK_CLASS);
+        htmlElement.setAttribute('data-theme', 'dark');
+      } else if (effectiveTheme === 'brand-dark') {
+        htmlElement.classList.add(this.DARK_CLASS);
+        htmlElement.setAttribute('data-theme', 'brand-dark');
+      } else {
+        htmlElement.classList.remove(this.DARK_CLASS);
+        htmlElement.setAttribute('data-theme', 'light');
+      }
+      localStorage.setItem(this.THEME_STORAGE_KEY, theme);
+    };
+
+    // Carga inicial o tema sin cambio → aplicar directo, sin animación
+    const shouldAnimate =
+      this.previousEffectiveTheme !== null &&
+      this.previousEffectiveTheme !== effectiveTheme;
+    this.previousEffectiveTheme = effectiveTheme;
+
+    if (!shouldAnimate) {
+      doApply();
+      return;
     }
 
-    // Add transitioning class for smooth animation
+    // ── View Transitions API (Chrome/Edge/Safari) ────────────────────────────
+    // Circle-reveal nativo desde el punto de click: sin jank, sin layout thrashing
+    if ('startViewTransition' in document) {
+      const { x, y } = this.transitionOrigin();
+      htmlElement.style.setProperty('--vt-x', `${x}px`);
+      htmlElement.style.setProperty('--vt-y', `${y}px`);
+      (document as Document & {
+        startViewTransition: (cb: () => void) => void;
+      }).startViewTransition(doApply);
+      return;
+    }
+
+    // ── Fallback CSS (Firefox y navegadores sin VT API) ───────────────────────
     htmlElement.classList.add('theme-transitioning');
-
-    // Apply theme class and attribute
-    if (effectiveTheme === 'dark') {
-      htmlElement.classList.add(this.DARK_CLASS);
-      htmlElement.setAttribute('data-theme', 'dark');
-    } else if (effectiveTheme === 'brand-dark') {
-      htmlElement.classList.add(this.DARK_CLASS); // Also add .dark class for basic tailwind/css dark util support if used
-      htmlElement.setAttribute('data-theme', 'brand-dark');
-    } else {
-      htmlElement.classList.remove(this.DARK_CLASS);
-      htmlElement.setAttribute('data-theme', 'light');
-    }
-
-    // Remove transitioning class after animation completes
+    doApply();
     requestAnimationFrame(() => {
-      setTimeout(() => {
-        htmlElement.classList.remove('theme-transitioning');
-      }, 150); // Match CSS transition duration
+      setTimeout(() => htmlElement.classList.remove('theme-transitioning'), 200);
     });
-
-    // Save to localStorage
-    localStorage.setItem(this.THEME_STORAGE_KEY, theme);
   }
 
   /**
