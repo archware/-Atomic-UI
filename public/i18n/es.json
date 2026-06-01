@@ -22,9 +22,22 @@
     "inactive": "Inactivo",
     "rowCount": "N° Filas",
     "startDate": "Fecha Inicio",
-    "filter": "Filtrar"
+    "dateStart": "Fecha Inicio",
+    "dateEnd": "Fecha Fin",
+    "filter": "Filtrar",
+    "clear": "Limpiar",
+    "statusOptions": {
+      "all": "Todos",
+      "active": "Activo",
+      "pending": "Pendiente",
+      "completed": "Completado",
+      "review": "En revisión",
+      "approved": "Aprobado",
+      "inactive": "Inactivo"
+    }
   },
   "table": {
+    "title": "Registros",
     "id": "ID",
     "name": "Nombre",
     "email": "Email",
@@ -33,7 +46,40 @@
     "type": "Tipo",
     "amount": "Monto",
     "priority": "Prioridad",
-    "actions": "Acciones"
+    "actions": "Acciones",
+    "headers": {
+      "id": "ID",
+      "name": "Nombre",
+      "email": "Email",
+      "date": "Fecha",
+      "status": "Estado",
+      "type": "Tipo",
+      "amount": "Monto",
+      "priority": "Prioridad",
+      "actions": "Acciones"
+    }
+  },
+  "data": {
+    "status": {
+      "active": "Activo",
+      "pending": "Pendiente",
+      "completed": "Completado",
+      "review": "En revisión",
+      "approved": "Aprobado",
+      "inactive": "Inactivo"
+    },
+    "type": {
+      "fua": "FUA",
+      "prescription": "Receta Médica",
+      "order": "Orden",
+      "consultation": "Consulta",
+      "referral": "Referencia"
+    },
+    "priority": {
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Baja"
+    }
   },
   "status": {
     "active": "Activo",

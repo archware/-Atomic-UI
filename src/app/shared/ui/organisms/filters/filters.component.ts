@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from 
 
 import { PanelComponent } from '../../surfaces/panel/panel.component';
 import { ButtonComponent } from '../../atoms/button/button.component';
-import { RowComponent } from '../../atoms/row/row.component';
 
 /**
  * FiltersComponent — Organismo genérico para paneles de filtros.
@@ -23,14 +22,11 @@ import { RowComponent } from '../../atoms/row/row.component';
   selector: 'app-filters',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [PanelComponent, ButtonComponent, RowComponent],
+  imports: [PanelComponent, ButtonComponent],
   template: `
     <app-panel [title]="title" icon="🔍" variant="default" padding="md">
-      <app-row [responsive]="true" minColumnWidth="180px" gap="1rem" verticalAlign="bottom">
-        <!-- Campos proyectados por el consumidor -->
+      <div class="filter-bar">
         <ng-content></ng-content>
-
-        <!-- Botones de acción -->
         <div class="filter-actions">
           <app-button variant="primary" (buttonClick)="onFilter()">
             <i icon-left class="fa-solid fa-magnifying-glass"></i>
@@ -42,16 +38,41 @@ import { RowComponent } from '../../atoms/row/row.component';
             </app-button>
           }
         </div>
-      </app-row>
+      </div>
     </app-panel>
   `,
   styles: [`
     :host { display: block; }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 1rem;
+    }
+
+    /* Cada campo proyectado crece pero no baja de 160px */
+    .filter-bar > ::ng-deep * {
+      flex: 1 1 160px;
+      min-width: 0;
+    }
+
+    /* El botón no crece: tamaño fijo */
     .filter-actions {
+      flex: 0 0 auto;
       display: flex;
       gap: var(--space-2);
       align-items: center;
-      flex-shrink: 0;
+    }
+
+    /* Móvil: stack vertical completo */
+    @media (max-width: 639px) {
+      .filter-bar > ::ng-deep * {
+        flex: 1 1 100%;
+      }
+      .filter-actions {
+        width: 100%;
+      }
     }
   `]
 })

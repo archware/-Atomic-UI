@@ -22,9 +22,22 @@
     "inactive": "Inactive",
     "rowCount": "Row Count",
     "startDate": "Start Date",
-    "filter": "Filter"
+    "dateStart": "Start Date",
+    "dateEnd": "End Date",
+    "filter": "Filter",
+    "clear": "Clear",
+    "statusOptions": {
+      "all": "All",
+      "active": "Active",
+      "pending": "Pending",
+      "completed": "Completed",
+      "review": "In Review",
+      "approved": "Approved",
+      "inactive": "Inactive"
+    }
   },
   "table": {
+    "title": "Records",
     "id": "ID",
     "name": "Name",
     "email": "Email",
@@ -33,7 +46,40 @@
     "type": "Type",
     "amount": "Amount",
     "priority": "Priority",
-    "actions": "Actions"
+    "actions": "Actions",
+    "headers": {
+      "id": "ID",
+      "name": "Name",
+      "email": "Email",
+      "date": "Date",
+      "status": "Status",
+      "type": "Type",
+      "amount": "Amount",
+      "priority": "Priority",
+      "actions": "Actions"
+    }
+  },
+  "data": {
+    "status": {
+      "active": "Active",
+      "pending": "Pending",
+      "completed": "Completed",
+      "review": "In Review",
+      "approved": "Approved",
+      "inactive": "Inactive"
+    },
+    "type": {
+      "fua": "FUA",
+      "prescription": "Medical Prescription",
+      "order": "Order",
+      "consultation": "Consultation",
+      "referral": "Referral"
+    },
+    "priority": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    }
   },
   "status": {
     "active": "Active",

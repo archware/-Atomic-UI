@@ -181,6 +181,12 @@ export class DashboardPageComponent implements OnInit {
   /** @customize Configure your menu items */
   menuItems: MenuItem[] = [
     {
+      id: 'showcase',
+      label: 'Showcase',
+      icon: 'fa-solid fa-palette',
+      route: '/showcase'
+    },
+    {
       id: 'dashboard',
       label: 'Dashboard',
       icon: 'fa-solid fa-chart-pie',
@@ -189,27 +195,21 @@ export class DashboardPageComponent implements OnInit {
     {
       id: 'crud',
       label: 'CRUD',
-      icon: 'fa-solid fa-users',
+      icon: 'fa-solid fa-table',
       route: '/crud',
       badge: 5
     },
     {
-      id: 'projects',
-      label: 'Proyectos',
-      icon: 'fa-solid fa-folder-open',
-      route: '/dashboard/projects'
-    },
-    {
-      id: 'reports',
-      label: 'Reportes',
-      icon: 'fa-solid fa-chart-bar',
-      route: '/dashboard/reports'
+      id: 'profile',
+      label: 'Profile',
+      icon: 'fa-solid fa-user',
+      route: '/profile'
     },
     {
       id: 'settings',
-      label: 'Configuración',
+      label: 'Settings',
       icon: 'fa-solid fa-gear',
-      route: '/dashboard/settings'
+      route: '/settings'
     }
   ];
 
