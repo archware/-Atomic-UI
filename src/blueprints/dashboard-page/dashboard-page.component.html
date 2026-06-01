@@ -21,7 +21,7 @@
   <!-- MAIN CONTENT (Atomic) -->
   <!-- ============================================ -->
   <!-- Page Header -->
-  <app-row justify="between" verticalAlign="center" class="mb-6">
+  <app-row columns="1fr auto" justify="between" verticalAlign="center" class="mb-6">
     <div class="header-text">
       <app-text variant="h2" weight="bold">
         Bienvenido, {{ (currentUser()?.name ?? 'Usuario').split(' ')[0] }} 👋
@@ -46,7 +46,7 @@
   </app-row>
   } @else if (statsApi.hasError()) {
   <app-panel class="mb-6">
-    <app-row align="center" justify="center" gap="1rem" style="padding: 2rem;">
+    <app-row wrap="wrap" align="center" justify="center" gap="1rem" style="padding: 2rem;">
       <i class="fa-solid fa-circle-exclamation text-danger" style="font-size: 2rem;"></i>
       <app-text variant="body" color="danger">Error al cargar estadísticas</app-text>
       <app-button variant="outline" size="sm" (buttonClick)="loadDashboardStats()">
@@ -62,13 +62,13 @@
   <app-row [responsive]="true" minColumnWidth="280px" gap="1.5rem" class="content-grid-row">
     <!-- Recent Activity -->
     <app-panel>
-      <app-row justify="between" align="center" class="mb-4">
+      <app-row columns="1fr auto" justify="between" align="center" class="mb-4">
         <app-text variant="h4" weight="bold">Actividad Reciente</app-text>
         <app-button variant="ghost" size="sm">Ver todo</app-button>
       </app-row>
-      <app-row direction="column" gap="0.75rem">
+      <app-row columns="1fr" gap="0.75rem">
         @for (i of [1, 2, 3, 4, 5]; track i) {
-        <app-row align="center" gap="1rem" class="border-b pb-4 last:border-0 last:pb-0">
+        <app-row columns="auto 1fr" align="center" gap="1rem" class="border-b pb-4 last:border-0 last:pb-0">
           <app-avatar variant="default" icon="fa-solid fa-user" size="sm"></app-avatar>
           <div style="flex: 1">
             <app-text variant="body-sm">

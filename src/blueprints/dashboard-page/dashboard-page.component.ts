@@ -181,33 +181,39 @@ export class DashboardPageComponent implements OnInit {
   /** @customize Configure your menu items */
   menuItems: MenuItem[] = [
     {
-      id: 'showcase',
-      label: 'Showcase',
-      icon: 'fa-solid fa-palette',
-      route: '/showcase'
-    },
-    {
-      id: 'dashboard',
-      label: 'Dashboard',
+      id: 'overview',
+      label: 'Resumen',
       icon: 'fa-solid fa-chart-pie',
       route: '/dashboard'
     },
     {
-      id: 'crud',
-      label: 'CRUD',
-      icon: 'fa-solid fa-table',
+      id: 'analytics',
+      label: 'Analíticas',
+      icon: 'fa-solid fa-chart-line',
+      route: '/dashboard'
+    },
+    {
+      id: 'projects',
+      label: 'Proyectos',
+      icon: 'fa-solid fa-folder-open',
       route: '/crud',
       badge: 5
     },
     {
+      id: 'reports',
+      label: 'Reportes',
+      icon: 'fa-solid fa-file-chart-column',
+      route: '/dashboard'
+    },
+    {
       id: 'profile',
-      label: 'Profile',
+      label: 'Mi Perfil',
       icon: 'fa-solid fa-user',
       route: '/profile'
     },
     {
       id: 'settings',
-      label: 'Settings',
+      label: 'Configuración',
       icon: 'fa-solid fa-gear',
       route: '/settings'
     }

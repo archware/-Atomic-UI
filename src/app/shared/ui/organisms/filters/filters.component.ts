@@ -65,6 +65,12 @@ import { ButtonComponent } from '../../atoms/button/button.component';
       align-items: center;
     }
 
+    /* Permite que los wrappers internos encojan en flex containers */
+    .filter-bar ::ng-deep .select2-wrapper,
+    .filter-bar ::ng-deep .floating-input-wrapper {
+      min-width: 0;
+    }
+
     /* Móvil: stack vertical completo */
     @media (max-width: 639px) {
       .filter-bar > ::ng-deep * {
