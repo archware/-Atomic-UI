@@ -16,7 +16,7 @@
   <!-- FILTERS -->
   <!-- ============================================ -->
   <app-panel class="filters-panel mb-4">
-    <app-row gap="1rem" verticalAlign="center" responsive="true" minColumnWidth="160px">
+    <app-row gap="1rem" verticalAlign="center" [responsive]="true" minColumnWidth="160px">
       <div class="search-box-container" style="flex: 1;">
         <app-input placeholder="Buscar por nombre o email..." iconClass="fa-solid fa-search" [ngModel]="searchTerm()"
           (ngModelChange)="onSearch($event)">
