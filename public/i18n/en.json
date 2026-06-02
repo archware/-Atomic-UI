@@ -121,5 +121,21 @@
     "success": "Success",
     "warning": "Warning",
     "info": "Information"
+  },
+  "footer": {
+    "all_rights_reserved": "All rights reserved."
+  },
+  "demo": {
+    "project": {
+      "title": "About this Project",
+      "subtitle": "Angular Design System",
+      "description": "Atomic UI is a collection of reusable Angular components built with Design Tokens, Signals, and SSR support.",
+      "tech": "Built with Angular 21, standalone components, View Transitions API, and ngx-translate."
+    },
+    "components": {
+      "title": "Component Library",
+      "subtitle": "Atomic Design Architecture",
+      "description": "Components organized following Atomic Design principles: Atoms, Molecules, Organisms, Templates, and Pages."
+    }
   }
 }

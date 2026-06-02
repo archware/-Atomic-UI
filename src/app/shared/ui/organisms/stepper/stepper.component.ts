@@ -146,20 +146,30 @@ export interface Step {
       overflow-wrap: break-word;
     }
 
-    /* Horizontal mode: single-line truncated labels */
+    /* Horizontal mode: indicator on top, label centered below */
+    .stepper:not(.stepper-vertical) .step {
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2, 0.5rem);
+    }
+
+    .stepper:not(.stepper-vertical) .step-content {
+      flex: 0 0 auto;
+      min-height: auto;
+      align-items: center;
+      text-align: center;
+    }
+
     .stepper:not(.stepper-vertical) .step-label {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      word-break: normal;
-      overflow-wrap: normal;
+      text-align: center;
+      white-space: normal;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
 
     .stepper:not(.stepper-vertical) .step-description,
     .stepper:not(.stepper-vertical) .step-optional {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      text-align: center;
     }
 
     .step.active .step-label {

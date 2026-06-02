@@ -322,7 +322,7 @@ export class FooterComponent {
   @Input() variant: FooterVariant = 'simple';
   @Input() companyName = 'Company';
   @Input() year = new Date().getFullYear();
-  @Input() copyrightText = 'FOOTER.ALL_RIGHTS_RESERVED';
+  @Input() copyrightText = 'footer.all_rights_reserved';
   @Input() description = '';
   @Input() socialLinks: SocialLink[] = [];
   @Input() legalLinks: LegalLink[] = [];

@@ -57,11 +57,9 @@ import { ShowcaseStatusComponent } from './examples/showcase-status/showcase-sta
 
       <!-- Footer Demo at the bottom -->
       <app-footer 
-        appName="Atomic UI" 
-        version="1.0.0" 
+        companyName="Atomic UI" 
         [socialLinks]="footerSocialLinks" 
-        [legalLinks]="footerLegalLinks"
-        copyright="© 2024 Atomic UI Project. All rights reserved.">
+        [legalLinks]="footerLegalLinks">
       </app-footer>
 
     </app-panel>

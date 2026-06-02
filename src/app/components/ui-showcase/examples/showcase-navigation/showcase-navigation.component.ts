@@ -75,7 +75,7 @@ import { StepperComponent, Step } from '../../../../shared/ui/organisms/stepper/
     <!-- STEPPER -->
     <app-panel title="Stepper" variant="flat" padding="md" class="showcase-section">
       <p style="margin-bottom: 1rem; color: var(--text-color-secondary);">Horizontal Stepper:</p>
-      <app-stepper [steps]="stepperSteps" [activeStep]="currentStep"></app-stepper>
+      <app-stepper [steps]="stepperSteps" [activeStep]="1"></app-stepper>
 
       <div style="margin-top: 2rem;">
         <p style="margin-bottom: 1rem; color: var(--text-color-secondary);">Vertical Stepper:</p>
@@ -119,5 +119,5 @@ export class ShowcaseNavigationComponent {
     { label: 'Confirmación', description: 'Revisar pedido' }
   ];
 
-  currentStep = 1;
+  readonly currentStep = 1;
 }
