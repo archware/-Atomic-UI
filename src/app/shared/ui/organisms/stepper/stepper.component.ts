@@ -56,13 +56,14 @@ export interface Step {
       display: block;
       width: 100%;
       min-width: 0;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .stepper {
       display: flex;
       align-items: flex-start;
       width: 100%;
+      padding: 1rem 0.25rem;
       min-width: 0;
     }
 
