@@ -41,33 +41,33 @@
    TRANSICIÓN DE TEMA — SISTEMA DUAL
    ─────────────────────────────────────────────────────────────────────────────
    1. View Transitions API (Chrome/Edge/Safari ≥ 2024):
-      Slide horizontal — el nuevo tema entra desde la derecha.
+      Zoom — el nuevo tema se expande desde el centro de la pantalla.
    2. Fallback CSS (Firefox + resto):
       Transición rápida solo en superficies estructurales (no en *todo* el DOM).
    ============================================================================= */
 
 /* ── 1. View Transitions API ────────────────────────────────────────────── */
 
-/* El tema antiguo se va hacia la izquierda con fade */
+/* El tema antiguo se desvanece y encoge ligeramente */
 ::view-transition-old(root) {
-  animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both theme-slide-out;
+  animation: 350ms cubic-bezier(0.4, 0, 0.2, 1) both theme-zoom-out;
   z-index: 1;
 }
 
-/* El nuevo tema entra desde la derecha */
+/* El nuevo tema entra expandiéndose desde el centro */
 ::view-transition-new(root) {
   z-index: 2;
-  animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both theme-slide-in;
+  animation: 400ms cubic-bezier(0.34, 1.56, 0.64, 1) both theme-zoom-in;
 }
 
-@keyframes theme-slide-out {
-  from { transform: translateX(0);     opacity: 1; }
-  to   { transform: translateX(-12%);  opacity: 0; }
+@keyframes theme-zoom-out {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(1.05); }
 }
 
-@keyframes theme-slide-in {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
+@keyframes theme-zoom-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 /* Movimiento reducido → cross-fade simple (accesibilidad) */

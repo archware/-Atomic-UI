@@ -27,7 +27,7 @@
       class="table-panel">
       <app-scroll-overlay class="so-block w-full max-w-full" [minColumnWidth]="40" [maxBodyHeight]="450"
         [lockColumnTemplate]="true"
-        [columnTemplate]="'70px minmax(120px, 1.5fr) minmax(150px, 2fr) minmax(80px, 1fr) minmax(80px, 1fr) minmax(70px, 0.8fr) minmax(80px, 1fr) minmax(80px, 1fr) 100px'">
+        [columnTemplate]="'70px 150px 220px 100px 130px 175px 90px 110px 100px'">
         <table class="rtc-table">
           <thead class="rtc-header">
             <tr>
@@ -45,18 +45,18 @@
           <tbody class="rtc-body">
             @for (row of tableData(); track row.col1) {
             <tr class="rtc-row">
-              <td class="rtc-text-center" data-label="ID:">{{ row.col1 }}</td>
-              <td data-label="Nombre:">{{ row.col2 }}</td>
-              <td data-label="Email:">{{ row.col3 }}</td>
-              <td data-label="Fecha:">{{ row.col4 }}</td>
-              <td class="rtc-text-center" data-label="Estado:">
+              <td class="rtc-text-center" [attr.data-label]="'table.headers.id' | translate">{{ row.col1 }}</td>
+              <td [attr.data-label]="'table.headers.name' | translate">{{ row.col2 }}</td>
+              <td [attr.data-label]="'table.headers.email' | translate">{{ row.col3 }}</td>
+              <td [attr.data-label]="'table.headers.date' | translate">{{ row.col4 }}</td>
+              <td class="rtc-text-center" [attr.data-label]="'table.headers.status' | translate">
                 <span class="badge" [class]="'badge-' + row.statusVariant">
                   {{ row.col5 | translate }}
                 </span>
               </td>
-              <td data-label="Tipo:">{{ row.col6 | translate }}</td>
-              <td data-label="Monto:">{{ row.col7 }}</td>
-              <td class="rtc-text-center" data-label="Prioridad:">{{ row.col8 | translate }}</td>
+              <td [attr.data-label]="'table.headers.type' | translate">{{ row.col6 | translate }}</td>
+              <td [attr.data-label]="'table.headers.amount' | translate">{{ row.col7 }}</td>
+              <td class="rtc-text-center" [attr.data-label]="'table.headers.priority' | translate">{{ row.col8 | translate }}</td>
               <td class="rtc-actions rtc-text-center" data-label="Acciones:">
                 <app-table-actions (view)="onView(row)" (edit)="onEdit(row)" (delete)="onDelete(row)">
                 </app-table-actions>

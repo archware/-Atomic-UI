@@ -771,7 +771,22 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    // Force table to recalculate its width based on content
+    // When lockColumnTemplate is true the user has provided an explicit pixel-based
+    // template. Avoid setting width: max-content on the table because that would
+    // cause fr-unit tracks (if present) to expand to cell max-content sizes and
+    // shift column positions whenever translated text changes length.
+    if (this._lockColumnTemplate) {
+      table.style.minWidth = '100%';
+      const thead = table.querySelector('thead') as HTMLElement;
+      const tbody = table.querySelector('tbody') as HTMLElement;
+      if (thead && tbody) {
+        thead.style.width = '100%';
+        tbody.style.width = '100%';
+      }
+      return;
+    }
+
+    // Auto-sync mode: let the table size itself by content so fr tracks expand.
     table.style.width = 'max-content';
     table.style.minWidth = '100%';
 
@@ -783,7 +798,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       thead.style.width = '100%';
       tbody.style.width = '100%';
 
-      // Force recalculation of grid template after width changes
+      // Re-measure column widths after the layout settles
       requestAnimationFrame(() => {
         this.syncColumnTemplate();
       });
