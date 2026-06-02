@@ -41,32 +41,33 @@
    TRANSICIÓN DE TEMA — SISTEMA DUAL
    ─────────────────────────────────────────────────────────────────────────────
    1. View Transitions API (Chrome/Edge/Safari ≥ 2024):
-      Circle-reveal desde el punto de click. Fluido, nativo, sin layout jank.
+      Slide horizontal — el nuevo tema entra desde la derecha.
    2. Fallback CSS (Firefox + resto):
       Transición rápida solo en superficies estructurales (no en *todo* el DOM).
    ============================================================================= */
 
 /* ── 1. View Transitions API ────────────────────────────────────────────── */
 
-/* El snapshot antiguo queda estático debajo */
+/* El tema antiguo se va hacia la izquierda con fade */
 ::view-transition-old(root) {
-  animation: none;
+  animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both theme-slide-out;
   z-index: 1;
 }
 
-/* El nuevo tema se revela con un círculo que expande desde --vt-x / --vt-y */
+/* El nuevo tema entra desde la derecha */
 ::view-transition-new(root) {
   z-index: 2;
-  animation: 380ms cubic-bezier(0.4, 0, 0.2, 1) both theme-reveal;
+  animation: 400ms cubic-bezier(0.4, 0, 0.2, 1) both theme-slide-in;
 }
 
-@keyframes theme-reveal {
-  from {
-    clip-path: circle(0% at var(--vt-x, 50%) var(--vt-y, 50%));
-  }
-  to {
-    clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 50%));
-  }
+@keyframes theme-slide-out {
+  from { transform: translateX(0);     opacity: 1; }
+  to   { transform: translateX(-12%);  opacity: 0; }
+}
+
+@keyframes theme-slide-in {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
 }
 
 /* Movimiento reducido → cross-fade simple (accesibilidad) */
