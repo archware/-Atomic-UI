@@ -14,7 +14,7 @@ export interface Step {
   template: `
     <div class="stepper" [class.stepper-vertical]="vertical" role="navigation" aria-label="Progreso">
       @for (step of steps; track step.label; let i = $index) {
-        <div 
+        <div
           class="step"
           [class.completed]="i < currentStep()"
           [class.active]="i === currentStep()"
@@ -52,9 +52,18 @@ export interface Step {
     </div>
   `,
   styles: [`
+    :host {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      overflow: hidden;
+    }
+
     .stepper {
       display: flex;
       align-items: flex-start;
+      width: 100%;
+      min-width: 0;
     }
 
     .stepper-vertical {
@@ -65,10 +74,12 @@ export interface Step {
     .step {
       display: flex;
       align-items: flex-start;
-      gap: var(--space-4);
+      gap: var(--space-3);
       cursor: pointer;
       position: relative;
       z-index: 1;
+      flex: 1 1 0;
+      min-width: 0;
     }
 
     .step.disabled {
@@ -122,6 +133,8 @@ export interface Step {
       gap: var(--space-1);
       min-height: 2.75rem;
       justify-content: center;
+      min-width: 0;
+      flex: 1 1 0;
     }
 
     .step-label {
@@ -129,6 +142,24 @@ export interface Step {
       font-weight: 600;
       color: var(--text-color-secondary);
       transition: color 200ms ease;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    /* Horizontal mode: single-line truncated labels */
+    .stepper:not(.stepper-vertical) .step-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: normal;
+      overflow-wrap: normal;
+    }
+
+    .stepper:not(.stepper-vertical) .step-description,
+    .stepper:not(.stepper-vertical) .step-optional {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .step.active .step-label {
@@ -155,10 +186,10 @@ export interface Step {
 
     /* CONNECTOR LINES */
     .step-connector {
-      flex: 1;
+      flex: 0 0 2rem;
       height: 3px;
-      min-width: var(--space-12, 3rem);
-      margin: var(--space-5, 1.375rem) var(--space-2) 0;
+      min-width: 1rem;
+      margin: var(--space-5, 1.375rem) var(--space-1) 0;
       background: var(--border-color);
       transition: background 300ms ease;
       border-radius: var(--radius-xs, 4px);
@@ -180,7 +211,7 @@ export interface Step {
       margin: var(--space-1) 0 var(--space-1) var(--space-5, 1.375rem);
     }
 
-    /* 
+    /*
      * Dark mode se maneja automáticamente via tokens semánticos.
      * --surface-background, --border-color, --primary-color, --shadow-glow-primary
      * ya tienen valores apropiados para temas oscuros.
@@ -193,7 +224,7 @@ export interface Step {
         align-items: stretch;
         gap: 0;
       }
-      
+
       .stepper .step {
         flex-direction: row;
         gap: var(--space-3);
