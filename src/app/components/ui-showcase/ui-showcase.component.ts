@@ -30,35 +30,35 @@ import { ShowcaseStatusComponent } from './examples/showcase-status/showcase-sta
 ],
   template: `
     <app-panel title="UI Components Showcase (Refactorizado)" icon="🎨" variant="elevated" padding="lg">
-      
+
       <!-- 1. Navigation & Layout Examples -->
       <app-showcase-navigation></app-showcase-navigation>
-      
+
       <!-- 2. Typography -->
       <app-showcase-typography></app-showcase-typography>
-      
+
       <!-- 3. Structure (Dividers, Panels, Rows) -->
       <app-showcase-structure></app-showcase-structure>
-      
+
       <!-- 4. Actions (Buttons) -->
       <app-showcase-actions></app-showcase-actions>
-      
+
       <!-- 5. Forms (Inputs, Selects) -->
       <app-showcase-forms></app-showcase-forms>
-      
+
       <!-- 6. Data Display (Tables, Avatars, Chips) -->
       <app-showcase-data-display></app-showcase-data-display>
-      
+
       <!-- 7. Feedback (Modals, Toasts) -->
       <app-showcase-feedback></app-showcase-feedback>
-      
+
       <!-- 8. Status (Loaders) -->
       <app-showcase-status></app-showcase-status>
 
       <!-- Footer Demo at the bottom -->
-      <app-footer 
-        companyName="Atomic UI" 
-        [socialLinks]="footerSocialLinks" 
+      <app-footer
+        companyName="Atomic UI"
+        [socialLinks]="footerSocialLinks"
         [legalLinks]="footerLegalLinks">
       </app-footer>
 

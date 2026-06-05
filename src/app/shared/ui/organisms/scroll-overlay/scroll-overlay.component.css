@@ -184,7 +184,6 @@ html.dark .so-root,
    With min-width: 100% the table fills its container and fr units distribute
    over a definite size instead. */
 .so-root.so-lock-template[data-so-table][data-so-sync-columns] table {
-  width: auto;
   min-width: 100%;
 }
 

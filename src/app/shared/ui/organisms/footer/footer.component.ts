@@ -311,7 +311,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
       }
     }
 
-    /* 
+    /*
      * Dark mode se maneja automáticamente via tokens semánticos.
      * --surface-section, --border-color, etc. ya tienen valores
      * apropiados para temas oscuros.

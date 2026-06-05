@@ -777,6 +777,9 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     // shift column positions whenever translated text changes length.
     if (this._lockColumnTemplate) {
       table.style.minWidth = '100%';
+      const hasFrUnits = this._columnTemplate ? this._columnTemplate.includes('fr') : false;
+      table.style.width = hasFrUnits ? 'auto' : 'max-content';
+
       const thead = table.querySelector('thead') as HTMLElement;
       const tbody = table.querySelector('tbody') as HTMLElement;
       if (thead && tbody) {
