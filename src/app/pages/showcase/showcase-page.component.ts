@@ -12,7 +12,7 @@ import {
   SidebarComponent,
   SidebarMenuItem,
   TopbarComponent,
-  TableActionsComponent,
+  ActionGroupComponent,
   FloatingInputComponent,
   Select2Component,
   Select2Option,
@@ -44,7 +44,7 @@ interface TableRow {
     ThemeSwitcherComponent,
     UiShowcaseComponent,
     PanelComponent,
-    TableActionsComponent,
+    ActionGroupComponent,
     LayoutShellComponent,
     SidebarComponent,
     TopbarComponent,
@@ -179,6 +179,20 @@ export class ShowcasePageComponent {
   onView(_row: TableRow) {}
   onEdit(_row: TableRow) {}
   onDelete(_row: TableRow) {}
+
+  onActionClick(actionId: string, row: TableRow) {
+    switch (actionId) {
+      case 'view': this.onView(row); break;
+      case 'edit': this.onEdit(row); break;
+      case 'delete': this.onDelete(row); break;
+    }
+  }
+
+  tableActions = [
+    { id: 'view', icon: 'fa-solid fa-eye', label: 'Ver' },
+    { id: 'edit', icon: 'fa-solid fa-pencil', label: 'Editar' },
+    { id: 'delete', icon: 'fa-solid fa-trash-can', label: 'Eliminar', variant: 'danger' as const }
+  ];
 
   private nombres = [
     'Juan Pérez', 'María García', 'Carlos López', 'Ana Martínez',

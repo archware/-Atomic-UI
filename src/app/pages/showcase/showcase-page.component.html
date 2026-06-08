@@ -58,8 +58,8 @@
               <td [attr.data-label]="'table.headers.amount' | translate">{{ row.col7 }}</td>
               <td class="rtc-text-center" [attr.data-label]="'table.headers.priority' | translate">{{ row.col8 | translate }}</td>
               <td class="rtc-actions rtc-text-center" data-label="Acciones:">
-                <app-table-actions (view)="onView(row)" (edit)="onEdit(row)" (delete)="onDelete(row)">
-                </app-table-actions>
+                <app-action-group [actions]="tableActions" (actionClick)="onActionClick($event, row)">
+                </app-action-group>
               </td>
             </tr>
             }
