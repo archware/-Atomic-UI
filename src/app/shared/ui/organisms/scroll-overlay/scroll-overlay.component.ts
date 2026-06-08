@@ -861,7 +861,13 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
     // 1. Revert to native HTML table layout to let the browser perfectly
     // calculate max-content widths for all cells based on actual content
+    const hadSync = this.hostEl.hasAttribute('data-so-sync-columns');
+    const hadTable = this.hostEl.hasAttribute('data-so-table');
+    const hadVertical = this.verticalScroller.hasAttribute('data-so-vertical');
+
     this.hostEl.removeAttribute('data-so-sync-columns');
+    this.hostEl.removeAttribute('data-so-table');
+    this.verticalScroller.removeAttribute('data-so-vertical');
     
     // 2. We MUST force the table to size to its content, not the container
     const table = this.hostEl.querySelector('table') as HTMLElement;
@@ -879,7 +885,9 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     });
 
     // 5. Restore grid layout attributes and properties
-    this.hostEl.setAttribute('data-so-sync-columns', 'true');
+    if (hadSync) this.hostEl.setAttribute('data-so-sync-columns', 'true');
+    if (hadTable) this.hostEl.setAttribute('data-so-table', 'true');
+    if (hadVertical) this.verticalScroller.setAttribute('data-so-vertical', 'true');
     table.style.width = oldTableWidth;
 
     // 6. Lock the exact pixel widths so thead and tbody align perfectly
