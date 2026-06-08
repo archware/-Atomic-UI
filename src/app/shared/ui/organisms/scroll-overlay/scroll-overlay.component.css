@@ -40,11 +40,11 @@ html.dark .so-root,
 }
 
 .so-root.so-has-overflow-y .so-scroll-area {
-  padding-right: calc(var(--so-track-size) + 4px);
+  padding-right: calc(var(--so-track-size) + 16px);
 }
 
 .so-root.so-has-overflow-x .so-scroll-area {
-  padding-bottom: calc(var(--so-track-size) + 4px);
+  padding-bottom: calc(var(--so-track-size) + 16px);
 }
 
 /* Cuando hay tabla, el tbody maneja el scroll vertical */
