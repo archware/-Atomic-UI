@@ -115,8 +115,8 @@
     vertical-align: middle;
 }
 
-.rtc-table td.text-right { text-align: right; }
-.rtc-table td.text-center { text-align: center; }
+.rtc-table td.text-right, .rtc-table th.text-right, .rtc-table td.rtc-text-right, .rtc-table th.rtc-text-right { text-align: right; }
+.rtc-table td.text-center, .rtc-table th.text-center, .rtc-table td.rtc-text-center, .rtc-table th.rtc-text-center { text-align: center; }
 
 /* Ocultar etiquetas de datos en desktop */
 .rtc-table td[data-label]::before,

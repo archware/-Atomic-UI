@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+ï»¿import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
 import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-overlay.component';
 
 @Component({
@@ -12,7 +12,9 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
       class="atomic-table-container so-block"
       [class.atomic-table-striped]="striped"
       [maxBodyHeight]="maxHeight"
-      [minColumnWidth]="40">
+      [minColumnWidth]="40"
+      [columnTemplate]="columnTemplate"
+      [lockColumnTemplate]="!!columnTemplate">
       <table class="atomic-table">
         <ng-content></ng-content>
       </table>
@@ -54,7 +56,7 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
     }
 
     /* ============================================
-       RESPONSIVE: Cards en móvil (Sin usar !important)
+       RESPONSIVE: Cards en mï¿½vil (Sin usar !important)
        Usamos selectores de alta especificidad para anular ScrollOverlay
        ============================================ */
     @media screen and (max-width: 768px) {
@@ -138,4 +140,8 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
 export class TableComponent {
   @Input() striped = false;
   @Input() maxHeight?: number;
+  @Input() columnTemplate?: string;
 }
+
+
+

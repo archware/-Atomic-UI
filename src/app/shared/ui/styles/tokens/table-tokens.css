@@ -23,11 +23,11 @@
   --table-color-hover: var(--hover-background);
 
   /* === Header === */
-  --table-header-bg: var(--surface-background);
-  --table-header-color: var(--text-color-secondary);
-  --table-header-border-width: 3px;
+  --table-header-bg: var(--primary-color);
+  --table-header-color: #ffffff;
+  --table-header-border-width: 1px;
   --table-header-border-style: solid;
-  --table-header-border-color: var(--primary-color);
+  --table-header-border-color: var(--primary-color-dark, var(--primary-color));
   --table-header-radius: var(--radius-md);
   --table-header-shadow: var(--shadow-xs, 0 1px 2px var(--shadow-color, rgba(0, 0, 0, 0.05)));
 
