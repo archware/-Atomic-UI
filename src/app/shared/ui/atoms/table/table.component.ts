@@ -104,8 +104,8 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
       .atomic-table tbody td[data-label]::before {
         content: attr(data-label);
         display: block !important;
-        font-weight: var(--table-font-weight-label);
-        color: var(--table-color-primary); /* Usar el color primario de la tabla para resaltar los títulos */
+        font-weight: var(--table-font-weight-label) !important;
+        color: var(--table-color-primary) !important;
         flex: 0 0 120px;
         margin-right: var(--space-3);
       }
