@@ -23,6 +23,9 @@
 /* Sistema de temas y tokens */
 @import './styles/themes/index.css';
 
+/* Tokens de Tabla (CR?TICO para estilos de cabecera y hover) */
+@import './app/shared/ui/styles/tokens/table-tokens.css';
+
 /* Estilos para tabla responsiva (usado por TableComponent) */
 @import './app/shared/ui/styles/responsive-table.css';
 
