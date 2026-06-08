@@ -194,7 +194,7 @@
         content: attr(data-label);
         display: block !important;
         font-weight: var(--rtc-font-weight-label);
-        color: var(--rtc-color-label);
+        color: var(--table-color-primary);
         font-size: var(--text-sm);
         width: 40%;
         max-width: 140px;
@@ -216,7 +216,7 @@
         content: attr(data-title);
         display: block !important;
         font-weight: var(--rtc-font-weight-label);
-        color: var(--rtc-color-label);
+        color: var(--table-color-primary);
         font-size: var(--text-sm);
         width: 40%;
         max-width: 140px;

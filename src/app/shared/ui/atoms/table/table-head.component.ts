@@ -55,23 +55,11 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
       /* Fondo */
       background: var(--table-header-bg);
       
-      /* Borde "cápsula" */
-      border-top: var(--table-header-border-width) var(--table-header-border-style) var(--table-header-border-color);
-      border-bottom: var(--table-header-border-width) var(--table-header-border-style) var(--table-header-border-color);
-      border-left: none;
-      border-right: none;
+      /* Borde sutil inferior para separar del contenido (igual que la tabla 1) */
+      border-bottom: 1px solid var(--table-color-border);
       
       /* Sombra */
       box-shadow: var(--table-header-shadow);
-    }
-    
-    /* Bordes en primera y última celda (sin radius manual para evitar gaps con el contenedor) */
-    .atomic-thead th:first-child {
-      border-left: var(--table-header-border-width) var(--table-header-border-style) var(--table-header-border-color);
-    }
-    
-    .atomic-thead th:last-child {
-      border-right: var(--table-header-border-width) var(--table-header-border-style) var(--table-header-border-color);
     }
     
     /* Alineación */
