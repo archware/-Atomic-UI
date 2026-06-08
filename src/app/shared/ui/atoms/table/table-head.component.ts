@@ -65,17 +65,13 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
       box-shadow: var(--table-header-shadow);
     }
     
-    /* Bordes redondeados en primera y última celda */
+    /* Bordes en primera y última celda (sin radius manual para evitar gaps con el contenedor) */
     .atomic-thead th:first-child {
       border-left: var(--table-header-border-width) var(--table-header-border-style) var(--table-header-border-color);
-      border-top-left-radius: var(--table-header-radius);
-      border-bottom-left-radius: var(--table-header-radius);
     }
     
     .atomic-thead th:last-child {
       border-right: var(--table-header-border-width) var(--table-header-border-style) var(--table-header-border-color);
-      border-top-right-radius: var(--table-header-radius);
-      border-bottom-right-radius: var(--table-header-radius);
     }
     
     /* Alineación */

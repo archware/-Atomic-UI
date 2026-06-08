@@ -1,27 +1,13 @@
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
+﻿import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
 import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-overlay.component';
 
-/**
- * TableComponent - Tabla atómica con scroll opcional
- *
- * Usa tokens centralizados de table-tokens.css
- *
- * @example
- * ```html
- * <!-- Tabla simple -->
- * <app-table [striped]="true">...</app-table>
- *
- * <!-- Tabla con altura máxima y scroll -->
- * <app-table [maxHeight]="350">...</app-table>
- * ```
- */
 @Component({
   selector: 'app-table',
   standalone: true,
   imports: [ScrollOverlayComponent],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+  template: \
     <app-scroll-overlay
       class="atomic-table-container so-block"
       [class.atomic-table-striped]="striped"
@@ -31,11 +17,8 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
         <ng-content></ng-content>
       </table>
     </app-scroll-overlay>
-  `,
-  styles: [`
-    /* ============================================
-       TOKENS: Usa --table-* de table-tokens.css
-       ============================================ */
+  \,
+  styles: [\
     :host {
       display: block;
       width: 100%;
@@ -43,13 +26,9 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
 
     .atomic-table-container {
       width: 100%;
-      border-radius: var(--table-border-radius);
-      border: 1px solid var(--table-color-border);
-      background: var(--table-color-background);
-      overflow: hidden; /* ScrollOverlay maneja el overflow interno */
+      /* Usamos estilos de ScrollOverlay, sin border duplicado */
+      overflow: hidden; 
     }
-
-    /* Eliminar scroll sticky nativo ya que ScrollOverlay usa CSS Grid para el layout */
 
     .atomic-table {
       width: 100%;
@@ -63,24 +42,18 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
       table-layout: auto;
     }
 
-    /* CRÍTICO: Hacer invisible el wrapper app-table-head */
     .atomic-table > app-table-head {
       display: contents;
     }
 
-    /* Tbody */
     .atomic-table tbody {
       display: table-row-group;
     }
 
-    /* Zebra stripes */
     .atomic-table-striped .atomic-table tbody tr:nth-child(odd) {
       background-color: var(--table-color-stripe);
     }
 
-    /* ============================================
-       RESPONSIVE: Cards en móvil
-       ============================================ */
     @media screen and (max-width: 768px) {
       .atomic-table-container {
         border: none !important;
@@ -104,7 +77,7 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
       .atomic-table tbody tr {
         display: flex !important;
         flex-direction: column !important;
-        width: 100% !important; /* Sobrescribir width: max-content de so-root */
+        width: 100% !important; 
         background: var(--table-color-background) !important;
         border: 1px solid var(--table-color-border) !important;
         border-radius: var(--table-border-radius) !important;
@@ -144,12 +117,9 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
         border-bottom: none !important;
       }
     }
-  `]
+  \]
 })
 export class TableComponent {
-  /** Habilitar filas alternadas (zebra stripes) */
   @Input() striped = false;
-
-  /** Altura máxima del contenedor en píxeles (activa scroll vertical) */
   @Input() maxHeight?: number;
 }
