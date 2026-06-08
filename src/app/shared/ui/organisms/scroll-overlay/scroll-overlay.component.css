@@ -36,6 +36,15 @@ html.dark .so-root,
   overflow-y: auto;  /* Permitir scroll vertical por defecto para contenido general */
   -ms-overflow-style: none;
   scrollbar-width: none;
+  box-sizing: border-box;
+}
+
+.so-root.so-has-overflow-y .so-scroll-area {
+  padding-right: calc(var(--so-track-size) + 4px);
+}
+
+.so-root.so-has-overflow-x .so-scroll-area {
+  padding-bottom: calc(var(--so-track-size) + 4px);
 }
 
 /* Cuando hay tabla, el tbody maneja el scroll vertical */
