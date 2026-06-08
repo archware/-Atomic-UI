@@ -1,4 +1,4 @@
-/**
+﻿/**
  * TABLE DESIGN TOKENS
  * Single Source of Truth para todos los estilos de tabla
  * 
@@ -23,11 +23,11 @@
   --table-color-hover: var(--hover-background);
 
   /* === Header === */
-  --table-header-bg: var(--primary-color);
-  --table-header-color: #ffffff;
-  --table-header-border-width: 1px;
+  --table-header-bg: var(--surface-background);
+  --table-header-color: var(--text-color-secondary);
+  --table-header-border-width: 2px;
   --table-header-border-style: solid;
-  --table-header-border-color: var(--primary-color-dark, var(--primary-color));
+  --table-header-border-color: var(--primary-color);
   --table-header-radius: var(--radius-md);
   --table-header-shadow: var(--shadow-xs, 0 1px 2px var(--shadow-color, rgba(0, 0, 0, 0.05)));
 
@@ -73,11 +73,11 @@ html.dark,
   --table-color-stripe: rgba(255, 255, 255, 0.03);
   --table-color-hover: var(--hover-background);
 
-  /* Header - Sin borde, fondo primario */
+  /* Header - Fondo primario, sin borde */
   --table-header-bg: var(--brand-primary-700, var(--primary-color-darker));
   --table-header-color: var(--gray-0);
-  --table-header-border-width: 2px;
-  --table-header-border-color: var(--brand-primary-500, var(--primary-color));
+  --table-header-border-width: 0;
+  --table-header-border-color: transparent;
   --table-header-shadow: none;
 
   /* Sombras Dark Mode */
@@ -132,3 +132,4 @@ html.dark,
   --rtc-row-hover-transform: var(--table-row-hover-transform);
   --rtc-shadow-row: var(--table-shadow-row);
 }
+

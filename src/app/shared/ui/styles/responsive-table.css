@@ -1,4 +1,4 @@
-/**
+﻿/**
  * DESCRIPCIÓN:
  * Componente CSS portable que transforma tablas HTML en tarjetas (cards)
  * responsivas cuando el viewport es menor al breakpoint definido.
@@ -77,7 +77,20 @@
     text-transform: uppercase;
     letter-spacing: 0.06em;
     background: var(--rtc-header-bg);
+    border-top: var(--rtc-header-border-width, 2px) var(--rtc-header-border-style, solid) var(--rtc-header-border-color, var(--rtc-color-border));
     border-bottom: var(--rtc-header-border-width, 2px) var(--rtc-header-border-style, solid) var(--rtc-header-border-color, var(--rtc-color-border));
+}
+
+.rtc-header th:first-child {
+    border-left: var(--rtc-header-border-width, 2px) var(--rtc-header-border-style, solid) var(--rtc-header-border-color, var(--rtc-color-border));
+    border-top-left-radius: var(--rtc-header-radius);
+    border-bottom-left-radius: var(--rtc-header-radius);
+}
+
+.rtc-header th:last-child {
+    border-right: var(--rtc-header-border-width, 2px) var(--rtc-header-border-style, solid) var(--rtc-header-border-color, var(--rtc-color-border));
+    border-top-right-radius: var(--rtc-header-radius);
+    border-bottom-right-radius: var(--rtc-header-radius);
 }
 
 /* === Body === */
@@ -271,3 +284,4 @@
         display: none;
     }
 }
+
