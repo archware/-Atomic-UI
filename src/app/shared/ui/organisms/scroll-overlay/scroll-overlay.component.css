@@ -38,14 +38,9 @@ html.dark .so-root,
   scrollbar-width: none;
   box-sizing: border-box;
 }
-/* Espacio de respiro (breathing room) dinámico para el scroll vertical */
-.so-root.so-has-overflow-y[data-so-table][data-so-sync-columns] thead tr,
-.so-root.so-has-overflow-y[data-so-table][data-so-sync-columns] tbody tr {
-  /* Añadimos una columna vacía al final del grid para forzar el margen y evitar el bug de WebKit */
-  grid-template-columns: var(
-    --so-column-template,
-    repeat(auto-fit, minmax(var(--so-min-column-width, 140px), max-content))
-  ) calc(var(--so-track-size) + 20px);
+/* Espacio de respiro dinámico para el scroll vertical (aplicado a la tabla para no romper el grid interno) */
+.so-root.so-has-overflow-y[data-so-table] table {
+  margin-right: calc(var(--so-track-size) + 20px);
 }
 
 /* Espacio de respiro para el scroll horizontal */
