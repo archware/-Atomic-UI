@@ -76,8 +76,8 @@ html.dark,
   /* Header - Sin borde, fondo primario */
   --table-header-bg: var(--brand-primary-700, var(--primary-color-darker));
   --table-header-color: var(--gray-0);
-  --table-header-border-width: 1px;
-  --table-header-border-color: var(--border-color);
+  --table-header-border-width: 2px;
+  --table-header-border-color: var(--brand-primary-500, var(--primary-color));
   --table-header-shadow: none;
 
   /* Sombras Dark Mode */

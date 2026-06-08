@@ -55,8 +55,8 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
       /* Fondo */
       background: var(--table-header-bg);
       
-      /* Borde sutil inferior para separar del contenido (igual que la tabla 1) */
-      border-bottom: 1px solid var(--table-color-border);
+      /* Borde sutil inferior para separar del contenido */
+      border-bottom: var(--table-header-border-width, 2px) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
       
       /* Sombra */
       box-shadow: var(--table-header-shadow);

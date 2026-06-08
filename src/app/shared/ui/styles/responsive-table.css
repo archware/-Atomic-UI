@@ -77,7 +77,7 @@
     text-transform: uppercase;
     letter-spacing: 0.06em;
     background: var(--rtc-header-bg);
-    border-bottom: 2px solid var(--rtc-color-border);
+    border-bottom: var(--rtc-header-border-width, 2px) var(--rtc-header-border-style, solid) var(--rtc-header-border-color, var(--rtc-color-border));
 }
 
 /* === Body === */
