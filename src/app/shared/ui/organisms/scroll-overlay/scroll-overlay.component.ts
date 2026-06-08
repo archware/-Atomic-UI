@@ -37,6 +37,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   /** When true, the component will not override a custom --so-column-template value. */
   private _lockColumnTemplate = false;
   private _columnTemplate: string | null = null;
+  private _lastColumnTemplate = '';
 
   /**
    * When true, the component will keep any user-provided column template intact and will not
@@ -607,6 +608,21 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   private syncGeometry(): void {
     this.syncColumnTemplate();
     this.updateScrollAreaDimensions();
+
+    // Crucial for grid alignment: prevent CSS Grid from squashing fixed tracks
+    // by allowing the table to expand naturally to the grid's max-content width.
+    if (this.hostEl.hasAttribute('data-so-table')) {
+      const table = this.hostEl.querySelector('table') as HTMLElement;
+      if (table) {
+        table.style.width = 'max-content';
+        table.style.minWidth = '100%';
+        const thead = table.querySelector('thead') as HTMLElement;
+        const tbody = table.querySelector('tbody') as HTMLElement;
+        if (thead) thead.style.width = '100%';
+        if (tbody) tbody.style.width = '100%';
+      }
+    }
+
     const hostRect = this.getSafeRect(this.hostEl);
 
     // Primero detectar overflow real ANTES de ajustar posiciones
@@ -829,53 +845,51 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       el.style.removeProperty('overflow-x');
       el.style.removeProperty('box-sizing');
     });
-  }  private syncColumnTemplate(): void {
+  }
+
+  private syncColumnTemplate(): void {
     if (!this.syncTableColumns || this._lockColumnTemplate || !this.headerRow || !this.verticalScroller || this.verticalScroller.tagName !== 'TBODY') {
       if (!this._lockColumnTemplate) {
         this.hostEl.style.removeProperty('--so-column-template');
+        this._lastColumnTemplate = '';
       }
       return;
     }
 
-    const bodyRows = Array.from(this.verticalScroller.querySelectorAll(':scope > tr')) as HTMLElement[];
     const headerCells = Array.from(this.headerRow.children) as HTMLElement[];
-    const columnCount = Math.max(
-      headerCells.length,
-      ...bodyRows.map((row) => row.children.length)
-    );
+    if (!headerCells.length) return;
 
-    if (!columnCount) {
-      this.hostEl.style.removeProperty('--so-column-template');
-      return;
-    }
-
-    // 1. Temporarily allow the grid to size itself purely by max-content
-    this.hostEl.style.setProperty('--so-column-template', `repeat(${columnCount}, max-content)`);
+    // 1. Revert to native HTML table layout to let the browser perfectly
+    // calculate max-content widths for all cells based on actual content
+    this.hostEl.removeAttribute('data-so-sync-columns');
     
-    // 2. Force the browser to calculate the layout
+    // 2. We MUST force the table to size to its content, not the container
+    const table = this.hostEl.querySelector('table') as HTMLElement;
+    const oldTableWidth = table.style.width;
+    table.style.width = 'max-content';
+    
+    // 3. Force browser layout recalculation
     void this.hostEl.offsetHeight;
 
-    // 3. Initialize minimum widths
-    const widths = Array.from({ length: columnCount }, () => this._minColumnWidth);
-
-    // 4. Measure the natural width of every cell
-    const updateWidth = (cell: Element, index: number) => {
+    // 4. Measure the natural widths determined by the browser's native table algorithm
+    // (Native table ensures thead and tbody align, so measuring thead is enough)
+    const widths = headerCells.map(cell => {
       const rect = this.getSafeRect(cell);
-      const contentWidth = Math.ceil(rect.width);
-
-      if (contentWidth > widths[index]) {
-        widths[index] = contentWidth;
-      }
-    };
-
-    headerCells.forEach((cell, index) => updateWidth(cell, index));
-    bodyRows.forEach((row) => {
-      Array.from(row.children).forEach((cell, index) => updateWidth(cell, index));
+      return Math.max(this._minColumnWidth, Math.ceil(rect.width));
     });
 
-    // 5. Lock the exact pixel widths so thead and tbody align perfectly
+    // 5. Restore grid layout attributes and properties
+    this.hostEl.setAttribute('data-so-sync-columns', 'true');
+    table.style.width = oldTableWidth;
+
+    // 6. Lock the exact pixel widths so thead and tbody align perfectly
     const template = widths.map((width) => `${width}px`).join(' ');
-    this.hostEl.style.setProperty('--so-column-template', template);
+    
+    // 7. Only apply if changed to prevent ResizeObserver infinite loops
+    if (this._lastColumnTemplate !== template) {
+      this._lastColumnTemplate = template;
+      this.hostEl.style.setProperty('--so-column-template', template);
+    }
   }
 
   private getSafeRect(element: Element | null): DOMRect {
