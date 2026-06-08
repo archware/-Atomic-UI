@@ -1,4 +1,4 @@
-﻿/**
+/**
  * DESCRIPCIÓN:
  * Componente CSS portable que transforma tablas HTML en tarjetas (cards)
  * responsivas cuando el viewport es menor al breakpoint definido.
@@ -70,7 +70,7 @@
 
 .rtc-header th {
     padding: var(--rtc-cell-padding);
-    color: var(--rtc-color-text-header);
+    color: var(--rtc-header-color);
     font-size: var(--rtc-font-size-header);
     font-weight: var(--rtc-font-weight-header);
     text-align: left;

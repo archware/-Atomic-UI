@@ -24,7 +24,7 @@
 
   /* === Header === */
   --table-header-bg: var(--surface-background);
-  --table-header-color: var(--brand-primary-500, var(--primary-color));
+  --table-header-color: var(--text-color-secondary);
   --table-header-border-width: 3px;
   --table-header-border-style: solid;
   --table-header-border-color: var(--primary-color);
@@ -70,14 +70,14 @@ html.dark,
   /* Colores */
   --table-color-primary: var(--primary-color-light);
   --table-color-background: var(--surface-section);
-  --table-color-stripe: var(--hover-background-subtle);
+  --table-color-stripe: rgba(255, 255, 255, 0.03);
   --table-color-hover: var(--hover-background);
 
   /* Header - Sin borde, fondo primario */
   --table-header-bg: var(--brand-primary-700, var(--primary-color-darker));
   --table-header-color: var(--gray-0);
-  --table-header-border-width: 0;
-  --table-header-border-color: transparent;
+  --table-header-border-width: 1px;
+  --table-header-border-color: var(--border-color);
   --table-header-shadow: none;
 
   /* Sombras Dark Mode */
