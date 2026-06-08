@@ -13,6 +13,19 @@
   --so-min-column-width: 140px;
 }
 
+/* Outer border for tables to provide rounded corners and enclosing border */
+.so-root[data-so-table] {
+  border: 1px solid var(--table-color-border, var(--border-color, #ccc));
+  border-radius: var(--table-border-radius, 8px);
+}
+
+@media screen and (max-width: 768px) {
+  .so-root[data-so-table] {
+    border: none;
+    border-radius: 0;
+  }
+}
+
 /* Colores para tema oscuro - blanco sutil */
 :host-context(.dark) .so-root,
 :host-context([data-theme="dark"]) .so-root,
