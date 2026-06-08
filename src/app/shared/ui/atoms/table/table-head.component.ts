@@ -72,6 +72,7 @@
       border-right: var(--table-header-border-width, 2px) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
       border-top-right-radius: var(--table-header-radius);
       border-bottom-right-radius: var(--table-header-radius);
+      padding-right: var(--space-6);
       
       /* Sombra */
       box-shadow: var(--table-header-shadow);
@@ -83,5 +84,6 @@
   `]
 })
 export class TableHeadComponent { }
+
 
 

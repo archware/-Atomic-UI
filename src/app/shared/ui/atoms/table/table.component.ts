@@ -31,6 +31,10 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
       overflow: hidden; 
     }
 
+    .atomic-table td:last-child {
+      padding-right: var(--space-6);
+    }
+
     .atomic-table {
       width: 100%;
       display: table;
@@ -142,6 +146,7 @@ export class TableComponent {
   @Input() maxHeight?: number;
   @Input() columnTemplate?: string;
 }
+
 
 
 

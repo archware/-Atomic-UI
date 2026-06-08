@@ -32,7 +32,7 @@ import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecule
       <p style="color: var(--text-color-secondary); margin-bottom: 1rem; font-size: 0.875rem;">
         Tabla con ActionGroup: overflow inteligente de acciones. El menú se crea en document.body para evitar problemas de z-index.
       </p>
-      <app-table [maxHeight]="350" [columnTemplate]="'minmax(200px, 1fr) 120px 120px 120px 100px'">
+      <app-table [maxHeight]="350" [columnTemplate]="'minmax(200px, 1fr) 120px 120px 120px 140px'">
         <app-table-head>
           <tr app-table-row>
             <th app-table-header-cell>Nombre</th>
@@ -210,4 +210,5 @@ export class ShowcaseDataDisplayComponent {
     console.log(`Acción "${actionId}" ejecutada para ${userName}`);
   }
 }
+
 
