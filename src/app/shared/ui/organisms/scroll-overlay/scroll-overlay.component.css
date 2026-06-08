@@ -38,17 +38,6 @@ html.dark .so-root,
   scrollbar-width: none;
   box-sizing: border-box;
 }
-/* Espacio de respiro dinámico para el scroll vertical (aplicado a la tabla para no romper el grid interno) */
-.so-root.so-has-overflow-y[data-so-table] table {
-  margin-right: calc(var(--so-track-size) + 20px);
-}
-
-/* Espacio de respiro para el scroll horizontal */
-.so-root.so-has-overflow-x[data-so-table] tbody::after {
-  content: '';
-  display: block;
-  height: calc(var(--so-track-size) + 20px);
-}
 
 /* Cuando hay tabla, el tbody maneja el scroll vertical */
 .so-root[data-so-table] .so-scroll-area {
