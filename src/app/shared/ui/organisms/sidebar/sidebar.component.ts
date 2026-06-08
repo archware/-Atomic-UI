@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, inject, PLATFORM_ID } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AvatarComponent } from '../../atoms/avatar/avatar.component';
 
@@ -6,6 +6,7 @@ export interface SidebarMenuItem {
   id?: string;
   label: string;
   icon: string;
+  iconColor?: string;
   active?: boolean;
   route?: string;
   badge?: string | number;
@@ -79,3 +80,4 @@ export class SidebarComponent {
     (items[index] as HTMLElement)?.focus();
   }
 }
+

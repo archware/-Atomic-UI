@@ -1,4 +1,4 @@
-<div class="sidebar-container" [class.collapsed]="collapsed">
+﻿<div class="sidebar-container" [class.collapsed]="collapsed">
   <div class="sidebar-logo">
     <i class="fa-solid fa-rocket logo-icon"></i>
     @if (!collapsed) {
@@ -13,7 +13,7 @@
         <button type="button" class="nav-link" [class.active]="item.active" (click)="onItemClick(item, i)"
           role="menuitem" [attr.aria-current]="item.active ? 'page' : null"
           [attr.tabindex]="focusedIndex === i ? 0 : -1">
-          <i [class]="item.icon + ' nav-icon'"></i>
+          <i [class]="item.icon + ' nav-icon'" [style.color]="item.iconColor || null"></i>
           @if (!collapsed) {
           <span class="nav-label">
             {{ item.label }}
@@ -38,3 +38,4 @@
     </div>
   </div>
 </div>
+
