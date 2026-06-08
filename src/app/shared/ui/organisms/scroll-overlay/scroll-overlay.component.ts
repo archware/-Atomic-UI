@@ -877,7 +877,6 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     const template = widths.map((width) => `${width}px`).join(' ');
     this.hostEl.style.setProperty('--so-column-template', template);
   }
-  }
 
   private getSafeRect(element: Element | null): DOMRect {
     if (element && typeof (element as HTMLElement).getBoundingClientRect === 'function') {
