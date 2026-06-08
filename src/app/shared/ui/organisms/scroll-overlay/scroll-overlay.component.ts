@@ -829,9 +829,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       el.style.removeProperty('overflow-x');
       el.style.removeProperty('box-sizing');
     });
-  }
-
-  private syncColumnTemplate(): void {
+  }  private syncColumnTemplate(): void {
     if (!this.syncTableColumns || this._lockColumnTemplate || !this.headerRow || !this.verticalScroller || this.verticalScroller.tagName !== 'TBODY') {
       if (!this._lockColumnTemplate) {
         this.hostEl.style.removeProperty('--so-column-template');
@@ -851,30 +849,22 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    // Get container width to calculate responsive column sizing
-    const containerWidth = this.getSafeRect(this.hostEl).width;
-    const availableWidth = Math.max(containerWidth, 300); // Minimum width fallback
+    // 1. Temporarily allow the grid to size itself purely by max-content
+    this.hostEl.style.setProperty('--so-column-template', `repeat(${columnCount}, max-content)`);
+    
+    // 2. Force the browser to calculate the layout
+    void this.hostEl.offsetHeight;
 
-    // Calculate base column width considering container constraints
-    const baseColumnWidth = Math.max(
-      this._minColumnWidth,
-      Math.floor((availableWidth - 20) / columnCount) // 20px for scrollbars/padding
-    );
+    // 3. Initialize minimum widths
+    const widths = Array.from({ length: columnCount }, () => this._minColumnWidth);
 
-    const widths = Array.from({ length: columnCount }, () => baseColumnWidth);
-
+    // 4. Measure the natural width of every cell
     const updateWidth = (cell: Element, index: number) => {
       const rect = this.getSafeRect(cell);
       const contentWidth = Math.ceil(rect.width);
 
-      // Use content width but respect minimum and don't exceed reasonable maximums
-      const calculatedWidth = Math.max(
-        this._minColumnWidth,
-        Math.min(contentWidth, Math.floor(availableWidth / 2)) // Don't let one column take more than half
-      );
-
-      if (calculatedWidth > widths[index]) {
-        widths[index] = calculatedWidth;
+      if (contentWidth > widths[index]) {
+        widths[index] = contentWidth;
       }
     };
 
@@ -883,18 +873,10 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       Array.from(row.children).forEach((cell, index) => updateWidth(cell, index));
     });
 
-    // Ensure total width doesn't exceed container significantly
-    const totalWidth = widths.reduce((sum, width) => sum + width, 0);
-    if (totalWidth > availableWidth * 1.5) {
-      // Scale down proportionally if too wide
-      const scale = (availableWidth * 1.3) / totalWidth;
-      widths.forEach((width, index) => {
-        widths[index] = Math.max(this._minColumnWidth, Math.floor(width * scale));
-      });
-    }
-
+    // 5. Lock the exact pixel widths so thead and tbody align perfectly
     const template = widths.map((width) => `${width}px`).join(' ');
     this.hostEl.style.setProperty('--so-column-template', template);
+  }
   }
 
   private getSafeRect(element: Element | null): DOMRect {

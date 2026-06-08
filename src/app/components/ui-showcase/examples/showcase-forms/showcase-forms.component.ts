@@ -98,7 +98,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
       </div>
       
       <h4 class="subsection-title">Anchos Personalizados</h4>
-      <app-row columns="auto auto auto auto" gap="1rem" align="left">
+      <app-row [responsive]="true" minColumnWidth="120px" gap="1rem" align="left">
         <app-floating-input 
           variant="outline" 
           label="100px" 
@@ -128,7 +128,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
         ></app-floating-input>
       </app-row>
       
-      <app-row columns="auto auto auto" gap="1rem" align="left" style="margin-top: 1rem;">
+      <app-row [responsive]="true" minColumnWidth="150px" gap="1rem" align="left" style="margin-top: 1rem;">
         <app-select2 
           [options]="select2Options" 
           placeholder="100px"
