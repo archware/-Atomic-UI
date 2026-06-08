@@ -1,13 +1,7 @@
-/**
+﻿/**
  * DESCRIPCIÓN:
  * Componente CSS portable que transforma tablas HTML en tarjetas (cards)
  * responsivas cuando el viewport es menor al breakpoint definido.
- * 
- * COMPATIBILIDAD:
- * ✓ HTML/CSS/JavaScript vanilla
- * ✓ Angular (2+)
- * ✓ ASP.NET MVC (Razor/CSHTML)
- * ✓ React, Vue, y cualquier framework que use HTML estándar
  * 
  * TOKENS:
  * Los tokens --rtc-* son alias de --table-* definidos en:
@@ -16,28 +10,56 @@
 
 /* ============================================
    TOKENS: Importados desde archivo centralizado
-   Los tokens --rtc-* son alias de --table-*
-   Ver: tokens/table-tokens.css
    ============================================ */
-@import url('./tokens/table-tokens.css');
+.rtc-table {
+    --rtc-color-border: var(--table-color-border);
+    --rtc-color-border-light: var(--table-color-border-light);
+    --rtc-color-background: var(--table-color-background);
+    --rtc-color-text: var(--table-color-text);
+    --rtc-color-label: var(--table-color-text-secondary);
+    --rtc-color-stripe: var(--table-color-stripe);
+    --rtc-color-row-hover: var(--table-color-hover);
 
-/* Tokens adicionales específicos de responsive-table (no compartidos) */
-:root {
-    --rtc-row-gap: 0;
-    --rtc-breakpoint: 768px;
+    --rtc-header-bg: var(--table-header-bg);
+    --rtc-header-color: var(--table-header-color);
+    --rtc-header-border-width: var(--table-header-border-width);
+    --rtc-header-border-style: var(--table-header-border-style);
+    --rtc-header-border-color: var(--table-header-border-color);
+    --rtc-header-radius: var(--table-header-radius);
+    --rtc-header-shadow: var(--table-header-shadow);
+
+    --rtc-cell-padding: var(--table-cell-padding);
+    --rtc-border-radius: var(--table-border-radius);
+    --rtc-card-padding: var(--table-card-padding);
+    --rtc-card-gap: var(--table-card-gap);
+    --rtc-shadow-card: var(--table-card-shadow);
+    --rtc-shadow-hover: var(--table-card-shadow-hover);
+
+    --rtc-font-family: var(--table-font-family);
+    --rtc-font-size-base: var(--table-font-size);
+    --rtc-font-size-mobile: var(--table-font-size-mobile);
+    --rtc-font-size-header: var(--table-font-size-header);
+    --rtc-font-weight-header: var(--table-font-weight-header);
+    --rtc-font-weight-label: var(--table-font-weight-label);
+
+    --rtc-transition-duration: var(--table-transition-duration);
+    --rtc-transition-timing: var(--table-transition-timing);
+    --rtc-row-hover-shadow: var(--table-row-hover-shadow);
+    --rtc-row-hover-transform: var(--table-row-hover-transform);
+    --rtc-shadow-row: var(--table-shadow-row);
 }
 
 /* ============================================
-   BASE TABLE STYLES (DESKTOP)
+   BASE STYLES (Desktop)
    ============================================ */
 .rtc-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    /* Removed spacing to fix sticky gaps */
     font-family: var(--rtc-font-family);
     font-size: var(--rtc-font-size-base);
     color: var(--rtc-color-text);
+    z-index: 10;
 }
 
 /* === Header === */
@@ -46,46 +68,17 @@
     z-index: 10;
 }
 
-/* Sticky Header Implementation */
 .rtc-header th {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    /* Ensure header stays above rows */
     padding: var(--rtc-cell-padding);
-    color: var(--rtc-header-color);
+    color: var(--rtc-color-text-header);
     font-size: var(--rtc-font-size-header);
     font-weight: var(--rtc-font-weight-header);
     text-align: left;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-
-    /* Fondo */
     background: var(--rtc-header-bg);
-
-    /* Borde "Cápsula" (Tokenized) */
-    border-top: var(--rtc-header-border-width) var(--rtc-header-border-style) var(--rtc-header-border-color);
-    border-bottom: var(--rtc-header-border-width) var(--rtc-header-border-style) var(--rtc-header-border-color);
-    border-left: none;
-    border-right: none;
-
-    /* Box shadow sutil */
-    box-shadow: var(--rtc-header-shadow);
+    border-bottom: 2px solid var(--rtc-color-border);
 }
-
-.rtc-header th:first-child {
-    border-left: var(--rtc-header-border-width) var(--rtc-header-border-style) var(--rtc-header-border-color);
-    border-top-left-radius: var(--rtc-header-radius);
-    border-bottom-left-radius: var(--rtc-header-radius);
-}
-
-.rtc-header th:last-child {
-    border-right: var(--rtc-header-border-width) var(--rtc-header-border-style) var(--rtc-header-border-color);
-    border-top-right-radius: var(--rtc-header-radius);
-    border-bottom-right-radius: var(--rtc-header-radius);
-}
-
-/* Primary Color Border Indication (Removed conflicting override) */
 
 /* === Body === */
 .rtc-body {
@@ -119,204 +112,133 @@
 /* === Cells === */
 .rtc-table td {
     padding: var(--rtc-cell-padding);
-    border: none;
-    border-bottom: 1px solid var(--rtc-color-border-light);
-    /* Line divider instead of shadow */
     vertical-align: middle;
 }
 
-/* Last row border removal */
-.rtc-row:last-child td {
-    border-bottom: none;
+.rtc-table td.text-right { text-align: right; }
+.rtc-table td.text-center { text-align: center; }
+
+/* Ocultar etiquetas de datos en desktop */
+.rtc-table td[data-label]::before,
+.rtc-table td[data-title]::before {
+    display: none;
 }
 
 /* ============================================
-   MOBILE STYLES (CARDS)
+   RESPONSIVE STYLES (Mobile - CARDS)
+   Alta especificidad para evitar !important
    ============================================ */
 @media screen and (max-width: 768px) {
-
-    /* Hide header on mobile - FORCE HIDDEN */
-    .rtc-header,
-    .rtc-header th {
-        display: none !important;
+    
+    /* Hide header on mobile */
+    .so-root[data-so-table][data-so-sync-columns] .rtc-header,
+    .so-root[data-so-table] .rtc-header,
+    table.rtc-table .rtc-header,
+    table.rtc-table .rtc-header th {
+        display: none;
     }
 
     /* Body as block container */
-    .rtc-body {
+    .so-root[data-so-table] .rtc-body,
+    table.rtc-table .rtc-body {
         display: block;
         width: 100%;
     }
 
     /* Row becomes a card - Compact Sizing */
-    .rtc-row {
-        display: flex !important;
-        flex-direction: column !important;
+    .so-root[data-so-table][data-so-sync-columns] .rtc-row,
+    .so-root[data-so-table] .rtc-row,
+    table.rtc-table .rtc-row {
+        display: flex;
+        flex-direction: column;
         position: relative;
         width: 100%;
-        box-sizing: border-box;
-        background-color: var(--rtc-color-background);
         border: 1px solid var(--rtc-color-border);
         border-radius: var(--rtc-border-radius);
-        padding: var(--space-4) !important;
-        margin-bottom: var(--space-3) !important;
+        padding: var(--space-4);
+        margin-bottom: var(--space-3);
         box-shadow: var(--rtc-shadow-card);
         min-height: 200px;
     }
 
-    .rtc-row:hover {
+    .so-root[data-so-table][data-so-sync-columns] .rtc-row:hover,
+    .so-root[data-so-table] .rtc-row:hover,
+    table.rtc-table .rtc-row:hover {
         transform: none;
-        background-color: var(--rtc-color-background) !important;
-        box-shadow: var(--rtc-shadow-card) !important;
+        background-color: var(--rtc-color-background);
+        box-shadow: var(--rtc-shadow-card);
         z-index: auto;
     }
 
     /* Cell Styles - Compact Layout */
-    .rtc-table td {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: flex-start !important;
-        justify-content: flex-start !important;
-        border: none !important;
-        border-bottom: 1px solid var(--rtc-color-border-light) !important;
-        border-radius: 0 !important;
-        padding: var(--space-2) 0 !important;
+    .so-root[data-so-table] table.rtc-table td,
+    table.rtc-table td {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        border: none;
+        border-bottom: 1px solid var(--rtc-color-border-light);
+        border-radius: 0;
+        padding: var(--space-2) 0;
         font-size: var(--rtc-font-size-mobile);
-        min-height: auto !important;
+        min-height: auto;
     }
 
-    .rtc-table td:last-child {
-        border-bottom: none !important;
-        padding-bottom: 0 !important;
+    .so-root[data-so-table] table.rtc-table td:last-child,
+    table.rtc-table td:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
     }
 
     /* Label Styles - Cleaner Look */
-    .rtc-table td[data-label]::before {
+    .so-root[data-so-table] table.rtc-table td[data-label]::before,
+    table.rtc-table td[data-label]::before {
         content: attr(data-label);
-        display: block !important;
+        display: block;
         font-weight: var(--rtc-font-weight-label);
-        color: var(--table-color-primary) !important;
+        color: var(--table-color-primary);
         font-size: var(--text-sm);
         width: 40%;
         max-width: 140px;
-        flex-shrink: 0;
         text-align: left;
         padding-right: var(--space-2);
     }
 
     /* Value Styles - Left Aligned */
-    .rtc-table td[data-label]>*,
-    .rtc-table td[data-label]::after {
+    .so-root[data-so-table] table.rtc-table td[data-label]>*,
+    .so-root[data-so-table] table.rtc-table td[data-label]::after,
+    table.rtc-table td[data-label]>*,
+    table.rtc-table td[data-label]::after {
         flex: 1;
         text-align: left;
         word-break: break-word;
     }
 
     /* Legacy: data-title support */
-    .rtc-table td[data-title]:not([data-label])::before {
+    .so-root[data-so-table] table.rtc-table td[data-title]:not([data-label])::before,
+    table.rtc-table td[data-title]:not([data-label])::before {
         content: attr(data-title);
-        display: block !important;
+        display: block;
         font-weight: var(--rtc-font-weight-label);
-        color: var(--table-color-primary) !important;
+        color: var(--table-color-primary);
         font-size: var(--text-sm);
         width: 40%;
         max-width: 140px;
-        flex-shrink: 0;
         text-align: left;
         padding-right: var(--space-2);
     }
 
     /* Acciones con label visible */
-    .rtc-actions {
-        flex-direction: row !important;
-        justify-content: flex-end !important;
-        padding-top: var(--space-3) !important;
-        margin-top: var(--space-2) !important;
-        border-top: 1px solid var(--rtc-color-border) !important;
-        border-bottom: none !important;
-    }
-}
-
-/* ============================================
-   UTILITY CLASSES
-   ============================================ */
-
-/* === Visibility Utilities === */
-
-/* Show only on mobile */
-.rtc-mobile-only {
-    display: none !important;
-}
-
-@media screen and (max-width: 768px) {
-    .rtc-mobile-only {
-        display: flex !important;
-    }
-}
-
-/* Show only on desktop */
-.rtc-desktop-only {
-    display: table-cell;
-}
-
-@media screen and (max-width: 768px) {
-    .rtc-desktop-only {
-        display: none !important;
-    }
-}
-
-/* === Actions Container === */
-.rtc-actions {
-    display: flex;
-    gap: var(--space-2);
-    align-items: center;
-    justify-content: center;
-}
-
-@media screen and (max-width: 768px) {
-    .rtc-actions {
-        justify-content: center;
+    .so-root[data-so-table] table.rtc-table .rtc-actions,
+    table.rtc-table .rtc-actions {
+        flex-direction: row;
+        justify-content: flex-end;
         padding-top: var(--space-3);
         margin-top: var(--space-2);
         border-top: 1px solid var(--rtc-color-border);
+        border-bottom: none;
     }
-}
-
-/* === Text Alignment Utilities === */
-.rtc-text-center,
-.rtc-table td.rtc-text-center,
-.rtc-table th.rtc-text-center {
-    text-align: center;
-}
-
-.rtc-text-left {
-    text-align: left;
-}
-
-.rtc-text-right {
-    text-align: right;
-}
-
-@media screen and (max-width: 768px) {
-
-    /* RESET MÓVIL: Forzar todo a la izquierda en vista de tarjetas */
-    .rtc-text-center,
-    .rtc-text-right,
-    .rtc-text-left {
-        text-align: left !important;
-    }
-}
-
-/* NOTA: Para badges de estado, usar ChipComponent de la UI Library */
-
-/* ============================================
-   ACCESSIBILITY
-   ============================================ */
-
-/* Focus styles for interactive elements */
-.rtc-table a:focus,
-.rtc-table button:focus {
-    outline: 2px solid var(--rtc-color-primary);
-    outline-offset: 2px;
 }
 
 /* Reduce motion for users who prefer it */
@@ -326,29 +248,26 @@
     }
 }
 
-/* ============================================
-   GLOBAL LOADING STATES - DARK MODE
-   ============================================ */
-
-/* Dark Mode Spinner - HIGH VISIBILITY */
-.dark .spinner,
-html.dark .spinner,
-[data-theme="dark"] .spinner {
-    border-color: var(--border-color-strong) !important;
-    border-top-color: var(--primary-color-lighter) !important;
+/* Show only on mobile */
+.rtc-mobile-only {
+    display: none;
 }
 
-/* Dark Mode Skeleton - Using CSS Variables */
-.dark .skeleton,
-html.dark .skeleton,
-[data-theme="dark"] .skeleton {
-    --skeleton-base: var(--gray-400);
-    --skeleton-highlight: var(--gray-300);
+@media screen and (max-width: 768px) {
+    .so-root[data-so-table] .rtc-mobile-only,
+    .rtc-mobile-only {
+        display: flex;
+    }
 }
 
-/* Loading container background for dark mode */
-.dark .loading-container,
-html.dark .loading-container,
-[data-theme="dark"] .loading-container {
-    background: transparent;
+/* Show only on desktop */
+.rtc-desktop-only {
+    display: table-cell;
+}
+
+@media screen and (max-width: 768px) {
+    .so-root[data-so-table] .rtc-desktop-only,
+    .rtc-desktop-only {
+        display: none;
+    }
 }
