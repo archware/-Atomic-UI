@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
-
+import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-overlay.component';
 
 /**
  * TableComponent - Tabla atómica con scroll opcional
@@ -18,19 +18,19 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@a
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [],
+  imports: [ScrollOverlayComponent],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div
-      class="atomic-table-container"
+    <app-scroll-overlay
+      class="atomic-table-container so-block"
       [class.atomic-table-striped]="striped"
-      [style.max-height]="maxHeight ? maxHeight + 'px' : null"
-      [class.atomic-table-scrollable]="!!maxHeight">
+      [maxBodyHeight]="maxHeight"
+      [minColumnWidth]="40">
       <table class="atomic-table">
         <ng-content></ng-content>
       </table>
-    </div>
+    </app-scroll-overlay>
   `,
   styles: [`
     /* ============================================
@@ -43,31 +43,13 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@a
 
     .atomic-table-container {
       width: 100%;
-      overflow-x: auto;
       border-radius: var(--table-border-radius);
       border: 1px solid var(--table-color-border);
       background: var(--table-color-background);
+      overflow: hidden; /* ScrollOverlay maneja el overflow interno */
     }
 
-    /* Scroll vertical cuando hay maxHeight */
-    .atomic-table-container.atomic-table-scrollable {
-      overflow-y: auto;
-    }
-
-    /* Sticky header cuando hay scroll */
-    .atomic-table-scrollable .atomic-table thead,
-    .atomic-table-scrollable .atomic-table .atomic-thead {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .atomic-table-scrollable .atomic-table thead th,
-    .atomic-table-scrollable .atomic-table .atomic-thead th {
-      position: sticky;
-      top: 0;
-      background: var(--table-header-bg, var(--surface-background));
-    }
+    /* Eliminar scroll sticky nativo ya que ScrollOverlay usa CSS Grid para el layout */
 
     .atomic-table {
       width: 100%;
