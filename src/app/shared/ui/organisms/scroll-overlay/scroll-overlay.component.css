@@ -38,13 +38,21 @@ html.dark .so-root,
   scrollbar-width: none;
   box-sizing: border-box;
 }
-
-.so-root.so-has-overflow-y .so-scroll-area {
-  padding-right: calc(var(--so-track-size) + 16px);
+/* Espacio de respiro (breathing room) dinámico para el scroll vertical */
+.so-root.so-has-overflow-y[data-so-table][data-so-sync-columns] thead tr,
+.so-root.so-has-overflow-y[data-so-table][data-so-sync-columns] tbody tr {
+  /* Añadimos una columna vacía al final del grid para forzar el margen y evitar el bug de WebKit */
+  grid-template-columns: var(
+    --so-column-template,
+    repeat(auto-fit, minmax(var(--so-min-column-width, 140px), max-content))
+  ) calc(var(--so-track-size) + 20px);
 }
 
-.so-root.so-has-overflow-x .so-scroll-area {
-  padding-bottom: calc(var(--so-track-size) + 16px);
+/* Espacio de respiro para el scroll horizontal */
+.so-root.so-has-overflow-x[data-so-table] tbody::after {
+  content: '';
+  display: block;
+  height: calc(var(--so-track-size) + 20px);
 }
 
 /* Cuando hay tabla, el tbody maneja el scroll vertical */
