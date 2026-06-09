@@ -188,7 +188,7 @@ export class ShowcaseDataDisplayComponent {
   // Table actions
   tableActions: ActionItem[] = [
     { id: 'view', icon: 'fa-solid fa-eye', label: 'Ver detalles', variant: 'success' },
-    { id: 'edit', icon: 'fa-solid fa-pen', label: 'Editar', variant: 'primary' },
+    { id: 'edit', icon: 'fa-solid fa-pen', label: 'Editar', variant: 'info' },
     { id: 'delete', icon: 'fa-solid fa-trash', label: 'Eliminar', variant: 'danger' },
     { id: 'duplicate', icon: 'fa-solid fa-copy', label: 'Duplicar', variant: 'secondary' },
     { id: 'export', icon: 'fa-solid fa-download', label: 'Exportar' }
@@ -210,6 +210,7 @@ export class ShowcaseDataDisplayComponent {
     console.log(`Acción "${actionId}" ejecutada para ${userName}`);
   }
 }
+
 
 
 

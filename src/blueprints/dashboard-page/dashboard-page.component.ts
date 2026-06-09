@@ -184,7 +184,7 @@ export class DashboardPageComponent implements OnInit {
     {
       id: 'overview',
       label: 'Resumen',
-      icon: 'fa-solid fa-chart-pie', route: '/dashboard', iconColor: 'var(--brand-primary-500)' },
+      icon: 'fa-solid fa-chart-pie', route: '/dashboard', iconColor: 'var(--secondary-color)' },
     {
       id: 'analytics',
       label: 'Analíticas',
@@ -385,6 +385,7 @@ export class DashboardPageComponent implements OnInit {
     }).format(value);
   }
 }
+
 
 
 

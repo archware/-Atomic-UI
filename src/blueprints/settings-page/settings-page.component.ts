@@ -81,7 +81,7 @@ export class SettingsPageComponent implements OnInit {
   protected menuItems: SidebarMenuItem[] = [
     { label: 'Dashboard', icon: 'fa-solid fa-gauge', route: '/dashboard', iconColor: 'var(--info-color)' },
     { label: 'Usuarios', icon: 'fa-solid fa-users', route: '/users', iconColor: 'var(--success-color)' },
-    { label: 'Configuración', icon: 'fa-solid fa-gear', route: '/settings', active: true, iconColor: 'var(--primary-color)' },
+    { label: 'Configuración', icon: 'fa-solid fa-gear', route: '/settings', active: true, iconColor: 'var(--text-color-secondary)' },
   ];
 
   // ============================================================
@@ -185,5 +185,6 @@ export class SettingsPageComponent implements OnInit {
     this.errorMessage.set(null);
   }
 }
+
 
 

@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+﻿import { Routes } from '@angular/router';
 import { authGuard, guestGuard } from '@shared/ui';
 
 /**
@@ -49,25 +49,25 @@ export const routes: Routes = [
     path: 'dashboard',
     loadComponent: () =>
       import('../blueprints/dashboard-page/dashboard-page.component').then(m => m.DashboardPageComponent),
-    canActivate: [authGuard],
+    // canActivate: [authGuard], // Disabled for UI Demo
   },
   {
     path: 'profile',
     loadComponent: () =>
       import('../blueprints/profile-page/profile-page.component').then(m => m.ProfilePageComponent),
-    canActivate: [authGuard],
+    // canActivate: [authGuard], // Disabled for UI Demo
   },
   {
     path: 'settings',
     loadComponent: () =>
       import('../blueprints/settings-page/settings-page.component').then(m => m.SettingsPageComponent),
-    canActivate: [authGuard],
+    // canActivate: [authGuard], // Disabled for UI Demo
   },
   {
     path: 'crud',
     loadComponent: () =>
       import('../blueprints/crud-table/crud-table.component').then(m => m.CrudTableComponent),
-    canActivate: [authGuard],
+    // canActivate: [authGuard], // Disabled for UI Demo
   },
 
   // ===================================================
@@ -100,3 +100,4 @@ export const routes: Routes = [
     data: { code: 404 },
   },
 ];
+

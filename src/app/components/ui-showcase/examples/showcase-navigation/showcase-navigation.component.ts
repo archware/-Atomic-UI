@@ -92,7 +92,7 @@ import { StepperComponent, Step } from '../../../../shared/ui/organisms/stepper/
 })
 export class ShowcaseNavigationComponent {
   variant1Items: SidebarMenuItem[] = [
-    { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard', active: true, iconColor: 'var(--brand-primary-500)' },
+    { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard', active: true, iconColor: 'var(--secondary-color)' },
     { label: 'Proyectos', icon: 'fa-solid fa-folder', route: '/projects', iconColor: 'var(--warning-color)' },
     { label: 'Reportes', icon: 'fa-solid fa-file-alt', route: '/reports', badge: 'New', iconColor: 'var(--info-color)' },
     { label: 'Equipo', icon: 'fa-solid fa-users', route: '/team', badge: 3, iconColor: 'var(--success-color)' }
@@ -102,7 +102,7 @@ export class ShowcaseNavigationComponent {
     { label: 'Mi Perfil', icon: 'fa-solid fa-user', route: '/profile', iconColor: 'var(--info-color)' },
     { label: 'Seguridad', icon: 'fa-solid fa-shield-alt', route: '/security', iconColor: 'var(--success-color)' },
     { label: 'Notificaciones', icon: 'fa-solid fa-bell', route: '/notifications', iconColor: 'var(--warning-color)' },
-    { label: 'Ayuda', icon: 'fa-solid fa-circle-question', route: '/help', iconColor: 'var(--primary-color)' },
+    { label: 'Ayuda', icon: 'fa-solid fa-circle-question', route: '/help', iconColor: 'var(--text-color-secondary)' },
     { label: 'Cerrar Sesión', icon: 'fa-solid fa-right-from-bracket', route: '/logout', iconColor: 'var(--error-color)' }
   ];
 
@@ -121,5 +121,6 @@ export class ShowcaseNavigationComponent {
 
   readonly currentStep = 1;
 }
+
 
 
