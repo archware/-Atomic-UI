@@ -22,7 +22,7 @@ import { CrudTableComponent } from '../../../blueprints/crud-table/crud-table.co
   ],
   template: `
     <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
-      <app-sidebar slot="sidebar" [menuItems]="menuItems" (navigate)="onNavigate($event)"></app-sidebar>
+      <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="CRUD Gen" logoIcon="fa-solid fa-database" (navigate)="onNavigate($event)"></app-sidebar>
       <app-topbar slot="topbar" title="CRUD" userInitials="HC" userName="COTAHA"
         userEmail="cotaha@email.com" [notificationCount]="0"
         (toggleSidebar)="onToggleSidebar()" (logout)="onLogout()">
@@ -77,6 +77,7 @@ export class CrudPageComponent {
     this.router.navigate(['/login']);
   }
 }
+
 
 
 

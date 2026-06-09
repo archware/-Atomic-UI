@@ -180,10 +180,14 @@ export class DashboardPageComponent implements OnInit {
   // ============================================
 
   /** @customize Configure your menu items */
-  menuItems: MenuItem[] = [
+  get menuItems(): MenuItem[] {
+    return this.RAW_MENU_ITEMS.map(item => ({ ...item, active: this.activeMenuItem() === item.id }));
+  }
+
+  private readonly RAW_MENU_ITEMS: MenuItem[] = [
       { id: 'showcase', label: 'Volver a Showcase', icon: 'fa-solid fa-arrow-left', route: '/showcase', iconColor: 'var(--primary-color)' },
     {
-      id: 'overview',
+      id: 'dashboard',
       label: 'Resumen',
       icon: 'fa-solid fa-chart-pie', route: '/dashboard', iconColor: 'var(--secondary-color)' },
     {
@@ -386,6 +390,9 @@ export class DashboardPageComponent implements OnInit {
     }).format(value);
   }
 }
+
+
+
 
 
 

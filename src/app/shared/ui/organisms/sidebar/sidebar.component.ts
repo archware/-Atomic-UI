@@ -38,6 +38,12 @@ export class SidebarComponent {
   /** Check if the sidebar is expanded (visual mode) */
   @Input() collapsed = false;
 
+  /** Logo text */
+  @Input() logoText = 'Atomic UI';
+
+  /** Logo icon */
+  @Input() logoIcon = 'fa-solid fa-atom';
+
   /** Event emitted when a menu item is clicked */
   @Output() navigate = new EventEmitter<SidebarMenuItem>();
 
@@ -80,4 +86,5 @@ export class SidebarComponent {
     (items[index] as HTMLElement)?.focus();
   }
 }
+
 

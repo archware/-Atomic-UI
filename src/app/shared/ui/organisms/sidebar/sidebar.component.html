@@ -1,8 +1,8 @@
 ﻿<div class="sidebar-container" [class.collapsed]="collapsed">
   <div class="sidebar-logo">
-    <i class="fa-solid fa-rocket logo-icon"></i>
+    <i [class]="logoIcon + ' logo-icon'"></i>
     @if (!collapsed) {
-    <span class="logo-text">Dashboard</span>
+    <span class="logo-text">{{ logoText }}</span>
     }
   </div>
 
@@ -13,7 +13,7 @@
         <button type="button" class="nav-link" [class.active]="item.active" (click)="onItemClick(item, i)"
           role="menuitem" [attr.aria-current]="item.active ? 'page' : null"
           [attr.tabindex]="focusedIndex === i ? 0 : -1">
-          <i [class]="item.icon + ' nav-icon'" [style.color]="item.iconColor || null"></i>
+          <i [class]="item.icon + ' nav-icon'" [style.color]="item.active ? null : (item.iconColor || null)"></i>
           @if (!collapsed) {
           <span class="nav-label">
             {{ item.label }}
@@ -26,6 +26,7 @@
     </ul>
   </nav>
 
+  @if (user) {
   <div class="sidebar-footer">
     <div class="user-profile">
       <app-avatar [name]="user?.name || 'User'" [initials]="user?.initials" [size]="'md'"></app-avatar>
@@ -37,5 +38,11 @@
       }
     </div>
   </div>
+  } 
 </div>
+
+
+
+
+
 

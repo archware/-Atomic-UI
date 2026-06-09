@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
   height: 100%;
 }
@@ -75,6 +75,7 @@
 }
 
 .nav-label {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -145,3 +146,21 @@
 }
 
 /* Dark Mode handling is now automatic via semantic variables */
+
+/* Collapsed State */
+.sidebar-container.collapsed {
+  padding: var(--space-6) var(--space-2);
+  align-items: center;
+}
+.sidebar-container.collapsed .sidebar-logo {
+  justify-content: center;
+  padding: 0 0 var(--space-8) 0;
+}
+.sidebar-container.collapsed .nav-link {
+  justify-content: center;
+  padding: var(--space-3);
+}
+.sidebar-container.collapsed .user-profile {
+  justify-content: center;
+  padding: var(--space-2);
+}
