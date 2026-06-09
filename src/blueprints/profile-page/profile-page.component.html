@@ -21,7 +21,9 @@
 
     <!-- Columna izquierda: Resumen de cuenta -->
     <aside class="profile-aside">
-      <app-panel variant="elevated" padding="lg">
+      <app-panel variant="elevated" padding="none">
+        <div class="profile-cover" style="height: 120px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: var(--radius-lg) var(--radius-lg) 0 0; position: relative;"></div>
+        <div style="padding: var(--space-6); margin-top: -60px; position: relative; z-index: 2;">
         <div class="avatar-section">
           @if (profileApi.loading()) {
             <app-skeleton variant="circular" width="80px" height="80px"></app-skeleton>
@@ -34,7 +36,7 @@
             <app-text variant="h3" weight="semibold">
               {{ profileApi.data()?.firstName }} {{ profileApi.data()?.lastName }}
             </app-text>
-            <app-chip [variant]="'primary'" size="sm">
+            <app-chip [variant]="'success'" size="sm">
               {{ profileApi.data()?.role ?? 'Usuario' }}
             </app-chip>
           }
@@ -59,7 +61,8 @@
     <main class="profile-main">
 
       <!-- Datos personales -->
-      <app-panel variant="elevated" padding="lg" title="Información personal" icon="👤">
+      <app-panel variant="elevated" padding="lg" title="Información personal" icon="fa-solid fa-user-pen">
+        <div style="margin-bottom: 1.5rem;"><app-text variant="body-sm" color="muted">Actualiza tus datos básicos y cómo te verán otros usuarios en el sistema.</app-text></div>
 
         @if (saveSuccess()) {
           <app-alert variant="success" message="Perfil actualizado correctamente." [closable]="true"></app-alert>
@@ -70,34 +73,35 @@
 
         <form [formGroup]="infoForm" (ngSubmit)="saveProfile()" novalidate>
           <app-row columns="1fr 1fr" gap="1rem">
-            <app-form-row>
+            <div class="mb-4">
               <app-floating-input
                 formControlName="firstName"
                 label="Nombre"
                 variant="outline"
                 [error]="uf['firstName'].invalid && uf['firstName'].touched ? 'Nombre requerido' : ''"
               ></app-floating-input>
-            </app-form-row>
-            <app-form-row>
+            </div>
+            <div class="mb-4">
               <app-floating-input
                 formControlName="lastName"
                 label="Apellido"
                 variant="outline"
                 [error]="uf['lastName'].invalid && uf['lastName'].touched ? 'Apellido requerido' : ''"
               ></app-floating-input>
-            </app-form-row>
+            </div>
           </app-row>
 
-          <app-form-row>
+          <div class="mb-4">
             <app-floating-input
               formControlName="phone"
               label="Teléfono (opcional)"
               type="tel"
               variant="outline"
             ></app-floating-input>
-          </app-form-row>
+          </div>
 
-          <div class="form-actions">
+          <div class="form-actions" style="gap: 1rem; display: flex; justify-content: flex-end;">
+            <app-button type="button" variant="ghost" (click)="infoForm.reset()">Cancelar</app-button>
             <app-button type="submit" variant="primary" [disabled]="saveApi.loading()">
               @if (saveApi.loading()) { Guardando... } @else { Guardar cambios }
             </app-button>
@@ -106,7 +110,9 @@
       </app-panel>
 
       <!-- Cambio de contraseña -->
-      <app-panel variant="elevated" padding="lg" title="Cambiar contraseña" icon="🔒" class="mt-panel">
+      <app-panel variant="elevated" padding="lg" title="Cambiar contraseña" icon="fa-solid fa-lock" class="mt-panel">
+
+        <div style="margin-bottom: 1.5rem;"><app-text variant="body-sm" color="muted">Asegúrate de usar una contraseña larga y difícil de adivinar.</app-text></div>
 
         @if (passSuccess()) {
           <app-alert variant="success" message="Contraseña actualizada correctamente." [closable]="true"></app-alert>
@@ -116,46 +122,35 @@
         }
 
         <form [formGroup]="passForm" (ngSubmit)="changePassword()" novalidate>
-          <app-form-row>
-            <app-floating-input
-              formControlName="current"
-              label="Contraseña actual"
-              type="password"
-              variant="outline"
-              [error]="pf['current'].invalid && pf['current'].touched ? 'Ingresa tu contraseña actual' : ''"
-            ></app-floating-input>
-          </app-form-row>
+          <div class="mb-4">
+            <app-floating-input formControlName="current" label="Contraseña actual" type="password" variant="outline" [error]="pf['current'].invalid && pf['current'].touched ? 'Ingresa tu contraseña actual' : ''"></app-floating-input>
+          </div>
 
-          <app-form-row>
-            <app-floating-input
-              formControlName="password"
-              label="Nueva contraseña"
-              type="password"
-              variant="outline"
-              [error]="pf['password'].invalid && pf['password'].touched ? 'Mínimo 8 caracteres' : ''"
-            ></app-floating-input>
-          </app-form-row>
+          <div class="mb-4">
+            <app-floating-input formControlName="password" label="Nueva contraseña" type="password" variant="outline" [error]="pf['password'].invalid && pf['password'].touched ? 'Mínimo 8 caracteres' : ''"></app-floating-input>
+          </div>
 
-          <app-form-row>
-            <app-floating-input
-              formControlName="confirm"
-              label="Confirmar nueva contraseña"
-              type="password"
-              variant="outline"
-              [error]="passForm.hasError('passwordMismatch') && pf['confirm'].touched ? 'Las contraseñas no coinciden' : ''"
-            ></app-floating-input>
-          </app-form-row>
+          <div class="mb-4">
+            <app-floating-input formControlName="confirm" label="Confirmar nueva contraseña" type="password" variant="outline" [error]="passForm.hasError('passwordMismatch') && pf['confirm'].touched ? 'Las contraseñas no coinciden' : ''"></app-floating-input>
+          </div>
 
-          <div class="form-actions">
+          <div class="form-actions" style="gap: 1rem; display: flex; justify-content: flex-end;">
+            <app-button type="button" variant="ghost" (click)="passForm.reset()">Cancelar</app-button>
             <app-button type="submit" variant="primary" [disabled]="passwordApi.loading()">
               @if (passwordApi.loading()) { Actualizando... } @else { Cambiar contraseña }
             </app-button>
           </div>
         </form>
-      </app-panel>
+</app-panel>
 
     </main>
   </div>
 
 </app-layout-shell>
+
+
+
+
+
+
 
