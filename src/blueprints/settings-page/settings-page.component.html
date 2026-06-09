@@ -1,7 +1,7 @@
 ﻿<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
 
   <!-- Sidebar -->
-  <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="Configuración" logoIcon="fa-solid fa-gear" (navigate)="onNavigate($event)"></app-sidebar>
+  <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="Configuración" logoiconClass="fa-solid fa-gear" (navigate)="onNavigate($event)"></app-sidebar>
 
   <!-- Topbar -->
   <app-topbar
@@ -38,7 +38,7 @@
          ======================================================== -->
     <app-tabs>
 
-      <app-tab label="Perfil" icon="fa-solid fa-user">
+      <app-tab label="Perfil" iconClass="fa-solid fa-user">
         <app-panel title="Información personal" icon="👤" variant="default" padding="lg">
           <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
 
@@ -115,7 +115,7 @@
       <!-- ========================================================
            TAB: SEGURIDAD
            ======================================================== -->
-      <app-tab label="Seguridad" icon="fa-solid fa-shield-halved">
+      <app-tab label="Seguridad" iconClass="fa-solid fa-shield-halved">
         <app-panel title="Cambiar contraseña" icon="🔐" variant="default" padding="lg">
           <form [formGroup]="passwordForm" (ngSubmit)="savePassword()">
 
@@ -162,7 +162,7 @@
       <!-- ========================================================
            TAB: NOTIFICACIONES
            ======================================================== -->
-      <app-tab label="Notificaciones" icon="fa-solid fa-bell">
+      <app-tab label="Notificaciones" iconClass="fa-solid fa-bell">
         <app-panel title="Preferencias de notificaciones" icon="🔔" variant="default" padding="lg">
 
           <div class="notif-list">
@@ -220,7 +220,7 @@
       <!-- ========================================================
            TAB: APARIENCIA
            ======================================================== -->
-      <app-tab label="Apariencia" icon="fa-solid fa-palette">
+      <app-tab label="Apariencia" iconClass="fa-solid fa-palette">
         <app-panel title="Tema y apariencia" icon="🎨" variant="default" padding="lg">
 
           <div class="appearance-section">
@@ -252,4 +252,5 @@
   </div>
 
 </app-layout-shell>
+
 
