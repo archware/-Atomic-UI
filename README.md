@@ -1,4 +1,4 @@
-# 🎨 Atomic UI - Sistema de Componentes y Temas Avanzado
+﻿# 🎨 Atomic UI - Sistema de Componentes y Temas Avanzado
 
 [![Angular](https://img.shields.io/badge/Angular-20+-red.svg)](https://angular.io/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
@@ -258,7 +258,8 @@ Este proyecto está bajo la Licencia MIT.
 
 ---
 
-**Versión:** 4.3.0 (Atomic Design System)  
+**Versión:** 4.4.0 (Atomic Design System)  
 **Última Actualización:** Mayo 2026  
 **Angular Version:** 21+  
 **TypeScript:** 5.0+
+
