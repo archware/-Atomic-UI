@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, OnInit, PLATFORM_ID } from '@angular/core';
+﻿import { Component, inject, signal, computed, OnInit, PLATFORM_ID } from '@angular/core';
 
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -79,9 +79,9 @@ export class SettingsPageComponent implements OnInit {
   // MENU — @customize: ajusta a tu navegación
   // ============================================================
   protected menuItems: SidebarMenuItem[] = [
-    { label: 'Dashboard', icon: 'fa-solid fa-gauge', route: '/dashboard' },
-    { label: 'Usuarios', icon: 'fa-solid fa-users', route: '/users' },
-    { label: 'Configuración', icon: 'fa-solid fa-gear', route: '/settings', active: true },
+    { label: 'Dashboard', icon: 'fa-solid fa-gauge', route: '/dashboard', iconColor: 'var(--info-color)' },
+    { label: 'Usuarios', icon: 'fa-solid fa-users', route: '/users', iconColor: 'var(--success-color)' },
+    { label: 'Configuración', icon: 'fa-solid fa-gear', route: '/settings', active: true, iconColor: 'var(--primary-color)' },
   ];
 
   // ============================================================
@@ -185,3 +185,5 @@ export class SettingsPageComponent implements OnInit {
     this.errorMessage.set(null);
   }
 }
+
+

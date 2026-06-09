@@ -1,4 +1,4 @@
-import { Component, signal, ChangeDetectionStrategy, HostListener, inject, PLATFORM_ID } from '@angular/core';
+﻿import { Component, signal, ChangeDetectionStrategy, HostListener, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -129,11 +129,11 @@ export class ShowcasePageComponent {
   sidebarVisible = signal(this.getInitialSidebarState());
 
   menuItems: SidebarMenuItem[] = [
-    { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' },
-    { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' },
-    { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud' },
-    { label: 'Profile', icon: 'fa-solid fa-user', route: '/profile' },
-    { label: 'Settings', icon: 'fa-solid fa-gear', route: '/settings' },
+    { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' , iconColor: 'var(--brand-primary-500)' },
+    { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' , iconColor: 'var(--info-color)' },
+    { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud' , iconColor: 'var(--success-color)' },
+    { label: 'Profile', icon: 'fa-solid fa-user', route: '/profile' , iconColor: 'var(--warning-color)' },
+    { label: 'Settings', icon: 'fa-solid fa-gear', route: '/settings' , iconColor: 'var(--primary-color)' },
   ];
 
   private getInitialSidebarState(): boolean {
@@ -189,8 +189,8 @@ export class ShowcasePageComponent {
   }
 
   tableActions = [
-    { id: 'view', icon: 'fa-solid fa-eye', label: 'Ver' },
-    { id: 'edit', icon: 'fa-solid fa-pencil', label: 'Editar' },
+    { id: 'view', icon: 'fa-solid fa-eye', label: 'Ver', variant: 'success' as const },
+    { id: 'edit', icon: 'fa-solid fa-pencil', label: 'Editar', variant: 'primary' as const },
     { id: 'delete', icon: 'fa-solid fa-trash-can', label: 'Eliminar', variant: 'danger' as const }
   ];
 
@@ -246,3 +246,5 @@ export class ShowcasePageComponent {
     this.tableData.set(this.allTableData);
   }
 }
+
+

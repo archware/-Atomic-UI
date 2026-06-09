@@ -1,4 +1,4 @@
-import { Component, signal, inject, PLATFORM_ID, HostListener } from '@angular/core';
+﻿import { Component, signal, inject, PLATFORM_ID, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -41,11 +41,11 @@ export class CrudPageComponent {
   sidebarVisible = signal(this.getInitialState());
 
   menuItems: SidebarMenuItem[] = [
-    { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' },
-    { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' },
-    { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud', active: true },
-    { label: 'Profile', icon: 'fa-solid fa-user', route: '/profile' },
-    { label: 'Settings', icon: 'fa-solid fa-gear', route: '/settings' },
+    { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' , iconColor: 'var(--brand-primary-500)' },
+    { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' , iconColor: 'var(--info-color)' },
+    { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud', active: true, iconColor: 'var(--success-color)' },
+    { label: 'Profile', icon: 'fa-solid fa-user', route: '/profile' , iconColor: 'var(--warning-color)' },
+    { label: 'Settings', icon: 'fa-solid fa-gear', route: '/settings' , iconColor: 'var(--primary-color)' },
   ];
 
   private getInitialState(): boolean {
@@ -77,3 +77,5 @@ export class CrudPageComponent {
     this.router.navigate(['/login']);
   }
 }
+
+

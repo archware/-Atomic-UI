@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit, PLATFORM_ID } from '@angular/core';
+﻿import { Component, inject, signal, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -120,9 +120,9 @@ export class ProfilePageComponent implements OnInit {
 
   // ── Sidebar menu ──────────────────────────────────
   protected readonly menuItems: SidebarMenuItem[] = [
-    { label: 'Dashboard',  icon: 'fa-solid fa-gauge',      route: '/dashboard' },
-    { label: 'Perfil',     icon: 'fa-solid fa-user',       active: true },
-    { label: 'Cerrar sesión', icon: 'fa-solid fa-right-from-bracket' },
+    { label: 'Dashboard', icon: 'fa-solid fa-gauge', route: '/dashboard', iconColor: 'var(--info-color)' },
+    { label: 'Perfil', icon: 'fa-solid fa-user', active: true, iconColor: 'var(--warning-color)' },
+    { label: 'Cerrar sesión', icon: 'fa-solid fa-right-from-bracket', iconColor: 'var(--danger-color)' },
   ];
 
   ngOnInit(): void {
@@ -201,3 +201,6 @@ export class ProfilePageComponent implements OnInit {
   get pf() { return this.passForm.controls; }
   get currentUser() { return this.auth.currentUser(); }
 }
+
+
+

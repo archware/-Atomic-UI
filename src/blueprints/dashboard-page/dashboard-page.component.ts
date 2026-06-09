@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, OnInit, PLATFORM_ID } from '@angular/core';
+﻿import { Component, inject, signal, computed, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import { Router } from '@angular/router';
@@ -50,6 +50,7 @@ interface MenuItem {
   id?: string;
   label: string;
   icon: string;
+  iconColor?: string;
   route?: string;
   badge?: number | string;
   children?: MenuItem[];
@@ -183,9 +184,7 @@ export class DashboardPageComponent implements OnInit {
     {
       id: 'overview',
       label: 'Resumen',
-      icon: 'fa-solid fa-chart-pie',
-      route: '/dashboard'
-    },
+      icon: 'fa-solid fa-chart-pie', route: '/dashboard', iconColor: 'var(--brand-primary-500)' },
     {
       id: 'analytics',
       label: 'Analíticas',
@@ -214,9 +213,7 @@ export class DashboardPageComponent implements OnInit {
     {
       id: 'settings',
       label: 'Configuración',
-      icon: 'fa-solid fa-gear',
-      route: '/settings'
-    }
+      icon: 'fa-solid fa-gear', route: '/settings', iconColor: 'var(--text-color-secondary)' }
   ];
 
   // ============================================
@@ -388,3 +385,6 @@ export class DashboardPageComponent implements OnInit {
     }).format(value);
   }
 }
+
+
+
