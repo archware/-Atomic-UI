@@ -1,4 +1,4 @@
-<app-panel class="crud-container">
+﻿<app-panel class="crud-container">
   <!-- ============================================ -->
   <!-- HEADER -->
   <!-- ============================================ -->
@@ -16,7 +16,7 @@
   <!-- FILTERS -->
   <!-- ============================================ -->
   <app-panel class="filters-panel mb-4">
-    <app-row gap="1rem" verticalAlign="center" [responsive]="true" minColumnWidth="160px">
+    <app-row gap="1rem" verticalAlign="center" columns="1fr auto auto auto" class="filters-row">
       <div class="search-box-container" style="flex: 1;">
         <app-input placeholder="Buscar por nombre o email..." iconClass="fa-solid fa-search" [ngModel]="searchTerm()"
           (ngModelChange)="onSearch($event)">
@@ -52,7 +52,7 @@
       <app-text variant="body" weight="medium" color="primary">
         {{ selectedCount() }} seleccionado(s)
       </app-text>
-      <app-row gap="0.5rem">
+      <app-row wrap="wrap" gap="0.5rem">
         <app-button variant="danger" size="sm" (buttonClick)="bulkDelete()">
           <i class="fa-solid fa-trash"></i>
           Eliminar
@@ -183,10 +183,10 @@
 <app-modal [title]="isEditMode() ? 'Editar ' + ENTITY_NAME : 'Nuevo ' + ENTITY_NAME" (close)="closeModal()">
 
   <form [formGroup]="entityForm" (ngSubmit)="onSave()" class="flex flex-col gap-4">
-    <app-floating-input label="Nombre" formControlName="name" icon="fa-solid fa-user" [error]="getFieldError('name')">
+    <app-floating-input label="Nombre" formControlName="name" iconClass="fa-solid fa-user" [error]="getFieldError('name')">
     </app-floating-input>
 
-    <app-floating-input label="Email" type="email" formControlName="email" icon="fa-solid fa-envelope"
+    <app-floating-input label="Email" type="email" formControlName="email" iconClass="fa-solid fa-envelope"
       [error]="getFieldError('email')">
     </app-floating-input>
 
@@ -203,7 +203,7 @@
     </app-row>
     }
 
-    <app-row justify="end" gap="0.75rem" class="mt-4 pt-4 border-t">
+    <app-row wrap="wrap" justify="end" gap="0.75rem" class="mt-4 pt-4 border-t">
       <app-button variant="ghost" type="button" (buttonClick)="closeModal()">
         Cancelar
       </app-button>
@@ -246,7 +246,7 @@
     </app-row>
     }
 
-    <app-row justify="end" gap="0.75rem" class="w-full">
+    <app-row wrap="wrap" justify="end" gap="0.75rem" class="w-full">
       <app-button variant="ghost" (buttonClick)="closeDeleteModal()">
         Cancelar
       </app-button>
@@ -262,3 +262,8 @@
   </app-row>
 </app-modal>
 }
+
+
+
+
+

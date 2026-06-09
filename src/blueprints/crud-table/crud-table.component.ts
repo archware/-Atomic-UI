@@ -1,4 +1,5 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+﻿import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { of, delay } from 'rxjs';
 
 import { FormBuilder, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import {
@@ -53,6 +54,15 @@ export interface PaginatedResponse<T> {
 /**
  * Filter options interface
  */
+const FAKE_DB: Entity[] = [
+  { id: '1', name: 'Ana Silva', email: 'ana@example.com', status: 'active', role: 'admin', createdAt: '2025-01-10' },
+  { id: '2', name: 'Carlos Gómez', email: 'carlos@example.com', status: 'inactive', role: 'user', createdAt: '2025-02-14' },
+  { id: '3', name: 'María Rosa', email: 'maria@example.com', status: 'pending', role: 'user', createdAt: '2025-03-01' },
+  { id: '4', name: 'Juan Pérez', email: 'juan@example.com', status: 'active', role: 'manager', createdAt: '2025-04-20' },
+  { id: '5', name: 'Luis Díaz', email: 'luis@example.com', status: 'active', role: 'user', createdAt: '2025-05-11' },
+];
+let idCounter = 6;
+
 export interface FilterOptions {
   search: string;
   status: string;
@@ -247,9 +257,24 @@ export class CrudTableComponent implements OnInit {
     if (filters.status) params['status'] = filters.status;
     if (filters.role) params['role'] = filters.role;
 
-    this.listApi.execute(
-      this.api.get<PaginatedResponse<Entity>>(this.ENDPOINT, { params })
-    );
+        // Mock API Call
+    let filtered = [...FAKE_DB];
+    if (filters.search) filtered = filtered.filter(e => e.name.toLowerCase().includes(filters.search.toLowerCase()) || e.email.toLowerCase().includes(filters.search.toLowerCase()));
+    if (filters.status) filtered = filtered.filter(e => e.status === filters.status);
+    if (filters.role) filtered = filtered.filter(e => e.role === filters.role);
+    
+    const page = this.currentPage();
+    const perPage = this.PAGE_SIZE;
+    const start = (page - 1) * perPage;
+    const end = start + perPage;
+    
+    const paginated = filtered.slice(start, end);
+    const res: PaginatedResponse<Entity> = {
+      data: paginated,
+      meta: { total: filtered.length, page, perPage, totalPages: Math.ceil(filtered.length / perPage) }
+    };
+    
+    this.listApi.execute(of(res).pipe(delay(600)) as any);
   }
 
   // ============================================
@@ -381,14 +406,10 @@ export class CrudTableComponent implements OnInit {
     if (this.isEditMode()) {
       const item = this.currentItem();
       if (item) {
-        this.saveApi.execute(
-          this.api.put<Entity>(`${this.ENDPOINT}/${item.id}`, data)
-        );
-      }
-    } else {
-      this.saveApi.execute(
-        this.api.post<Entity>(this.ENDPOINT, data)
-      );
+              data.id = String(idCounter++);
+      data.createdAt = new Date().toISOString().split('T')[0];
+      FAKE_DB.unshift(data as Entity);
+      this.saveApi.execute(of(data).pipe(delay(800)) as any);
     }
 
     // Check for success
@@ -420,9 +441,9 @@ export class CrudTableComponent implements OnInit {
     const item = this.itemToDelete();
     if (!item) return;
 
-    this.deleteApi.execute(
-      this.api.delete<{ success: boolean }>(`${this.ENDPOINT}/${item.id}`)
-    );
+          const idx = FAKE_DB.findIndex(e => e.id === item.id);
+      if (idx !== -1) FAKE_DB.splice(idx, 1);
+      this.deleteApi.execute(of({ success: true }).pipe(delay(600)) as any);
 
     const checkDelete = setInterval(() => {
       if (this.deleteApi.success()) {
@@ -494,3 +515,9 @@ export class CrudTableComponent implements OnInit {
     return '';
   }
 }
+
+
+
+
+
+
