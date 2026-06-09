@@ -1,4 +1,4 @@
-import {
+﻿import {
   Component, Input, Output, EventEmitter, signal, HostListener,
   ElementRef, ChangeDetectionStrategy, inject,
   ViewEncapsulation, OnInit, OnDestroy, Renderer2
@@ -16,7 +16,7 @@ export interface ActionItem {
   /** Texto del tooltip y label en el menú */
   label: string;
   /** Variante de color */
-  variant?: 'default' | 'primary' | 'secondary' | 'danger' | 'warning' | 'success';
+  variant?: 'default' | 'primary' | 'secondary' | 'danger' | 'warning' | 'success' | 'info';
   /** Si la acción está deshabilitada */
   disabled?: boolean;
 }
@@ -184,11 +184,23 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
       color: var(--success-color);
     }
 
+    .action-btn--info { color: var(--info-color); }
+    .action-btn--info:hover:not(:disabled) { 
+      background: var(--info-color-lighter); 
+      color: var(--info-color);
+    }
+
     .action-btn--more {
       color: var(--text-color-muted);
     }
 
-    .more-wrapper.open .action-btn--more {
+    .more-wrapper.open .action-btn--info { color: var(--info-color); }
+    .action-btn--info:hover:not(:disabled) { 
+      background: var(--info-color-lighter); 
+      color: var(--info-color);
+    }
+
+    .action-btn--more {
       background: var(--surface-hover);
       color: var(--primary-color);
     }
@@ -575,3 +587,5 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
     this.renderer.setStyle(this.menuElement, 'left', `${left}px`);
   }
 }
+
+
