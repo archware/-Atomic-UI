@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, signal, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, signal, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild, HostBinding } from '@angular/core';
 
 
 /**
@@ -9,7 +9,7 @@ import { Component, Input, Output, EventEmitter, signal, ContentChildren, QueryL
   selector: 'app-tab',
   standalone: true,
   template: `<ng-content></ng-content>`,
-  styles: [`:host { display: block; }`]
+  styles: [`:host { display: none; } :host(.active) { display: block; }`]
 })
 export class TabComponent {
   /** Tab label displayed in the header */
@@ -20,6 +20,8 @@ export class TabComponent {
   @Input() iconClass?: string;
   /** Whether this tab is disabled */
   @Input() disabled = false;
+
+  @HostBinding('class.active') active = false;
 }
 
 /**
@@ -211,10 +213,16 @@ export class TabsComponent implements AfterContentInit {
   ngAfterContentInit() {
     this.tabs = this.tabComponents.toArray();
     this.activeIndex.set(this.defaultIndex);
+    this.updateTabs();
+  }
+
+  private updateTabs() {
+    this.tabs.forEach((tab, i) => tab.active = i === this.activeIndex());
   }
 
   selectTab(index: number, event?: MouseEvent) {
     this.activeIndex.set(index);
+    this.updateTabs();
     this.tabChange.emit(index);
 
     // Auto-scroll horizontalmente (sin afectar scroll vertical del padre)
@@ -232,3 +240,7 @@ export class TabsComponent implements AfterContentInit {
     }
   }
 }
+
+
+
+
