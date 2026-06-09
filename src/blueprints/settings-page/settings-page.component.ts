@@ -79,6 +79,7 @@ export class SettingsPageComponent implements OnInit {
   // MENU — @customize: ajusta a tu navegación
   // ============================================================
   protected menuItems: SidebarMenuItem[] = [
+      { label: 'Volver a Showcase', icon: 'fa-solid fa-arrow-left', route: '/showcase', iconColor: 'var(--primary-color)' },
     { label: 'Dashboard', icon: 'fa-solid fa-gauge', route: '/dashboard', iconColor: 'var(--info-color)' },
     { label: 'Usuarios', icon: 'fa-solid fa-users', route: '/users', iconColor: 'var(--success-color)' },
     { label: 'Configuración', icon: 'fa-solid fa-gear', route: '/settings', active: true, iconColor: 'var(--text-color-secondary)' },
@@ -185,6 +186,7 @@ export class SettingsPageComponent implements OnInit {
     this.errorMessage.set(null);
   }
 }
+
 
 
 

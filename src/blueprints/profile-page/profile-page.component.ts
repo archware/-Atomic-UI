@@ -120,6 +120,7 @@ export class ProfilePageComponent implements OnInit {
 
   // ── Sidebar menu ──────────────────────────────────
   protected readonly menuItems: SidebarMenuItem[] = [
+      { label: 'Volver a Showcase', icon: 'fa-solid fa-arrow-left', route: '/showcase', iconColor: 'var(--primary-color)' },
     { label: 'Dashboard', icon: 'fa-solid fa-gauge', route: '/dashboard', iconColor: 'var(--info-color)' },
     { label: 'Perfil', icon: 'fa-solid fa-user', active: true, iconColor: 'var(--warning-color)' },
     { label: 'Cerrar sesión', icon: 'fa-solid fa-right-from-bracket', iconColor: 'var(--danger-color)' },
@@ -201,6 +202,7 @@ export class ProfilePageComponent implements OnInit {
   get pf() { return this.passForm.controls; }
   get currentUser() { return this.auth.currentUser(); }
 }
+
 
 
 

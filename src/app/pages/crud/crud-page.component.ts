@@ -41,7 +41,7 @@ export class CrudPageComponent {
   sidebarVisible = signal(this.getInitialState());
 
   menuItems: SidebarMenuItem[] = [
-    { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' , iconColor: 'var(--secondary-color)' },
+    { label: 'Volver a Showcase', icon: 'fa-solid fa-arrow-left', route: '/showcase' , iconColor: 'var(--secondary-color)' },
     { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' , iconColor: 'var(--info-color)' },
     { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud', active: true, iconColor: 'var(--success-color)' },
     { label: 'Profile', icon: 'fa-solid fa-user', route: '/profile' , iconColor: 'var(--warning-color)' },
@@ -77,6 +77,7 @@ export class CrudPageComponent {
     this.router.navigate(['/login']);
   }
 }
+
 
 
 

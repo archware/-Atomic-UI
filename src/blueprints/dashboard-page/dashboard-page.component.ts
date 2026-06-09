@@ -181,6 +181,7 @@ export class DashboardPageComponent implements OnInit {
 
   /** @customize Configure your menu items */
   menuItems: MenuItem[] = [
+      { id: 'showcase', label: 'Volver a Showcase', icon: 'fa-solid fa-arrow-left', route: '/showcase', iconColor: 'var(--primary-color)' },
     {
       id: 'overview',
       label: 'Resumen',
@@ -283,7 +284,7 @@ export class DashboardPageComponent implements OnInit {
       this.api.setAuthToken(token);
     } else {
       // No token, redirect to login
-      this.router.navigate(['/login']);
+      // this.router.navigate(['/login']); // Disabled for UI Demo
     }
   }
 
@@ -360,7 +361,7 @@ export class DashboardPageComponent implements OnInit {
     this.api.clearAuthToken();
 
     // Redirect to login
-    this.router.navigate(['/login']);
+    // this.router.navigate(['/login']); // Disabled for UI Demo
   }
 
   // ============================================
@@ -385,6 +386,8 @@ export class DashboardPageComponent implements OnInit {
     }).format(value);
   }
 }
+
+
 
 
 
