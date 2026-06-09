@@ -1,4 +1,4 @@
-<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="closeSidebar()">
+﻿<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="closeSidebar()">
 
   <!-- ============================================ -->
   <!-- SIDEBAR (Atomic) -->
@@ -58,6 +58,50 @@
   <app-metrics-grid [metrics]="metrics()" minCardWidth="240px" class="mb-6"></app-metrics-grid>
   }
 
+    <!-- Additional Analytics Section (Added for better UX/UI) -->
+  <app-panel title="Rendimiento de Proyectos" class="mb-6">
+    <app-row columns="1fr 1fr" gap="2rem" [responsive]="true">
+      <div class="chart-placeholder" style="height: 250px; background: linear-gradient(135deg, var(--surface-hover), var(--surface-ground)); border-radius: var(--radius-md); display: flex; align-items: flex-end; justify-content: space-between; padding: 1rem; border: 1px dashed var(--border-color);">
+        <div style="width: 12%; background: var(--primary-color); height: 40%; border-radius: 4px;"></div>
+        <div style="width: 12%; background: var(--info-color); height: 60%; border-radius: 4px;"></div>
+        <div style="width: 12%; background: var(--success-color); height: 85%; border-radius: 4px;"></div>
+        <div style="width: 12%; background: var(--warning-color); height: 30%; border-radius: 4px;"></div>
+        <div style="width: 12%; background: var(--primary-color); height: 75%; border-radius: 4px;"></div>
+        <div style="width: 12%; background: var(--info-color); height: 50%; border-radius: 4px;"></div>
+        <div style="width: 12%; background: var(--success-color); height: 95%; border-radius: 4px;"></div>
+      </div>
+      <div class="stats-breakdown" style="display: flex; flex-direction: column; justify-content: center; gap: 1.5rem;">
+        <div>
+          <app-row justify="between" class="mb-2">
+            <app-text variant="body" weight="semibold">Alpha UI Rewrite</app-text>
+            <app-text variant="body" color="muted">85%</app-text>
+          </app-row>
+          <div style="height: 8px; background: var(--surface-hover); border-radius: 4px; overflow: hidden;">
+            <div style="height: 100%; width: 85%; background: var(--success-color);"></div>
+          </div>
+        </div>
+        <div>
+          <app-row justify="between" class="mb-2">
+            <app-text variant="body" weight="semibold">Migración Backend</app-text>
+            <app-text variant="body" color="muted">60%</app-text>
+          </app-row>
+          <div style="height: 8px; background: var(--surface-hover); border-radius: 4px; overflow: hidden;">
+            <div style="height: 100%; width: 60%; background: var(--info-color);"></div>
+          </div>
+        </div>
+        <div>
+          <app-row justify="between" class="mb-2">
+            <app-text variant="body" weight="semibold">Auditoría de Seguridad</app-text>
+            <app-text variant="body" color="muted">30%</app-text>
+          </app-row>
+          <div style="height: 8px; background: var(--surface-hover); border-radius: 4px; overflow: hidden;">
+            <div style="height: 100%; width: 30%; background: var(--warning-color);"></div>
+          </div>
+        </div>
+      </div>
+    </app-row>
+  </app-panel>
+
   <!-- Content Panels -->
   <app-row [responsive]="true" minColumnWidth="280px" gap="1.5rem" class="content-grid-row">
     <!-- Recent Activity -->
@@ -95,3 +139,4 @@
   </app-row>
 
 </app-layout-shell>
+

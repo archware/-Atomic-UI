@@ -1,4 +1,5 @@
-﻿import { Component, inject, signal, OnInit, PLATFORM_ID } from '@angular/core';
+﻿import { Observable, of, delay, tap } from 'rxjs';
+import { Component, inject, signal, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -134,9 +135,7 @@ export class ProfilePageComponent implements OnInit {
   }
 
   private loadProfile(): void {
-    this.profileApi.execute(
-      this.api.get<UserProfile>(PROFILE_ENDPOINT)
-    );
+    this.profileApi.execute(of({ id: '1', firstName: 'Havel', lastName: 'Contreras', email: 'havel.contreras@example.com', phone: '555-1234', role: 'Administrador' } as UserProfile).pipe(delay(800)));
     // Cuando lleguen los datos, popular el formulario
     const sub = this.profileApi.data;
     // Effect manual: watch data signal change
@@ -158,9 +157,7 @@ export class ProfilePageComponent implements OnInit {
   protected saveProfile(): void {
     if (this.infoForm.invalid) { this.infoForm.markAllAsTouched(); return; }
     this.saveSuccess.set(false);
-    this.saveApi.execute(
-      this.api.put<SaveProfileResponse>(SAVE_PROFILE_ENDPOINT, this.infoForm.value)
-    );
+    this.saveApi.execute(of({ success: true }).pipe(delay(1500)) as any);
     // Mostrar éxito
     setTimeout(() => { if (this.saveApi.success()) this.saveSuccess.set(true); }, 300);
   }
@@ -188,6 +185,14 @@ export class ProfilePageComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  protected onNavigate(item: SidebarMenuItem): void {
+    if (item.route) {
+      this.router.navigate([item.route]);
+    } else if (item.label === 'Cerrar sesión' || item.label === 'Cerrar sesin') {
+      this.logout();
+    }
+  }
+
   protected onToggleSidebar(): void {
     this.sidebarVisible.update(v => !v);
   }
@@ -202,6 +207,11 @@ export class ProfilePageComponent implements OnInit {
   get pf() { return this.passForm.controls; }
   get currentUser() { return this.auth.currentUser(); }
 }
+
+
+
+
+
 
 
 

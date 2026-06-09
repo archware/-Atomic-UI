@@ -144,6 +144,12 @@ export class SettingsPageComponent implements OnInit {
   // ============================================================
   // ACTIONS
   // ============================================================
+  onNavigate(item: SidebarMenuItem): void {
+    if (item.route) {
+      this.router.navigate([item.route]);
+    }
+  }
+
   onToggleSidebar(): void {
     this.sidebarVisible.update(v => !v);
   }
@@ -186,6 +192,8 @@ export class SettingsPageComponent implements OnInit {
     this.errorMessage.set(null);
   }
 }
+
+
 
 
 
