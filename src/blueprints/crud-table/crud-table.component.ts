@@ -1,5 +1,4 @@
 ﻿import { Component, inject, signal, computed, OnInit } from '@angular/core';
-import { of, delay } from 'rxjs';
 
 import { FormBuilder, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import {
@@ -23,24 +22,23 @@ import {
   useApi
 } from '@shared/ui';
 
-/**
- * Generic entity interface
- * @customize Adjust to match your data model
- */
+import { of, delay } from 'rxjs';
+
 export interface Entity {
-  id: string | number;
+  id: string;
   name: string;
   email: string;
-  status: 'active' | 'inactive' | 'pending';
   role: string;
+  status: string;
   createdAt: string;
-  [key: string]: unknown;
 }
 
-/**
- * Paginated response interface
- * @customize Adjust to match your API response
- */
+export interface FilterOptions {
+  search: string;
+  status: string;
+  role: string;
+}
+
 export interface PaginatedResponse<T> {
   data: T[];
   meta: {
@@ -51,23 +49,13 @@ export interface PaginatedResponse<T> {
   };
 }
 
-/**
- * Filter options interface
- */
 const FAKE_DB: Entity[] = [
-  { id: '1', name: 'Ana Silva', email: 'ana@example.com', status: 'active', role: 'admin', createdAt: '2025-01-10' },
-  { id: '2', name: 'Carlos Gómez', email: 'carlos@example.com', status: 'inactive', role: 'user', createdAt: '2025-02-14' },
-  { id: '3', name: 'María Rosa', email: 'maria@example.com', status: 'pending', role: 'user', createdAt: '2025-03-01' },
-  { id: '4', name: 'Juan Pérez', email: 'juan@example.com', status: 'active', role: 'manager', createdAt: '2025-04-20' },
-  { id: '5', name: 'Luis Díaz', email: 'luis@example.com', status: 'active', role: 'user', createdAt: '2025-05-11' },
+  { id: '1', name: 'Admin User', email: 'admin@atomic.ui', role: 'admin', status: 'active', createdAt: '2025-01-01' },
+  { id: '2', name: 'John Doe', email: 'john@example.com', role: 'user', status: 'active', createdAt: '2025-02-15' },
+  { id: '3', name: 'Jane Smith', email: 'jane@example.com', role: 'editor', status: 'pending', createdAt: '2025-03-10' },
+  { id: '4', name: 'Inactive Bob', email: 'bob@example.com', role: 'user', status: 'inactive', createdAt: '2024-11-20' },
 ];
-let idCounter = 6;
-
-export interface FilterOptions {
-  search: string;
-  status: string;
-  role: string;
-}
+let idCounter = 5;
 
 /**
  * CRUD Table Blueprint
@@ -247,17 +235,7 @@ export class CrudTableComponent implements OnInit {
   // ============================================
 
   loadData(): void {
-    const params: Record<string, string> = {
-      page: this.currentPage().toString(),
-      perPage: this.PAGE_SIZE.toString()
-    };
-
     const filters = this.filters();
-    if (filters.search) params['search'] = filters.search;
-    if (filters.status) params['status'] = filters.status;
-    if (filters.role) params['role'] = filters.role;
-
-        // Mock API Call
     let filtered = [...FAKE_DB];
     if (filters.search) filtered = filtered.filter(e => e.name.toLowerCase().includes(filters.search.toLowerCase()) || e.email.toLowerCase().includes(filters.search.toLowerCase()));
     if (filters.status) filtered = filtered.filter(e => e.status === filters.status);
@@ -266,9 +244,8 @@ export class CrudTableComponent implements OnInit {
     const page = this.currentPage();
     const perPage = this.PAGE_SIZE;
     const start = (page - 1) * perPage;
-    const end = start + perPage;
+    const paginated = filtered.slice(start, start + perPage);
     
-    const paginated = filtered.slice(start, end);
     const res: PaginatedResponse<Entity> = {
       data: paginated,
       meta: { total: filtered.length, page, perPage, totalPages: Math.ceil(filtered.length / perPage) }
@@ -336,7 +313,7 @@ export class CrudTableComponent implements OnInit {
     if (this.allSelected()) {
       this.clearSelection();
     } else {
-      const allIds = new Set(this.items().map(item => item.id));
+      const allIds = new Set(this.items().map((item: any) => item.id));
       this.selectedItems.set(allIds);
       this.allSelected.set(true);
     }
@@ -401,12 +378,17 @@ export class CrudTableComponent implements OnInit {
       return;
     }
 
-    const data = this.entityForm.value;
+    const data: any = this.entityForm.value;
 
     if (this.isEditMode()) {
       const item = this.currentItem();
       if (item) {
-              data.id = String(idCounter++);
+        const idx = FAKE_DB.findIndex(e => e.id === item.id);
+        if (idx !== -1) FAKE_DB[idx] = { ...FAKE_DB[idx], ...data } as Entity;
+        this.saveApi.execute(of(data).pipe(delay(800)) as any);
+      }
+    } else {
+      data.id = String(idCounter++);
       data.createdAt = new Date().toISOString().split('T')[0];
       FAKE_DB.unshift(data as Entity);
       this.saveApi.execute(of(data).pipe(delay(800)) as any);
@@ -439,19 +421,18 @@ export class CrudTableComponent implements OnInit {
 
   confirmDelete(): void {
     const item = this.itemToDelete();
-    if (!item) return;
-
-          const idx = FAKE_DB.findIndex(e => e.id === item.id);
-      if (idx !== -1) FAKE_DB.splice(idx, 1);
+    if (item) {
+      const idx = FAKE_DB.findIndex(e => e.id === item.id);
+      if (idx !== -1) { FAKE_DB.splice(idx, 1); }
       this.deleteApi.execute(of({ success: true }).pipe(delay(600)) as any);
-
-    const checkDelete = setInterval(() => {
-      if (this.deleteApi.success()) {
-        clearInterval(checkDelete);
-        this.closeDeleteModal();
-        this.loadData();
-      }
-    }, 100);
+      const checkDelete = setInterval(() => {
+        if (this.deleteApi.success()) {
+          clearInterval(checkDelete);
+          this.closeDeleteModal();
+          this.loadData();
+        }
+      }, 100);
+    }
   }
 
   // ============================================
@@ -515,9 +496,5 @@ export class CrudTableComponent implements OnInit {
     return '';
   }
 }
-
-
-
-
 
 

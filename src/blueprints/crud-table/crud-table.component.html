@@ -90,74 +90,52 @@
       </app-button>
     </app-row>
     } @else {
-    <app-table>
-      <app-table-head>
-        <tr app-table-row>
-          <th app-table-header-cell class="w-12 text-center">
-            <input type="checkbox" [checked]="allSelected()" (change)="toggleSelectAll()" class="cursor-pointer">
-          </th>
-          <th app-table-header-cell>Nombre</th>
-          <th app-table-header-cell>Email</th>
-          <th app-table-header-cell>Rol</th>
-          <th app-table-header-cell>Estado</th>
-          <th app-table-header-cell>Creado</th>
-          <th app-table-header-cell class="text-right">Acciones</th>
-        </tr>
-      </app-table-head>
-      <tbody>
-        @if (items().length === 0 && !listApi.loading()) {
-        <tr app-table-row>
-          <td app-table-cell colspan="7">
-            <app-row justify="center" verticalAlign="center" direction="column" class="p-5 text-center">
-              <i class="fa-solid fa-inbox text-muted text-2xl mb-2"></i>
-              <app-text color="muted">No se encontraron registros</app-text>
-              @if (hasActiveFilters()) {
-              <app-button variant="outline" size="sm" (buttonClick)="clearFilters()" class="mt-2">
-                Limpiar filtros
-              </app-button>
-              }
-            </app-row>
-          </td>
-        </tr>
-        }
-
-        @for (item of items(); track item.id) {
-        <tr app-table-row [class.selected]="isSelected(item)">
-          <td app-table-cell class="text-center">
-            <input type="checkbox" [checked]="isSelected(item)" (change)="toggleSelect(item)" class="cursor-pointer">
-          </td>
-          <td app-table-cell>
-            <app-row verticalAlign="center" gap="0.75rem">
-              <div class="avatar-circle">
-                {{ item.name.charAt(0).toUpperCase() }}
-              </div>
-              <app-text>{{ item.name }}</app-text>
-            </app-row>
-          </td>
-          <td app-table-cell>{{ item.email }}</td>
-          <td app-table-cell>
-            <span class="role-badge">{{ item.role }}</span>
-          </td>
-          <td app-table-cell>
-            <app-chip [variant]="getStatusVariant(item.status)" size="sm">
-              {{ getStatusLabel(item.status) }}
-            </app-chip>
-          </td>
-          <td app-table-cell>{{ formatDate(item.createdAt) }}</td>
-          <td app-table-cell class="text-right">
-            <app-row justify="end" gap="0.25rem">
-              <app-icon-button size="sm" title="Editar" (clicked)="openEditModal(item)">
-                <i class="fa-solid fa-pen"></i>
-              </app-icon-button>
-              <app-icon-button size="sm" variant="ghost" title="Eliminar" (clicked)="openDeleteModal(item)">
-                <i class="fa-solid fa-trash text-danger"></i>
-              </app-icon-button>
-            </app-row>
-          </td>
-        </tr>
-        }
-      </tbody>
-    </app-table>
+          <div style="overflow-x: auto; width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+        <table class="rtc-table">
+          <thead class="rtc-header">
+            <tr>
+              <th class="rtc-text-center" style="width: 50px;"><input type="checkbox" [checked]="allSelected()" (change)="toggleSelectAll()" class="cursor-pointer"></th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th class="rtc-text-center">Estado</th>
+              <th>Creado</th>
+              <th class="rtc-text-center" style="width: 100px;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="rtc-body">
+            @if (items().length === 0 && !listApi.loading()) {
+              <tr class="rtc-row">
+                <td colspan="7" style="text-align: center; padding: 3rem;">
+                  <i class="fa-solid fa-inbox text-muted text-3xl mb-2"></i>
+                  <div><app-text color="muted">No se encontraron registros</app-text></div>
+                </td>
+              </tr>
+            }
+            @for (item of items(); track item.id) {
+              <tr class="rtc-row" [class.selected]="isSelected(item)">
+                <td class="rtc-text-center" data-label="Sel:"><input type="checkbox" [checked]="isSelected(item)" (change)="toggleSelect(item)" class="cursor-pointer"></td>
+                <td data-label="Nombre:">
+                  <app-row verticalAlign="center" gap="0.75rem">
+                    <div class="avatar-circle">{{ item.name.charAt(0).toUpperCase() }}</div>
+                    <app-text>{{ item.name }}</app-text>
+                  </app-row>
+                </td>
+                <td data-label="Email:">{{ item.email }}</td>
+                <td data-label="Rol:"><span class="role-badge">{{ item.role }}</span></td>
+                <td class="rtc-text-center" data-label="Estado:"><app-chip [variant]="getStatusVariant(item.status)" size="sm">{{ getStatusLabel(item.status) }}</app-chip></td>
+                <td data-label="Creado:">{{ formatDate(item.createdAt) }}</td>
+                <td class="rtc-actions rtc-text-center" data-label="Acciones:">
+                  <app-row justify="center" gap="0.25rem">
+                    <app-icon-button size="sm" title="Editar" (clicked)="openEditModal(item)"><i class="fa-solid fa-pen"></i></app-icon-button>
+                    <app-icon-button size="sm" variant="ghost" title="Eliminar" (clicked)="openDeleteModal(item)"><i class="fa-solid fa-trash text-danger"></i></app-icon-button>
+                  </app-row>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     }
   </div>
 
@@ -262,6 +240,7 @@
   </app-row>
 </app-modal>
 }
+
 
 
 
