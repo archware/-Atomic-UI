@@ -94,7 +94,7 @@ interface MenuItem {
 })
 export class DashboardPageComponent implements OnInit {
   private api = inject(ApiService);
-  private router = inject(Router);
+  protected router = inject(Router);
   private platformId = inject(PLATFORM_ID);
 
   // ============================================
@@ -390,6 +390,7 @@ export class DashboardPageComponent implements OnInit {
     }).format(value);
   }
 }
+
 
 
 

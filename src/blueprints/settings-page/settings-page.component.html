@@ -22,13 +22,11 @@
     <!-- Mensajes globales -->
     @if (successMessage()) {
       <app-alert variant="success" [closable]="true" (closed)="successMessage.set(null)">
-        <i class="fa-solid fa-circle-check" icon></i>
         {{ successMessage() }}
       </app-alert>
     }
     @if (errorMessage()) {
       <app-alert variant="danger" [closable]="true" (closed)="errorMessage.set(null)">
-        <i class="fa-solid fa-circle-xmark" icon></i>
         {{ errorMessage() }}
       </app-alert>
     }
@@ -120,7 +118,6 @@
           <form [formGroup]="passwordForm" (ngSubmit)="savePassword()">
 
             <app-alert variant="info">
-              <i class="fa-solid fa-circle-info" icon></i>
               La nueva contraseña debe tener al menos 8 caracteres, incluir mayúsculas y números.
             </app-alert>
 
@@ -252,5 +249,7 @@
   </div>
 
 </app-layout-shell>
+
+
 
 

@@ -129,14 +129,17 @@
     <app-panel>
       <app-text variant="h4" weight="bold" class="mb-4">Acciones Rápidas</app-text>
       <app-row columns="1fr" gap="0.75rem">
-        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-plus">Nuevo Usuario</app-button>
+        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-plus" (click)="router.navigate(['/crud'])">Nuevo Usuario</app-button>
         <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-file-alt">Nuevo
           Reporte</app-button>
-        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-gear">Configuración</app-button>
-        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-question-circle">Ayuda</app-button>
+        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-gear" (click)="router.navigate(['/settings'])">Configuración</app-button>
+        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-question-circle" (click)="router.navigate(['/showcase'])">Ayuda</app-button>
       </app-row>
     </app-panel>
   </app-row>
 
 </app-layout-shell>
+
+
+
 
