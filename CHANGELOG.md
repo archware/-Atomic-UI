@@ -1,9 +1,30 @@
-# Changelog
+﻿# Changelog
 
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
+
+## [4.4.0] - 2026-06-08
+
+### Refactorización de Tablas, Scrolling Avanzado y Pulido Visual UI
+
+#### Added
+- **`app-table` & `ScrollOverlayComponent`**: Se completó la integración del contenedor inteligente de scroll (`app-scroll-overlay`) dentro del componente nativo `<app-table>`. Ahora las tablas admiten scroll horizontal y vertical perfecto con sincronización de columnas (`lockColumnTemplate`), evitando el desbordamiento sin romper la estructura HTML semántica.
+- **`table.component.ts`**: Nuevo `@Input() columnTemplate: string` para permitir definir anchos estrictos en grid (ej. `minmax(200px, 1fr) 120px...`), evitando que el navegador autoajuste y aplaste columnas cuando hay contenido largo.
+- **`SidebarMenuItem`**: Se añadió la propiedad `iconColor?: string` para permitir colores temáticos/personalizados en los iconos de la barra de navegación lateral, mejorando drásticamente el peso visual de la interfaz.
+
+#### Fixed (Visual & CSS)
+- **Modo Claro (Tablas)**: El `thead` ahora se renderiza como un bloque de color primario sólido con texto en blanco, reemplazando la débil línea inferior que lo hacía ilegible sobre fondos blancos.
+- **Modo Oscuro (Tablas)**: Se han corregido las variables de zebra (`--rtc-color-stripe`) para utilizar `rgba(255, 255, 255, 0.03)`, logrando un contraste limpio y solucionando el efecto visual de "bloque cuadrado oscuro".
+- **Bordes Perimetrales (Tablas)**: El contenedor inteligente exterior (`ScrollOverlay`) asume ahora la responsabilidad del `border` y `border-radius` cortando dinámicamente (`overflow: hidden`) las filas internas. Esto restaura las preciadas esquinas redondeadas en todas las vistas de escritorio al colapsar las tablas.
+- **Alineación y Espaciado de Acciones**: 
+  - Se añadieron las utilidades `.rtc-text-center` y `.rtc-text-right` al core CSS para alinear estrictamente flex-containers internos (como los menús de botones y `app-action-group`).
+  - Se implementó un margen de seguridad nativo (`padding-right: var(--space-6)`) en la última celda de todas las tablas para erradicar definitivamente las colisiones visuales entre el contenido y el *scrollbar* nativo de la UI.
+- **Sombras Premium (Paneles / Modo Claro)**: Se incrementaron sustancialmente las opacidades (canales alpha) de todas las elevaciones en modo claro (tokens `--shadow-sm` a `--shadow-xl`), logrando que las transiciones interactivas (*mouse move / hover effects*) en los *Cards* y *Panels* luzcan realmente elevadas.
+
+
+
 
 ## [4.3.0] - 2026-05-29
 

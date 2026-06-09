@@ -1,6 +1,6 @@
-{
+﻿{
   "name": "atomic-ui",
-  "version": "4.3.0",
+  "version": "4.4.0",
   "type": "module",
   "author": "COTAHA",
   "scripts": {
@@ -93,3 +93,4 @@
     "typescript-eslint": "8.46.4"
   }
 }
+
