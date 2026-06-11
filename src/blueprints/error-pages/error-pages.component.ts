@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   ButtonComponent,
   TextComponent,
+  ScrollOverlayComponent,
   RowComponent,
 } from '@shared/ui';
 
@@ -80,9 +81,11 @@ const ERROR_DEFAULTS: Record<ErrorCode, Omit<ErrorPageConfig, 'primaryAction' | 
   imports: [
     ButtonComponent,
     TextComponent,
+  ScrollOverlayComponent,
     RowComponent
 ],
   template: `
+    <app-scroll-overlay class="so-block h-screen w-full" [skipTableDetection]="true">
     <div class="error-page">
       <div class="error-container">
 
@@ -288,3 +291,4 @@ export class ErrorPagesComponent implements OnInit {
     history.back();
   }
 }
+

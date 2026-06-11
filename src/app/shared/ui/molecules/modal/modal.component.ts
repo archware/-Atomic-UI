@@ -47,32 +47,35 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
     </div>
   `,
   styles: [`
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: var(--overlay-backdrop);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      animation: fadeIn 150ms ease;
-    }
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: var(--overlay-backdrop);
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        z-index: 1000;
+        animation: fadeIn 150ms ease;
+        overflow-y: auto;
+        padding: 2rem 1rem;
+      }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
 
-    .modal {
-      background: var(--surface-background);
-      border-radius: var(--radius-lg);
-      width: 90%;
-      box-shadow: var(--shadow-xl);
-      animation: slideUp 200ms ease;
-      display: flex;
-      flex-direction: column;
-      max-height: 90vh;
-    }
+      .modal {
+        background: var(--surface-background);
+        border-radius: var(--radius-lg);
+        width: 90%;
+        box-shadow: var(--shadow-xl);
+        animation: slideUp 200ms ease;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        position: relative;
+      }
 
     /* Sizes */
     .modal-sm { max-width: 400px; }
@@ -80,19 +83,18 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
     .modal-lg { max-width: 800px; }
 
     /* En móvil el modal ocupa casi todo el ancho y se ancla al fondo */
-    @media (max-width: 479px) {
-      .modal-overlay {
-        align-items: flex-end;
-        padding: 0;
-      }
+      @media (max-width: 479px) {
+        .modal-overlay {
+          align-items: flex-end;
+          padding: 0;
+        }
 
-      .modal {
-        width: 100%;
-        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-        max-height: 90dvh;
-        max-height: 90vh; /* fallback */
-        max-height: 90dvh;
-      }
+        .modal {
+          width: 100%;
+          border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+          margin: 0;
+          margin-top: auto;
+        }
 
       .modal-sm,
       .modal-md,
@@ -141,10 +143,10 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
       color: var(--text-color);
     }
 
-    .modal-body {
-      padding: var(--space-5);
-      overflow-y: auto;
-    }
+      .modal-body {
+        padding: var(--space-5);
+        overflow: visible;
+      }
 
     .modal-footer {
       display: flex;

@@ -1,44 +1,73 @@
-﻿<app-panel class="crud-container">
-  <!-- ============================================ -->
-  <!-- HEADER -->
-  <!-- ============================================ -->
-  <app-row justify="between" verticalAlign="center" class="mb-6">
-    <div class="header-title-group">
-      <app-text variant="h2" weight="bold">{{ TABLE_TITLE }}</app-text>
-      <app-text variant="body-sm" color="muted">{{ meta().total }} registros</app-text>
-    </div>
-    <app-button variant="primary" icon="➕" (buttonClick)="openCreateModal()">
-      Nuevo {{ ENTITY_NAME }}
-    </app-button>
-  </app-row>
+<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
+  <!-- Sidebar Slot -->
+  <app-sidebar slot="sidebar" [menuItems]="menuItems" (navigate)="onSidebarNavigate($event)"></app-sidebar>
 
+  <!-- Topbar Slot -->
+  <app-topbar slot="topbar" [title]="'Gestión de Usuarios'" [userInitials]="'HC'" [userName]="'COTAHA'"
+    [userEmail]="'cotaha@email.com'" [notificationCount]="3" (toggleSidebar)="onToggleSidebar()" (logout)="onLogout()">
+    <app-theme-switcher></app-theme-switcher>
+  </app-topbar>
+
+<app-panel class="crud-container">  <!-- ============================================ -->
+  <!-- HEADER & FILTERS -->
   <!-- ============================================ -->
-  <!-- FILTERS -->
-  <!-- ============================================ -->
-  <app-panel class="filters-panel mb-4">
-    <app-row gap="1rem" verticalAlign="center" columns="1fr auto auto auto" class="filters-row">
-      <div class="search-box-container" style="flex: 1;">
-        <app-input placeholder="Buscar por nombre o email..." iconClass="fa-solid fa-search" [ngModel]="searchTerm()"
-          (ngModelChange)="onSearch($event)">
-        </app-input>
+  <div class="mb-6">
+    <app-text variant="h2" weight="bold" align="center" class="mb-6" style="text-transform: uppercase; letter-spacing: 0.5px; font-size: 28px; color: var(--text-color);">
+      LISTADO DE PERSONAL
+    </app-text>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: var(--space-4); background: var(--surface-background); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: 0 1px 2px rgba(0,0,0,0.02); flex-wrap: wrap; gap: 1rem;">
+      
+      <div style="display: flex; gap: 1rem; flex: 1; flex-wrap: wrap;">
+        <!-- Tipo de búsqueda Combo -->
+        <div style="width: 250px;">
+          <app-select2 
+            [options]="searchTypeOptions" 
+            [ngModel]="selectedSearchType()"
+            (ngModelChange)="onSearchTypeChange($event)"
+            label="Tipo de búsqueda">
+          </app-select2>
+        </div>
+        
+        <!-- Second Control Dynamic -->
+        <div style="width: 280px; position: relative;">
+          @if (selectedSearchType() === 'name') {
+            <app-floating-input 
+              label="Nombre del personal" 
+              placeholder="Ingrese el nombre" 
+              [ngModel]="searchValue()"
+              (ngModelChange)="onSearchValueChange($event)">
+            </app-floating-input>
+          } @else if (selectedSearchType() === 'document') {
+            <app-floating-input 
+              label="Número de documento" 
+              placeholder="Ingrese el documento" 
+              [ngModel]="searchValue()"
+              (ngModelChange)="onSearchValueChange($event)">
+            </app-floating-input>
+          } @else if (selectedSearchType() === 'regimen') {
+            <app-select2 
+              [options]="regimenOptions" 
+              [ngModel]="searchValue()"
+              (ngModelChange)="onSearchValueChange($event)"
+              label="Regimen laboral">
+            </app-select2>
+          } @else if (selectedSearchType() === 'status') {
+            <app-select2 
+              [options]="statusOptions" 
+              [ngModel]="searchValue()"
+              (ngModelChange)="onSearchValueChange($event)"
+              label="Estado">
+            </app-select2>
+          }
+        </div>
       </div>
 
-      <app-select2 [options]="statusOptions" [ngModel]="filters().status" placeholder="Estado"
-        (ngModelChange)="onStatusFilter($any($event))">
-      </app-select2>
-
-      <app-select2 [options]="roleOptions" [ngModel]="filters().role" placeholder="Rol"
-        (ngModelChange)="onRoleFilter($any($event))">
-      </app-select2>
-
-      @if (hasActiveFilters()) {
-      <app-button variant="ghost" size="sm" (buttonClick)="clearFilters()">
-        <i class="fa-solid fa-times"></i>
-        Limpiar
+      <app-button variant="primary" iconClass="fa-solid fa-plus" iconPosition="left" (buttonClick)="openCreateModal()">
+        Agregar
       </app-button>
-      }
-    </app-row>
-  </app-panel>
+    </div>
+  </div>
 
   <!-- ============================================ -->
   <!-- BULK ACTIONS BAR -->
@@ -72,7 +101,17 @@
   <!-- ============================================ -->
   <!-- TABLE -->
   <!-- ============================================ -->
-  <div class="table-wrapper">
+  <div class="mt-4 pt-4 border-t">
+    <app-data-pager 
+      [page]="currentPage()" 
+      [total]="meta().total" 
+      [pageSize]="pageSize()"
+      (pageChange)="onPageChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)">
+    </app-data-pager>
+  </div>
+  
+  <div class="table-wrapper mt-4">
     @if (listApi.loading()) {
     <app-row justify="center" verticalAlign="center" class="p-5">
       <app-loader variant="spinner" size="lg"></app-loader>
@@ -90,7 +129,9 @@
       </app-button>
     </app-row>
     } @else {
-          <div style="overflow-x: auto; width: 100%; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+        <app-scroll-overlay class="so-block w-full max-w-full" [minColumnWidth]="40" [maxBodyHeight]="450"
+          [lockColumnTemplate]="true"
+          [columnTemplate]="'50px minmax(200px, 1.5fr) minmax(200px, 1fr) 120px 100px 120px 100px'">
         <table class="rtc-table">
           <thead class="rtc-header">
             <tr>
@@ -135,24 +176,46 @@
             }
           </tbody>
         </table>
-      </div>
+        </app-scroll-overlay>
     }
   </div>
 
   <!-- ============================================ -->
-  <!-- PAGINATION -->
-  <!-- ============================================ -->
-  <!-- ============================================ -->
-  <!-- PAGINATION -->
+  <!-- DEMO PAGINATIONS (BOTTOM) -->
   <!-- ============================================ -->
   @if (meta().totalPages > 1) {
-  <app-row justify="center" class="mt-4 pt-4 border-t">
-    <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="PAGE_SIZE"
-      (pageChange)="onPageChange($event)">
-    </app-pagination>
-  </app-row>
+  <div class="mt-6 pt-6 border-t">
+    <app-text variant="h4" weight="semibold" class="mb-4">Otras opciones de paginación (Molecules):</app-text>
+    
+    <div style="display: flex; flex-direction: column; gap: 2rem;">
+      <div>
+        <app-text variant="label" color="muted" class="mb-2" style="display: block;">Variante Minimal:</app-text>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: var(--space-3) var(--space-4); background: var(--surface-background); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+          <app-text variant="body-sm" color="muted" weight="semibold">Total de registros: {{ meta().total }}</app-text>
+          <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="pageSize()" variant="minimal" (pageChange)="onPageChange($event)"></app-pagination>
+        </div>
+      </div>
+
+      <div>
+        <app-text variant="label" color="muted" class="mb-2" style="display: block;">Variante Rounded:</app-text>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: var(--space-3) var(--space-4); background: var(--surface-background); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+          <app-text variant="body-sm" color="muted" weight="semibold">Total de registros: {{ meta().total }}</app-text>
+          <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="pageSize()" variant="rounded" (pageChange)="onPageChange($event)"></app-pagination>
+        </div>
+      </div>
+
+      <div>
+        <app-text variant="label" color="muted" class="mb-2" style="display: block;">Variante Cards:</app-text>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: var(--space-3) var(--space-4); background: var(--surface-background); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+          <app-text variant="body-sm" color="muted" weight="semibold">Total de registros: {{ meta().total }}</app-text>
+          <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="pageSize()" variant="cards" (pageChange)="onPageChange($event)"></app-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
   }
 </app-panel>
+</app-layout-shell>
 
 <!-- ============================================ -->
 <!-- CREATE/EDIT MODAL -->
@@ -240,6 +303,12 @@
   </app-row>
 </app-modal>
 }
+
+
+
+
+
+
 
 
 

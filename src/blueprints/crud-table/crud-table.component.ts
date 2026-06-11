@@ -1,7 +1,8 @@
-﻿import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { FormBuilder, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
-import {
+import { SidebarMenuItem,
   PanelComponent,
   ButtonComponent,
   InputComponent,
@@ -15,6 +16,13 @@ import {
   ChipComponent,
   IconButtonComponent,
   PaginationComponent,
+  DataPagerComponent,
+  ScrollOverlayComponent,
+  LayoutShellComponent,
+  SidebarComponent,
+  TopbarComponent,
+  ThemeSwitcherComponent,
+
   ModalComponent,
   FloatingInputComponent,
   LoaderComponent,
@@ -34,7 +42,8 @@ export interface Entity {
 }
 
 export interface FilterOptions {
-  search: string;
+  searchType: string;
+  searchValue: string;
   status: string;
   role: string;
 }
@@ -49,13 +58,15 @@ export interface PaginatedResponse<T> {
   };
 }
 
-const FAKE_DB: Entity[] = [
-  { id: '1', name: 'Admin User', email: 'admin@atomic.ui', role: 'admin', status: 'active', createdAt: '2025-01-01' },
-  { id: '2', name: 'John Doe', email: 'john@example.com', role: 'user', status: 'active', createdAt: '2025-02-15' },
-  { id: '3', name: 'Jane Smith', email: 'jane@example.com', role: 'editor', status: 'pending', createdAt: '2025-03-10' },
-  { id: '4', name: 'Inactive Bob', email: 'bob@example.com', role: 'user', status: 'inactive', createdAt: '2024-11-20' },
-];
-let idCounter = 5;
+const FAKE_DB: Entity[] = Array.from({ length: 50 }).map((_, i) => ({
+  id: String(i + 1),
+  name: `Usuario de Prueba ${i + 1}`,
+  email: `usuario${i + 1}@example.com`,
+  role: i % 3 === 0 ? 'admin' : i % 2 === 0 ? 'editor' : 'user',
+  status: i % 5 === 0 ? 'inactive' : i % 7 === 0 ? 'pending' : 'active',
+  createdAt: new Date(Date.now() - Math.floor(Math.random() * 10000000000)).toISOString().split('T')[0]
+}));
+let idCounter = 51;
 
 /**
  * CRUD Table Blueprint
@@ -87,6 +98,17 @@ let idCounter = 5;
     FloatingInputComponent,
     Select2Component,
     PaginationComponent,
+    DataPagerComponent,
+    ScrollOverlayComponent,
+    LayoutShellComponent,
+    SidebarComponent,
+    TopbarComponent,
+    ThemeSwitcherComponent,
+  LayoutShellComponent,
+  SidebarComponent,
+  TopbarComponent,
+  ThemeSwitcherComponent,
+
     ModalComponent,
     ChipComponent,
     LoaderComponent,
@@ -102,7 +124,33 @@ let idCounter = 5;
   styleUrl: './crud-table.component.css'
 })
 export class CrudTableComponent implements OnInit {
-  private fb = inject(FormBuilder);
+  // SIDEBAR
+  sidebarVisible = signal(true);
+  menuItems: SidebarMenuItem[] = [
+    { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' , iconColor: 'var(--secondary-color)' },
+    { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' , iconColor: 'var(--info-color)' },
+    { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud' , iconColor: 'var(--success-color)' },
+    { label: 'Perfil', icon: 'fa-solid fa-user', route: '/profile' , iconColor: 'var(--warning-color)' },
+    { label: 'Settings', icon: 'fa-solid fa-cog', route: '/settings' , iconColor: 'var(--danger-color)' },
+  ];
+
+  onToggleSidebar() {
+    this.sidebarVisible.update(v => !v);
+  }
+
+  onSidebarNavigate(item: SidebarMenuItem) {
+    if (item.route) {
+      this.router.navigate([item.route]);
+    }
+  }
+
+  onLogout() {
+    alert('Cerrando sesión...');
+    this.router.navigate(['/login']);
+  }
+
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
   private api = inject(ApiService);
 
   // ============================================
@@ -113,7 +161,7 @@ export class CrudTableComponent implements OnInit {
   private readonly ENDPOINT = '/users';
 
   /** @customize Items per page */
-  readonly PAGE_SIZE = 10;
+  pageSize = signal(10);
 
   /** @customize Table title */
   readonly TABLE_TITLE = 'Usuarios';
@@ -144,7 +192,8 @@ export class CrudTableComponent implements OnInit {
 
   /** Active filters */
   filters = signal<FilterOptions>({
-    search: '',
+    searchType: '',
+    searchValue: '',
     status: '',
     role: ''
   });
@@ -175,6 +224,25 @@ export class CrudTableComponent implements OnInit {
   // ============================================
 
   /** @customize Status options for filter */
+  
+  searchTypeOptions = [
+    { value: '', label: 'Seleccione una opción' },
+    { value: 'name', label: 'Nombre del personal' },
+    { value: 'document', label: 'Número de documento' },
+    { value: 'regimen', label: 'Régimen laboral' },
+    { value: 'status', label: 'Estado' }
+  ];
+
+  regimenOptions = [
+    { value: '', label: 'Seleccione una opción' },
+    { value: '728', label: 'D.L. 728' },
+    { value: '1057', label: 'CAS' },
+    { value: '276', label: 'D.L. 276' }
+  ];
+
+  selectedSearchType = signal('');
+  searchValue = signal('');
+
   statusOptions = [
     { value: '', label: 'Todos los estados' },
     { value: 'active', label: 'Activo' },
@@ -212,7 +280,7 @@ export class CrudTableComponent implements OnInit {
   meta = computed(() => this.listApi.data()?.meta ?? {
     total: 0,
     page: 1,
-    perPage: this.PAGE_SIZE,
+    perPage: this.pageSize(),
     totalPages: 1
   });
 
@@ -237,12 +305,23 @@ export class CrudTableComponent implements OnInit {
   loadData(): void {
     const filters = this.filters();
     let filtered = [...FAKE_DB];
-    if (filters.search) filtered = filtered.filter(e => e.name.toLowerCase().includes(filters.search.toLowerCase()) || e.email.toLowerCase().includes(filters.search.toLowerCase()));
+    if (filters.searchType && filters.searchValue) {
+      const type = filters.searchType;
+      const val = filters.searchValue.toLowerCase();
+      if (type === 'name') filtered = filtered.filter(e => e.name.toLowerCase().includes(val) || e.email.toLowerCase().includes(val));
+      if (type === 'document') filtered = filtered.filter(e => e.id.toLowerCase().includes(val)); // Mock document as id
+      if (type === 'regimen') {
+        // Mock regimen logic (we don't have regimen in Entity, let's map it randomly or just skip)
+        // Let's pretend everyone with role admin is 728, others are CAS (1057)
+        filtered = filtered.filter(e => (val === '728' ? e.role === 'admin' : e.role !== 'admin'));
+      }
+      if (type === 'status') filtered = filtered.filter(e => e.status === val);
+    }
     if (filters.status) filtered = filtered.filter(e => e.status === filters.status);
     if (filters.role) filtered = filtered.filter(e => e.role === filters.role);
     
     const page = this.currentPage();
-    const perPage = this.PAGE_SIZE;
+    const perPage = this.pageSize();
     const start = (page - 1) * perPage;
     const paginated = filtered.slice(start, start + perPage);
     
@@ -268,16 +347,23 @@ export class CrudTableComponent implements OnInit {
   // SEARCH & FILTERS
   // ============================================
 
-  onSearch(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.searchTerm.set(input.value);
+  applySearch(): void {
+    this.filters.update(f => ({ ...f, searchType: this.selectedSearchType(), searchValue: this.searchValue() }));
+    this.currentPage.set(1);
+    this.loadData();
+  }
 
-    // Debounce search
+  onSearchTypeChange(type: string): void {
+    this.selectedSearchType.set(type);
+    this.searchValue.set(''); // clear value when type changes
+    this.applySearch();
+  }
+
+  onSearchValueChange(val: string): void {
+    this.searchValue.set(val);
     clearTimeout(this._searchTimeout);
     this._searchTimeout = setTimeout(() => {
-      this.filters.update(f => ({ ...f, search: input.value }));
-      this.currentPage.set(1);
-      this.loadData();
+      this.applySearch();
     }, 300);
   }
 
@@ -294,15 +380,15 @@ export class CrudTableComponent implements OnInit {
   }
 
   clearFilters(): void {
-    this.filters.set({ search: '', status: '', role: '' });
-    this.searchTerm.set('');
+    this.filters.set({ searchType: '', searchValue: '', status: '', role: '' });
+    this.selectedSearchType.set(''); this.searchValue.set('');
     this.currentPage.set(1);
     this.loadData();
   }
 
   hasActiveFilters(): boolean {
     const f = this.filters();
-    return !!(f.search || f.status || f.role);
+    return !!(f.searchType || f.searchValue || f.status || f.role);
   }
 
   // ============================================
@@ -476,6 +562,20 @@ export class CrudTableComponent implements OnInit {
     }
   }
 
+  // ============================================
+  // NAVIGATION
+  // ============================================
+
+  onPageSizeChange(newSize: number): void {
+    this.pageSize.set(newSize);
+    this.currentPage.set(1);
+    this.loadData();
+  }
+
+  goBack(): void {
+    this.router.navigate(['/']);
+  }
+
   formatDate(dateString: string): string {
     return new Date(dateString).toLocaleDateString('es-ES', {
       year: 'numeric',
@@ -496,5 +596,8 @@ export class CrudTableComponent implements OnInit {
     return '';
   }
 }
+
+
+
 
 

@@ -1,4 +1,4 @@
-/* ============================================
+﻿/* ============================================
    CRUD TABLE STYLES
    ============================================ */
 
@@ -262,7 +262,7 @@
   color: var(--text-color);
 }
 
-.error-state .error-message {
+.error-state .input-error {
   font-size: 0.875rem;
   color: var(--text-color-secondary);
 }
@@ -507,3 +507,21 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+
+/* Fix filter input alignment */
+.filters-row app-input {
+  --input-margin-bottom: 0;
+  margin-bottom: 0;
+}
+.filters-row app-input::ng-deep .form-group {
+  margin-bottom: 0 !important;
+}
+.filters-row app-input::ng-deep .input-error {
+  display: none !important;
+}
+
+
+.filters-row app-input::ng-deep .form-group { margin: 0 !important; padding: 0 !important; gap: 0 !important; }
+.filters-row app-select2::ng-deep .select2-wrapper { margin: 0 !important; }
+

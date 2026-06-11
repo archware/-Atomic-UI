@@ -19,40 +19,62 @@ import { Component, Input, Output, EventEmitter, signal, computed } from '@angul
   standalone: true,
   imports: [],
   template: `
-    <nav class="pagination" [class]="'pagination-' + size" aria-label="Paginación">
-      <button type="button"
-        class="page-btn page-prev"
-        [disabled]="currentPage() === 1"
-        (click)="goToPage(currentPage() - 1)"
-        aria-label="Página anterior"
-      >
-        <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
-      </button>
+    <nav class="pagination" [class]="'pagination-' + size + ' pagination-' + variant" aria-label="Paginación">
+      @if (variant === 'minimal') {
+        <button type="button"
+          class="page-btn page-text-btn"
+          [disabled]="currentPage() === 1"
+          (click)="goToPage(currentPage() - 1)"
+        >
+          <i class="fa-solid fa-arrow-left" aria-hidden="true" style="margin-right: 0.5rem"></i> Anterior
+        </button>
+        
+        <span class="page-minimal-text">
+          Página <strong>{{ currentPage() }}</strong> de <strong>{{ totalPages() }}</strong>
+        </span>
 
-      @for (page of visiblePages(); track page) {
-        @if (page === '...') {
-          <span class="page-ellipsis" aria-hidden="true">...</span>
-        } @else {
-          <button type="button"
-            class="page-btn page-number"
-            [class.active]="page === currentPage()"
-            [attr.aria-current]="page === currentPage() ? 'page' : null"
-            [attr.aria-label]="'Página ' + page"
-            (click)="goToPage(+page)"
-          >
-            {{ page }}
-          </button>
+        <button type="button"
+          class="page-btn page-text-btn"
+          [disabled]="currentPage() === totalPages()"
+          (click)="goToPage(currentPage() + 1)"
+        >
+          Siguiente <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left: 0.5rem"></i>
+        </button>
+      } @else {
+        <button type="button"
+          class="page-btn page-prev"
+          [disabled]="currentPage() === 1"
+          (click)="goToPage(currentPage() - 1)"
+          aria-label="Página anterior"
+        >
+          <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+        </button>
+
+        @for (page of visiblePages(); track page) {
+          @if (page === '...') {
+            <span class="page-ellipsis" aria-hidden="true">...</span>
+          } @else {
+            <button type="button"
+              class="page-btn page-number"
+              [class.active]="page === currentPage()"
+              [attr.aria-current]="page === currentPage() ? 'page' : null"
+              [attr.aria-label]="'Página ' + page"
+              (click)="goToPage(+page)"
+            >
+              {{ page }}
+            </button>
+          }
         }
-      }
 
-      <button type="button"
-        class="page-btn page-next"
-        [disabled]="currentPage() === totalPages()"
-        (click)="goToPage(currentPage() + 1)"
-        aria-label="Página siguiente"
-      >
-        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-      </button>
+        <button type="button"
+          class="page-btn page-next"
+          [disabled]="currentPage() === totalPages()"
+          (click)="goToPage(currentPage() + 1)"
+          aria-label="Página siguiente"
+        >
+          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+        </button>
+      }
     </nav>
   `,
   styles: [`
@@ -135,18 +157,79 @@ import { Component, Input, Output, EventEmitter, signal, computed } from '@angul
       font-size: var(--text-sm);
     }
 
+    /* Minimal Variant */
+    .pagination-minimal {
+      justify-content: space-between;
+      width: 100%;
+      gap: var(--space-4);
+    }
+
+    .page-text-btn {
+      padding: 0 var(--space-4);
+      background: transparent;
+      border: 1px solid var(--border-color);
+      min-width: auto;
+    }
+
+    .page-minimal-text {
+      font-size: var(--text-sm);
+      color: var(--text-color-secondary);
+    }
+
+    .page-minimal-text strong {
+      color: var(--text-color);
+      font-weight: 600;
+    }
+
+    /* Rounded Variant */
+    .pagination-rounded .page-btn {
+      border-radius: 9999px; /* Fully rounded */
+      border: none;
+      background: transparent;
+    }
+
+    .pagination-rounded .page-btn:hover:not(:disabled):not(.active) {
+      background: var(--surface-hover);
+    }
+
+    .pagination-rounded .page-btn.active {
+      background: var(--primary-color);
+      color: var(--text-color-on-primary);
+      box-shadow: 0 2px 4px rgba(var(--primary-rgb), 0.3);
+    }
+
+    /* Cards Variant */
+    .pagination-cards .page-btn {
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      background: var(--surface-background);
+      margin: 0 2px;
+    }
+
+    .pagination-cards .page-btn.active {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 1px var(--primary-color);
+      background: var(--primary-50);
+      color: var(--primary-700);
+    }
+
     /*
      * Dark mode se maneja automáticamente via tokens semánticos.
-     * --surface-background, --border-color, --primary-color, --surface-hover
-     * ya tienen valores apropiados para temas oscuros.
      */
   `]
 })
 export class PaginationComponent {
-  @Input() total = 0;
-  @Input() pageSize = 10;
+  @Input() variant: 'standard' | 'minimal' | 'rounded' | 'cards' = 'standard';
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() maxVisible = 5;
+  
+  _total = signal(0);
+  @Input() set total(val: number) { this._total.set(val); }
+  
+  _pageSize = signal(10);
+  @Input() set pageSize(val: number) { this._pageSize.set(val); }
+
   @Input() set page(value: number) {
     this.currentPage.set(value);
   }
@@ -154,7 +237,7 @@ export class PaginationComponent {
 
   currentPage = signal(1);
 
-  totalPages = computed(() => Math.ceil(this.total / this.pageSize) || 1);
+  totalPages = computed(() => Math.ceil(this._total() / this._pageSize()) || 1);
 
   visiblePages = computed(() => {
     const total = this.totalPages();

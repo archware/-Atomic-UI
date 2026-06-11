@@ -1,4 +1,4 @@
-﻿/**
+/**
  * TABLE DESIGN TOKENS
  * Single Source of Truth para todos los estilos de tabla
  * 
@@ -70,7 +70,7 @@ html.dark,
   /* Colores */
   --table-color-primary: var(--primary-color-light);
   --table-color-background: var(--surface-section);
-  --table-color-stripe: rgba(255, 255, 255, 0.03);
+  --table-color-stripe: rgba(255, 255, 255, 0.06);
   --table-color-hover: var(--hover-background);
 
   /* Header - Fondo primario, sin borde */

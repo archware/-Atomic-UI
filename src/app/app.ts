@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, inject, PLATFORM_ID } from '@angula
 import { RouterOutlet } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { ThemeService } from '@shared/ui';
 import {
   ToastComponent,
   PopupContainerComponent,
@@ -19,6 +20,7 @@ import {
 export class App {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly translate = inject(TranslateService);
+  private readonly themeService = inject(ThemeService);
 
   constructor() {
     const savedLang = isPlatformBrowser(this.platformId)

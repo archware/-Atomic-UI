@@ -46,6 +46,14 @@ export const routes: Routes = [
   // Rutas PROTEGIDAS (requieren autenticación)
   // ===================================================
   {
+    path: 'analytics',
+    loadComponent: () => import('../blueprints/analytics-page/analytics-page.component').then(m => m.AnalyticsPageComponent),
+  },
+  {
+    path: 'reports',
+    loadComponent: () => import('../blueprints/reports-page/reports-page.component').then(m => m.ReportsPageComponent),
+  },
+  {
     path: 'dashboard',
     loadComponent: () =>
       import('../blueprints/dashboard-page/dashboard-page.component').then(m => m.DashboardPageComponent),

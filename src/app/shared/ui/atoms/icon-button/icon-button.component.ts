@@ -14,7 +14,8 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
       [class.icon-btn--avatar]="variant === 'avatar'"
       [attr.title]="tooltip"
       [attr.aria-label]="ariaLabel || tooltip"
-      (click)="clicked.emit($event)">
+      [disabled]="disabled"
+      (click)="!disabled && clicked.emit($event)">
       <ng-content></ng-content>
       @if (badge && badge > 0) {
         <span class="icon-btn__badge">{{ badge > 9 ? '9+' : badge }}</span>
@@ -49,6 +50,14 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
 
     .icon-btn:active {
       transform: scale(0.95);
+    }
+
+    .icon-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: transparent;
+      color: var(--text-color-secondary);
+      transform: none;
     }
 
     /* Ghost variant - más sutil */
@@ -113,6 +122,9 @@ export class IconButtonComponent {
 
   /** Badge count (for notifications) */
   @Input() badge = 0;
+
+  /** Disabled state */
+  @Input() disabled = false;
 
   /** Click event */
   @Output() clicked = new EventEmitter<MouseEvent>();

@@ -142,6 +142,8 @@ export type { AvatarGroupItem } from './molecules/avatar-group/avatar-group.comp
 // ============================================
 export { AccordionComponent, AccordionItemComponent } from './organisms/accordion/accordion.component';
 
+export { DataPagerComponent } from './organisms/data-pager/data-pager.component';
+
 export { FiltersComponent } from './organisms/filters/filters.component';
 
 export { FooterComponent } from './organisms/footer/footer.component';
@@ -223,3 +225,4 @@ export type {
 export { authGuard, guestGuard, passwordChangeGuard } from './guards/auth.guard';
 
 export { authInterceptor } from './interceptors/auth.interceptor';
+export * from './organisms/chart/chart.component';

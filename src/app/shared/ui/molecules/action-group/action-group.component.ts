@@ -1,4 +1,4 @@
-﻿import {
+import {
   Component, Input, Output, EventEmitter, signal, HostListener,
   ElementRef, ChangeDetectionStrategy, inject,
   ViewEncapsulation, OnInit, OnDestroy, Renderer2
@@ -368,15 +368,17 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
   private resizeListener = () => this.onScrollOrResize();
 
   ngOnInit(): void {
-    // Añadir listeners para recalcular posición
-    window.addEventListener('scroll', this.scrollListener, true);
-    window.addEventListener('resize', this.resizeListener);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', this.scrollListener, true);
+      window.addEventListener('resize', this.resizeListener);
+    }
   }
 
   ngOnDestroy(): void {
-    // Limpiar listeners
-    window.removeEventListener('scroll', this.scrollListener, true);
-    window.removeEventListener('resize', this.resizeListener);
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('scroll', this.scrollListener, true);
+      window.removeEventListener('resize', this.resizeListener);
+    }
     // Limpiar menú si existe
     this.destroyMenu();
   }

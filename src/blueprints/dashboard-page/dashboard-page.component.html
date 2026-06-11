@@ -1,15 +1,7 @@
 ﻿<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="closeSidebar()">
 
-  <!-- ============================================ -->
-  <!-- SIDEBAR (Atomic) -->
-  <!-- ============================================ -->
-  <app-sidebar slot="sidebar" [menuItems]="menuItems" [user]="sidebarUser()" [collapsed]="false"
-    (navigate)="onMenuItemClick($event)">
-  </app-sidebar>
+  <app-sidebar slot="sidebar" [menuItems]="menuItems" [user]="sidebarUser()" [collapsed]="false" (navigate)="onMenuItemClick($event)"></app-sidebar>
 
-  <!-- ============================================ -->
-  <!-- TOPBAR (Atomic) -->
-  <!-- ============================================ -->
   <app-topbar slot="topbar" [title]="'Dashboard'" [userInitials]="userInitials()"
     [userName]="currentUser()?.name || 'Usuario'" [userEmail]="currentUser()?.email || 'usuario@email.com'"
     [notificationCount]="3" (toggleSidebar)="toggleSidebar()" (userAction)="onUserAction($any($event))"
@@ -17,9 +9,6 @@
     <app-theme-switcher></app-theme-switcher>
   </app-topbar>
 
-  <!-- ============================================ -->
-  <!-- MAIN CONTENT (Atomic) -->
-  <!-- ============================================ -->
   <!-- Page Header -->
   <app-row columns="1fr auto" justify="between" verticalAlign="center" class="mb-6">
     <div class="header-text">
@@ -27,10 +16,10 @@
         Bienvenido, {{ (currentUser()?.name ?? 'Usuario').split(' ')[0] }} 👋
       </app-text>
       <app-text variant="body" color="muted">
-        Aquí está el resumen de tu actividad
+        Aquí está el resumen de tu actividad de hoy.
       </app-text>
     </div>
-    <app-button variant="primary" icon="➕">
+    <app-button variant="primary" iconClass="fa-solid fa-plus">
       Nuevo Proyecto
     </app-button>
   </app-row>
@@ -49,97 +38,40 @@
     <app-row wrap="wrap" align="center" justify="center" gap="1rem" style="padding: 2rem;">
       <i class="fa-solid fa-circle-exclamation text-danger" style="font-size: 2rem;"></i>
       <app-text variant="body" color="danger">Error al cargar estadísticas</app-text>
-      <app-button variant="outline" size="sm" (buttonClick)="loadDashboardStats()">
-        Reintentar
-      </app-button>
+      <app-button variant="outline" size="sm" (buttonClick)="loadDashboardStats()">Reintentar</app-button>
     </app-row>
   </app-panel>
   } @else {
   <app-metrics-grid [metrics]="metrics()" minCardWidth="240px" class="mb-6"></app-metrics-grid>
   }
 
-    <!-- Additional Analytics Section (Added for better UX/UI) -->
-  <app-panel title="Rendimiento de Proyectos" class="mb-6">
-    <app-row columns="1fr 1fr" gap="2rem" [responsive]="true">
-      <div class="chart-placeholder" style="height: 250px; background: linear-gradient(135deg, var(--surface-hover), var(--surface-ground)); border-radius: var(--radius-md); display: flex; align-items: flex-end; justify-content: space-between; padding: 1rem; border: 1px dashed var(--border-color);">
-        <div style="width: 12%; background: var(--primary-color); height: 40%; border-radius: 4px;"></div>
-        <div style="width: 12%; background: var(--info-color); height: 60%; border-radius: 4px;"></div>
-        <div style="width: 12%; background: var(--success-color); height: 85%; border-radius: 4px;"></div>
-        <div style="width: 12%; background: var(--warning-color); height: 30%; border-radius: 4px;"></div>
-        <div style="width: 12%; background: var(--primary-color); height: 75%; border-radius: 4px;"></div>
-        <div style="width: 12%; background: var(--info-color); height: 50%; border-radius: 4px;"></div>
-        <div style="width: 12%; background: var(--success-color); height: 95%; border-radius: 4px;"></div>
-      </div>
-      <div class="stats-breakdown" style="display: flex; flex-direction: column; justify-content: center; gap: 1.5rem;">
-        <div>
-          <app-row justify="between" class="mb-2">
-            <app-text variant="body" weight="semibold">Alpha UI Rewrite</app-text>
-            <app-text variant="body" color="muted">85%</app-text>
-          </app-row>
-          <div style="height: 8px; background: var(--surface-hover); border-radius: 4px; overflow: hidden;">
-            <div style="height: 100%; width: 85%; background: var(--success-color);"></div>
-          </div>
-        </div>
-        <div>
-          <app-row justify="between" class="mb-2">
-            <app-text variant="body" weight="semibold">Migración Backend</app-text>
-            <app-text variant="body" color="muted">60%</app-text>
-          </app-row>
-          <div style="height: 8px; background: var(--surface-hover); border-radius: 4px; overflow: hidden;">
-            <div style="height: 100%; width: 60%; background: var(--info-color);"></div>
-          </div>
-        </div>
-        <div>
-          <app-row justify="between" class="mb-2">
-            <app-text variant="body" weight="semibold">Auditoría de Seguridad</app-text>
-            <app-text variant="body" color="muted">30%</app-text>
-          </app-row>
-          <div style="height: 8px; background: var(--surface-hover); border-radius: 4px; overflow: hidden;">
-            <div style="height: 100%; width: 30%; background: var(--warning-color);"></div>
-          </div>
-        </div>
-      </div>
-    </app-row>
-  </app-panel>
-
-  <!-- Content Panels -->
-  <app-row [responsive]="true" minColumnWidth="280px" gap="1.5rem" class="content-grid-row">
-    <!-- Recent Activity -->
-    <app-panel>
-      <app-row columns="1fr auto" justify="between" align="center" class="mb-4">
-        <app-text variant="h4" weight="bold">Actividad Reciente</app-text>
-        <app-button variant="ghost" size="sm">Ver todo</app-button>
-      </app-row>
-      <app-row columns="1fr" gap="0.75rem">
-        @for (i of [1, 2, 3, 4, 5]; track i) {
-        <app-row columns="auto 1fr" align="center" gap="1rem" class="border-b pb-4 last:border-0 last:pb-0">
-          <app-avatar variant="default" icon="fa-solid fa-user" size="sm"></app-avatar>
-          <div style="flex: 1">
-            <app-text variant="body-sm">
-              <span class="font-bold">Usuario {{ i }}</span> completó una tarea en <strong>Proyecto A</strong>
-            </app-text>
-            <app-text variant="caption" color="muted">Hace {{ i * 5 }} minutos</app-text>
-          </div>
-        </app-row>
-        }
-      </app-row>
+  <!-- Bento Box Layout -->
+  <div class="bento-grid mb-6">
+    <!-- Main Chart: Revenue -->
+    <app-panel class="bento-item bento-large" title="Evolución de Ingresos">
+      <app-chart type="line" [data]="revenueData" [options]="revenueOptions" height="280px"></app-chart>
     </app-panel>
 
+    <!-- Secondary Chart: Users by Role -->
+    <app-panel class="bento-item bento-medium" title="Usuarios por Rol">
+      <app-chart type="doughnut" [data]="roleData" [options]="donutOptions" height="280px"></app-chart>
+    </app-panel>
+
+    <!-- Project Performance (Bar Chart) -->
+    <app-panel class="bento-item bento-large" title="Rendimiento de Proyectos">
+       <app-chart type="bar" [data]="performanceData" [options]="performanceOptions" height="250px"></app-chart>
+    </app-panel>
+    
     <!-- Quick Actions -->
-    <app-panel>
-      <app-text variant="h4" weight="bold" class="mb-4">Acciones Rápidas</app-text>
-      <app-row columns="1fr" gap="0.75rem">
-        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-plus" (click)="router.navigate(['/crud'])">Nuevo Usuario</app-button>
-        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-file-alt">Nuevo
-          Reporte</app-button>
-        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-gear" (click)="router.navigate(['/settings'])">Configuración</app-button>
-        <app-button variant="outline" class="w-full justify-start" icon="fa-solid fa-question-circle" (click)="router.navigate(['/showcase'])">Ayuda</app-button>
-      </app-row>
+    <app-panel class="bento-item bento-small" title="Acciones Rápidas">
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <app-button variant="outline" iconClass="fa-solid fa-users" style="width: 100%; justify-content: flex-start" (buttonClick)="router.navigate(['/crud'])">Gestionar Personal</app-button>
+        <app-button variant="outline" iconClass="fa-solid fa-chart-line" style="width: 100%; justify-content: flex-start" (buttonClick)="router.navigate(['/analytics'])">Ver Analíticas</app-button>
+        <app-button variant="outline" iconClass="fa-solid fa-file-pdf" style="width: 100%; justify-content: flex-start" (buttonClick)="router.navigate(['/reports'])">Generar Reporte</app-button>
+        <app-button variant="primary" iconClass="fa-solid fa-gear" style="width: 100%; justify-content: flex-start" (buttonClick)="router.navigate(['/settings'])">Configuración</app-button>
+      </div>
     </app-panel>
-  </app-row>
+
+  </div>
 
 </app-layout-shell>
-
-
-
-

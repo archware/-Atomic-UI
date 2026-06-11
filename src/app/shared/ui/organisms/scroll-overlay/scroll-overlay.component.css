@@ -47,7 +47,10 @@ html.dark .so-root,
   height: 100%;  /* Enable scroll by giving explicit height */
   overflow-x: auto;
   overflow-y: auto;  /* Permitir scroll vertical por defecto para contenido general */
+    scrollbar-width: none;
   -ms-overflow-style: none;
+  scrollbar-width: none;
+  scrollbar-width: none;
   scrollbar-width: none;
   box-sizing: border-box;
 }
@@ -65,6 +68,8 @@ html.dark .so-root,
 .so-root [data-so-vertical] {
   overscroll-behavior: contain;
   -ms-overflow-style: none;
+  scrollbar-width: none;
+  scrollbar-width: none;
   scrollbar-width: none;
 }
 
@@ -198,7 +203,8 @@ html.dark .so-root,
    With min-width: 100% the table fills its container and fr units distribute
    over a definite size instead. */
 .so-root.so-lock-template[data-so-table][data-so-sync-columns] table {
-  min-width: 100%;
+  width: 100%;
+  min-width: max-content;
 }
 
 .so-root[data-so-table][data-so-sync-columns] thead,
@@ -249,3 +255,4 @@ html.dark .so-root,
   height: var(--so-body-height, auto);
   min-height: var(--so-body-height, auto);
 }
+
