@@ -167,10 +167,12 @@
                 <td class="rtc-text-center" data-label="Estado:"><app-chip [variant]="getStatusVariant(item.status)" size="sm">{{ getStatusLabel(item.status) }}</app-chip></td>
                 <td data-label="Creado:">{{ formatDate(item.createdAt) }}</td>
                 <td class="rtc-actions rtc-text-center" data-label="Acciones:">
-                  <app-row justify="center" gap="0.25rem">
-                    <app-icon-button size="sm" title="Editar" (clicked)="openEditModal(item)"><i class="fa-solid fa-pen"></i></app-icon-button>
-                    <app-icon-button size="sm" variant="ghost" title="Eliminar" (clicked)="openDeleteModal(item)"><i class="fa-solid fa-trash text-danger"></i></app-icon-button>
-                  </app-row>
+                  <app-action-group
+                    [actions]="tableActions"
+                    [maxVisible]="2"
+                    size="sm"
+                    (actionClick)="onRowAction($event, item)">
+                  </app-action-group>
                 </td>
               </tr>
             }

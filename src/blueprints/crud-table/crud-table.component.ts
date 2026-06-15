@@ -15,6 +15,8 @@ import { SidebarMenuItem,
   TextComponent,
   ChipComponent,
   IconButtonComponent,
+  ActionGroupComponent,
+  ActionItem,
   PaginationComponent,
   DataPagerComponent,
   ScrollOverlayComponent,
@@ -113,6 +115,7 @@ let idCounter = 51;
     ChipComponent,
     LoaderComponent,
     IconButtonComponent,
+    ActionGroupComponent,
     TableComponent,
     TableHeadComponent,
     TableRowComponent,
@@ -152,6 +155,20 @@ export class CrudTableComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
   private api = inject(ApiService);
+
+  // Table actions configuration
+  tableActions: ActionItem[] = [
+    { id: 'edit', icon: 'fa-solid fa-pen', label: 'Editar', variant: 'default' },
+    { id: 'delete', icon: 'fa-solid fa-trash', label: 'Eliminar', variant: 'danger' }
+  ];
+
+  onRowAction(actionId: string, item: Entity) {
+    if (actionId === 'edit') {
+      this.openEditModal(item);
+    } else if (actionId === 'delete') {
+      this.openDeleteModal(item);
+    }
+  }
 
   // ============================================
   // CONFIGURATION - Customize these values

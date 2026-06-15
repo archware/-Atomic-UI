@@ -1,4 +1,4 @@
-﻿import { Component, Input, Output, EventEmitter, signal, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild, HostBinding } from '@angular/core';
+import { Component, Input, Output, EventEmitter, signal, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild, HostBinding } from '@angular/core';
 
 
 /**
@@ -84,7 +84,7 @@ export class TabComponent {
       display: flex;
       position: relative;
       border-bottom: 1px solid var(--border-color);
-      margin-bottom: var(--space-6);
+      margin-bottom: 0;
       gap: 6px;
     }
 

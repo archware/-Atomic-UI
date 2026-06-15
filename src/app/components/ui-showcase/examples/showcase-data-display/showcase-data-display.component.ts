@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { TableComponent } from '../../../../shared/ui/atoms/table/table.component';
@@ -10,6 +10,7 @@ import { ChipComponent } from '../../../../shared/ui/atoms/chip/chip.component';
 import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
 import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
 import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecules/action-group/action-group.component';
+import { ChartComponent } from '../../../../shared/ui/organisms/chart/chart.component';
 
 @Component({
   selector: 'app-showcase-data-display',
@@ -24,7 +25,8 @@ import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecule
     ChipComponent,
     RowComponent,
     TextComponent,
-    ActionGroupComponent
+    ActionGroupComponent,
+    ChartComponent
 ],
   template: `
     <!-- TABLAS CON ACTION GROUP -->
@@ -150,6 +152,22 @@ import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecule
         <span class="badge badge-outline">Outline</span>
       </div>
     </section>
+
+    <!-- CHARTS -->
+    <section class="showcase-section">
+      <h3 class="section-title">Gráficos (ChartComponent)</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+        <app-panel title="Line Chart">
+          <app-chart type="line" [data]="chartLineData" [options]="chartOptions" height="250px"></app-chart>
+        </app-panel>
+        <app-panel title="Doughnut Chart">
+          <app-chart type="doughnut" [data]="chartDonutData" [options]="donutOptions" height="250px"></app-chart>
+        </app-panel>
+        <app-panel title="Bar Chart">
+          <app-chart type="bar" [data]="chartBarData" [options]="chartOptions" height="250px"></app-chart>
+        </app-panel>
+      </div>
+    </section>
   `,
   styles: [`
     .showcase-section { margin-bottom: 2rem; display: block; }
@@ -209,6 +227,23 @@ export class ShowcaseDataDisplayComponent {
   onAction(actionId: string, userName: string): void {
     console.log(`Acción "${actionId}" ejecutada para ${userName}`);
   }
+
+  // Chart data
+  chartOptions: any = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
+  donutOptions: any = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } }, cutout: '75%' };
+
+  chartLineData = {
+    labels: ['Ene', 'Feb', 'Mar'],
+    datasets: [{ data: [65, 59, 80], label: 'Series A', borderColor: '#4f46e5', tension: 0.4 }]
+  };
+  chartDonutData = {
+    labels: ['Red', 'Blue', 'Green'],
+    datasets: [{ data: [300, 50, 100], backgroundColor: ['#ef4444', '#3b82f6', '#10b981'], borderWidth: 0 }]
+  };
+  chartBarData = {
+    labels: ['Q1', 'Q2', 'Q3'],
+    datasets: [{ data: [45, 85, 30], label: 'Ventas', backgroundColor: '#8b5cf6', borderRadius: 4 }]
+  };
 }
 
 

@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, OnInit, OnDestroy, PLATFORM_ID, inject } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, OnInit, OnDestroy, PLATFORM_ID, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartType } from 'chart.js';
@@ -9,7 +9,7 @@ import { ChartConfiguration, ChartType } from 'chart.js';
   imports: [BaseChartDirective],
   template: `
     <div class="chart-container" [style.height]="height">
-      @if (isBrowser) {
+      @if (isChartReady()) {
         <canvas baseChart
           [data]="data"
           [options]="options"
@@ -37,14 +37,14 @@ export class ChartComponent implements OnInit, OnDestroy {
   @Input() height = '300px';
 
   private platformId = inject(PLATFORM_ID);
-  isBrowser = false;
+  isChartReady = signal(false);
 
   ngOnInit() {
-    this.isBrowser = isPlatformBrowser(this.platformId);
-    if (this.isBrowser) {
+    if (isPlatformBrowser(this.platformId)) {
       import('chart.js').then((ChartJs) => {
         const { Chart, registerables } = ChartJs;
         Chart.register(...registerables);
+        this.isChartReady.set(true);
       });
     }
   }
