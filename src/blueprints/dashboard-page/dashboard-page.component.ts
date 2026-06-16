@@ -62,7 +62,7 @@ interface MenuItem { id?: string; label: string; icon: string; iconColor?: strin
 
     /* Radial Progress */
     .radial-progress { width: 180px; height: 180px; margin: 0 auto; }
-    .circular-chart { display: block; margin: 0 auto; max-width: 100%; max-height: 250px; }
+    .circular-chart { display: block; margin: 0 auto; width: 100%; height: 100%; max-width: 100%; max-height: 250px; }
     .circle-bg { fill: none; stroke: var(--surface-hover); stroke-width: 2.5; }
     .circle { fill: none; stroke-width: 2.5; stroke-linecap: round; animation: progress 1.5s ease-out forwards; }
     .circular-chart.primary .circle { stroke: var(--primary-color); }

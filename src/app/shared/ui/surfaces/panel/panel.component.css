@@ -142,6 +142,8 @@
   padding: var(--space-4) var(--space-5);
   border-bottom: 1px solid var(--border-color);
   background: var(--surface-section);
+  border-top-left-radius: calc(var(--radius-lg) - 1px);
+  border-top-right-radius: calc(var(--radius-lg) - 1px);
 }
 
 .panel__icon {
