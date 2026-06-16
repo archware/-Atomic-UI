@@ -158,7 +158,7 @@ export class CrudTableComponent implements OnInit {
 
   // Table actions configuration
   tableActions: ActionItem[] = [
-    { id: 'edit', icon: 'fa-solid fa-pen', label: 'Editar', variant: 'default' },
+    { id: 'edit', icon: 'fa-solid fa-pen', label: 'Editar', variant: 'primary' },
     { id: 'delete', icon: 'fa-solid fa-trash', label: 'Eliminar', variant: 'danger' }
   ];
 

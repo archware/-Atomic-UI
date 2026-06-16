@@ -1,11 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-overlay.component';
+import { FooterComponent } from '../../organisms/footer/footer.component';
 
 @Component({
   selector: 'app-layout-shell',
   standalone: true,
-  imports: [ScrollOverlayComponent],
+  imports: [ScrollOverlayComponent, FooterComponent],
   templateUrl: './layout-shell.component.html',
   styleUrl: './layout-shell.component.css'
 })

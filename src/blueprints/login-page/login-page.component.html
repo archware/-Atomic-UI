@@ -1,10 +1,24 @@
 <app-auth-layout>
-  <!-- Header slot with logo -->
+  <!-- Top Navigation slot -->
+  <div slot="top-nav">
+    <app-button variant="ghost" iconClass="fa-solid fa-arrow-left" (buttonClick)="goBack()">
+      Volver al Inicio
+    </app-button>
+  </div>
+
+  <!-- Decorative Banner slot (Split Screen Left) -->
+  <div slot="banner">
+    <div style="margin-bottom: 2rem;">
+      <span style="font-size: 3rem; background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 1rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">🔐</span>
+    </div>
+    <h1 style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2;">Bienvenido a <br>Tu Empresa</h1>
+    <p style="font-size: 1.25rem; opacity: 0.9; max-width: 400px; line-height: 1.6;">Accede al sistema premium diseñado con la mejor experiencia de usuario y arquitectura atómica.</p>
+  </div>
+
+  <!-- Header slot with logo for the Right Side Form -->
   <div slot="header">
-    <div class="auth-logo">
-      <!-- @customize Replace with your logo -->
-      <span class="logo-icon">🔐</span>
-      <h1 class="logo-text">Tu Empresa</h1>
+    <div class="auth-logo" style="margin-bottom: 2rem;">
+      <span class="logo-icon" style="font-size: 2rem; color: var(--primary-color);">🔐</span>
     </div>
   </div>
 
@@ -46,14 +60,16 @@
         <app-form-error [customMessage]="loginApi.error()?.message"></app-form-error>
         }
 
-        <app-button type="submit" variant="primary" [disabled]="loginApi.loading()" class="w-full">
-          @if (loginApi.loading()) {
-          <i class="fa-solid fa-spinner fa-spin"></i>
-          Ingresando...
-          } @else {
-          Iniciar Sesión
-          }
-        </app-button>
+        <app-row justify="center" class="w-full mt-4">
+          <app-button type="submit" variant="primary" [disabled]="loginApi.loading()">
+            @if (loginApi.loading()) {
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Ingresando...
+            } @else {
+            Iniciar Sesión
+            }
+          </app-button>
+        </app-row>
       </form>
 
       <app-divider text="o"></app-divider>
@@ -114,14 +130,16 @@
         </div>
         }
 
-        <app-button type="submit" variant="primary" [disabled]="registerApi.loading()" class="w-full">
-          @if (registerApi.loading()) {
-          <i class="fa-solid fa-spinner fa-spin"></i>
-          Registrando...
-          } @else {
-          Crear Cuenta
-          }
-        </app-button>
+        <app-row justify="center" class="w-full mt-4">
+          <app-button type="submit" variant="primary" [disabled]="registerApi.loading()">
+            @if (registerApi.loading()) {
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Registrando...
+            } @else {
+            Crear Cuenta
+            }
+          </app-button>
+        </app-row>
       </form>
 
       <div class="mt-4 text-center">
@@ -157,14 +175,16 @@
         <app-form-error [customMessage]="forgotApi.error()?.message"></app-form-error>
         }
 
-        <app-button type="submit" variant="primary" [disabled]="forgotApi.loading()" class="w-full mt-4">
-          @if (forgotApi.loading()) {
-          <i class="fa-solid fa-spinner fa-spin"></i>
-          Enviando...
-          } @else {
-          Enviar Instrucciones
-          }
-        </app-button>
+        <app-row justify="center" class="w-full mt-4">
+          <app-button type="submit" variant="primary" [disabled]="forgotApi.loading()">
+            @if (forgotApi.loading()) {
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Enviando...
+            } @else {
+            Enviar Instrucciones
+            }
+          </app-button>
+        </app-row>
       </form>
       } @else {
       <!-- Success state -->
@@ -189,7 +209,7 @@
   </div>
 
   <!-- Footer slot -->
-  <app-text slot="footer" variant="caption" color="muted" align="center">
-    © 2025 Tu Empresa. Todos los derechos reservados.
-  </app-text>
+  <div slot="footer">
+    <app-footer variant="simple" companyName="Tu Empresa"></app-footer>
+  </div>
 </app-auth-layout>

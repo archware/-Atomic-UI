@@ -14,7 +14,7 @@
     "lint": "ng lint",
     "storybook": "ng run angular-scrollable-table:storybook",
     "build-storybook": "ng run angular-scrollable-table:build-storybook",
-    "predeploy": "npm run build:prod && npm run build-storybook && node scripts/combine-builds.js",
+    "predeploy": "npm run build:prod && npm run build-storybook && node scripts/combine-builds.cjs",
     "deploy": "npx angular-cli-ghpages --dir=dist/gh-pages",
     "deploy:app": "ng build --configuration production --base-href /-Atomic-UI/ && npx angular-cli-ghpages --dir=dist/angular-scrollable-table/browser",
     "deploy:storybook": "npm run build-storybook && npx angular-cli-ghpages --dir=storybook-static",

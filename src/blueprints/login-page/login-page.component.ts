@@ -16,7 +16,8 @@ import {
   TextComponent,
   RowComponent,
   FormRowComponent,
-  DividerComponent
+  DividerComponent,
+  FooterComponent
 } from '@shared/ui';
 
 /**
@@ -81,7 +82,8 @@ interface ForgotPasswordResponse {
     TextComponent,
     RowComponent,
     FormRowComponent,
-    DividerComponent
+    DividerComponent,
+    FooterComponent
 ],
   animations: [
     trigger('fadeSlide', [
@@ -163,6 +165,10 @@ export class LoginPageComponent {
   // ============================================
   // VIEW SWITCHING
   // ============================================
+
+  goBack(): void {
+    this.router.navigate(['/']);
+  }
 
   showLogin(): void {
     this.activeView.set('login');

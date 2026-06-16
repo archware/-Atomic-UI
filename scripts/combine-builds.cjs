@@ -60,6 +60,17 @@ console.log(`📦 Copying Angular app from ${ANGULAR_BUILD_DIR}...`);
 copyDirSync(ANGULAR_BUILD_DIR, OUTPUT_DIR);
 console.log('   ✅ Angular app copied to root\n');
 
+// Step 2.5: Fix missing index.html due to SSR
+const csrPath = path.join(OUTPUT_DIR, 'index.csr.html');
+const indexPath = path.join(OUTPUT_DIR, 'index.html');
+const notFoundPath = path.join(OUTPUT_DIR, '404.html');
+
+if (fs.existsSync(csrPath) && !fs.existsSync(indexPath)) {
+  fs.copyFileSync(csrPath, indexPath);
+  fs.copyFileSync(csrPath, notFoundPath);
+  console.log('   ✅ Copied index.csr.html to index.html and 404.html\n');
+}
+
 // Step 3: Copy Storybook to subdirectory
 const storybookDest = path.join(OUTPUT_DIR, STORYBOOK_SUBDIR);
 console.log(`📚 Copying Storybook from ${STORYBOOK_BUILD_DIR}...`);
