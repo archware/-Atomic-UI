@@ -1,0 +1,3359 @@
+/* =============================================================================
+   TOKENS PRIMITIVOS - Colores Base Universales
+   =============================================================================
+   ⚠️ ESTOS COLORES SON CONSTANTES - NO MODIFICAR ENTRE PROYECTOS
+   Representan valores de color puros sin contexto semántico
+
+   📅 Última actualización: Diciembre 2025
+   ============================================================================= */
+
+:root {
+   /* ─────────────────────────────────────────────────────────────────────────
+     ESCALA DE GRISES NEUTRAL
+     ───────────────────────────────────────────────────────────────────────── */
+   --gray-0: #FFFFFF;
+   --gray-50: #F9FAFB;
+   --gray-75: #efeff4;
+   /* iOS Light Gray - Surface Ground */
+   --gray-100: #F3F4F6;
+   --gray-200: #E5E7EB;
+   --gray-300: #D1D5DB;
+   --gray-400: #9CA3AF;
+   --gray-500: #6B7280;
+   --gray-600: #4B5563;
+   --gray-700: #374151;
+   --gray-800: #1F2937;
+   --gray-900: #111827;
+   --gray-950: #030712;
+   --gray-1000: #000000;
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     COLORES iOS SYSTEM (Para estados semánticos)
+     ───────────────────────────────────────────────────────────────────────── */
+   --ios-green: #34C759;
+   --ios-green-dark: #30D158;
+   --ios-orange: #FF9500;
+   --ios-orange-dark: #FF9F0A;
+   --ios-red: #FF3B30;
+   --ios-red-dark: #FF453A;
+   --ios-blue: #007AFF;
+   --ios-blue-dark: #0A84FF;
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     TIPOGRAFÍA
+     ───────────────────────────────────────────────────────────────────────── */
+   --font-family-base: 'Open Sans', system-ui, -apple-system, sans-serif;
+
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     COLORES SEMÁNTICOS FIJOS (Estados del sistema)
+     ───────────────────────────────────────────────────────────────────────── */
+
+   /* 🔴 Rojo - Errores, Peligro, Eliminación */
+   --red-50: #FEF2F2;
+   --red-100: #FEE2E2;
+   --red-200: #FECACA;
+   --red-300: #FCA5A5;
+   --red-400: #F87171;
+   --red-500: #EF4444;
+   --red-600: #DC2626;
+   --red-700: #B91C1C;
+   --red-800: #991B1B;
+   --red-900: #7F1D1D;
+
+   /* 🟢 Verde - Éxito, Confirmación, Activo */
+   --green-50: #F0FDF4;
+   --green-100: #DCFCE7;
+   --green-200: #BBF7D0;
+   --green-300: #86EFAC;
+   --green-400: #4ADE80;
+   --green-500: #22C55E;
+   --green-600: #16A34A;
+   --green-700: #15803D;
+   --green-800: #166534;
+   --green-900: #14532D;
+
+   /* 🟡 Amarillo - Advertencia, Precaución */
+   --yellow-50: #FEFCE8;
+   --yellow-100: #FEF9C3;
+   --yellow-200: #FEF08A;
+   --yellow-300: #FDE047;
+   --yellow-400: #FACC15;
+   --yellow-500: #EAB308;
+   --yellow-600: #CA8A04;
+   --yellow-700: #A16207;
+   --yellow-800: #854D0E;
+   --yellow-900: #713F12;
+
+   /* 🟠 Naranja - Alerta, Atención */
+   --orange-50: #FFF7ED;
+   --orange-100: #FFEDD5;
+   --orange-200: #FED7AA;
+   --orange-300: #FDBA74;
+   --orange-400: #FB923C;
+   --orange-500: #F97316;
+   --orange-600: #EA580C;
+   --orange-700: #C2410C;
+   --orange-800: #9A3412;
+   --orange-900: #7C2D12;
+
+   /* 🔵 Azul - Información, Enlaces */
+   --blue-50: #EFF6FF;
+   --blue-100: #DBEAFE;
+   --blue-200: #BFDBFE;
+   --blue-300: #93C5FD;
+   --blue-400: #60A5FA;
+   --blue-500: #3B82F6;
+   --blue-600: #2563EB;
+   --blue-700: #1D4ED8;
+   --blue-800: #1E40AF;
+   --blue-900: #1E3A8A;
+
+   /* 🩵 Cyan/Sky - Info secundaria */
+   --sky-50: #F0F9FF;
+   --sky-100: #E0F2FE;
+   --sky-200: #BAE6FD;
+   --sky-300: #7DD3FC;
+   --sky-400: #38BDF8;
+   --sky-500: #0EA5E9;
+   --sky-600: #0284C7;
+   --sky-700: #0369A1;
+   --sky-800: #075985;
+   --sky-900: #0C4A6E;
+
+   /* 💜 Púrpura - Especial, Premium */
+   --purple-50: #FAF5FF;
+   --purple-100: #F3E8FF;
+   --purple-200: #E9D5FF;
+   --purple-300: #D8B4FE;
+   --purple-400: #C084FC;
+   --purple-500: #A855F7;
+   --purple-600: #9333EA;
+   --purple-700: #7C3AED;
+   --purple-800: #6B21A8;
+   --purple-900: #581C87;
+
+   /* 🩷 Rosa - Destacado, Marketing */
+   --pink-50: #FDF2F8;
+   --pink-100: #FCE7F3;
+   --pink-200: #FBCFE8;
+   --pink-300: #F9A8D4;
+   --pink-400: #F472B6;
+   --pink-500: #EC4899;
+   --pink-600: #DB2777;
+   --pink-700: #BE185D;
+   --pink-800: #9D174D;
+   --pink-900: #831843;
+
+   /* 🩵 Teal - Complementario */
+   --teal-50: #F0FDFA;
+   --teal-100: #CCFBF1;
+   --teal-200: #99F6E4;
+   --teal-300: #5EEAD4;
+   --teal-400: #2DD4BF;
+   --teal-500: #14B8A6;
+   --teal-600: #0D9488;
+   --teal-700: #0F766E;
+   --teal-800: #115E59;
+   --teal-900: #134E4A;
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     ESCALA DE TAMAÑOS DE ICONOS
+     ───────────────────────────────────────────────────────────────────────── */
+   --icon-xs: 0.75rem;
+   /* 12px */
+   --icon-sm: 1rem;
+   /* 16px */
+   --icon-md: 1.5rem;
+   /* 24px */
+   --icon-lg: 2rem;
+   /* 32px */
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     ESCALA DE ESPACIADO (Margin, Padding, Gap)
+     Diseño por eliminación - solo estas opciones
+     ───────────────────────────────────────────────────────────────────────── */
+   --space-1: 0.25rem;
+   /* 4px  - Micro spacing */
+   --space-2: 0.5rem;
+   /* 8px  - Tight spacing */
+   --space-3: 0.75rem;
+   /* 12px - Compact spacing */
+   --space-4: 1rem;
+   /* 16px - Default spacing */
+   --space-5: 1.5rem;
+   /* 24px - Comfortable spacing */
+   --space-6: 2rem;
+   /* 32px - Loose spacing */
+   --space-7: 2.5rem;
+   /* 40px - Comfortable section spacing */
+   --space-8: 3rem;
+   /* 48px - Section spacing */
+   --space-9: 3.5rem;
+   /* 56px - Large spacing */
+   --space-10: 4rem;
+   /* 64px - Large section spacing */
+   --space-11: 2.75rem;
+   /* 44px - Component sizes (buttons, menu items) */
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     ESCALA DE TAMAÑOS DE FUENTE
+     ───────────────────────────────────────────────────────────────────────── */
+   --text-xs: 0.75rem;
+   /* 12px */
+   --text-sm: 0.875rem;
+   /* 14px */
+   --text-md: 1rem;
+   /* 16px */
+   --text-lg: 1.125rem;
+   /* 18px */
+   --text-xl: 1.25rem;
+   /* 20px */
+   --text-2xl: 1.5rem;
+   /* 24px */
+   --text-3xl: 2rem;
+   /* 32px */
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     ESCALA DE BORDER RADIUS
+     ───────────────────────────────────────────────────────────────────────── */
+   --radius-sm: 0.25rem;
+   /* 4px */
+   --radius-md: 0.5rem;
+   /* 8px */
+   --radius-lg: 0.75rem;
+   /* 12px */
+   --radius-xl: 1rem;
+   /* 16px */
+   --radius-full: 9999px;
+   /* Full rounded */
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     ESCALA DE TAMAÑOS DE AVATAR
+     ───────────────────────────────────────────────────────────────────────── */
+   --avatar-xs: 1.5rem;
+   /* 24px */
+   --avatar-sm: 2rem;
+   /* 32px */
+   --avatar-md: 2.5rem;
+   /* 40px */
+   --avatar-lg: 3rem;
+   /* 48px */
+   --avatar-xl: 4rem;
+   /* 64px */
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     ESCALA DE ALTURAS DE CONTROL (Buttons, Inputs)
+     ───────────────────────────────────────────────────────────────────────── */
+   --control-height-xs: 1.5rem;
+   /* 24px - Chips, mini buttons */
+   --control-height-sm: 2rem;
+   /* 32px - Compact inputs */
+   --control-height-md: 2.875rem;
+   /* 46px - Default (actual --control-height) */
+   --control-height-lg: 3.5rem;
+   /* 56px - Prominent CTAs */
+}
+/* =============================================================================
+   TOKENS DE MARCA - PERSONALIZACIÓN POR EMPRESA
+   =============================================================================
+
+   🎨 INSTRUCCIONES PARA PERSONALIZAR:
+   ──────────────────────────────────────────────────────────────────────────────
+   1. Cambia los valores de --brand-primary-* con los colores de tu empresa
+   2. Cambia los valores de --brand-secondary-* con el color secundario
+   3. Opcionalmente ajusta --brand-accent-* para un tercer color
+   4. Los colores deben seguir una escala de 50 (más claro) a 900 (más oscuro)
+
+   💡 TIP: Usa https://uicolors.app para generar escalas de color automáticamente
+
+   📅 Última actualización: Diciembre 2025
+   🏢 Marca actual: Lujo / Corporativo (Púrpura + Dorado)
+   ============================================================================= */
+
+:root {
+   /* ─────────────────────────────────────────────────────────────────────────
+     🟣 COLOR PRIMARIO DE MARCA (Púrpura Profundo)
+     Base: #5F295C
+     Estilo: Elegante, Serio, Premium
+     ───────────────────────────────────────────────────────────────────────── */
+   --brand-primary-50: #fbf5fb;
+   --brand-primary-100: #f5e6f6;
+   --brand-primary-200: #ecccec;
+   --brand-primary-300: #dfa6df;
+   --brand-primary-400: #bb6bbb;
+   --brand-primary-500: #5F295C;
+   /* ← COLOR PRINCIPAL */
+   --brand-primary-500-rgb: 95, 41, 92;
+   /* RGB para uso en rgba() */
+   --brand-primary-600: #4a2048;
+   --brand-primary-700: #381836;
+   --brand-primary-800: #261024;
+   --brand-primary-900: #1a0818;
+
+   /* Colores especiales de acento (derivados del primario) */
+   --brand-primary-A100: #e0aaff;
+   --brand-primary-A200: #c77dff;
+   --brand-primary-A400: #9d4edd;
+   --brand-primary-A700: #7b2cbf;
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     🟡 COLOR SECUNDARIO DE MARCA (Dorado / Ámbar)
+     Base: #FFB800
+     Estilo: Contraste, Lujo, Llamativo
+     ───────────────────────────────────────────────────────────────────────── */
+   --brand-secondary-50: #fffbed;
+   --brand-secondary-100: #fff5d6;
+   --brand-secondary-200: #ffe6ad;
+   --brand-secondary-300: #ffd275;
+   --brand-secondary-400: #ffc400;
+   /* Ajustado para mejor visibilidad */
+   --brand-secondary-500: #FFB800;
+   /* ← COLOR SECUNDARIO PRINCIPAL */
+   --brand-secondary-500-rgb: 255, 184, 0;
+   /* RGB para uso en rgba() */
+   --brand-secondary-600: #e09600;
+   --brand-secondary-700: #b37000;
+   --brand-secondary-800: #8a5200;
+   --brand-secondary-900: #663a00;
+   --brand-secondary-950: #422300;
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     ✨ COLOR DE ACENTO (Opcional - Rosa suave complementario)
+     Para elementos especiales, CTAs subtiles
+     ───────────────────────────────────────────────────────────────────────── */
+   --brand-accent-50: #fff0f7;
+   --brand-accent-100: #ffe3f1;
+   --brand-accent-200: #ffc6e3;
+   --brand-accent-300: #ff99ca;
+   --brand-accent-400: #ff5ca5;
+   --brand-accent-500: #f5368a;
+   --brand-accent-600: #d91c6e;
+   --brand-accent-700: #b50f55;
+   --brand-accent-800: #961148;
+   --brand-accent-900: #7d133f;
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     🏢 METADATOS DE MARCA (para documentación)
+     Estos son comentarios de referencia, no afectan el CSS
+     ───────────────────────────────────────────────────────────────────────── */
+}
+/* =============================================================================
+   TOKENS SEMÁNTICOS - MAPEO POR CONTEXTO DE USO
+   =============================================================================
+   Este archivo NO se modifica entre proyectos.
+   Los colores se derivan automáticamente de los tokens de marca.
+
+   📅 Última actualización: Diciembre 2025
+   ============================================================================= */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   🌞 TEMA CLARO (Light Theme) - DEFAULT
+   ───────────────────────────────────────────────────────────────────────────── */
+:root,
+[data-theme="light"],
+.theme-light {
+   color-scheme: light;
+
+   /* === SUPERFICIES === */
+   --surface-ground: var(--gray-75);
+   /* Fondo de página - derivado de gray-75 */
+   --surface-background: #ffffff;
+   /* Fondo de cards/contenedores */
+   --surface-section: #efeff4;
+   /* Secciones alternadas */
+   --surface-overlay: rgba(0, 0, 0, 0.4);
+   /* Modales overlay */
+   --surface-elevated: #ffffff;
+   /* Elementos elevados */
+   --surface-sunken: #F0F0F0;
+   /* Elementos hundidos / Deshabilitados */
+
+   /* === TEXTO === */
+   --text-color: var(--gray-900);
+   /* Texto principal */
+   --text-color-secondary: var(--gray-600);
+   /* Texto secundario */
+   --text-color-muted: var(--gray-500);
+   /* Texto deshabilitado/sutil */
+   --text-color-placeholder: var(--gray-400);
+   /* Placeholders */
+   --text-color-inverse: var(--gray-0);
+   /* Texto sobre fondos oscuros */
+   --text-color-on-primary: var(--gray-0);
+   /* Texto sobre color primario */
+   --text-color-on-secondary: var(--gray-0);
+   /* Texto sobre color secundario */
+
+   /* === BORDES === */
+   --border-color: var(--gray-300);
+   /* Borde por defecto */
+   --border-color-light: var(--gray-200);
+   /* Borde sutil */
+   --border-color-strong: var(--gray-400);
+   /* Borde enfatizado */
+   --border-color-focus: var(--brand-primary-500);
+   /* Borde en focus */
+
+   /* === COLORES DE MARCA (Contextuales) === */
+   --primary-color: var(--brand-primary-500);
+   --primary-color-light: var(--brand-primary-100);
+   --primary-color-lighter: #e8f0fe;
+   /* Adjusted for Selected BG match */
+   --primary-color-dark: var(--brand-primary-700);
+   --primary-color-darker: var(--brand-primary-900);
+   --primary-color-text: var(--brand-primary-700);
+   --primary-color-hover: var(--brand-primary-600);
+   --primary-color-active: var(--brand-primary-700);
+
+   --secondary-color: var(--brand-secondary-500);
+   --secondary-color-light: var(--brand-secondary-100);
+   --secondary-color-lighter: var(--brand-secondary-50);
+   --secondary-color-dark: var(--brand-secondary-700);
+   --secondary-color-darker: var(--brand-secondary-900);
+   --secondary-color-text: var(--brand-secondary-700);
+   --secondary-color-hover: var(--brand-secondary-600);
+   --secondary-color-active: var(--brand-secondary-700);
+
+   --accent-color: var(--brand-accent-500);
+   --accent-color-light: var(--brand-accent-100);
+   --accent-color-dark: var(--brand-accent-700);
+
+   /* === ESTADOS SEMÁNTICOS === */
+   --success-color: var(--ios-green);
+   --success-color-light: var(--green-100);
+   --success-color-lighter: var(--green-50);
+   --success-color-dark: var(--green-700);
+   --success-color-text: var(--green-700);
+   --success-color-hover: var(--green-600);
+
+   --warning-color: var(--ios-orange);
+   --warning-color-light: var(--yellow-100);
+   --warning-color-lighter: var(--yellow-50);
+   --warning-color-dark: var(--yellow-600);
+   --warning-color-text: var(--yellow-700);
+   --warning-color-hover: var(--orange-600);
+
+   --danger-color: var(--ios-red);
+   --danger-color-light: var(--red-100);
+   --danger-color-lighter: var(--red-50);
+   --danger-color-dark: var(--red-700);
+   --danger-color-text: var(--red-800);
+   --danger-color-hover: var(--red-600);
+
+   --info-color: var(--ios-blue);
+   --info-color-light: var(--blue-100);
+   --info-color-lighter: var(--blue-50);
+   --info-color-dark: var(--blue-700);
+   --info-color-text: var(--blue-900);
+   --info-color-hover: var(--blue-700);
+
+   /* === TEXTO DESHABILITADO === */
+   --text-color-disabled: var(--gray-400);
+
+   /* === INTERACCIONES === */
+   --hover-background: var(--primary-color-lighter);
+   --hover-background-subtle: var(--gray-100);
+   --active-background: var(--primary-color-lighter);
+   --selected-background: var(--primary-color-lighter);
+   --surface-hover: var(--gray-100);
+   --focus-ring-color: var(--brand-primary-500);
+   --focus-ring: 0 0 0 3px rgba(95, 41, 92, 0.2);
+
+   /* === SOMBRAS === */
+   --shadow-color: 220 3% 15%;
+   --shadow-xs: 0 1px 2px hsl(var(--shadow-color) / 0.15);
+   --shadow-sm: 0 1px 4px hsl(var(--shadow-color) / 0.2),
+      0 1px 2px hsl(var(--shadow-color) / 0.15);
+   --shadow-md: 0 4px 8px hsl(var(--shadow-color) / 0.2),
+      0 2px 4px hsl(var(--shadow-color) / 0.15);
+   --shadow-lg: 0 10px 15px hsl(var(--shadow-color) / 0.25),
+      0 4px 8px hsl(var(--shadow-color) / 0.15);
+   --shadow-xl: 0 20px 25px hsl(var(--shadow-color) / 0.3),
+      0 10px 12px hsl(var(--shadow-color) / 0.2);
+
+   /* Sombras de Focus */
+   --shadow-focus-primary: 0 0 0 3px rgba(95, 41, 92, 0.2);
+   --shadow-focus-secondary: 0 0 0 3px rgba(35, 167, 212, 0.2);
+
+   /* Sombras de Glow (para estados activos) */
+   --shadow-glow-primary: 0 4px 12px rgba(95, 41, 92, 0.4);
+   --shadow-glow-success: 0 4px 12px rgba(52, 199, 89, 0.4);
+
+   /* Sombras de Dropdown/Popover */
+   --shadow-dropdown: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+      0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+   /* Overlay de Modal */
+   --overlay-backdrop: rgba(0, 0, 0, 0.5);
+
+   /* === COMPONENTES ESPECÍFICOS === */
+
+   /* Skeleton Gradients */
+   --skeleton-gradient-start: #e2e8f0;
+   --skeleton-gradient-mid: #cbd5e1;
+   --skeleton-card-bg: #ffffff;
+   --skeleton-card-border: #e5e7eb;
+
+   /* Rating Stars */
+   --rating-star-empty: var(--border-color);
+   --rating-star-filled: #fbbf24;
+   --rating-star-hover: #f59e0b;
+
+   /* Theme Switcher Icons */
+   --icon-sun-color: #f59e0b;
+   --icon-moon-color: #6366f1;
+   --icon-star-color: var(--primary-color);
+
+   /* === COMPATIBILIDAD LEGADO (variables antiguas) === */
+   --bg-primary: var(--surface-ground);
+   --bg-secondary: var(--surface-background);
+   --bg-tertiary: var(--brand-secondary-50);
+   --text-primary: var(--text-color);
+   --text-secondary: var(--text-color-secondary);
+   --text-muted: var(--text-color-muted);
+   --color-primary: var(--primary-color);
+   --color-primary-light: var(--primary-color-light);
+   --color-primary-lighter: var(--primary-color-lighter);
+   --color-primary-dark: var(--primary-color-dark);
+   --color-primary-darker: var(--primary-color-darker);
+   --color-secondary: var(--secondary-color);
+   --color-secondary-light: var(--secondary-color-light);
+   --color-secondary-lighter: var(--secondary-color-lighter);
+   --color-secondary-dark: var(--secondary-color-dark);
+   --color-secondary-darker: var(--secondary-color-darker);
+   --shadow-primary: rgba(121, 53, 118, 0.25);
+   --shadow-secondary: rgba(35, 167, 212, 0.2);
+   --accent-primary: var(--brand-primary-400);
+   --accent-secondary: var(--brand-secondary-400);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   🌙 BASE OSCURA COMPARTIDA (Dark Base)
+   Tokens comunes para todos los temas oscuros
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-theme="dark"],
+[data-theme="brand-dark"],
+.theme-dark,
+html.dark {
+   color-scheme: dark;
+
+   /* === TEXTO (Compartido) === */
+   --text-color: #e5e7eb;
+   --text-color-secondary: #9ca3af;
+   --text-color-muted: #6b7280;
+   --text-color-placeholder: #4b5563;
+   --text-color-inverse: #111827;
+   --text-color-on-primary: #ffffff;
+   --text-color-on-secondary: #ffffff;
+   --text-color-disabled: var(--gray-600);
+
+   /* === COLORES DE MARCA (Compartido) === */
+   --primary-color: var(--brand-primary-400);
+   --primary-color-light: var(--brand-primary-900);
+   --primary-color-dark: var(--brand-primary-300);
+   --primary-color-darker: var(--brand-primary-200);
+   --primary-color-text: var(--brand-primary-300);
+   --primary-color-hover: var(--brand-primary-300);
+   --primary-color-active: var(--brand-primary-200);
+
+   --secondary-color: var(--brand-secondary-400);
+   --secondary-color-light: var(--brand-secondary-900);
+   --secondary-color-lighter: rgba(35, 167, 212, 0.15);
+   --secondary-color-dark: var(--brand-secondary-300);
+   --secondary-color-darker: var(--brand-secondary-200);
+   --secondary-color-text: var(--brand-secondary-300);
+   --secondary-color-hover: var(--brand-secondary-300);
+   --secondary-color-active: var(--brand-secondary-200);
+
+   --accent-color: var(--brand-accent-400);
+   --accent-color-light: var(--brand-accent-900);
+   --accent-color-dark: var(--brand-accent-300);
+
+   /* === ESTADOS SEMÁNTICOS (Compartido) === */
+   --success-color: var(--ios-green-dark);
+   --success-color-light: rgba(48, 209, 88, 0.15);
+   --success-color-lighter: rgba(48, 209, 88, 0.1);
+   --success-color-dark: #208b3a;
+   --success-color-text: var(--ios-green-dark);
+   --success-color-hover: var(--green-400);
+
+   --warning-color: var(--ios-orange-dark);
+   --warning-color-light: rgba(255, 159, 10, 0.15);
+   --warning-color-lighter: rgba(255, 159, 10, 0.1);
+   --warning-color-dark: #cc7a00;
+   --warning-color-text: var(--ios-orange-dark);
+   --warning-color-hover: var(--orange-400);
+
+   --danger-color: var(--ios-red-dark);
+   --danger-color-light: rgba(255, 69, 58, 0.15);
+   --danger-color-lighter: rgba(255, 69, 58, 0.1);
+   --danger-color-dark: #cc251c;
+   --danger-color-text: var(--ios-red-dark);
+   --danger-color-hover: var(--red-400);
+
+   --info-color: var(--ios-blue-dark);
+   --info-color-light: rgba(10, 132, 255, 0.15);
+   --info-color-lighter: rgba(10, 132, 255, 0.1);
+   --info-color-dark: #0066cc;
+   --info-color-text: var(--ios-blue-dark);
+   --info-color-hover: var(--blue-400);
+
+   /* === FOCUS (Compartido) === */
+   --focus-ring-color: var(--brand-primary-400);
+   --focus-ring: 0 0 0 3px rgba(141, 83, 139, 0.3);
+
+   /* === SOMBRAS DE FOCUS/GLOW (Compartido) === */
+   --shadow-focus-primary: 0 0 0 3px rgba(188, 154, 187, 0.3);
+   --shadow-focus-secondary: 0 0 0 3px rgba(35, 167, 212, 0.3);
+   --shadow-glow-primary: 0 0 15px rgba(188, 154, 187, 0.4);
+   --shadow-glow-success: 0 0 15px rgba(48, 209, 88, 0.4);
+   --shadow-dropdown: 0 10px 25px -5px rgba(0, 0, 0, 0.4),
+      0 8px 10px -6px rgba(0, 0, 0, 0.3);
+   --overlay-backdrop: rgba(0, 0, 0, 0.7);
+
+   /* === COMPONENTES ESPECÍFICOS (Compartido) === */
+   --skeleton-gradient-start: #64748b;
+   --skeleton-gradient-mid: #94a3b8;
+   --skeleton-card-bg: #334155;
+   --skeleton-card-border: #64748b;
+
+   --rating-star-empty: var(--border-color);
+   --rating-star-filled: #fcd34d;
+   --rating-star-hover: #fbbf24;
+
+   --icon-sun-color: #fcd34d;
+   --icon-moon-color: #a5b4fc;
+   --icon-star-color: var(--primary-color);
+
+   /* === COMPATIBILIDAD LEGADO (Compartido) === */
+   --text-primary: var(--gray-100);
+   --text-secondary: var(--gray-300);
+   --text-muted: var(--gray-400);
+   --color-primary: var(--brand-primary-300);
+   --color-primary-light: var(--brand-primary-200);
+   --color-primary-lighter: var(--brand-primary-100);
+   --color-primary-dark: var(--brand-primary-600);
+   --color-primary-darker: var(--brand-primary-900);
+   --color-secondary: var(--brand-secondary-400);
+   --color-secondary-light: var(--brand-secondary-300);
+   --color-secondary-lighter: var(--brand-secondary-200);
+   --color-secondary-dark: var(--brand-secondary-600);
+   --color-secondary-darker: var(--brand-secondary-950);
+   --shadow-primary: rgba(161, 114, 159, 0.3);
+   --shadow-secondary: rgba(75, 191, 229, 0.25);
+   --accent-primary: var(--brand-primary-200);
+   --accent-secondary: var(--brand-secondary-300);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   🌙 TEMA OSCURO CORPORATIVO (Brand Dark) - Deep Blue
+   Solo overrides de superficie específicos
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-theme="brand-dark"] {
+   /* === SUPERFICIES (Deep Blue Theme) === */
+   --surface-ground: #171a23;
+   --surface-background: #1b2440;
+   --surface-section: #2a3556;
+   --surface-overlay: rgba(23, 26, 35, 0.85);
+   --surface-elevated: #202f61;
+   --surface-sunken: #29324d;
+
+   /* === BORDES === */
+   --border-color: #2a3556;
+   --border-color-light: #202f61;
+   --border-color-strong: #404040;
+   --border-color-focus: var(--brand-primary-400);
+
+   /* === INTERACCIONES === */
+   --hover-background: #202f61;
+   --hover-background-subtle: #29324d;
+   --active-background: #202f61;
+   --selected-background: #202f61;
+   --surface-hover: var(--surface-elevated);
+   --primary-color-lighter: #202f61;
+
+   /* === SOMBRAS — elevation overlay (anillo blanco + sombra profunda) === */
+   --shadow-color: 220 40% 2%;
+   --shadow-xs: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 1px 2px hsl(var(--shadow-color) / 0.85);
+   --shadow-sm: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 2px 6px hsl(var(--shadow-color) / 0.85);
+   --shadow-md: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 4px 12px hsl(var(--shadow-color) / 0.85);
+   --shadow-lg: 0 0 0 1px rgba(255, 255, 255, 0.10), 0 10px 20px hsl(var(--shadow-color) / 0.85);
+   --shadow-xl: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 20px 30px hsl(var(--shadow-color) / 0.9);
+
+   /* === LEGADO ESPECÍFICO === */
+   --bg-primary: #0e0e14;
+   --bg-secondary: #1a1a24;
+   --bg-tertiary: #252534;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   🌙 TEMA OSCURO ESTÁNDAR (Neutral Dark)
+   Solo overrides de superficie específicos (hereda tokens de base compartida)
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-theme="dark"],
+.theme-dark,
+html.dark {
+   /* === SUPERFICIES (Neutral) === */
+   --surface-ground: #121212;
+   --surface-background: #1e1e1e;
+   --surface-section: #252525;
+   --surface-overlay: rgba(0, 0, 0, 0.8);
+   --surface-elevated: #2d2d2d;
+   --surface-sunken: #181818;
+
+   /* === BORDES === */
+   --border-color: #374151;
+   --border-color-light: #2c2c2c;
+   --border-color-strong: #4b5563;
+   --border-color-focus: var(--brand-primary-400);
+
+   /* === INTERACCIONES === */
+   --hover-background: #2d2d2d;
+   --hover-background-subtle: #252525;
+   --active-background: #2d2d2d;
+   --selected-background: #2d2d2d;
+   --surface-hover: var(--surface-elevated);
+   --primary-color-lighter: #2d2d2d;
+
+   /* === SOMBRAS — elevation overlay (anillo blanco + sombra profunda) === */
+   --shadow-color: 0 0% 0%;
+   --shadow-xs: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 1px 2px rgba(0, 0, 0, 0.85);
+   --shadow-sm: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 2px 6px rgba(0, 0, 0, 0.85);
+   --shadow-md: 0 0 0 1px rgba(255, 255, 255, 0.07), 0 4px 12px rgba(0, 0, 0, 0.85);
+   --shadow-lg: 0 0 0 1px rgba(255, 255, 255, 0.09), 0 10px 20px rgba(0, 0, 0, 0.85);
+   --shadow-xl: 0 0 0 1px rgba(255, 255, 255, 0.11), 0 20px 30px rgba(0, 0, 0, 0.9);
+
+   /* === LEGADO ESPECÍFICO === */
+   --bg-primary: #121212;
+   --bg-secondary: #1e1e1e;
+   --bg-tertiary: #252525;
+}
+
+/* =============================================================================
+   TOKENS DE COMPONENTES - Estilos específicos de UI
+   =============================================================================
+   Tokens derivados para componentes específicos de la aplicación.
+   Estos tokens utilizan los valores semánticos definidos en _tokens-semantic.css
+
+   📅 Última actualización: Diciembre 2025
+   ============================================================================= */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   🌞 TEMA CLARO - Componentes
+   ───────────────────────────────────────────────────────────────────────────── */
+:root,
+[data-theme="light"],
+.theme-light {
+   /* === NAVEGACIÓN === */
+   --nav-bg: var(--surface-background);
+   --nav-text: var(--text-color);
+   --nav-text-hover: var(--primary-color);
+   --nav-border: var(--border-color-light);
+   --nav-item-hover-bg: var(--hover-background-subtle);
+   --nav-item-active-bg: var(--primary-color-lighter);
+   --nav-item-active-text: var(--primary-color);
+   --nav-shadow: var(--shadow-sm);
+
+   /* === SIDEBAR === */
+   --sidebar-bg: var(--surface-background);
+   --sidebar-text: var(--text-color-secondary);
+   --sidebar-heading: var(--text-color);
+   --sidebar-border: var(--border-color-light);
+   --sidebar-item-hover: var(--hover-background-subtle);
+   --sidebar-item-active: var(--primary-color-lighter);
+
+   /* === CARDS === */
+   --card-bg: var(--surface-background);
+   --card-border: var(--border-color-light);
+   --card-header-bg: var(--surface-section);
+   --card-footer-bg: var(--surface-section);
+   --card-shadow: var(--shadow-md);
+
+   /* === TABLAS === */
+   --table-bg: var(--surface-background);
+   --table-header-bg: var(--surface-section);
+   --table-header-text: var(--text-color);
+   --table-header-start: var(--brand-primary-500);
+   --table-header-end: var(--brand-secondary-500);
+   --table-cell-text: var(--text-color-secondary);
+   --table-row-alt-bg: var(--surface-section);
+   --table-row-hover: var(--hover-background);
+   --table-row-selected: var(--selected-background);
+   --table-border: var(--brand-primary-100);
+   --table-stripe-bg: var(--gray-50);
+   --table-stripe-alt: var(--brand-secondary-50);
+   --table-hover-bg: var(--brand-primary-50);
+   --table-hover-secondary: var(--brand-secondary-50);
+
+   /* Efecto hover elevado para filas */
+   --table-row-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+   --table-row-hover-transform: translateY(-2px);
+   --table-row-transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+   /* === FORMULARIOS / INPUTS === */
+   --control-height: var(--control-height-md);
+   /* Derivado de primitivos - 46px standard */
+   --input-bg: var(--surface-background);
+   --input-border: var(--gray-300);
+   /* Más oscuro para contraste */
+   --input-border-width: 2.5px;
+   /* Grosor óptimo para visibilidad */
+   --input-border-hover: var(--gray-400);
+   --input-border-focus: var(--primary-color);
+   --input-placeholder: var(--text-color-placeholder);
+   --input-text: var(--text-color);
+   --input-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+   /* Sombra sutil */
+   --input-shadow-focus: var(--shadow-focus-primary);
+   --input-disabled-bg: var(--gray-100);
+   --input-disabled-text: var(--gray-400);
+
+   /* === BOTONES === */
+   --button-primary-bg: var(--primary-color);
+   --button-primary-bg-hover: var(--primary-color-hover);
+   --button-primary-bg-active: var(--primary-color-active);
+   --button-primary-text: var(--text-color-on-primary);
+
+   --button-secondary-bg: var(--secondary-color);
+   --button-secondary-bg-hover: var(--secondary-color-hover);
+   --button-secondary-text: var(--text-color-on-secondary);
+
+   --button-outline-border: var(--primary-color);
+   --button-outline-text: var(--primary-color);
+   --button-outline-hover-bg: var(--primary-color-lighter);
+
+   --button-ghost-text: var(--primary-color);
+   --button-ghost-hover-bg: var(--hover-background-subtle);
+
+   /* Button Shadows */
+   --button-shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+   --button-shadow-outer: 0 1px 3px hsla(0, 0%, 0%, 0.2);
+   --button-shadow: var(--button-shadow-inset), var(--button-shadow-outer);
+
+   /* === BADGES === */
+   --badge-primary-bg: var(--primary-color);
+   --badge-primary-text: var(--text-color-on-primary);
+   --badge-secondary-bg: var(--gray-200);
+   --badge-secondary-text: var(--gray-700);
+   --badge-success-bg: var(--success-color-light);
+   --badge-success-text: var(--success-color-text);
+   --badge-warning-bg: var(--warning-color-light);
+   --badge-warning-text: var(--warning-color-text);
+   --badge-danger-bg: var(--danger-color-light);
+   --badge-danger-text: var(--danger-color-text);
+   --badge-info-bg: var(--info-color-light);
+   --badge-info-text: var(--info-color-text);
+
+   /* === TOOLTIPS === */
+   --tooltip-bg: var(--gray-900);
+   --tooltip-text: var(--gray-0);
+   --tooltip-shadow: var(--shadow-lg);
+
+   /* === DROPDOWNS / SELECT === */
+   --dropdown-bg: var(--surface-background);
+   --dropdown-border: var(--border-color);
+   --dropdown-shadow: var(--shadow-lg);
+   --dropdown-item-hover: var(--hover-background-subtle);
+   --dropdown-item-selected: var(--selected-background);
+
+   /* === NG-SELECT (específico del proyecto) === */
+   --ng-select-border: var(--border-color-strong);
+   --ng-select-shadow: var(--shadow-sm);
+   --ng-select-hover-bg: var(--brand-primary-50);
+   --ng-select-hover-shadow: inset 0 0 0 2px var(--brand-primary-900);
+   --ng-select-selected-bg: var(--brand-primary-50);
+
+   /* === MODALES === */
+   --modal-bg: var(--surface-background);
+   --modal-overlay: var(--surface-overlay);
+   --modal-shadow: var(--shadow-xl);
+   --modal-header-bg: var(--surface-section);
+   --modal-footer-bg: var(--surface-section);
+   --modal-border: var(--border-color-light);
+
+   /* === ALERTS === */
+   --alert-info-bg: var(--info-color-lighter);
+   --alert-info-border: var(--info-color);
+   --alert-info-text: var(--info-color-text);
+   --alert-success-bg: var(--success-color-lighter);
+   --alert-success-border: var(--success-color);
+   --alert-success-text: var(--success-color-text);
+   --alert-warning-bg: var(--warning-color-lighter);
+   --alert-warning-border: var(--warning-color);
+   --alert-warning-text: var(--warning-color-text);
+   --alert-danger-bg: var(--danger-color-lighter);
+   --alert-danger-border: var(--danger-color);
+   --alert-danger-text: var(--danger-color-text);
+
+   /* === SCROLLBAR === */
+   --scrollbar-track: rgba(121, 53, 118, 0.08);
+   --scrollbar-thumb: rgba(121, 53, 118, 0.3);
+   --scrollbar-thumb-hover: rgba(121, 53, 118, 0.5);
+
+   /* === LOADER / SPINNER === */
+   --loader-border: var(--gray-300);
+   --loader-spinner: var(--accent-color);
+   --loader-gradient-start: var(--brand-accent-300);
+   --loader-gradient-end: var(--brand-accent-500);
+
+   /* Standardized Loader Ramp: Purple (Primary) -> Pink (Accent) -> Amber (Secondary) */
+   --loader-gradient-1: var(--brand-primary-600);
+   --loader-gradient-2: var(--brand-primary-400);
+   --loader-gradient-3: var(--brand-accent-500);
+   --loader-gradient-4: var(--brand-secondary-400);
+   --loader-gradient-5: var(--brand-secondary-500);
+
+   /* === TABS === */
+   --tab-bg: transparent;
+   --tab-text: var(--text-color-secondary);
+   --tab-hover-bg: var(--hover-background-subtle);
+   --tab-active-bg: var(--surface-background);
+   --tab-active-text: var(--primary-color);
+   --tab-active-border: var(--primary-color);
+   --tab-border: var(--border-color-light);
+
+   /* === BREADCRUMBS === */
+   --breadcrumb-text: var(--text-color-muted);
+   --breadcrumb-separator: var(--gray-400);
+   --breadcrumb-active: var(--text-color);
+   --breadcrumb-hover: var(--primary-color);
+
+   /* === PAGINATION === */
+   --pagination-bg: var(--surface-background);
+   --pagination-text: var(--text-color);
+   --pagination-hover-bg: var(--hover-background-subtle);
+   --pagination-active-bg: var(--primary-color);
+   --pagination-active-text: var(--text-color-on-primary);
+   --pagination-disabled-text: var(--text-color-muted);
+   --pagination-border: var(--border-color);
+
+   /* === PROGRESS BAR === */
+   --progress-bg: var(--gray-200);
+   --progress-fill: var(--primary-color);
+   --progress-success: var(--success-color);
+   --progress-warning: var(--warning-color);
+   --progress-danger: var(--danger-color);
+
+   /* === SWITCH / TOGGLE === */
+   --switch-bg-off: var(--gray-300);
+   --switch-bg-on: var(--primary-color);
+   --switch-thumb: var(--gray-0);
+   --switch-disabled-bg: var(--gray-200);
+
+   /* === AVATAR === */
+   --avatar-bg: var(--primary-color-lighter);
+   --avatar-text: var(--primary-color-dark);
+   --avatar-border: var(--border-color-light);
+
+   /* === SKELETON === */
+   --skeleton-bg: var(--gray-200);
+   --skeleton-shimmer: var(--gray-100);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   🌙 TEMA OSCURO - Componentes
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-theme="dark"],
+.theme-dark,
+html.dark {
+   /* === NAVEGACIÓN === */
+   --nav-bg: var(--surface-section);
+   /* Sub BG: #2a3556 */
+   --nav-text: var(--text-color);
+   --nav-text-hover: var(--primary-color);
+   --nav-border: var(--border-color);
+   --nav-item-hover-bg: var(--hover-background-subtle);
+   --nav-item-active-bg: var(--primary-color-lighter);
+   --nav-item-active-text: var(--primary-color-text);
+   --nav-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+
+   /* === SIDEBAR === */
+   --sidebar-bg: var(--surface-section);
+   /* Sub BG: #2a3556 */
+   --sidebar-text: var(--text-color-secondary);
+   --sidebar-heading: var(--text-color);
+   --sidebar-border: var(--border-color);
+   --sidebar-item-hover: var(--hover-background-subtle);
+   --sidebar-item-active: var(--primary-color-lighter);
+
+   /* === CARDS === */
+   --card-bg: var(--surface-background);
+   /* Layer BG: #1b2440 */
+   --card-border: var(--border-color);
+   --card-header-bg: var(--surface-section);
+   --card-footer-bg: var(--surface-section);
+   --card-shadow: var(--shadow-lg);
+
+   /* === TABLAS === */
+   --table-bg: var(--surface-background);
+   /* Layer BG */
+   --table-header-bg: var(--surface-section);
+   /* Sub BG */
+   --table-header-text: var(--text-color);
+   --table-header-start: var(--brand-primary-700);
+   --table-header-end: var(--brand-secondary-700);
+   --table-cell-text: var(--text-color-secondary);
+   --table-row-alt-bg: var(--surface-section);
+   --table-row-hover: var(--hover-background);
+   --table-row-selected: var(--selected-background);
+   --table-border: var(--border-color-strong);
+   --table-stripe-bg: var(--surface-section);
+   /* Fixed hardcoded */
+   --table-stripe-alt: var(--surface-ground);
+   /* Fixed hardcoded */
+   --table-hover-bg: var(--hover-background);
+   /* Fixed hardcoded */
+   --table-hover-secondary: var(--hover-background-subtle);
+   /* Fixed hardcoded */
+
+   /* Efecto hover elevado para filas (dark) */
+   --table-row-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2);
+   --table-row-hover-transform: translateY(-2px);
+   --table-row-transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+   /* === FORMULARIOS / INPUTS === */
+   --input-bg: var(--surface-background);
+   /* Layer BG (Typical for inputs in dark) or Sub BG */
+   --input-border: var(--gray-600);
+   /* Más visible en oscuro */
+   --input-border-width: 2.5px;
+   --input-border-hover: var(--gray-500);
+   --input-border-focus: var(--primary-color);
+   --input-placeholder: var(--text-color-placeholder);
+   --input-text: var(--text-color);
+   --input-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+   /* Sombra más pronunciada */
+   --input-shadow-focus: var(--shadow-focus-primary);
+   --input-disabled-bg: var(--surface-sunken);
+   --input-disabled-text: var(--gray-600);
+
+   /* === BOTONES === */
+   --button-primary-bg: var(--brand-primary-500);
+   --button-primary-bg-hover: var(--brand-primary-400);
+   --button-primary-bg-active: var(--brand-primary-300);
+   --button-primary-text: var(--gray-0);
+
+   --button-secondary-bg: var(--brand-secondary-600);
+   --button-secondary-bg-hover: var(--brand-secondary-500);
+   --button-secondary-text: var(--gray-0);
+
+   --button-outline-border: var(--primary-color);
+   --button-outline-text: var(--primary-color);
+   --button-outline-hover-bg: var(--hover-background);
+
+   --button-ghost-text: var(--primary-color);
+   --button-ghost-hover-bg: var(--hover-background-subtle);
+
+   /* Button Shadows (Dark Mode - more subtle) */
+   --button-shadow-inset: inset 0 1px 0 hsla(224, 60%, 70%, 0.4);
+   --button-shadow-outer: 0 1px 4px hsla(0, 0%, 0%, 0.4);
+   --button-shadow: var(--button-shadow-inset), var(--button-shadow-outer);
+
+   /* === BADGES === */
+   --badge-primary-bg: var(--brand-primary-500);
+   --badge-primary-text: var(--gray-0);
+   --badge-secondary-bg: var(--surface-section);
+   --badge-secondary-text: var(--text-color-secondary);
+   --badge-success-bg: var(--success-color-light);
+   --badge-success-text: var(--success-color-text);
+   --badge-warning-bg: var(--warning-color-light);
+   --badge-warning-text: var(--warning-color-text);
+   --badge-danger-bg: var(--danger-color-light);
+   --badge-danger-text: var(--danger-color-text);
+   --badge-info-bg: var(--info-color-light);
+   --badge-info-text: var(--info-color-text);
+
+   /* === TOOLTIPS === */
+   --tooltip-bg: var(--surface-section);
+   --tooltip-text: var(--text-color);
+
+   /* === DROPDOWNS / SELECT === */
+   --dropdown-bg: var(--surface-section);
+   /* Sub BG often used for popovers */
+   --dropdown-border: var(--border-color);
+   --dropdown-shadow: var(--shadow-xl);
+   --dropdown-item-hover: var(--hover-background-subtle);
+   --dropdown-item-selected: var(--selected-background);
+
+   /* === NG-SELECT === */
+   --ng-select-border: var(--border-color-strong);
+   /* Fixed hardcoded #404040 */
+   --ng-select-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+   --ng-select-hover-bg: var(--hover-background);
+   --ng-select-hover-shadow: inset 0 0 0 2px var(--brand-primary-400);
+   --ng-select-selected-bg: var(--selected-background);
+
+   /* === MODALES === */
+   --modal-bg: var(--surface-background);
+   /* Layer BG */
+   --modal-overlay: var(--surface-overlay);
+   --modal-shadow: var(--shadow-xl);
+   --modal-header-bg: var(--surface-section);
+   --modal-footer-bg: var(--surface-section);
+   --modal-border: var(--border-color);
+
+   /* === ALERTS === */
+   --alert-info-bg: var(--info-color-lighter);
+   --alert-info-border: var(--info-color);
+   --alert-info-text: var(--info-color-text);
+   --alert-success-bg: var(--success-color-lighter);
+   --alert-success-border: var(--success-color);
+   --alert-success-text: var(--success-color-text);
+   --alert-warning-bg: var(--warning-color-lighter);
+   --alert-warning-border: var(--warning-color);
+   --alert-warning-text: var(--warning-color-text);
+   --alert-danger-bg: var(--danger-color-lighter);
+   --alert-danger-border: var(--danger-color);
+   --alert-danger-text: var(--danger-color-text);
+
+   /* === SCROLLBAR === */
+   --scrollbar-track: rgba(161, 114, 159, 0.1);
+   --scrollbar-thumb: rgba(161, 114, 159, 0.4);
+   --scrollbar-thumb-hover: rgba(161, 114, 159, 0.6);
+
+   /* === LOADER / SPINNER === */
+   --loader-border: var(--border-color-strong);
+   /* Fixed hardcoded #404040 */
+   --loader-spinner: var(--brand-accent-400);
+
+   /* Dark Mode Ramp: Lighter/Brighter variants */
+   --loader-gradient-1: var(--brand-primary-400);
+   --loader-gradient-2: var(--brand-primary-300);
+   --loader-gradient-3: var(--brand-accent-300);
+   --loader-gradient-4: var(--brand-secondary-300);
+   --loader-gradient-5: var(--brand-secondary-400);
+
+   /* === TABS === */
+   --tab-bg: transparent;
+   --tab-text: var(--text-color-secondary);
+   --tab-hover-bg: var(--hover-background-subtle);
+   --tab-active-bg: var(--surface-elevated);
+   --tab-active-text: var(--primary-color);
+   --tab-active-border: var(--primary-color);
+   --tab-border: var(--border-color);
+
+   /* === BREADCRUMBS === */
+   --breadcrumb-text: var(--text-color-muted);
+   --breadcrumb-separator: var(--gray-600);
+   --breadcrumb-active: var(--text-color);
+   --breadcrumb-hover: var(--primary-color);
+
+   /* === PAGINATION === */
+   --pagination-bg: var(--surface-elevated);
+   --pagination-text: var(--text-color);
+   --pagination-hover-bg: var(--hover-background-subtle);
+   --pagination-active-bg: var(--brand-primary-600);
+   --pagination-active-text: var(--gray-0);
+   --pagination-disabled-text: var(--text-color-muted);
+   --pagination-border: var(--border-color);
+
+   /* === PROGRESS BAR === */
+   --progress-bg: var(--gray-700);
+   --progress-fill: var(--primary-color);
+   --progress-success: var(--success-color);
+   --progress-warning: var(--warning-color);
+   --progress-danger: var(--danger-color);
+
+   /* === SWITCH / TOGGLE === */
+   --switch-bg-off: var(--gray-600);
+   --switch-bg-on: var(--brand-primary-500);
+   --switch-thumb: var(--gray-0);
+   --switch-disabled-bg: var(--gray-700);
+
+   /* === AVATAR === */
+   --avatar-bg: var(--hover-background);
+   --avatar-text: var(--primary-color);
+   --avatar-border: var(--border-color);
+
+   /* === SKELETON === */
+   --skeleton-bg: var(--gray-700);
+   --skeleton-shimmer: var(--gray-600);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   🌙 TEMA OSCURO CORPORATIVO - Componentes
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-theme="brand-dark"] {
+   /* === NAVEGACIÓN === */
+   --nav-bg: var(--surface-section);
+   --nav-text: var(--text-color);
+   --nav-text-hover: var(--primary-color);
+   --nav-border: var(--border-color);
+   --nav-item-hover-bg: var(--hover-background-subtle);
+   --nav-item-active-bg: var(--primary-color-lighter);
+   --nav-item-active-text: var(--primary-color-text);
+   --nav-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+
+   /* === SIDEBAR === */
+   --sidebar-bg: var(--surface-section);
+   --sidebar-text: var(--text-color-secondary);
+   --sidebar-heading: var(--text-color);
+   --sidebar-border: var(--border-color);
+   --sidebar-item-hover: var(--hover-background-subtle);
+   --sidebar-item-active: var(--primary-color-lighter);
+
+   /* === CARDS === */
+   --card-bg: var(--surface-background);
+   --card-border: var(--border-color);
+   --card-header-bg: var(--surface-section);
+   --card-footer-bg: var(--surface-section);
+   --card-shadow: var(--shadow-lg);
+
+   /* === TABLAS === */
+   --table-bg: var(--surface-background);
+   --table-header-bg: var(--surface-section);
+   --table-header-text: var(--text-color);
+   --table-header-start: var(--brand-primary-700);
+   --table-header-end: var(--brand-secondary-700);
+   --table-cell-text: var(--text-color-secondary);
+   --table-row-alt-bg: var(--surface-section);
+   --table-row-hover: var(--hover-background);
+   --table-row-selected: var(--selected-background);
+   --table-border: var(--border-color-strong);
+   --table-stripe-bg: var(--surface-section);
+   --table-stripe-alt: var(--surface-ground);
+   --table-hover-bg: var(--hover-background);
+   --table-hover-secondary: var(--hover-background-subtle);
+
+   /* Efecto hover elevado para filas (brand-dark) */
+   --table-row-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
+   --table-row-hover-transform: translateY(-2px);
+   --table-row-transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+   /* === FORMULARIOS / INPUTS === */
+   --input-bg: var(--surface-background);
+   --input-border: var(--gray-600);
+   --input-border-width: 2.5px;
+   --input-border-hover: var(--gray-500);
+   --input-border-focus: var(--primary-color);
+   --input-placeholder: var(--text-color-placeholder);
+   --input-text: var(--text-color);
+   --input-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+   --input-shadow-focus: var(--shadow-focus-primary);
+   --input-disabled-bg: var(--surface-sunken);
+   --input-disabled-text: var(--gray-600);
+
+   /* === BOTONES === */
+   --button-primary-bg: var(--brand-primary-500);
+   --button-primary-bg-hover: var(--brand-primary-400);
+   --button-primary-bg-active: var(--brand-primary-300);
+   --button-primary-text: var(--gray-0);
+
+   --button-secondary-bg: var(--brand-secondary-600);
+   --button-secondary-bg-hover: var(--brand-secondary-500);
+   --button-secondary-text: var(--gray-0);
+
+   --button-outline-border: var(--primary-color);
+   --button-outline-text: var(--primary-color);
+   --button-outline-hover-bg: var(--hover-background);
+
+   --button-ghost-text: var(--primary-color);
+   --button-ghost-hover-bg: var(--hover-background-subtle);
+
+   /* Button Shadows (Brand-Dark Mode) */
+   --button-shadow-inset: inset 0 1px 0 hsla(224, 60%, 70%, 0.4);
+   --button-shadow-outer: 0 1px 4px hsla(0, 0%, 0%, 0.4);
+   --button-shadow: var(--button-shadow-inset), var(--button-shadow-outer);
+
+   /* === BADGES === */
+   --badge-primary-bg: var(--brand-primary-500);
+   --badge-primary-text: var(--gray-0);
+   --badge-secondary-bg: var(--surface-section);
+   --badge-secondary-text: var(--text-color-secondary);
+   --badge-success-bg: var(--success-color-light);
+   --badge-success-text: var(--success-color-text);
+   --badge-warning-bg: var(--warning-color-light);
+   --badge-warning-text: var(--warning-color-text);
+   --badge-danger-bg: var(--danger-color-light);
+   --badge-danger-text: var(--danger-color-text);
+   --badge-info-bg: var(--info-color-light);
+   --badge-info-text: var(--info-color-text);
+
+   /* === TOOLTIPS === */
+   --tooltip-bg: var(--surface-section);
+   --tooltip-text: var(--text-color);
+
+   /* === DROPDOWNS / SELECT === */
+   --dropdown-bg: var(--surface-section);
+   --dropdown-border: var(--border-color);
+   --dropdown-shadow: var(--shadow-xl);
+   --dropdown-item-hover: var(--hover-background-subtle);
+   --dropdown-item-selected: var(--selected-background);
+
+   /* === NG-SELECT === */
+   --ng-select-border: var(--border-color-strong);
+   --ng-select-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+   --ng-select-hover-bg: var(--hover-background);
+   --ng-select-hover-shadow: inset 0 0 0 2px var(--brand-primary-400);
+   --ng-select-selected-bg: var(--selected-background);
+
+   /* === MODALES === */
+   --modal-bg: var(--surface-background);
+   --modal-overlay: var(--surface-overlay);
+   --modal-shadow: var(--shadow-xl);
+   --modal-header-bg: var(--surface-section);
+   --modal-footer-bg: var(--surface-section);
+   --modal-border: var(--border-color);
+
+   /* === ALERTS === */
+   --alert-info-bg: var(--info-color-lighter);
+   --alert-info-border: var(--info-color);
+   --alert-info-text: var(--info-color-text);
+   --alert-success-bg: var(--success-color-lighter);
+   --alert-success-border: var(--success-color);
+   --alert-success-text: var(--success-color-text);
+   --alert-warning-bg: var(--warning-color-lighter);
+   --alert-warning-border: var(--warning-color);
+   --alert-warning-text: var(--warning-color-text);
+   --alert-danger-bg: var(--danger-color-lighter);
+   --alert-danger-border: var(--danger-color);
+   --alert-danger-text: var(--danger-color-text);
+
+   /* === SCROLLBAR === */
+   --scrollbar-track: rgba(161, 114, 159, 0.1);
+   --scrollbar-thumb: rgba(161, 114, 159, 0.4);
+   --scrollbar-thumb-hover: rgba(161, 114, 159, 0.6);
+
+   /* === LOADER / SPINNER === */
+   --loader-border: var(--border-color-strong);
+   --loader-spinner: var(--brand-accent-400);
+   --loader-gradient-1: var(--brand-primary-400);
+   --loader-gradient-2: var(--brand-primary-300);
+   --loader-gradient-3: var(--brand-accent-300);
+   --loader-gradient-4: var(--brand-secondary-300);
+   --loader-gradient-5: var(--brand-secondary-400);
+
+   /* === TABS === */
+   --tab-bg: transparent;
+   --tab-text: var(--text-color-secondary);
+   --tab-hover-bg: var(--hover-background-subtle);
+   --tab-active-bg: var(--surface-elevated);
+   --tab-active-text: var(--primary-color);
+   --tab-active-border: var(--primary-color);
+   --tab-border: var(--border-color);
+
+   /* === BREADCRUMBS === */
+   --breadcrumb-text: var(--text-color-muted);
+   --breadcrumb-separator: var(--gray-600);
+   --breadcrumb-active: var(--text-color);
+   --breadcrumb-hover: var(--primary-color);
+
+   /* === PAGINATION === */
+   --pagination-bg: var(--surface-elevated);
+   --pagination-text: var(--text-color);
+   --pagination-hover-bg: var(--hover-background-subtle);
+   --pagination-active-bg: var(--brand-primary-600);
+   --pagination-active-text: var(--gray-0);
+   --pagination-disabled-text: var(--text-color-muted);
+   --pagination-border: var(--border-color);
+
+   /* === PROGRESS BAR === */
+   --progress-bg: var(--gray-700);
+   --progress-fill: var(--primary-color);
+   --progress-success: var(--success-color);
+   --progress-warning: var(--warning-color);
+   --progress-danger: var(--danger-color);
+
+   /* === SWITCH / TOGGLE === */
+   --switch-bg-off: var(--gray-600);
+   --switch-bg-on: var(--brand-primary-500);
+   --switch-thumb: var(--gray-0);
+   --switch-disabled-bg: var(--gray-700);
+
+   /* === AVATAR === */
+   --avatar-bg: var(--hover-background);
+   --avatar-text: var(--primary-color);
+   --avatar-border: var(--border-color);
+
+   /* === SKELETON === */
+   --skeleton-bg: var(--gray-700);
+   --skeleton-shimmer: var(--gray-600);
+}
+
+/* =============================================================================
+   ESTILOS DE BOTONES - Clases CSS Globales
+   =============================================================================
+   Define las clases .btn y sus variantes utilizando los tokens CSS del sistema
+   de temas. Este archivo debe ser importado en el index.css del tema.
+
+   📅 Última actualización: Diciembre 2025
+   ============================================================================= */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BOTÓN BASE
+   ───────────────────────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: var(--control-height);
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  text-decoration: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+          user-select: none;
+  font-family: inherit;
+  box-sizing: border-box;
+  box-shadow: var(--button-shadow);
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px hsla(0, 0%, 0%, 0.2);
+}
+
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   VARIANTES DE COLOR
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Primary */
+.btn-primary {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  border-color: var(--button-primary-bg);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--button-primary-bg-hover);
+  border-color: var(--button-primary-bg-hover);
+}
+
+.btn-primary:active:not(:disabled) {
+  background-color: var(--button-primary-bg-active);
+  border-color: var(--button-primary-bg-active);
+}
+
+/* Secondary */
+.btn-secondary {
+  background-color: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
+  border-color: var(--button-secondary-bg);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--button-secondary-bg-hover);
+  border-color: var(--button-secondary-bg-hover);
+}
+
+/* Success */
+.btn-success {
+  background-color: var(--success-color);
+  color: var(--text-color-on-primary);
+  border-color: var(--success-color);
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: var(--success-color-hover);
+  border-color: var(--success-color-hover);
+}
+
+/* Warning */
+.btn-warning {
+  background-color: var(--warning-color);
+  color: var(--text-color-inverse);
+  border-color: var(--warning-color);
+}
+
+.btn-warning:hover:not(:disabled) {
+  background-color: var(--warning-color-hover);
+  border-color: var(--warning-color-hover);
+}
+
+/* Danger */
+.btn-danger {
+  background-color: var(--danger-color);
+  color: var(--text-color-on-primary);
+  border-color: var(--danger-color);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: var(--danger-color-hover);
+  border-color: var(--danger-color-hover);
+}
+
+/* Outline */
+.btn-outline {
+  background-color: transparent;
+  color: var(--button-outline-text);
+  border-color: var(--button-outline-border);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background-color: var(--button-outline-hover-bg);
+}
+
+/* Ghost */
+.btn-ghost {
+  background-color: transparent;
+  color: var(--button-ghost-text);
+  border-color: transparent;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background-color: var(--button-ghost-hover-bg);
+}
+
+/* Link */
+.btn-link {
+  background-color: transparent;
+  color: var(--primary-color);
+  border-color: transparent;
+  padding: 0;
+  height: auto;
+  line-height: inherit;
+  font-weight: 500;
+}
+
+.btn-link:hover:not(:disabled) {
+  text-decoration: underline;
+  color: var(--primary-color-dark);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TAMAÑOS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Small */
+.btn-sm {
+  padding: 0.375rem 0.875rem;
+  font-size: 0.75rem;
+  border-radius: 0.375rem;
+}
+
+/* Large */
+.btn-lg {
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  border-radius: 0.625rem;
+}
+
+/* Full Width */
+.btn-block {
+  width: 100%;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ICONOS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.btn-icon {
+  padding: 0.625rem;
+}
+
+.btn-icon.btn-sm {
+  padding: 0.375rem;
+}
+
+.btn-icon.btn-lg {
+  padding: 0.875rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   GRUPO DE BOTONES
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.btn-group {
+  display: inline-flex;
+}
+
+.btn-group .btn {
+  border-radius: 0;
+}
+
+.btn-group .btn:first-child {
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+.btn-group .btn:last-child {
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.btn-group .btn:not(:last-child) {
+  border-right-width: 0;
+}
+/* =============================================================================
+   ESTILOS DE FORMULARIOS - Clases CSS Globales
+   =============================================================================
+   Define las clases para inputs, selects y otros elementos de formulario
+   utilizando los tokens CSS del sistema de temas.
+   
+   📅 Última actualización: Diciembre 2025
+   ============================================================================= */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   INPUTS DE TEXTO Y SELECTS BASE
+   ───────────────────────────────────────────────────────────────────────────── */
+.form-input {
+  display: block;
+  width: 100%;
+  padding: 0 0.875rem;
+  /* Horizontal padding only */
+  font-size: 0.875rem;
+  /* 14px */
+  height: var(--control-height);
+  /* 40px */
+  line-height: calc(var(--control-height) - 2px);
+  /* Dynamic: Height - Borders */
+  color: var(--input-text);
+  background-color: var(--input-bg);
+  background-clip: padding-box;
+  border: 1px solid var(--input-border);
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  appearance: none;
+}
+
+.form-textarea {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--input-text);
+  background-color: var(--input-bg);
+  background-clip: padding-box;
+  border: 1px solid var(--input-border);
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  appearance: none;
+}
+
+/* Focus state */
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--input-border-focus);
+  outline: 0;
+  box-shadow: 0 0 0 3px var(--hover-background);
+}
+
+/* Disabled state */
+.form-input:disabled,
+.form-select:disabled,
+.form-textarea:disabled {
+  background-color: var(--input-disabled-bg);
+  color: var(--input-disabled-text);
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Placeholder */
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--input-placeholder);
+  opacity: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SELECT EXTRAS
+   ───────────────────────────────────────────────────────────────────────────── */
+.form-select {
+  display: block;
+  width: 100%;
+  height: var(--control-height);
+  padding: 0.625rem 0.875rem;
+  /* ~10px top/bottom padding for 46px height */
+  padding-right: 2.5rem;
+  /* Space for arrow */
+  font-size: 0.875rem;
+  line-height: 1.5;
+  /* Reset line-height to normal */
+  color: var(--input-text);
+  background-color: var(--input-bg);
+  background-clip: padding-box;
+  border: 1px solid var(--input-border);
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  appearance: none;
+
+  /* Arrow ID */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+  background-size: 16px 12px;
+}
+
+/* Dark mode semantic override for arrow icon (inverted color if needed) */
+/* Note: For simplicity, checking if we need a light arrow for dark mode. 
+   Ideally, use an SVG with currentColor or a CSS variable for the URL if supported, 
+   but data URI with separate definitions is safer for cross-browser. */
+[data-theme="dark"] .form-select,
+[data-theme="brand-dark"] .form-select,
+.theme-dark .form-select,
+html.dark .form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23e5e7eb' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TEXTAREA
+   ───────────────────────────────────────────────────────────────────────────── */
+.form-textarea {
+  min-height: calc(var(--control-height) * 2);
+  /* Al menos 2 filas aprox */
+  resize: vertical;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   CHECKBOX & RADIO
+   ───────────────────────────────────────────────────────────────────────────── */
+.form-checkbox,
+.form-radio {
+  width: 1.125rem;
+  height: 1.125rem;
+  padding: 0;
+  background-color: var(--input-bg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: 1px solid var(--input-border);
+  appearance: none;
+  -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+  vertical-align: text-bottom;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.form-checkbox:checked,
+.form-radio:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.form-checkbox {
+  border-radius: 0.25em;
+}
+
+.form-radio {
+  border-radius: 50%;
+}
+
+.form-checkbox:checked {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+}
+
+.form-radio:checked {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LABELS & GROUPS
+   ───────────────────────────────────────────────────────────────────────────── */
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-right: -5px;
+  margin-left: -5px;
+}
+
+.form-row>* {
+  flex: 1 0 0%;
+}
+/* =============================================================================
+   SISTEMA DE TEMAS - ARCHIVO PRINCIPAL
+   =============================================================================
+
+   🚀 GUÍA RÁPIDA DE PERSONALIZACIÓN PARA NUEVOS PROYECTOS:
+   ──────────────────────────────────────────────────────────────────────────────
+
+   1. Copia esta carpeta "themes" a tu nuevo proyecto
+   2. Abre `_tokens-brand.css`
+   3. Cambia los colores de --brand-primary-* y --brand-secondary-*
+   4. ¡Listo! El sistema se adapta automáticamente
+
+   📖 ESTRUCTURA DE ARCHIVOS:
+   ├── _tokens-primitives.css  → Colores base universales (NO modificar)
+   ├── _tokens-brand.css       → Colores de marca (✏️ MODIFICAR POR PROYECTO)
+   ├── _tokens-semantic.css    → Variables semánticas light/dark (NO modificar)
+   ├── _tokens-components.css  → Tokens de componentes UI (Personalizar si necesitas)
+   └── index.css               → Este archivo (punto de entrada)
+
+   💡 TIPS:
+   - Usa https://uicolors.app para generar escalas de color
+   - El tema se activa con data-theme="light|dark" en el <html>
+   - También soporta la clase .dark para compatibilidad con Tailwind
+
+   📅 Última actualización: Diciembre 2025
+   ============================================================================= */
+
+/* === IMPORTACIONES EN ORDEN === */
+
+/* =============================================================================
+   ESTILOS BASE GLOBALES
+   ============================================================================= */
+
+/* =============================================================================
+   TRANSICIÓN DE TEMA — SISTEMA DUAL
+   ─────────────────────────────────────────────────────────────────────────────
+   1. View Transitions API (Chrome/Edge/Safari ≥ 2024):
+      Zoom — el nuevo tema se expande desde el centro de la pantalla.
+   2. Fallback CSS (Firefox + resto):
+      Transición rápida solo en superficies estructurales (no en *todo* el DOM).
+   ============================================================================= */
+
+/* ── 1. View Transitions API ────────────────────────────────────────────── */
+
+/* El tema antiguo se desvanece y encoge ligeramente */
+::view-transition-old(root) {
+  animation: 350ms cubic-bezier(0.4, 0, 0.2, 1) both theme-zoom-out;
+  z-index: 1;
+}
+
+/* El nuevo tema entra expandiéndose desde el centro */
+::view-transition-new(root) {
+  z-index: 2;
+  animation: 400ms cubic-bezier(0.34, 1.56, 0.64, 1) both theme-zoom-in;
+}
+
+@keyframes theme-zoom-out {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(1.05); }
+}
+
+@keyframes theme-zoom-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Movimiento reducido → cross-fade simple (accesibilidad) */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 150ms;
+    animation-name: theme-fade;
+  }
+
+  @keyframes theme-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+}
+
+/* ── 2. Fallback CSS (navegadores sin VT API) ────────────────────────────── */
+/* Solo superficies estructurales — evita transicionar cada nodo del DOM */
+html.theme-transitioning,
+html.theme-transitioning body,
+html.theme-transitioning header,
+html.theme-transitioning nav,
+html.theme-transitioning main,
+html.theme-transitioning aside,
+html.theme-transitioning footer,
+html.theme-transitioning [class*="card"],
+html.theme-transitioning [class*="panel"],
+html.theme-transitioning [class*="surface"],
+html.theme-transitioning [class*="sidebar"],
+html.theme-transitioning [class*="topbar"] {
+  transition:
+    background-color 200ms ease-out,
+    border-color 200ms ease-out,
+    color 200ms ease-out !important;
+}
+
+/* Aplicar colores base al body */
+body,
+html {
+  background-color: var(--surface-ground);
+  color: var(--text-color);
+  /* Breakpoints del sistema de diseño:
+     Mobile:  < 640px
+     Tablet:  640px – 1024px
+     Desktop: > 1024px
+  */
+}
+
+/* Evita que el contenido siga reduciéndose por debajo del ancho mínimo móvil.
+   A < 320px el navegador mostrará scroll horizontal en lugar de comprimir todo. */
+body {
+  min-width: 320px;
+}
+
+/* =============================================================================
+   WCAG 2.1 AA — FOCO VISIBLE
+   Garantiza un indicador de foco consistente para navegación por teclado.
+   :focus-visible solo se activa con teclado, no con clic (UX limpio).
+   ============================================================================= */
+:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm, 2px);
+}
+
+/* Elimina el outline del navegador en clics, manteniéndolo solo para teclado */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* =============================================================================
+   ACCESIBILIDAD — PREFERS-REDUCED-MOTION
+   Respeta la preferencia del sistema operativo: usuarios con vestibular
+   disorders, epilepsia u otras condiciones solicitan menos movimiento.
+   ============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =============================================================================
+   SCROLLBAR PERSONALIZADA
+   ============================================================================= */
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* =============================================================================
+   ACCESIBILIDAD - FOCUS VISIBLE
+   ============================================================================= */
+
+/* Focus visible para accesibilidad (solo con teclado) */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Remover outline por defecto */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Link focus */
+a:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* =============================================================================
+   SELECCIÓN DE TEXTO
+   ============================================================================= */
+
+::selection {
+  background-color: var(--primary-color);
+  color: var(--text-color-on-primary);
+}
+
+::-moz-selection {
+  background-color: var(--primary-color);
+  color: var(--text-color-on-primary);
+}
+
+/* =============================================================================
+   UTILIDADES DE TEMA
+   ============================================================================= */
+
+/* Forzar tema claro en un elemento específico */
+.force-light {
+  color-scheme: light;
+}
+
+.force-light,
+.force-light * {
+  --surface-ground: var(--gray-100) !important;
+  --surface-background: var(--gray-0) !important;
+  --text-color: var(--gray-900) !important;
+}
+
+/* Forzar tema oscuro en un elemento específico */
+.force-dark {
+  color-scheme: dark;
+}
+
+.force-dark,
+.force-dark * {
+  --surface-ground: #0a0a0a !important;
+  --surface-background: #141414 !important;
+  --text-color: var(--gray-100) !important;
+}
+
+/* =============================================================================
+   CLASES DE UTILIDAD PARA COLORES
+   ============================================================================= */
+
+/* Colores de texto */
+.text-primary {
+  color: var(--text-color) !important;
+}
+
+.text-secondary {
+  color: var(--text-color-secondary) !important;
+}
+
+.text-muted {
+  color: var(--text-color-muted) !important;
+}
+
+.text-brand {
+  color: var(--primary-color) !important;
+}
+
+.text-brand-secondary {
+  color: var(--secondary-color) !important;
+}
+
+.text-success {
+  color: var(--success-color-text) !important;
+}
+
+.text-warning {
+  color: var(--warning-color-text) !important;
+}
+
+.text-danger {
+  color: var(--danger-color-text) !important;
+}
+
+.text-info {
+  color: var(--info-color-text) !important;
+}
+
+/* Colores de fondo */
+.bg-ground {
+  background-color: var(--surface-ground) !important;
+}
+
+.bg-surface {
+  background-color: var(--surface-background) !important;
+}
+
+.bg-section {
+  background-color: var(--surface-section) !important;
+}
+
+.bg-elevated {
+  background-color: var(--surface-elevated) !important;
+}
+
+.bg-brand {
+  background-color: var(--primary-color) !important;
+}
+
+.bg-brand-light {
+  background-color: var(--primary-color-lighter) !important;
+}
+
+.bg-brand-secondary {
+  background-color: var(--secondary-color) !important;
+}
+
+.bg-success {
+  background-color: var(--success-color-lighter) !important;
+}
+
+.bg-warning {
+  background-color: var(--warning-color-lighter) !important;
+}
+
+.bg-danger {
+  background-color: var(--danger-color-lighter) !important;
+}
+
+.bg-info {
+  background-color: var(--info-color-lighter) !important;
+}
+
+/* Colores de borde */
+.border-default {
+  border-color: var(--border-color) !important;
+}
+
+.border-light {
+  border-color: var(--border-color-light) !important;
+}
+
+.border-strong {
+  border-color: var(--border-color-strong) !important;
+}
+
+.border-brand {
+  border-color: var(--primary-color) !important;
+}
+
+.border-success {
+  border-color: var(--success-color) !important;
+}
+
+.border-warning {
+  border-color: var(--warning-color) !important;
+}
+
+.border-danger {
+  border-color: var(--danger-color) !important;
+}
+
+.border-info {
+  border-color: var(--info-color) !important;
+}
+
+/**
+ * TABLE DESIGN TOKENS
+ * Single Source of Truth para todos los estilos de tabla
+ * 
+ * Usado por:
+ * - responsive-table.css (CSS global para HTML nativo)
+ * - Atomic Table Components (app-table, app-table-row, etc.)
+ * - ScrollOverlayComponent
+ */
+
+/* ============================================
+   LIGHT MODE TOKENS (Default)
+   ============================================ */
+:root {
+  /* === Colores Base (referencia tokens semánticos) === */
+  --table-color-primary: var(--primary-color);
+  --table-color-border: var(--border-color);
+  --table-color-border-light: var(--border-color-light, var(--border-color));
+  --table-color-background: var(--surface-background);
+  --table-color-text: var(--text-color);
+  --table-color-text-secondary: var(--text-color-secondary);
+  --table-color-stripe: var(--hover-background-subtle);
+  --table-color-hover: var(--hover-background);
+
+  /* === Header === */
+  --table-header-bg: var(--surface-background);
+  --table-header-color: var(--text-color-secondary);
+  --table-header-border-width: 2px;
+  --table-header-border-style: solid;
+  --table-header-border-color: var(--primary-color);
+  --table-header-radius: var(--radius-md);
+  --table-header-shadow: var(--shadow-xs, 0 1px 2px var(--shadow-color, rgba(0, 0, 0, 0.05)));
+
+  /* === Celdas === */
+  --table-cell-padding: var(--space-3) var(--space-4);
+  --table-border-radius: var(--radius-md);
+
+  /* === Cards (Móvil) === */
+  --table-card-padding: var(--space-4);
+  --table-card-gap: var(--space-4);
+  --table-card-shadow: var(--shadow-md);
+  --table-card-shadow-hover: var(--shadow-lg);
+
+  /* === Tipografía === */
+  --table-font-family: inherit;
+  --table-font-size: var(--text-sm);
+  --table-font-size-mobile: var(--text-sm);
+  --table-font-size-header: var(--text-xs);
+  --table-font-weight-header: 600;
+  --table-font-weight-label: 600;
+
+  /* === Efectos === */
+  --table-transition-duration: 0.2s;
+  --table-transition-timing: ease;
+  --table-row-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --table-row-hover-transform: translateY(-2px);
+
+  /* === Sombras === */
+  --table-shadow-row: var(--shadow-xs, 0 1px 2px var(--shadow-color, rgba(0, 0, 0, 0.05)));
+
+  /* === Breakpoint === */
+  --table-breakpoint: 768px;
+}
+
+/* ============================================
+   DARK MODE TOKENS
+   ============================================ */
+html.dark,
+[data-theme="dark"] {
+  /* Colores */
+  --table-color-primary: var(--primary-color-light);
+  --table-color-background: var(--surface-section);
+  --table-color-stripe: rgba(255, 255, 255, 0.06);
+  --table-color-hover: var(--hover-background);
+
+  /* Header - Fondo primario, sin borde */
+  --table-header-bg: var(--brand-primary-700, var(--primary-color-darker));
+  --table-header-color: var(--gray-0);
+  --table-header-border-width: 0;
+  --table-header-border-color: transparent;
+  --table-header-shadow: none;
+
+  /* Sombras Dark Mode */
+  --table-shadow-row: var(--shadow-sm);
+  --table-card-shadow: var(--shadow-lg);
+  --table-card-shadow-hover: var(--shadow-xl);
+
+  /* Efecto Hover Elevado (Dark) */
+  --table-row-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+   LEGACY ALIAS (Compatibilidad con --rtc-*)
+   Mapea tokens antiguos a nuevos
+   ============================================ */
+:root {
+  /* Alias para mantener compatibilidad con responsive-table.css */
+  --rtc-color-primary: var(--table-color-primary);
+  --rtc-color-border: var(--table-color-border);
+  --rtc-color-border-light: var(--table-color-border-light);
+  --rtc-color-background: var(--table-color-background);
+  --rtc-color-text: var(--table-color-text);
+  --rtc-color-label: var(--table-color-text-secondary);
+  --rtc-color-stripe: var(--table-color-stripe);
+  --rtc-color-row-hover: var(--table-color-hover);
+
+  --rtc-header-bg: var(--table-header-bg);
+  --rtc-header-color: var(--table-header-color);
+  --rtc-header-border-width: var(--table-header-border-width);
+  --rtc-header-border-style: var(--table-header-border-style);
+  --rtc-header-border-color: var(--table-header-border-color);
+  --rtc-header-radius: var(--table-header-radius);
+  --rtc-header-shadow: var(--table-header-shadow);
+
+  --rtc-cell-padding: var(--table-cell-padding);
+  --rtc-border-radius: var(--table-border-radius);
+  --rtc-card-padding: var(--table-card-padding);
+  --rtc-card-gap: var(--table-card-gap);
+  --rtc-shadow-card: var(--table-card-shadow);
+  --rtc-shadow-hover: var(--table-card-shadow-hover);
+
+  --rtc-font-family: var(--table-font-family);
+  --rtc-font-size-base: var(--table-font-size);
+  --rtc-font-size-mobile: var(--table-font-size-mobile);
+  --rtc-font-size-header: var(--table-font-size-header);
+  --rtc-font-weight-header: var(--table-font-weight-header);
+  --rtc-font-weight-label: var(--table-font-weight-label);
+
+  --rtc-transition-duration: var(--table-transition-duration);
+  --rtc-transition-timing: var(--table-transition-timing);
+  --rtc-row-hover-shadow: var(--table-row-hover-shadow);
+  --rtc-row-hover-transform: var(--table-row-hover-transform);
+  --rtc-shadow-row: var(--table-shadow-row);
+}
+
+
+/**
+ * DESCRIPCIÓN:
+ * Componente CSS portable que transforma tablas HTML en tarjetas (cards)
+ * responsivas cuando el viewport es menor al breakpoint definido.
+ * 
+ * TOKENS:
+ * Los tokens --rtc-* son alias de --table-* definidos en:
+ * tokens/table-tokens.css (Single Source of Truth)
+ */
+
+/* ============================================
+   TOKENS: Importados desde archivo centralizado
+   ============================================ */
+.rtc-table {
+    --rtc-color-border: var(--table-color-border);
+    --rtc-color-border-light: var(--table-color-border-light);
+    --rtc-color-background: var(--table-color-background);
+    --rtc-color-text: var(--table-color-text);
+    --rtc-color-label: var(--table-color-text-secondary);
+    --rtc-color-stripe: var(--table-color-stripe);
+    --rtc-color-row-hover: var(--table-color-hover);
+
+    --rtc-header-bg: var(--table-header-bg);
+    --rtc-header-color: var(--table-header-color);
+    --rtc-header-border-width: var(--table-header-border-width);
+    --rtc-header-border-style: var(--table-header-border-style);
+    --rtc-header-border-color: var(--table-header-border-color);
+    --rtc-header-radius: var(--table-header-radius);
+    --rtc-header-shadow: var(--table-header-shadow);
+
+    --rtc-cell-padding: var(--table-cell-padding);
+    --rtc-border-radius: var(--table-border-radius);
+    --rtc-card-padding: var(--table-card-padding);
+    --rtc-card-gap: var(--table-card-gap);
+    --rtc-shadow-card: var(--table-card-shadow);
+    --rtc-shadow-hover: var(--table-card-shadow-hover);
+
+    --rtc-font-family: var(--table-font-family);
+    --rtc-font-size-base: var(--table-font-size);
+    --rtc-font-size-mobile: var(--table-font-size-mobile);
+    --rtc-font-size-header: var(--table-font-size-header);
+    --rtc-font-weight-header: var(--table-font-weight-header);
+    --rtc-font-weight-label: var(--table-font-weight-label);
+
+    --rtc-transition-duration: var(--table-transition-duration);
+    --rtc-transition-timing: var(--table-transition-timing);
+    --rtc-row-hover-shadow: var(--table-row-hover-shadow);
+    --rtc-row-hover-transform: var(--table-row-hover-transform);
+    --rtc-shadow-row: var(--table-shadow-row);
+}
+
+/* ============================================
+   BASE STYLES (Desktop)
+   ============================================ */
+.rtc-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: var(--rtc-font-family);
+    font-size: var(--rtc-font-size-base);
+    color: var(--rtc-color-text);
+    z-index: 10;
+}
+
+/* === Header === */
+.rtc-header {
+    display: table-header-group;
+    position: relative;
+    z-index: 10;
+}
+
+.rtc-header th {
+    position: relative;
+    z-index: 10;
+    padding: var(--rtc-cell-padding);
+    color: var(--rtc-header-color);
+    font-size: var(--rtc-font-size-header);
+    font-weight: var(--rtc-font-weight-header);
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--rtc-header-bg);
+    border-top: var(--rtc-header-border-width, 2px) var(--rtc-header-border-style, solid) var(--rtc-header-border-color, var(--rtc-color-border));
+    border-bottom: var(--rtc-header-border-width, 2px) var(--rtc-header-border-style, solid) var(--rtc-header-border-color, var(--rtc-color-border));
+}
+
+.rtc-header th:first-child {
+    border-left: var(--rtc-header-border-width, 2px) var(--rtc-header-border-style, solid) var(--rtc-header-border-color, var(--rtc-color-border));
+    border-top-left-radius: var(--rtc-header-radius);
+    border-bottom-left-radius: var(--rtc-header-radius);
+}
+
+.rtc-header th:last-child {
+    border-right: var(--rtc-header-border-width, 2px) var(--rtc-header-border-style, solid) var(--rtc-header-border-color, var(--rtc-color-border));
+    border-top-right-radius: var(--rtc-header-radius);
+    border-bottom-right-radius: var(--rtc-header-radius);
+}
+
+/* === Body === */
+.rtc-body {
+    display: table-row-group;
+}
+
+/* === Rows === */
+.rtc-row {
+    position: relative;
+    background-color: var(--rtc-color-background);
+    transition:
+        background-color var(--rtc-transition-duration) var(--rtc-transition-timing),
+        box-shadow var(--rtc-transition-duration) var(--rtc-transition-timing),
+        transform var(--rtc-transition-duration) var(--rtc-transition-timing);
+    border-bottom: 1px solid var(--rtc-color-border-light);
+}
+
+/* Zebra stripes - Filas alternadas */
+.rtc-body .rtc-row:nth-child(odd) {
+    background-color: var(--rtc-color-stripe);
+}
+
+/* Hover effect - Elevación */
+.rtc-row:hover {
+    background-color: var(--rtc-color-row-hover);
+    box-shadow: var(--rtc-row-hover-shadow);
+    transform: var(--rtc-row-hover-transform);
+    z-index: 1;
+}
+
+/* === Cells === */
+.rtc-table td {
+    padding: var(--rtc-cell-padding);
+    vertical-align: middle;
+}
+
+.rtc-table td:last-child, .rtc-table th:last-child {
+    padding-right: var(--space-6);
+}
+
+.rtc-table td.text-right, .rtc-table th.text-right, .rtc-table td.rtc-text-right, .rtc-table th.rtc-text-right { text-align: right; }
+.rtc-table td.text-center, .rtc-table th.text-center, .rtc-table td.rtc-text-center, .rtc-table th.rtc-text-center { text-align: center; }
+
+/* Ocultar etiquetas de datos en desktop */
+.rtc-table td[data-label]::before,
+.rtc-table td[data-title]::before {
+    display: none;
+}
+
+/* ============================================
+   RESPONSIVE STYLES (Mobile - CARDS)
+   Alta especificidad para evitar !important
+   ============================================ */
+@media screen and (max-width: 768px) {
+    
+    /* Hide header on mobile */
+    .so-root[data-so-table][data-so-sync-columns] .rtc-header,
+    .so-root[data-so-table] .rtc-header,
+    table.rtc-table .rtc-header,
+    table.rtc-table .rtc-header th {
+        display: none;
+    }
+
+    /* Body as block container */
+    .so-root[data-so-table] .rtc-body,
+    table.rtc-table .rtc-body {
+        display: block;
+        width: 100%;
+    }
+
+    /* Row becomes a card - Compact Sizing */
+    .so-root[data-so-table][data-so-sync-columns] .rtc-row,
+    .so-root[data-so-table] .rtc-row,
+    table.rtc-table .rtc-row {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+        border: 1px solid var(--rtc-color-border);
+        border-radius: var(--rtc-border-radius);
+        padding: var(--space-4);
+        margin-bottom: var(--space-3);
+        box-shadow: var(--rtc-shadow-card);
+        min-height: 200px;
+    }
+
+    .so-root[data-so-table][data-so-sync-columns] .rtc-row:hover,
+    .so-root[data-so-table] .rtc-row:hover,
+    table.rtc-table .rtc-row:hover {
+        transform: none;
+        background-color: var(--rtc-color-background);
+        box-shadow: var(--rtc-shadow-card);
+        z-index: auto;
+    }
+
+    /* Cell Styles - Compact Layout */
+    .so-root[data-so-table] table.rtc-table td,
+    table.rtc-table td {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        border: none;
+        border-bottom: 1px solid var(--rtc-color-border-light);
+        border-radius: 0;
+        padding: var(--space-2) 0;
+        font-size: var(--rtc-font-size-mobile);
+        min-height: auto;
+    }
+
+    .so-root[data-so-table] table.rtc-table td:last-child,
+    table.rtc-table td:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    /* Label Styles - Cleaner Look */
+    .so-root[data-so-table] table.rtc-table td[data-label]::before,
+    table.rtc-table td[data-label]::before {
+        content: attr(data-label);
+        display: block;
+        font-weight: var(--rtc-font-weight-label);
+        color: var(--table-color-primary);
+        font-size: var(--text-sm);
+        width: 40%;
+        max-width: 140px;
+        text-align: left;
+        padding-right: var(--space-2);
+    }
+
+    /* Value Styles - Left Aligned */
+    .so-root[data-so-table] table.rtc-table td[data-label]>*,
+    .so-root[data-so-table] table.rtc-table td[data-label]::after,
+    table.rtc-table td[data-label]>*,
+    table.rtc-table td[data-label]::after {
+        flex: 1;
+        text-align: left;
+        word-break: break-word;
+    }
+
+    /* Legacy: data-title support */
+    .so-root[data-so-table] table.rtc-table td[data-title]:not([data-label])::before,
+    table.rtc-table td[data-title]:not([data-label])::before {
+        content: attr(data-title);
+        display: block;
+        font-weight: var(--rtc-font-weight-label);
+        color: var(--table-color-primary);
+        font-size: var(--text-sm);
+        width: 40%;
+        max-width: 140px;
+        text-align: left;
+        padding-right: var(--space-2);
+    }
+
+    /* Acciones con label visible */
+    .so-root[data-so-table] table.rtc-table .rtc-actions,
+    table.rtc-table .rtc-actions {
+        flex-direction: row;
+        justify-content: flex-end;
+        padding-top: var(--space-3);
+        margin-top: var(--space-2);
+        border-top: 1px solid var(--rtc-color-border);
+        border-bottom: none;
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    .rtc-row {
+        transition: none;
+    }
+}
+
+/* Show only on mobile */
+.rtc-mobile-only {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .so-root[data-so-table] .rtc-mobile-only,
+    .rtc-mobile-only {
+        display: flex;
+    }
+}
+
+/* Show only on desktop */
+.rtc-desktop-only {
+    display: table-cell;
+}
+
+@media screen and (max-width: 768px) {
+    .so-root[data-so-table] .rtc-desktop-only,
+    .rtc-desktop-only {
+        display: none;
+    }
+}
+
+
+
+
+/**
+ * UI Component Library - Shared Animations
+ */
+
+@keyframes ui-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ui-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes ui-slide-in-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes ui-slide-out-right {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+@keyframes ui-slide-up {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes ui-scale-in {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes ui-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ui-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes ui-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes ui-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-25%); }
+}
+
+/* =============================================================================
+   ESTILOS GLOBALES - Atomic UI
+   =============================================================================
+   📅 Actualizado: Diciembre 2025
+   🎨 Sistema de temas portable implementado
+   ============================================================================= */
+
+/* =============================================================================
+   SISTEMA DE TEMAS PORTABLE
+   =============================================================================
+   Para personalizar los colores de marca para otro proyecto:
+   1. Abre: src/styles/themes/_tokens-brand.css
+   2. Modifica los valores de --brand-primary-* y --brand-secondary-*
+   3. ¡Listo! Todo se actualiza automáticamente
+   ============================================================================= */
+
+/* Fonts (Local - @fontsource) */
+
+/* Sistema de temas y tokens */
+
+/* Tokens de Tabla (CR?TICO para estilos de cabecera y hover) */
+
+/* Estilos para tabla responsiva (usado por TableComponent) */
+
+/* Animaciones compartidas de la UI */
+
+/* Tailwind CSS - DEBE IR DESPUÉS DE LOS IMPORTS */
+*, ::before, ::after{
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}
+::backdrop{
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+  --tw-contain-size:  ;
+  --tw-contain-layout:  ;
+  --tw-contain-paint:  ;
+  --tw-contain-style:  ;
+}
+/* ! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com */
+/*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+*,
+::before,
+::after {
+  box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: #e5e7eb; /* 2 */
+}
+::before,
+::after {
+  --tw-content: '';
+}
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
+6. Use the user's configured `sans` font-variation-settings by default.
+7. Disable tap highlights on iOS
+*/
+html,
+:host {
+  line-height: 1.5; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */ /* 3 */
+  tab-size: 4; /* 3 */
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+  font-feature-settings: normal; /* 5 */
+  font-variation-settings: normal; /* 6 */
+  -webkit-tap-highlight-color: transparent; /* 7 */
+}
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+body {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+/*
+Remove the default font size and weight for headings.
+*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+/*
+Add the correct font weight in Edge and Safari.
+*/
+b,
+strong {
+  font-weight: bolder;
+}
+/*
+1. Use the user's configured `mono` font-family by default.
+2. Use the user's configured `mono` font-feature-settings by default.
+3. Use the user's configured `mono` font-variation-settings by default.
+4. Correct the odd `em` font sizing in all browsers.
+*/
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* 1 */
+  font-feature-settings: normal; /* 2 */
+  font-variation-settings: normal; /* 3 */
+  font-size: 1em; /* 4 */
+}
+/*
+Add the correct font size in all browsers.
+*/
+small {
+  font-size: 80%;
+}
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sub {
+  bottom: -0.25em;
+}
+sup {
+  top: -0.5em;
+}
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse; /* 3 */
+}
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  font-weight: inherit; /* 1 */
+  line-height: inherit; /* 1 */
+  letter-spacing: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+button,
+select {
+  text-transform: none;
+}
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+button,
+input:where([type='button']),
+input:where([type='reset']),
+input:where([type='submit']) {
+  -webkit-appearance: button; /* 1 */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+:-moz-focusring {
+  outline: auto;
+}
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+progress {
+  vertical-align: baseline;
+}
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+[type='search'] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+/*
+Add the correct display in Chrome and Safari.
+*/
+summary {
+  display: list-item;
+}
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+legend {
+  padding: 0;
+}
+ol,
+ul,
+menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/*
+Reset default styling for dialogs.
+*/
+dialog {
+  padding: 0;
+}
+/*
+Prevent resizing textareas horizontally by default.
+*/
+textarea {
+  resize: vertical;
+}
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+input::placeholder,
+textarea::placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+/*
+Set the default cursor for buttons.
+*/
+button,
+[role="button"] {
+  cursor: pointer;
+}
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+:disabled {
+  cursor: default;
+}
+/*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+/* Make elements with the HTML hidden attribute stay hidden by default */
+[hidden]:where(:not([hidden="until-found"])) {
+  display: none;
+}
+.container{
+  width: 100%;
+}
+@media (min-width: 640px){
+  .container{
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px){
+  .container{
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px){
+  .container{
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px){
+  .container{
+    max-width: 1280px;
+  }
+}
+@media (min-width: 1536px){
+  .container{
+    max-width: 1536px;
+  }
+}
+.pointer-events-none{
+  pointer-events: none;
+}
+.\!visible{
+  visibility: visible !important;
+}
+.visible{
+  visibility: visible;
+}
+.invisible{
+  visibility: hidden;
+}
+.collapse{
+  visibility: collapse;
+}
+.static{
+  position: static;
+}
+.fixed{
+  position: fixed;
+}
+.absolute{
+  position: absolute;
+}
+.relative{
+  position: relative;
+}
+.sticky{
+  position: sticky;
+}
+.mb-2{
+  margin-bottom: 0.5rem;
+}
+.mb-4{
+  margin-bottom: 1rem;
+}
+.mb-6{
+  margin-bottom: 1.5rem;
+}
+.mt-2{
+  margin-top: 0.5rem;
+}
+.mt-4{
+  margin-top: 1rem;
+}
+.mt-6{
+  margin-top: 1.5rem;
+}
+.block{
+  display: block;
+}
+.inline-block{
+  display: inline-block;
+}
+.inline{
+  display: inline;
+}
+.flex{
+  display: flex;
+}
+.inline-flex{
+  display: inline-flex;
+}
+.\!table{
+  display: table !important;
+}
+.table{
+  display: table;
+}
+.table-row{
+  display: table-row;
+}
+.grid{
+  display: grid;
+}
+.contents{
+  display: contents;
+}
+.hidden{
+  display: none;
+}
+.h-16{
+  height: 4rem;
+}
+.h-full{
+  height: 100%;
+}
+.h-screen{
+  height: 100vh;
+}
+.w-16{
+  width: 4rem;
+}
+.w-full{
+  width: 100%;
+}
+.max-w-full{
+  max-width: 100%;
+}
+.flex-shrink{
+  flex-shrink: 1;
+}
+.border-collapse{
+  border-collapse: collapse;
+}
+.transform{
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.resize{
+  resize: both;
+}
+.flex-col{
+  flex-direction: column;
+}
+.flex-wrap{
+  flex-wrap: wrap;
+}
+.items-center{
+  align-items: center;
+}
+.justify-start{
+  justify-content: flex-start;
+}
+.justify-end{
+  justify-content: flex-end;
+}
+.justify-center{
+  justify-content: center;
+}
+.gap-4{
+  gap: 1rem;
+}
+.rounded{
+  border-radius: 0.25rem;
+}
+.rounded-full{
+  border-radius: 9999px;
+}
+.rounded-md{
+  border-radius: 0.375rem;
+}
+.border{
+  border-width: 1px;
+}
+.border-t{
+  border-top-width: 1px;
+}
+.p-3{
+  padding: 0.75rem;
+}
+.p-5{
+  padding: 1.25rem;
+}
+.py-4{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.pt-4{
+  padding-top: 1rem;
+}
+.pt-6{
+  padding-top: 1.5rem;
+}
+.text-left{
+  text-align: left;
+}
+.text-center{
+  text-align: center;
+}
+.text-right{
+  text-align: right;
+}
+.text-2xl{
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.text-3xl{
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.uppercase{
+  text-transform: uppercase;
+}
+.italic{
+  font-style: italic;
+}
+.text-gray-500{
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
+}
+.underline{
+  text-decoration-line: underline;
+}
+.outline{
+  outline-style: solid;
+}
+.blur{
+  --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.drop-shadow{
+  --tw-drop-shadow: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.filter{
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.backdrop-filter{
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+}
+.transition{
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.ease-in{
+  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+.ease-in-out{
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ease-out{
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}

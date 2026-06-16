@@ -22,9 +22,22 @@
     "inactive": "Inactivo",
     "rowCount": "N° Filas",
     "startDate": "Fecha Inicio",
-    "filter": "Filtrar"
+    "dateStart": "Fecha Inicio",
+    "dateEnd": "Fecha Fin",
+    "filter": "Filtrar",
+    "clear": "Limpiar",
+    "statusOptions": {
+      "all": "Todos",
+      "active": "Activo",
+      "pending": "Pendiente",
+      "completed": "Completado",
+      "review": "En revisión",
+      "approved": "Aprobado",
+      "inactive": "Inactivo"
+    }
   },
   "table": {
+    "title": "Registros",
     "id": "ID",
     "name": "Nombre",
     "email": "Email",
@@ -33,7 +46,40 @@
     "type": "Tipo",
     "amount": "Monto",
     "priority": "Prioridad",
-    "actions": "Acciones"
+    "actions": "Acciones",
+    "headers": {
+      "id": "ID",
+      "name": "Nombre",
+      "email": "Email",
+      "date": "Fecha",
+      "status": "Estado",
+      "type": "Tipo",
+      "amount": "Monto",
+      "priority": "Prioridad",
+      "actions": "Acciones"
+    }
+  },
+  "data": {
+    "status": {
+      "active": "Activo",
+      "pending": "Pendiente",
+      "completed": "Completado",
+      "review": "En revisión",
+      "approved": "Aprobado",
+      "inactive": "Inactivo"
+    },
+    "type": {
+      "fua": "FUA",
+      "prescription": "Receta Médica",
+      "order": "Orden",
+      "consultation": "Consulta",
+      "referral": "Referencia"
+    },
+    "priority": {
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Baja"
+    }
   },
   "status": {
     "active": "Activo",
@@ -75,5 +121,21 @@
     "success": "Éxito",
     "warning": "Advertencia",
     "info": "Información"
+  },
+  "footer": {
+    "all_rights_reserved": "Todos los derechos reservados."
+  },
+  "demo": {
+    "project": {
+      "title": "Sobre este Proyecto",
+      "subtitle": "Sistema de Diseño Angular",
+      "description": "Atomic UI es una colección de componentes Angular reutilizables construidos con Design Tokens, Signals y soporte SSR.",
+      "tech": "Construido con Angular 21, componentes standalone, View Transitions API y ngx-translate."
+    },
+    "components": {
+      "title": "Librería de Componentes",
+      "subtitle": "Arquitectura de Diseño Atómico",
+      "description": "Componentes organizados siguiendo los principios de Diseño Atómico: Átomos, Moléculas, Organismos, Plantillas y Páginas."
+    }
   }
 }

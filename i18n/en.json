@@ -22,9 +22,22 @@
     "inactive": "Inactive",
     "rowCount": "Row Count",
     "startDate": "Start Date",
-    "filter": "Filter"
+    "dateStart": "Start Date",
+    "dateEnd": "End Date",
+    "filter": "Filter",
+    "clear": "Clear",
+    "statusOptions": {
+      "all": "All",
+      "active": "Active",
+      "pending": "Pending",
+      "completed": "Completed",
+      "review": "In Review",
+      "approved": "Approved",
+      "inactive": "Inactive"
+    }
   },
   "table": {
+    "title": "Records",
     "id": "ID",
     "name": "Name",
     "email": "Email",
@@ -33,7 +46,40 @@
     "type": "Type",
     "amount": "Amount",
     "priority": "Priority",
-    "actions": "Actions"
+    "actions": "Actions",
+    "headers": {
+      "id": "ID",
+      "name": "Name",
+      "email": "Email",
+      "date": "Date",
+      "status": "Status",
+      "type": "Type",
+      "amount": "Amount",
+      "priority": "Priority",
+      "actions": "Actions"
+    }
+  },
+  "data": {
+    "status": {
+      "active": "Active",
+      "pending": "Pending",
+      "completed": "Completed",
+      "review": "In Review",
+      "approved": "Approved",
+      "inactive": "Inactive"
+    },
+    "type": {
+      "fua": "FUA",
+      "prescription": "Medical Prescription",
+      "order": "Order",
+      "consultation": "Consultation",
+      "referral": "Referral"
+    },
+    "priority": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    }
   },
   "status": {
     "active": "Active",
@@ -75,5 +121,21 @@
     "success": "Success",
     "warning": "Warning",
     "info": "Information"
+  },
+  "footer": {
+    "all_rights_reserved": "All rights reserved."
+  },
+  "demo": {
+    "project": {
+      "title": "About this Project",
+      "subtitle": "Angular Design System",
+      "description": "Atomic UI is a collection of reusable Angular components built with Design Tokens, Signals, and SSR support.",
+      "tech": "Built with Angular 21, standalone components, View Transitions API, and ngx-translate."
+    },
+    "components": {
+      "title": "Component Library",
+      "subtitle": "Atomic Design Architecture",
+      "description": "Components organized following Atomic Design principles: Atoms, Molecules, Organisms, Templates, and Pages."
+    }
   }
 }
