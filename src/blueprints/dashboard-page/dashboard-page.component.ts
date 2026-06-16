@@ -44,15 +44,19 @@ interface MenuItem { id?: string; label: string; icon: string; iconColor?: strin
 
     /* Premium Card Styles */
     .bento-card {
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid var(--border-color);
-      background: var(--surface-background); /* Adjust to support glassmorphism if desired */
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .bento-card ::ng-deep .panel {
+      border: none;
+      box-shadow: var(--shadow-md);
     }
     .bento-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 24px -10px rgba(var(--primary-color-rgb), 0.15);
-      border-color: rgba(var(--primary-color-rgb), 0.3);
       z-index: 2;
+    }
+    .bento-card:hover ::ng-deep .panel {
+      box-shadow: 0 12px 24px -10px rgba(var(--primary-color-rgb), 0.15);
+      border: none;
     }
     
     .chart-wrapper { position: relative; height: 100%; min-height: 250px; width: 100%; display: flex; flex-direction: column; justify-content: center; }

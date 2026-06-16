@@ -60,9 +60,10 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
 
     .kpi-card {
       width: 100%;
-      border: 1px solid var(--border-color);
+      border: none;
       border-radius: var(--radius-lg);
       background: var(--surface-background);
+      box-shadow: var(--shadow-md);
       padding: var(--space-4);
       box-sizing: border-box;
       display: grid;
