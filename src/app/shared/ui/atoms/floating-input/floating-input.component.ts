@@ -50,17 +50,18 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
         <button type="button" class="input-icon-btn" (click)="onPasswordToggleClick($event)" tabindex="-1">
           <i class="fa-solid" [class.fa-eye]="!showPassword()" [class.fa-eye-slash]="showPassword()"></i>
         </button>
-      } @else if (iconClass) {
+      } @else if (iconClass || clearable) {
         <button
           type="button"
           class="input-icon-btn input-icon-btn--static"
-          (click)="emitIconClick($event)"
-          (keydown.enter)="emitIconClick($event)"
-          (keydown.space)="emitIconClick($event); $event.preventDefault()"
+          (click)="handleIconClick($event)"
+          (keydown.enter)="handleIconClick($event)"
+          (keydown.space)="handleIconClick($event); $event.preventDefault()"
           tabindex="0"
           [attr.aria-label]="label || 'Input icon action'"
+          [style.cursor]="(clearable && hasValue()) ? 'pointer' : 'default'"
         >
-          <i [class]="iconClass"></i>
+          <i [class]="getIconClass()"></i>
         </button>
       } @else if (icon) {
         <button
@@ -400,7 +401,9 @@ export class FloatingInputComponent implements ControlValueAccessor {
   @Input() width = ''; // Optional: e.g., '200px', '50%', 'auto'
   @Input() autocomplete = ''; // Optional: 'off', 'current-password', 'new-password', etc.
   @Input() iconClass = '';
+  @Input() clearable = false;
   @Output() iconClick = new EventEmitter<void>();
+  @Output() clear = new EventEmitter<void>();
 
   @Input() value: string | number = '';
   isFocused = signal(false);
@@ -428,6 +431,31 @@ export class FloatingInputComponent implements ControlValueAccessor {
   onPasswordToggleClick(event: Event): void {
     event.stopPropagation();
     this.togglePassword();
+    this.iconClick.emit();
+  }
+
+  getIconClass(): string {
+    if (this.clearable && this.hasValue()) {
+      return 'fa-solid fa-times';
+    }
+    return this.iconClass;
+  }
+
+  handleIconClick(event: Event): void {
+    event.stopPropagation();
+    if (this.clearable && this.hasValue()) {
+      this.value = '';
+      this.onChange(this.value);
+      this.clear.emit();
+      // If parent is listening to (input) event directly on the native element,
+      // it won't fire unless we dispatch it. We will emit both.
+      const nativeInput = (event.target as HTMLElement).closest('.floating-input-wrapper')?.querySelector('input');
+      if (nativeInput) {
+        nativeInput.value = '';
+        nativeInput.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+      return;
+    }
     this.iconClick.emit();
   }
 

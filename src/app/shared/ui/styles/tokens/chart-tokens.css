@@ -1,0 +1,18 @@
+:root {
+  /* Ejes y Textos */
+  --chart-text-color: #a1a1aa;
+  --chart-title-color: #f4f4f5;
+  --chart-grid-color: rgba(255, 255, 255, 0.05);
+  
+  /* Tooltips */
+  --chart-tooltip-bg: rgba(24, 24, 27, 0.9);
+  --chart-tooltip-text: #f4f4f5;
+  --chart-tooltip-border: #3f3f46;
+  
+  /* Paleta de Series de Datos (Premium Dark) */
+  --chart-color-1: #ec4899; /* Mujeres / Pink */
+  --chart-color-2: #3b82f6; /* Hombres / Blue */
+  --chart-color-3: #8b5cf6; /* Métodos / Violet */
+  --chart-color-4: #10b981; /* Iniciaron / Emerald */
+  --chart-color-5: #f59e0b; /* Continuadores / Amber */
+}

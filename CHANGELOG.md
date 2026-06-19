@@ -1,7 +1,22 @@
-﻿# Changelog
+# Changelog
 
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
+
+---
+
+## [4.5.0] - 2026-06-19
+
+### Refactorización del Indicador 11 y DB-First
+
+#### Fixed (Base de Datos & Arquitectura)
+- **Filtros Estrictos en Vistas**: Se corrigió la vista `ind.VW_NOMINAL_ID11` para excluir correctamente a las gestantes y filtrar población de 15 a 49 años, según la Ficha Técnica 11.
+- **Sincronización SP-Vista**: Se eliminó la lógica duplicada de tablas de origen en el SP de paginación `ind.USP_SEL_GRILLA_NOMINAL_ID11`, haciendo que consuma directamente la vista `VW_NOMINAL_ID11`. Esto corrigió el bug de los "62856 registros basura" persistentes.
+- **Views de Dashboards**: Se crearon las vistas de datos `VW_DASHBOARD_STATS_ID11` (para métricas macro) y `VW_DASHBOARD_MONTHLY_ID11` (para avance en barras) centralizando todo cálculo matemático en SQL Server (DB-First).
+
+#### Added (Frontend - Wails & Tauri)
+- **Dashboards Temáticos**: Reorganización de las tarjetas del nivel gerencial mostrando la "Población Denominador", el "Logro Indicador 11" (%) y la alerta de "Próximos a Vencer".
+- **Gráficos Dinámicos**: Integración del doughnut chart "Métodos Modernos" comparando Preservativos vs Otros, y el Bar chart "Avance Mensual 2026".
 
 ---
 
@@ -13,6 +28,10 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 - **`app-table` & `ScrollOverlayComponent`**: Se completó la integración del contenedor inteligente de scroll (`app-scroll-overlay`) dentro del componente nativo `<app-table>`. Ahora las tablas admiten scroll horizontal y vertical perfecto con sincronización de columnas (`lockColumnTemplate`), evitando el desbordamiento sin romper la estructura HTML semántica.
 - **`table.component.ts`**: Nuevo `@Input() columnTemplate: string` para permitir definir anchos estrictos en grid (ej. `minmax(200px, 1fr) 120px...`), evitando que el navegador autoajuste y aplaste columnas cuando hay contenido largo.
 - **`SidebarMenuItem`**: Se añadió la propiedad `iconColor?: string` para permitir colores temáticos/personalizados en los iconos de la barra de navegación lateral, mejorando drásticamente el peso visual de la interfaz.
+
+#### Fixed (Visual & Arquitectura)
+- **Alineación de Tarjetas (Dashboard)**: Se detectó que las tarjetas (`app-card`) del tablero gerencial no mantenían una altura uniforme debido a la ausencia de subtítulos en el indicador "Total Pacientes". Se insertó un espaciador fantasma (`&nbsp;`) transparente y no seleccionable (`user-select: none`) en dicho bloque, equilibrando la grilla CSS y logrando una uniformidad absoluta sin alterar semántica HTML.
+- **`ScrollOverlayComponent` y Scrollbars superpuestos**: Se detectó y solucionó una colisión visual en donde la barra de scroll vertical custom (`.so-scrollbar-y`) se dibujaba sobre la cabecera de la tabla (`thead`). Ahora el componente detecta dinámicamente la altura del header (`this.tableHead.offsetHeight`) y aplica un *offset* automático al inicio de la barra y su altura, manteniéndola perfectamente confinada en la zona de datos (tbody).
 
 #### Fixed (Visual & CSS)
 - **Modo Claro (Tablas)**: El `thead` ahora se renderiza como un bloque de color primario sólido con texto en blanco, reemplazando la débil línea inferior que lo hacía ilegible sobre fondos blancos.

@@ -1,4 +1,6 @@
 import { Component, Input, Output, EventEmitter, signal, computed } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Select2Component } from '../select2/select2.component';
 
 
 /**
@@ -17,70 +19,145 @@ import { Component, Input, Output, EventEmitter, signal, computed } from '@angul
 @Component({
   selector: 'app-pagination',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, Select2Component],
   template: `
-    <nav class="pagination" [class]="'pagination-' + size + ' pagination-' + variant" aria-label="Paginación">
-      @if (variant === 'minimal') {
-        <button type="button"
-          class="page-btn page-text-btn"
-          [disabled]="currentPage() === 1"
-          (click)="goToPage(currentPage() - 1)"
-        >
-          <i class="fa-solid fa-arrow-left" aria-hidden="true" style="margin-right: 0.5rem"></i> Anterior
-        </button>
-        
-        <span class="page-minimal-text">
-          Página <strong>{{ currentPage() }}</strong> de <strong>{{ totalPages() }}</strong>
+    <div class="pagination-wrapper">
+      <div class="pagination-info">
+        <span class="info-text">
+          Mostrando <strong>{{ ((currentPage() - 1) * _pageSize()) + 1 }}</strong> - <strong>{{ min(currentPage() * _pageSize(), _total()) }}</strong> de <strong>{{ _total() }}</strong> registros
         </span>
+        <div class="page-size-selector">
+          <label [for]="'pageSize' + variant">Mostrar:</label>
+          <div style="width: 80px;">
+            <app-select2 
+              [options]="pageSizeOptions()" 
+              [ngModel]="_pageSize()" 
+              (ngModelChange)="onPageSizeChange($event)"
+              [searchable]="false">
+            </app-select2>
+          </div>
+        </div>
+      </div>
+      <nav class="pagination" [class]="'pagination-' + size + ' pagination-' + variant" aria-label="Paginación">
+        @if (variant === 'minimal') {
+          <button type="button"
+            class="page-btn page-text-btn"
+            [disabled]="currentPage() === 1"
+            (click)="goToPage(currentPage() - 1)"
+          >
+            <i class="fa-solid fa-arrow-left" aria-hidden="true" style="margin-right: 0.5rem"></i> Anterior
+          </button>
+          
+          <span class="page-minimal-text">
+            Página <strong>{{ currentPage() }}</strong> de <strong>{{ totalPages() }}</strong>
+          </span>
 
-        <button type="button"
-          class="page-btn page-text-btn"
-          [disabled]="currentPage() === totalPages()"
-          (click)="goToPage(currentPage() + 1)"
-        >
-          Siguiente <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left: 0.5rem"></i>
-        </button>
-      } @else {
-        <button type="button"
-          class="page-btn page-prev"
-          [disabled]="currentPage() === 1"
-          (click)="goToPage(currentPage() - 1)"
-          aria-label="Página anterior"
-        >
-          <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
-        </button>
+          <button type="button"
+            class="page-btn page-text-btn"
+            [disabled]="currentPage() === totalPages()"
+            (click)="goToPage(currentPage() + 1)"
+          >
+            Siguiente <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left: 0.5rem"></i>
+          </button>
+        } @else {
+          <button type="button"
+            class="page-btn page-prev"
+            [disabled]="currentPage() === 1"
+            (click)="goToPage(currentPage() - 1)"
+            aria-label="Página anterior"
+          >
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+          </button>
 
-        @for (page of visiblePages(); track page) {
-          @if (page === '...') {
-            <span class="page-ellipsis" aria-hidden="true">...</span>
-          } @else {
-            <button type="button"
-              class="page-btn page-number"
-              [class.active]="page === currentPage()"
-              [attr.aria-current]="page === currentPage() ? 'page' : null"
-              [attr.aria-label]="'Página ' + page"
-              (click)="goToPage(+page)"
-            >
-              {{ page }}
-            </button>
+          @for (page of visiblePages(); track page) {
+            @if (page === '...') {
+              <span class="page-ellipsis" aria-hidden="true">...</span>
+            } @else {
+              <button type="button"
+                class="page-btn page-number"
+                [class.active]="page === currentPage()"
+                [attr.aria-current]="page === currentPage() ? 'page' : null"
+                [attr.aria-label]="'Página ' + page"
+                (click)="goToPage(+page)"
+              >
+                {{ page }}
+              </button>
+            }
           }
-        }
 
-        <button type="button"
-          class="page-btn page-next"
-          [disabled]="currentPage() === totalPages()"
-          (click)="goToPage(currentPage() + 1)"
-          aria-label="Página siguiente"
-        >
-          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-        </button>
-      }
-    </nav>
+          <button type="button"
+            class="page-btn page-next"
+            [disabled]="currentPage() === totalPages()"
+            (click)="goToPage(currentPage() + 1)"
+            aria-label="Página siguiente"
+          >
+            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+          </button>
+        }
+      </nav>
+    </div>
   `,
   styles: [`
+    .pagination-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      width: 100%;
+    }
+
+    .pagination-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .info-text {
+      font-size: var(--text-sm);
+      color: var(--text-color-secondary);
+    }
+
+    .info-text strong {
+      color: var(--text-color);
+      font-weight: 600;
+    }
+
+    .page-size-selector {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .page-size-selector label {
+      font-size: var(--text-sm);
+      color: var(--text-color-secondary);
+    }
+
+    .page-size-select {
+      height: var(--control-height-sm);
+      padding: 0 var(--space-2);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      background-color: var(--surface-background);
+      color: var(--text-color);
+      font-size: var(--text-sm);
+      cursor: pointer;
+      outline: none;
+      transition: all 150ms ease;
+    }
+
+    .page-size-select:focus,
+    .page-size-select:hover {
+      border-color: var(--primary-color);
+    }
+
     .pagination {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: var(--space-1);
     }
 
@@ -234,6 +311,7 @@ export class PaginationComponent {
     this.currentPage.set(value);
   }
   @Output() pageChange = new EventEmitter<number>();
+  @Output() pageSizeChange = new EventEmitter<number>();
 
   currentPage = signal(1);
 
@@ -279,5 +357,23 @@ export class PaginationComponent {
       this.currentPage.set(page);
       this.pageChange.emit(page);
     }
+  }
+
+  pageSizeOptions = computed(() => [
+    { value: 10, label: '10' },
+    { value: 20, label: '20' },
+    { value: 50, label: '50' },
+    { value: 100, label: '100' },
+    { value: 500, label: '500' }
+  ]);
+
+  onPageSizeChange(newSize: number | string) {
+    const size = typeof newSize === 'string' ? parseInt(newSize, 10) : newSize;
+    this.pageSize = size;
+    this.pageSizeChange.emit(size);
+  }
+
+  min(a: number, b: number): number {
+    return Math.min(a, b);
   }
 }

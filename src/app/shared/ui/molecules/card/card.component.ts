@@ -22,6 +22,9 @@ export type CardSize = 'sm' | 'md' | 'lg';
   standalone: true,
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    'style': 'display: block; width: 100%;'
+  },
   template: `
     <article
       class="card"

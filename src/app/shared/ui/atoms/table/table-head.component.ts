@@ -1,5 +1,4 @@
-﻿import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
-
+import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * TableHeadComponent - Cabecera de tabla atómica
@@ -26,7 +25,9 @@
     /* Thead con estilos usando tokens --table-* */
     .atomic-thead {
       display: table-header-group;
-      z-index: 10;
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
     
     /* Fila del header */
@@ -84,6 +85,3 @@
   `]
 })
 export class TableHeadComponent { }
-
-
-

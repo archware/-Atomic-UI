@@ -14,7 +14,7 @@ import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@a
  * ```
  */
 @Component({
-  selector: 'td[app-table-cell], th[app-table-header-cell]',
+  selector: 'td[app-table-cell]',
   standalone: true,
   imports: [],
   encapsulation: ViewEncapsulation.None,

@@ -17,7 +17,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
    * CSS selector used to locate the element that controls the vertical scroll.
    * Defaults to the first <tbody> found within the component's content.
    */
-  @Input() verticalSelector: string | null = '[data-scroll-overlay-vertical], tbody';
+  @Input() verticalSelector: string | null = '[data-scroll-overlay-vertical]';
 
   /**
    * CSS selector used to locate the element that controls horizontal scroll.
@@ -170,6 +170,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   private hideTimer?: ReturnType<typeof setTimeout>;
   private verticalThumbSize = this.minThumbSize;
   private horizontalThumbSize = this.minThumbSize;
+  private verticalBarHeight = 0;
   private resizeObserver?: ResizeObserver;
   private mutationObserver?: MutationObserver;
 
@@ -336,19 +337,10 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       this.horizontalScroller.removeAttribute('data-so-horizontal-temp');
     }
 
-    let vertical = searchDirect(this.verticalSelector) ?? undefined;
-    if (!vertical) {
-      // Skip tbody detection if explicitly disabled (for layout containers)
-      if (this.skipTableDetection) {
-        vertical = scrollArea;
-      } else {
-        // Find tbody that is a DIRECT descendant (not inside nested scroll-overlay)
-        const allTbodies = Array.from(host.querySelectorAll('tbody')) as HTMLElement[];
-        const directTbody = allTbodies.find((tbody) => !isInsideNestedScrollOverlay(tbody));
-        vertical = directTbody ?? scrollArea;
-      }
-    }
-    this.verticalScroller = vertical ?? undefined;
+    let vertical = searchDirect(this.verticalSelector);
+    // If vertical is explicitly set via selector, use it. Otherwise, always use scrollArea.
+    // We intentionally DO NOT default to tbody anymore, to avoid browser bugs with table height limits.
+    this.verticalScroller = vertical ?? scrollArea;
     if (this.verticalScroller) {
       if (!this.verticalScroller.hasAttribute('data-so-vertical')) {
         this.verticalScroller.setAttribute('data-so-vertical', 'true');
@@ -371,7 +363,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       this.headerRow = null;
     }
 
-    if (this.tableHead && this.verticalScroller?.tagName === 'TBODY') {
+    if (this.tableHead) {
       host.setAttribute('data-so-table', 'true');
       if (this.syncTableColumns) {
         host.setAttribute('data-so-sync-columns', 'true');
@@ -543,11 +535,13 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     bar.style.opacity = '';
     bar.style.pointerEvents = 'auto';
 
-    const thumbHeight = Math.max(this.minThumbSize, (clientHeight * clientHeight) / scrollHeight);
+    // Use verticalBarHeight instead of clientHeight for the thumb track length
+    const trackHeight = this.verticalBarHeight > 0 ? this.verticalBarHeight : clientHeight;
+    const thumbHeight = Math.max(this.minThumbSize, (trackHeight * clientHeight) / scrollHeight);
     this.verticalThumbSize = thumbHeight;
     thumb.style.height = `${thumbHeight}px`;
 
-    const maxThumbOffset = Math.max(1, clientHeight - thumbHeight);
+    const maxThumbOffset = Math.max(1, trackHeight - thumbHeight);
     const maxScrollTop = Math.max(1, scrollHeight - clientHeight);
     const offset = (scrollTop / maxScrollTop) * maxThumbOffset;
     thumb.style.transform = `translateY(${offset}px)`;
@@ -639,14 +633,21 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     if (this.verticalScroller && !this.disableVertical) {
       const verticalRect = this.getSafeRect(this.verticalScroller);
       const barY = this.barYRef.nativeElement;
-      const barTop = verticalRect.top - hostRect.top;
+      
+      let headerOffset = 0;
+      if (this.tableHead) {
+        headerOffset = this.tableHead.offsetHeight;
+      }
+      
+      const barTop = verticalRect.top - hostRect.top + headerOffset;
       barY.style.top = `${barTop}px`;
 
       // Ajustar altura si hay overflow horizontal para evitar colisión
-      let barHeight = verticalRect.height;
+      let barHeight = verticalRect.height - headerOffset;
       if (hasHorizontalOverflow && horizontalBarTop !== null) {
         barHeight = Math.max(0, horizontalBarTop - barTop - this.verticalBarGap);
       }
+      this.verticalBarHeight = barHeight;
       barY.style.height = `${barHeight}px`;
     }
 
