@@ -4,6 +4,22 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-06-23] - Chromium Focus-Stealing en WebView2 y Rust Tiberius Panics
+
+### 1. El Falso "Refresco" en Selects sobre Wails (WebView2)
+**Contexto**: Wails intercepta fuertemente los eventos del mouse para el manejo del Drag de la ventana. Al usar un dropdown que destruye su elemento nativo en el DOM (ngIf/if) justo en el evento `click`, el focus stealing hacía que Angular perdiera su Change Detection y abortara el model update.
+**La Lección**: Cambiar `click` por `mousedown` o forzar elementos nativos rompe otras cosas o tipos de datos. La solución definitiva para engañar al motor Chromium es rodear el flag de destrucción (`this.isOpen.set(false)`) con un `setTimeout(..., 0)`. Esto cede la prioridad a la burbuja de eventos nativa para finalizar la asignación antes de purgar el DOM.
+
+### 2. Crasheos Silenciosos en Rust y Activación de Mock Data
+**Contexto**: El dashboard de Tauri mostraba "Datos de prueba" aunque el ping DB funcionara. Se debió a un panic de la librería Tiberius usando `row.get()`.
+**La Lección**: En Rust, `row.get::<T>` hace `unwrap` interno de los tipos SQL exactos. Si SQL manda un FLOAT donde Rust pide un INT, la aplicación colapsa y Angular atrapa el error como "conexión caída". Toda capa Repository en Tauri debe usar estrictamente iteradores `.try_get()` aplanados a defaults: `row.try_get::<i32, _>("col").ok().flatten().unwrap_or(0)`.
+
+### 3. Excepción TLS en Bases de Datos Legacy
+**Contexto**: El intento de forzar `TrustServerCertificate=true` destruyó por completo el acceso a Tauri arrojando "os error -2146893007".
+**La Lección**: Windows 11/10 modernos no comparten algoritmos TLS con SQL Servers sin parchar. El único túnel viable de desarrollo local es `encrypt=DANGER_PLAINTEXT`.
+
+---
+
 ## [2026-06-19] - Paginación, Scrollbars Nativos vs Custom y Sticky Headers
 
 ### 1. Paginación y Comportamiento del "Remanente" (Falso Bug)

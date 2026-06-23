@@ -64,6 +64,30 @@ export class ChartComponent implements OnInit, OnDestroy {
           Chart.defaults.scale.grid.color = style.getPropertyValue('--chart-grid-color').trim() || 'rgba(255, 255, 255, 0.05)';
         }
 
+        // Global Arc (Doughnut/Pie) defaults for depth
+        Chart.defaults.elements.arc.borderWidth = 3;
+        Chart.defaults.elements.arc.borderColor = style.getPropertyValue('--surface-color').trim() || '#18181b';
+        Chart.defaults.elements.arc.hoverOffset = 8;
+
+        // Custom Shadow Plugin for 3D depth on Doughnuts
+        const shadowPlugin = {
+          id: 'shadowPlugin',
+          beforeDatasetDraw: (chart: any) => {
+            if (chart.config.type !== 'doughnut' && chart.config.type !== 'pie') return;
+            const ctx = chart.ctx;
+            ctx.save();
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            ctx.shadowBlur = 12;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 6;
+          },
+          afterDatasetDraw: (chart: any) => {
+            if (chart.config.type !== 'doughnut' && chart.config.type !== 'pie') return;
+            chart.ctx.restore();
+          }
+        };
+        Chart.register(shadowPlugin);
+
         this.isChartReady.set(true);
       });
     }

@@ -5,6 +5,20 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [4.6.0] - 2026-06-23
+
+### Select2Component y DB-First Robustness
+
+#### Fixed (Frontend - Wails & Tauri)
+- **Robo de Foco en WebView2 (Wails)**: El cierre destructivo del dropdown colapsaba el Event Loop de Angular al dispararse junto al evento `click`. Se inyectó un `setTimeout(..., 0)` en `selectOption` retrasando la destrucción del DOM y garantizando el flujo de datos.
+- **Tipado Fuerte de Select2**: Al descartar el uso de elementos nativos de Windows, el componente recuperó su capacidad de emitir valores reales (`number` o objetos) en lugar de strings literales, solucionando fallas de carga en la Grilla de Wails.
+
+#### Fixed (Backend - Tauri)
+- **Tiberius TLS Handshake**: El servidor SQL antiguo 10.100.6.11 rechaza certificados TLS modernos (Error de algoritmo común -2146893007). Se ha regresado a la cadena de conexión con `encrypt=DANGER_PLAINTEXT` para saltar el handshake.
+- **Anti-Panic Data Extraction**: El puente de datos en `tiberius_repository.rs` se refactorizó para usar `.try_get::<T, _>().ok().flatten().unwrap_or(0)` en todas las columnas. El backend ahora es inmune a inconsistencias de tipos y retornos nulos desde SQL Server, impidiendo crasheos silentes que forzaban la activación de Mock Data.
+
+---
+
 ## [4.5.0] - 2026-06-19
 
 ### Refactorización del Indicador 11 y DB-First

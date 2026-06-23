@@ -1,4 +1,4 @@
-﻿<div class="sidebar-container" [class.collapsed]="collapsed">
+<div class="sidebar-container" [class.collapsed]="collapsed">
   <div class="sidebar-logo">
     <i [class]="logoIcon + ' logo-icon'"></i>
     @if (!collapsed) {
@@ -29,7 +29,7 @@
   @if (user) {
   <div class="sidebar-footer">
     <div class="user-profile">
-      <app-avatar [name]="user?.name || 'User'" [initials]="user?.initials" [size]="'md'"></app-avatar>
+      <app-avatar [name]="user.name || 'User'" [initials]="user.initials" [size]="'md'"></app-avatar>
       @if (!collapsed && user) {
       <div class="user-info">
         <span class="user-name">{{ user.name }}</span>

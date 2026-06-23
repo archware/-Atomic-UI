@@ -36,7 +36,7 @@ export interface Select2Option {
       [style.width]="width || null"
     >
       <div class="select2-trigger"
-        (click)="toggleDropdown()"
+        (click)="$event.stopPropagation(); toggleDropdown()"
         (keydown)="handleKeydown($event)"
         [attr.aria-labelledby]="label ? selectId() : null"
         [attr.aria-controls]="listboxId()"
@@ -86,7 +86,7 @@ export interface Select2Option {
       </div>
 
       @if (isOpen()) {
-        <div class="select2-dropdown">
+        <div class="select2-dropdown" (click)="$event.stopPropagation()" (mousedown)="$event.stopPropagation()">
           <!-- Search box -->
           @if (searchable) {
             <div class="select2-search">
@@ -112,7 +112,7 @@ export interface Select2Option {
                 [class.selected]="isSelected(option)"
                 [class.highlighted]="highlightedIndex() === i"
                 [class.disabled]="option.disabled"
-                (click)="!option.disabled && selectOption(option)"
+                (mousedown)="$event.preventDefault(); $event.stopPropagation(); !option.disabled && selectOption(option)"
                 (keydown)="handleKeydown($event)"
                 tabindex="-1"
                 role="option"
@@ -171,6 +171,8 @@ export interface Select2Option {
       font-size: var(--text-sm);
       box-sizing: border-box;
       box-shadow: var(--input-shadow);
+      /* FIXED: Permitir clics en Wails */
+      --wails-draggable: no-drag;
     }
 
     .select2-wrapper.has-label .select2-trigger {
@@ -300,6 +302,8 @@ export interface Select2Option {
       z-index: 10000;
       animation: dropdownSlide 200ms ease;
       overflow: hidden;
+      /* FIXED: Permitir clics en Wails */
+      --wails-draggable: no-drag;
     }
 
     @keyframes dropdownSlide {
@@ -546,12 +550,14 @@ export class Select2Component implements ControlValueAccessor {
       this.selectedOption.set(option);
       this.onChange(option.value);
       this.valueChange.emit(option.value);
-      this.isOpen.set(false);
-      this.searchTerm.set('');
-      this.highlightedIndex.set(-1);
-      // Return focus to trigger
-      this.elementRef.nativeElement.querySelector('.select2-trigger')?.focus();
-      this.onTouched();
+      
+      // FIX para Chromium/Wails WebView2: Retrasar la destrucción del DOM
+      setTimeout(() => {
+        this.isOpen.set(false);
+        this.searchTerm.set('');
+        this.highlightedIndex.set(-1);
+        this.onTouched();
+      }, 0);
     }
   }
 

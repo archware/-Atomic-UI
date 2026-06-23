@@ -14,7 +14,7 @@ import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@a
  * ```
  */
 @Component({
-  selector: 'td[app-table-cell]',
+  selector: '[app-table-cell]',
   standalone: true,
   imports: [],
   encapsulation: ViewEncapsulation.None,
@@ -27,7 +27,7 @@ import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@a
     '[attr.data-label]': 'dataLabel'
   },
   styles: [`
-    td[app-table-cell], th[app-table-header-cell] {
+    td[app-table-cell] {
       /* Usando tokens --table-* */
       padding: var(--table-cell-padding);
       vertical-align: middle;
