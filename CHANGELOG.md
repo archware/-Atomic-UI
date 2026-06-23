@@ -5,6 +5,14 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [4.7.0] - 2026-06-23
+
+### Dropdown Click Propagation Isolation
+
+#### Fixed (Frontend - Select2Component)
+- **Aislamiento de Clicks en Opciones**: Se corrigió el cierre inmediato y pérdida de foco del dropdown al hacer click en una opción. Reemplazamos la lógica destructiva asíncrona de `setTimeout` de 150ms por un control síncrono nativo usando `(click)="$event.stopPropagation(); !option.disabled && selectOption(option)"` en la opción. Esto detiene el evento `click` antes de que alcance el listener global del documento (`document:click`), impidiendo falsos cierres externos por desvinculación de nodos DOM.
+- **Mantener foco de busqueda**: Se mantuvo `(mousedown)="$event.preventDefault()"` para evitar la pérdida no deseada del foco del input de búsqueda.
+
 ## [4.6.0] - 2026-06-23
 
 ### Select2Component y DB-First Robustness

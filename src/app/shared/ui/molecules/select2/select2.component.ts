@@ -112,7 +112,8 @@ export interface Select2Option {
                 [class.selected]="isSelected(option)"
                 [class.highlighted]="highlightedIndex() === i"
                 [class.disabled]="option.disabled"
-                (mousedown)="$event.preventDefault(); $event.stopPropagation(); !option.disabled && selectOption(option)"
+                (mousedown)="$event.preventDefault()"
+                (click)="$event.stopPropagation(); !option.disabled && selectOption(option)"
                 (keydown)="handleKeydown($event)"
                 tabindex="-1"
                 role="option"
@@ -551,13 +552,10 @@ export class Select2Component implements ControlValueAccessor {
       this.onChange(option.value);
       this.valueChange.emit(option.value);
       
-      // FIX para Chromium/Wails WebView2: Retrasar la destrucción del DOM
-      setTimeout(() => {
-        this.isOpen.set(false);
-        this.searchTerm.set('');
-        this.highlightedIndex.set(-1);
-        this.onTouched();
-      }, 0);
+      this.isOpen.set(false);
+      this.searchTerm.set('');
+      this.highlightedIndex.set(-1);
+      this.onTouched();
     }
   }
 

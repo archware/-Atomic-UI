@@ -4,11 +4,12 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
-## [2026-06-23] - Chromium Focus-Stealing en WebView2 y Rust Tiberius Panics
+## [2026-06-23] - Aislamiento de Propagación de Eventos en Dropdowns y Rust Tiberius Panics
 
 ### 1. El Falso "Refresco" en Selects sobre Wails (WebView2)
-**Contexto**: Wails intercepta fuertemente los eventos del mouse para el manejo del Drag de la ventana. Al usar un dropdown que destruye su elemento nativo en el DOM (ngIf/if) justo en el evento `click`, el focus stealing hacía que Angular perdiera su Change Detection y abortara el model update.
-**La Lección**: Cambiar `click` por `mousedown` o forzar elementos nativos rompe otras cosas o tipos de datos. La solución definitiva para engañar al motor Chromium es rodear el flag de destrucción (`this.isOpen.set(false)`) con un `setTimeout(..., 0)`. Esto cede la prioridad a la burbuja de eventos nativa para finalizar la asignación antes de purgar el DOM.
+**Contexto**: Los elementos `Select2Component` perdían el dato recién seleccionado al hacer click en una opción, pareciendo reiniciarse o cerrarse prematuramente sin actualizarse en el frontend.
+**La Lección**: La causa real es la propagación (bubbling) del evento `click` hacia el `document` combinado con la destrucción del elemento del DOM. Al seleccionar la opción, el dropdown se ocultaba eliminando el elemento del DOM. Cuando el evento `click` llegaba a la directiva global `@HostListener('document:click')`, esta ejecutaba `contains(event.target)`. Como el elemento clickeado ya no existía en el DOM, la directiva creía falsamente que se hizo un click "fuera" del componente y sobreescribía el estado. 
+La solución robusta es detener la propagación del evento `click` en la opción mediante `(click)="$event.stopPropagation(); ..."` y utilizar `(mousedown)="$event.preventDefault()"` para retener el foco en el input de búsqueda. Esto elimina la necesidad de retardar la destrucción del DOM con `setTimeout`.
 
 ### 2. Crasheos Silenciosos en Rust y Activación de Mock Data
 **Contexto**: El dashboard de Tauri mostraba "Datos de prueba" aunque el ping DB funcionara. Se debió a un panic de la librería Tiberius usando `row.get()`.
