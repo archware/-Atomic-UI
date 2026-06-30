@@ -57,6 +57,12 @@ html.dark .so-root,
   display: none;
 }
 
+/* Cuando hay overflow horizontal, agregamos padding para que la barra no tape el último elemento */
+.so-root.so-has-overflow-x .so-scroll-area,
+.so-root.so-has-overflow-x tbody[data-so-vertical] {
+  padding-bottom: calc(var(--so-track-size) + 4px);
+}
+
 /* Cuando hay tabla, el div maneja el scroll */
 .so-root[data-so-table] .so-scroll-area {
   overflow-y: auto;
