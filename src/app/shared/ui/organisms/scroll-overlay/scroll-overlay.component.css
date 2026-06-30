@@ -182,8 +182,14 @@ html.dark .so-root,
   transform: translateX(0);
 }
 
-.so-root[data-so-max-height] [data-so-vertical],
-.so-root[data-so-max-height] .so-scroll-area {
+.so-root[data-so-max-height] [data-so-vertical] {
+  max-height: var(--so-max-height, 100%);
+  height: var(--so-body-height, auto);
+  min-height: var(--so-body-height, auto);
+}
+
+.so-root[data-so-max-height]:not([data-so-table]) .so-scroll-area,
+.so-root[data-so-max-height][data-so-table]:not([data-so-sync-columns]) .so-scroll-area {
   max-height: var(--so-max-height, 100%);
   height: var(--so-body-height, auto);
   min-height: var(--so-body-height, auto);
