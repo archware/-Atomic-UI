@@ -25,6 +25,7 @@ import { PopupService, PopupItem } from '../../services/popup.service';
         [class.popup-closing]="popup.closing"
         (click)="onBackdropClick(popup)"
         (keydown.escape)="onEscape(popup)"
+        (keydown.enter)="onEnter(popup)"
         tabindex="0"
         role="dialog"
         aria-modal="true"
@@ -273,6 +274,15 @@ export class PopupContainerComponent {
   onEscape(popup: PopupItem): void {
     if (popup.closable) {
       this.popupService.close(popup.id);
+    }
+  }
+
+  onEnter(popup: PopupItem): void {
+    if (popup.buttons && popup.buttons.length > 0) {
+      const primaryBtn = popup.buttons.find(b => b.variant === 'primary' || !b.variant) || popup.buttons[0];
+      if (primaryBtn && primaryBtn.action) {
+        primaryBtn.action();
+      }
     }
   }
 }

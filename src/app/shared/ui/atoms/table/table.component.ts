@@ -14,7 +14,8 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
       [maxBodyHeight]="maxHeight"
       [minColumnWidth]="40"
       [columnTemplate]="columnTemplate"
-      [lockColumnTemplate]="!!columnTemplate">
+      [lockColumnTemplate]="!!columnTemplate"
+      verticalSelector="tbody">
       <table class="atomic-table">
         <ng-content></ng-content>
       </table>
@@ -65,7 +66,7 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
     }
 
     .atomic-table tbody tr:hover {
-      background-color: var(--table-color-hover, rgba(0,0,0,0.02));
+      background-color: var(--table-row-hover, rgba(0,0,0,0.02));
       box-shadow: var(--table-row-hover-shadow, 0 4px 12px rgba(0,0,0,0.08));
       transform: var(--table-row-hover-transform, translateY(-2px));
       z-index: 1;
@@ -73,6 +74,9 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
     }
 
     .atomic-table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
       color: var(--table-header-color);
       font-size: var(--table-font-size-header, 0.75rem);
       font-weight: var(--table-font-weight-header, 600);

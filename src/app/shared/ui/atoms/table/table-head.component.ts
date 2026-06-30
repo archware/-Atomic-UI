@@ -13,7 +13,9 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <thead class="atomic-thead">
-      <ng-content></ng-content>
+      <tr>
+        <ng-content></ng-content>
+      </tr>
     </thead>
   `,
   styles: [`

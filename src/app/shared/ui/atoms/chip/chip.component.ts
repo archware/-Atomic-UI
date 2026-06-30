@@ -70,48 +70,48 @@ export type ChipSize = 'sm' | 'md' | 'lg';
       padding: var(--space-1) var(--space-2);
       border-radius: var(--radius-full);
       font-size: var(--text-xs);
-      font-weight: 500;
+      font-weight: 600;
       transition: all 150ms ease;
       border: 1px solid transparent;
     }
 
-    .chip-sm { padding: var(--space-0) var(--space-2); font-size: var(--text-xs); }
+    .chip-sm { padding: 3px var(--space-2); font-size: var(--text-xs); }
     .chip-md { padding: var(--space-1) var(--space-2); font-size: var(--text-xs); }
     .chip-lg { padding: var(--space-1) var(--space-3); font-size: var(--text-sm); }
 
     .chip-default {
       background: var(--surface-elevated);
-      color: var(--text-color);
+      color: var(--text-color-secondary);
     }
 
     .chip-primary {
-      background: var(--primary-color-lighter);
-      color: var(--primary-color);
+      background: var(--primary-color-light, var(--primary-color-lighter));
+      color: var(--primary-color-text, var(--primary-color));
     }
 
     .chip-secondary {
-      background: var(--secondary-color-lighter);
-      color: var(--secondary-color);
+      background: var(--secondary-color-light, var(--secondary-color-lighter));
+      color: var(--secondary-color-text, var(--secondary-color));
     }
 
     .chip-success {
-      background: var(--success-color-lighter);
-      color: var(--success-color);
+      background: var(--success-color-light);
+      color: var(--success-color-text, var(--success-color));
     }
 
     .chip-warning {
-      background: var(--warning-color-lighter);
-      color: var(--warning-color);
+      background: var(--warning-color-light);
+      color: var(--warning-color-text, var(--warning-color));
     }
 
     .chip-error {
-      background: var(--danger-color-lighter);
-      color: var(--danger-color);
+      background: var(--danger-color-light);
+      color: var(--danger-color-text, var(--danger-color));
     }
 
     .chip-info {
-      background: var(--info-color-lighter);
-      color: var(--info-color);
+      background: var(--info-color-light);
+      color: var(--info-color-text, var(--info-color));
     }
 
     .chip-outline {

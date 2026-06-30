@@ -33,11 +33,18 @@ export type SortDirection = 'asc' | 'desc' | null;
     th[app-table-header-cell].sortable-cell {
       cursor: pointer;
       user-select: none;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      transition: filter 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+      --hover-brightness: 0.96; /* Oscurece 4% en modo claro */
+    }
+
+    [data-theme="dark"] th[app-table-header-cell].sortable-cell,
+    .theme-dark th[app-table-header-cell].sortable-cell,
+    html.dark th[app-table-header-cell].sortable-cell {
+      --hover-brightness: 1.2; /* Ilumina 20% en modo oscuro */
     }
 
     th[app-table-header-cell].sortable-cell:hover {
-      background-color: var(--hover-background-subtle, rgba(255, 255, 255, 0.05));
+      filter: brightness(var(--hover-brightness));
     }
 
     .th-content {

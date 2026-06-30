@@ -42,8 +42,9 @@ export class ChartComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       import('chart.js').then((ChartJs) => {
-        const { Chart, registerables } = ChartJs;
-        Chart.register(...registerables);
+        import('chartjs-plugin-datalabels').then((DataLabels) => {
+          const { Chart, registerables } = ChartJs;
+          Chart.register(...registerables, DataLabels.default);
         
         // Inject Atomic UI tokens into Chart.js defaults
         const style = getComputedStyle(document.documentElement);
@@ -63,7 +64,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         if (Chart.defaults.scale) {
           Chart.defaults.scale.grid.color = style.getPropertyValue('--chart-grid-color').trim() || 'rgba(255, 255, 255, 0.05)';
         }
-
+        
         // Global Arc (Doughnut/Pie) defaults for depth
         Chart.defaults.elements.arc.borderWidth = 3;
         Chart.defaults.elements.arc.borderColor = style.getPropertyValue('--surface-color').trim() || '#18181b';
@@ -88,7 +89,27 @@ export class ChartComponent implements OnInit, OnDestroy {
         };
         Chart.register(shadowPlugin);
 
+        if (Chart.defaults.plugins.datalabels) {
+          Chart.defaults.plugins.datalabels.color = '#fff';
+          Chart.defaults.plugins.datalabels.font = { weight: 'bold', size: 14 };
+          Chart.defaults.plugins.datalabels.formatter = function(value: any, context: any) {
+            if (typeof value === 'number') {
+              // If it's a percentage (e.g. from a bar chart), add % sign
+              if (context.chart.config.type === 'bar') {
+                return (Math.round(value * 100) / 100) + '%';
+              }
+              return Math.round(value * 100) / 100;
+            }
+            return value;
+          };
+          Chart.defaults.plugins.datalabels.display = function(context: any) {
+            const val = context.dataset.data[context.dataIndex];
+            return typeof val === 'number' && val > 0;
+          };
+        }
+
         this.isChartReady.set(true);
+        });
       });
     }
   }

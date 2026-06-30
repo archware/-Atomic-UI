@@ -5,6 +5,20 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [4.8.0] - 2026-06-26
+
+### Refactorización de Tablas, Hover Effects y Contrastes en Modo Oscuro
+
+#### Fixed (Frontend - UI Core)
+- **Mejora del Resaltado en el Thead**: Se cambió la técnica de resaltado en hover para los encabezados de tabla ordenables (`th[app-table-header-cell]`). En lugar de utilizar un overlay fijo o translúcido que ocultaba el color del fondo (perdiendo saturación en temas oscuros o vibrantes), se implementó `filter: brightness(1.2)`. Esta solución ilumina los píxeles originales respetando la paleta de colores nativa sin importar si se usa modo claro u oscuro.
+- **Corrección Typo en Tbody Hover**: En el CSS del `table.component.ts` de Atomic-UI, las filas intentaban hacer referencia a la variable `--table-color-hover` para su efecto de hover, pero el nombre correcto en el design system es `--table-row-hover`. Al fallar, usaban el color por defecto (2% negro), haciéndolo casi imperceptible. Se corrigió la variable para que herede correctamente el hover diseñado (`var(--table-row-hover)`).
+- **Contraste de Componentes Chip en Modo Oscuro**: Se reemplazó el uso duro de variables base (`--primary-color-lighter`) en el componente `app-chip` por el uso de tokens semánticos adaptativos para fondos y textos en los chips (`var(--primary-color-light, var(--primary-color-lighter))` y `var(--primary-color-text, var(--primary-color))`). Esto resuelve la ilegibilidad de los chips en modo oscuro debido a la falta de contraste.
+
+#### Added (Frontend - Wails & Tauri DataGrids)
+- **Columna de Fecha de Inicio Histórica**: En respuesta a peticiones funcionales, las tablas del CRM (Operativo) en Wails y Tauri ahora muestran 3 columnas de fechas de seguimiento del paciente: *F. Inicio*, *F. Última*, y *F. Próxima*. Esto incluyó la adición de la propiedad `fecha_inicio` en las estructuras del modelo.
+
+---
+
 ## [4.7.0] - 2026-06-23
 
 ### Dropdown Click Propagation Isolation

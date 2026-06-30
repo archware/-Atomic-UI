@@ -4,6 +4,12 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-06-26] - Iluminación de Fondos sin pérdida de Saturación (Hover)
+
+### 1. Highlight UI vs Background Colors
+**Contexto**: Los encabezados de tabla (`thead`) contaban con un efecto `hover` implementado inyectando un overlay negro translúcido (`rgba(0,0,0,0.05)`) o gris. Sin embargo, esto destruía visualmente colores vibrantes (como morados intensos o verdes puros) al "ensuciarlos" o "des-saturarlos".
+**La Lección**: En componentes genéricos de UI (como un Design System) donde se desconoce si el consumidor usará colores claros o fondos fuertemente saturados, nunca se debe inyectar gris o negro semitransparente como estrategia de `hover`. La solución nativa ideal para preservar exactamente la saturación de color de origen (Hue) mientras se destaca la interacción es el uso de `filter: brightness(X)`. Por ejemplo, `filter: brightness(1.2)` aumenta mágicamente el brillo 20% logrando un resaltado espectacular y fiel al ADN cromático subyacente.
+
 ## [2026-06-23] - Aislamiento de Propagación de Eventos en Dropdowns y Rust Tiberius Panics
 
 ### 1. El Falso "Refresco" en Selects sobre Wails (WebView2)

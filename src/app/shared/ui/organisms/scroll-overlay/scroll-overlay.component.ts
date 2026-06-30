@@ -635,7 +635,8 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       const barY = this.barYRef.nativeElement;
       
       let headerOffset = 0;
-      if (this.tableHead) {
+      // Only apply header offset if the vertical scroller is the entire scroll area (meaning it includes the header)
+      if (this.tableHead && this.verticalScroller === this.scrollAreaRef?.nativeElement) {
         headerOffset = this.tableHead.offsetHeight;
       }
       

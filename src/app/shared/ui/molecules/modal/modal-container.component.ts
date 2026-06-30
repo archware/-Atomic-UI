@@ -25,6 +25,7 @@ import { ModalService, ModalItem } from '../../services/modal.service';
         [class.modal-closing]="modal.closing"
         (click)="onBackdropClick(modal)"
         (keydown.escape)="onEscape(modal)"
+        (keydown.enter)="onEnter(modal)"
         tabindex="-1"
       >
         <div 
@@ -281,6 +282,15 @@ export class ModalContainerComponent {
   onEscape(modal: ModalItem): void {
     if (modal.closable) {
       this.modalService.close(modal.id);
+    }
+  }
+
+  onEnter(modal: ModalItem): void {
+    if (modal.buttons && modal.buttons.length > 0) {
+      const primaryBtn = modal.buttons.find(b => b.variant === 'primary' || !b.variant) || modal.buttons[0];
+      if (primaryBtn && primaryBtn.action) {
+        primaryBtn.action();
+      }
     }
   }
 }
