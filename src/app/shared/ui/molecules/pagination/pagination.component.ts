@@ -191,6 +191,7 @@ import { Select2Component } from '../select2/select2.component';
       background: var(--surface-background);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
       font-size: var(--text-sm);
       color: var(--text-color);
       cursor: pointer;

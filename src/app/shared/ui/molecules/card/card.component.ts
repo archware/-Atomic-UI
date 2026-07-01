@@ -78,6 +78,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
       background: var(--surface-background);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
       /* overflow: visible para que tooltips y dropdowns dentro de la card no queden cortados.
          La imagen se clips con overflow: hidden en .card__image directamente. */
       overflow: visible;

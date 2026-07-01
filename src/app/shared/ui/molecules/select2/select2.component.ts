@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+
 
 export interface Select2Option {
   value: string | number;
@@ -17,7 +17,7 @@ export interface Select2Option {
   // Standalone component for Select2 dropdown
   selector: 'app-select2',
   standalone: true,
-  imports: [FormsModule, TranslateModule],
+  imports: [FormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -56,9 +56,9 @@ export interface Select2Option {
               @if (selectedOption()!.icon) {
                 <span class="option-icon">{{ selectedOption()!.icon }}</span>
               }
-              {{ selectedOption()!.label | translate }}
+              {{ selectedOption()!.label }}
             } @else if (!label) {
-              <span class="placeholder">{{ placeholder | translate }}</span>
+              <span class="placeholder">{{ placeholder }}</span>
             }
           </span>
         }
@@ -68,12 +68,12 @@ export interface Select2Option {
           <div class="select2-tags">
             @for (opt of selectedOptions(); track opt.value) {
               <span class="select2-tag">
-                {{ opt.label | translate }}
+                {{ opt.label }}
                 <button type="button" class="tag-remove" (click)="removeTag(opt, $event)">×</button>
               </span>
             }
             @if (selectedOptions().length === 0 && !label) {
-              <span class="placeholder">{{ placeholder | translate }}</span>
+              <span class="placeholder">{{ placeholder }}</span>
             }
           </div>
         }
@@ -121,7 +121,7 @@ export interface Select2Option {
                 @if (option.icon) {
                   <span class="option-icon">{{ option.icon }}</span>
                 }
-                <span class="option-label">{{ option.label | translate }}</span>
+                <span class="option-label">{{ option.label }}</span>
                 @if (isSelected(option)) {
                   <span class="check-icon">✓</span>
                 }
@@ -170,7 +170,7 @@ export interface Select2Option {
       transition: all 200ms ease;
       font-size: var(--text-sm);
       box-sizing: border-box;
-      box-shadow: var(--input-shadow);
+      box-shadow: var(--shadow-sm);
       /* FIXED: Permitir clics en Wails */
       --wails-draggable: no-drag;
     }
@@ -215,6 +215,7 @@ export interface Select2Option {
     .select2-wrapper.focused .select2-trigger,
     .select2-trigger:hover {
       border-color: var(--input-border-focus);
+      box-shadow: var(--shadow-md);
     }
 
     .select2-wrapper.focused .select2-trigger {
@@ -328,12 +329,19 @@ export interface Select2Option {
       background: var(--input-bg);
       color: var(--input-text);
       outline: none;
+      box-shadow: var(--shadow-xs);
       transition: all 150ms ease;
+    }
+
+    .search-input:hover:not(:focus) {
+      border-color: var(--input-border-hover);
+      box-shadow: var(--shadow-sm);
     }
 
     .search-input:focus {
       border-color: var(--primary-color);
       background: var(--input-bg);
+      box-shadow: var(--shadow-focus-primary);
     }
 
     .search-icon {
