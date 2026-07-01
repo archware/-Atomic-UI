@@ -311,6 +311,13 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       display: none;
     }
 
+    /* === HOVER STATE (floating + outline, antes del focus) === */
+    .variant-floating:not(.focused) .floating-input:hover,
+    .variant-outline:not(.focused) .floating-input:hover {
+      border-color: var(--input-border-hover);
+      box-shadow: var(--input-shadow-hover);
+    }
+
     /* === ICONS === */
     .input-icon {
       position: absolute;

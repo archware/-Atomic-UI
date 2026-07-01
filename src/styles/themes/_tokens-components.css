@@ -128,6 +128,8 @@
    --input-text: var(--text-color);
    --input-shadow: 0 2px 8px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
    /* Sombra visible en inputs: dos capas para efecto de profundidad */
+   --input-shadow-hover: 0 4px 14px rgba(0, 0, 0, 0.18), 0 2px 5px rgba(0, 0, 0, 0.1);
+   /* Sombra elevada al hacer hover sobre el input */
    --input-shadow-focus: var(--shadow-focus-primary);
    --form-row-gap: 2.25rem;
    /* 36px - espaciado vertical entre secciones de formulario */
@@ -362,6 +364,7 @@ html.dark {
    --input-text: var(--text-color);
    --input-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.25);
    /* Sombra visible en oscuro */
+   --input-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.35);
    --input-shadow-focus: var(--shadow-focus-primary);
    --form-row-gap: 2.25rem;
    --input-disabled-bg: var(--surface-sunken);
@@ -588,6 +591,7 @@ html.dark {
    --input-placeholder: var(--text-color-placeholder);
    --input-text: var(--text-color);
    --input-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.25);
+   --input-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.35);
    --input-shadow-focus: var(--shadow-focus-primary);
    --form-row-gap: 2.25rem;
    --input-disabled-bg: var(--surface-sunken);
