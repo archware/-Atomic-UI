@@ -5,7 +5,48 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [5.0.0] - 2026-07-01
+
+### Auditoria Profunda del Ecosistema — Sincronizacion Total y Limpieza
+
+#### Fixed (Ecosistema — CRITICO)
+- **114/114 archivos `shared/ui` sincronizados**: Auditoria SHA-256 completa detecto 10 archivos con drift y 5 MISSING en Tauri y Wails. Todos corregidos. El ecosistema queda en estado 100% sincronizado.
+- **WebView2 canvas fix retroalimentado**: La correccion `ctx.save()`/`ctx.restore()` incondicional para todos los tipos de chart (documentada en v4.9.0 y en `ECOSYSTEM_WORKFLOW.md`) existia unicamente en Wails. Se retroalimento a Atomic-UI (Fuente de la Verdad) y se propago a Tauri.
+- **`propagate-tokens.ps1` extendido**: El script solo propagaba `_tokens-components.css` (1 de 7 archivos). Ahora cubre los 7 archivos CSS del directorio `src/styles/themes/` con verificacion SHA-256 individual por archivo.
+- **Selector `table-cell` extendido**: `selector: '[app-table-cell]'` ampliado a `td[app-table-cell], th[app-table-header-cell]` para soportar uso en `<th>`. Mejora llevada desde Tauri/Wails a Atomic-UI.
+- **`z-index: 10` en `table-head`**: Propiedad que existia en consumidores retroalimentada a Atomic-UI.
+
+#### Added
+- **5 componentes nuevos propagados a Tauri y Wails**: `language-switcher`, `table-actions` (`.ts`, `.html`, `.css`) y `footer` ahora existen en los tres proyectos.
+- **`chartjs-plugin-datalabels@^2.2.0`**: Dependencia que estaba en Tauri y Wails pero faltaba en Atomic-UI. Instalada para alinear el ecosistema y eliminar errores `TS2307` en `chart.component.ts`.
+
+#### Changed
+- **Blueprint `crud-table`**: Integrado `app-data-pager` superior, tabla envuelta en `app-scroll-overlay`, paginacion inferior con tres variantes (minimal, rounded, cards). Script `fix.py` aplicado y eliminado.
+- **`topbar` y `layout-shell`**: Actualizados en los tres proyectos para incluir `LanguageSwitcherComponent` y `FooterComponent` respectivamente.
+
+---
+
+## [4.9.0] - 2026-07-01
+
+### Auditoría Profunda de Tokens — Fix Crítico de Tabla y Chart + Guía de Migración
+
+#### Fixed (Tokens — CRÍTICO)
+- **25 tokens de tabla ausentes detectados y definidos**: Los componentes `table.component.ts`, `table-head.component.ts` y `table-row.component.ts` consumían un nuevo namespace `--table-color-*`, `--table-font-*`, `--table-header-*`, `--table-card-*` y `--table-transition-*` que **nunca fue definido** en `_tokens-components.css`. Esto causaba que todas las tablas renderizaran sin estilos (sin zebra/striping, sin header estilado, sin hover visible, sin responsive cards). Se definieron los 25+ tokens faltantes en los tres temas (light, dark, brand-dark) con aliases legados para no romper módulos existentes (gerencial, operativo).
+- **6 tokens de chart ausentes definidos**: `--chart-text-color`, `--chart-tooltip-bg`, `--chart-tooltip-text`, `--chart-tooltip-border`, `--chart-grid-color` y `--surface-color` que `chart.component.ts` leía via `getComputedStyle` nunca estuvieron en `_tokens-components.css`. Se definieron en los tres temas.
+- **Fix shadowPlugin WebView2 (Wails)**: `ctx.save()`/`ctx.restore()` ahora son incondicionales para todos los tipos de chart. Evita corrupción del estado del canvas en WebView2.
+
+#### Added (Developer Experience)
+- **`CONTRIBUTING_TOKENS.md`**: Guía oficial de token-first development con checklist, convenciones de nomenclatura, plantilla de bloque CSS, regla de tokens legado y flujo completo.
+- **`scripts/audit-tokens.ps1`**: Detecta tokens consumidos por cualquier componente que no están definidos. Exit code 1 si hay faltantes.
+- **`scripts/propagate-tokens.ps1`**: Propaga `_tokens-components.css` a Wails y Tauri con verificación SHA-256.
+
+#### Changed
+- `_tokens-components.css`: Bloque `=== TABLAS ===` expandido de 16 a 60+ tokens. Documentado con comentarios por grupo.
+
+---
+
 ## [4.8.0] - 2026-06-26
+
 
 ### Refactorización de Tablas, Hover Effects y Contrastes en Modo Oscuro
 

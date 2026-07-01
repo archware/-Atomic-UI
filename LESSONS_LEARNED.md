@@ -4,6 +4,26 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-01] - Auditoria de Ecosistema: Drift, Dependencias y Seguridad
+
+### 1. El Drift Silencioso en Ecosistemas Multi-Repo
+**Contexto**: La auditoria SHA-256 de todos los archivos `shared/ui` revelo que 10 archivos tenian drift y 5 estaban completamente ausentes en Tauri y Wails. En ningun momento hubo errores visibles — el drift se acumula silenciosamente.
+**La Leccion**: Los fixes aplicados en un consumidor (Wails, Tauri) deben retroalimentarse SIEMPRE a Atomic-UI (Fuente de la Verdad) antes de propagarse. El flujo correcto es: *Arreglar en Atomic-UI → Propagar a consumidores*. Nunca al reves. Validar con SHA-256 periodicamente es la unica forma de detectar drift oculto.
+
+### 2. Las Dependencias de package.json tambien son parte de la Fuente de la Verdad
+**Contexto**: `chartjs-plugin-datalabels` estaba en `package.json` de Tauri y Wails pero faltaba completamente en Atomic-UI, causando errores TS2307 unicamente en la fuente. Los errores eran invisibles en los consumidores porque tenian el paquete.
+**La Leccion**: Atomic-UI debe tener instaladas TODAS las dependencias que sus componentes consumen, aunque los consumidores tambien las tengan. El `package.json` de Atomic-UI es tambien la Fuente de la Verdad de dependencias. El script de propagacion deberia incluir una verificacion de paquetes cruzada.
+
+### 3. API Breaking Change en ngx-translate v18 (TranslateModule eliminado)
+**Contexto**: Wails tenia `@ngx-translate/core@^18.0.0` mientras Atomic-UI y Tauri usaban `^17.0.0`. Los componentes propagados que usaban `TranslateModule` fallaban con `TS2724` en Wails porque v18 elimino esa exportacion.
+**La Leccion**: Al propagar componentes que dependen de librerias con versiones semanticas distintas entre proyectos, el primer paso es alinear TODAS las versiones al semver del proyecto Fuente de la Verdad. Nunca asumir que `^18` incluye la API de `^17` — los breaking changes son reales aunque sean parches mayores.
+
+### 4. Scripts de Desarrollo con Credenciales Hardcodeadas (OWASP A07)
+**Contexto**: Se encontraron credenciales SQL Server (`sa:Password123.@10.100.6.11`) hardcodeadas en 14 archivos a lo largo del workspace (3 scripts `.go` raiz, 11 archivos `.js` en `db_test/`, 1 archivo `scratch/test_db.go`).
+**La Leccion**: Los scripts de utilidad de desarrollo deben seguir el mismo patron de seguridad que el codigo de produccion. El patron correcto para scripts locales es: centralizar en `config.js` o usar el keyring del sistema (`go-keyring`), gitignorear el archivo de credenciales, y proveer un `config.example.js` como plantilla. Ningun password debe existir en texto plano en el repositorio.
+
+---
+
 ## [2026-06-26] - Iluminación de Fondos sin pérdida de Saturación (Hover)
 
 ### 1. Highlight UI vs Background Colors
