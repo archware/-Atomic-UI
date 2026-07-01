@@ -38,26 +38,81 @@
    --card-footer-bg: var(--surface-section);
    --card-shadow: var(--shadow-md);
 
-   /* === TABLAS === */
-   --table-bg: var(--surface-background);
-   --table-header-bg: var(--surface-section);
-   --table-header-text: var(--text-color);
-   --table-header-start: var(--brand-primary-500);
-   --table-header-end: var(--brand-secondary-500);
-   --table-cell-text: var(--text-color-secondary);
-   --table-row-alt-bg: var(--surface-section);
-   --table-row-hover: var(--hover-background);
-   --table-row-selected: var(--selected-background);
-   --table-border: var(--brand-primary-100);
-   --table-stripe-bg: var(--gray-50);
-   --table-stripe-alt: var(--brand-secondary-50);
-   --table-hover-bg: var(--brand-primary-50);
-   --table-hover-secondary: var(--brand-secondary-50);
+   /* === TABLAS ===
+      Tokens que los componentes atómicos realmente consumen.
+      Prefijo --table-color-*  → colores de superficie
+      Prefijo --table-font-*   → tipografía
+      Prefijo --table-card-*   → layout responsive (móvil)
+      Prefijo --table-header-* → estilos de cabecera
+      LEGADO: tokens --table-bg / --table-stripe-bg mantenidos para
+              compatibilidad con código de gerencial/operativo existente. */
 
-   /* Efecto hover elevado para filas */
-   --table-row-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+   /* --- Colores de superficie (consumidos por table.component.ts) --- */
+   --table-color-background:  var(--surface-background);
+   --table-color-stripe:      var(--gray-50);
+   --table-color-hover:       var(--brand-primary-50);
+   --table-color-border:      var(--brand-primary-200);
+   --table-color-border-light: rgba(0, 0, 0, 0.05);
+   --table-color-text:        var(--text-color-secondary);
+   --table-color-primary:     var(--primary-color);
+
+   /* --- Tipografía --- */
+   --table-font-family:        var(--font-sans, 'Inter', sans-serif);
+   --table-font-size:          0.875rem;
+   --table-font-size-header:   0.75rem;
+   --table-font-weight-header: 600;
+   --table-font-weight-label:  600;
+
+   /* --- Espaciado de celdas --- */
+   --table-cell-padding: 0.75rem 1rem;
+
+   /* --- Cabecera --- */
+   --table-header-color:        var(--text-color);
+   --table-header-bg:           var(--surface-section);
+   --table-header-border-width: 2px;
+   --table-header-border-style: solid;
+   --table-header-border-color: var(--brand-primary-200);
+   --table-header-radius:       0.5rem;
+   --table-header-shadow:       none;
+
+   /* --- Hover de filas --- */
+   --table-row-hover-shadow:    0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
    --table-row-hover-transform: translateY(-2px);
-   --table-row-transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+   /* --- Transición --- */
+   --table-transition-duration: 0.2s;
+   --table-transition-timing:   ease;
+
+   /* --- Responsive (cards en móvil) --- */
+   --table-border-radius: 0.5rem;
+   --table-card-padding:  1rem;
+   --table-card-gap:      0.75rem;
+   --table-card-shadow:   var(--shadow-sm);
+
+   /* --- Legado mantenido (gerencial, operativo) --- */
+   --table-bg:              var(--surface-background);
+   --table-header-start:    var(--brand-primary-500);
+   --table-header-end:      var(--brand-secondary-500);
+   --table-header-text:     var(--text-color);
+   --table-cell-text:       var(--text-color-secondary);
+   --table-row-alt-bg:      var(--surface-section);
+   --table-row-hover:       var(--brand-primary-50);
+   --table-row-selected:    var(--selected-background);
+   --table-border:          var(--brand-primary-100);
+   --table-stripe-bg:       var(--gray-50);
+   --table-stripe-alt:      var(--brand-secondary-50);
+   --table-hover-bg:        var(--brand-primary-50);
+   --table-hover-secondary: var(--brand-secondary-50);
+   --table-row-transition:  background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+   /* === CHARTS ===
+      Tokens consumidos por chart.component.ts vía getComputedStyle. */
+   --chart-text-color:    var(--text-color-secondary);
+   --chart-tooltip-bg:    var(--surface-elevated);
+   --chart-tooltip-text:  var(--text-color);
+   --chart-tooltip-border: var(--border-color);
+   --chart-grid-color:    rgba(0, 0, 0, 0.06);
+   --surface-color:       var(--surface-background);
 
    /* === FORMULARIOS / INPUTS === */
    --control-height: var(--control-height-md);
@@ -253,32 +308,45 @@ html.dark {
    --card-footer-bg: var(--surface-section);
    --card-shadow: var(--shadow-lg);
 
-   /* === TABLAS === */
-   --table-bg: var(--surface-background);
-   /* Layer BG */
-   --table-header-bg: var(--surface-section);
-   /* Sub BG */
-   --table-header-text: var(--text-color);
-   --table-header-start: var(--brand-primary-700);
-   --table-header-end: var(--brand-secondary-700);
-   --table-cell-text: var(--text-color-secondary);
-   --table-row-alt-bg: var(--surface-section);
-   --table-row-hover: var(--hover-background);
-   --table-row-selected: var(--selected-background);
-   --table-border: var(--border-color-strong);
-   --table-stripe-bg: var(--surface-section);
-   /* Fixed hardcoded */
-   --table-stripe-alt: var(--surface-ground);
-   /* Fixed hardcoded */
-   --table-hover-bg: var(--hover-background);
-   /* Fixed hardcoded */
-   --table-hover-secondary: var(--hover-background-subtle);
-   /* Fixed hardcoded */
-
-   /* Efecto hover elevado para filas (dark) */
-   --table-row-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2);
+   /* === TABLAS (dark overrides) === */
+   --table-color-background:    var(--surface-background);
+   --table-color-stripe:        var(--surface-section);
+   --table-color-hover:         var(--hover-background);
+   --table-color-border:        var(--border-color-strong);
+   --table-color-border-light:  rgba(255, 255, 255, 0.05);
+   --table-color-text:          var(--text-color-secondary);
+   --table-color-primary:       var(--primary-color);
+   --table-header-color:        var(--text-color);
+   --table-header-bg:           var(--surface-section);
+   --table-header-border-color: var(--border-color);
+   --table-header-shadow:       none;
+   --table-row-hover-shadow:    0 4px 16px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2);
    --table-row-hover-transform: translateY(-2px);
-   --table-row-transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+   --table-card-shadow:         var(--shadow-md);
+
+   /* Legado dark */
+   --table-bg:              var(--surface-background);
+   --table-header-start:    var(--brand-primary-700);
+   --table-header-end:      var(--brand-secondary-700);
+   --table-header-text:     var(--text-color);
+   --table-cell-text:       var(--text-color-secondary);
+   --table-row-alt-bg:      var(--surface-section);
+   --table-row-hover:       var(--hover-background);
+   --table-row-selected:    var(--selected-background);
+   --table-border:          var(--border-color-strong);
+   --table-stripe-bg:       var(--surface-section);
+   --table-stripe-alt:      var(--surface-ground);
+   --table-hover-bg:        var(--hover-background);
+   --table-hover-secondary: var(--hover-background-subtle);
+   --table-row-transition:  background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+   /* === CHARTS (dark overrides) === */
+   --chart-text-color:     var(--text-color-secondary);
+   --chart-tooltip-bg:     var(--surface-elevated);
+   --chart-tooltip-text:   var(--text-color);
+   --chart-tooltip-border: var(--border-color);
+   --chart-grid-color:     rgba(255, 255, 255, 0.06);
+   --surface-color:        var(--surface-background);
 
    /* === FORMULARIOS / INPUTS === */
    --input-bg: var(--surface-background);
@@ -468,26 +536,45 @@ html.dark {
    --card-footer-bg: var(--surface-section);
    --card-shadow: var(--shadow-lg);
 
-   /* === TABLAS === */
-   --table-bg: var(--surface-background);
-   --table-header-bg: var(--surface-section);
-   --table-header-text: var(--text-color);
-   --table-header-start: var(--brand-primary-700);
-   --table-header-end: var(--brand-secondary-700);
-   --table-cell-text: var(--text-color-secondary);
-   --table-row-alt-bg: var(--surface-section);
-   --table-row-hover: var(--hover-background);
-   --table-row-selected: var(--selected-background);
-   --table-border: var(--border-color-strong);
-   --table-stripe-bg: var(--surface-section);
-   --table-stripe-alt: var(--surface-ground);
-   --table-hover-bg: var(--hover-background);
-   --table-hover-secondary: var(--hover-background-subtle);
-
-   /* Efecto hover elevado para filas (brand-dark) */
-   --table-row-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
+   /* === TABLAS (brand-dark overrides) === */
+   --table-color-background:    var(--surface-background);
+   --table-color-stripe:        var(--surface-section);
+   --table-color-hover:         var(--hover-background);
+   --table-color-border:        var(--border-color-strong);
+   --table-color-border-light:  rgba(255, 255, 255, 0.06);
+   --table-color-text:          var(--text-color-secondary);
+   --table-color-primary:       var(--primary-color);
+   --table-header-color:        var(--text-color);
+   --table-header-bg:           var(--surface-section);
+   --table-header-border-color: var(--border-color);
+   --table-header-shadow:       none;
+   --table-row-hover-shadow:    0 4px 16px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
    --table-row-hover-transform: translateY(-2px);
-   --table-row-transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+   --table-card-shadow:         var(--shadow-md);
+
+   /* Legado brand-dark */
+   --table-bg:              var(--surface-background);
+   --table-header-start:    var(--brand-primary-700);
+   --table-header-end:      var(--brand-secondary-700);
+   --table-header-text:     var(--text-color);
+   --table-cell-text:       var(--text-color-secondary);
+   --table-row-alt-bg:      var(--surface-section);
+   --table-row-hover:       var(--hover-background);
+   --table-row-selected:    var(--selected-background);
+   --table-border:          var(--border-color-strong);
+   --table-stripe-bg:       var(--surface-section);
+   --table-stripe-alt:      var(--surface-ground);
+   --table-hover-bg:        var(--hover-background);
+   --table-hover-secondary: var(--hover-background-subtle);
+   --table-row-transition:  background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+   /* === CHARTS (brand-dark overrides) === */
+   --chart-text-color:     var(--text-color-secondary);
+   --chart-tooltip-bg:     var(--surface-elevated);
+   --chart-tooltip-text:   var(--text-color);
+   --chart-tooltip-border: var(--border-color);
+   --chart-grid-color:     rgba(255, 255, 255, 0.07);
+   --surface-color:        var(--surface-background);
 
    /* === FORMULARIOS / INPUTS === */
    --input-bg: var(--surface-background);

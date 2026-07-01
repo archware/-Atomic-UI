@@ -27,6 +27,7 @@
   border: 1px solid var(--input-border);
   border-radius: 0.5rem;
   box-sizing: border-box;
+  box-shadow: var(--shadow-sm);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   appearance: none;
 }
@@ -43,8 +44,17 @@
   border: 1px solid var(--input-border);
   border-radius: 0.5rem;
   box-sizing: border-box;
+  box-shadow: var(--shadow-sm);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   appearance: none;
+}
+
+/* Hover state */
+.form-input:hover:not(:disabled):not(:focus),
+.form-select:hover:not(:disabled):not(:focus),
+.form-textarea:hover:not(:disabled):not(:focus) {
+  border-color: var(--input-border-hover);
+  box-shadow: var(--shadow-md);
 }
 
 /* Focus state */
@@ -53,7 +63,7 @@
 .form-textarea:focus {
   border-color: var(--input-border-focus);
   outline: 0;
-  box-shadow: 0 0 0 3px var(--hover-background);
+  box-shadow: var(--shadow-focus-primary);
 }
 
 /* Disabled state */
@@ -93,6 +103,7 @@
   border: 1px solid var(--input-border);
   border-radius: 0.5rem;
   box-sizing: border-box;
+  box-shadow: var(--shadow-sm);
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   appearance: none;
 

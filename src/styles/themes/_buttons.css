@@ -29,17 +29,24 @@
   user-select: none;
   font-family: inherit;
   box-sizing: border-box;
-  box-shadow: var(--button-shadow);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+  filter: brightness(1.04);
 }
 
 .btn:focus {
   outline: none;
-  box-shadow: var(--focus-ring);
+  box-shadow: var(--shadow-focus-primary);
 }
 
 .btn:active:not(:disabled) {
   transform: translateY(1px);
-  box-shadow: inset 0 2px 4px hsla(0, 0%, 0%, 0.2);
+  box-shadow: inset 0 2px 4px hsla(0, 0%, 0%, 0.25);
+  filter: brightness(0.96);
 }
 
 .btn:disabled,
@@ -127,6 +134,7 @@
 
 .btn-outline:hover:not(:disabled) {
   background-color: var(--button-outline-hover-bg);
+  box-shadow: var(--shadow-md);
 }
 
 /* Ghost */
@@ -138,6 +146,7 @@
 
 .btn-ghost:hover:not(:disabled) {
   background-color: var(--button-ghost-hover-bg);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Link */

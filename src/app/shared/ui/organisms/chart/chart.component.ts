@@ -45,12 +45,12 @@ export class ChartComponent implements OnInit, OnDestroy {
         import('chartjs-plugin-datalabels').then((DataLabels) => {
           const { Chart, registerables } = ChartJs;
           Chart.register(...registerables, DataLabels.default);
-        
+
         // Inject Atomic UI tokens into Chart.js defaults
         const style = getComputedStyle(document.documentElement);
         Chart.defaults.color = style.getPropertyValue('--chart-text-color').trim() || '#a1a1aa';
         Chart.defaults.font.family = 'Inter, sans-serif';
-        
+
         if (Chart.defaults.plugins.tooltip) {
           Chart.defaults.plugins.tooltip.backgroundColor = style.getPropertyValue('--chart-tooltip-bg').trim() || 'rgba(24, 24, 27, 0.9)';
           Chart.defaults.plugins.tooltip.titleColor = style.getPropertyValue('--chart-tooltip-text').trim() || '#f4f4f5';
@@ -64,27 +64,31 @@ export class ChartComponent implements OnInit, OnDestroy {
         if (Chart.defaults.scale) {
           Chart.defaults.scale.grid.color = style.getPropertyValue('--chart-grid-color').trim() || 'rgba(255, 255, 255, 0.05)';
         }
-        
+
         // Global Arc (Doughnut/Pie) defaults for depth
         Chart.defaults.elements.arc.borderWidth = 3;
         Chart.defaults.elements.arc.borderColor = style.getPropertyValue('--surface-color').trim() || '#18181b';
         Chart.defaults.elements.arc.hoverOffset = 8;
 
         // Custom Shadow Plugin for 3D depth on Doughnuts
+        // FIX (WebView2): save/restore MUST be unconditional for all chart types.
+        // WebView2 reuses the canvas context between dataset draws; leaving ctx.shadowColor
+        // set on a bar chart causes subsequent datasets to render with an unintended shadow.
         const shadowPlugin = {
           id: 'shadowPlugin',
           beforeDatasetDraw: (chart: any) => {
-            if (chart.config.type !== 'doughnut' && chart.config.type !== 'pie') return;
             const ctx = chart.ctx;
-            ctx.save();
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-            ctx.shadowBlur = 12;
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 6;
+            ctx.save(); // Always save — never skip, regardless of chart type
+            if (chart.config.type === 'doughnut' || chart.config.type === 'pie') {
+              ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
+              ctx.shadowBlur = 12;
+              ctx.shadowOffsetX = 0;
+              ctx.shadowOffsetY = 5;
+            }
+            // For all other types: ctx is saved clean, shadow props are at default (none)
           },
           afterDatasetDraw: (chart: any) => {
-            if (chart.config.type !== 'doughnut' && chart.config.type !== 'pie') return;
-            chart.ctx.restore();
+            chart.ctx.restore(); // Always restore — mirrors the unconditional save above
           }
         };
         Chart.register(shadowPlugin);
