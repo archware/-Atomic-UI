@@ -39,41 +39,47 @@ export class ChartComponent implements OnInit, OnDestroy {
   private platformId = inject(PLATFORM_ID);
   isChartReady = signal(false);
 
+  private themeObserver: MutationObserver | null = null;
+  private ChartRef: any = null;
+
+  /** Lee los tokens CSS actuales y los aplica a los defaults globales de Chart.js */
+  private applyChartTheme(Chart: any): void {
+    const style = getComputedStyle(document.documentElement);
+    Chart.defaults.color = style.getPropertyValue('--chart-text-color').trim() || '#a1a1aa';
+    Chart.defaults.font.family = 'Inter, sans-serif';
+
+    if (Chart.defaults.plugins.tooltip) {
+      Chart.defaults.plugins.tooltip.backgroundColor = style.getPropertyValue('--chart-tooltip-bg').trim() || 'rgba(24, 24, 27, 0.9)';
+      Chart.defaults.plugins.tooltip.titleColor = style.getPropertyValue('--chart-tooltip-text').trim() || '#f4f4f5';
+      Chart.defaults.plugins.tooltip.bodyColor = style.getPropertyValue('--chart-tooltip-text').trim() || '#f4f4f5';
+      Chart.defaults.plugins.tooltip.borderColor = style.getPropertyValue('--chart-tooltip-border').trim() || '#3f3f46';
+      Chart.defaults.plugins.tooltip.borderWidth = 1;
+      Chart.defaults.plugins.tooltip.padding = 12;
+      Chart.defaults.plugins.tooltip.cornerRadius = 8;
+    }
+
+    if (Chart.defaults.scale) {
+      Chart.defaults.scale.grid.color = style.getPropertyValue('--chart-grid-color').trim() || 'rgba(255, 255, 255, 0.05)';
+    }
+
+    Chart.defaults.elements.arc.borderWidth = 3;
+    Chart.defaults.elements.arc.borderColor = style.getPropertyValue('--surface-color').trim() || '#18181b';
+    Chart.defaults.elements.arc.hoverOffset = 8;
+  }
+
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       import('chart.js').then((ChartJs) => {
         import('chartjs-plugin-datalabels').then((DataLabels) => {
           const { Chart, registerables } = ChartJs;
           Chart.register(...registerables, DataLabels.default);
+          this.ChartRef = Chart;
 
-        // Inject Atomic UI tokens into Chart.js defaults
-        const style = getComputedStyle(document.documentElement);
-        Chart.defaults.color = style.getPropertyValue('--chart-text-color').trim() || '#a1a1aa';
-        Chart.defaults.font.family = 'Inter, sans-serif';
-
-        if (Chart.defaults.plugins.tooltip) {
-          Chart.defaults.plugins.tooltip.backgroundColor = style.getPropertyValue('--chart-tooltip-bg').trim() || 'rgba(24, 24, 27, 0.9)';
-          Chart.defaults.plugins.tooltip.titleColor = style.getPropertyValue('--chart-tooltip-text').trim() || '#f4f4f5';
-          Chart.defaults.plugins.tooltip.bodyColor = style.getPropertyValue('--chart-tooltip-text').trim() || '#f4f4f5';
-          Chart.defaults.plugins.tooltip.borderColor = style.getPropertyValue('--chart-tooltip-border').trim() || '#3f3f46';
-          Chart.defaults.plugins.tooltip.borderWidth = 1;
-          Chart.defaults.plugins.tooltip.padding = 12;
-          Chart.defaults.plugins.tooltip.cornerRadius = 8;
-        }
-
-        if (Chart.defaults.scale) {
-          Chart.defaults.scale.grid.color = style.getPropertyValue('--chart-grid-color').trim() || 'rgba(255, 255, 255, 0.05)';
-        }
-
-        // Global Arc (Doughnut/Pie) defaults for depth
-        Chart.defaults.elements.arc.borderWidth = 3;
-        Chart.defaults.elements.arc.borderColor = style.getPropertyValue('--surface-color').trim() || '#18181b';
-        Chart.defaults.elements.arc.hoverOffset = 8;
+          // Aplicar tema inicial
+          this.applyChartTheme(Chart);
 
         // Custom Shadow Plugin for 3D depth on Doughnuts
         // FIX (WebView2): save/restore MUST be unconditional for all chart types.
-        // WebView2 reuses the canvas context between dataset draws; leaving ctx.shadowColor
-        // set on a bar chart causes subsequent datasets to render with an unintended shadow.
         const shadowPlugin = {
           id: 'shadowPlugin',
           beforeDatasetDraw: (chart: any) => {
@@ -85,7 +91,6 @@ export class ChartComponent implements OnInit, OnDestroy {
               ctx.shadowOffsetX = 0;
               ctx.shadowOffsetY = 5;
             }
-            // For all other types: ctx is saved clean, shadow props are at default (none)
           },
           afterDatasetDraw: (chart: any) => {
             chart.ctx.restore(); // Always restore — mirrors the unconditional save above
@@ -98,7 +103,6 @@ export class ChartComponent implements OnInit, OnDestroy {
           Chart.defaults.plugins.datalabels.font = { weight: 'bold', size: 14 };
           Chart.defaults.plugins.datalabels.formatter = function(value: any, context: any) {
             if (typeof value === 'number') {
-              // If it's a percentage (e.g. from a bar chart), add % sign
               if (context.chart.config.type === 'bar') {
                 return (Math.round(value * 100) / 100) + '%';
               }
@@ -113,10 +117,30 @@ export class ChartComponent implements OnInit, OnDestroy {
         }
 
         this.isChartReady.set(true);
+
+        // Observar cambios de tema: data-theme en <html> o clase dark en <body>
+        this.themeObserver = new MutationObserver(() => {
+          this.applyChartTheme(Chart);
+          // Forzar recreación del canvas para que Chart.js aplique los nuevos defaults
+          this.isChartReady.set(false);
+          setTimeout(() => this.isChartReady.set(true), 0);
+        });
+        this.themeObserver.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ['data-theme', 'class']
+        });
+        this.themeObserver.observe(document.body, {
+          attributes: true,
+          attributeFilter: ['data-theme', 'class']
+        });
+
         });
       });
     }
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.themeObserver?.disconnect();
+    this.themeObserver = null;
+  }
 }

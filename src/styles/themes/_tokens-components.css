@@ -126,10 +126,10 @@
    --input-border-focus: var(--primary-color);
    --input-placeholder: var(--text-color-placeholder);
    --input-text: var(--text-color);
-   --input-shadow: 0 2px 8px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
-   /* Sombra visible en inputs: dos capas para efecto de profundidad */
-   --input-shadow-hover: 0 4px 14px rgba(0, 0, 0, 0.18), 0 2px 5px rgba(0, 0, 0, 0.1);
-   /* Sombra elevada al hacer hover sobre el input */
+   --input-shadow: var(--shadow-sm);
+   /* Uniformizado con select2: misma capa de elevacion */
+   --input-shadow-hover: var(--shadow-md);
+   /* Hover elevado — igual que select2 en hover */
    --input-shadow-focus: var(--shadow-focus-primary);
    --form-row-gap: 2.25rem;
    /* 36px - espaciado vertical entre secciones de formulario */
@@ -362,13 +362,9 @@ html.dark {
    --input-border-focus: var(--primary-color);
    --input-placeholder: var(--text-color-placeholder);
    --input-text: var(--text-color);
-   --input-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.25);
-   /* Sombra visible en oscuro */
-   --input-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.35);
+   --input-shadow: var(--shadow-sm);
+   --input-shadow-hover: var(--shadow-md);
    --input-shadow-focus: var(--shadow-focus-primary);
-   --form-row-gap: 2.25rem;
-   --input-disabled-bg: var(--surface-sunken);
-   --input-disabled-text: var(--gray-600);
 
    /* === BOTONES === */
    --button-primary-bg: var(--brand-primary-500);
@@ -590,8 +586,8 @@ html.dark {
    --input-border-focus: var(--primary-color);
    --input-placeholder: var(--text-color-placeholder);
    --input-text: var(--text-color);
-   --input-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.25);
-   --input-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.35);
+   --input-shadow: var(--shadow-sm);
+   --input-shadow-hover: var(--shadow-md);
    --input-shadow-focus: var(--shadow-focus-primary);
    --form-row-gap: 2.25rem;
    --input-disabled-bg: var(--surface-sunken);
