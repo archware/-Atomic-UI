@@ -5,6 +5,18 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [5.1.0] - 2026-07-02
+
+### Uniformizacion UI y Chart reactivo a temas
+
+#### Fixed
+- **Input shadows uniformes con `select2`**: `--input-shadow` y `--input-shadow-hover` ahora usan `var(--shadow-sm)` y `var(--shadow-md)` — la misma escala semantica que `select2`. Los inputs `floating` y `outline` tienen la misma elevacion visual en los 3 temas.
+- **Focus ring de `floating-input` alineado**: El estado focused usaba `0 0 0 3px var(--hover-background)` produciendo un ring diferente al de `select2`. Ahora usa `var(--input-shadow-focus)` = `var(--shadow-focus-primary)`, uniformizando el comportamiento de todos los inputs del sistema.
+- **`chart.component.ts` reactivo a cambios de tema**: Se anadio `MutationObserver` en `data-theme`/`class` de `<html>` y `<body>`. Al cambiar de tema se re-leen los tokens CSS via `getComputedStyle` y se fuerza la recreacion del canvas. Metodo `applyChartTheme()` extraido como privado reutilizable. `ngOnDestroy` desconecta el observer.
+- **`.gitignore` completado**: Anadido `.history/` en `wails-angular-app` y `src-tauri`, y `.env`/`.env.local` en `db_test`.
+
+---
+
 ## [5.0.0] - 2026-07-01
 
 ### Auditoria Profunda del Ecosistema — Sincronizacion Total y Limpieza

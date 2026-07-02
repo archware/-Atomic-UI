@@ -214,7 +214,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     .variant-floating.focused .floating-input {
       border-color: var(--input-border-focus);
-      box-shadow: 0 0 0 3px var(--hover-background);
+      box-shadow: var(--input-shadow-focus);
     }
 
     .variant-floating .input-line {
@@ -304,7 +304,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     .variant-outline.focused .floating-input {
       border-color: var(--input-border-focus);
-      box-shadow: 0 0 0 3px var(--hover-background);
+      box-shadow: var(--input-shadow-focus);
     }
 
     .variant-outline .input-line {
