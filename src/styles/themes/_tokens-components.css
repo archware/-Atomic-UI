@@ -114,6 +114,22 @@
    --chart-grid-color:    rgba(0, 0, 0, 0.06);
    --surface-color:       var(--surface-background);
 
+   /* Paleta de colores de segmentos de gráficos (donut, bar, line)
+      Hardcoded como constantes visuales — igual en todos los temas
+      para mantener identidad cromática de los indicadores. */
+   --chart-color-1:  #ec4899; /* rosa   — Ampolla Mensual      */
+   --chart-color-2:  #3b82f6; /* azul   — Ampolla Trimestral   */
+   --chart-color-3:  #8b5cf6; /* violeta — Preservativo/Barra  */
+   --chart-color-4:  #10b981; /* verde  — Ligaduras (AQV)      */
+   --chart-color-5:  #f59e0b; /* ámbar  — Vasectomías (AQV)    */
+   --chart-color-6:  #14b8a6; /* teal   — DIU / SIU            */
+   --chart-color-7:  #f43f5e; /* rosa   — Implantes            */
+   --chart-color-8:  #84cc16; /* lima   — Oral Combinado       */
+   --chart-color-9:  #a855f7; /* púrpura — Preservativo Fem.   */
+   --chart-color-10: #64748b; /* gris   — Consejería           */
+   /* Color semántico para texto sobre barras de avance */
+   --chart-label-color: var(--text-color-secondary);
+
    /* === FORMULARIOS / INPUTS === */
    --control-height: var(--control-height-md);
    /* Derivado de primitivos - 46px standard */
@@ -351,6 +367,7 @@ html.dark {
    --chart-tooltip-border: var(--border-color);
    --chart-grid-color:     rgba(255, 255, 255, 0.06);
    --surface-color:        var(--surface-background);
+   --chart-label-color:    var(--text-color-secondary);
 
    /* === FORMULARIOS / INPUTS === */
    --input-bg: var(--surface-background);
@@ -577,6 +594,7 @@ html.dark {
    --chart-tooltip-border: var(--border-color);
    --chart-grid-color:     rgba(255, 255, 255, 0.07);
    --surface-color:        var(--surface-background);
+   --chart-label-color:    var(--text-color-secondary);
 
    /* === FORMULARIOS / INPUTS === */
    --input-bg: var(--surface-background);
