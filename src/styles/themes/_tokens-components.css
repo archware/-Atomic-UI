@@ -138,14 +138,15 @@
    /* Más oscuro para contraste */
    --input-border-width: 2.5px;
    /* Grosor óptimo para visibilidad */
-   --input-border-hover: var(--gray-400);
+   --input-border-hover: var(--primary-color);
+   /* Igual que select2: hover usa color primario para look&feel uniforme */
    --input-border-focus: var(--primary-color);
    --input-placeholder: var(--text-color-placeholder);
    --input-text: var(--text-color);
    --input-shadow: var(--shadow-sm);
-   /* Uniformizado con select2: misma capa de elevacion */
+   /* LIGHT: drop shadow clásico (profundidad) */
    --input-shadow-hover: var(--shadow-md);
-   /* Hover elevado — igual que select2 en hover */
+   /* LIGHT: sombra elevada al hacer hover — igual que select2 */
    --input-shadow-focus: var(--shadow-focus-primary);
    --form-row-gap: 2.25rem;
    /* 36px - espaciado vertical entre secciones de formulario */
@@ -375,13 +376,17 @@ html.dark {
    --input-border: var(--gray-600);
    /* Más visible en oscuro */
    --input-border-width: 2.5px;
-   --input-border-hover: var(--gray-500);
+   --input-border-hover: var(--primary-color);
+   /* Igual que select2: hover usa color primario para look&feel uniforme */
    --input-border-focus: var(--primary-color);
    --input-placeholder: var(--text-color-placeholder);
    --input-text: var(--text-color);
-   --input-shadow: var(--shadow-sm);
-   --input-shadow-hover: var(--shadow-md);
+   --input-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 2px 6px rgba(0, 0, 0, 0.40);
+   /* DARK: anillo blanco nítido + sombra oscura — visible sobre fondos oscuros */
+   --input-shadow-hover: 0 0 0 1.5px rgba(255, 255, 255, 0.22), 0 4px 12px rgba(0, 0, 0, 0.55);
+   /* DARK: anillo blanco más fuerte en hover */
    --input-shadow-focus: var(--shadow-focus-primary);
+   --form-row-gap: 2.25rem;
 
    /* === BOTONES === */
    --button-primary-bg: var(--brand-primary-500);
@@ -600,12 +605,15 @@ html.dark {
    --input-bg: var(--surface-background);
    --input-border: var(--gray-600);
    --input-border-width: 2.5px;
-   --input-border-hover: var(--gray-500);
+   --input-border-hover: var(--primary-color);
+   /* Igual que select2: hover usa color primario */
    --input-border-focus: var(--primary-color);
    --input-placeholder: var(--text-color-placeholder);
    --input-text: var(--text-color);
-   --input-shadow: var(--shadow-sm);
-   --input-shadow-hover: var(--shadow-md);
+   --input-shadow: 0 0 0 1px rgba(188, 154, 187, 0.18), 0 2px 6px rgba(0, 0, 0, 0.50);
+   /* BRAND-DARK: glow de marca (primary violeta) + sombra profunda */
+   --input-shadow-hover: 0 0 0 2px rgba(188, 154, 187, 0.38), 0 4px 14px rgba(0, 0, 0, 0.60);
+   /* BRAND-DARK: glow primario más fuerte en hover */
    --input-shadow-focus: var(--shadow-focus-primary);
    --form-row-gap: 2.25rem;
    --input-disabled-bg: var(--surface-sunken);
