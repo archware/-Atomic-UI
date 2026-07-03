@@ -37,6 +37,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   @Input() height = '300px';
 
   private platformId = inject(PLATFORM_ID);
+  private el = inject(ElementRef);
   isChartReady = signal(false);
 
   private themeObserver: MutationObserver | null = null;
@@ -44,7 +45,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   /** Lee los tokens CSS actuales y los aplica a los defaults globales de Chart.js */
   private applyChartTheme(Chart: any): void {
-    const style = getComputedStyle(document.documentElement);
+    const style = getComputedStyle(this.el.nativeElement);
     Chart.defaults.color = style.getPropertyValue('--chart-text-color').trim() || '#a1a1aa';
     Chart.defaults.font.family = 'Inter, sans-serif';
 
