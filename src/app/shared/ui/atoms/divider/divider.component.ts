@@ -55,7 +55,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
       flex-direction: column;
       width: auto;
       height: 100%;
-      min-height: 1.5rem;
+      min-height: var(--space-5);
     }
 
     .divider::before,
@@ -71,16 +71,16 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
       height: auto;
       width: 1px;
       flex: 1;
-      min-height: 0.75rem;
+      min-height: var(--space-3);
     }
 
     /* Variants */
     .divider--light { opacity: 0.4; }
 
     .divider--strong::before,
-    .divider--strong::after { height: 2px; }
+    .divider--strong::after { height: var(--space-1); }
     .divider--strong.divider--vertical::before,
-    .divider--strong.divider--vertical::after { width: 2px; height: auto; }
+    .divider--strong.divider--vertical::after { width: var(--space-1); height: auto; }
 
     .divider--dashed::before,
     .divider--dashed::after {

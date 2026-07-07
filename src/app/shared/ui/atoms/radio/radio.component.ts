@@ -118,12 +118,12 @@ export interface RadioOption {
     }
 
     .radio-circle {
-      width: var(--checkbox-size, 1.5rem);
-      height: var(--checkbox-size, 1.5rem);
+      width: var(--checkbox-size, var(--space-5));
+      height: var(--checkbox-size, var(--space-5));
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid var(--border-color);
+      border: var(--space-1) solid var(--border-color);
       border-radius: var(--radius-full);
       background: var(--surface-background);
       transition: all 200ms ease;
@@ -131,8 +131,8 @@ export interface RadioOption {
     }
 
     .radio-dot {
-      width: calc(var(--checkbox-size, 1.5rem) * 0.5);
-      height: calc(var(--checkbox-size, 1.5rem) * 0.5);
+      width: calc(var(--checkbox-size, var(--space-5)) * 0.5);
+      height: calc(var(--checkbox-size, var(--space-5)) * 0.5);
       border-radius: var(--radius-full);
       background: var(--text-color-on-primary);
       opacity: 0;
@@ -158,7 +158,7 @@ export interface RadioOption {
 
     /* Focus */
     .radio-input:focus-visible + .radio-circle {
-      box-shadow: var(--shadow-focus-primary);
+      box-shadow: var(--input-shadow-focus);
     }
 
     .radio-label {

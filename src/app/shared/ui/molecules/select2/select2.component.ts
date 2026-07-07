@@ -162,7 +162,7 @@ export interface Select2Option {
       align-items: center;
       height: var(--control-height);
       padding: var(--space-1) var(--space-3);
-      padding-right: 2.75rem;
+      padding-right: var(--space-11);
       background: var(--input-bg);
       border: var(--input-border-width, 1.5px) solid var(--input-border);
       border-radius: var(--radius-md);
@@ -208,7 +208,7 @@ export interface Select2Option {
       min-height: var(--control-height);
       height: auto;
       padding: var(--space-1) var(--space-3);
-      padding-right: 2.75rem;
+      padding-right: var(--space-11);
       align-items: center;
     }
 
@@ -219,7 +219,7 @@ export interface Select2Option {
     }
 
     .select2-wrapper.focused .select2-trigger {
-      box-shadow: var(--shadow-focus-primary);
+      box-shadow: var(--input-shadow-focus);
     }
 
     .select2-value {
@@ -274,8 +274,8 @@ export interface Select2Option {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 1rem;
-      height: 1rem;
+      width: var(--space-4);
+      height: var(--space-4);
       padding: 0;
       background: none;
       border: none;
@@ -299,7 +299,7 @@ export interface Select2Option {
       background: var(--dropdown-bg);
       border: 1px solid var(--dropdown-border);
       border-radius: var(--radius-md);
-      box-shadow: var(--shadow-dropdown);
+      box-shadow: var(--shadow-lg);
       z-index: 10000;
       animation: dropdownSlide 200ms ease;
       overflow: hidden;
@@ -308,7 +308,7 @@ export interface Select2Option {
     }
 
     @keyframes dropdownSlide {
-      from { opacity: 0; transform: translateY(-8px); }
+      from { opacity: 0; transform: translateY(-var(--space-2)); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -322,7 +322,7 @@ export interface Select2Option {
     .search-input {
       width: 100%;
       padding: var(--space-2) var(--space-3);
-      padding-left: 2.25rem;
+      padding-left: var(--space-7);
       font-size: var(--text-md);
       border: 1px solid var(--input-border);
       border-radius: var(--radius-sm);
@@ -339,9 +339,9 @@ export interface Select2Option {
     }
 
     .search-input:focus {
-      border-color: var(--primary-color);
+      border-color: var(--input-border-focus);
       background: var(--input-bg);
-      box-shadow: var(--shadow-focus-primary);
+      box-shadow: var(--input-shadow-focus);
     }
 
     .search-icon {
@@ -358,6 +358,21 @@ export interface Select2Option {
       overflow-y: auto;
     }
 
+    /* Custom Scrollbar for dropdown */
+    .select2-options::-webkit-scrollbar {
+      width: 6px;
+    }
+    .select2-options::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .select2-options::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: var(--radius-full);
+    }
+    .select2-options::-webkit-scrollbar-thumb:hover {
+      background: var(--text-color-muted);
+    }
+
     .select2-option {
       display: flex;
       align-items: center;
@@ -368,6 +383,8 @@ export interface Select2Option {
       cursor: pointer;
       transition: background 100ms ease;
     }
+    
+
 
     .select2-option:hover:not(.disabled),
     .select2-option.highlighted:not(.disabled) {
@@ -465,12 +482,24 @@ export class Select2Component implements ControlValueAccessor {
     if (!this.disabled) {
       this.isOpen.update(v => !v);
       if (this.isOpen()) {
-        this.highlightedIndex.set(0);
+        const options = this.filteredOptions();
+        let selectedIdx = 0;
+        if (!this.multiple && this.selectedOption()) {
+           selectedIdx = options.findIndex(o => o.value === this.selectedOption()!.value);
+           if (selectedIdx === -1) selectedIdx = 0;
+        }
+        this.highlightedIndex.set(selectedIdx);
+        
         // Focus search input if searchable
         if (this.searchable) {
           setTimeout(() => {
             const searchInput = this.elementRef.nativeElement.querySelector('.search-input');
             if (searchInput) searchInput.focus();
+            this.scrollToHighlighted();
+          }, 0);
+        } else {
+          setTimeout(() => {
+            this.scrollToHighlighted();
           }, 0);
         }
       } else {

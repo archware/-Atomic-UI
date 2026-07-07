@@ -75,6 +75,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
     .card {
       display: flex;
       flex-direction: column;
+      height: 100%;
       background: var(--surface-background);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
@@ -83,12 +84,15 @@ export type CardSize = 'sm' | 'md' | 'lg';
          La imagen se clips con overflow: hidden en .card__image directamente. */
       overflow: visible;
       transition: all 200ms ease;
-      /* Container query: la card es su propio contexto de contenedor.
-         Los hijos pueden adaptar su layout basándose en el ancho de la card,
-         no en el viewport (@container en lugar de @media). */
-      container-type: inline-size;
-      container-name: card;
-    }
+    /* Container query: la card es su propio contexto de contenedor.
+       Los hijos pueden adaptar su layout basándose en el ancho de la card,
+       no en el viewport (@container en lugar de @media). */
+    container-type: inline-size;
+    container-name: card;
+  }
+  :host {
+    display: block;
+  }
 
     /* Footer se apila verticalmente cuando la card es muy angosta (< 280px) */
     @container card (max-width: 280px) {
@@ -105,13 +109,14 @@ export type CardSize = 'sm' | 'md' | 'lg';
     }
 
     .card--elevated {
-      border: none;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-color); /* keeping border for depth as requested by user */
       box-shadow: var(--shadow-md);
     }
 
     .card--elevated:hover {
       box-shadow: var(--shadow-lg);
-      transform: translateY(-2px);
+      transform: translateY(-var(--space-1));
     }
 
     .card--outlined {
@@ -132,7 +137,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
 
     .card--interactive:hover {
       box-shadow: var(--shadow-md);
-      transform: translateY(-2px);
+      transform: translateY(-var(--space-1));
       border-color: var(--primary-color);
     }
 
@@ -266,7 +271,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
     }
 
     /* === Responsive === */
-    @media (max-width: 768px) {
+    @media (max-width: 76var(--space-2)) {
       .card--horizontal {
         flex-direction: column;
       }

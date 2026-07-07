@@ -59,20 +59,20 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
       background: var(--table-header-bg);
       
       /* Borde sutil inferior para separar del contenido */
-      border-top: var(--table-header-border-width, 2px) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
-      border-bottom: var(--table-header-border-width, 2px) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
+      border-top: var(--table-header-border-width, var(--space-1)) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
+      border-bottom: var(--table-header-border-width, var(--space-1)) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
     }
 
     .atomic-thead th:first-child,
     .atomic-thead th[app-table-header-cell]:first-child {
-      border-left: var(--table-header-border-width, 2px) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
+      border-left: var(--table-header-border-width, var(--space-1)) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
       border-top-left-radius: var(--table-header-radius);
       border-bottom-left-radius: var(--table-header-radius);
     }
 
     .atomic-thead th:last-child,
     .atomic-thead th[app-table-header-cell]:last-child {
-      border-right: var(--table-header-border-width, 2px) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
+      border-right: var(--table-header-border-width, var(--space-1)) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
       border-top-right-radius: var(--table-header-radius);
       border-bottom-right-radius: var(--table-header-radius);
       padding-right: var(--space-6);

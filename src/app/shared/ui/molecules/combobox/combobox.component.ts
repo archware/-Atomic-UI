@@ -137,8 +137,8 @@ export interface ComboboxOption {
     }
 
     .combobox-input:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px var(--primary-color-alpha);
+      border-color: var(--input-border-focus);
+      box-shadow: var(--input-shadow-focus);
     }
 
     .combobox-input:disabled {

@@ -75,7 +75,7 @@ export type ChipSize = 'sm' | 'md' | 'lg';
       border: 1px solid transparent;
     }
 
-    .chip-sm { padding: 3px var(--space-2); font-size: var(--text-xs); }
+    .chip-sm { padding: var(--space-1) var(--space-2); font-size: var(--text-xs); }
     .chip-md { padding: var(--space-1) var(--space-2); font-size: var(--text-xs); }
     .chip-lg { padding: var(--space-1) var(--space-3); font-size: var(--text-sm); }
 

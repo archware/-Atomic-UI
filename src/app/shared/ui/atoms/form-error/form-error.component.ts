@@ -32,8 +32,8 @@ import { ValidationService } from '../../services/validation.service';
     .form-error {
       display: flex;
       align-items: flex-start;
-      gap: 0.375rem;
-      margin-top: 0.25rem;
+      gap: var(--space-2);
+      margin-top: var(--space-1);
       font-size: 0.8125rem;
       color: var(--danger-color, #ef4444);
       animation: error-in 150ms ease;
@@ -45,8 +45,8 @@ import { ValidationService } from '../../services/validation.service';
     }
 
     .error-icon {
-      font-size: 0.75rem;
-      margin-top: 0.125rem;
+      font-size: var(--space-3);
+      margin-top: var(--space-1);
       flex-shrink: 0;
     }
 

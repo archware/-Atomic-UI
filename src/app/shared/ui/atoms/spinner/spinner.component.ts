@@ -57,16 +57,16 @@ export type SpinnerVariant = 'primary' | 'secondary' | 'white' | 'current';
     }
 
     /* Sizes */
-    .spinner--xs  { --sz: 12px; --border: 1.5px; }
-    .spinner--sm  { --sz: 16px; --border: 2px;   }
+    .spinner--xs  { --sz: 1var(--space-1); --border: 1.5px; }
+    .spinner--sm  { --sz: 1var(--space-2); --border: var(--space-1);   }
     .spinner--md  { --sz: 24px; --border: 2.5px; }
-    .spinner--lg  { --sz: 36px; --border: 3px;   }
-    .spinner--xl  { --sz: 48px; --border: 4px;   }
+    .spinner--lg  { --sz: 3var(--space-2); --border: var(--space-1);   }
+    .spinner--xl  { --sz: 4var(--space-2); --border: 4px;   }
 
     /* Variants — track color */
     .spinner--primary .spinner__ring  { border-color: var(--primary-color-alpha, rgba(59,130,246,.25)); border-top-color: var(--primary-color, #3b82f6); }
     .spinner--secondary .spinner__ring { border-color: var(--secondary-color-alpha, rgba(100,116,139,.25)); border-top-color: var(--secondary-color, #64748b); }
-    .spinner--white .spinner__ring    { border-color: rgba(255,255,255,.3); border-top-color: #fff; }
+    .spinner--white .spinner__ring    { border-color: var(--border-color); border-top-color: var(--gray-0); }
     .spinner--current .spinner__ring  { border-color: transparent; border-top-color: currentColor; }
 
     .spinner__ring {

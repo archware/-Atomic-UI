@@ -151,8 +151,8 @@ export interface NavBarBrand {
     }
     .navbar--dark .navbar__brand-name,
     .navbar--dark .navbar__link { color: rgba(255,255,255,.9); }
-    .navbar--dark .navbar__link:hover { background: rgba(255,255,255,.1); color: #fff; }
-    .navbar--dark .navbar__link--active { background: rgba(255,255,255,.15); color: #fff; }
+    .navbar--dark .navbar__link:hover { background: var(--hover-background-subtle); color: var(--gray-0); }
+    .navbar--dark .navbar__link--active { background: var(--hover-background-subtle); color: var(--gray-0); }
     .navbar--dark .navbar__mobile-toggle { color: rgba(255,255,255,.9); }
 
     .navbar--primary {
@@ -161,8 +161,8 @@ export interface NavBarBrand {
     }
     .navbar--primary .navbar__brand-name,
     .navbar--primary .navbar__link { color: rgba(255,255,255,.9); }
-    .navbar--primary .navbar__link:hover { background: rgba(255,255,255,.15); color: #fff; }
-    .navbar--primary .navbar__link--active { background: rgba(255,255,255,.25); color: #fff; }
+    .navbar--primary .navbar__link:hover { background: var(--hover-background-subtle); color: var(--gray-0); }
+    .navbar--primary .navbar__link--active { background: var(--button-primary-bg-hover); color: var(--gray-0); }
     .navbar--primary .navbar__mobile-toggle { color: rgba(255,255,255,.9); }
 
     .navbar--transparent {
@@ -178,7 +178,7 @@ export interface NavBarBrand {
       text-decoration: none;
       flex-shrink: 0;
     }
-    .navbar__logo { height: 28px; width: auto; }
+    .navbar__logo { height: 2var(--space-2); width: auto; }
     .navbar__brand-name {
       font-size: var(--text-base);
       font-weight: var(--font-semibold, 600);
@@ -237,8 +237,8 @@ export interface NavBarBrand {
       display: none;
       align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
+      width: 3var(--space-2);
+      height: 3var(--space-2);
       border: none;
       border-radius: var(--radius-md);
       background: transparent;
@@ -279,7 +279,7 @@ export interface NavBarBrand {
     }
 
     /* Responsive */
-    @media (max-width: 768px) {
+    @media (max-width: 76var(--space-2)) {
       .navbar__nav { display: none; }
       .navbar__actions { display: none; }
       .navbar__mobile-toggle { display: flex; }

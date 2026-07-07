@@ -45,7 +45,7 @@ import { Select2Component } from '../select2/select2.component';
             [disabled]="currentPage() === 1"
             (click)="goToPage(currentPage() - 1)"
           >
-            <i class="fa-solid fa-arrow-left" aria-hidden="true" style="margin-right: 0.5rem"></i> Anterior
+            <i class="fa-solid fa-arrow-left" aria-hidden="true" style="margin-right: var(--space-2)"></i> Anterior
           </button>
           
           <span class="page-minimal-text">
@@ -57,7 +57,7 @@ import { Select2Component } from '../select2/select2.component';
             [disabled]="currentPage() === totalPages()"
             (click)="goToPage(currentPage() + 1)"
           >
-            Siguiente <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left: 0.5rem"></i>
+            Siguiente <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left: var(--space-2)"></i>
           </button>
         } @else {
           <button type="button"
@@ -261,7 +261,7 @@ import { Select2Component } from '../select2/select2.component';
 
     /* Rounded Variant */
     .pagination-rounded .page-btn {
-      border-radius: 9999px; /* Fully rounded */
+      border-radius: var(--radius-full); /* Fully rounded */
       border: none;
       background: transparent;
     }
@@ -273,16 +273,16 @@ import { Select2Component } from '../select2/select2.component';
     .pagination-rounded .page-btn.active {
       background: var(--primary-color);
       color: var(--text-color-on-primary);
-      box-shadow: 0 2px 4px rgba(var(--primary-rgb), 0.3);
+      box-shadow: 0 var(--space-1) 4px rgba(var(--primary-rgb), 0.3);
     }
 
     /* Cards Variant */
     .pagination-cards .page-btn {
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-color);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      box-shadow: 0 1px var(--space-1) rgba(0,0,0,0.05);
       background: var(--surface-background);
-      margin: 0 2px;
+      margin: 0 var(--space-1);
     }
 
     .pagination-cards .page-btn.active {

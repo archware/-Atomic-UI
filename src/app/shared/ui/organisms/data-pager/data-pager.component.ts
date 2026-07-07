@@ -85,19 +85,19 @@ import { Select2Component } from '../../molecules/select2/select2.component';
       background: var(--surface-background);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+      box-shadow: 0 1px var(--space-1) rgba(0,0,0,0.02);
     }
 
     .pager-group {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: var(--space-5);
     }
 
     .pager-page-size-group {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: var(--space-2);
     }
 
     .page-size-select-wrapper {
@@ -108,7 +108,7 @@ import { Select2Component } from '../../molecules/select2/select2.component';
     .pager-controls {
       display: flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: var(--space-1);
     }
 
     /* Modificamos el Select2 para que se vea más pequeño / compacto */
@@ -116,15 +116,15 @@ import { Select2Component } from '../../molecules/select2/select2.component';
       width: 100%;
     }
     ::ng-deep .page-size-select-wrapper .select2-trigger {
-      min-height: 32px !important;
-      height: 32px !important;
-      padding: 0 0.5rem !important;
+      min-height: 3var(--space-1) !important;
+      height: 3var(--space-1) !important;
+      padding: 0 var(--space-2) !important;
       border-radius: var(--radius-sm);
       font-size: var(--text-sm);
       font-weight: 600;
     }
     ::ng-deep .page-size-select-wrapper .select2-value {
-      line-height: 32px;
+      line-height: 3var(--space-1);
       margin: 0;
     }
 
@@ -132,7 +132,7 @@ import { Select2Component } from '../../molecules/select2/select2.component';
     @media (max-width: 640px) {
       .data-pager-container {
         flex-direction: column;
-        gap: 1rem;
+        gap: var(--space-4);
         align-items: flex-start;
       }
       .pager-group {

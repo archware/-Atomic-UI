@@ -63,7 +63,7 @@
 .form-textarea:focus {
   border-color: var(--input-border-focus);
   outline: 0;
-  box-shadow: var(--shadow-focus-primary);
+  box-shadow: var(--input-shadow-focus);
 }
 
 /* Disabled state */
@@ -184,17 +184,17 @@ html.dark .form-select {
   margin-bottom: 0.5rem;
   font-size: 0.9375rem;
   font-weight: 500;
-  color: var(--text-color);
+  color: var(--info-color);
 }
 
 .form-group {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem; /* 24px vertical gap */
 }
 
 .form-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.25rem;
+  gap: var(--form-row-gap, 2.25rem); /* 36px horizontal gap */
   margin-right: -5px;
   margin-left: -5px;
 }

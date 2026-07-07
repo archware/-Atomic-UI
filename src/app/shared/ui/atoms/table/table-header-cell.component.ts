@@ -50,7 +50,7 @@ export type SortDirection = 'asc' | 'desc' | null;
     .th-content {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: var(--space-2);
     }
 
     .sort-indicator {

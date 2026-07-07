@@ -50,7 +50,7 @@ export type ProgressSize = 'sm' | 'md' | 'lg';
   styles: [`
     :host { display: block; width: 100%; }
 
-    .progress-wrapper { display: flex; flex-direction: column; gap: 0.375rem; }
+    .progress-wrapper { display: flex; flex-direction: column; gap: var(--space-2); }
 
     .progress-header {
       display: flex;
@@ -80,8 +80,8 @@ export type ProgressSize = 'sm' | 'md' | 'lg';
     }
 
     .progress-track--sm { height: 4px; }
-    .progress-track--md { height: 8px; }
-    .progress-track--lg { height: 12px; }
+    .progress-track--md { height: var(--space-2); }
+    .progress-track--lg { height: 1var(--space-1); }
 
     .progress-bar {
       height: 100%;

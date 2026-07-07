@@ -68,7 +68,7 @@ export type RowVariant = 'default' | 'form';
 
     /* Form variant: add margin-bottom for form spacing */
     :host:has(.row--variant-form) {
-      margin-bottom: 1.25rem;
+      margin-bottom: var(--space-5); /* 24px vertical */
     }
 
     .row {
@@ -130,7 +130,7 @@ export type RowVariant = 'default' | 'form';
     @media (max-width: 640px) {
       .row:not(.row--responsive) {
         grid-template-columns: 1fr !important;
-        gap: 1.25rem !important;
+        gap: var(--space-5) !important; /* 24px vertical on mobile */
       }
     }
   `]
@@ -143,7 +143,7 @@ export class RowComponent {
   @Input() columns?: string;
 
   /** Gap between columns */
-  @Input() gap = '1.5rem';
+  @Input() gap = 'var(--space-7)'; /* 3var(--space-2) default horizontal gap */
 
   /** Horizontal column content alignment */
   @Input() align: RowAlign = 'stretch';
@@ -157,7 +157,7 @@ export class RowComponent {
   /** 
    * Layout variant
    * - 'default': Standard grid layout
-   * - 'form': Form layout (1fr 1fr, gap 1.25rem, margin-bottom)
+   * - 'form': Form layout (1fr 1fr, gap var(--space-5), margin-bottom)
    */
   @Input() variant: RowVariant = 'default';
 
@@ -203,7 +203,7 @@ export class RowComponent {
   /** Computed gap based on variant */
   get computedGap(): string {
     if (this.variant === 'form') {
-      return '1.25rem';
+      return 'var(--space-5) var(--space-7)'; /* 24px vertical, 3var(--space-2) horizontal */
     }
     return this.gap;
   }

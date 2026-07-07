@@ -110,14 +110,14 @@ export interface FileInputFile {
     :host { display: block; }
 
     .file-label {
-      display: block; margin-bottom: 0.5rem;
+      display: block; margin-bottom: var(--space-2);
       font-size: var(--text-sm); font-weight: 500; color: var(--text-color);
     }
 
     .drop-zone {
-      border: 2px dashed var(--border-color);
+      border: var(--space-1) dashed var(--border-color);
       border-radius: var(--radius-md);
-      padding: 2rem 1.5rem;
+      padding: var(--space-6) var(--space-5);
       text-align: center;
       cursor: pointer;
       transition: border-color 0.2s, background 0.2s;
@@ -125,44 +125,44 @@ export interface FileInputFile {
       outline: none;
     }
     .drop-zone:hover,
-    .drop-zone:focus-visible { border-color: var(--primary-color); background: var(--surface-hover); }
+    .drop-zone:focus-visible { border-color: var(--input-border-focus); background: var(--surface-hover); }
 
-    .drag-over .drop-zone { border-color: var(--primary-color); background: var(--surface-hover); }
+    .drag-over .drop-zone { border-color: var(--input-border-focus); background: var(--surface-hover); }
     .disabled .drop-zone { opacity: 0.5; pointer-events: none; cursor: not-allowed; }
 
-    .drop-icon { font-size: 2rem; color: var(--text-color-muted); display: block; margin-bottom: 0.5rem; }
-    .drop-text  { margin: 0.25rem 0; font-size: var(--text-sm); color: var(--text-color-secondary); }
-    .drop-hint  { margin: 0.125rem 0 0; font-size: var(--text-xs); color: var(--text-color-muted); }
+    .drop-icon { font-size: var(--space-6); color: var(--text-color-muted); display: block; margin-bottom: var(--space-2); }
+    .drop-text  { margin: var(--space-1) 0; font-size: var(--text-sm); color: var(--text-color-secondary); }
+    .drop-hint  { margin: var(--space-1) 0 0; font-size: var(--text-xs); color: var(--text-color-muted); }
 
     .file-hidden { display: none; }
 
     .file-hint {
-      margin: 0 0 0.5rem;
+      margin: 0 0 var(--space-2);
       font-size: var(--text-xs);
       color: var(--text-color-muted);
     }
 
     .file-error {
-      display: flex; align-items: center; gap: 0.375rem;
-      margin: 0.5rem 0 0;
+      display: flex; align-items: center; gap: var(--space-2);
+      margin: var(--space-2) 0 0;
       font-size: var(--text-sm); color: var(--color-error, #ef4444);
     }
 
     .file-list {
-      list-style: none; margin: 0.75rem 0 0; padding: 0;
-      display: flex; flex-direction: column; gap: 0.5rem;
+      list-style: none; margin: var(--space-3) 0 0; padding: 0;
+      display: flex; flex-direction: column; gap: var(--space-2);
     }
 
     .file-item {
-      display: flex; align-items: center; gap: 0.75rem;
-      padding: 0.5rem 0.75rem;
+      display: flex; align-items: center; gap: var(--space-3);
+      padding: var(--space-2) var(--space-3);
       background: var(--surface-section);
       border-radius: var(--radius-sm);
       border: 1px solid var(--border-color);
     }
 
     .file-preview {
-      width: 2rem; height: 2rem; object-fit: cover;
+      width: var(--space-6); height: var(--space-6); object-fit: cover;
       border-radius: var(--radius-xs, 4px); flex-shrink: 0;
     }
     .file-icon { color: var(--text-color-muted); flex-shrink: 0; }
@@ -174,7 +174,7 @@ export interface FileInputFile {
 
     .file-remove {
       background: none; border: none; cursor: pointer;
-      padding: 0.25rem 0.375rem;
+      padding: var(--space-1) var(--space-2);
       color: var(--text-color-muted);
       border-radius: var(--radius-xs, 4px);
       transition: color 0.15s, background 0.15s;

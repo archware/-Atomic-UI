@@ -100,7 +100,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         Chart.register(shadowPlugin);
 
         if (Chart.defaults.plugins.datalabels) {
-          Chart.defaults.plugins.datalabels.color = '#fff';
+          Chart.defaults.plugins.datalabels.color = 'var(--gray-0)';
           Chart.defaults.plugins.datalabels.font = { weight: 'bold', size: 14 };
           Chart.defaults.plugins.datalabels.formatter = function(value: any, context: any) {
             if (typeof value === 'number') {

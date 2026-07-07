@@ -65,3 +65,7 @@ La solución robusta es detener la propagación del evento `click` en la opción
 **Solución Arquitectónica**: En el cálculo de geometría (`syncGeometry`), el componente debe leer dinámicamente la altura reservada del header (`this.tableHead.offsetHeight`) y utilizar ese valor como un offset tanto para el inicio del recorrido (`top = offset`) como para recortar la altura de la vía (`barHeight = containerHeight - offset`). A nivel de motor lógico (`updateVerticalThumb`), la matemática que calcula la altura del thumb de scroll también debe iterar sobre el nuevo tamaño neto de la vía y no sobre todo el viewport general del contenedor.
 
 ---
+
+## [2026-07-06] - Uso Correcto de Variantes de Tarjeta y Alineación (Atomic-UI)
+- **Problema:** Al utilizar <app-card variant="filled"> en contenedores grid, los fondos se veían planos sin profundidad, y el texto interior no se alineaba verticalmente causando desbalances estéticos. Inicialmente se intentó "hackear" el CSS agregando bordes y sombras al variant illed.
+- **Solución y Regla de Oro:** NO hackear los estilos base. El sistema Atomic-UI contiene la variante elevated que utiliza el color de fondo --surface-elevated y aplica las sombras predefinidas según el tema claro/oscuro. Además, para las cuadrículas (CSS Grid), el contenedor interno de la tarjeta debe utilizar class="text-center h-full d-flex flex-col justify-center" para alinear los elementos dinámicamente y centrar de forma perfecta.

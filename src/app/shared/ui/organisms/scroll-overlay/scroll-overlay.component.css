@@ -9,17 +9,17 @@
   --so-thumb-color-hover: rgba(0, 0, 0, 0.45);
   --so-thumb-color-active: rgba(0, 0, 0, 0.6);
   --so-track-size: 7px;
-  --so-thumb-blur: 2px;
+  --so-thumb-blur: var(--space-1);
   --so-min-column-width: 140px;
 }
 
 /* Outer border for tables to provide rounded corners and enclosing border */
 .so-root[data-so-table] {
   border: 1px solid var(--table-color-border, var(--border-color, #ccc));
-  border-radius: var(--table-border-radius, 8px);
+  border-radius: var(--table-border-radius, var(--space-2));
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 76var(--space-2)) {
   .so-root[data-so-table] {
     border: none;
     border-radius: 0;
@@ -60,7 +60,7 @@ html.dark .so-root,
 /* Agregamos padding al área scrolleable para dar respiro al final y asegurar que el último registro se vea por completo */
 .so-scroll-area,
 .so-root[data-so-table] tbody[data-so-vertical] {
-  padding-bottom: calc(var(--so-track-size) + 16px);
+  padding-bottom: calc(var(--so-track-size) + 1var(--space-2));
 }
 
 /* Cuando hay tabla, el div maneja el scroll */
@@ -128,7 +128,7 @@ html.dark .so-root,
 }
 
 .so-scrollbar-y {
-  right: 2px;
+  right: var(--space-1);
   top: 0;
   width: var(--so-track-size);
   height: 0;
@@ -147,7 +147,7 @@ html.dark .so-root,
 
 .so-thumb {
   position: absolute;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   backdrop-filter: blur(var(--so-thumb-blur));
   will-change: transform, width, height, opacity;
   pointer-events: auto;
@@ -169,7 +169,7 @@ html.dark .so-root,
   top: 0;
   right: 0;
   width: 100%;
-  height: 32px;
+  height: 3var(--space-1);
   transform: translateY(0);
   background: linear-gradient(180deg, var(--so-thumb-color-start), var(--so-thumb-color-end));
 }
@@ -178,7 +178,7 @@ html.dark .so-root,
   left: 0;
   top: 0;
   height: 100%;
-  width: 32px;
+  width: 3var(--space-1);
   transform: translateX(0);
 }
 

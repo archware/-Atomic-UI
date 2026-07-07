@@ -89,7 +89,7 @@
  */
 
 /* Responsive - Mobile/Tablet */
-@media (max-width: 768px) {
+@media (max-width: 76var(--space-2)) {
   .layout-shell {
     grid-template-columns: 1fr;
     grid-template-rows: 64px 1fr;

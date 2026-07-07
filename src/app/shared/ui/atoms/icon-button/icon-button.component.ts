@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-
 export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
 
 @Component({
@@ -35,18 +34,16 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
       height: var(--control-height);
       padding: 0;
       background: transparent;
-      border: none;
+      border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
       color: var(--text-color-secondary);
       cursor: pointer;
       transition: all 0.2s ease;
       position: relative;
     }
 
-    .icon-btn:hover {
-      background: var(--surface-hover);
-      color: var(--primary-color);
-    }
+    .icon-btn:hover { background: var(--surface-hover); color: var(--primary-color); transform: translateY(-2px) scale(1.05); box-shadow: var(--shadow-md); filter: brightness(1.1); }
 
     .icon-btn:active {
       transform: scale(0.95);
@@ -61,15 +58,24 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
     }
 
     /* Ghost variant - más sutil */
+    .icon-btn--ghost {
+      border: 1px solid transparent;
+      box-shadow: none;
+    }
+
     .icon-btn--ghost:hover {
       background: transparent;
       color: var(--primary-color);
+      box-shadow: none;
+      border: 1px solid transparent;
     }
 
     /* Avatar variant - circular con gradiente */
     .icon-btn--avatar {
       background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
       border-radius: 50%;
+      border: none;
+      box-shadow: none;
       color: var(--text-color-on-primary);
     }
 
@@ -82,10 +88,10 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
     /* Badge */
     .icon-btn__badge {
       position: absolute;
-      top: 2px;
-      right: 2px;
-      min-width: 16px;
-      height: 16px;
+      top: var(--space-1);
+      right: var(--space-1);
+      min-width: var(--space-2);
+      height: var(--space-2);
       padding: 0 4px;
       font-size: 0.625rem;
       font-weight: 600;
@@ -102,12 +108,6 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
       width: 20px;
       height: 20px;
     }
-
-    /* 
-     * Dark mode se maneja automáticamente via tokens semánticos.
-     * --surface-hover, --primary-color, --shadow-glow-primary
-     * ya tienen valores apropiados para temas oscuros.
-     */
   `]
 })
 export class IconButtonComponent {

@@ -63,7 +63,7 @@ export interface Step {
       display: flex;
       align-items: flex-start;
       width: 100%;
-      padding: 1rem 0.25rem;
+      padding: var(--space-4) var(--space-1);
       min-width: 0;
     }
 
@@ -90,8 +90,8 @@ export interface Step {
 
     /* STEP INDICATOR (CIRCLE) */
     .step-indicator {
-      width: 2.75rem;
-      height: 2.75rem;
+      width: var(--space-11);
+      height: var(--space-11);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -100,7 +100,7 @@ export interface Step {
       color: var(--text-color-secondary);
       font-size: var(--text-md);
       font-weight: 700;
-      border: 2px solid var(--border-color);
+      border: var(--space-1) solid var(--border-color);
       transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
       flex-shrink: 0;
       box-shadow: var(--shadow-xs);
@@ -132,7 +132,7 @@ export interface Step {
       display: flex;
       flex-direction: column;
       gap: var(--space-1);
-      min-height: 2.75rem;
+      min-height: var(--space-11);
       justify-content: center;
       min-width: 0;
       flex: 1 1 0;
@@ -151,7 +151,7 @@ export interface Step {
     .stepper:not(.stepper-vertical) .step {
       flex-direction: column;
       align-items: center;
-      gap: var(--space-2, 0.5rem);
+      gap: var(--space-2, var(--space-2));
     }
 
     .stepper:not(.stepper-vertical) .step-content {
@@ -192,14 +192,14 @@ export interface Step {
       font-size: var(--text-xs);
       color: var(--text-color-muted);
       font-style: italic;
-      margin-top: -0.125rem;
+      margin-top: -var(--space-1);
     }
 
     /* CONNECTOR LINES */
     .step-connector {
-      flex: 0 0 2rem;
-      height: 3px;
-      min-width: 1rem;
+      flex: 0 0 var(--space-6);
+      height: var(--space-1);
+      min-width: var(--space-4);
       margin: var(--space-5, 1.375rem) var(--space-1) 0;
       background: var(--border-color);
       transition: background 300ms ease;
@@ -216,9 +216,9 @@ export interface Step {
     }
 
     .stepper-vertical .step-connector {
-      width: 3px;
+      width: var(--space-1);
       height: var(--space-10, 2.5rem);
-      min-width: 3px;
+      min-width: var(--space-1);
       margin: var(--space-1) 0 var(--space-1) var(--space-5, 1.375rem);
     }
 
@@ -229,7 +229,7 @@ export interface Step {
      */
 
     /* RESPONSIVE: Compact mobile layout */
-    @media (max-width: 768px) {
+    @media (max-width: 76var(--space-2)) {
       .stepper {
         flex-direction: column;
         align-items: stretch;
@@ -243,8 +243,8 @@ export interface Step {
       }
 
       .stepper .step-indicator {
-        width: 2rem;
-        height: 2rem;
+        width: var(--space-6);
+        height: var(--space-6);
         font-size: var(--text-sm);
       }
 
@@ -262,9 +262,9 @@ export interface Step {
       }
 
       .stepper .step-connector {
-        width: 3px;
+        width: var(--space-1);
         height: var(--space-6);
-        min-width: 3px;
+        min-width: var(--space-1);
         margin: 0 0 0 var(--space-4, 0.9375rem);
       }
     }

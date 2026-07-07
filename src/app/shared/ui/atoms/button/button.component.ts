@@ -79,7 +79,7 @@ export type IconPosition = 'left' | 'right' | 'none';
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: var(--icon-sm); /* 16px */
+      font-size: var(--icon-sm); /* 1var(--space-2) */
     }
 
     /* Hide empty slot containers */
@@ -98,7 +98,7 @@ export type IconPosition = 'left' | 'right' | 'none';
 
     /* Size-specific icon adjustments */
     :host-context(.btn-sm) .btn-icon-wrapper {
-      font-size: var(--icon-xs); /* 12px */
+      font-size: var(--icon-xs); /* 1var(--space-1) */
     }
 
     :host-context(.btn-lg) .btn-icon-wrapper {

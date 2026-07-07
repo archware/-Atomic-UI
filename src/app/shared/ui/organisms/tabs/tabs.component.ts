@@ -85,7 +85,7 @@ export class TabComponent {
       position: relative;
       border-bottom: 1px solid var(--border-color);
       margin-bottom: 0;
-      gap: 6px;
+      gap: var(--space-2);
     }
 
     .tab-button {
@@ -120,7 +120,7 @@ export class TabComponent {
     /* Pressed state effects */
     .tab-button:active {
       box-shadow: inset 0 1px 0 color-mix(in srgb, var(--primary-color), transparent 30%), 
-                  0 1px 3px rgba(0, 0, 0, 0.2);
+                  0 1px var(--space-1) rgba(0, 0, 0, 0.2);
     }
 
     .tab-button.active {
@@ -129,7 +129,7 @@ export class TabComponent {
       background: var(--surface-background);
       
       /* Active: Thick Top Border + Sides matching content border */
-      border-top: 3px solid var(--primary-color);
+      border-top: var(--space-1) solid var(--primary-color);
       border-left: 1px solid var(--border-color);
       border-right: 1px solid var(--border-color);
       border-bottom: 1px solid var(--surface-background);
@@ -163,7 +163,7 @@ export class TabComponent {
      */
 
     /* RESPONSIVE: Compact scrollable tabs on mobile */
-    @media (max-width: 768px) {
+    @media (max-width: 76var(--space-2)) {
       .tabs-header {
         overflow-x: auto;
         overflow-y: hidden;
@@ -174,7 +174,7 @@ export class TabComponent {
       }
 
       .tabs-header::-webkit-scrollbar {
-        height: 3px;
+        height: var(--space-1);
       }
 
       .tabs-header::-webkit-scrollbar-thumb {

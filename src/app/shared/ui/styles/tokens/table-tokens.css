@@ -25,11 +25,11 @@
   /* === Header === */
   --table-header-bg: var(--surface-background);
   --table-header-color: var(--text-color-secondary);
-  --table-header-border-width: 2px;
+  --table-header-border-width: var(--space-1);
   --table-header-border-style: solid;
   --table-header-border-color: var(--primary-color);
   --table-header-radius: var(--radius-md);
-  --table-header-shadow: var(--shadow-xs, 0 1px 2px var(--shadow-color, rgba(0, 0, 0, 0.05)));
+  --table-header-shadow: var(--shadow-xs, 0 1px var(--space-1) var(--shadow-color, rgba(0, 0, 0, 0.05)));
 
   /* === Celdas === */
   --table-cell-padding: var(--space-3) var(--space-4);
@@ -52,14 +52,14 @@
   /* === Efectos === */
   --table-transition-duration: 0.2s;
   --table-transition-timing: ease;
-  --table-row-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
-  --table-row-hover-transform: translateY(-2px);
+  --table-row-hover-shadow: 0 4px 1var(--space-1) rgba(0, 0, 0, 0.08), 0 var(--space-1) 4px rgba(0, 0, 0, 0.04);
+  --table-row-hover-transform: translateY(-var(--space-1));
 
   /* === Sombras === */
-  --table-shadow-row: var(--shadow-xs, 0 1px 2px var(--shadow-color, rgba(0, 0, 0, 0.05)));
+  --table-shadow-row: var(--shadow-xs, 0 1px var(--space-1) var(--shadow-color, rgba(0, 0, 0, 0.05)));
 
   /* === Breakpoint === */
-  --table-breakpoint: 768px;
+  --table-breakpoint: 76var(--space-2);
 }
 
 /* ============================================
@@ -86,7 +86,7 @@ html.dark,
   --table-card-shadow-hover: var(--shadow-xl);
 
   /* Efecto Hover Elevado (Dark) */
-  --table-row-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2);
+  --table-row-hover-shadow: 0 4px 1var(--space-2) rgba(0, 0, 0, 0.3), 0 var(--space-1) var(--space-2) rgba(0, 0, 0, 0.2);
 }
 
 /* ============================================

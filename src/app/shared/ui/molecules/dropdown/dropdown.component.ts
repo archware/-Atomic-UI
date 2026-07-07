@@ -102,12 +102,12 @@ export interface DropdownOption {
     }
 
     .dropdown-trigger:hover:not(:disabled) {
-      border-color: var(--primary-color);
+      border-color: var(--input-border-hover);
     }
 
     .dropdown.open .dropdown-trigger {
-      border-color: var(--primary-color);
-      box-shadow: var(--shadow-focus-primary);
+      border-color: var(--input-border-focus);
+      box-shadow: var(--input-shadow-focus);
     }
 
     .dropdown-value {
@@ -184,7 +184,7 @@ export interface DropdownOption {
     }
 
     @keyframes dropdownFade {
-      from { opacity: 0; transform: translateY(-8px); }
+      from { opacity: 0; transform: translateY(-var(--space-2)); }
       to { opacity: 1; transform: translateY(0); }
     }
 

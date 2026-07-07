@@ -133,9 +133,9 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
     }
 
     /* Size variants */
-    .action-group--sm { --action-btn-size: 1.75rem; }  /* 28px */
-    .action-group--md { --action-btn-size: 2.25rem; }  /* 36px */
-    .action-group--lg { --action-btn-size: 2.75rem; }  /* 44px */
+    .action-group--sm { --action-btn-size: 1.75rem; }  /* 2var(--space-2) */
+    .action-group--md { --action-btn-size: var(--space-7); }  /* 3var(--space-2) */
+    .action-group--lg { --action-btn-size: var(--space-11); }  /* 44px */
 
     .action-btn:hover:not(:disabled) {
       background: var(--surface-hover);
@@ -305,7 +305,7 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
     }
 
     .menu-item i {
-      width: 1rem;
+      width: var(--space-4);
       text-align: center;
     }
 
@@ -346,7 +346,7 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
   /** Modo compacto: oculta todas las acciones en el menú */
   @Input() compact = false;
 
-  /** Tamaño de los botones: sm (28px), md (36px), lg (44px) */
+  /** Tamaño de los botones: sm (2var(--space-2)), md (3var(--space-2)), lg (44px) */
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
 
   /** Emitido cuando se hace clic en una acción */

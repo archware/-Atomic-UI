@@ -100,7 +100,7 @@ export type AlertSize = 'sm' | 'md' | 'lg';
       color: var(--color-success-800, #166534);
     }
     .alert--warning {
-      background-color: var(--color-warning-50, #fffbeb);
+      background-color: var(--color-warning-50, var(--gray-0)beb);
       border-color: var(--color-warning-200, #fde68a);
       color: var(--color-warning-800, #92400e);
     }
@@ -113,7 +113,7 @@ export type AlertSize = 'sm' | 'md' | 'lg';
     /* Icon */
     .alert__icon {
       flex-shrink: 0;
-      font-size: 1rem;
+      font-size: var(--space-4);
       margin-top: 1px;
     }
 
@@ -154,7 +154,7 @@ export type AlertSize = 'sm' | 'md' | 'lg';
     }
     .alert__close:hover { opacity: 1; }
     .alert__close:focus-visible {
-      outline: 2px solid currentColor;
+      outline: var(--space-1) solid currentColor;
       outline-offset: 1px;
     }
   `],

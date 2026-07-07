@@ -85,15 +85,15 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
       top: calc(100% + var(--space-2));
       right: 0;
       /* min() evita que el dropdown desborde el viewport en pantallas pequeñas */
-      min-width: min(220px, calc(100vw - 2rem));
-      max-width: calc(100vw - 1rem);
+      min-width: min(220px, calc(100vw - var(--space-6)));
+      max-width: calc(100vw - var(--space-4));
       background: var(--surface-background);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-dropdown);
       opacity: 0;
       visibility: hidden;
-      transform: translateY(-8px);
+      transform: translateY(-var(--space-2));
       transition: all 200ms ease;
       z-index: 1000;
       overflow: hidden;

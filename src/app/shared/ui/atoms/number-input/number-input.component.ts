@@ -104,7 +104,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 2.25rem;       /* 36px → 2.25rem: respeta zoom de accesibilidad */
+      width: var(--space-7);       /* 3var(--space-2) → var(--space-7): respeta zoom de accesibilidad */
       flex-shrink: 0;       /* No se comprime aunque el campo crezca */
       background: var(--surface-section);
       border: none;
@@ -124,7 +124,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
     .number-input__field {
       flex: 1;              /* Ocupa el espacio sobrante entre los botones */
-      min-width: 3rem;      /* Mínimo usable (48px) para poder escribir números */
+      min-width: var(--space-8);      /* Mínimo usable (4var(--space-2)) para poder escribir números */
       border: none;
       border-left: 1px solid var(--border-color);
       border-right: 1px solid var(--border-color);

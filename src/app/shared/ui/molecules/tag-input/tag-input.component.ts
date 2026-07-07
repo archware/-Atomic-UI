@@ -99,7 +99,7 @@ export interface TagInputOption {
       flex-wrap: wrap;
       align-items: center;
       gap: var(--space-1);
-      min-height: 42px;
+      min-height: 4var(--space-1);
       padding: var(--space-2) var(--space-3);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
@@ -109,8 +109,8 @@ export interface TagInputOption {
     }
 
     .tag-input--focused .tag-input__field {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px var(--primary-color-alpha, rgba(59,130,246,0.15));
+      border-color: var(--input-border-focus);
+      box-shadow: var(--input-shadow-focus);
     }
 
     .tag-input--disabled .tag-input__field {
@@ -127,7 +127,7 @@ export interface TagInputOption {
       background: transparent;
       font-size: var(--text-sm);
       color: var(--text-color);
-      padding: 2px 0;
+      padding: var(--space-1) 0;
     }
 
     .tag-input__hint {

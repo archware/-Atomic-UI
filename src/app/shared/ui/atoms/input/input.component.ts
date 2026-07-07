@@ -115,7 +115,7 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
     }
 
     .has-error .form-input:focus {
-      box-shadow: 0 0 0 3px var(--danger-color-lighter);
+      box-shadow: 0 0 0 var(--space-1) var(--danger-color-lighter);
     }
 
     .input-error {

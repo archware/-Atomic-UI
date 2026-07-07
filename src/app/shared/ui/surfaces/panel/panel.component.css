@@ -66,7 +66,7 @@
 
 .panel--elevated:hover {
   box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
+  transform: translateY(-var(--space-1));
 }
 
 /* Card specific: less interactive */
@@ -245,7 +245,7 @@
  */
 
 /* === RESPONSIVE === */
-@media (max-width: 768px) {
+@media (max-width: 76var(--space-2)) {
   .panel__header {
     padding: var(--space-3) var(--space-4);
   }

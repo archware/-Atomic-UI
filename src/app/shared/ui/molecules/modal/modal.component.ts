@@ -57,7 +57,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
         z-index: 1000;
         animation: fadeIn 150ms ease;
         overflow-y: auto;
-        padding: 2rem 1rem;
+        padding: var(--space-6) var(--space-4);
       }
 
       @keyframes fadeIn {

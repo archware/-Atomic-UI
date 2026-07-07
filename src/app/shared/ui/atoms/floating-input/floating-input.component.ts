@@ -92,7 +92,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       position: relative;
       width: 100%;
       min-width: var(--fi-min-width, 8rem); /* Controlable desde el contenedor padre. */
-      margin-top: 0.75rem;
+      margin-top: var(--space-3);
     }
 
     /* === BASE INPUT === */
@@ -100,7 +100,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       width: 100%;
       height: var(--control-height);
       padding: 0 0.875rem;
-      line-height: calc(var(--control-height) - 2px); /* Robust vertical centering */
+      line-height: calc(var(--control-height) - var(--space-1)); /* Robust vertical centering */
       font-size: 0.875rem;
       color: var(--input-text);
       background: transparent;
@@ -131,7 +131,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     }
 
     .has-icon .floating-input {
-      padding-right: 3rem;
+      padding-right: var(--space-8);
     }
 
     .floating-input::placeholder {
@@ -155,11 +155,11 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     /* Label goes up when focused or has value */
     .focused .floating-label,
     .has-value .floating-label {
-      top: 0.125rem;
+      top: var(--space-1);
       transform: translateY(0);
       font-size: 0.8125rem;
       font-weight: 500;
-      color: var(--primary-color);
+      color: var(--info-color);
     }
 
     /* === INPUT LINE (for underline/material) === */
@@ -168,7 +168,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 2px;
+      height: var(--space-1);
       background: var(--input-border);
     }
 
@@ -178,8 +178,8 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       bottom: 0;
       left: 50%;
       width: 0;
-      height: 2px;
-      background: var(--primary-color);
+      height: var(--space-1);
+      background: var(--info-color);
       transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
       transform: translateX(-50%);
     }
@@ -193,7 +193,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       height: var(--control-height);
       /* padding inherited from base: 0 0.875rem */
       border: var(--input-border-width, 1.5px) solid var(--input-border);
-      border-radius: 0.5rem;
+      border-radius: var(--radius-md);
       background: var(--input-bg);
       font-size: 0.875rem;
       box-shadow: var(--input-shadow);
@@ -202,7 +202,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     .variant-floating .floating-label {
       left: 0.875rem;
       background: var(--input-bg);
-      padding: 0 0.5rem;
+      padding: 0 var(--space-2);
       white-space: nowrap;
     }
 
@@ -225,7 +225,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     .variant-underline .floating-input {
       height: var(--control-height);
       padding: 0;
-      padding-top: 1.25rem; /* Increased for 46px height */
+      padding-top: var(--space-5); /* Increased for 4var(--space-2) height */
       line-height: 1.5; /* Reset line-height for underline */
       font-size: 0.875rem;
       border-bottom: 1px solid var(--input-border);
@@ -238,8 +238,8 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     .variant-underline.focused .floating-label,
     .variant-underline.has-value .floating-label {
-      top: -0.25rem;
-      font-size: 0.75rem;
+      top: -var(--space-1);
+      font-size: var(--space-3);
     }
 
     .variant-underline.focused .floating-input,
@@ -248,20 +248,20 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     }
 
     .variant-underline .input-line {
-      height: 2px;
+      height: var(--space-1);
     }
 
     /* === VARIANT: MATERIAL === */
     .variant-material .floating-input {
       height: var(--control-height);
       padding: 0;
-      padding-top: 1.25rem;
+      padding-top: var(--space-5);
       line-height: 1.5;
       font-size: 0.875rem;
     }
 
     .variant-material.has-icon .floating-input {
-      padding-right: 3rem;
+      padding-right: var(--space-8);
     }
 
     .variant-material .floating-label {
@@ -271,8 +271,8 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     .variant-material.focused .floating-label,
     .variant-material.has-value .floating-label {
-      top: -0.25rem;
-      font-size: 0.75rem;
+      top: -var(--space-1);
+      font-size: var(--space-3);
       color: var(--primary-color);
       font-weight: 600;
     }
@@ -284,14 +284,14 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       font-size: 0.875rem;
       background: var(--input-bg);
       border: var(--input-border-width, 1.5px) solid var(--input-border);
-      border-radius: 0.5rem;
+      border-radius: var(--radius-md);
       box-shadow: var(--input-shadow);
     }
 
     .variant-outline .floating-label {
       top: 50%;
       background: var(--input-bg);
-      padding: 0 0.5rem;
+      padding: 0 var(--space-2);
       font-size: 1.0625rem;
       white-space: nowrap;
     }
@@ -325,10 +325,10 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       top: calc(var(--control-height) / 2);
       transform: translateY(-50%);
       color: var(--text-color-muted);
-      font-size: 1rem;
+      font-size: var(--space-4);
       /* Fix strict sizing to prevent height variations */
-      width: 1.5rem;
-      height: 1.5rem;
+      width: var(--space-5);
+      height: var(--space-5);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -336,11 +336,11 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     .input-icon-btn {
       position: absolute;
-      right: 0.5rem;
+      right: var(--space-2);
       top: calc(var(--control-height) / 2);
       transform: translateY(-50%);
-      width: 2.25rem;
-      height: 2.25rem;
+      width: var(--space-7);
+      height: var(--space-7);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -360,11 +360,11 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     .input-icon-btn--static {
       width: 1.75rem;
       height: 1.75rem;
-      right: 0.75rem;
+      right: var(--space-3);
     }
 
     .input-icon-btn i {
-      font-size: 1rem;
+      font-size: var(--space-4);
     }
 
     /* === STATES === */
@@ -388,7 +388,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     .input-error {
       display: block;
-      margin-top: 0.375rem;
+      margin-top: var(--space-2);
       font-size: 0.8125rem;
       color: var(--danger-color);
     }

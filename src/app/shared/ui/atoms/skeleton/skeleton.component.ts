@@ -8,10 +8,10 @@ import { Component, Input } from '@angular/core';
   template: `
     @switch (variant) {
       @case ('text') {
-        <div class="skeleton skeleton-text" [style.width]="width" [style.height]="height || '1rem'"></div>
+        <div class="skeleton skeleton-text" [style.width]="width" [style.height]="height || 'var(--space-4)'"></div>
       }
       @case ('circular') {
-        <div class="skeleton skeleton-circular" [style.width]="width || '3rem'" [style.height]="height || '3rem'"></div>
+        <div class="skeleton skeleton-circular" [style.width]="width || 'var(--space-8)'" [style.height]="height || 'var(--space-8)'"></div>
       }
       @case ('rectangular') {
         <div class="skeleton skeleton-rectangular" [style.width]="width || '100%'" [style.height]="height || '8rem'"></div>
@@ -20,9 +20,9 @@ import { Component, Input } from '@angular/core';
         <div class="skeleton-card">
           <div class="skeleton skeleton-rectangular" style="height: 8.75rem"></div>
           <div class="skeleton-card-content">
-            <div class="skeleton skeleton-text" style="width: 80%; height: 1rem"></div>
-            <div class="skeleton skeleton-text" style="width: 60%; height: 0.75rem"></div>
-            <div class="skeleton skeleton-text" style="width: 40%; height: 0.75rem"></div>
+            <div class="skeleton skeleton-text" style="width: 80%; height: var(--space-4)"></div>
+            <div class="skeleton skeleton-text" style="width: 60%; height: var(--space-3)"></div>
+            <div class="skeleton skeleton-text" style="width: 40%; height: var(--space-3)"></div>
           </div>
         </div>
       }
@@ -31,7 +31,7 @@ import { Component, Input } from '@angular/core';
           <div class="skeleton skeleton-circular" style="width: 2.5rem; height: 2.5rem"></div>
           <div class="skeleton-text-group">
             <div class="skeleton skeleton-text" style="width: 7.5rem; height: 0.875rem"></div>
-            <div class="skeleton skeleton-text" style="width: 5rem; height: 0.75rem"></div>
+            <div class="skeleton skeleton-text" style="width: 5rem; height: var(--space-3)"></div>
           </div>
         </div>
       }
@@ -59,7 +59,7 @@ import { Component, Input } from '@angular/core';
     }
 
     .skeleton-text {
-      height: 1rem;
+      height: var(--space-4);
       border-radius: var(--radius-sm);
     }
 

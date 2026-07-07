@@ -39,12 +39,12 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
 
     .icon-sun {
       color: var(--icon-sun-color);
-      filter: drop-shadow(0 0 2px var(--shadow-glow-primary));
+      filter: drop-shadow(0 0 var(--space-1) var(--shadow-glow-primary));
     }
 
     .icon-moon {
       color: var(--icon-moon-color);
-      filter: drop-shadow(0 0 2px var(--shadow-glow-primary));
+      filter: drop-shadow(0 0 var(--space-1) var(--shadow-glow-primary));
     }
 
     .icon.hidden {
@@ -52,13 +52,9 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
     }
 
     /* Hover effect */
-    :host:hover .icon-sun {
-      transform: rotate(15deg);
-    }
+    :host:hover .icon-sun { transform: rotate(45deg) scale(1.15); filter: drop-shadow(0 0 6px var(--warning-color)); }
 
-    :host:hover .icon-moon {
-      transform: rotate(-10deg);
-    }
+    :host:hover .icon-moon { transform: rotate(-15deg) scale(1.15); filter: drop-shadow(0 0 6px var(--primary-color)); }
   `],
   host: {
     '[attr.data-theme-switcher]': 'true'

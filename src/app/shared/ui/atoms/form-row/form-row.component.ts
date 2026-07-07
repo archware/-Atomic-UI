@@ -32,7 +32,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
     :host {
       display: block;
       width: 100%;
-      margin-bottom: 1.25rem;
+      margin-bottom: var(--space-5); /* 24px vertical */
     }
 
     .form-row-grid {
@@ -44,7 +44,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
     @media (max-width: 640px) {
       .form-row-grid {
         grid-template-columns: 1fr !important;
-        gap: 1.25rem !important;
+        gap: var(--space-5) !important; /* 24px vertical on mobile */
       }
     }
   `]
@@ -54,5 +54,5 @@ export class FormRowComponent {
   @Input() columns = '1fr 1fr';
 
   /** @deprecated Use app-row variant="form" instead */
-  @Input() gap = '1.25rem';
+  @Input() gap = 'var(--space-7)'; /* 3var(--space-2) horizontal */
 }

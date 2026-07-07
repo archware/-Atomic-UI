@@ -115,7 +115,7 @@ export interface Language {
     }
 
     @keyframes dropdown-in {
-      from { opacity: 0; transform: translateY(-8px); }
+      from { opacity: 0; transform: translateY(-var(--space-2)); }
       to { opacity: 1; transform: translateY(0); }
     }
 

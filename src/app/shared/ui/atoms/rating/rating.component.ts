@@ -34,9 +34,9 @@ import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
       gap: var(--space-1);
     }
 
-    .rating-sm .star { width: 1rem; height: 1rem; }
-    .rating-md .star { width: 1.5rem; height: 1.5rem; }
-    .rating-lg .star { width: 2rem; height: 2rem; }
+    .rating-sm .star { width: var(--space-4); height: var(--space-4); }
+    .rating-md .star { width: var(--space-5); height: var(--space-5); }
+    .rating-lg .star { width: var(--space-6); height: var(--space-6); }
 
     .star {
       padding: 0;

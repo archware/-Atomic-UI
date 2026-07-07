@@ -57,19 +57,19 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
 
     .toggle-track {
-      width: 3rem;          /* 48px → 3rem: respeta zoom de accesibilidad */
-      height: 1.75rem;      /* 28px → 1.75rem */
+      width: var(--space-8);          /* 4var(--space-2) → var(--space-8): respeta zoom de accesibilidad */
+      height: 1.75rem;      /* 2var(--space-2) → 1.75rem */
       background: var(--border-color);
-      border-radius: 0.875rem; /* 14px → 0.875rem */
-      padding: var(--space-0, 2px);
+      border-radius: var(--radius-xl); /* 14px → 0.875rem */
+      padding: var(--space-0, var(--space-1));
       transition: all 200ms ease;
       flex-shrink: 0;
     }
 
     .toggle-thumb {
       display: block;
-      width: 1.5rem;        /* 24px → 1.5rem */
-      height: 1.5rem;       /* 24px → 1.5rem */
+      width: var(--space-5);        /* 24px → var(--space-5) */
+      height: var(--space-5);       /* 24px → var(--space-5) */
       background: var(--surface-background);
       border-radius: 50%;
       box-shadow: var(--shadow-sm);
@@ -87,12 +87,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
 
     .toggle-input:checked + .toggle-track .toggle-thumb {
-      transform: translateX(1.25rem); /* 20px → 1.25rem: track(3rem) - thumb(1.5rem) - padding(2*2px) ≈ 1.25rem */
+      transform: translateX(var(--space-5)); /* 20px → var(--space-5): track(var(--space-8)) - thumb(var(--space-5)) - padding(2*var(--space-1)) ≈ var(--space-5) */
     }
 
     /* Focus */
     .toggle-input:focus-visible + .toggle-track {
-      box-shadow: var(--shadow-focus-primary);
+      box-shadow: var(--input-shadow-focus);
     }
 
     .toggle-label {

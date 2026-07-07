@@ -83,7 +83,7 @@ export interface TimelineItem {
 
     .timeline-item {
       display: grid;
-      grid-template-columns: 32px 1fr;
+      grid-template-columns: 3var(--space-1) 1fr;
       grid-template-rows: auto;
       column-gap: var(--space-3);
       position: relative;
@@ -91,7 +91,7 @@ export interface TimelineItem {
 
     .timeline-horizontal .timeline-item {
       grid-template-columns: 1fr;
-      grid-template-rows: 32px auto;
+      grid-template-rows: 3var(--space-1) auto;
       align-items: center;
       flex: 1;
     }
@@ -100,9 +100,9 @@ export interface TimelineItem {
     .timeline-connector {
       position: absolute;
       left: 15px;
-      top: 32px;
+      top: 3var(--space-1);
       bottom: 0;
-      width: 2px;
+      width: var(--space-1);
       background: var(--border-color);
       z-index: 0;
     }
@@ -113,16 +113,16 @@ export interface TimelineItem {
       bottom: auto;
       right: -50%;
       width: auto;
-      height: 2px;
+      height: var(--space-1);
     }
 
     /* Dot */
     .timeline-dot {
-      width: 32px;
-      height: 32px;
+      width: 3var(--space-1);
+      height: 3var(--space-1);
       border-radius: 50%;
       background: var(--surface-section);
-      border: 2px solid var(--border-color);
+      border: var(--space-1) solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -197,7 +197,7 @@ export interface TimelineItem {
 
     .timeline-badge {
       font-size: var(--text-xs);
-      padding: 2px 8px;
+      padding: var(--space-1) var(--space-2);
       border-radius: var(--radius-full);
       background: var(--primary-color-alpha);
       color: var(--primary-color);
@@ -226,7 +226,7 @@ export interface TimelineItem {
       }
 
       .timeline-horizontal .timeline-item {
-        grid-template-columns: 32px 1fr;
+        grid-template-columns: 3var(--space-1) 1fr;
         grid-template-rows: auto;
         align-items: start;
         flex: unset;
@@ -234,10 +234,10 @@ export interface TimelineItem {
 
       .timeline-horizontal .timeline-connector {
         left: 15px;
-        top: 32px;
+        top: 3var(--space-1);
         bottom: 0;
         right: auto;
-        width: 2px;
+        width: var(--space-1);
         height: auto;
       }
 

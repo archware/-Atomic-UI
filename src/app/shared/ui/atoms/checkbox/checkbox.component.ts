@@ -56,12 +56,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
 
     .checkbox-box {
-      width: var(--checkbox-size, 1.5rem);
-      height: var(--checkbox-size, 1.5rem);
+      width: var(--checkbox-size, var(--space-5));
+      height: var(--checkbox-size, var(--space-5));
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid var(--border-color);
+      border: var(--space-1) solid var(--border-color);
       border-radius: var(--radius-md);
       background: var(--surface-background);
       transition: all 200ms ease;
@@ -95,7 +95,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
     /* Focus */
     .checkbox-input:focus-visible + .checkbox-box {
-      box-shadow: var(--shadow-focus-primary);
+      box-shadow: var(--input-shadow-focus);
     }
 
     .checkbox-label {

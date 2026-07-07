@@ -57,21 +57,21 @@ export interface AvatarGroupItem {
 
     .avatar-group-item {
       /* margin-inline-start: propiedad lógica — funciona correctamente en LTR y RTL */
-      margin-inline-start: -0.5rem; /* -8px */
+      margin-inline-start: -var(--space-2); /* -var(--space-2) */
       position: relative;
       border-radius: 50%;
-      border: 2px solid var(--surface-background, #fff);
+      border: var(--space-1) solid var(--surface-background, var(--gray-0));
       transition: transform 150ms ease, z-index 0ms;
     }
 
-    .avatar-group-sm .avatar-group-item { margin-inline-start: -0.375rem; } /* -6px */
+    .avatar-group-sm .avatar-group-item { margin-inline-start: -var(--space-2); } /* -var(--space-2) */
     .avatar-group-lg .avatar-group-item { margin-inline-start: -0.625rem; } /* -10px */
-    .avatar-group-xl .avatar-group-item { margin-inline-start: -0.75rem; }  /* -12px */
+    .avatar-group-xl .avatar-group-item { margin-inline-start: -var(--space-3); }  /* -1var(--space-1) */
 
     .avatar-group-item:first-child { margin-left: 0; }
 
     .avatar-group-item:hover {
-      transform: translateY(-2px);
+      transform: translateY(-var(--space-1));
       z-index: 99 !important;
     }
 
@@ -84,15 +84,15 @@ export interface AvatarGroupItem {
       background: var(--color-neutral-200, #e5e7eb);
       color: var(--text-color-secondary, #6b7280);
       font-weight: 600;
-      font-size: var(--text-xs, 0.75rem);
+      font-size: var(--text-xs, var(--space-3));
       user-select: none;
     }
 
     /* Tamaños del badge de overflow en rem (alineados con avatar-size tokens) */
-    .overflow-sm  { width: 1.75rem;  height: 1.75rem;  font-size: 0.65rem; }  /* 28px */
-    .overflow-md  { width: 2.25rem;  height: 2.25rem;  font-size: 0.75rem; }  /* 36px */
-    .overflow-lg  { width: 3rem;     height: 3rem;     font-size: 0.875rem; } /* 48px */
-    .overflow-xl  { width: 4rem;     height: 4rem;     font-size: 1rem; }     /* 64px */
+    .overflow-sm  { width: 1.75rem;  height: 1.75rem;  font-size: 0.65rem; }  /* 2var(--space-2) */
+    .overflow-md  { width: var(--space-7);  height: var(--space-7);  font-size: var(--space-3); }  /* 3var(--space-2) */
+    .overflow-lg  { width: var(--space-8);     height: var(--space-8);     font-size: 0.875rem; } /* 4var(--space-2) */
+    .overflow-xl  { width: 4rem;     height: 4rem;     font-size: var(--space-4); }     /* 64px */
   `]
 })
 export class AvatarGroupComponent {

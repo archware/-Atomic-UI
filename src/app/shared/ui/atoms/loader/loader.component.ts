@@ -122,8 +122,8 @@ export type LoaderSize = 'sm' | 'md' | 'lg';
     .gradient-5 { stop-color: var(--gradient-5); }
 
     /* ========== TAMAÑOS ========== */
-    .loader-sm { --loader-size: 1.5rem; --loader-thickness: 2px; }
-    .loader-container { --loader-size: 2.5rem; --loader-thickness: 3px; }
+    .loader-sm { --loader-size: var(--space-5); --loader-thickness: var(--space-1); }
+    .loader-container { --loader-size: 2.5rem; --loader-thickness: var(--space-1); }
     .loader-lg { --loader-size: 3.5rem; --loader-thickness: 4px; }
 
     /* ========== 1. SPINNER CON DEGRADADO ========== */
@@ -160,7 +160,7 @@ export type LoaderSize = 'sm' | 'md' | 'lg';
       height: calc(var(--loader-size) * 0.25);
       border-radius: 50%;
       animation: dotPulse 1.5s ease-in-out infinite;
-      backdrop-filter: blur(2px); /* Efecto cristal */
+      backdrop-filter: blur(var(--space-1)); /* Efecto cristal */
     }
 
     .dot-1 { background: var(--gradient-1); animation-delay: 0s; }
@@ -235,7 +235,7 @@ export type LoaderSize = 'sm' | 'md' | 'lg';
     .bar {
       width: calc(var(--loader-size) * 0.14);
       height: 55%;
-      border-radius: 3px;
+      border-radius: var(--radius-sm);
       animation: barBounce 1.2s ease-in-out infinite;
       opacity: 0.8;
     }
@@ -280,7 +280,7 @@ export type LoaderSize = 'sm' | 'md' | 'lg';
     .orbit-ring {
       position: absolute;
       inset: 0;
-      border: 2px solid var(--gradient-3);
+      border: var(--space-1) solid var(--gradient-3);
       border-radius: 50%;
       opacity: 0.3;
     }

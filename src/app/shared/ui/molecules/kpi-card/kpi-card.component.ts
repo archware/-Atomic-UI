@@ -68,7 +68,7 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
       box-sizing: border-box;
       display: grid;
       gap: var(--space-3);
-      min-height: 148px;
+      min-height: 14var(--space-2);
     }
 
     .kpi-card__header {
@@ -99,8 +99,8 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
     }
 
     .kpi-card__icon {
-      width: 32px;
-      height: 32px;
+      width: 3var(--space-1);
+      height: 3var(--space-1);
       border-radius: var(--radius-md);
       display: inline-flex;
       align-items: center;
@@ -112,7 +112,7 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
 
     .kpi-card__value {
       margin: 0;
-      font-size: clamp(1.25rem, 2vw, 1.8rem);
+      font-size: clamp(var(--space-5), 2vw, 1.8rem);
       line-height: 1.2;
       font-weight: 700;
       color: var(--text-color);
@@ -130,10 +130,10 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
     .kpi-card__trend {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: var(--space-2);
       font-size: var(--text-xs);
       font-weight: 600;
-      padding: 2px 8px;
+      padding: var(--space-1) var(--space-2);
       border-radius: var(--radius-full);
       border: 1px solid transparent;
     }
@@ -168,7 +168,7 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
     .kpi-card__chart {
       color: var(--primary-color);
       opacity: 0.85;
-      height: 32px;
+      height: 3var(--space-1);
       display: flex;
       align-items: flex-end;
     }
@@ -180,7 +180,7 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
 
     @media (max-width: 640px) {
       .kpi-card {
-        min-height: 132px;
+        min-height: 13var(--space-1);
         padding: var(--space-3);
       }
     }

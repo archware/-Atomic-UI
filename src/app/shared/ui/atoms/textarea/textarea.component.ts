@@ -99,8 +99,8 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
 
     .textarea-input:focus {
       outline: none;
-      border-color: var(--primary-color);
-      box-shadow: var(--shadow-focus-primary);
+      border-color: var(--input-border-focus);
+      box-shadow: var(--input-shadow-focus);
     }
 
     .textarea-input:disabled {
@@ -136,7 +136,7 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
     /* Material variant */
     .variant-material .textarea-input {
       border-radius: var(--radius-md) var(--radius-md) 0 0;
-      border-bottom: 2px solid var(--border-color);
+      border-bottom: var(--space-1) solid var(--border-color);
     }
 
     .variant-material .textarea-input:focus {
@@ -148,7 +148,7 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
       bottom: 0;
       left: 0;
       right: 0;
-      height: 2px;
+      height: var(--space-1);
       background: var(--primary-color);
       transform: scaleX(0);
       transition: transform 200ms ease;
@@ -160,7 +160,7 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
 
     /* Outline variant - label always visible */
     .variant-outline .textarea-label {
-      top: calc(-1 * var(--space-2) - 2px);
+      top: calc(-1 * var(--space-2) - var(--space-1));
       font-size: var(--text-xs);
       color: var(--text-color-secondary);
       background: var(--surface-input);

@@ -53,7 +53,7 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
     }
 
     .atomic-table th, .atomic-table td {
-      padding: var(--table-cell-padding, 0.75rem 1rem);
+      padding: var(--table-cell-padding, var(--space-3) var(--space-4));
       vertical-align: middle;
       border-bottom: 1px solid var(--table-color-border-light, rgba(0,0,0,0.05));
     }
@@ -67,8 +67,8 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
 
     .atomic-table tbody tr:hover {
       background-color: var(--table-row-hover, rgba(0,0,0,0.02));
-      box-shadow: var(--table-row-hover-shadow, 0 4px 12px rgba(0,0,0,0.08));
-      transform: var(--table-row-hover-transform, translateY(-2px));
+      box-shadow: var(--table-row-hover-shadow, 0 4px 1var(--space-1) rgba(0,0,0,0.08));
+      transform: var(--table-row-hover-transform, translateY(-var(--space-1)));
       z-index: 1;
       position: relative;
     }
@@ -78,25 +78,25 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
       top: 0;
       z-index: 2;
       color: var(--table-header-color);
-      font-size: var(--table-font-size-header, 0.75rem);
+      font-size: var(--table-font-size-header, var(--space-3));
       font-weight: var(--table-font-weight-header, 600);
       text-transform: uppercase;
       letter-spacing: 0.06em;
       background: var(--table-header-bg);
-      border-top: var(--table-header-border-width, 2px) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
-      border-bottom: var(--table-header-border-width, 2px) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
+      border-top: var(--table-header-border-width, var(--space-1)) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
+      border-bottom: var(--table-header-border-width, var(--space-1)) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
     }
 
     .atomic-table thead th:first-child {
-      border-left: var(--table-header-border-width, 2px) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
-      border-top-left-radius: var(--table-header-radius, 0.5rem);
-      border-bottom-left-radius: var(--table-header-radius, 0.5rem);
+      border-left: var(--table-header-border-width, var(--space-1)) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
+      border-top-left-radius: var(--table-header-radius, var(--space-2));
+      border-bottom-left-radius: var(--table-header-radius, var(--space-2));
     }
 
     .atomic-table thead th:last-child {
-      border-right: var(--table-header-border-width, 2px) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
-      border-top-right-radius: var(--table-header-radius, 0.5rem);
-      border-bottom-right-radius: var(--table-header-radius, 0.5rem);
+      border-right: var(--table-header-border-width, var(--space-1)) var(--table-header-border-style, solid) var(--table-header-border-color, var(--table-color-border));
+      border-top-right-radius: var(--table-header-radius, var(--space-2));
+      border-bottom-right-radius: var(--table-header-radius, var(--space-2));
     }
 
     .atomic-table-striped .atomic-table tbody tr:nth-child(odd) {
@@ -111,7 +111,7 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
        RESPONSIVE: Cards en móvil (Sin usar !important)
        Usamos selectores de alta especificidad para anular ScrollOverlay
        ============================================ */
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 76var(--space-2)) {
       .so-root[data-so-table].atomic-table-container,
       .atomic-table-container {
         border: none;

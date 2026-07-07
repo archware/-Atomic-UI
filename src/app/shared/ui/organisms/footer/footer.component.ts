@@ -149,8 +149,8 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
       display: flex;
       align-items: center;
       justify-content: center;
-      width: var(--space-9, 2.25rem);
-      height: var(--space-9, 2.25rem);
+      width: var(--space-9, var(--space-7));
+      height: var(--space-9, var(--space-7));
       background: var(--surface-hover);
       border-radius: 50%;
       color: var(--text-color-secondary);
@@ -161,7 +161,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
     .footer__social-link:hover {
       background: var(--primary-color);
       color: var(--text-color-on-primary);
-      transform: translateY(-2px);
+      transform: translateY(-var(--space-1));
     }
 
     .footer__legal {
@@ -282,7 +282,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
     }
 
     /* === RESPONSIVE === */
-    @media (max-width: 768px) {
+    @media (max-width: 76var(--space-2)) {
       .footer__inline-top {
         flex-direction: column;
         text-align: center;

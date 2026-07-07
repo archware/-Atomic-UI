@@ -2,7 +2,7 @@
   <div class="topbar-left">
     <!-- Sidebar Toggle Button (usando IconButton) -->
     <app-icon-button tooltip="Toggle Sidebar" (clicked)="toggleSidebar.emit()">
-      <i class="fa-solid fa-bars" style="font-size: 1.25rem;"></i>
+      <i class="fa-solid fa-bars" style="font-size: var(--space-5);"></i>
     </app-icon-button>
 
     <!-- Page Title -->
@@ -18,7 +18,7 @@
 
     <!-- 2. Notifications (usando IconButton con badge) -->
     <app-icon-button tooltip="Notificaciones" [badge]="notificationCount">
-      <i class="fa-regular fa-bell" style="font-size: 1.25rem;"></i>
+      <i class="fa-regular fa-bell" style="font-size: var(--space-5);"></i>
     </app-icon-button>
 
     <!-- 3. User Menu (con dropdown) -->

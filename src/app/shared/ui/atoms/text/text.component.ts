@@ -40,10 +40,10 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify';
     .align-justify { text-align: justify; }
 
     /* Variants - Headings (Escala tipográfica base del sistema) */
-    .text-h1 { font-size: var(--text-4xl, 2.25rem); letter-spacing: -0.025em; line-height: 1.2; margin-top: var(--space-9); margin-bottom: var(--space-3); }
+    .text-h1 { font-size: var(--text-4xl, var(--space-7)); letter-spacing: -0.025em; line-height: 1.2; margin-top: var(--space-9); margin-bottom: var(--space-3); }
     .text-h2 { font-size: var(--text-3xl, 1.875rem); letter-spacing: -0.025em; line-height: 1.25; margin-top: var(--space-9); margin-bottom: var(--space-3); }
-    .text-h3 { font-size: var(--text-2xl, 1.5rem); letter-spacing: -0.025em; line-height: 1.3; margin-top: var(--space-9); margin-bottom: var(--space-3); }
-    .text-h4 { font-size: var(--text-xl, 1.25rem); letter-spacing: -0.015em; line-height: 1.4; margin-top: var(--space-9); margin-bottom: var(--space-3); }
+    .text-h3 { font-size: var(--text-2xl, var(--space-5)); letter-spacing: -0.025em; line-height: 1.3; margin-top: var(--space-9); margin-bottom: var(--space-3); }
+    .text-h4 { font-size: var(--text-xl, var(--space-5)); letter-spacing: -0.015em; line-height: 1.4; margin-top: var(--space-9); margin-bottom: var(--space-3); }
     
     /* First heading in container should not have top margin */
     :host(:first-child) .text-h1,
@@ -74,7 +74,7 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify';
     .color-success { color: var(--success-color); }
     .color-warning { color: var(--warning-color); }
     .color-danger { color: var(--danger-color); }
-    .color-white { color: var(--white, #ffffff); }
+    .color-white { color: var(--white, var(--gray-0)fff); }
 
     /* 
      * Dark mode se maneja automáticamente via tokens semánticos.

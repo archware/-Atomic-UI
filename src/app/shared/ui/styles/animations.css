@@ -23,7 +23,7 @@
 }
 
 @keyframes ui-slide-up {
-  from { transform: translateY(8px); opacity: 0; }
+  from { transform: translateY(var(--space-2)); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 

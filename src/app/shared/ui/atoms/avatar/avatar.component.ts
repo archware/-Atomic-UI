@@ -66,10 +66,10 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
     .avatar-danger { background-color: var(--danger-color-lighter); color: var(--danger-color); }
     .avatar-info { background-color: var(--info-color-lighter); color: var(--info-color); }
 
-    .avatar-xs { width: var(--avatar-size-xs, 1.5rem); height: var(--avatar-size-xs, 1.5rem); font-size: var(--text-xs); }
-    .avatar-sm { width: var(--avatar-size-sm, 2rem); height: var(--avatar-size-sm, 2rem); font-size: var(--text-xs); }
+    .avatar-xs { width: var(--avatar-size-xs, var(--space-5)); height: var(--avatar-size-xs, var(--space-5)); font-size: var(--text-xs); }
+    .avatar-sm { width: var(--avatar-size-sm, var(--space-6)); height: var(--avatar-size-sm, var(--space-6)); font-size: var(--text-xs); }
     .avatar-md { width: var(--avatar-size-md, 2.5rem); height: var(--avatar-size-md, 2.5rem); font-size: var(--text-sm); }
-    .avatar-lg { width: var(--avatar-size-lg, 3rem); height: var(--avatar-size-lg, 3rem); font-size: var(--text-lg); }
+    .avatar-lg { width: var(--avatar-size-lg, var(--space-8)); height: var(--avatar-size-lg, var(--space-8)); font-size: var(--text-lg); }
     .avatar-xl { width: var(--avatar-size-xl, 4rem); height: var(--avatar-size-xl, 4rem); font-size: var(--text-xl); }
 
     .avatar img {
@@ -113,7 +113,7 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
       min-width: var(--space-2);
       min-height: var(--space-2);
       border-radius: var(--radius-full);
-      border: 2px solid var(--surface-background);
+      border: var(--space-1) solid var(--surface-background);
     }
 
     .status-online { background: var(--success-color); }
