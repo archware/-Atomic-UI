@@ -1,4 +1,4 @@
-﻿# 🎨 Atomic UI - Sistema de Componentes y Temas Avanzado
+# 🎨 Atomic UI - Sistema de Componentes y Temas Avanzado
 
 [![Angular](https://img.shields.io/badge/Angular-20+-red.svg)](https://angular.io/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
@@ -214,7 +214,7 @@ src/
 
 ---
 
-## � Comandos CLI
+## Comandos CLI
 
 ```bash
 # Desarrollo

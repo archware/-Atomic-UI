@@ -244,7 +244,7 @@ Examples:
 @import "@fontsource/open-sans/500.css";
 @import "@fontsource/open-sans/600.css";
 @import "@fontsource/open-sans/700.css";
-@import "@fortawesome/fontawesome-free/css/all.css";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 
 /* Reset */
 *, *::before, *::after {

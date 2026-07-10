@@ -350,5 +350,5 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 - La validacion tecnica completa queda automatizada en GitHub Actions mediante `ci.yml`.
 
 ### Fixed
-- Corrección visual en cuadros de mando (Gerencial y Operativo) asegurando el uso de ariant="elevated" para mantener jerarquías de color consistentes.
+- Corrección visual en cuadros de mando (Gerencial y Operativo) asegurando el uso de variant="elevated" para mantener jerarquías de color consistentes.
 - Alineación vertical perfecta mediante Flexbox en todas las tarjetas de estadísticas.

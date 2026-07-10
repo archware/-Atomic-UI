@@ -200,10 +200,10 @@ html.dark {
    color-scheme: dark;
 
    /* === TEXTO (Compartido) === */
-   --text-color: #e5e7eb;
-   --text-color-secondary: #9ca3af;
-   --text-color-muted: #6b7280;
-   --text-color-placeholder: #4b5563;
+   --text-color: #f9fafb;
+   --text-color-secondary: #d1d5db;
+   --text-color-muted: #9ca3af;
+   --text-color-placeholder: #6b7280;
    --text-color-inverse: #111827;
    --text-color-on-primary: #ffffff;
    --text-color-on-secondary: #ffffff;

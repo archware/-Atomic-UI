@@ -25,12 +25,18 @@ ORIGEN:  -Atomic-UI/src/styles.css
 DESTINO: <nuevo-proyecto>/src/styles.css
 ```
 
-### 3. Las Dependencias y Fuentes (Iconos)
+### 3. Las dependencias y fuentes locales
 Para que los íconos y la fuente principal se rendericen correctamente, asegúrate de que el `index.html` del nuevo proyecto o el `styles.css` importen FontAwesome y Open Sans.
-```html
-<!-- En el index.html del nuevo proyecto -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+```bash
+npm install @fontsource/open-sans @fortawesome/fontawesome-free
+```
+
+```css
+@import "@fontsource/open-sans/400.css";
+@import "@fontsource/open-sans/500.css";
+@import "@fontsource/open-sans/600.css";
+@import "@fontsource/open-sans/700.css";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 ```
 *(Alternativamente, instala `@fortawesome/fontawesome-free` vía NPM).*
 

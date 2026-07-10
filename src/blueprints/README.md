@@ -85,7 +85,7 @@ Y configurados los estilos en `styles.css`:
 ```css
 @import './styles/themes/index.css';
 @import "@fontsource/open-sans/400.css";
-@import "@fortawesome/fontawesome-free/css/all.css";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 ```
 
 ## 🎯 Blueprints Disponibles

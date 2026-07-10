@@ -29,9 +29,9 @@ $ok      = $consumed | Where-Object { $_ -in $defined }
 
 Write-Host ""
 Write-Host "+---------------------------------------------+" -ForegroundColor Cyan
-Write-Host "¶   ATOMIC-UI ó AUDITORÕA DE TOKENS           ¶" -ForegroundColor Cyan
+Write-Host "¬¶   ATOMIC-UI ‚Äî AUDITOR√çA DE TOKENS           ¬¶" -ForegroundColor Cyan
 Write-Host "+---------------------------------------------+" -ForegroundColor Cyan
-Write-Host "PatrÛn:          $ComponentGlob"
+Write-Host "Patr√≥n:          $ComponentGlob"
 Write-Host "Tokens pedidos:  $($consumed.Count)"
 Write-Host "Tokens OK:       $($ok.Count)" -ForegroundColor Green
 Write-Host "Tokens FALTANTES: $($missing.Count)" -ForegroundColor $(if ($missing.Count -gt 0) { "Red" } else { "Green" })
@@ -41,10 +41,10 @@ if ($missing.Count -gt 0) {
     Write-Host "? TOKENS NO DEFINIDOS (agregar a _tokens-components.css):" -ForegroundColor Red
     $missing | ForEach-Object { Write-Host "   --$_" -ForegroundColor Yellow }
     Write-Host ""
-    Write-Host "? AcciÛn requerida: ver CONTRIBUTING_TOKENS.md > Plantilla" -ForegroundColor Yellow
+    Write-Host "? Acci√≥n requerida: ver CONTRIBUTING_TOKENS.md > Plantilla" -ForegroundColor Yellow
     exit 1
 } else {
-    Write-Host "? Todos los tokens est·n correctamente definidos." -ForegroundColor Green
+    Write-Host "? Todos los tokens est√°n correctamente definidos." -ForegroundColor Green
     exit 0
 }
 

@@ -20,6 +20,9 @@
 @import "@fontsource/open-sans/600.css";
 @import "@fontsource/open-sans/700.css";
 
+/* Iconografia (Local - FontAwesome) */
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
 /* Sistema de temas y tokens */
 @import './styles/themes/index.css';
 
