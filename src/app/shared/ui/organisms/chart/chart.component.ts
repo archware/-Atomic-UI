@@ -112,6 +112,14 @@ export class ChartComponent implements OnInit, OnDestroy {
             return value;
           };
           Chart.defaults.plugins.datalabels.display = function(context: any) {
+            const chartType = context.chart.config.type;
+            const isPieOrDoughnut = chartType === 'pie' || chartType === 'doughnut' || chartType === 'polarArea';
+            const isVisible = isPieOrDoughnut
+              ? context.chart.getDataVisibility(context.dataIndex)
+              : context.chart.isDatasetVisible(context.datasetIndex);
+
+            if (!isVisible) return false;
+
             const val = context.dataset.data[context.dataIndex];
             return typeof val === 'number' && val > 0;
           };
