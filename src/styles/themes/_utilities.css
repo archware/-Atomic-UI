@@ -104,7 +104,11 @@
   display: flex !important;
   flex-direction: column !important;
   height: 100% !important;
-  min-height: 380px !important;
+  min-height: 320px !important;
+}
+
+.chart-panel--center {
+  justify-content: center !important;
 }
 
 /* Chart Colors */
