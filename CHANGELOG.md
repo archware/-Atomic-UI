@@ -5,6 +5,14 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [5.1.1] - 2026-07-15
+
+### Corregido
+- **Grafico reactivo de alto completo**: Se ajusto `app-chart` para que el host y el contenedor interno puedan ocupar el 100% del alto disponible cuando el consumidor declara `height="100%"`. Esta correccion permite que los graficos embebidos en tarjetas altas no queden limitados por el valor por defecto de 300 px.
+- **Contraste de grilla en tema claro**: Se convirtio `chart-tokens.css` a tokens dependientes de tema. El modo claro usa una grilla con mayor contraste y los temas oscuros conservan una grilla visible sin saturar el panel.
+
+---
+
 ## [5.1.0] - 2026-07-02
 
 ### Uniformizacion UI y Chart reactivo a temas

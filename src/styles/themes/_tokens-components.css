@@ -111,7 +111,7 @@
    --chart-tooltip-bg:    var(--surface-elevated);
    --chart-tooltip-text:  var(--text-color);
    --chart-tooltip-border: var(--border-color);
-   --chart-grid-color:    rgba(0, 0, 0, 0.06);
+   --chart-grid-color:    rgba(15, 23, 42, 0.16);
    --surface-color:       var(--surface-background);
 
    /* Paleta de colores de segmentos de gráficos (donut, bar, line)
@@ -367,7 +367,7 @@ html.dark {
    --chart-tooltip-bg:     var(--surface-elevated);
    --chart-tooltip-text:   var(--text-color);
    --chart-tooltip-border: var(--border-color);
-   --chart-grid-color:     rgba(255, 255, 255, 0.06);
+   --chart-grid-color:     rgba(255, 255, 255, 0.10);
    --surface-color:        var(--surface-background);
    --chart-label-color:    var(--text-color-secondary);
 
@@ -599,7 +599,7 @@ html.dark {
    --chart-tooltip-bg:     var(--surface-elevated);
    --chart-tooltip-text:   var(--text-color);
    --chart-tooltip-border: var(--border-color);
-   --chart-grid-color:     rgba(255, 255, 255, 0.07);
+   --chart-grid-color:     rgba(255, 255, 255, 0.12);
    --surface-color:        var(--surface-background);
    --chart-label-color:    var(--text-color-secondary);
 

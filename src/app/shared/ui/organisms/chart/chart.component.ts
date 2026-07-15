@@ -19,9 +19,16 @@ import { ChartConfiguration, ChartType } from 'chart.js';
     </div>
   `,
   styles: [`
+    :host {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+    }
     .chart-container {
       position: relative;
       width: 100%;
+      min-height: 0;
     }
     canvas {
       display: block;
