@@ -23,7 +23,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'style': 'display: block; width: 100%; height: 100%; min-height: 0;'
+    'style': 'display: block; width: 100%;'
   },
   template: `
     <article
@@ -76,7 +76,6 @@ export type CardSize = 'sm' | 'md' | 'lg';
       display: flex;
       flex-direction: column;
       height: 100%;
-      min-height: 0;
       background: var(--surface-background);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
@@ -93,8 +92,6 @@ export type CardSize = 'sm' | 'md' | 'lg';
   }
   :host {
     display: block;
-    height: 100%;
-    min-height: 0;
   }
 
     /* Footer se apila verticalmente cuando la card es muy angosta (< 280px) */
@@ -234,9 +231,6 @@ export type CardSize = 'sm' | 'md' | 'lg';
     /* === Body === */
     .card__body {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
       font-size: var(--text-md);
       color: var(--text-color);
       line-height: 1.6;
