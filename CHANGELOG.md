@@ -5,6 +5,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [5.1.4] - 2026-07-15
+
+### Corregido
+- **Grafico con resize propio**: `app-chart` ahora usa host flexible, observa cambios reales del contenedor con `ResizeObserver` y fuerza `resize/update` de Chart.js. Esto permite que el canvas se adapte al espacio disponible sin mover la responsabilidad al contenedor padre.
+
+---
+
 ## [5.1.3] - 2026-07-15
 
 ### Aniadido

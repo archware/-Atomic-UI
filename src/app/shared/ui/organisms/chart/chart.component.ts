@@ -8,7 +8,7 @@ import { ChartConfiguration, ChartType } from 'chart.js';
   standalone: true,
   imports: [BaseChartDirective],
   template: `
-    <div class="chart-container" [style.height]="height">
+    <div #chartContainer class="chart-container" [style.height]="height">
       @if (isChartReady()) {
         <canvas baseChart
           [data]="data"
@@ -20,7 +20,7 @@ import { ChartConfiguration, ChartType } from 'chart.js';
   `,
   styles: [`
     :host {
-      display: block;
+      display: flex;
       width: 100%;
       height: 100%;
       min-height: 0;
@@ -29,6 +29,7 @@ import { ChartConfiguration, ChartType } from 'chart.js';
       position: relative;
       width: 100%;
       min-height: 0;
+      flex: 1 1 auto;
     }
     canvas {
       display: block;
@@ -42,12 +43,16 @@ export class ChartComponent implements OnInit, OnDestroy {
   @Input() data!: ChartConfiguration['data'];
   @Input() options!: ChartConfiguration['options'];
   @Input() height = '300px';
+  @ViewChild('chartContainer') private chartContainer?: ElementRef<HTMLDivElement>;
+  @ViewChild(BaseChartDirective) private chart?: BaseChartDirective;
 
   private platformId = inject(PLATFORM_ID);
   private el = inject(ElementRef);
   isChartReady = signal(false);
 
   private themeObserver: MutationObserver | null = null;
+  private resizeObserver: ResizeObserver | null = null;
+  private resizeFrame: number | null = null;
   private ChartRef: any = null;
 
   /** Lee los tokens CSS actuales y los aplica a los defaults globales de Chart.js */
@@ -73,6 +78,39 @@ export class ChartComponent implements OnInit, OnDestroy {
     Chart.defaults.elements.arc.borderWidth = 3;
     Chart.defaults.elements.arc.borderColor = style.getPropertyValue('--surface-color').trim() || '#18181b';
     Chart.defaults.elements.arc.hoverOffset = 8;
+  }
+
+  private refreshChartSize(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    if (this.resizeFrame !== null) {
+      cancelAnimationFrame(this.resizeFrame);
+    }
+
+    this.resizeFrame = requestAnimationFrame(() => {
+      this.resizeFrame = null;
+      this.chart?.chart?.resize();
+      this.chart?.chart?.update('none');
+    });
+  }
+
+  private watchContainerSize(): void {
+    if (!isPlatformBrowser(this.platformId) || typeof ResizeObserver === 'undefined') return;
+
+    const target = this.chartContainer?.nativeElement;
+    if (!target) return;
+
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = new ResizeObserver(() => this.refreshChartSize());
+    this.resizeObserver.observe(target);
+  }
+
+  private renderChart(): void {
+    this.isChartReady.set(true);
+    setTimeout(() => {
+      this.watchContainerSize();
+      this.refreshChartSize();
+    }, 0);
   }
 
   ngOnInit() {
@@ -132,14 +170,14 @@ export class ChartComponent implements OnInit, OnDestroy {
           };
         }
 
-        this.isChartReady.set(true);
+        this.renderChart();
 
         // Observar cambios de tema: data-theme en <html> o clase dark en <body>
         this.themeObserver = new MutationObserver(() => {
           this.applyChartTheme(Chart);
           // Forzar recreación del canvas para que Chart.js aplique los nuevos defaults
           this.isChartReady.set(false);
-          setTimeout(() => this.isChartReady.set(true), 0);
+          setTimeout(() => this.renderChart(), 0);
         });
         this.themeObserver.observe(document.documentElement, {
           attributes: true,
@@ -158,5 +196,12 @@ export class ChartComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.themeObserver?.disconnect();
     this.themeObserver = null;
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
+
+    if (this.resizeFrame !== null) {
+      cancelAnimationFrame(this.resizeFrame);
+      this.resizeFrame = null;
+    }
   }
 }
