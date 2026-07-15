@@ -95,6 +95,7 @@
 .grid-cols-350 { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important; }
 
 /* Heights */
+.h-300 { height: 300px !important; }
 .h-380 { height: 380px !important; }
 .h-29 { height: 29px !important; }
 

@@ -5,6 +5,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [5.1.3] - 2026-07-15
+
+### Aniadido
+- **Alto compacto para graficos**: Se agrego la utilidad `h-300` para que los consumidores puedan reducir paneles de grafico puntuales sin tocar el comportamiento global de `app-card` ni afectar tarjetas hermanas en grillas.
+
+---
+
 ## [5.1.2] - 2026-07-15
 
 ### Corregido
