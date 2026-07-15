@@ -99,6 +99,14 @@
 .h-380 { height: 380px !important; }
 .h-29 { height: 29px !important; }
 
+/* Chart Layout */
+.chart-panel {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 380px !important;
+}
+
 /* Chart Colors */
 .text-chart-1 { color: var(--chart-color-1, #ec4899) !important; }
 .text-chart-2 { color: var(--chart-color-2, #3b82f6) !important; }
