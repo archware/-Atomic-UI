@@ -5,6 +5,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [5.1.8] - 2026-07-15
+
+### Corregido
+- **Cajas internas de grafico definidas**: `chart-panel--center` fija 260 px para tortas/donas y `chart-panel--fill` fija 320 px para barras. `chart-panel` usa `box-sizing: border-box` para evitar que el canvas desborde la tarjeta cuando el padre tiene altura fija de 430 px.
+
+---
+
 ## [5.1.7] - 2026-07-15
 
 ### Corregido

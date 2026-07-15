@@ -108,14 +108,16 @@
 .chart-panel {
   display: flex !important;
   flex-direction: column !important;
-  min-height: 240px !important;
+  box-sizing: border-box !important;
+  min-height: 0 !important;
 }
 
 .chart-panel--fill {
-  height: 100% !important;
+  height: 320px !important;
 }
 
 .chart-panel--center {
+  height: 260px !important;
   justify-content: center !important;
 }
 
