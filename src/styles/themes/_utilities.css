@@ -97,6 +97,7 @@
 /* Heights */
 .h-380 { height: 380px !important; }
 .h-29 { height: 29px !important; }
+.min-h-380 { min-height: 380px !important; }
 
 /* Chart Colors */
 .text-chart-1 { color: var(--chart-color-1, #ec4899) !important; }

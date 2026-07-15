@@ -5,6 +5,14 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [5.1.2] - 2026-07-15
+
+### Corregido
+- **Alto real de tarjetas con graficos**: Se ajusto `app-card` para que el host, la tarjeta interna y `card__body` trabajen como contenedores flexibles de alto completo. Esta correccion permite que un grafico hijo declarado con `flex-1` y `height="100%"` ocupe el alto disponible de la tarjeta padre.
+- **Utilidad de alto minimo para graficos**: Se agrego `min-h-380` para conservar un alto minimo operativo sin bloquear el crecimiento vertical cuando el contenedor padre tiene mas espacio disponible.
+
+---
+
 ## [5.1.1] - 2026-07-15
 
 ### Corregido
