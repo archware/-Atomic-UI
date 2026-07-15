@@ -93,6 +93,11 @@
 .grid-cols-220 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important; }
 .grid-cols-180 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important; }
 .grid-cols-350 { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important; }
+.chart-grid-compact { grid-auto-rows: 430px !important; }
+
+@media (max-width: 900px) {
+  .chart-grid-compact { grid-auto-rows: auto !important; }
+}
 
 /* Heights */
 .h-300 { height: 300px !important; }
@@ -103,8 +108,11 @@
 .chart-panel {
   display: flex !important;
   flex-direction: column !important;
+  min-height: 240px !important;
+}
+
+.chart-panel--fill {
   height: 100% !important;
-  min-height: 320px !important;
 }
 
 .chart-panel--center {
