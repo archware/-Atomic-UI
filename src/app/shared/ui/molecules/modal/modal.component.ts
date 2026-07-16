@@ -51,6 +51,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
         position: fixed;
         inset: 0;
         background: var(--overlay-backdrop);
+        backdrop-filter: blur(4px);
         display: flex;
         align-items: flex-start;
         justify-content: center;
