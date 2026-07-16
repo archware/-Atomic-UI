@@ -83,13 +83,24 @@ export class AnalyticsPageComponent {
     if (item.route) this.router.navigate([item.route]);
   }
 
-  // Chart data
+  // Datos demo exclusivos del blueprint. Las aplicaciones productivas deben enlazar contratos de backend.
+  private chartColor(index: number, fallback: string): string {
+    if (typeof document === 'undefined') return fallback;
+    const value = getComputedStyle(document.documentElement).getPropertyValue(`--chart-color-${index}`).trim();
+    return value || fallback;
+  }
+
+  private chartGridColor(): string {
+    if (typeof document === 'undefined') return 'rgba(15, 23, 42, 0.16)';
+    return getComputedStyle(document.documentElement).getPropertyValue('--chart-grid-color').trim() || 'rgba(15, 23, 42, 0.16)';
+  }
+
   chartOptions: any = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: { legend: { position: 'bottom' } },
     scales: {
-      y: { beginAtZero: true, grid: { color: 'rgba(150, 150, 150, 0.1)' } },
+      y: { beginAtZero: true, grid: { color: () => this.chartGridColor() } },
       x: { grid: { display: false } }
     }
   };
@@ -103,8 +114,8 @@ export class AnalyticsPageComponent {
   trafficData = {
     labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
     datasets: [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Visitas', borderColor: '#4f46e5', tension: 0.4 },
-      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Visitantes Únicos', borderColor: '#0ea5e9', tension: 0.4 }
+      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Visitas demo', borderColor: this.chartColor(2, '#3b82f6'), tension: 0.4 },
+      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Visitantes demo', borderColor: this.chartColor(6, '#14b8a6'), tension: 0.4 }
     ]
   };
 
@@ -112,14 +123,14 @@ export class AnalyticsPageComponent {
     labels: ['Móvil', 'Desktop', 'Tablet'],
     datasets: [{
       data: [350, 450, 100],
-      backgroundColor: ['#4f46e5', '#0ea5e9', '#10b981']
+      backgroundColor: [this.chartColor(2, '#3b82f6'), this.chartColor(3, '#8b5cf6'), this.chartColor(4, '#10b981')]
     }]
   };
 
   conversionData = {
     labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
     datasets: [
-      { data: [12, 19, 3, 5, 2, 3, 10], label: 'Ventas', backgroundColor: '#8b5cf6', borderRadius: 6 }
+      { data: [12, 19, 3, 5, 2, 3, 10], label: 'Conversion demo', backgroundColor: this.chartColor(3, '#8b5cf6'), borderRadius: 6 }
     ]
   };
 }

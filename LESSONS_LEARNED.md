@@ -4,6 +4,13 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-16] - Datos demo de graficos y contratos productivos
+**Contexto:** Atomic UI contiene showcase, stories y blueprints que necesitan datos de demostracion para exponer el comportamiento de `app-chart`, dashboards y paginas analiticas. Esos datos pueden confundirse con mocks operativos cuando se propagan componentes hacia Wails, Tauri o Python.
+**La leccion:** Los datos de showcase, stories y blueprints son demostrativos y no constituyen contrato de negocio. Toda aplicacion productiva debe enlazar sus graficos a contratos backend, SP o vistas versionadas. Cuando un consumidor no tenga datos reales, debe renderizar estado vacio o contrato vacio, no valores inventados.
+**Regla de propagacion:** Los ejemplos de graficos en Atomic UI deben estar rotulados como demo y consumir tokens `--chart-color-*`, `--chart-grid-color`, superficie y tooltip. Al copiar componentes a Wails, Tauri o Python, se propaga el componente y los tokens, pero no los arreglos demo de datos.
+
+---
+
 ## [2026-07-16] - Reserva inferior en tablas con scroll sincronizado
 **Contexto:** La grilla nominal del indicador 11 combinaba `ScrollOverlayComponent`, cuerpo de tabla scrolleable (`tbody[data-so-vertical]`), columnas sincronizadas con grid y barra horizontal superpuesta. En ese escenario, la ultima fila quedaba visualmente demasiado cerca de la barra horizontal y el texto secundario de `Estado TA` podia percibirse incompleto.
 **La leccion:** En tablas sincronizadas por grid, no se debe depender de `tbody::after` para crear aire al final del scroll. El `tbody` actua como scroller real y debe recibir `padding-bottom` y `scroll-padding-bottom` condicionados por `so-has-overflow-x`. La reserva debe ser mayor que el grosor visual de la barra; por ello `--so-scroll-end-space` usa `calc(var(--so-track-size) + var(--space-8))`.

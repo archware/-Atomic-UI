@@ -5,6 +5,14 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [5.1.10] - 2026-07-16
+
+### Corregido
+- **Graficos demo alineados al ADN**: Los ejemplos de showcase y blueprints quedan marcados como datos demo y consumen tokens `--chart-color-*`, `--chart-grid-color`, superficie y tooltip, evitando hexadecimales sueltos que luego puedan propagarse a aplicaciones productivas.
+- **Frontera entre demo y produccion**: Se documenta que los datos de stories, showcase y blueprints no deben copiarse a Wails, Tauri ni Python como fuente de negocio.
+
+---
+
 ## [5.1.9] - 2026-07-16
 
 ### Corregido

@@ -132,11 +132,47 @@ export class DashboardPageComponent implements OnInit {
   // ============================================
   // Premium Chart Configurations
   // ============================================
-  revenueOptions: any = { 
-    responsive: true, maintainAspectRatio: false, 
-    plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false, backgroundColor: 'rgba(0,0,0,0.8)', padding: 12, titleFont: { size: 14 }, bodyFont: { size: 14 } } }, 
+  // Datos demo exclusivos del blueprint. Las aplicaciones productivas deben enlazar contratos de backend.
+  private chartColor(index: number, fallback: string): string {
+    if (typeof document === 'undefined') return fallback;
+    const value = getComputedStyle(document.documentElement).getPropertyValue(`--chart-color-${index}`).trim();
+    return value || fallback;
+  }
+
+  private chartGridColor(): string {
+    if (typeof document === 'undefined') return 'rgba(15, 23, 42, 0.16)';
+    return getComputedStyle(document.documentElement).getPropertyValue('--chart-grid-color').trim() || 'rgba(15, 23, 42, 0.16)';
+  }
+
+  private chartSurfaceColor(): string {
+    if (typeof document === 'undefined') return '#ffffff';
+    return getComputedStyle(document.documentElement).getPropertyValue('--surface-color').trim()
+      || getComputedStyle(document.documentElement).getPropertyValue('--surface-background').trim()
+      || '#ffffff';
+  }
+
+  private chartTooltipBg(): string {
+    if (typeof document === 'undefined') return 'rgba(24, 24, 27, 0.9)';
+    return getComputedStyle(document.documentElement).getPropertyValue('--chart-tooltip-bg').trim() || 'rgba(24, 24, 27, 0.9)';
+  }
+
+  private chartColorAlpha(index: number, fallback: string, alpha: number): string {
+    const color = this.chartColor(index, fallback);
+    const hex = color.replace('#', '').trim();
+    if (/^[0-9a-fA-F]{6}$/.test(hex)) {
+      const r = parseInt(hex.slice(0, 2), 16);
+      const g = parseInt(hex.slice(2, 4), 16);
+      const b = parseInt(hex.slice(4, 6), 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+    return color;
+  }
+
+  revenueOptions: any = {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false, backgroundColor: this.chartTooltipBg(), padding: 12, titleFont: { size: 14 }, bodyFont: { size: 14 } } },
     interaction: { mode: 'nearest', axis: 'x', intersect: false },
-    scales: { y: { beginAtZero: true, grid: { color: 'rgba(150, 150, 150, 0.1)', drawBorder: false } }, x: { grid: { display: false, drawBorder: false } } } 
+    scales: { y: { beginAtZero: true, grid: { color: () => this.chartGridColor(), drawBorder: false } }, x: { grid: { display: false, drawBorder: false } } }
   };
   donutOptions: any = { 
     responsive: true, maintainAspectRatio: false, 
@@ -154,22 +190,22 @@ export class DashboardPageComponent implements OnInit {
     datasets: [{ 
       data: [180, 195, 185, 215, 240, 230, 260, 290], 
       label: 'Ingresos (USD)', 
-      borderColor: '#4f46e5', 
+      borderColor: this.chartColor(2, '#3b82f6'),
       backgroundColor: (context: any) => {
         const chart = context.chart;
         if (!chart || !chart.chartArea) {
-          return 'rgba(79, 70, 229, 0.2)';
+          return this.chartColorAlpha(2, '#3b82f6', 0.2);
         }
         const {ctx, chartArea} = chart;
         const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
-        gradient.addColorStop(0, 'rgba(79, 70, 229, 0.4)');
-        gradient.addColorStop(1, 'rgba(79, 70, 229, 0.0)');
+        gradient.addColorStop(0, this.chartColorAlpha(2, '#3b82f6', 0.4));
+        gradient.addColorStop(1, this.chartColorAlpha(2, '#3b82f6', 0.0));
         return gradient;
       },
       fill: true, 
       tension: 0.4,
-      pointBackgroundColor: '#fff',
-      pointBorderColor: '#4f46e5',
+      pointBackgroundColor: this.chartSurfaceColor(),
+      pointBorderColor: this.chartColor(2, '#3b82f6'),
       pointBorderWidth: 2,
       pointRadius: 4,
       pointHoverRadius: 6
@@ -177,13 +213,13 @@ export class DashboardPageComponent implements OnInit {
   };
   roleData = {
     labels: ['Administradores', 'Editores', 'Lectores', 'Invitados'],
-    datasets: [{ data: [15, 45, 120, 30], backgroundColor: ['#8b5cf6', '#0ea5e9', '#10b981', '#f59e0b'] }]
+    datasets: [{ data: [15, 45, 120, 30], backgroundColor: [this.chartColor(3, '#8b5cf6'), this.chartColor(2, '#3b82f6'), this.chartColor(4, '#10b981'), this.chartColor(5, '#f59e0b')] }]
   };
   performanceData = {
     labels: ['Ventas', 'Marketing', 'Soporte', 'Ingeniería'],
     datasets: [
-      { data: [85, 92, 78, 95], label: 'Objetivo Alcanzado', backgroundColor: '#10b981', borderRadius: 6, barPercentage: 0.6 },
-      { data: [15, 8, 22, 5], label: 'Brecha', backgroundColor: 'rgba(150,150,150,0.1)', borderRadius: 6, barPercentage: 0.6 }
+      { data: [85, 92, 78, 95], label: 'Objetivo alcanzado demo', backgroundColor: this.chartColor(4, '#10b981'), borderRadius: 6, barPercentage: 0.6 },
+      { data: [15, 8, 22, 5], label: 'Brecha demo', backgroundColor: this.chartColorAlpha(10, '#64748b', 0.16), borderRadius: 6, barPercentage: 0.6 }
     ]
   };
 

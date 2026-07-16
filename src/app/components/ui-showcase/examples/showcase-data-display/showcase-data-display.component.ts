@@ -228,22 +228,40 @@ export class ShowcaseDataDisplayComponent {
     console.log(`Acción "${actionId}" ejecutada para ${userName}`);
   }
 
-  // Chart data
+  // Showcase-only chart data. Production apps must bind SP/view contracts instead of copying these values.
   chartOptions: any = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
   donutOptions: any = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } }, cutout: '75%' };
 
-  chartLineData = {
-    labels: ['Ene', 'Feb', 'Mar'],
-    datasets: [{ data: [65, 59, 80], label: 'Series A', borderColor: '#4f46e5', tension: 0.4 }]
-  };
-  chartDonutData = {
-    labels: ['Red', 'Blue', 'Green'],
-    datasets: [{ data: [300, 50, 100], backgroundColor: ['#ef4444', '#3b82f6', '#10b981'], borderWidth: 0 }]
-  };
-  chartBarData = {
-    labels: ['Q1', 'Q2', 'Q3'],
-    datasets: [{ data: [45, 85, 30], label: 'Ventas', backgroundColor: '#8b5cf6', borderRadius: 4 }]
-  };
+  private chartColor(index: number, fallback: string): string {
+    if (typeof document === 'undefined') return fallback;
+    const value = getComputedStyle(document.documentElement).getPropertyValue(`--chart-color-${index}`).trim();
+    return value || fallback;
+  }
+
+  get chartLineData() {
+    return {
+      labels: ['Ene', 'Feb', 'Mar'],
+      datasets: [{ data: [65, 59, 80], label: 'Serie demo', borderColor: this.chartColor(2, '#3b82f6'), tension: 0.4 }]
+    };
+  }
+
+  get chartDonutData() {
+    return {
+      labels: ['Rosa', 'Azul', 'Verde'],
+      datasets: [{
+        data: [300, 50, 100],
+        backgroundColor: [this.chartColor(1, '#ec4899'), this.chartColor(2, '#3b82f6'), this.chartColor(4, '#10b981')],
+        borderWidth: 0
+      }]
+    };
+  }
+
+  get chartBarData() {
+    return {
+      labels: ['Q1', 'Q2', 'Q3'],
+      datasets: [{ data: [45, 85, 30], label: 'Demo', backgroundColor: this.chartColor(3, '#8b5cf6'), borderRadius: 4 }]
+    };
+  }
 }
 
 
