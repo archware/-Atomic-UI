@@ -198,7 +198,7 @@
    /* === DROPDOWNS / SELECT === */
    --dropdown-bg: var(--surface-background);
    --dropdown-border: var(--border-color);
-   --dropdown-shadow: var(--shadow-lg);
+   --dropdown-shadow: var(--shadow-dropdown);
    --dropdown-item-hover: var(--hover-background-subtle);
    --dropdown-item-selected: var(--selected-background);
 
@@ -232,9 +232,9 @@
    --alert-danger-text: var(--danger-color-text);
 
    /* === SCROLLBAR === */
-   --scrollbar-track: rgba(121, 53, 118, 0.08);
-   --scrollbar-thumb: rgba(121, 53, 118, 0.3);
-   --scrollbar-thumb-hover: rgba(121, 53, 118, 0.5);
+   --scrollbar-track: color-mix(in srgb, var(--info-color), transparent 92%);
+   --scrollbar-thumb: color-mix(in srgb, var(--info-color), transparent 68%);
+   --scrollbar-thumb-hover: color-mix(in srgb, var(--info-color), transparent 48%);
 
    /* === LOADER / SPINNER === */
    --loader-border: var(--gray-300);
@@ -434,7 +434,7 @@ html.dark {
    --dropdown-bg: var(--surface-elevated);
    /* Sub BG often used for popovers */
    --dropdown-border: var(--border-color);
-   --dropdown-shadow: var(--shadow-xl);
+   --dropdown-shadow: var(--shadow-dropdown);
    --dropdown-item-hover: var(--hover-background-subtle);
    --dropdown-item-selected: var(--selected-background);
 
@@ -470,9 +470,9 @@ html.dark {
    --alert-danger-text: var(--danger-color-text);
 
    /* === SCROLLBAR === */
-   --scrollbar-track: rgba(161, 114, 159, 0.1);
-   --scrollbar-thumb: rgba(161, 114, 159, 0.4);
-   --scrollbar-thumb-hover: rgba(161, 114, 159, 0.6);
+   --scrollbar-track: color-mix(in srgb, var(--info-color), transparent 88%);
+   --scrollbar-thumb: color-mix(in srgb, var(--info-color), transparent 60%);
+   --scrollbar-thumb-hover: color-mix(in srgb, var(--info-color), transparent 40%);
 
    /* === LOADER / SPINNER === */
    --loader-border: var(--border-color-strong);
@@ -665,7 +665,7 @@ html.dark {
    /* === DROPDOWNS / SELECT === */
    --dropdown-bg: var(--surface-elevated);
    --dropdown-border: var(--border-color);
-   --dropdown-shadow: var(--shadow-xl);
+   --dropdown-shadow: var(--shadow-dropdown);
    --dropdown-item-hover: var(--hover-background-subtle);
    --dropdown-item-selected: var(--selected-background);
 
@@ -699,9 +699,9 @@ html.dark {
    --alert-danger-text: var(--danger-color-text);
 
    /* === SCROLLBAR === */
-   --scrollbar-track: rgba(161, 114, 159, 0.1);
-   --scrollbar-thumb: rgba(161, 114, 159, 0.4);
-   --scrollbar-thumb-hover: rgba(161, 114, 159, 0.6);
+   --scrollbar-track: color-mix(in srgb, var(--info-color), transparent 88%);
+   --scrollbar-thumb: color-mix(in srgb, var(--info-color), transparent 55%);
+   --scrollbar-thumb-hover: color-mix(in srgb, var(--info-color), transparent 35%);
 
    /* === LOADER / SPINNER === */
    --loader-border: var(--border-color-strong);

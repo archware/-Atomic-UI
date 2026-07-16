@@ -170,7 +170,7 @@ export interface Select2Option {
       transition: all 200ms ease;
       font-size: var(--text-sm);
       box-sizing: border-box;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--input-shadow);
       /* FIXED: Permitir clics en Wails */
       --wails-draggable: no-drag;
     }
@@ -212,13 +212,13 @@ export interface Select2Option {
       align-items: center;
     }
 
-    .select2-wrapper.focused .select2-trigger,
     .select2-trigger:hover {
       border-color: var(--input-border-focus);
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--input-shadow-hover);
     }
 
     .select2-wrapper.focused .select2-trigger {
+      border-color: var(--input-border-focus);
       box-shadow: var(--input-shadow-focus);
     }
 
@@ -299,7 +299,7 @@ export interface Select2Option {
       background: var(--dropdown-bg);
       border: 1px solid var(--dropdown-border);
       border-radius: var(--radius-md);
-      box-shadow: var(--shadow-lg);
+      box-shadow: var(--dropdown-shadow);
       z-index: 10000;
       animation: dropdownSlide 200ms ease;
       overflow: hidden;
@@ -356,6 +356,8 @@ export interface Select2Option {
     .select2-options {
       max-height: 240px;
       overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
     }
 
     /* Custom Scrollbar for dropdown */
@@ -363,14 +365,14 @@ export interface Select2Option {
       width: 6px;
     }
     .select2-options::-webkit-scrollbar-track {
-      background: transparent;
+      background: var(--scrollbar-track);
     }
     .select2-options::-webkit-scrollbar-thumb {
-      background: var(--border-color);
+      background: var(--scrollbar-thumb);
       border-radius: var(--radius-full);
     }
     .select2-options::-webkit-scrollbar-thumb:hover {
-      background: var(--text-color-muted);
+      background: var(--scrollbar-thumb-hover);
     }
 
     .select2-option {

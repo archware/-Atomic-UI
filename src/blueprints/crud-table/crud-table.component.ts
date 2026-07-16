@@ -243,7 +243,7 @@ export class CrudTableComponent implements OnInit {
   /** @customize Status options for filter */
   
   searchTypeOptions = [
-    { value: '', label: 'Seleccione una opción' },
+    { value: '', label: 'Seleccione' },
     { value: 'name', label: 'Nombre del personal' },
     { value: 'document', label: 'Número de documento' },
     { value: 'regimen', label: 'Régimen laboral' },
@@ -251,7 +251,7 @@ export class CrudTableComponent implements OnInit {
   ];
 
   regimenOptions = [
-    { value: '', label: 'Seleccione una opción' },
+    { value: '', label: 'Seleccione' },
     { value: '728', label: 'D.L. 728' },
     { value: '1057', label: 'CAS' },
     { value: '276', label: 'D.L. 276' }
