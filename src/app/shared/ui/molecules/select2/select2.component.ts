@@ -200,7 +200,7 @@ export interface Select2Option {
       transform: translateY(0);
       font-size: var(--text-xs);
       font-weight: 500;
-      color: var(--primary-color);
+      color: var(--info-color);
     }
 
     /* === MULTI-SELECT FIX === */
@@ -263,8 +263,8 @@ export interface Select2Option {
       align-items: center;
       gap: var(--space-1);
       padding: var(--space-1) var(--space-2);
-      background: var(--primary-color-lighter);
-      color: var(--primary-color);
+      background: var(--info-color-lighter);
+      color: var(--info-color-text);
       border-radius: var(--radius-full);
       font-size: var(--text-xs);
       font-weight: 500;
@@ -281,13 +281,13 @@ export interface Select2Option {
       border: none;
       border-radius: 50%;
       font-size: var(--text-sm);
-      color: var(--primary-color);
+      color: var(--info-color);
       cursor: pointer;
       transition: all 150ms ease;
     }
 
     .tag-remove:hover {
-      background: var(--primary-color-lighter);
+      background: var(--info-color-lighter);
     }
 
     /* === DROPDOWN === */
@@ -393,7 +393,7 @@ export interface Select2Option {
 
     .select2-option.selected {
       background: var(--dropdown-item-selected);
-      color: var(--primary-color);
+      color: var(--info-color);
       font-weight: 500;
     }
 
@@ -411,7 +411,7 @@ export interface Select2Option {
     }
 
     .check-icon {
-      color: var(--primary-color);
+      color: var(--info-color);
       font-weight: bold;
     }
 
