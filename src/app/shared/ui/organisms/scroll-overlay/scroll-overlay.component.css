@@ -11,7 +11,7 @@
   --so-track-size: 7px;
   --so-thumb-blur: var(--space-1);
   --so-min-column-width: 140px;
-  --so-scroll-end-space: calc(var(--so-track-size) + var(--space-6));
+  --so-scroll-end-space: calc(var(--so-track-size) + var(--space-8));
 }
 
 /* Outer border for tables to provide rounded corners and enclosing border */
