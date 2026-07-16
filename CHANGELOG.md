@@ -5,6 +5,12 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [v1.3.4] - 2026-07-16
+### Documentación
+- **Layouts y desbordamiento en `app-card`:** Se agregó documentación formal en las lecciones aprendidas sobre cómo manejar grillas flexbox complejas con `.card__body` usando `::ng-deep` para no romper el comportamiento natural de bloque de otras tarjetas y evitar desbordamientos de `100vh`.
+- **Modales custom:** Se reiteró la regla estricta de heredar `var(--surface-section)` y `var(--text-color)` en cualquier modal personalizado de los consumidores Wails, Tauri y Python para garantizar el funcionamiento del modo oscuro.
+
+
 ## [5.1.8] - 2026-07-15
 
 ### Corregido

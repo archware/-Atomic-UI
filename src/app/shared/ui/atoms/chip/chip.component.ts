@@ -85,8 +85,10 @@ export type ChipSize = 'sm' | 'md' | 'lg';
     }
 
     .chip-primary {
-      background: var(--primary-color-light, var(--primary-color-lighter));
-      color: var(--primary-color-text, var(--primary-color));
+      background: var(--primary-color-lighter);
+      background: color-mix(in srgb, var(--primary-color) 14%, transparent);
+      border-color: color-mix(in srgb, var(--primary-color) 28%, transparent);
+      color: var(--primary-color-dark, var(--primary-color));
     }
 
     .chip-secondary {
