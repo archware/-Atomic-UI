@@ -52,14 +52,14 @@
   /* === Efectos === */
   --table-transition-duration: 0.2s;
   --table-transition-timing: ease;
-  --table-row-hover-shadow: 0 4px 1var(--space-1) rgba(0, 0, 0, 0.08), 0 var(--space-1) 4px rgba(0, 0, 0, 0.04);
+  --table-row-hover-shadow: 0 var(--space-1) var(--space-3) rgba(0, 0, 0, 0.08), 0 var(--space-1) var(--space-1) rgba(0, 0, 0, 0.04);
   --table-row-hover-transform: translateY(-var(--space-1));
 
   /* === Sombras === */
   --table-shadow-row: var(--shadow-xs, 0 1px var(--space-1) var(--shadow-color, rgba(0, 0, 0, 0.05)));
 
   /* === Breakpoint === */
-  --table-breakpoint: 76var(--space-2);
+  --table-breakpoint: 768px;
 }
 
 /* ============================================
@@ -86,7 +86,7 @@ html.dark,
   --table-card-shadow-hover: var(--shadow-xl);
 
   /* Efecto Hover Elevado (Dark) */
-  --table-row-hover-shadow: 0 4px 1var(--space-2) rgba(0, 0, 0, 0.3), 0 var(--space-1) var(--space-2) rgba(0, 0, 0, 0.2);
+  --table-row-hover-shadow: 0 var(--space-1) var(--space-4) rgba(0, 0, 0, 0.3), 0 var(--space-1) var(--space-2) rgba(0, 0, 0, 0.2);
 }
 
 /* ============================================

@@ -11,7 +11,7 @@
   --so-track-size: 7px;
   --so-thumb-blur: var(--space-1);
   --so-min-column-width: 140px;
-  --so-scroll-end-space: calc(var(--so-track-size) + var(--space-4));
+  --so-scroll-end-space: calc(var(--so-track-size) + var(--space-6));
 }
 
 /* Outer border for tables to provide rounded corners and enclosing border */
@@ -20,7 +20,7 @@
   border-radius: var(--table-border-radius, var(--space-2));
 }
 
-@media screen and (max-width: 76var(--space-2)) {
+@media screen and (max-width: 768px) {
   .so-root[data-so-table] {
     border: none;
     border-radius: 0;
@@ -69,20 +69,9 @@ html.dark .so-root,
   scroll-padding-bottom: 0;
 }
 
-.so-root[data-so-table] tbody[data-so-vertical] {
+.so-root[data-so-table].so-has-overflow-x tbody[data-so-vertical] {
+  padding-bottom: var(--so-scroll-end-space);
   scroll-padding-bottom: var(--so-scroll-end-space);
-}
-
-.so-root[data-so-table] tbody[data-so-vertical]::after {
-  content: '';
-  display: block;
-  height: var(--so-scroll-end-space);
-  width: 100%;
-}
-
-.so-root[data-so-table]:not(.so-has-overflow-x) tbody[data-so-vertical]::after {
-  display: none;
-  height: 0;
 }
 
 /* Cuando hay tabla, el div maneja el scroll */

@@ -71,6 +71,7 @@ export type ChipSize = 'sm' | 'md' | 'lg';
       border-radius: var(--radius-full);
       font-size: var(--text-xs);
       font-weight: 600;
+      line-height: 1.1;
       transition: all 150ms ease;
       border: 1px solid transparent;
     }
@@ -86,9 +87,9 @@ export type ChipSize = 'sm' | 'md' | 'lg';
 
     .chip-primary {
       background: var(--primary-color-lighter);
-      background: color-mix(in srgb, var(--primary-color) 14%, transparent);
-      border-color: color-mix(in srgb, var(--primary-color) 28%, transparent);
-      color: var(--primary-color-dark, var(--primary-color));
+      background: color-mix(in srgb, var(--primary-color) 12%, var(--surface-elevated, transparent));
+      border-color: color-mix(in srgb, var(--primary-color) 28%, var(--border-color, transparent));
+      color: color-mix(in srgb, var(--primary-color) 72%, var(--text-color));
     }
 
     .chip-secondary {

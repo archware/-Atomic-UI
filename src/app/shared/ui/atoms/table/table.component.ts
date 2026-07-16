@@ -58,6 +58,11 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
       border-bottom: 1px solid var(--table-color-border-light, rgba(0,0,0,0.05));
     }
 
+    .so-root[data-so-table][data-so-sync-columns] .atomic-table tbody td[app-table-cell]:has(> app-chip:only-child) {
+      display: flex;
+      align-items: center;
+    }
+
     .atomic-table tbody tr {
       background-color: var(--table-color-background);
       transition: background-color var(--table-transition-duration, 0.2s) var(--table-transition-timing, ease),
@@ -67,7 +72,7 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
 
     .atomic-table tbody tr:hover {
       background-color: var(--table-row-hover, rgba(0,0,0,0.02));
-      box-shadow: var(--table-row-hover-shadow, 0 4px 1var(--space-1) rgba(0,0,0,0.08));
+      box-shadow: var(--table-row-hover-shadow, 0 var(--space-1) var(--space-3) rgba(0,0,0,0.08));
       transform: var(--table-row-hover-transform, translateY(-var(--space-1)));
       z-index: 1;
       position: relative;
@@ -111,7 +116,7 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
        RESPONSIVE: Cards en móvil (Sin usar !important)
        Usamos selectores de alta especificidad para anular ScrollOverlay
        ============================================ */
-    @media screen and (max-width: 76var(--space-2)) {
+    @media screen and (max-width: 768px) {
       .so-root[data-so-table].atomic-table-container,
       .atomic-table-container {
         border: none;
