@@ -5,6 +5,16 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [5.1.9] - 2026-07-16
+
+### Corregido
+- **Cierre inferior de tablas con scroll sincronizado**: `ScrollOverlayComponent` amplia `--so-scroll-end-space` a `calc(var(--so-track-size) + var(--space-8))` para que la ultima fila quede visible por encima de la barra horizontal cuando existe scroll vertical y horizontal simultaneo.
+- **Chips de metodo mas sobrios**: `chip-primary` mezcla el color primario con `surface-elevated`, reduce la saturacion visual en tema oscuro y mantiene coherencia con los chips semanticos.
+- **Centrado vertical de celdas compactas**: `TableComponent` centra verticalmente las celdas cuyo unico contenido es `app-chip`, sin alterar celdas compuestas como `Estado TA` con detalle secundario.
+- **Saneamiento CSS en tablas**: Se corrigieron expresiones invalidas como `76var(...)` y `1var(...)` en tokens y responsive table para evitar reglas descartadas por el navegador.
+
+---
+
 ## [v1.3.4] - 2026-07-16
 ### Documentación
 - **Layouts y desbordamiento en `app-card`:** Se agregó documentación formal en las lecciones aprendidas sobre cómo manejar grillas flexbox complejas con `.card__body` usando `::ng-deep` para no romper el comportamiento natural de bloque de otras tarjetas y evitar desbordamientos de `100vh`.

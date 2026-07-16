@@ -4,6 +4,14 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-16] - Reserva inferior en tablas con scroll sincronizado
+**Contexto:** La grilla nominal del indicador 11 combinaba `ScrollOverlayComponent`, cuerpo de tabla scrolleable (`tbody[data-so-vertical]`), columnas sincronizadas con grid y barra horizontal superpuesta. En ese escenario, la ultima fila quedaba visualmente demasiado cerca de la barra horizontal y el texto secundario de `Estado TA` podia percibirse incompleto.
+**La leccion:** En tablas sincronizadas por grid, no se debe depender de `tbody::after` para crear aire al final del scroll. El `tbody` actua como scroller real y debe recibir `padding-bottom` y `scroll-padding-bottom` condicionados por `so-has-overflow-x`. La reserva debe ser mayor que el grosor visual de la barra; por ello `--so-scroll-end-space` usa `calc(var(--so-track-size) + var(--space-8))`.
+**Regla de propagacion:** Cualquier ajuste de `ScrollOverlayComponent`, `TableComponent`, `table-tokens.css` o `responsive-table.css` debe aplicarse primero en Atomic UI y luego copiarse a Wails, Tauri y Python. Los consumidores no deben resolver este problema con estilos locales porque se generaria drift visual entre aplicaciones.
+**Regla visual:** Las celdas cuyo unico contenido es `app-chip` pueden centrarse verticalmente mediante `display: flex; align-items: center;`. Las celdas compuestas, como `Estado TA`, deben conservar flujo vertical para mostrar el chip y el detalle secundario sin comprimir el texto.
+
+---
+
 ## [2026-07-01] - Auditoria de Ecosistema: Drift, Dependencias y Seguridad
 
 ### 1. El Drift Silencioso en Ecosistemas Multi-Repo

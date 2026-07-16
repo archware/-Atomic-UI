@@ -10,6 +10,17 @@ Auditoria de componentes base y blueprints con foco en dashboards.
 
 Fecha: 2026-05-27
 
+## Revision del 2026-07-16
+
+Se reviso el comportamiento de `ScrollOverlayComponent` y `TableComponent` en tablas de escritorio con cabecera fija, cuerpo vertical scrolleable, columnas sincronizadas y barra horizontal visible. El caso nominal del indicador 11 mostro que una tabla puede compilar correctamente y aun asi dejar la ultima fila demasiado pegada a la barra horizontal si el cierre inferior se resuelve fuera del scroller real.
+
+- Estado: resuelto en esta iteracion.
+- Accion aplicada: `--so-scroll-end-space` se amplio a `calc(var(--so-track-size) + var(--space-8))`.
+- Accion aplicada: el padding inferior se aplica sobre `tbody[data-so-vertical]` solo cuando el host tiene `so-has-overflow-x`.
+- Accion aplicada: las celdas de chip unico se centran verticalmente sin cambiar celdas compuestas con texto secundario.
+- Accion aplicada: se sanearon expresiones CSS invalidas en la ruta de tabla, incluyendo `76var(...)` y `1var(...)`.
+- Criterio de QA: la ultima fila debe poder desplazarse por encima de la barra horizontal hasta mostrar completo el chip principal y cualquier detalle secundario.
+
 ## Hallazgos principales
 
 ### Alta prioridad
