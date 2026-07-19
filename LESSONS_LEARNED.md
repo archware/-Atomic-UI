@@ -4,6 +4,23 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-19] - Tokens de Color Obligatorios en Modales y Overlays Custom
+
+**Contexto:** En la aplicacion base_python_angular (Acopiador HRA), los modales de alerta y confirmacion construidos con `app-card variant="elevated"` + `slot="image"` tenian colores hexadecimales fijos en el header (`#1e293b`, `#f8fafc`, `#334155`). En modo oscuro el texto parecia correcto (porque los colores fijos simulaban el dark mode), pero en modo claro el fondo quedaba negro y el texto blanco, siendo completamente ilegible.
+
+**La leccion:** Los consumidores de Atomic UI (Wails, Tauri, Python/WebView) NO deben usar colores hexadecimales fijos en ningun elemento que forme parte de un modal, overlay o dialogo. El sistema de tokens de Atomic garantiza la paridad automatica entre Light Mode y Dark Mode. Al forzar un color fijo, se rompe esa garantia y el componente queda "atado" a un solo tema.
+
+**Regla de tokens para modales:**
+- Header/cabecera del modal: `background: var(--surface-section)` + `border-bottom: 1px solid var(--border-color)`
+- Titulo del modal: `color: var(--text-color)`
+- Texto del cuerpo: `color: var(--text-color)` explicito (NO usar `text-secondary` ni `text-muted` en modales; esas clases aplican opacidad reducida que resulta ilegible sobre fondos de superficie)
+- Iconos de estado: `color: var(--danger-color)`, `var(--warning-color)`, `var(--success-color)` segun el tipo de alerta
+- Separadores: `border-color: var(--border-color)`
+
+**Regla de propagacion:** Cualquier modal o elemento HTML flotante (overlay, drawer, tooltip, popover) en cualquier consumidor del ecosistema (Wails, Tauri, Python/WebView) debe heredar exclusivamente tokens semanticos de Atomic UI. Esta regla aplica antes de cualquier decision de layout o color.
+
+---
+
 ## [2026-07-16] - Datos demo de graficos y contratos productivos
 **Contexto:** Atomic UI contiene showcase, stories y blueprints que necesitan datos de demostracion para exponer el comportamiento de `app-chart`, dashboards y paginas analiticas. Esos datos pueden confundirse con mocks operativos cuando se propagan componentes hacia Wails, Tauri o Python.
 **La leccion:** Los datos de showcase, stories y blueprints son demostrativos y no constituyen contrato de negocio. Toda aplicacion productiva debe enlazar sus graficos a contratos backend, SP o vistas versionadas. Cuando un consumidor no tenga datos reales, debe renderizar estado vacio o contrato vacio, no valores inventados.

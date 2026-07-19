@@ -5,6 +5,17 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [5.1.11] - 2026-07-19
+
+### Corregido
+- **Tokens de color obligatorios en overlays y modales custom:** Al construir un dialog/modal personalizado sobre `app-card variant="elevated"` con un `slot="image"` como cabecera, queda prohibido usar colores hexadecimales fijos (e.g. `#1e293b`, `#f8fafc`). Toda cabecera de modal debe consumir `background: var(--surface-section)` y `color: var(--text-color)` para respetar el Dark/Light Mode automatico del ecosistema. Los iconos de estado deben usar `color: var(--danger-color)`, `var(--warning-color)` etc., nunca hexadecimales sueltos.
+- **Texto de cuerpo en modales:** El parrafo de contenido de un modal custom debe llevar `color: var(--text-color)` explicito en lugar de clases de utilidad como `text-secondary` o `text-muted`, ya que estas clases aplican opacidad reducida y en fondos oscuros resultan ilegibles.
+
+### Directriz
+- **Plantilla canonica de modal para consumidores (Wails/Tauri/Python):** El header del modal usa `slot="image"` con fondo `var(--surface-section)`, separador `var(--border-color)` y texto `var(--text-color)`. El cuerpo del modal usa `color: var(--text-color)` explicito en el parrafo. Esta plantilla garantiza compatibilidad automatica con Light Mode y Dark Mode sin estilos adicionales.
+
+---
+
 ## [5.1.10] - 2026-07-16
 
 ### Corregido
