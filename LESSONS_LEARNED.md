@@ -4,6 +4,21 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-20] - Fugas de Click en Componentes Encapsulados (app-button)
+
+**Contexto:** En el Orquestador del Acopiador HRA, el boton "Ejecutar Calculo" se mostraba deshabilitado (gris, opacity reducida) cuando faltaban fuentes de datos `[disabled]="!canExecuteIndicador()"`, pero el usuario reporto que al hacer click, el calculo se ejecutaba de todas formas.
+
+**Causa Raiz:** El consumidor enlazo la accion usando el evento nativo del DOM `(click)="ejecutarIndicador()"` directamente sobre la etiqueta `<app-button>`. En Angular, esto enlaza el listener al *Host Element*. Aunque el `<button>` HTML nativo en el interior del componente este `disabled` y no dispare eventos de click, el click del usuario impactaba en el host (padding, wrapper) y disparaba la funcion.
+
+**La leccion:** Los componentes de UI empaquetados (como `app-button`) gestionan su estado `disabled` bloqueando la emision de eventos desde dentro. El `ButtonComponent` de Atomic UI cuenta con un `@Output() buttonClick` que solo emite si el boton no esta deshabilitado.
+
+**Regla de propagacion (Angular Consumidor):** 
+Queda estrictamente prohibido usar `(click)` sobre elementos custom de la libreria Atomic UI como `<app-button>`, `<app-icon-button>` o `<app-chip>`. Se debe usar siempre el `@Output()` disenado para tal fin:
+- ✅ Correcto: `<app-button (buttonClick)="save()">`
+- ❌ Incorrecto: `<app-button (click)="save()">`
+
+---
+
 ## [2026-07-19] - Tokens de Color Obligatorios en Modales y Overlays Custom
 
 **Contexto:** En la aplicacion base_python_angular (Acopiador HRA), los modales de alerta y confirmacion construidos con `app-card variant="elevated"` + `slot="image"` tenian colores hexadecimales fijos en el header (`#1e293b`, `#f8fafc`, `#334155`). En modo oscuro el texto parecia correcto (porque los colores fijos simulaban el dark mode), pero en modo claro el fondo quedaba negro y el texto blanco, siendo completamente ilegible.

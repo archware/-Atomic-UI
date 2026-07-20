@@ -5,6 +5,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ---
 
+## [5.1.12] - 2026-07-20
+
+### Corregido
+- **Fuga de clicks en app-button deshabilitados:** Se registro una directriz critica sobre el uso de eventos en componentes encapsulados de Atomic UI. Al utilizar <app-button>, los consumidores deben enlazar la accion a la salida nativa del componente (buttonClick)=... en lugar del evento DOM directo (click)=.... El uso de (click) se adhiere al elemento host de Angular, permitiendo que eventos de click se filtren aunque el boton interno este en estado [disabled]=true.
+
+---
+
 ## [5.1.11] - 2026-07-19
 
 ### Corregido
