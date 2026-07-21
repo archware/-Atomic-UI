@@ -4,6 +4,24 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Anclaje del Viewport y Bloqueo de Scroll Nivel Navegador
+
+**Contexto:** En aplicaciones consumidoras Web/Angular, al mover la rueda del ratón el documento entero (`body`) se desplazaba verticalmente, destruyendo el encuadre fijo del layout del tablero.
+
+**Causa Raíz:** Las etiquetas raíz `html` y `body` declaraban `min-height: 100vh` sin `overflow: hidden`, lo que permitía la generación de una barra de scroll nativa externa del navegador.
+
+**La Lección:** Todo layout SPA debe declarar en `html` y `body`: `width: 100%; height: 100dvh; overflow: hidden;`. Ningún scroll debe ocurrir en la ventana principal del navegador. Todo scroll se delega internamente a los contenedores `<prest-scroll-overlay>`.
+
+---
+
+## [2026-07-21] - Transformación Automática de Estados a StatusBadge
+
+**Contexto:** Los desarrolladores solían inyectar valores de estado ("Activo", "Inactivo", "Vigente") como cadenas de texto plano dentro de las tablas de datos (`DataTable`).
+
+**La Lección:** Ninguna tabla del ecosistema debe mostrar estados en texto plano. El componente `DataTable` intercepta automáticamente las columnas de estado (`stateLabel`, `status`, `b_STATE`, `isBadge`) y las convierte al átomo `StatusBadgeComponent`, ofreciendo código de color y voz accesible ARIA nativa.
+
+---
+
 ## [2026-07-20] - Fugas de Click en Componentes Encapsulados (app-button)
 
 **Contexto:** En el Orquestador del Acopiador HRA, el boton "Ejecutar Calculo" se mostraba deshabilitado (gris, opacity reducida) cuando faltaban fuentes de datos `[disabled]="!canExecuteIndicador()"`, pero el usuario reporto que al hacer click, el calculo se ejecutaba de todas formas.
