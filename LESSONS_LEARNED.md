@@ -4,6 +4,22 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Separación de `thead`, Envoltura de `tbody` con Scroll Auto-Ocultable, Distinción de Cabecera y Variación de Botones
+
+**Contexto:**
+1. El scrollbar de la tabla se extendía erróneamente cubriendo el `thead` y permanecía visible de forma tosca.
+2. El fondo de `thead` usaba el mismo tono que la barra de paginación (`.data-table__toolbar`), provocando confusión visual.
+3. El botón "BUSCAR" en formularios usaba el color primario idéntico al botón de acción principal ("NUEVO CLIENTE") y carecía de íconos.
+4. El espaciado horizontal entre filtros era excesivo (36px).
+
+**La Lección:**
+1. **Aislamiento de `tbody` en Scroll Overlay:** `thead` debe residir en su propio contenedor fijo (`.data-table__header-container`), mientras que `<prest-scroll-overlay>` envuelve **únicamente al `<tbody>`**. Esto garantiza que el scrollbar sea auto-ocultable al mover el ratón y NUNCA se extienda hasta las cabeceras `thead`.
+2. **Distinción Visual de `thead`:** `thead` debe pintar un fondo contrastante (`background: var(--surface-ground)`) con un borde inferior pronunciado (`border-bottom: 2px solid var(--border-color)`), separándolo claramente de la barra de paginación superior.
+3. **Variantes de Botón e Íconos Obligatorios:** Los botones de búsqueda de formulario deben usar `variant="secondary"` (o `outline`/`ghost`) e incluir siempre un ícono explícito (ej. `icon="magnifying-glass"`, `icon="plus"`, `icon="rotate-left"`), diferenciándose visualmente del botón de creación principal.
+4. **Espaciado Horizontal de Filtros:** Los elementos de formularios de búsqueda en línea deben distanciarse con `gap: var(--space-4)` (16px) en lugar de espaciados gigantescos.
+
+---
+
 ## [2026-07-21] - Auditoría Profunda: Habilitación de Scroll Vertical (`[vertical]="true"`), Preservación de Flechas SVG (`background-color`) y Espaciado Holgado en Filas
 
 **Contexto:** Se detectaron 4 problemas en auditoría profunda:
