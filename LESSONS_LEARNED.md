@@ -4,6 +4,19 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Contenedores de Tabla con Altura Fija e Integridad de thead
+
+**Contexto:** Al seleccionar 40 o 50 registros por página, la tarjeta contenedora de la tabla se expandía libremente hacia abajo empujando el layout y creando scrollbars innecesarias en la ventana del navegador. Además, el `thead` dejaba un espacio blanco no pintado a la derecha junto al scrollbar de las filas.
+
+**Causa Raíz:** Las tablas dependían de `height: auto` o `max-height` variable en el contenedor viewport, y la propiedad `border-collapse: separate` dejaba sin pintar el fondo del gutter sobre el scrollbar.
+
+**La Lección:** 
+1. Los contenedores de tablas de datos (`data-table__viewport`) deben declarar una altura fija o acotada (`height: calc(100vh - 18.5rem); overflow: auto; background: var(--surface-section)`). Seleccionar 10, 20 o 50 filas por página NUNCA debe alterar la altura del contenedor principal.
+2. Para evitar esquinas superiores sin pintar en `thead`, el contenedor `.data-table__viewport` debe pintar su fondo con `var(--surface-section)`, heredando la continuidad visual perfecta sobre el gutter del scrollbar.
+3. Se deben eliminar los subtítulos y títulos duplicados "BÚSQUEDA" y "RESULTADOS" de los contenedores cuando la estructura visual es auto-explicativa, ahorrando espacio vertical valioso para los datos de negocio.
+
+---
+
 ## [2026-07-21] - Anclaje del Viewport y Bloqueo de Scroll Nivel Navegador
 
 **Contexto:** En aplicaciones consumidoras Web/Angular, al mover la rueda del ratón el documento entero (`body`) se desplazaba verticalmente, destruyendo el encuadre fijo del layout del tablero.
