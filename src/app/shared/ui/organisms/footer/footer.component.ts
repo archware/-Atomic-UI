@@ -282,7 +282,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
     }
 
     /* === RESPONSIVE === */
-    @media (max-width: 76var(--space-2)) {
+    @media (max-width: 768px) {
       .footer__inline-top {
         flex-direction: column;
         text-align: center;

@@ -271,7 +271,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
     }
 
     /* === Responsive === */
-    @media (max-width: 76var(--space-2)) {
+    @media (max-width: 768px) {
       .card--horizontal {
         flex-direction: column;
       }

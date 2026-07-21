@@ -19,6 +19,33 @@ Queda estrictamente prohibido usar `(click)` sobre elementos custom de la librer
 
 ---
 
+## [2026-07-20] - El componente visual no debe reinterpretar importes ni tendencias
+
+**Contexto:** Una tarjeta KPI genérica redondeaba monedas a cero decimales y mostraba una tendencia neutral aun cuando el consumidor no había recibido comparación. Además de perder precisión visible, esto convertía una ausencia de datos en una afirmación visual.
+
+**La lección:** Los componentes de presentación financiera deben aceptar un `displayValue` ya formateado por la frontera autorizada y conservar dos decimales cuando deban aplicar un formato monetario genérico. Tendencias, comparaciones y estados no se infieren: permanecen ausentes hasta que el consumidor los entrega explícitamente.
+
+**Regla de estado:** Un estado operativo siempre incluye texto; el color y el icono son apoyos visuales. Los badges de estado se mantienen separados de los contadores de notificaciones para no generar nombres accesibles engañosos.
+
+**Regla responsive:** Una grilla reutilizable debe permitir que la columna mínima nunca supere a su contenedor mediante `min(100%, medida)`, y cada host participante debe declarar `min-width: 0`.
+
+---
+
+## [2026-07-20] - Propagación visual sólo después de validar la fuente
+
+**Contexto:** Una sustitución mecánica de píxeles por tokens dejó expresiones como `76var(...)` dentro de media queries y tamaños. CSS descarta esas declaraciones sin generar un error de compilación, por lo que el defecto responsive puede propagarse silenciosamente a todos los consumidores.
+
+**La lección:** La fuente de diseño debe pasar una búsqueda estática de valores inválidos, pruebas de componente y validación en los breakpoints nominales antes de copiarse. Los valores numéricos dañados se restauran únicamente cuando se conoce su medida original; no se hacen reemplazos globales especulativos.
+
+**Regla de feedback:** El espacio posterior a un mensaje forma parte del contrato del componente y debe expresarse con un token y una variante explícita. La mayúscula corresponde a títulos o etiquetas de interfaz; nunca se transforma el cuerpo del mensaje ni datos del usuario.
+
+**Regla de navegación:** Un padre con hijos controla expansión y una hoja controla navegación. La presentación en mayúsculas se resuelve con CSS para no mutar etiquetas, rutas ni contratos de backend.
+
+**Regla de acciones de icono:** Todo botón que sólo contiene un icono necesita nombre accesible. Enter y Espacio ya activan un `<button>` nativo; añadir handlers de teclado paralelos duplica eventos y puede ejecutar una mutación dos veces.
+>>>>>>> Stashed changes
+
+---
+
 ## [2026-07-19] - Tokens de Color Obligatorios en Modales y Overlays Custom
 
 **Contexto:** En la aplicacion base_python_angular (Acopiador HRA), los modales de alerta y confirmacion construidos con `app-card variant="elevated"` + `slot="image"` tenian colores hexadecimales fijos en el header (`#1e293b`, `#f8fafc`, `#334155`). En modo oscuro el texto parecia correcto (porque los colores fijos simulaban el dark mode), pero en modo claro el fondo quedaba negro y el texto blanco, siendo completamente ilegible.
@@ -126,6 +153,36 @@ La solución robusta es detener la propagación del evento `click` en la opción
 - **Contexto:** Al usar el sistema en aplicaciones como el Acopiador HRA en Python, ciertas tarjetas de consola de texto forzaban el crecimiento vertical de la ventana más allá de `100vh`.
 - **Problema:** En `app-card`, el contenedor interno `.card__body` es un bloque tradicional que crece con su contenido. Si un consumidor inyecta un `div` con `flex: 1` asumiendo que llenará el espacio, el texto largo puede expandir la grilla.
 - **Lección aprendida:** No se debe mutar `.card__body` a `display: flex` de forma global en Atomic UI, ya que rompería el flujo normal de texto y botones de las tarjetas tradicionales. Cuando un proyecto consumidor necesite que el contenido interno de una tarjeta ocupe el resto del layout, por ejemplo una terminal, el consumidor debe inyectar una regla estricta local: `:host ::ng-deep .mi-tarjeta .card__body { display: flex; flex-direction: column; min-height: 0; }`.
+
+## Una corrección automática de auditoría puede degradar el framework
+
+- **Contexto:** la fuente Atomic usaba Angular 22.0.0 y herramientas de diseño con rangos de compatibilidad anteriores; la auditoría proponía resolver avisos del entorno instalando Angular 21.
+- **Decisión:** alinear primero Angular, DevKit, Storybook y ESLint dentro de Angular 22, fijar el motor Node compatible y validar pruebas/builds; no aceptar una solución `--force` que cambie la línea arquitectónica.
+- **Prevención:** separar vulnerabilidades de producción y desarrollo, revisar el plan exacto de actualización y conservar explícitos `engines`, `.node-version` y el lockfile.
+
+## Un aviso transitivo puede cerrarse sin cambiar la línea Angular
+
+- **Contexto:** Angular 22.0.7 aún resolvía `webpack-dev-server 5.2.3` y
+  `sockjs → uuid 8.3.2`, aunque sus revisiones compatibles ya corregían los
+  avisos publicados.
+- **Decisión:** fijar únicamente `webpack-dev-server 5.2.6` y el `uuid` interno
+  en `11.1.1`, y volver a ejecutar pruebas dirigidas, build Angular, Storybook y
+  auditoría completa con el Node fijado.
+- **Prevención:** un `override` mayor solo se acepta cuando la API consumida se
+  inspecciona y todo el toolchain se ejecuta; nunca se usa el cero de auditoría
+  como sustituto de las pruebas.
+
+## Una suite histórica roja debe reportarse por separado
+
+- **Contexto:** los 24 casos del ADN propagado pasan, pero la corrida completa
+  descubrió 68 specs antiguos que establecen inputs de componentes Angular como
+  propiedades ordinarias y ya no ejercitan la plantilla real.
+- **Decisión:** no mezclar su reparación con PREST-014 ni declarar la suite global
+  aprobada; registrar 106 éxitos/68 fallos y mantener como gate la suite dirigida,
+  los builds y las pruebas del consumidor.
+- **Prevención:** al migrar componentes a `input()`, actualizar sus fixtures con
+  `ComponentRef.setInput()` en un incremento dedicado y conservar una línea base
+  explícita de la suite completa.
 
 ## Modales personalizados y modo oscuro
 - **Contexto:** En aplicaciones híbridas a veces se inyectan modales HTML custom en lugar de los componentes estándar de Atomic UI.

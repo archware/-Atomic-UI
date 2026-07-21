@@ -1,4 +1,4 @@
-﻿# propagate-tokens.ps1
+# propagate-tokens.ps1
 # Uso: .\scripts\propagate-tokens.ps1
 # Propaga TODOS los archivos CSS de src/styles/themes/ desde Atomic-UI a Wails y Tauri
 
@@ -12,12 +12,14 @@ $cssFiles = @(
     "_tokens-components.css",
     "_buttons.css",
     "_forms.css",
+    "_utilities.css",
     "index.css"
 )
 
 $destDirs = @(
     (Join-Path $rootDir "..\wails-angular-app\frontend\src\styles\themes"),
-    (Join-Path $rootDir "..\tauri-angular-app\src\styles\themes")
+    (Join-Path $rootDir "..\tauri-angular-app\src\styles\themes"),
+    (Join-Path $rootDir "..\prestamo_front_atomic\src\styles\themes")
 )
 
 Write-Host ""

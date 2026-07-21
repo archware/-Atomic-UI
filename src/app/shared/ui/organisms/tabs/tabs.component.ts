@@ -163,7 +163,7 @@ export class TabComponent {
      */
 
     /* RESPONSIVE: Compact scrollable tabs on mobile */
-    @media (max-width: 76var(--space-2)) {
+    @media (max-width: 768px) {
       .tabs-header {
         overflow-x: auto;
         overflow-y: hidden;

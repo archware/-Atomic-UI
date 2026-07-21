@@ -3,6 +3,56 @@
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
+## [5.1.14] - 2026-07-21
+
+### Añadido
+- **Paginación integrada en `DataTable`:** Se integró el footer de paginación y resumen de registros (`Mostrando X - Y de Z registros`) dentro del Organismo `<prest-data-table>`.
+- **Propiedad `size` en `TableAction`:** Soporte para tamaños `sm` (28px), `md` (36px) y `lg` (44px) en el componente de acciones de grilla.
+
+### Corregido
+- **Aislamiento de tokens de layout:** Se documentó la regla de paridad para evitar que los scripts de sincronización de temas sobreescriban variables locales de maquetación (`--sidebar-width`, `--header-height`) en aplicaciones consumidoras.
+- **Grids de métricas en Angular:** Se validó la regla de maquetación con `:host { height: 100% }` para asegurar alineación estricta de bordes en tarjetas KPI.
+
+---
+
+## [5.1.13] - 2026-07-20
+
+### Añadido
+- **Estado semántico independiente:** `StatusBadgeComponent` representa `active`, `inactive`, `degraded` y `unconfigured` con texto visible además del color. Puede mostrar identidad WEB, TELEGRAM o SMS mediante FontAwesome sin aceptar ni exponer credenciales.
+- **Identidad estable de indicadores:** `MetricsGridComponent` admite `KpiMetric.id` para conservar cada tarjeta al reordenar datos y expone un nombre accesible para la sección.
+- **Pruebas y catálogo:** KPI, MetricsGrid y StatusBadge incorporan specs zoneless y stories coherentes, incluidas composiciones estrechas, títulos repetidos e importes preformateados.
+
+### Corregido
+- **KPI financiero:** se restauraron dimensiones CSS válidas, la moneda conserva dos decimales por defecto y `displayValue` permite presentar exactamente el importe autoritativo recibido por el consumidor.
+- **Comparaciones honestas:** una KPI no muestra tendencia, icono ni texto comparativo por defecto; la tendencia solo aparece cuando el consumidor la entrega explícitamente.
+- **Responsive sin desborde:** MetricsGrid usa `minmax(min(100%, var(--min-col-width)), 1fr)` y sus hosts permiten encogimiento desde 320 px.
+- **Sparkline liviano:** las series finitas generan un SVG decorativo sin Chart.js, animaciones ni valores `NaN`/`Infinity`.
+- **Cadena Angular 22 alineada:** Angular y DevKit pasan a `22.0.7`; Storybook, ESLint, Compodoc y la herramienta de publicación se actualizan a líneas compatibles, sin usar `npm audit fix --force` ni degradar el framework.
+- **Entorno reproducible:** `.node-version`, `.nvmrc`, `engines` y `packageManager` fijan Node `24.15.0` y npm `11.12.1`; Vite queda sobreescrito a una revisión corregida para Windows.
+- **Dependencias transitivas de desarrollo:** `webpack-dev-server` queda fijado en `5.2.6` y el `uuid` interno de `sockjs` en `11.1.1`, ambos dentro del contrato usado y comprobado por Angular/Storybook, para cerrar los avisos moderados sin degradar Angular.
+
+### Verificación
+- Incremento de diseño `PREST-20260720-014`, limitado al ADN Atomic UI. La propagación a consumidores queda separada y exige sus propias pruebas de contrato y responsive.
+- Con Node 24.15.0: 24/24 pruebas dirigidas, build Angular y build Storybook correctos. Tanto `npm audit --omit=dev` como la auditoría completa reportan 0 vulnerabilidades.
+- La suite histórica completa deja 106 pruebas correctas y 68 fallos en componentes no modificados por el incremento —principalmente specs que mutan `input()` sin `setInput`—. No se oculta como gate aprobado; la fuente propagada por PREST-014 queda cubierta por la suite dirigida y el saneamiento global se mantiene como deuda independiente.
+
+---
+
+## [5.1.12] - 2026-07-20
+
+### Añadido
+- **Navegación jerárquica:** `SidebarComponent` admite árboles mediante `children`, expansión declarativa con `expanded`, apertura automática del ancestro activo e iconos FontAwesome en padres e hijos sin alterar el contrato de los elementos planos.
+- **Sesión completa en Topbar:** idioma y notificaciones pueden ocultarse independientemente; el menú de usuario muestra `userRole` y las acciones de sesión se presentan en mayúsculas.
+- **Espaciado de feedback:** `AlertComponent` incorpora `flowSpacing="default|compact|none"`; el valor predeterminado reserva 36 px después del mensaje mediante tokens y conserva la capitalización del cuerpo.
+
+### Corregido
+- **Responsive recuperado:** se restauraron a `768px` los breakpoints dañados de LayoutShell, Panel, Card, Toast, Stepper, Topbar, Footer, Tabs y Navbar. El logo y el botón móvil de Navbar recuperan 28 px y 36 px respectivamente.
+- **Alertas semánticas:** las cuatro variantes consumen `--alert-*-bg|border|text`; la advertencia deja de depender de un fallback CSS inválido.
+- **Acciones de icono accesibles:** `ActionGroup` y `TableActions` exponen `aria-label` y delegan Enter/Espacio al comportamiento nativo del botón para emitir una sola acción. `ActionGroup size="sm"` conserva 28 px.
+
+### Verificación
+- Incremento de diseño `PREST-20260720-013`, limitado a la fuente Atomic UI y sin propagación automática a consumidores.
+
 ---
 
 ## [5.1.12] - 2026-07-20

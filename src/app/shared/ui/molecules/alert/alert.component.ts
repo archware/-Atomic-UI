@@ -9,6 +9,7 @@ import {
 
 export type AlertVariant = 'info' | 'success' | 'warning' | 'danger';
 export type AlertSize = 'sm' | 'md' | 'lg';
+export type AlertFlowSpacing = 'default' | 'compact' | 'none';
 
 /**
  * AlertComponent — Mensaje de estado inline.
@@ -31,7 +32,9 @@ export type AlertSize = 'sm' | 'md' | 'lg';
     @if (visible) {
       <div
         class="alert"
-        [class]="'alert--' + variant + ' alert--' + size"
+        [class]="
+          'alert--' + variant + ' alert--' + size + ' alert--flow-' + flowSpacing
+        "
         [class.alert--dismissible]="closable"
         role="alert"
         [attr.aria-live]="variant === 'danger' ? 'assertive' : 'polite'"
@@ -88,26 +91,31 @@ export type AlertSize = 'sm' | 'md' | 'lg';
     .alert--md { padding: var(--space-3) var(--space-4); }
     .alert--lg { padding: var(--space-4) var(--space-5); font-size: var(--text-base); }
 
+    /* Flow spacing keeps feedback separate from the next content section. */
+    .alert--flow-default { margin-block-end: var(--alert-flow-gap, 2.25rem); }
+    .alert--flow-compact { margin-block-end: var(--alert-flow-gap-compact, var(--space-4)); }
+    .alert--flow-none { margin-block-end: 0; }
+
     /* Variants */
     .alert--info {
-      background-color: var(--color-info-50, #eff6ff);
-      border-color: var(--color-info-200, #bfdbfe);
-      color: var(--color-info-800, #1e40af);
+      background-color: var(--alert-info-bg, var(--info-color-lighter));
+      border-color: var(--alert-info-border, var(--info-color));
+      color: var(--alert-info-text, var(--info-color-text));
     }
     .alert--success {
-      background-color: var(--color-success-50, #f0fdf4);
-      border-color: var(--color-success-200, #bbf7d0);
-      color: var(--color-success-800, #166534);
+      background-color: var(--alert-success-bg, var(--success-color-lighter));
+      border-color: var(--alert-success-border, var(--success-color));
+      color: var(--alert-success-text, var(--success-color-text));
     }
     .alert--warning {
-      background-color: var(--color-warning-50, var(--gray-0)beb);
-      border-color: var(--color-warning-200, #fde68a);
-      color: var(--color-warning-800, #92400e);
+      background-color: var(--alert-warning-bg, var(--warning-color-lighter));
+      border-color: var(--alert-warning-border, var(--warning-color));
+      color: var(--alert-warning-text, var(--warning-color-text));
     }
     .alert--danger {
-      background-color: var(--color-danger-50, #fef2f2);
-      border-color: var(--color-danger-200, #fecaca);
-      color: var(--color-danger-800, #991b1b);
+      background-color: var(--alert-danger-bg, var(--danger-color-lighter));
+      border-color: var(--alert-danger-border, var(--danger-color));
+      color: var(--alert-danger-text, var(--danger-color-text));
     }
 
     /* Icon */
@@ -127,6 +135,7 @@ export type AlertSize = 'sm' | 'md' | 'lg';
       margin: 0 0 var(--space-1);
       font-weight: var(--font-semibold, 600);
       line-height: 1.4;
+      text-transform: uppercase;
     }
 
     .alert__message {
@@ -165,6 +174,7 @@ export class AlertComponent {
   @Input() title = '';
   @Input() message = '';
   @Input() closable = false;
+  @Input() flowSpacing: AlertFlowSpacing = 'default';
 
   @Output() closed = new EventEmitter<void>();
 

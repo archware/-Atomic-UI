@@ -62,10 +62,9 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
             [class]="'action-btn--' + (action.variant || 'default')"
             [class.disabled]="action.disabled"
             [title]="action.label"
+            [attr.aria-label]="action.label"
             [disabled]="action.disabled"
             (click)="onActionClick(action)"
-            (keydown.enter)="onActionClick(action)"
-            (keydown.space)="onActionClick(action); $event.preventDefault()"
           >
             <i [class]="action.icon"></i>
           </button>
@@ -79,9 +78,8 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
             type="button"
             class="action-btn action-btn--more"
             [title]="compact ? 'Acciones' : 'Más acciones'"
+            [attr.aria-label]="compact ? 'Acciones' : 'Más acciones'"
             (click)="toggleMenu($event)"
-            (keydown.enter)="toggleMenu($event)"
-            (keydown.space)="toggleMenu($event); $event.preventDefault()"
             [attr.aria-expanded]="isOpen()"
             aria-haspopup="menu"
           >
@@ -459,6 +457,7 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
         this.renderer.setAttribute(btn, 'disabled', 'true');
       }
       this.renderer.setAttribute(btn, 'role', 'menuitem');
+      this.renderer.setAttribute(btn, 'aria-label', action.label);
 
       // Icono
       const icon = this.renderer.createElement('i');

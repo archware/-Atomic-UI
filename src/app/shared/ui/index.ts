@@ -24,6 +24,13 @@ export type { ChipVariant, ChipSize } from './atoms/chip/chip.component';
 export { BadgeComponent } from './atoms/badge/badge.component';
 export type { BadgeVariant, BadgeSize, BadgePosition } from './atoms/badge/badge.component';
 
+export { StatusBadgeComponent } from './atoms/status-badge/status-badge.component';
+export type {
+  StatusBadgeStatus,
+  StatusBadgeChannel,
+  StatusBadgeSize,
+} from './atoms/status-badge/status-badge.component';
+
 export { BreadcrumbComponent } from './atoms/breadcrumb/breadcrumb.component';
 export type { BreadcrumbItem } from './atoms/breadcrumb/breadcrumb.component';
 
@@ -128,7 +135,7 @@ export type { ModalConfig, ModalItem, ModalButton, ModalSize } from './services/
 export { UserMenuComponent } from './molecules/user-menu/user-menu.component';
 
 export { AlertComponent } from './molecules/alert/alert.component';
-export type { AlertVariant, AlertSize } from './molecules/alert/alert.component';
+export type { AlertVariant, AlertSize, AlertFlowSpacing } from './molecules/alert/alert.component';
 
 export { TagInputComponent } from './molecules/tag-input/tag-input.component';
 export type { TagInputOption } from './molecules/tag-input/tag-input.component';

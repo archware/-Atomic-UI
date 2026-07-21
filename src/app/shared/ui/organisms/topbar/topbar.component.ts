@@ -9,7 +9,7 @@ import { LanguageSwitcherComponent } from '../../atoms/language-switcher/languag
   standalone: true,
   imports: [IconButtonComponent, UserMenuComponent, LanguageSwitcherComponent],
   templateUrl: './topbar.component.html',
-  styleUrl: './topbar.component.css'
+  styleUrl: './topbar.component.css',
 })
 export class TopbarComponent {
   /** Page title displayed in the topbar */
@@ -24,14 +24,26 @@ export class TopbarComponent {
   /** User email */
   @Input() userEmail = 'usuario@email.com';
 
+  /** User role displayed in the session menu */
+  @Input() userRole = '';
+
   /** Number of unread notifications */
   @Input() notificationCount = 0;
+
+  /** Whether the language control is rendered */
+  @Input() showLanguageSwitcher = true;
+
+  /** Whether the notifications control is rendered */
+  @Input() showNotifications = true;
 
   /** Event emitted when sidebar toggle is clicked */
   @Output() toggleSidebar = new EventEmitter<void>();
 
   /** Event emitted when logout is clicked */
   @Output() logout = new EventEmitter<void>();
+
+  /** Event emitted when notifications are clicked */
+  @Output() notificationClick = new EventEmitter<void>();
 
   /** Event emitted when any user menu action is clicked */
   @Output() userAction = new EventEmitter<UserMenuAction>();

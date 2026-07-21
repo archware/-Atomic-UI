@@ -230,6 +230,8 @@
    --alert-danger-bg: var(--danger-color-lighter);
    --alert-danger-border: var(--danger-color);
    --alert-danger-text: var(--danger-color-text);
+   --alert-flow-gap: 2.25rem;
+   --alert-flow-gap-compact: var(--space-4);
 
    /* === SCROLLBAR === */
    --scrollbar-track: color-mix(in srgb, var(--info-color), transparent 92%);
