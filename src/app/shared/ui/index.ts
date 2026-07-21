@@ -58,6 +58,9 @@ export { TextComponent } from './atoms/text/text.component';
 export { ToggleComponent } from './atoms/toggle/toggle.component';
 
 export { TextareaComponent } from './atoms/textarea/textarea.component';
+
+export { VersionComponent } from './atoms/version/version.component';
+export type { VersionVariant } from './atoms/version/version.component';
 export type { TextareaVariant } from './atoms/textarea/textarea.component';
 
 export { RadioComponent } from './atoms/radio/radio.component';

@@ -26,7 +26,7 @@ export type IconPosition = 'left' | 'right' | 'none';
       [type]="type"
       [disabled]="disabled"
       [class]="buttonClasses"
-      (click)="buttonClick.emit($event)"
+      (click)="onButtonClick($event)"
     >
       <!-- Custom Icon Link (Left) -->
       <span class="btn-icon-wrapper btn-icon-wrapper--left">
@@ -154,6 +154,13 @@ export class ButtonComponent {
    * Does not emit when disabled.
    */
   @Output() buttonClick = new EventEmitter<MouseEvent>();
+
+  onButtonClick(event: MouseEvent): void {
+    event.stopPropagation();
+    if (!this.disabled) {
+      this.buttonClick.emit(event);
+    }
+  }
 
   /** @internal */
   get buttonClasses(): string {

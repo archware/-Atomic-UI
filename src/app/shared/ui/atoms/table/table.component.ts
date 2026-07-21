@@ -15,7 +15,7 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
       [minColumnWidth]="40"
       [columnTemplate]="columnTemplate"
       [lockColumnTemplate]="!!columnTemplate"
-      verticalSelector="tbody">
+      [verticalSelector]="maxHeight ? null : 'tbody'">
       <table class="atomic-table">
         <ng-content></ng-content>
       </table>
