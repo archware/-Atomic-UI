@@ -13,7 +13,7 @@ export type VersionVariant = 'pill' | 'badge' | 'text' | 'compact';
   template: `
     <div class="atomic-version" [class]="'atomic-version--' + variant">
       @if (variant === 'pill' || variant === 'badge') {
-        <span class="atomic-version__dot"></span>
+        <span class="atomic-version__dot" [class]="'atomic-version__dot--' + environment.toLowerCase()"></span>
       }
       
       @if (appName) {
@@ -89,6 +89,21 @@ export type VersionVariant = 'pill' | 'badge' | 'text' | 'compact';
       box-shadow: 0 0 6px var(--success-color, #10b981);
     }
 
+    .atomic-version__dot--dev {
+      background-color: var(--warning-color, #f59e0b);
+      box-shadow: 0 0 6px var(--warning-color, #f59e0b);
+    }
+
+    .atomic-version__dot--beta {
+      background-color: var(--info-color, #3b82f6);
+      box-shadow: 0 0 6px var(--info-color, #3b82f6);
+    }
+
+    .atomic-version__dot--qa, .atomic-version__dot--staging {
+      background-color: #8b5cf6;
+      box-shadow: 0 0 6px #8b5cf6;
+    }
+
     .atomic-version__name {
       font-weight: 500;
       color: var(--text-color-muted, rgba(255, 255, 255, 0.5));
@@ -101,8 +116,8 @@ export type VersionVariant = 'pill' | 'badge' | 'text' | 'compact';
     }
 
     .atomic-version__env {
-      padding: 1px 5px;
-      border-radius: 3px;
+      padding: 2px 6px;
+      border-radius: 4px;
       font-size: 0.65rem;
       font-weight: 700;
       text-transform: uppercase;
@@ -110,13 +125,23 @@ export type VersionVariant = 'pill' | 'badge' | 'text' | 'compact';
       color: var(--text-color, #ffffff);
     }
 
+    .atomic-version__env--prod {
+      background: var(--success-color, #10b981);
+      color: #ffffff;
+    }
+
     .atomic-version__env--dev {
       background: var(--warning-color, #f59e0b);
       color: #000000;
     }
 
-    .atomic-version__env--prod {
-      background: var(--success-color, #10b981);
+    .atomic-version__env--beta {
+      background: #3b82f6;
+      color: #ffffff;
+    }
+
+    .atomic-version__env--qa, .atomic-version__env--staging {
+      background: #8b5cf6;
       color: #ffffff;
     }
 
