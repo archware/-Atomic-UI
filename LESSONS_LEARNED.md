@@ -4,6 +4,17 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Supresión de Contenedores Dobles (Single Card Boxing) y Estilos de Combos Atómicos
+
+**Contexto:** Los componentes de tabla (`DataTableComponent`) se estaban envolviendo erróneamente dentro de tarjetas adicionales (`<prest-card>`), lo que creaba bordes y sombras dobles anidadas y desbordaba la pantalla. Además, los desplegables `<select>` mostraban los menús rectangulares por defecto del SO.
+
+**La Lección:**
+1. **Contenedor Único Atómico:** Los componentes de organismo como `DataTableComponent` constituyen su propia tarjeta atómica. Prohibido envolver un `DataTableComponent` dentro de un `<prest-card>`.
+2. **Estilizado Universal de Combos y Desplegables:** Todos los elementos `<select>` u `<option>` deben anular la apariencia nativa (`appearance: none`), incluir íconos SVG de despliegue estilizados y utilizar el token de superficie `var(--surface-background)` con bordes redondeados y estados `:hover`/`:focus` atómicos.
+3. **Cálculo de Altura del Viewport:** La altura del viewport de tablas dentro de la aplicación principal debe acotarse exactamente a `height: calc(100vh - 23.5rem)` para garantizar cero desbordamiento vertical y un margen inferior respirable.
+
+---
+
 ## [2026-07-21] - Contenedores de Tabla con Altura Fija e Integridad de thead
 
 **Contexto:** Al seleccionar 40 o 50 registros por página, la tarjeta contenedora de la tabla se expandía libremente hacia abajo empujando el layout y creando scrollbars innecesarias en la ventana del navegador. Además, el `thead` dejaba un espacio blanco no pintado a la derecha junto al scrollbar de las filas.
