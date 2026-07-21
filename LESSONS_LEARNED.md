@@ -4,6 +4,17 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Contraste en Modo Oscuro (Hover de Filas), Margen Respirable (36px) y Flechas SVG de Combos
+
+**Contexto:** Al pasar el ratón (`hover`) por las filas de las tablas en Tema Oscuro, las filas se pintaban de blanco brillante cegador, tornando ilegible el texto. Además, los combos `<select>` perdían las flechas de despliegue en modo oscuro y las tarjetas de tabla quedaban pegadas al borde inferior sin espacio respirable.
+
+**La Lección:**
+1. **Hover Semántico de Filas (`var(--hover-background)`):** Jamás usar colores claros rígidos (como `var(--brand-primary-50)`) para eventos `:hover` en elementos de tabla. Utilizar siempre el token semántico de interacción `var(--hover-background)` (que en tema claro es celeste suave `#e8f0fe` y en tema oscuro es azul naval/slate `#202f61` / `#2d2d2d`).
+2. **Margen Respirable de 36px:** Todo contenedor de tabla acotado debe acotar su viewport (`height: calc(100vh - 27rem)`) para garantizar una holgura o aire de al menos 36px (`2.25rem`) por encima del borde inferior de la pantalla.
+3. **Flecha SVG Dinámica en Combos:** El SVG inyectado en `background-image` para desplegables `<select>` debe alternar su trazo (`stroke='%23cbd5e1'`) en selectores oscuros (`[data-theme='dark'] select`), asegurando legibilidad perfecta.
+
+---
+
 ## [2026-07-21] - Supresión de Contenedores Dobles (Single Card Boxing) y Estilos de Combos Atómicos
 
 **Contexto:** Los componentes de tabla (`DataTableComponent`) se estaban envolviendo erróneamente dentro de tarjetas adicionales (`<prest-card>`), lo que creaba bordes y sombras dobles anidadas y desbordaba la pantalla. Además, los desplegables `<select>` mostraban los menús rectangulares por defecto del SO.
