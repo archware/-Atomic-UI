@@ -4,6 +4,22 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Auditoría Profunda: Habilitación de Scroll Vertical (`[vertical]="true"`), Preservación de Flechas SVG (`background-color`) y Espaciado Holgado en Filas
+
+**Contexto:** Se detectaron 4 problemas en auditoría profunda:
+1. El scrollbar vertical de la tabla no funcionaba y solo mostraba 18 de 40 filas por tener `[vertical]="false"` en la envoltura `<prest-scroll-overlay>`.
+2. Las flechas SVG de los combos se borraban silenciosamente por usar `background: var(--input-bg)` en lugar de `background-color`.
+3. Los combos lucían desproporcionadamente grandes en los formularios.
+4. El espaciado interno de las filas de las tablas se sentía apretado y comprimido.
+
+**La Lección:**
+1. **Activación de Scrollbar Vertical:** `<prest-scroll-overlay>` en tablas de datos debe declarar explícitamente `[vertical]="true"` y el contenedor `.data-table__viewport` debe poseer `overflow-y: auto` con scrollbars WebKit estilizados (`::-webkit-scrollbar`).
+2. **Preservación de SVG de Flecha:** Usar estrictamente la propiedad singular `background-color: var(--input-bg)` en lugar del taquigráfico `background: ...`, para evitar la anulación accidental de `background-image: url(...)`.
+3. **Ancho Compacto de Combos:** Los desplegables `<select>` en formularios deben acotarse a `max-width: 14rem; min-height: 2.375rem;` para lucir elegantes y estilizados.
+4. **Espaciado Holgado y Ejecutivo de Filas:** `th` y `td` deben emplear un relleno holgado `padding: var(--space-4) var(--space-5)` (16px top/bottom, 20px left/right), proporcionando un diseño respirable y de alta gama.
+
+---
+
 ## [2026-07-21] - Contraste en Modo Oscuro (Hover de Filas), Margen Respirable (36px) y Flechas SVG de Combos
 
 **Contexto:** Al pasar el ratón (`hover`) por las filas de las tablas en Tema Oscuro, las filas se pintaban de blanco brillante cegador, tornando ilegible el texto. Además, los combos `<select>` perdían las flechas de despliegue en modo oscuro y las tarjetas de tabla quedaban pegadas al borde inferior sin espacio respirable.
