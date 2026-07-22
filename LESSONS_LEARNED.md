@@ -4,6 +4,20 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Estandarización de Ancho de Combos (185px), Unificación de Tabla y Color Distintivo de Cabecera `thead`
+
+**Contexto:**
+1. Los desplegables `<select>` cambiaban de ancho dinámicamente según la etiqueta o la opción seleccionada, produciendo desalineación visual.
+2. Dividir la tabla en dos elementos `<table>` separados desalineaba las columnas e impedía el funcionamiento correcto del scroll.
+3. Las cabeceras `thead` carecían de un tono de fondo distintivo.
+
+**La Lección:**
+1. **Ancho Estándar de 185px:** Todos los campos `<select>` y combos de formulario deben poseer una anchura estándar estricta de `width: 185px; min-width: 185px; max-width: 185px;`. Esto garantiza una retícula limpia, predecible y uniforme en todos los formularios.
+2. **Tabla Única con Cabecera Pegajosa (`sticky`):** La estructura HTML de una grilla debe consistir en una **ÚNICA tabla `<table>`** dentro del contenedor `<prest-scroll-overlay class="data-table__viewport">`. Esto asegura la alineación matemática exacta de todas las columnas entre `thead` y `tbody`.
+3. **Color Distintivo de Cabecera `thead`:** Las celdas `th` deben declarar `background: var(--surface-ground)` con un borde inferior pronunciado (`border-bottom: 2px solid var(--border-color-strong)`), otorgándole un color de cabecera limpio y distinguible.
+
+---
+
 ## [2026-07-21] - Separación de `thead`, Envoltura de `tbody` con Scroll Auto-Ocultable, Distinción de Cabecera y Variación de Botones
 
 **Contexto:**
