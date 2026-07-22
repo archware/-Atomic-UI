@@ -4,6 +4,23 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Auditoría Agresiva ADN: Cabecera `th` 100% Opaca con Tinte Azul, Elevación `shadow-sm` en Botones y Estilo Forzado en Paginación
+
+**Contexto:**
+Tras una auditoría visual agresiva, se resolvieron 3 defectos sutiles pero críticos:
+1. La cabecera `th` utilizaba `color-mix` que en ciertas encapsulaciones provocaba transparencia e interferencia visual con las filas al desplazarse.
+2. Los botones carecían de sombra de reposo (`box-shadow: var(--shadow-sm)`), luciendo planos sin profundidad.
+3. El combo de paginación sufría interferencia de especificidad en reglas SCSS locales.
+
+**La Lección:**
+1. **Fondo de Cabecera 100% Opaco y Azulado:** Las celdas `th` DEBEN vestir un fondo sólido opaco (nunca transparente o dinámico inestable):
+   - **Modo Claro:** `background-color: #dbeafe !important; color: #1e40af !important; border-bottom: 2px solid #2563eb !important;` (Fondo azul cielo opaco con texto azul marino).
+   - **Modo Oscuro:** `background-color: #1e293b !important; color: #93c5fd !important; border-bottom: 2px solid #38bdf8 !important;` (Fondo pizarra azul noche opaco con texto azul celeste).
+2. **Elevación Obligatoria en Botones (`box-shadow: var(--shadow-sm)`):** La clase `.button` e instancias `<prest-button>` DEBEN incluir `box-shadow: var(--shadow-sm)` en reposo y `box-shadow: var(--shadow-md)` en `:hover` con traslación `translateY(-1px)` para garantizar profundidad visual ejecutiva.
+3. **Especificidad Forzada en Paginación:** `.data-table__page-size select` debe declarar sus propiedades de borde, fondo y sombras con especificidad estricta para no ceder frente a contenedores de tabla contenedores.
+
+---
+
 ## [2026-07-21] - Auditoría ADN de Estados de Entrada: Borde Morado en Hover (`:hover`) y Borde Azul en Enfoque/Escritura (`:focus`)
 
 **Contexto:**
