@@ -4,6 +4,20 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Requisito Obligatorio `[fill]="true"` en ScrollOverlay, Tamaño Estándar de 220px para Combos y Color Distintivo en `thead`
+
+**Contexto:**
+1. Al incrustar `<prest-scroll-overlay class="data-table__viewport">` sin la propiedad `[fill]="true"`, el viewport interno tenía `height: auto` en lugar de `height: 100%`, impidiendo la activación del scroll vertical.
+2. La anchura de 185px resultaba aún muy ajustada para ciertas opciones largas; el estándar definitivo solicitado es de **220px**.
+3. Las cabeceras `thead` se confundían con el fondo de la tarjeta al usar `var(--surface-ground)`.
+
+**La Lección:**
+1. **`[fill]="true"` Obligatorio en ScrollOverlay:** Todo uso de `<prest-scroll-overlay>` en componentes de alto rígido (como tablas y paneles) DEBE incluir `[fill]="true"` para forzar `height: 100%` en la vista interna y permitir el disparo de `overflow-y: auto`.
+2. **Ancho Estándar Definitivo de 220px:** Todos los desplegables `<select>` en formularios deben medir estrictamente `width: 220px; min-width: 220px; max-width: 220px;`.
+3. **Fondo de Cabecera Contrastante (`var(--border-color-light)`):** Las celdas `th` deben usar `background: var(--border-color-light)` con un borde inferior de marca `border-bottom: 2px solid var(--primary-color)` y sombra sutil `box-shadow: 0 2px 4px rgba(0,0,0,0.08)`, destacando la cabecera tanto en modo claro (`#e2e8f0`) como en oscuro.
+
+---
+
 ## [2026-07-21] - Estandarización de Ancho de Combos (185px), Unificación de Tabla y Color Distintivo de Cabecera `thead`
 
 **Contexto:**
