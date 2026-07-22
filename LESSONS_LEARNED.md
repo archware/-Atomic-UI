@@ -4,6 +4,20 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Auditoría ADN de Estados de Entrada: Borde Morado en Hover (`:hover`) y Borde Azul en Enfoque/Escritura (`:focus`)
+
+**Contexto:**
+Se identificó una inconsistencia en los estados de entrada: los campos de texto e inputs de paginación no conservaban la sombra de reposo al tener contenido (`:not(:placeholder-shown)`), y el comportamiento ADN original (borde **morado de marca en `:hover`** y borde **azul de escritura en `:focus`**) se había distorsionado por reglas ad-hoc en vistas locales.
+
+**La Lección:**
+1. **Regla de Estados ADN Unificada:** Todos los componentes de entrada de la arquitectura (`input`, `select`, `textarea`, `.form-input`, `.form-select`, `.form-textarea`, `.data-table__page-size select`) DEBEN heredar estrictamente la misma secuencia cromática de interacción:
+   - **Reposo / Con Contenido:** `border-color: var(--input-border); box-shadow: var(--shadow-sm);` (La sombra `shadow-sm` se conserva SIEMPRE, con o sin texto escrito).
+   - **Paso del Ratón (`:hover`):** **BORDE MORADO DE MARCA** (`border-color: var(--primary-color)`) con elevación (`box-shadow: var(--shadow-md)`).
+   - **Enfoque / Digitando (`:focus` / `:focus-visible`):** **BORDE AZUL DE ESCRITURA** (`border-color: var(--info-color)`) con resplandor cian/azul (`box-shadow: var(--shadow-focus-secondary)`).
+2. **Eliminación de Estilos Ad-Hoc:** Ninguna vista local debe declarar estados de enfoque o hover aislados; la totalidad de formularios, paginación y controles de búsqueda consumen esta definición unificada desde los tokens globales (`_base.scss` y `_forms.css`).
+
+---
+
 ## [2026-07-21] - Sombra de Elevación Reposo (`shadow-sm`) en Todos los Inputs, Resaltado en Paginación y Cabecera Azul Adaptativa con `color-mix`
 
 **Contexto:**
