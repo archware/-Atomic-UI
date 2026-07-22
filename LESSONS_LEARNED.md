@@ -4,6 +4,18 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Combo de Paginación Compacto (Máx 3 Cifras / `5.25rem`) y Fondo de Cabecera con Color Secundario de Marca
+
+**Contexto:**
+1. Al estandarizar los combos de búsqueda en 220px, el desplegable de paginación (`POR PÁGINA: [40]`) heredó esa anchura excesiva.
+2. El color de la cabecera `thead` requería mayor expresividad utilizando la paleta secundaria de la marca.
+
+**La Lección:**
+1. **Diferenciación de Combo de Paginación:** Mientras que los campos de búsqueda miden 220px, el selector de paginación (`.data-table__page-size select`) DEBE estar acotado a un tamaño compacto de `width: 5.25rem !important` (aprox. 84px), permitiendo alojar como máximo 3 dígitos (ej. `10`, `30`, `50`, `100`) sin desperdiciar espacio.
+2. **Cabecera con Color Secundario:** Las celdas `th` deben vestir el tono secundario contextual `background: var(--secondary-color-lighter)`, `color: var(--secondary-color-text)` y un borde inferior pronunciado `border-bottom: 2px solid var(--secondary-color)`, otorgando una apariencia fresca, distintiva y armonizada con la marca.
+
+---
+
 ## [2026-07-21] - Requisito Obligatorio `[fill]="true"` en ScrollOverlay, Tamaño Estándar de 220px para Combos y Color Distintivo en `thead`
 
 **Contexto:**
