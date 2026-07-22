@@ -4,6 +4,18 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Cabecera Azul Distintiva (`#ebf5ff` / `#1e40af`) y Reducción al 50% del Combo de Paginación (`3.85rem`)
+
+**Contexto:**
+1. El usuario solicitó evaluar una tonalidad azul ejecutiva en la cabecera `thead` de las tablas.
+2. El selector de paginación (`POR PÁGINA: [40]`) requería reducirse a la mitad para lucir ultra-compacto y afinado.
+
+**La Lección:**
+1. **Cabecera Azul Corporativa (`#ebf5ff` / `#1e40af`):** Las celdas `th` lucen una tonalidad azul suave de contraste (`background: #ebf5ff; color: #1e40af; border-bottom: 2px solid #2563eb;`), proporcionando una lectura clara, fresca y profesional.
+2. **Reducción al 50% del Combo de Paginación (`3.85rem`):** `.data-table__page-size select` se ajustó a `3.85rem` (~58px), recortando el tamaño a la mitad para albergar estrictamente las cifras de página (`10`, `30`, `40`, `50`, `100`) de forma minimalista.
+
+---
+
 ## [2026-07-21] - Combo de Paginación Compacto (Máx 3 Cifras / `5.25rem`) y Fondo de Cabecera con Color Secundario de Marca
 
 **Contexto:**
