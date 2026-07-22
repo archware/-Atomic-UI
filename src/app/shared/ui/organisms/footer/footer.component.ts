@@ -1,6 +1,8 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { VersionComponent } from '../../atoms/version/version.component';
+import { AppVersionService } from '../../services/app-version.service';
 
 export interface SocialLink {
   platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin' | 'github' | 'youtube';
@@ -17,14 +19,25 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, VersionComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <footer class="footer" [class]="'footer--' + variant">
       <!-- SIMPLE: Solo copyright -->
       @if (variant === 'simple') {
         <div class="footer__simple">
-          <p class="footer__copyright">© {{ year }} {{ companyName }}. {{ copyrightText | translate }}</p>
+          <div class="footer__copyright">
+            <span>© {{ year }} {{ companyName }}. {{ copyrightText | translate }}</span>
+            @if (showVersion) {
+              <app-version 
+                [version]="versionService.versionInfo().version"
+                [environment]="versionService.versionInfo().environment"
+                [showBuildDate]="!!versionService.versionInfo().buildDate"
+                [buildDate]="versionService.versionInfo().buildDate"
+                variant="badge">
+              </app-version>
+            }
+          </div>
         </div>
       }
 
@@ -55,7 +68,18 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
               </nav>
             }
           </div>
-          <p class="footer__copyright">© {{ year }} {{ companyName }}</p>
+          <div class="footer__copyright">
+            <span>© {{ year }} {{ companyName }}</span>
+            @if (showVersion) {
+              <app-version 
+                [version]="versionService.versionInfo().version"
+                [environment]="versionService.versionInfo().environment"
+                [showBuildDate]="!!versionService.versionInfo().buildDate"
+                [buildDate]="versionService.versionInfo().buildDate"
+                variant="badge">
+              </app-version>
+            }
+          </div>
         </div>
       }
 
@@ -319,11 +343,14 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
   `]
 })
 export class FooterComponent {
+  public readonly versionService = inject(AppVersionService);
+
   @Input() variant: FooterVariant = 'simple';
   @Input() companyName = 'Company';
   @Input() year = new Date().getFullYear();
   @Input() copyrightText = 'footer.all_rights_reserved';
   @Input() description = '';
+  @Input() showVersion = true;
   @Input() socialLinks: SocialLink[] = [];
   @Input() legalLinks: LegalLink[] = [];
 
