@@ -4,6 +4,25 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Propagación Global del Estado Hover (`:hover`) y Glow en Todos los Inputs y Selects
+
+**Contexto:**
+Los combos `<select>` tenían un efecto de resaltado al pasar el cursor (`:hover`), mientras que los campos de texto `<input>` permanecían estáticos, generando inconsistencia visual en los formularios.
+
+**La Lección:**
+1. **Consistencia Visual en Formularios:** Todos los elementos interactivos de entrada (`input`, `select`, `textarea`, `.form-input`, `.form-select`, `.form-textarea`) DEBEN compartir la misma regla global de `:hover` y `:focus`:
+   ```css
+   input:hover:not(:disabled):not(:focus),
+   select:hover:not(:disabled):not(:focus),
+   textarea:hover:not(:disabled):not(:focus) {
+     border-color: var(--primary-color);
+     box-shadow: var(--shadow-md);
+   }
+   ```
+2. **Experiencia Fluida:** Al asegurar que tanto campos de texto como desplegables reaccionen con el mismo resplandor púrpura de la marca, los formularios lucen uniformes y armónicos al interactuar con ellos.
+
+---
+
 ## [2026-07-21] - Fondo Oscuro Integrado (`var(--surface-section)`) con Texto Azul (`var(--info-color-text)`) y Línea de Acento Azul (`var(--info-color)`)
 
 **Contexto:**
