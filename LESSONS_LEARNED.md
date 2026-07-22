@@ -4,11 +4,34 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-22] - Anclaje de Footer en Shell de la Aplicación y Desacoplamiento de Pipes Translators
+
+**Contexto:** En aplicaciones Angular empaquetadas (Tauri, Wails, PyWebView), el pie de página (`<app-footer>`) no era visible en ciertas vistas o pestañas internas (`GerencialComponent`, `OperativoComponent`), o se colapsaba visualmente debido a desbordamientos de layout y a la dependencia implícita del pipe `| translate` de `@ngx-translate/core`.
+
+**Causa Raíz:**
+1. **Layout y Scroll Scope:** Al renderizar pestañas (`<app-tabs>`) con contenedores de scroll independientes (`<app-scroll-overlay>` o `overflow: auto`), colocar el pie de página dentro de componentes secundarios o sub-vistas provocaba que quedara recortado por la altura de las tablas o desplazado fuera del área visible (*below the fold*).
+2. **Crash de Pipes Translators:** El componente `FooterComponent` incluía `| translate` en plantillas por defecto sin que los proyectos consumidores proveyeran explícitamente `TranslateService` o archivos i18n JSON, generando fallos de inyección que cancelaban la renderización del DOM.
+
+**La Lección y Solución Arquitectónica:**
+1. **Shell Root Pinned Layout:** El pie de página **NUNCA** debe incrustarse dentro de componentes de pestañas ni vistas secundarias. Debe declararse **exclusivamente a nivel del `AppComponent` raíz** mediante un contenedor flexbox de pantalla completa:
+   ```html
+   <div class="app-root-shell" style="display: flex; flex-direction: column; height: 100vh; width: 100vw; overflow: hidden; background: var(--surface-base, #0f172a);">
+     <div class="app-root-content" style="flex: 1; overflow-y: auto; min-height: 0;">
+       <app-dashboard></app-dashboard>
+     </div>
+     <app-footer variant="inline" companyName="Hospital Regional Ayacucho"></app-footer>
+   </div>
+   ```
+2. **Independencia Total de i18n:** El `FooterComponent` de Atomic-UI debe usar valores en texto plano con fallbacks por defecto (`copyrightText || 'Todos los derechos reservados.'`), evitando dependencias duras de `@ngx-translate/core` para garantizar un renderizado atómico 100% libre de errores en cualquier entorno.
+3. **Estilos de Host Blindados:** `:host { display: block !important; width: 100% !important; margin-top: auto !important; }` asegura que el pie de página ocupe el ancho completo y permanezca fijo en la base del viewport.
+
+---
+
 ## [2026-07-20] - Fugas de Click en Componentes Encapsulados (app-button)
 
 **Contexto:** En el Orquestador del Acopiador HRA, el boton "Ejecutar Calculo" se mostraba deshabilitado (gris, opacity reducida) cuando faltaban fuentes de datos `[disabled]="!canExecuteIndicador()"`, pero el usuario reporto que al hacer click, el calculo se ejecutaba de todas formas.
 
-**Causa Raiz:** El consumidor enlazo la accion usando el evento nativo del DOM `(click)="ejecutarIndicador()"` directamente sobre la etiqueta `<app-button>`. En Angular, esto enlaza el listener al *Host Element*. Aunque el `<button>` HTML nativo en el interior del componente este `disabled` y no dispare eventos de click, el click del usuario impactaba en el host (padding, wrapper) y disparaba la funcion.
+**Causa Raiz:** El consumidor enlazo la accion usando el evento nativo del DOM `(click)="ejecutarIndicador()"` directamente sobre la etiqueta `<app-button>`. En Angular, esto enlazar el listener al *Host Element*. Aunque el `<button>` HTML nativo en el interior del componente este `disabled` y no dispare eventos de click, el click del usuario impactaba en el host (padding, wrapper) y disparaba la funcion.
 
 **La leccion:** Los componentes de UI empaquetados (como `app-button`) gestionan su estado `disabled` bloqueando la emision de eventos desde dentro. El `ButtonComponent` de Atomic UI cuenta con un `@Output() buttonClick` que solo emite si el boton no esta deshabilitado.
 
@@ -86,7 +109,7 @@ La solución robusta es detener la propagación del evento `click` en la opción
 
 ### 2. Crasheos Silenciosos en Rust y Activación de Mock Data
 **Contexto**: El dashboard de Tauri mostraba "Datos de prueba" aunque el ping DB funcionara. Se debió a un panic de la librería Tiberius usando `row.get()`.
-**La Lección**: En Rust, `row.get::<T>` hace `unwrap` interno de los tipos SQL exactos. Si SQL manda un FLOAT donde Rust pide un INT, la aplicación colapsa y Angular atrapa el error como "conexión caída". Toda capa Repository en Tauri debe usar estrictamente iteradores `.try_get()` aplanados a defaults: `row.try_get::<i32, _>("col").ok().flatten().unwrap_or(0)`.
+**La Lección**: En Rust, `row.get::<T>` hace `unwrap` interno de los tipos SQL exactos. Si SQL manda un FLOAT donde Rust pide un INT, la aplicación colapsa y Angular atrapa el error como "conexión caída". Toda capa Repository en Tauri debe usar strictly iteradores `.try_get()` aplanados a defaults: `row.try_get::<i32, _>("col").ok().flatten().unwrap_or(0)`.
 
 ### 3. Excepción TLS en Bases de Datos Legacy
 **Contexto**: El intento de forzar `TrustServerCertificate=true` destruyó por completo el acceso a Tauri arrojando "os error -2146893007".
@@ -120,7 +143,7 @@ La solución robusta es detener la propagación del evento `click` en la opción
 ### [2026-07-08] Desarrollo Independiente y Sintaxis Nativa (Arquitectura Desacoplada)
 - **Contexto:** Al abordar problemas en el mapeo de variables desde bases de datos, se intentó replicar (hacer análoga) la lógica del ecosistema de Wails (Go) directamente al ecosistema de Tauri (Rust).
 - **Problema:** Wails (Go) y Tauri (Rust) manejan el acceso a base de datos, mapeo JSON, y serialización de formas muy distintas (ej. `row.Scan` vs `tiberius` y `serde`). Tratar de forzar que Tauri funcionara exactamente con las convenciones, nombres de variables o estructuras parciales copiadas de Wails ocasionó roturas críticas en el frontend al intentar pintar la data.
-- **Lección Aprendida:** **NUNCA se debe asumir que una mejora en Wails es análoga a Tauri.** Queda estrictamente prohibido desarrollar mezclando o copiando sintaxis entre ecosistemas. A partir de ahora, cada ecosistema (Python, Wails, Tauri) debe ser desarrollado **de forma individual con su sintaxis nativa** y respetando sus propios paradigmas y librerías. Cualquier nueva característica o corrección requiere una auditoría profunda e independiente en su respectivo entorno para solucionar el problema de raíz, sin asumir paridad automática con los otros frameworks.
+- **Lección Aprendida:** **NUNCA se debe asumir que una mejora en Wails es análoga a Tauri.** Queda strictly prohibido desarrollar mezclando o copiando sintaxis entre ecosistemas. A partir de ahora, cada ecosistema (Python, Wails, Tauri) debe ser desarrollado **de forma individual con su sintaxis nativa** y respetando sus propios paradigmas y librerías. Cualquier nueva característica o corrección requiere una auditoría profunda e independiente en su respectivo entorno para solucionar el problema de raíz, sin asumir paridad automática con los otros frameworks.
 
 ## Desbordamiento silencioso en grillas Flexbox
 - **Contexto:** Al usar el sistema en aplicaciones como el Acopiador HRA en Python, ciertas tarjetas de consola de texto forzaban el crecimiento vertical de la ventana más allá de `100vh`.
