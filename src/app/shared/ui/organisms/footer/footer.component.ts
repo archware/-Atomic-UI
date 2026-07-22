@@ -17,7 +17,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
 
 /**
  * Atomic Footer Component.
- * Guaranteed 100% visible and robust across all application views and layouts.
+ * Guaranteed 100% sticky visible at the bottom of the viewport across all application views.
  */
 @Component({
   selector: 'app-footer',
@@ -49,6 +49,9 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
     :host {
       display: block !important;
       width: 100% !important;
+      position: sticky !important;
+      bottom: 0 !important;
+      z-index: 1000 !important;
       margin-top: auto !important;
       box-sizing: border-box !important;
     }
@@ -57,12 +60,13 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
       width: 100% !important;
       background: #0f172a !important;
       color: #94a3b8 !important;
-      border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
-      padding: 12px 24px !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+      padding: 10px 24px !important;
       box-sizing: border-box !important;
       display: block !important;
       visibility: visible !important;
       opacity: 1 !important;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3) !important;
     }
 
     .atomic-footer__container {
