@@ -4,6 +4,18 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Cabecera `thead` de Alto Contraste en Modo Oscuro (`#1e293b` con Texto Blanco `#f8fafc`) y Reducción del 45% en Combos (120px)
+
+**Contexto:**
+1. En Modo Oscuro (`brand-dark` y `dark`), el texto azul sobre fondo azul oscuro en `thead` producía una relación de contraste deficiente y baja legibilidad.
+2. Los combos de búsqueda requerían reducirse un 45% (de 220px a 120px) para lucir ultra-compactos y estilizados.
+
+**La Lección:**
+1. **Contraste de Alto Nivel en Modo Oscuro (`#1e293b` + `#f8fafc`):** En Tema Oscuro, las celdas `th` DEBEN vestir un fondo pizarra oscuro azulado (`background: #1e293b !important;`) con texto blanco brillante de alto contraste (`color: #f8fafc !important;`) y un borde inferior cian/azul luminoso (`border-bottom: 2px solid #60a5fa !important;`), garantizando legibilidad y legibilidad ejecutiva al 100%.
+2. **Ancho Compacto de 120px (Reducción 45%):** Los campos `<select>` de búsqueda en formularios deben acotarse a `120px` (`width: 120px; min-width: 120px; max-width: 120px;`), logrando un diseño ultra-compacto, estilizado y ágil.
+
+---
+
 ## [2026-07-21] - Cabecera Azul Semántica Reactiva a Temas (`var(--info-color-*)`), Restauración del Ícono SVG de Flecha en Paginación y Reducción del 30% en Combos (154px)
 
 **Contexto:**
