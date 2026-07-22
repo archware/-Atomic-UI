@@ -4,6 +4,17 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Fondo Oscuro Integrado (`var(--surface-section)`) con Texto Azul (`var(--info-color-text)`) y Línea de Acento Azul (`var(--info-color)`)
+
+**Contexto:**
+El usuario confirmó que la tipografía azul y la línea de acento azul eran ideales, pero cualquier fondo claro estático en la cabecera `thead` rompía el look and feel del Tema Oscuro.
+
+**La Lección:**
+1. **Fondo de Superficie Integrado + Letras y Línea Azules:** Las celdas `th` DEBEN mantener el fondo de superficie nativo del tema (`background: var(--surface-section)`), combinando únicamente **letras azules** (`color: var(--info-color-text)`) y una **línea de acento inferior azul** (`border-bottom: 2px solid var(--info-color)`).
+2. **Harmonía Visual en Tema Oscuro:** De este modo, en Tema Oscuro el fondo de la cabecera se integra al 100% con las tarjetas azul noche/negras sin ninguna franja clara desencajada, manteniendo los títulos y la línea de acento en un elegante tono azul luminoso (`#93c5fd` / `#0a84ff`).
+
+---
+
 ## [2026-07-21] - Fondo de Cabecera Integrado `var(--surface-section)`, Restablecimiento de Combos de Búsqueda a 220px y Ultra-Recorte de Paginación (`3.25rem`)
 
 **Contexto:**
