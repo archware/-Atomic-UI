@@ -4,6 +4,20 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Cabecera Azul Semántica Reactiva a Temas (`var(--info-color-*)`), Restauración del Ícono SVG de Flecha en Paginación y Reducción del 30% en Combos (154px)
+
+**Contexto:**
+1. Al usar tonos HEX fijos (`#ebf5ff` / `#1e40af`), la cabecera azul no reaccionaba al cambiar entre tema claro y tema oscuro.
+2. El combo de paginación perdió su flecha SVG de despliegue al recortar excesivamente los márgenes de relleno.
+3. El usuario solicitó reducir el ancho de los combos de búsqueda en un 30% (de 220px a 154px).
+
+**La Lección:**
+1. **Tokens Semánticos Reactivos para Cabeceras Azul (`var(--info-color-*)`):** Las celdas `th` DEBEN emplear tokens semánticos contextuales (`background: var(--info-color-lighter); color: var(--info-color-text); border-bottom: 2px solid var(--info-color)`). De este modo, la cabecera reacciona dinámicamente y se adapta impecablemente a Tema Claro, Tema Oscuro y Tema Brand Dark.
+2. **Preservación del Ícono SVG de Flecha en Paginación:** El selector `.data-table__page-size select` debe declarar explícitamente `background-image: url(...)` con `background-position: right 0.25rem center;` y `padding-right: 1.25rem !important;`, garantizando que la flecha `chevron` sea siempre visible.
+3. **Ancho Reducido un 30% (154px):** Los campos `<select>` de formularios de búsqueda deben acotarse a `154px` (`width: 154px; min-width: 154px; max-width: 154px;`), ofreciendo un equilibrio compacto de espacio.
+
+---
+
 ## [2026-07-21] - Cabecera Azul Distintiva (`#ebf5ff` / `#1e40af`) y Reducción al 50% del Combo de Paginación (`3.85rem`)
 
 **Contexto:**
