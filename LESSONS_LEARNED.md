@@ -4,6 +4,20 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Fondo de Cabecera Integrado `var(--surface-section)`, Restablecimiento de Combos de Búsqueda a 220px y Ultra-Recorte de Paginación (`3.25rem`)
+
+**Contexto:**
+1. Usar tonos fijos o slate-200 en `thead` desentonaba en Tema Oscuro ("desencajaba mucho") al crear una franja brillante estridente.
+2. Los combos de búsqueda debían permanecer en su estándar amplio de 220px.
+3. El combo de paginación (`POR PÁGINA: [10]`) requería un recorte adicional a un tamaño ultra-compacto.
+
+**La Lección:**
+1. **Fondo de Cabecera Seamless Integrado (`var(--surface-section)`):** Las celdas `th` DEBEN emplear `background: var(--surface-section)` con `color: var(--text-color)` y `border-bottom: 2px solid var(--primary-color)`. De este modo, en modo claro la cabecera es de un gris suave `#efeff4`, y en modo oscuro adopta el tono azul noche/oscuro `#2a3556` / `#252525` del tema, integrándose 100% sin bandas desentonadas.
+2. **Combos de Búsqueda a 220px:** Los desplegables de búsqueda en formularios se mantienen en su estándar amplio de `220px` (`width: 220px; min-width: 220px; max-width: 220px;`).
+3. **Ultra-Recorte de Paginación (`3.25rem`):** `.data-table__page-size select` se redujo a `3.25rem` (~52px), envolviendo apretadamente las cifras de paginación (`10`, `30`, `50`) con ícono de flecha SVG adaptable según el tema.
+
+---
+
 ## [2026-07-21] - Cabecera `thead` de Alto Contraste en Modo Oscuro (`#1e293b` con Texto Blanco `#f8fafc`) y Reducción del 45% en Combos (120px)
 
 **Contexto:**
