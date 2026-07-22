@@ -4,6 +4,20 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-21] - Sombra de Elevación Reposo (`shadow-sm`) en Todos los Inputs, Resaltado en Paginación y Cabecera Azul Adaptativa con `color-mix`
+
+**Contexto:**
+1. Los campos de texto `<input>` no poseían sombra de reposo (`box-shadow`), luciendo planos en comparación con los combos `<select>`.
+2. El selector de paginación no activaba el borde púrpura de marca al pasar el ratón.
+3. La cabecera `thead` requería un tinte azul elegante que se adaptara a modo claro y modo oscuro sin romper el esquema visual.
+
+**La Lección:**
+1. **Sombra de Reposo Obligatoria (`box-shadow: var(--shadow-sm)`):** Todos los elementos de entrada (`input`, `select`, `textarea`) DEBEN poseer `box-shadow: var(--shadow-sm)` en estado de reposo para transmitir profundidad y elevación consistente desde el primer vistazo.
+2. **Resaltado en Combo de Paginación:** `.data-table__page-size select` debe incluir las mismas reglas de `:hover` (`border-color: var(--primary-color); box-shadow: var(--shadow-md);`) y `:focus` que el resto de los componentes.
+3. **Cabecera Azul Adaptativa (`color-mix`):** Usar `background: color-mix(in srgb, var(--info-color) 12%, var(--surface-section));` en las celdas `th`. En modo claro produce un azul suave `#e0f2fe`, y en modo oscuro produce un elegante azul noche `#243656` totalmente integrado al tema.
+
+---
+
 ## [2026-07-21] - Propagación Global del Estado Hover (`:hover`) y Glow en Todos los Inputs y Selects
 
 **Contexto:**
