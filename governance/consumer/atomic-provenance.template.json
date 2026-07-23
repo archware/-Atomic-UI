@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "policyVersion": "1.0.0",
+  "changeId": "ATOMIC-BOOTSTRAP",
+  "atomicRepository": "../-Atomic-UI",
+  "atomicRemote": "archware/-Atomic-UI",
+  "atomicRef": "main",
+  "uiRoots": ["src/app/shared/ui"],
+  "featureRoots": ["src/app/features", "src/app/pages"],
+  "layers": ["atoms", "molecules", "organisms", "surfaces", "templates"],
+  "components": [],
+  "governanceArtifacts": [
+    {
+      "local": "docs/ATOMIC_GOVERNANCE.md",
+      "atomic": "governance/consumer/ATOMIC_GOVERNANCE.md"
+    },
+    {
+      "local": "scripts/check-atomic-provenance.mjs",
+      "atomic": "governance/consumer/check-atomic-provenance.mjs"
+    },
+    {
+      "local": ".github/workflows/atomic-governance.yml",
+      "atomic": "governance/consumer/atomic-governance.yml"
+    }
+  ],
+  "tokens": {
+    "atomic": "src/styles/themes/_tokens-components.css",
+    "consumer": "src/styles/themes/_tokens-components.css",
+    "required": []
+  }
+}

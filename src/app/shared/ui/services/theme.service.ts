@@ -144,9 +144,16 @@ export class ThemeService {
       const { x, y } = this.transitionOrigin();
       htmlElement.style.setProperty('--vt-x', `${x}px`);
       htmlElement.style.setProperty('--vt-y', `${y}px`);
-      (document as Document & {
-        startViewTransition: (cb: () => void) => void;
+      const transition = (document as Document & {
+        startViewTransition: (cb: () => void) => {
+          ready: Promise<unknown>;
+          updateCallbackDone: Promise<unknown>;
+          finished: Promise<unknown>;
+        };
       }).startViewTransition(doApply);
+      void transition.ready.catch(() => undefined);
+      void transition.updateCallbackDone.catch(() => undefined);
+      void transition.finished.catch(() => undefined);
       return;
     }
 

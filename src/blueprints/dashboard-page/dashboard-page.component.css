@@ -18,7 +18,7 @@
   padding-bottom: 1rem;
 }
 
-/* Specific button width override for quick actions if needed,
+/* Specific action width override for quick actions if needed,
    or rely on w-full global utility if available */
 .w-full {
   width: 100%;
@@ -154,6 +154,42 @@
   padding: 0;
 }
 
+.trend-chip {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-6);
+}
+
+.goal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.goal-amount {
+  margin-top: var(--space-4);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.table-container {
+  width: 100%;
+}
+
+.transaction-client {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.table-footer {
+  margin-top: auto;
+  text-align: center;
+}
+
 /* Page Header */
 .page-header {
   display: flex;
@@ -267,7 +303,7 @@
 .skeleton-icon {
   width: 48px;
   height: 48px;
-  background: var(--skeleton-color, #e5e7eb);
+  background: var(--skeleton-color, var(--surface-elevated));
   border-radius: var(--radius-lg);
   animation: pulse 2s infinite;
 }
@@ -275,7 +311,7 @@
 .skeleton-text {
   width: 80px;
   height: 12px;
-  background: var(--skeleton-color, #e5e7eb);
+  background: var(--skeleton-color, var(--surface-elevated));
   border-radius: var(--radius-sm);
   animation: pulse 2s infinite;
 }
@@ -283,7 +319,7 @@
 .skeleton-number {
   width: 60px;
   height: 24px;
-  background: var(--skeleton-color, #e5e7eb);
+  background: var(--skeleton-color, var(--surface-elevated));
   border-radius: var(--radius-sm);
   margin-top: 0.5rem;
   animation: pulse 2s infinite;

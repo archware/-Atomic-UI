@@ -1,0 +1,10 @@
+<dialog
+  #nativeDialog
+  class="crud-dialog crud-dialog--{{ size() }} {{ panelClass() }}"
+  [attr.aria-labelledby]="labelledBy()"
+  [attr.aria-describedby]="describedBy()"
+  (cancel)="handleCancel($event)"
+  (close)="closed.emit()"
+>
+  <ng-content />
+</dialog>

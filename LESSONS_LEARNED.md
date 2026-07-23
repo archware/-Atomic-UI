@@ -4,6 +4,22 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-22] - La fuente visual se corrige antes que el consumidor
+
+**Evidencia:** `prestamo_front_atomic` había evolucionado la tabla, las acciones
+y los diálogos CRUD, mientras el changelog de Atomic mencionaba parte de esos
+objetos sin que los componentes existieran realmente en su árbol.
+
+**Decisión:** `TableAction`, `DataTable`, `CrudDialog` y sus tokens viven primero
+en `-Atomic-UI`. Cada consumidor mantiene un manifiesto de procedencia; los
+archivos exactos se comparan por contenido y las adaptaciones declaran su motivo.
+
+**Prevención:** ningún cambio visual se cierra sin build de Atomic previo,
+propagación posterior y una auditoría que rechace objetos desconocidos, diálogos
+directos, estilos inline y colores fijos.
+
+---
+
 ## [2026-07-21] - Auditoría Agresiva ADN: Cabecera `th` 100% Opaca con Tinte Azul, Elevación `shadow-sm` en Botones y Estilo Forzado en Paginación
 
 **Contexto:**

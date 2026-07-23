@@ -6,6 +6,11 @@ describe('ChipComponent', () => {
   let component: ChipComponent;
   let fixture: ComponentFixture<ChipComponent>;
 
+  function setInput(name: string, value: unknown): void {
+    fixture.componentRef.setInput(name, value);
+    fixture.detectChanges();
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ChipComponent],
@@ -26,8 +31,7 @@ describe('ChipComponent', () => {
 
     variants.forEach(variant => {
       it(`should apply chip-${variant} class when variant is ${variant}`, () => {
-        component.variant = variant;
-        fixture.detectChanges();
+        setInput('variant', variant);
 
         const chip = fixture.nativeElement.querySelector('.chip');
         expect(chip.classList.contains(`chip-${variant}`)).toBeTrue();
@@ -40,8 +44,7 @@ describe('ChipComponent', () => {
 
     sizes.forEach(size => {
       it(`should apply chip-${size} class when size is ${size}`, () => {
-        component.size = size;
-        fixture.detectChanges();
+        setInput('size', size);
 
         const chip = fixture.nativeElement.querySelector('.chip');
         expect(chip.classList.contains(`chip-${size}`)).toBeTrue();
@@ -56,16 +59,14 @@ describe('ChipComponent', () => {
     });
 
     it('should show remove button when removable is true', () => {
-      component.removable = true;
-      fixture.detectChanges();
+      setInput('removable', true);
 
       const removeBtn = fixture.nativeElement.querySelector('.chip-remove');
       expect(removeBtn).toBeTruthy();
     });
 
     it('should emit remove event when remove button is clicked', () => {
-      component.removable = true;
-      fixture.detectChanges();
+      setInput('removable', true);
 
       spyOn(component.remove, 'emit');
 
@@ -76,8 +77,7 @@ describe('ChipComponent', () => {
     });
 
     it('should have aria-label on remove button', () => {
-      component.removable = true;
-      fixture.detectChanges();
+      setInput('removable', true);
 
       const removeBtn = fixture.nativeElement.querySelector('.chip-remove');
       expect(removeBtn.getAttribute('aria-label')).toBe('Eliminar');
@@ -91,24 +91,21 @@ describe('ChipComponent', () => {
     });
 
     it('should add interactive class when clickable', () => {
-      component.clickable = true;
-      fixture.detectChanges();
+      setInput('clickable', true);
 
       const chip = fixture.nativeElement.querySelector('.chip');
       expect(chip.classList.contains('chip-interactive')).toBeTrue();
     });
 
     it('should have role="button" when clickable', () => {
-      component.clickable = true;
-      fixture.detectChanges();
+      setInput('clickable', true);
 
       const chip = fixture.nativeElement.querySelector('.chip');
       expect(chip.getAttribute('role')).toBe('button');
     });
 
     it('should emit chipClick when clicked and clickable', () => {
-      component.clickable = true;
-      fixture.detectChanges();
+      setInput('clickable', true);
 
       spyOn(component.chipClick, 'emit');
 
@@ -121,8 +118,7 @@ describe('ChipComponent', () => {
 
   describe('icon', () => {
     it('should display icon when provided', () => {
-      component.icon = '✓';
-      fixture.detectChanges();
+      setInput('icon', '✓');
 
       const iconSpan = fixture.nativeElement.querySelector('.chip-icon');
       expect(iconSpan?.textContent?.trim()).toBe('✓');
@@ -131,8 +127,7 @@ describe('ChipComponent', () => {
 
   describe('selected state', () => {
     it('should add selected class when selected', () => {
-      component.selected = true;
-      fixture.detectChanges();
+      setInput('selected', true);
 
       const chip = fixture.nativeElement.querySelector('.chip');
       expect(chip.classList.contains('chip-selected')).toBeTrue();

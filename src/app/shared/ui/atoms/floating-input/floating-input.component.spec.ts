@@ -7,6 +7,11 @@ describe('FloatingInputComponent', () => {
   let component: FloatingInputComponent;
   let fixture: ComponentFixture<FloatingInputComponent>;
 
+  function setInput(name: string, value: unknown): void {
+    fixture.componentRef.setInput(name, value);
+    fixture.detectChanges();
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FloatingInputComponent, FormsModule],
@@ -27,8 +32,7 @@ describe('FloatingInputComponent', () => {
 
     variants.forEach(variant => {
       it(`should apply variant-${variant} class when variant is ${variant}`, () => {
-        component.variant = variant;
-        fixture.detectChanges();
+        setInput('variant', variant);
 
         const wrapper = fixture.nativeElement.querySelector('.floating-input-wrapper');
         expect(wrapper.classList.contains(`variant-${variant}`)).toBeTrue();
@@ -38,8 +42,7 @@ describe('FloatingInputComponent', () => {
 
   describe('label', () => {
     it('should display label text', () => {
-      component.label = 'Email';
-      fixture.detectChanges();
+      setInput('label', 'Email');
 
       const label = fixture.nativeElement.querySelector('.floating-label');
       expect(label.textContent).toBe('Email');
@@ -69,16 +72,14 @@ describe('FloatingInputComponent', () => {
 
   describe('has-value state', () => {
     it('should add has-value class when input has value', () => {
-      component.value = 'test';
-      fixture.detectChanges();
+      setInput('value', 'test');
 
       const wrapper = fixture.nativeElement.querySelector('.floating-input-wrapper');
       expect(wrapper.classList.contains('has-value')).toBeTrue();
     });
 
     it('should not have has-value class when empty', () => {
-      component.value = '';
-      fixture.detectChanges();
+      setInput('value', '');
 
       const wrapper = fixture.nativeElement.querySelector('.floating-input-wrapper');
       expect(wrapper.classList.contains('has-value')).toBeFalse();
@@ -87,16 +88,14 @@ describe('FloatingInputComponent', () => {
 
   describe('error state', () => {
     it('should add has-error class when error is provided', () => {
-      component.error = 'Campo requerido';
-      fixture.detectChanges();
+      setInput('error', 'Campo requerido');
 
       const wrapper = fixture.nativeElement.querySelector('.floating-input-wrapper');
       expect(wrapper.classList.contains('has-error')).toBeTrue();
     });
 
     it('should display error message', () => {
-      component.error = 'Campo requerido';
-      fixture.detectChanges();
+      setInput('error', 'Campo requerido');
 
       const errorEl = fixture.nativeElement.querySelector('.input-error');
       expect(errorEl.textContent).toBe('Campo requerido');
@@ -105,16 +104,14 @@ describe('FloatingInputComponent', () => {
 
   describe('disabled state', () => {
     it('should add disabled class when disabled', () => {
-      component.disabled = true;
-      fixture.detectChanges();
+      setInput('disabled', true);
 
       const wrapper = fixture.nativeElement.querySelector('.floating-input-wrapper');
       expect(wrapper.classList.contains('disabled')).toBeTrue();
     });
 
     it('should set disabled attribute on input', () => {
-      component.disabled = true;
-      fixture.detectChanges();
+      setInput('disabled', true);
 
       const input = fixture.nativeElement.querySelector('.floating-input');
       expect(input.disabled).toBeTrue();
@@ -123,16 +120,14 @@ describe('FloatingInputComponent', () => {
 
   describe('password toggle', () => {
     it('should show password toggle button for password type', () => {
-      component.type = 'password';
-      fixture.detectChanges();
+      setInput('type', 'password');
 
       const toggleBtn = fixture.nativeElement.querySelector('.input-icon-btn');
       expect(toggleBtn).toBeTruthy();
     });
 
     it('should toggle password visibility', () => {
-      component.type = 'password';
-      fixture.detectChanges();
+      setInput('type', 'password');
 
       expect(component.actualType()).toBe('password');
 
@@ -180,8 +175,7 @@ describe('FloatingInputComponent', () => {
 
   describe('width', () => {
     it('should apply custom width', () => {
-      component.width = '200px';
-      fixture.detectChanges();
+      setInput('width', '200px');
 
       const wrapper = fixture.nativeElement.querySelector('.floating-input-wrapper');
       expect(wrapper.style.width).toBe('200px');

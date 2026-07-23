@@ -1,0 +1,52 @@
+name: Atomic governance
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  atomic-governance:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout consumer
+        uses: actions/checkout@v4
+        with:
+          path: consumer
+
+      - name: Read Atomic contract
+        id: atomic-contract
+        working-directory: consumer
+        shell: bash
+        run: |
+          echo "repository=$(jq -r '.atomicRemote' docs/atomic-provenance.json)" >> "$GITHUB_OUTPUT"
+          echo "ref=$(jq -r '.atomicRef' docs/atomic-provenance.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout Atomic source of truth
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.atomic-contract.outputs.repository }}
+          ref: ${{ steps.atomic-contract.outputs.ref }}
+          path: atomic-source
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: consumer/.node-version
+          cache: npm
+          cache-dependency-path: consumer/package-lock.json
+
+      - name: Install dependencies
+        working-directory: consumer
+        run: npm ci
+
+      - name: Enforce Atomic-first policy
+        working-directory: consumer
+        env:
+          ATOMIC_UI_ROOT: ${{ github.workspace }}/atomic-source
+        run: npm run check:atomic
+
+      - name: Consumer verification
+        working-directory: consumer
+        run: npm run check

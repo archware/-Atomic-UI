@@ -5,24 +5,42 @@
 
 ## 🏗️ Los 3 Pilares del Ecosistema
 
-El entorno de trabajo se compone de tres repositorios estrechamente acoplados:
+El entorno de trabajo se compone de una fuente visual y sus consumidores:
 
 1. **`-Atomic-UI`**: La **Fuente de la Verdad (Source of Truth)**. Es nuestra biblioteca de componentes agnóstica, sistema de diseño, tokens CSS y utilidades visuales. Todo el ADN visual nace aquí.
 2. **`wails-angular-app`**: Aplicación de escritorio utilizando **Wails** (Go backend + Angular frontend). Utiliza WebView2 en Windows.
 3. **`tauri-angular-app`**: Aplicación de escritorio utilizando **Tauri** (Rust backend + Angular frontend).
+4. **`prestamo_front_atomic`**: SPA Angular 22 zoneless que consume adaptaciones
+   trazables del ADN sin incorporar lógica financiera en la biblioteca.
 
 ---
 
 ## 🔄 Flujo de Trabajo y Propagación (Atomic-UI Sync)
 
-Basado en la regla global de **Atomic-UI Sync**: *Cualquier mejora o nuevo componente desarrollado en el frontend (Wails/Tauri) DEBE ser extraído y reflejado inmediatamente en la librería `-Atomic-UI`.*
+Basado en la regla global de **Atomic-UI Sync**: *ninguna mejora visual nace en
+un consumidor*. Todo componente o corrección se implementa y valida primero en
+`-Atomic-UI`; solo después se propaga a Wails, Tauri, web u otro consumidor.
+
+Un hallazgo descubierto dentro de una aplicación no autoriza a corregir allí la
+fuente. Si falta el objeto, se crea primero en la capa Atomic correspondiente.
+Los consumidores deben mantener una matriz de procedencia y una puerta automática
+que detecte componentes sin fuente, copias divergentes, estilos inline y colores
+fijos.
+
+Esta regla es ejecutable: `governance/consumer` contiene la política canónica,
+el manifiesto base, el gate y CI. `npm run create:project` los instala en toda
+aplicación nueva y `npm run governance:install` gobierna consumidores existentes.
+La CI de Atomic prueba un bootstrap válido y debe bloquear primitivas nativas,
+componentes desconocidos, divergencias exactas y adaptaciones sin justificación.
 
 ### 1. Desarrollo UI (El Origen)
 - Todo nuevo componente, ajuste de CSS, o corrección visual (ej. mejoras en hover, contrastes, bordes) se diseña y codifica **primero** en `-Atomic-UI`.
 - **Token-First Development**: Si el componente necesita variables CSS, estas se definen en los archivos `_tokens-*.css` de Atomic-UI antes de ser consumidas por el componente (Ver `CONTRIBUTING_TOKENS.md`).
 
 ### 2. La Propagación (Push a Consumidores)
-Una vez que el cambio está validado en `-Atomic-UI`, se debe **propagar** (copiar exactamente) a las rutas correspondientes en Wails y Tauri.
+Una vez que el cambio está validado en `-Atomic-UI`, se debe **propagar** a las
+rutas correspondientes de cada consumidor. Una adaptación de selector, import o
+change detection debe quedar declarada; nunca se considera una nueva fuente.
 
 - **Para CSS/Tokens**: Se utilizan scripts automatizados (como `scripts/propagate-tokens.ps1` en Atomic-UI) que copian los archivos CSS a las carpetas `src/styles/themes/` de Wails y Tauri, verificando que el hash SHA-256 coincida exactamente en los tres repositorios.
 - **Para Componentes TS/HTML**: Se sincronizan los archivos de la carpeta `src/app/shared/ui/` desde Atomic-UI hacia las mismas rutas en Wails y Tauri.

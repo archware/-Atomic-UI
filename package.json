@@ -23,7 +23,11 @@
     "dev:components": "ng run angular-scrollable-table:storybook",
     "dev:full": "concurrently \"npm run storybook\" \"npm run watch\"",
     "docs": "npx compodoc -p tsconfig.json -s",
-    "create:project": "node tools/create-project.js"
+    "create:project": "node tools/create-project.js",
+    "governance:install": "node tools/install-consumer-governance.js",
+    "governance:test": "node tools/test-consumer-governance.js",
+    "governance:smoke": "node tools/test-project-generator.js",
+    "governance:check": "npm run governance:test && node tools/check-atomic-blueprints.js"
   },
   "prettier": {
     "printWidth": 100,

@@ -18,7 +18,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execFileSync, execSync } = require('child_process');
 
 // ============================================
 // CONFIGURATION
@@ -27,6 +27,7 @@ const { execSync } = require('child_process');
 const BLUEPRINTS_DIR = path.join(__dirname, '..', 'src', 'blueprints');
 const STYLES_DIR = path.join(__dirname, '..', 'src', 'styles');
 const UI_DIR = path.join(__dirname, '..', 'src', 'app', 'shared', 'ui');
+const GOVERNANCE_INSTALLER = path.join(__dirname, 'install-consumer-governance.js');
 
 const TEMPLATES = {
   'login': ['login'],
@@ -213,6 +214,14 @@ Examples:
   const destStyles = path.join(projectPath, 'src', 'styles');
   copyRecursive(STYLES_DIR, destStyles);
   log('Styles copied', 'success');
+
+  // Step 3.5: Install the non-optional Atomic-first governance contract
+  log('Installing mandatory Atomic governance...', 'step');
+  execFileSync(process.execPath, [GOVERNANCE_INSTALLER, projectPath], {
+    cwd: path.join(__dirname, '..'),
+    stdio: 'inherit'
+  });
+  log('Atomic governance installed', 'success');
 
   // Step 4: Copy selected blueprints
   log(`Copying blueprints: ${template}...`, 'step');

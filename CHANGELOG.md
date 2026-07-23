@@ -3,6 +3,61 @@
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
+## [5.1.17] - 2026-07-22
+
+### Gobierno obligatorio
+
+- `PREST-20260722-031`: la política Atomic-first deja de ser recomendación. Se
+  incorpora un kit canónico con contrato para agentes, manifiesto, gate exacto,
+  instalador y workflow de CI para todo consumidor nuevo o existente.
+- `create:project` instala automáticamente esos cerrojos; las adaptaciones
+  requieren justificación y registro de decisión, y el gate se protege a sí
+  mismo mediante comparación de hashes contra `-Atomic-UI`.
+- Los blueprints eliminan primitivas visuales nativas, estilos inline y colores
+  fijos para que una aplicación nueva nazca cumpliendo la misma ley.
+
+### Verificación
+
+- El contrato prueba un bootstrap real y bloquea cuatro violaciones: control
+  nativo, componente desconocido, copia divergente y adaptación injustificada.
+- Gate normativo y build completo de Atomic aprobados.
+
+## [5.1.16] - 2026-07-22
+
+### Añadido
+- `PREST-20260722-030`: nuevos átomos canónicos `Input`, `Select` y
+  `ChoiceControl`, con CVA zoneless, accesibilidad, estados de ayuda/error y
+  contratos reutilizables. `Select` conserva el tipo real de opciones numéricas
+  y `ChoiceControl` publica los estados marcado/deshabilitado en el host.
+
+### Corregido
+- La suite histórica OnPush usa `componentRef.setInput`; `Avatar` deja de
+  memoizar propiedades `@Input` no reactivas y `ThemeService` consume de forma
+  segura los rechazos de View Transitions.
+- La prueba del shell incorpora sus proveedores reales y valida la composición
+  vigente en lugar de un título obsoleto.
+
+### Verificación
+- Suite completa: 197/197 pruebas aprobadas. Build Angular correcto. La deuda de
+  68 fallos históricos documentada en versiones anteriores queda cerrada.
+
+## [5.1.15] - 2026-07-22
+
+### Añadido
+- `PREST-20260722-029`: `TableAction`, `DataTable` y `CrudDialog` pasan a existir
+  realmente en Atomic UI. El átomo cubre tres tamaños sin ocultar acciones, la
+  tabla integra estados, orden, paginación y tarjetas móviles, y el diálogo
+  encapsula el elemento nativo para altas y ediciones accesibles.
+- Se incorporan tokens específicos del diálogo CRUD y exports públicos para que
+  los consumidores propaguen los componentes sin recrear estilos o contratos.
+- Validación del incremento: build correcto, auditoría npm de producción sin
+  vulnerabilidades y 16/16 pruebas focalizadas aprobadas.
+
+### Regla de propagación
+- Todo objeto visual nuevo se implementa y valida en `-Atomic-UI` antes de
+  copiarse o adaptarse en una aplicación. La lógica de dominio permanece fuera
+  del ADN.
+
 ## [5.1.14] - 2026-07-21
 
 ### Añadido

@@ -12,15 +12,15 @@
   <!-- HEADER & FILTERS -->
   <!-- ============================================ -->
   <div class="mb-6">
-    <app-text variant="h2" weight="bold" align="center" class="mb-6" style="text-transform: uppercase; letter-spacing: 0.5px; font-size: 28px; color: var(--text-color);">
+    <app-text variant="h2" weight="bold" align="center" class="mb-6 crud-title">
       LISTADO DE PERSONAL
     </app-text>
     
-    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: var(--space-4); background: var(--surface-background); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: 0 1px 2px rgba(0,0,0,0.02); flex-wrap: wrap; gap: 1rem;">
+    <div class="filter-toolbar">
       
-      <div style="display: flex; gap: 1rem; flex: 1; flex-wrap: wrap;">
+      <div class="filter-fields">
         <!-- Tipo de búsqueda Combo -->
-        <div style="width: 250px;">
+        <div class="filter-control filter-control--type">
           <app-select2 
             [options]="searchTypeOptions" 
             [ngModel]="selectedSearchType()"
@@ -30,7 +30,7 @@
         </div>
         
         <!-- Second Control Dynamic -->
-        <div style="width: 280px; position: relative;">
+        <div class="filter-control filter-control--value">
           @if (selectedSearchType() === 'name') {
             <app-floating-input 
               label="Nombre del personal" 
@@ -75,8 +75,7 @@
   <!-- BULK ACTIONS BAR -->
   <!-- ============================================ -->
   @if (hasSelection()) {
-  <app-panel class="bulk-actions-bar mb-4"
-    style="background-color: var(--primary-50); border-color: var(--primary-200);">
+  <app-panel class="bulk-actions-bar mb-4">
     <app-row justify="between" verticalAlign="center">
       <app-text variant="body" weight="medium" color="primary">
         {{ selectedCount() }} seleccionado(s)
@@ -129,44 +128,55 @@
       </app-button>
     </app-row>
     } @else {
-        <app-scroll-overlay class="so-block w-full max-w-full" [minColumnWidth]="40" [maxBodyHeight]="450"
-          [lockColumnTemplate]="true"
+        <app-table
+          [maxHeight]="450"
           [columnTemplate]="'50px minmax(200px, 1.5fr) minmax(200px, 1fr) 120px 100px 120px 100px'">
-        <table class="rtc-table">
-          <thead class="rtc-header">
-            <tr>
-              <th class="rtc-text-center" style="width: 50px;"><input type="checkbox" [checked]="allSelected()" (change)="toggleSelectAll()" class="cursor-pointer"></th>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>Rol</th>
-              <th class="rtc-text-center">Estado</th>
-              <th>Creado</th>
-              <th class="rtc-text-center" style="width: 100px;">Acciones</th>
-            </tr>
-          </thead>
-          <tbody class="rtc-body">
+          <app-table-head>
+            <th app-table-cell class="selection-column">
+              <prest-choice-control
+                ariaLabel="Seleccionar todos"
+                [checked]="allSelected()"
+                (changed)="toggleSelectAll()"
+              />
+            </th>
+            <th app-table-cell>Nombre</th>
+            <th app-table-cell>Email</th>
+            <th app-table-cell>Rol</th>
+            <th app-table-cell class="rtc-text-center">Estado</th>
+            <th app-table-cell>Creado</th>
+            <th app-table-cell class="rtc-text-center actions-column">Acciones</th>
+          </app-table-head>
+          <tbody>
             @if (items().length === 0 && !listApi.loading()) {
-              <tr class="rtc-row">
-                <td colspan="7" style="text-align: center; padding: 3rem;">
+              <tr app-table-row>
+                <td app-table-cell colspan="7" class="empty-cell">
                   <i class="fa-solid fa-inbox text-muted text-3xl mb-2"></i>
-                  <div><app-text color="muted">No se encontraron registros</app-text></div>
+                  <app-text color="muted">No se encontraron registros</app-text>
                 </td>
               </tr>
             }
             @for (item of items(); track item.id) {
-              <tr class="rtc-row" [class.selected]="isSelected(item)">
-                <td class="rtc-text-center" data-label="Sel:"><input type="checkbox" [checked]="isSelected(item)" (change)="toggleSelect(item)" class="cursor-pointer"></td>
-                <td data-label="Nombre:">
+              <tr app-table-row [selected]="isSelected(item)">
+                <td app-table-cell [dataLabel]="'Sel:'" align="center">
+                  <prest-choice-control
+                    [ariaLabel]="'Seleccionar ' + item.name"
+                    [checked]="isSelected(item)"
+                    (changed)="toggleSelect(item)"
+                  />
+                </td>
+                <td app-table-cell [dataLabel]="'Nombre:'">
                   <app-row verticalAlign="center" gap="0.75rem">
-                    <div class="avatar-circle">{{ item.name.charAt(0).toUpperCase() }}</div>
+                    <app-avatar [name]="item.name" size="sm" />
                     <app-text>{{ item.name }}</app-text>
                   </app-row>
                 </td>
-                <td data-label="Email:">{{ item.email }}</td>
-                <td data-label="Rol:"><span class="role-badge">{{ item.role }}</span></td>
-                <td class="rtc-text-center" data-label="Estado:"><app-chip [variant]="getStatusVariant(item.status)" size="sm">{{ getStatusLabel(item.status) }}</app-chip></td>
-                <td data-label="Creado:">{{ formatDate(item.createdAt) }}</td>
-                <td class="rtc-actions rtc-text-center" data-label="Acciones:">
+                <td app-table-cell [dataLabel]="'Email:'">{{ item.email }}</td>
+                <td app-table-cell [dataLabel]="'Rol:'"><app-chip variant="default" size="sm">{{ item.role }}</app-chip></td>
+                <td app-table-cell [dataLabel]="'Estado:'" align="center">
+                  <app-chip [variant]="getStatusVariant(item.status)" size="sm">{{ getStatusLabel(item.status) }}</app-chip>
+                </td>
+                <td app-table-cell [dataLabel]="'Creado:'">{{ formatDate(item.createdAt) }}</td>
+                <td app-table-cell [dataLabel]="'Acciones:'" align="center" class="actions-cell">
                   <app-action-group
                     [actions]="tableActions"
                     [maxVisible]="2"
@@ -177,8 +187,7 @@
               </tr>
             }
           </tbody>
-        </table>
-        </app-scroll-overlay>
+        </app-table>
     }
   </div>
 
@@ -189,26 +198,26 @@
   <div class="mt-6 pt-6 border-t">
     <app-text variant="h4" weight="semibold" class="mb-4">Otras opciones de paginación (Molecules):</app-text>
     
-    <div style="display: flex; flex-direction: column; gap: 2rem;">
+    <div class="pagination-demos">
       <div>
-        <app-text variant="label" color="muted" class="mb-2" style="display: block;">Variante Minimal:</app-text>
-        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: var(--space-3) var(--space-4); background: var(--surface-background); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+        <app-text variant="label" color="muted" class="mb-2 pagination-label">Variante Minimal:</app-text>
+        <div class="pagination-demo-row">
           <app-text variant="body-sm" color="muted" weight="semibold">Total de registros: {{ meta().total }}</app-text>
           <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="pageSize()" variant="minimal" (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)"></app-pagination>
         </div>
       </div>
 
       <div>
-        <app-text variant="label" color="muted" class="mb-2" style="display: block;">Variante Rounded:</app-text>
-        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: var(--space-3) var(--space-4); background: var(--surface-background); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+        <app-text variant="label" color="muted" class="mb-2 pagination-label">Variante Rounded:</app-text>
+        <div class="pagination-demo-row">
           <app-text variant="body-sm" color="muted" weight="semibold">Total de registros: {{ meta().total }}</app-text>
           <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="pageSize()" variant="rounded" (pageChange)="onPageChange($event)"></app-pagination>
         </div>
       </div>
 
       <div>
-        <app-text variant="label" color="muted" class="mb-2" style="display: block;">Variante Cards:</app-text>
-        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: var(--space-3) var(--space-4); background: var(--surface-background); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+        <app-text variant="label" color="muted" class="mb-2 pagination-label">Variante Cards:</app-text>
+        <div class="pagination-demo-row">
           <app-text variant="body-sm" color="muted" weight="semibold">Total de registros: {{ meta().total }}</app-text>
           <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="pageSize()" variant="cards" (pageChange)="onPageChange($event)"></app-pagination>
         </div>

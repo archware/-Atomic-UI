@@ -22,8 +22,8 @@
     <!-- Columna izquierda: Resumen de cuenta -->
     <aside class="profile-aside">
       <app-panel variant="elevated" padding="none">
-        <div class="profile-cover" style="height: 120px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: var(--radius-lg) var(--radius-lg) 0 0; position: relative;"></div>
-        <div style="padding: var(--space-6); margin-top: -60px; position: relative; z-index: 2;">
+        <div class="profile-cover"></div>
+        <div class="profile-summary">
         <div class="avatar-section">
           @if (profileApi.loading()) {
             <app-skeleton variant="circular" width="80px" height="80px"></app-skeleton>
@@ -63,7 +63,7 @@
 
       <!-- Datos personales -->
       <app-panel variant="elevated" padding="lg" title="Información personal" icon="fa-solid fa-user-pen">
-        <div style="margin-bottom: 1.5rem;"><app-text variant="body-sm" color="muted">Actualiza tus datos básicos y cómo te verán otros usuarios en el sistema.</app-text></div>
+        <div class="panel-description"><app-text variant="body-sm" color="muted">Actualiza tus datos básicos y cómo te verán otros usuarios en el sistema.</app-text></div>
 
         @if (saveSuccess()) {
           <app-alert variant="success" message="Perfil actualizado correctamente." [closable]="true"></app-alert>
@@ -101,7 +101,7 @@
             ></app-floating-input>
           </div>
 
-          <div class="form-actions" style="gap: 1rem; display: flex; justify-content: flex-end;">
+          <div class="form-actions">
             <app-button type="button" variant="ghost" (click)="infoForm.reset()">Cancelar</app-button>
             <app-button type="submit" variant="primary" [disabled]="saveApi.loading()">
               @if (saveApi.loading()) { Guardando... } @else { Guardar cambios }
@@ -113,7 +113,7 @@
       <!-- Cambio de contraseña -->
       <app-panel variant="elevated" padding="lg" title="Cambiar contraseña" icon="fa-solid fa-lock" class="mt-panel">
 
-        <div style="margin-bottom: 1.5rem;"><app-text variant="body-sm" color="muted">Asegúrate de usar una contraseña larga y difícil de adivinar.</app-text></div>
+        <div class="panel-description"><app-text variant="body-sm" color="muted">Asegúrate de usar una contraseña larga y difícil de adivinar.</app-text></div>
 
         @if (passSuccess()) {
           <app-alert variant="success" message="Contraseña actualizada correctamente." [closable]="true"></app-alert>
@@ -135,7 +135,7 @@
             <app-floating-input formControlName="confirm" label="Confirmar nueva contraseña" type="password" variant="outline" [error]="passForm.hasError('passwordMismatch') && pf['confirm'].touched ? 'Las contraseñas no coinciden' : ''"></app-floating-input>
           </div>
 
-          <div class="form-actions" style="gap: 1rem; display: flex; justify-content: flex-end;">
+          <div class="form-actions">
             <app-button type="button" variant="ghost" (click)="passForm.reset()">Cancelar</app-button>
             <app-button type="submit" variant="primary" [disabled]="passwordApi.loading()">
               @if (passwordApi.loading()) { Actualizando... } @else { Cambiar contraseña }

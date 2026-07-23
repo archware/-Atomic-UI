@@ -6,6 +6,11 @@ describe('ButtonComponent', () => {
   let component: ButtonComponent;
   let fixture: ComponentFixture<ButtonComponent>;
 
+  function setInput(name: string, value: unknown): void {
+    fixture.componentRef.setInput(name, value);
+    fixture.detectChanges();
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ButtonComponent],
@@ -26,8 +31,7 @@ describe('ButtonComponent', () => {
 
     variants.forEach(variant => {
       it(`should apply btn-${variant} class when variant is ${variant}`, () => {
-        component.variant = variant;
-        fixture.detectChanges();
+        setInput('variant', variant);
 
         const button = fixture.nativeElement.querySelector('button');
         expect(button.classList.contains(`btn-${variant}`)).toBeTrue();
@@ -37,24 +41,21 @@ describe('ButtonComponent', () => {
 
   describe('size classes', () => {
     it('should apply btn-sm class for small size', () => {
-      component.size = 'sm';
-      fixture.detectChanges();
+      setInput('size', 'sm');
 
       const button = fixture.nativeElement.querySelector('button');
       expect(button.classList.contains('btn-sm')).toBeTrue();
     });
 
     it('should apply btn-lg class for large size', () => {
-      component.size = 'lg';
-      fixture.detectChanges();
+      setInput('size', 'lg');
 
       const button = fixture.nativeElement.querySelector('button');
       expect(button.classList.contains('btn-lg')).toBeTrue();
     });
 
     it('should not add size class for medium (default)', () => {
-      component.size = 'md';
-      fixture.detectChanges();
+      setInput('size', 'md');
 
       const button = fixture.nativeElement.querySelector('button');
       expect(button.classList.contains('btn-md')).toBeFalse();
@@ -63,8 +64,7 @@ describe('ButtonComponent', () => {
 
   describe('disabled state', () => {
     it('should set disabled attribute when disabled is true', () => {
-      component.disabled = true;
-      fixture.detectChanges();
+      setInput('disabled', true);
 
       const button = fixture.nativeElement.querySelector('button');
       expect(button.disabled).toBeTrue();
@@ -94,8 +94,7 @@ describe('ButtonComponent', () => {
     });
 
     it('should set type="submit" when specified', () => {
-      component.type = 'submit';
-      fixture.detectChanges();
+      setInput('type', 'submit');
 
       const button = fixture.nativeElement.querySelector('button');
       expect(button.type).toBe('submit');
@@ -104,9 +103,8 @@ describe('ButtonComponent', () => {
 
   describe('icon', () => {
     it('should display emoji icon when provided', () => {
-      component.icon = '🔍';
-      component.iconPosition = 'left';
-      fixture.detectChanges();
+      setInput('icon', '🔍');
+      setInput('iconPosition', 'left');
 
       const iconSpan = fixture.nativeElement.querySelector('.btn-icon--emoji');
       expect(iconSpan?.textContent?.trim()).toBe('🔍');

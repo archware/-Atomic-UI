@@ -7,6 +7,16 @@ Sistema de diseño **Atomic Design** con temas **Light/Dark/System**, paleta de 
 
 ---
 
+## Gobierno Atomic-first
+
+Toda aplicación generada recibe política para agentes, manifiesto de procedencia,
+gate protegido por hashes y CI obligatoria. Si falta un objeto visual, se crea y
+valida primero en este repositorio; el consumidor no puede inventarlo ni
+desactivar la compuerta. Véase [governance/README.md](./governance/README.md).
+
+---
+
+
 ## 📋 Tabla de Contenidos
 
 - [Características](#-características)
@@ -24,7 +34,9 @@ Sistema de diseño **Atomic Design** con temas **Light/Dark/System**, paleta de 
 
 ### 🧩 **Sistema Atómico Completo**
 
-- ✅ **57 Componentes** organizados en 5 capas (Atoms, Molecules, Organisms, Surfaces, Templates)
+- ✅ **Componentes organizados** en 5 capas (Atoms, Molecules, Organisms, Surfaces, Templates)
+- ✅ **Atomic-first**: `TableAction`, `DataTable` y `CrudDialog` son fuentes
+  canónicas para acciones, grillas responsive y editores CRUD propagables.
 - ✅ **Altura Estándar Global**: 46px (`var(--control-height)`) para todos los controles de formulario
 - ✅ **Standalone Components**: Todos los componentes son standalone y reutilizables
 - ✅ **ControlValueAccessor**: Integración completa con Angular Forms

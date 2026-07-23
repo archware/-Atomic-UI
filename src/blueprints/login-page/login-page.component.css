@@ -13,7 +13,41 @@
 
 .logo-icon {
   font-size: 3rem;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(var(--shadow-sm));
+}
+
+.banner-icon-wrap,
+.auth-logo--header {
+  margin-bottom: var(--space-8);
+}
+
+.banner-icon {
+  display: inline-flex;
+  padding: var(--space-4);
+  font-size: 3rem;
+  background: color-mix(in srgb, var(--text-color-on-primary) 20%, transparent);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.banner-title {
+  margin: 0 0 var(--space-4);
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.banner-copy {
+  max-width: 25rem;
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.logo-icon--header {
+  color: var(--primary-color);
+  font-size: 2rem;
 }
 
 .logo-text {

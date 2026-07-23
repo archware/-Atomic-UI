@@ -216,6 +216,12 @@
    --modal-header-bg: var(--surface-section);
    --modal-footer-bg: var(--surface-section);
    --modal-border: var(--border-color-light);
+   --crud-dialog-max-width-sm: 32rem;
+   --crud-dialog-max-width-md: 42rem;
+   --crud-dialog-max-width-lg: 48rem;
+   --crud-dialog-max-width-xl: 58rem;
+   --crud-dialog-max-height: calc(100dvh - var(--space-8));
+   --crud-dialog-padding: 0;
 
    /* === ALERTS === */
    --alert-info-bg: var(--info-color-lighter);
@@ -456,6 +462,12 @@ html.dark {
    --modal-header-bg: var(--surface-section);
    --modal-footer-bg: var(--surface-section);
    --modal-border: var(--border-color);
+   --crud-dialog-max-width-sm: 32rem;
+   --crud-dialog-max-width-md: 42rem;
+   --crud-dialog-max-width-lg: 48rem;
+   --crud-dialog-max-width-xl: 58rem;
+   --crud-dialog-max-height: calc(100dvh - var(--space-8));
+   --crud-dialog-padding: 0;
 
    /* === ALERTS === */
    --alert-info-bg: var(--info-color-lighter);
@@ -685,6 +697,12 @@ html.dark {
    --modal-header-bg: var(--surface-section);
    --modal-footer-bg: var(--surface-section);
    --modal-border: var(--border-color);
+   --crud-dialog-max-width-sm: 32rem;
+   --crud-dialog-max-width-md: 42rem;
+   --crud-dialog-max-width-lg: 48rem;
+   --crud-dialog-max-width-xl: 58rem;
+   --crud-dialog-max-height: calc(100dvh - var(--space-8));
+   --crud-dialog-padding: 0;
 
    /* === ALERTS === */
    --alert-info-bg: var(--info-color-lighter);

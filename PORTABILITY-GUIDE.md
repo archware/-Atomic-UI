@@ -2,9 +2,26 @@
 
 Este documento está dirigido a futuros Agentes IA y Desarrolladores que necesiten reutilizar el sistema de diseño **Atomic UI** en nuevos proyectos (como aplicaciones de escritorio en Tauri, Wails, Electron, o nuevas aplicaciones web en Angular).
 
+## Gobierno obligatorio desde el primer commit
+
+La portabilidad ya no es una recomendación manual. Toda aplicación nueva debe
+nacer mediante `npm run create:project`, que instala automáticamente el contrato
+de agentes, manifiesto de procedencia, gate y workflow de CI descritos en
+[`governance/README.md`](./governance/README.md). Una aplicación existente se
+incorpora con `npm run governance:install -- <ruta> --ui-root=<ruta-ui>`.
+
+No se permite retirar ni modificar esas copias desde el consumidor. El comando
+`npm run check:atomic` debe preceder pruebas y build; en GitHub, su job debe ser
+un status check requerido de la rama protegida.
+
 ## ⚠️ Regla de Oro (Lo que NO debes hacer)
 **NUNCA copies el repositorio completo.** 
 Este repositorio contiene configuraciones de despliegue a GitHub Pages, Storybook (`.storybook`), pipelines y scripts de tests que inflarán innecesariamente cualquier proyecto nuevo. Atomic UI está diseñado para ser trasplantado quirúrgicamente.
+
+**NUNCA crees primero un objeto visual en el consumidor.** Si el átomo, molécula,
+organismo o plantilla no existe, se incorpora y valida aquí antes del trasplante.
+El consumidor registra la ruta fuente y no mantiene colores, tamaños o diálogos
+alternativos sin trazabilidad.
 
 ## ✂️ Extracción Quirúrgica (Lo que SÍ debes copiar)
 
