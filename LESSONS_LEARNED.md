@@ -4,6 +4,21 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-07-23] - Prohibición de Bypass Atomic UI: Scrollbars de SO en Tema Oscuro y Grillas Rígidas
+
+**Evidencia:** En aplicaciones consumidoras (`prestamo_front_atomic`), se detectaron fallas visuales graves:
+1. El navegador renderizaba la barra gris nativa del sistema operativo en tema oscuro al no incluir `::-webkit-scrollbar` en la capa base de tokens `_base.scss`.
+2. Los organismos de tablas imponían `max-height` con `overflow-y: auto` compitiendo contra el scroll de `AppShell`, creando un doble scrollbar vertical nativo.
+3. Se forzaron reglas CSS ad-hoc con píxeles hardcodeados (`width: 220px`) y grillas de 3 columnas gigantescas en el Dashboard.
+
+**Decisión y Regla de Gobernanza:**
+1. **Scrollbars Estilizados en Capa Base:** `-Atomic-UI` define obligatoriamente los seudoelementos `::-webkit-scrollbar` (ancho 6px, thumb `var(--border-color)`, hover `var(--primary-color)`) y `scrollbar-color` para garantizar que ninguna aplicación consumidora muestre barras nativas del SO en tema oscuro.
+2. **Eliminación de Scroll Anidado:** `DataTable` no impone restricciones rígidas de altura ni scrollbar vertical compitiendo con el layout global del consumidor.
+3. **Métricas en 4 Cajas Compactas:** `MetricsGrid` y `Card` invocan `minCardWidth="14rem"` y `size="sm"` para distribuir 4 métricas compactas por fila en escritorio.
+4. **Enforcement de Tokens:** Prohibido el uso de píxeles hardcodeados (`px`); se exige el uso estricto de Design Tokens (`var(--space-*)`, `var(--radius-*)`).
+
+---
+
 ## [2026-07-22] - La fuente visual se corrige antes que el consumidor
 
 **Evidencia:** `prestamo_front_atomic` había evolucionado la tabla, las acciones

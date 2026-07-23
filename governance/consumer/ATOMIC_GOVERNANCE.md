@@ -23,6 +23,8 @@ tokens y patrones visuales reutilizables de todas las aplicaciones consumidoras.
 7. Los estilos visuales deben usar tokens Atomic; quedan prohibidos estilos
    inline y colores fijos en features o componentes UI consumidores.
 8. `npm run check:atomic` es obligatorio antes de pruebas y build, y en CI.
+9. Queda prohibido el uso de píxeles hardcodeados (`px`) en reglas CSS de consumidores (`width: 220px`, `padding: 20px`); se deben utilizar obligatoriamente Design Tokens (`var(--space-*)`, `var(--radius-*)`).
+10. El layer base de Tokens debe estilizar los scrollbars globales (`::-webkit-scrollbar`) para evitar que el navegador renderice la barra gris nativa en temas oscuros, y los organismos de tablas no pueden imponer scrollbars anidados compitiendo contra el layout global.
 
 ## Lo que sí pertenece al consumidor
 
