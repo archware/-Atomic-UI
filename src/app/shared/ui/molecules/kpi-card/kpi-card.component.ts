@@ -79,11 +79,11 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
       .kpi-card {
         width: 100%;
         min-width: 0;
-        min-height: 9.25rem;
+        min-height: 6.5rem;
         display: grid;
         box-sizing: border-box;
-        gap: var(--space-3);
-        padding: var(--space-4);
+        gap: var(--space-2);
+        padding: var(--space-3) var(--space-4);
         border: 1px solid var(--border-color);
         border-radius: var(--radius-lg);
         background: var(--surface-background);
@@ -140,7 +140,7 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
       .kpi-card__value {
         margin: 0;
         color: var(--text-color);
-        font-size: clamp(1.4rem, 3vw, 1.8rem);
+        font-size: 1.35rem;
         font-variant-numeric: tabular-nums;
         font-weight: 700;
         letter-spacing: -0.02em;
@@ -207,7 +207,7 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
 
       @media (max-width: 40rem) {
         .kpi-card {
-          min-height: 8.25rem;
+          min-height: 5.5rem;
           padding: var(--space-3);
         }
       }

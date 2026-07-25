@@ -1,6 +1,13 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-export type StatusBadgeStatus = 'active' | 'inactive' | 'degraded' | 'unconfigured';
+export type StatusBadgeStatus =
+  | 'active'
+  | 'inactive'
+  | 'degraded'
+  | 'unconfigured'
+  | 'success'
+  | 'warning'
+  | 'danger';
 export type StatusBadgeChannel = 'web' | 'telegram' | 'sms';
 export type StatusBadgeSize = 'sm' | 'md';
 
@@ -9,6 +16,9 @@ const STATUS_LABELS: Readonly<Record<StatusBadgeStatus, string>> = {
   inactive: 'Inactivo',
   degraded: 'Con incidencias',
   unconfigured: 'Sin configurar',
+  success: 'Correcto',
+  warning: 'Advertencia',
+  danger: 'Crítico',
 };
 
 const CHANNELS: Readonly<
@@ -129,6 +139,24 @@ const CHANNELS: Readonly<
         border-color: var(--info-color-light);
         background: var(--info-color-lighter);
         color: var(--info-color-text, var(--info-color-dark));
+      }
+
+      .status-badge--success {
+        border-color: var(--success-color-light);
+        background: var(--success-color-lighter);
+        color: var(--success-color-text, var(--success-color-dark));
+      }
+
+      .status-badge--warning {
+        border-color: var(--warning-color-light);
+        background: var(--warning-color-lighter);
+        color: var(--warning-color-text, var(--warning-color-dark));
+      }
+
+      .status-badge--danger {
+        border-color: var(--danger-color-light);
+        background: var(--danger-color-lighter);
+        color: var(--danger-color-text, var(--danger-color-dark));
       }
     `,
   ],

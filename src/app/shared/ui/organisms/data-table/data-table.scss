@@ -18,8 +18,9 @@
   display: block;
   height: auto;
   min-height: 18rem;
-  max-height: calc(100vh - 18rem);
-  overflow-y: auto;
+  max-height: none;
+  overflow-x: auto;
+  overflow-y: visible;
   background: var(--surface-background);
 }
 

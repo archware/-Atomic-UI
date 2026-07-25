@@ -3,6 +3,22 @@
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
+## [5.1.18] - 2026-07-24
+
+### Corregido
+
+- `PREST-20260724-060`: el ADN incorpora las variantes semánticas
+  `success`, `warning` y `danger` de `StatusBadge`, con texto accesible además
+  del color.
+- KPI y `MetricsGrid` adoptan la geometría ejecutiva compacta de cuatro
+  columnas; la tabla elimina su límite vertical rígido y delega el scroll
+  vertical al layout.
+
+### Verificación
+
+- 200/200 pruebas Atomic aprobadas. El consumidor solo puede actualizar su
+  procedencia después de validar y consolidar este cambio en la fuente.
+
 ## [5.1.17] - 2026-07-22
 
 ### Gobierno obligatorio

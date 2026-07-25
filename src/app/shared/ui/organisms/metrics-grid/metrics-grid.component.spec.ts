@@ -32,6 +32,7 @@ describe('MetricsGridComponent', () => {
     expect(grid.getAttribute('aria-label')).toBe('Indicadores financieros');
     expect(cards.length).toBe(2);
     expect(grid.style.getPropertyValue('--min-col-width')).toBe('13.75rem');
+    expect(getComputedStyle(grid).gridTemplateColumns.split(' ')).toHaveSize(4);
   });
 
   it('tracks cards by stable id when their order changes', () => {

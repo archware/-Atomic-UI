@@ -22,6 +22,9 @@ describe('StatusBadgeComponent', () => {
       inactive: 'Inactivo',
       degraded: 'Con incidencias',
       unconfigured: 'Sin configurar',
+      success: 'Correcto',
+      warning: 'Advertencia',
+      danger: 'Crítico',
     };
 
     for (const [status, label] of Object.entries(expected)) {
@@ -33,6 +36,17 @@ describe('StatusBadgeComponent', () => {
       expect(badge.textContent).toContain(label);
       expect(badge.getAttribute('aria-label')).toBe(label);
     }
+  });
+
+  it('exposes an explicit critical state without relying on color alone', () => {
+    fixture.componentRef.setInput('status', 'danger');
+    fixture.componentRef.setInput('label', 'Cuota vencida');
+    fixture.detectChanges();
+
+    const badge = fixture.nativeElement.querySelector('.status-badge') as HTMLElement;
+    expect(badge.classList).toContain('status-badge--danger');
+    expect(badge.textContent).toContain('Cuota vencida');
+    expect(badge.getAttribute('aria-label')).toBe('Cuota vencida');
   });
 
   it('adds an accessible, secret-free visual identity for Telegram', () => {

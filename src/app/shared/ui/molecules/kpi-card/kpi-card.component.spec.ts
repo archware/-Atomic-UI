@@ -69,4 +69,13 @@ describe('KpiCardComponent', () => {
     expect(meta.textContent).toContain('+4.2%');
     expect(meta.textContent).toContain('frente al periodo anterior');
   });
+
+  it('keeps the compact executive geometry defined by Atomic', () => {
+    fixture.detectChanges();
+
+    const card = fixture.nativeElement.querySelector('.kpi-card') as HTMLElement;
+    const value = fixture.nativeElement.querySelector('.kpi-card__value') as HTMLElement;
+    expect(getComputedStyle(card).minHeight).toBe('104px');
+    expect(getComputedStyle(value).fontSize).toBe('21.6px');
+  });
 });
