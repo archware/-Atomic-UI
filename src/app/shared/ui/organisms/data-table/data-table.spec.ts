@@ -94,9 +94,10 @@ describe('DataTable', () => {
     expect(region.tabIndex).toBe(0);
     expect(region.getAttribute('aria-label')).toContain('Créditos vigentes');
     expect(caption?.textContent?.trim()).toBe('Créditos vigentes');
-    expect(headers.length).toBe(3);
-    expect(firstRowCells[1]?.textContent?.trim()).toBe('Zeta');
-    expect(firstRowCells[2]?.textContent?.trim()).toBe('—');
+    expect(headers.length).toBe(4);
+    expect(firstRowCells[0]?.textContent?.trim()).toBe('1');
+    expect(firstRowCells[2]?.textContent?.trim()).toBe('Zeta');
+    expect(firstRowCells[3]?.textContent?.trim()).toBe('—');
   });
 
   it('delegates vertical scrolling to the page and keeps only horizontal overflow', async () => {
@@ -122,7 +123,7 @@ describe('DataTable', () => {
       'th[data-column="id"]',
     ) as HTMLTableCellElement;
     const cell = fixture.nativeElement.querySelector(
-      'tbody tr:not(.data-table__state-row) td:first-child',
+      'tbody tr:not(.data-table__state-row) td[data-column="id"]',
     ) as HTMLTableCellElement;
 
     expect(header.style.width).toBe('');
@@ -266,6 +267,11 @@ describe('DataTable', () => {
     );
     expect(pageInfo.textContent).toContain('2 de 3');
     expect(pageSize.value).toBe('20');
+    expect(
+      fixture.nativeElement.querySelector(
+        'tbody tr:not(.data-table__state-row) td[data-column="rowNumber"]',
+      )?.textContent?.trim(),
+    ).toBe('21');
   });
 
   it('renders a zero range and disables pagination for an empty result', async () => {
@@ -291,10 +297,37 @@ describe('DataTable', () => {
     expect(buttons[1]?.disabled).toBe(true);
   });
 
-  it('keeps the pagination toolbar absent when total records are not provided', async () => {
+  it('paginates complete local collections and keeps the row number continuous', async () => {
     const fixture = await createTable();
+    fixture.componentRef.setInput(
+      'rows',
+      Array.from({ length: 12 }, (_, index) => ({
+        id: index + 1,
+        customer: `Cliente ${index + 1}`,
+        balance: index + 1,
+      })),
+    );
+    await fixture.whenStable();
 
-    expect(fixture.nativeElement.querySelector('.data-table__toolbar')).toBeNull();
+    const toolbar = fixture.nativeElement.querySelector('.data-table__toolbar');
+    const buttons = fixture.nativeElement.querySelectorAll(
+      '.data-table__page-btn',
+    ) as NodeListOf<HTMLButtonElement>;
+
+    expect(toolbar).not.toBeNull();
+    expect(renderedCustomers(fixture.nativeElement).length).toBe(10);
+    expect(buttons[0]?.disabled).toBe(true);
+    expect(buttons[1]?.disabled).toBe(false);
+
+    buttons[1]?.click();
+    await fixture.whenStable();
+
+    expect(renderedCustomers(fixture.nativeElement)).toEqual(['Cliente 11', 'Cliente 12']);
+    expect(
+      fixture.nativeElement.querySelector(
+        'tbody tr:not(.data-table__state-row) td[data-column="rowNumber"]',
+      )?.textContent?.trim(),
+    ).toBe('11');
   });
 
   it('emits page size and previous or next one-based pages from the toolbar', async () => {
@@ -356,6 +389,8 @@ describe('DataTable', () => {
 
 function renderedCustomers(root: HTMLElement): string[] {
   return Array.from(
-    root.querySelectorAll('tbody tr:not(.data-table__state-row) td:nth-child(2)'),
+    root.querySelectorAll(
+      'tbody tr:not(.data-table__state-row) td[data-column="customer"]',
+    ),
   ).map((cell) => cell.textContent?.trim() ?? '');
 }

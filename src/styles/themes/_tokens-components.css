@@ -223,6 +223,23 @@
    --crud-dialog-max-height: calc(100dvh - var(--space-8));
    --crud-dialog-padding: 0;
 
+   /* === THERMAL RECEIPT === */
+   --receipt-panel-background: var(--surface-background);
+   --receipt-panel-border: var(--border-color);
+   --receipt-panel-detail-background: var(--surface-section);
+   --receipt-panel-emphasis: var(--primary-color);
+   --receipt-panel-shadow: var(--shadow-sm);
+   --receipt-paper-width: 58mm;
+   --receipt-printable-width: 48mm;
+   --receipt-print-padding: 1mm;
+   --receipt-print-background: #ffffff;
+   --receipt-print-color: #000000;
+   --receipt-print-font-family: 'Courier New', Courier, monospace;
+   --receipt-print-font-size: 7pt;
+   --receipt-print-font-weight: 700;
+   --receipt-print-letter-spacing: 0;
+   --receipt-print-line-height: 1.25;
+
    /* === ALERTS === */
    --alert-info-bg: var(--info-color-lighter);
    --alert-info-border: var(--info-color);

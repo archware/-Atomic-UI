@@ -508,6 +508,36 @@ steps = [
 </app-accordion>
 ```
 
+#### FormDialog
+
+`FormDialog` compone el `CrudDialog` nativo con encabezado, descripción, cuerpo
+y acciones visualmente consistentes. El consumidor conserva el formulario y
+sus reglas; el organismo únicamente gobierna estructura, foco y responsive.
+
+```html
+<prest-form-dialog
+  #editor
+  eyebrow="Seguridad"
+  title="Editar acceso"
+  description="Defina el rol y su vigencia."
+  (cancelled)="editor.close()"
+>
+  <app-button dialog-close aria-label="Cerrar">Cerrar</app-button>
+
+  <form>
+    <!-- Controles Atomic y reglas del consumidor -->
+    <prest-form-dialog-actions>
+      <app-button type="submit">Guardar</app-button>
+      <app-button variant="outline" (buttonClick)="editor.close()">Cancelar</app-button>
+    </prest-form-dialog-actions>
+  </form>
+</prest-form-dialog>
+```
+
+El foco inicial prioriza `[data-dialog-initial-focus]` y
+`[data-control-focus]`. Al cerrar con botón o Escape, el foco vuelve al
+elemento que abrió el diálogo.
+
 ### ScrollOverlay
 ```html
 <app-scroll-overlay [maxBodyHeight]="400">

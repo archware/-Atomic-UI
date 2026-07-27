@@ -3,6 +3,92 @@
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
+## [5.1.22] - 2026-07-25
+
+### Añadido
+
+- `PREST-20260725-070`: nuevo organismo `FormDialog` con encabezado, descripción,
+  cuerpo y grupo de acciones canónicos. Usa exclusivamente tokens, conserva
+  contraste por tema y adapta el espaciado en pantallas estrechas.
+- `CrudDialog` mantiene su API y ahora prioriza controles Atomic marcados al
+  abrir, omite entradas auxiliares no navegables y restaura el foco en el
+  invocador al cerrar.
+
+### Verificación
+
+- Pruebas focalizadas de `CrudDialog` y `FormDialog`: 5/5.
+- Suite completa: 210/210; gobierno Atomic y build correctos.
+- Rollback: retirar `FormDialog` y conservar el contrato anterior de
+  `CrudDialog`; ningún consumidor existente requiere cambiar.
+
+## [5.1.21] - 2026-07-25
+
+### Añadido
+
+- `PREST-20260725-068`: `StatusBadge` incorpora la variante semántica `info`
+  con los tokens informativos canónicos. Permite representar estados
+  intermedios, como un pago parcial, sin confundirlos con advertencias
+  pendientes ni depender solo del color.
+
+### Verificación
+
+- Gobierno Atomic y blueprints conformes; suite completa 206/206 y build
+  Angular correctos. La prueba focalizada cubre estilo `info`, nombre accesible
+  y etiqueta explícita.
+
+## [5.1.20] - 2026-07-25
+
+### Corregido
+
+- `PREST-20260725-064`: `DataTable` publica de forma canónica la columna
+  correlativa `N.º` y calcula el número como desplazamiento de página más
+  posición visible, sin reutilizar identificadores técnicos.
+- Toda colección sin metadatos de servidor recibe paginación local automática;
+  las grillas con backend conservan sus eventos y muestran el correlativo
+  continuo entre páginas. Ordenar una colección local regresa a la página 1.
+- La columna de acciones y el modo responsive mantienen el contrato anterior;
+  el consumidor no necesita recrear paginadores ni columnas de numeración.
+
+### Verificación
+
+- Prueba focalizada de `DataTable`: 15/15.
+- Contrato de gobernanza Atomic y blueprints: conforme.
+- Suite completa: 205/205 pruebas.
+- Compilación Angular: correcta; conserva únicamente advertencias preexistentes
+  de imports sin uso y presupuesto del bundle.
+
+## [5.1.19] - 2026-07-25
+
+### Añadido
+
+- `PREST-20260725-062`: nuevo organismo `ReceiptPanel` para comprobantes
+  responsive e impresión térmica aislada de 58 mm. Proyecta acciones del
+  consumidor, recibe campos y texto ya formateados y no incorpora reglas
+  financieras ni acceso directo a dispositivos.
+- Tokens de superficie y papel térmico, export público, prueba zoneless y
+  escenario Storybook con datos sintéticos.
+- La impresión ya no intenta ocultar la aplicación ni imprimir el organismo
+  dentro de un diálogo. Crea un documento temporal con solo el ticket, copia
+  los tokens canónicos, espera dos ciclos de render y lo cierra en
+  `afterprint`, evitando la vista previa blanca de Chrome. Los datos se
+  insertan con `textContent` y el texto usa negro/blanco puros con peso 700
+  para salida monocroma nítida a 203 dpi.
+- El documento térmico centra el área real de 48 mm en el papel de 58 mm con
+  márgenes laterales simétricos. La fuente pasa a 7 pt para contener 32
+  columnas completas en 384 puntos. La página CSS conserva el tamaño automático
+  del controlador: una altura CSS menor no se fuerza porque Edge la centra
+  dentro de la hoja física configurada. El espaciado vertical baja a 1 mm.
+
+### Compatibilidad
+
+- `print()` usa el diálogo nativo del navegador y la cola configurada por el
+  sistema operativo. No emite corte automático ni comandos ESC/POS.
+
+### Verificación
+
+- Gobierno Atomic, 204/204 pruebas y build aprobados. La copia propagada al
+  consumidor mantiene hashes idénticos en TS/HTML/SCSS.
+
 ## [5.1.18] - 2026-07-24
 
 ### Corregido
@@ -41,12 +127,14 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.16] - 2026-07-22
 
 ### Añadido
+
 - `PREST-20260722-030`: nuevos átomos canónicos `Input`, `Select` y
   `ChoiceControl`, con CVA zoneless, accesibilidad, estados de ayuda/error y
   contratos reutilizables. `Select` conserva el tipo real de opciones numéricas
   y `ChoiceControl` publica los estados marcado/deshabilitado en el host.
 
 ### Corregido
+
 - La suite histórica OnPush usa `componentRef.setInput`; `Avatar` deja de
   memoizar propiedades `@Input` no reactivas y `ThemeService` consume de forma
   segura los rechazos de View Transitions.
@@ -54,12 +142,14 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
   vigente en lugar de un título obsoleto.
 
 ### Verificación
+
 - Suite completa: 197/197 pruebas aprobadas. Build Angular correcto. La deuda de
   68 fallos históricos documentada en versiones anteriores queda cerrada.
 
 ## [5.1.15] - 2026-07-22
 
 ### Añadido
+
 - `PREST-20260722-029`: `TableAction`, `DataTable` y `CrudDialog` pasan a existir
   realmente en Atomic UI. El átomo cubre tres tamaños sin ocultar acciones, la
   tabla integra estados, orden, paginación y tarjetas móviles, y el diálogo
@@ -70,6 +160,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
   vulnerabilidades y 16/16 pruebas focalizadas aprobadas.
 
 ### Regla de propagación
+
 - Todo objeto visual nuevo se implementa y valida en `-Atomic-UI` antes de
   copiarse o adaptarse en una aplicación. La lógica de dominio permanece fuera
   del ADN.
@@ -77,10 +168,12 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.14] - 2026-07-21
 
 ### Añadido
+
 - **Paginación integrada en `DataTable`:** Se integró el footer de paginación y resumen de registros (`Mostrando X - Y de Z registros`) dentro del Organismo `<prest-data-table>`.
 - **Propiedad `size` en `TableAction`:** Soporte para tamaños `sm` (28px), `md` (36px) y `lg` (44px) en el componente de acciones de grilla.
 
 ### Corregido
+
 - **Aislamiento de tokens de layout:** Se documentó la regla de paridad para evitar que los scripts de sincronización de temas sobreescriban variables locales de maquetación (`--sidebar-width`, `--header-height`) en aplicaciones consumidoras.
 - **Grids de métricas en Angular:** Se validó la regla de maquetación con `:host { height: 100% }` para asegurar alineación estricta de bordes en tarjetas KPI.
 
@@ -89,11 +182,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.13] - 2026-07-20
 
 ### Añadido
+
 - **Estado semántico independiente:** `StatusBadgeComponent` representa `active`, `inactive`, `degraded` y `unconfigured` con texto visible además del color. Puede mostrar identidad WEB, TELEGRAM o SMS mediante FontAwesome sin aceptar ni exponer credenciales.
 - **Identidad estable de indicadores:** `MetricsGridComponent` admite `KpiMetric.id` para conservar cada tarjeta al reordenar datos y expone un nombre accesible para la sección.
 - **Pruebas y catálogo:** KPI, MetricsGrid y StatusBadge incorporan specs zoneless y stories coherentes, incluidas composiciones estrechas, títulos repetidos e importes preformateados.
 
 ### Corregido
+
 - **KPI financiero:** se restauraron dimensiones CSS válidas, la moneda conserva dos decimales por defecto y `displayValue` permite presentar exactamente el importe autoritativo recibido por el consumidor.
 - **Comparaciones honestas:** una KPI no muestra tendencia, icono ni texto comparativo por defecto; la tendencia solo aparece cuando el consumidor la entrega explícitamente.
 - **Responsive sin desborde:** MetricsGrid usa `minmax(min(100%, var(--min-col-width)), 1fr)` y sus hosts permiten encogimiento desde 320 px.
@@ -103,6 +198,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 - **Dependencias transitivas de desarrollo:** `webpack-dev-server` queda fijado en `5.2.6` y el `uuid` interno de `sockjs` en `11.1.1`, ambos dentro del contrato usado y comprobado por Angular/Storybook, para cerrar los avisos moderados sin degradar Angular.
 
 ### Verificación
+
 - Incremento de diseño `PREST-20260720-014`, limitado al ADN Atomic UI. La propagación a consumidores queda separada y exige sus propias pruebas de contrato y responsive.
 - Con Node 24.15.0: 24/24 pruebas dirigidas, build Angular y build Storybook correctos. Tanto `npm audit --omit=dev` como la auditoría completa reportan 0 vulnerabilidades.
 - La suite histórica completa deja 106 pruebas correctas y 68 fallos en componentes no modificados por el incremento —principalmente specs que mutan `input()` sin `setInput`—. No se oculta como gate aprobado; la fuente propagada por PREST-014 queda cubierta por la suite dirigida y el saneamiento global se mantiene como deuda independiente.
@@ -112,16 +208,19 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.12] - 2026-07-20
 
 ### Añadido
+
 - **Navegación jerárquica:** `SidebarComponent` admite árboles mediante `children`, expansión declarativa con `expanded`, apertura automática del ancestro activo e iconos FontAwesome en padres e hijos sin alterar el contrato de los elementos planos.
 - **Sesión completa en Topbar:** idioma y notificaciones pueden ocultarse independientemente; el menú de usuario muestra `userRole` y las acciones de sesión se presentan en mayúsculas.
 - **Espaciado de feedback:** `AlertComponent` incorpora `flowSpacing="default|compact|none"`; el valor predeterminado reserva 36 px después del mensaje mediante tokens y conserva la capitalización del cuerpo.
 
 ### Corregido
+
 - **Responsive recuperado:** se restauraron a `768px` los breakpoints dañados de LayoutShell, Panel, Card, Toast, Stepper, Topbar, Footer, Tabs y Navbar. El logo y el botón móvil de Navbar recuperan 28 px y 36 px respectivamente.
 - **Alertas semánticas:** las cuatro variantes consumen `--alert-*-bg|border|text`; la advertencia deja de depender de un fallback CSS inválido.
 - **Acciones de icono accesibles:** `ActionGroup` y `TableActions` exponen `aria-label` y delegan Enter/Espacio al comportamiento nativo del botón para emitir una sola acción. `ActionGroup size="sm"` conserva 28 px.
 
 ### Verificación
+
 - Incremento de diseño `PREST-20260720-013`, limitado a la fuente Atomic UI y sin propagación automática a consumidores.
 
 ---
@@ -129,6 +228,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.12] - 2026-07-20
 
 ### Corregido
+
 - **Fuga de clicks en app-button deshabilitados:** Se registro una directriz critica sobre el uso de eventos en componentes encapsulados de Atomic UI. Al utilizar <app-button>, los consumidores deben enlazar la accion a la salida nativa del componente (buttonClick)=... en lugar del evento DOM directo (click)=.... El uso de (click) se adhiere al elemento host de Angular, permitiendo que eventos de click se filtren aunque el boton interno este en estado [disabled]=true.
 
 ---
@@ -136,10 +236,12 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.11] - 2026-07-19
 
 ### Corregido
+
 - **Tokens de color obligatorios en overlays y modales custom:** Al construir un dialog/modal personalizado sobre `app-card variant="elevated"` con un `slot="image"` como cabecera, queda prohibido usar colores hexadecimales fijos (e.g. `#1e293b`, `#f8fafc`). Toda cabecera de modal debe consumir `background: var(--surface-section)` y `color: var(--text-color)` para respetar el Dark/Light Mode automatico del ecosistema. Los iconos de estado deben usar `color: var(--danger-color)`, `var(--warning-color)` etc., nunca hexadecimales sueltos.
 - **Texto de cuerpo en modales:** El parrafo de contenido de un modal custom debe llevar `color: var(--text-color)` explicito en lugar de clases de utilidad como `text-secondary` o `text-muted`, ya que estas clases aplican opacidad reducida y en fondos oscuros resultan ilegibles.
 
 ### Directriz
+
 - **Plantilla canonica de modal para consumidores (Wails/Tauri/Python):** El header del modal usa `slot="image"` con fondo `var(--surface-section)`, separador `var(--border-color)` y texto `var(--text-color)`. El cuerpo del modal usa `color: var(--text-color)` explicito en el parrafo. Esta plantilla garantiza compatibilidad automatica con Light Mode y Dark Mode sin estilos adicionales.
 
 ---
@@ -147,6 +249,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.10] - 2026-07-16
 
 ### Corregido
+
 - **Graficos demo alineados al ADN**: Los ejemplos de showcase y blueprints quedan marcados como datos demo y consumen tokens `--chart-color-*`, `--chart-grid-color`, superficie y tooltip, evitando hexadecimales sueltos que luego puedan propagarse a aplicaciones productivas.
 - **Frontera entre demo y produccion**: Se documenta que los datos de stories, showcase y blueprints no deben copiarse a Wails, Tauri ni Python como fuente de negocio.
 
@@ -155,6 +258,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.9] - 2026-07-16
 
 ### Corregido
+
 - **Cierre inferior de tablas con scroll sincronizado**: `ScrollOverlayComponent` amplia `--so-scroll-end-space` a `calc(var(--so-track-size) + var(--space-8))` para que la ultima fila quede visible por encima de la barra horizontal cuando existe scroll vertical y horizontal simultaneo.
 - **Chips de metodo mas sobrios**: `chip-primary` mezcla el color primario con `surface-elevated`, reduce la saturacion visual en tema oscuro y mantiene coherencia con los chips semanticos.
 - **Centrado vertical de celdas compactas**: `TableComponent` centra verticalmente las celdas cuyo unico contenido es `app-chip`, sin alterar celdas compuestas como `Estado TA` con detalle secundario.
@@ -163,14 +267,16 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ---
 
 ## [v1.3.4] - 2026-07-16
+
 ### Documentación
+
 - **Layouts y desbordamiento en `app-card`:** Se agregó documentación formal en las lecciones aprendidas sobre cómo manejar grillas flexbox complejas con `.card__body` usando `::ng-deep` para no romper el comportamiento natural de bloque de otras tarjetas y evitar desbordamientos de `100vh`.
 - **Modales custom:** Se reiteró la regla estricta de heredar `var(--surface-section)` y `var(--text-color)` en cualquier modal personalizado de los consumidores Wails, Tauri y Python para garantizar el funcionamiento del modo oscuro.
-
 
 ## [5.1.8] - 2026-07-15
 
 ### Corregido
+
 - **Cajas internas de grafico definidas**: `chart-panel--center` fija 260 px para tortas/donas y `chart-panel--fill` fija 320 px para barras. `chart-panel` usa `box-sizing: border-box` para evitar que el canvas desborde la tarjeta cuando el padre tiene altura fija de 430 px.
 
 ---
@@ -178,6 +284,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.7] - 2026-07-15
 
 ### Corregido
+
 - **Altura padre controlada para filas de grafico**: Se agrego `chart-grid-compact` con filas de 430 px para evitar crecimiento excesivo en pantalla completa. `chart-panel` baja su alto minimo a 240 px para trabajar dentro de la altura fija del padre sin recortar controles.
 
 ---
@@ -185,6 +292,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.6] - 2026-07-15
 
 ### Corregido
+
 - **Altura simetrica de paneles de grafico**: `chart-panel` reduce su alto minimo a 320 px para evitar espacios vacios excesivos en tarjetas de graficos. Se agrega `chart-panel--center` para centrar verticalmente graficos compactos como tortas/donas.
 
 ---
@@ -192,6 +300,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.5] - 2026-07-15
 
 ### Aniadido
+
 - **Panel uniforme para graficos**: Se agrego la utilidad `chart-panel` para que los contenedores de graficos mantengan un alto minimo estable, llenen el alto disponible de tarjetas estiradas en grid y deleguen el redimensionamiento final al componente `app-chart`.
 
 ---
@@ -199,6 +308,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.4] - 2026-07-15
 
 ### Corregido
+
 - **Grafico con resize propio**: `app-chart` ahora usa host flexible, observa cambios reales del contenedor con `ResizeObserver` y fuerza `resize/update` de Chart.js. Esto permite que el canvas se adapte al espacio disponible sin mover la responsabilidad al contenedor padre.
 
 ---
@@ -206,6 +316,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.3] - 2026-07-15
 
 ### Aniadido
+
 - **Alto compacto para graficos**: Se agrego la utilidad `h-300` para que los consumidores puedan reducir paneles de grafico puntuales sin tocar el comportamiento global de `app-card` ni afectar tarjetas hermanas en grillas.
 
 ---
@@ -213,6 +324,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.2] - 2026-07-15
 
 ### Corregido
+
 - **Alto natural de tarjetas con graficos**: Se retiro el alto flexible global de `app-card` porque hacia crecer las tarjetas hermanas dentro de grillas, especialmente la tarjeta del grafico de torta. El control de alto queda localizado en el consumidor mediante `h-380` y `height="100%"`.
 - **Limpieza de utilidad de alto minimo**: Se retiro `min-h-380` porque ya no se requiere para el grafico mensual y podia inducir crecimiento vertical no deseado.
 
@@ -221,6 +333,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ## [5.1.1] - 2026-07-15
 
 ### Corregido
+
 - **Grafico reactivo de alto completo**: Se ajusto `app-chart` para que el host y el contenedor interno puedan ocupar el 100% del alto disponible cuando el consumidor declara `height="100%"`. Esta correccion permite que los graficos embebidos en tarjetas altas no queden limitados por el valor por defecto de 300 px.
 - **Contraste de grilla en tema claro**: Se convirtio `chart-tokens.css` a tokens dependientes de tema. El modo claro usa una grilla con mayor contraste y los temas oscuros conservan una grilla visible sin saturar el panel.
 
@@ -231,6 +344,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ### Uniformizacion UI y Chart reactivo a temas
 
 #### Fixed
+
 - **Input shadows uniformes con `select2`**: `--input-shadow` y `--input-shadow-hover` ahora usan `var(--shadow-sm)` y `var(--shadow-md)` — la misma escala semantica que `select2`. Los inputs `floating` y `outline` tienen la misma elevacion visual en los 3 temas.
 - **Focus ring de `floating-input` alineado**: El estado focused usaba `0 0 0 3px var(--hover-background)` produciendo un ring diferente al de `select2`. Ahora usa `var(--input-shadow-focus)` = `var(--shadow-focus-primary)`, uniformizando el comportamiento de todos los inputs del sistema.
 - **`chart.component.ts` reactivo a cambios de tema**: Se anadio `MutationObserver` en `data-theme`/`class` de `<html>` y `<body>`. Al cambiar de tema se re-leen los tokens CSS via `getComputedStyle` y se fuerza la recreacion del canvas. Metodo `applyChartTheme()` extraido como privado reutilizable. `ngOnDestroy` desconecta el observer.
@@ -243,6 +357,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ### Auditoria Profunda del Ecosistema — Sincronizacion Total y Limpieza
 
 #### Fixed (Ecosistema — CRITICO)
+
 - **114/114 archivos `shared/ui` sincronizados**: Auditoria SHA-256 completa detecto 10 archivos con drift y 5 MISSING en Tauri y Wails. Todos corregidos. El ecosistema queda en estado 100% sincronizado.
 - **WebView2 canvas fix retroalimentado**: La correccion `ctx.save()`/`ctx.restore()` incondicional para todos los tipos de chart (documentada en v4.9.0 y en `ECOSYSTEM_WORKFLOW.md`) existia unicamente en Wails. Se retroalimento a Atomic-UI (Fuente de la Verdad) y se propago a Tauri.
 - **`propagate-tokens.ps1` extendido**: El script solo propagaba `_tokens-components.css` (1 de 7 archivos). Ahora cubre los 7 archivos CSS del directorio `src/styles/themes/` con verificacion SHA-256 individual por archivo.
@@ -250,10 +365,12 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 - **`z-index: 10` en `table-head`**: Propiedad que existia en consumidores retroalimentada a Atomic-UI.
 
 #### Added
+
 - **5 componentes nuevos propagados a Tauri y Wails**: `language-switcher`, `table-actions` (`.ts`, `.html`, `.css`) y `footer` ahora existen en los tres proyectos.
 - **`chartjs-plugin-datalabels@^2.2.0`**: Dependencia que estaba en Tauri y Wails pero faltaba en Atomic-UI. Instalada para alinear el ecosistema y eliminar errores `TS2307` en `chart.component.ts`.
 
 #### Changed
+
 - **Blueprint `crud-table`**: Integrado `app-data-pager` superior, tabla envuelta en `app-scroll-overlay`, paginacion inferior con tres variantes (minimal, rounded, cards). Script `fix.py` aplicado y eliminado.
 - **`topbar` y `layout-shell`**: Actualizados en los tres proyectos para incluir `LanguageSwitcherComponent` y `FooterComponent` respectivamente.
 
@@ -264,32 +381,36 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ### Auditoría Profunda de Tokens — Fix Crítico de Tabla y Chart + Guía de Migración
 
 #### Fixed (Tokens — CRÍTICO)
+
 - **25 tokens de tabla ausentes detectados y definidos**: Los componentes `table.component.ts`, `table-head.component.ts` y `table-row.component.ts` consumían un nuevo namespace `--table-color-*`, `--table-font-*`, `--table-header-*`, `--table-card-*` y `--table-transition-*` que **nunca fue definido** en `_tokens-components.css`. Esto causaba que todas las tablas renderizaran sin estilos (sin zebra/striping, sin header estilado, sin hover visible, sin responsive cards). Se definieron los 25+ tokens faltantes en los tres temas (light, dark, brand-dark) con aliases legados para no romper módulos existentes (gerencial, operativo).
 - **6 tokens de chart ausentes definidos**: `--chart-text-color`, `--chart-tooltip-bg`, `--chart-tooltip-text`, `--chart-tooltip-border`, `--chart-grid-color` y `--surface-color` que `chart.component.ts` leía via `getComputedStyle` nunca estuvieron en `_tokens-components.css`. Se definieron en los tres temas.
 - **Fix shadowPlugin WebView2 (Wails)**: `ctx.save()`/`ctx.restore()` ahora son incondicionales para todos los tipos de chart. Evita corrupción del estado del canvas en WebView2.
 
 #### Added (Developer Experience)
+
 - **`CONTRIBUTING_TOKENS.md`**: Guía oficial de token-first development con checklist, convenciones de nomenclatura, plantilla de bloque CSS, regla de tokens legado y flujo completo.
 - **`scripts/audit-tokens.ps1`**: Detecta tokens consumidos por cualquier componente que no están definidos. Exit code 1 si hay faltantes.
 - **`scripts/propagate-tokens.ps1`**: Propaga `_tokens-components.css` a Wails y Tauri con verificación SHA-256.
 
 #### Changed
+
 - `_tokens-components.css`: Bloque `=== TABLAS ===` expandido de 16 a 60+ tokens. Documentado con comentarios por grupo.
 
 ---
 
 ## [4.8.0] - 2026-06-26
 
-
 ### Refactorización de Tablas, Hover Effects y Contrastes en Modo Oscuro
 
 #### Fixed (Frontend - UI Core)
+
 - **Mejora del Resaltado en el Thead**: Se cambió la técnica de resaltado en hover para los encabezados de tabla ordenables (`th[app-table-header-cell]`). En lugar de utilizar un overlay fijo o translúcido que ocultaba el color del fondo (perdiendo saturación en temas oscuros o vibrantes), se implementó `filter: brightness(1.2)`. Esta solución ilumina los píxeles originales respetando la paleta de colores nativa sin importar si se usa modo claro u oscuro.
 - **Corrección Typo en Tbody Hover**: En el CSS del `table.component.ts` de Atomic-UI, las filas intentaban hacer referencia a la variable `--table-color-hover` para su efecto de hover, pero el nombre correcto en el design system es `--table-row-hover`. Al fallar, usaban el color por defecto (2% negro), haciéndolo casi imperceptible. Se corrigió la variable para que herede correctamente el hover diseñado (`var(--table-row-hover)`).
 - **Contraste de Componentes Chip en Modo Oscuro**: Se reemplazó el uso duro de variables base (`--primary-color-lighter`) en el componente `app-chip` por el uso de tokens semánticos adaptativos para fondos y textos en los chips (`var(--primary-color-light, var(--primary-color-lighter))` y `var(--primary-color-text, var(--primary-color))`). Esto resuelve la ilegibilidad de los chips en modo oscuro debido a la falta de contraste.
 
 #### Added (Frontend - Wails & Tauri DataGrids)
-- **Columna de Fecha de Inicio Histórica**: En respuesta a peticiones funcionales, las tablas del CRM (Operativo) en Wails y Tauri ahora muestran 3 columnas de fechas de seguimiento del paciente: *F. Inicio*, *F. Última*, y *F. Próxima*. Esto incluyó la adición de la propiedad `fecha_inicio` en las estructuras del modelo.
+
+- **Columna de Fecha de Inicio Histórica**: En respuesta a peticiones funcionales, las tablas del CRM (Operativo) en Wails y Tauri ahora muestran 3 columnas de fechas de seguimiento del paciente: _F. Inicio_, _F. Última_, y _F. Próxima_. Esto incluyó la adición de la propiedad `fecha_inicio` en las estructuras del modelo.
 
 ---
 
@@ -298,6 +419,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ### Dropdown Click Propagation Isolation
 
 #### Fixed (Frontend - Select2Component)
+
 - **Aislamiento de Clicks en Opciones**: Se corrigió el cierre inmediato y pérdida de foco del dropdown al hacer click en una opción. Reemplazamos la lógica destructiva asíncrona de `setTimeout` de 150ms por un control síncrono nativo usando `(click)="$event.stopPropagation(); !option.disabled && selectOption(option)"` en la opción. Esto detiene el evento `click` antes de que alcance el listener global del documento (`document:click`), impidiendo falsos cierres externos por desvinculación de nodos DOM.
 - **Mantener foco de busqueda**: Se mantuvo `(mousedown)="$event.preventDefault()"` para evitar la pérdida no deseada del foco del input de búsqueda.
 
@@ -306,10 +428,12 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ### Select2Component y DB-First Robustness
 
 #### Fixed (Frontend - Wails & Tauri)
+
 - **Robo de Foco en WebView2 (Wails)**: El cierre destructivo del dropdown colapsaba el Event Loop de Angular al dispararse junto al evento `click`. Se inyectó un `setTimeout(..., 0)` en `selectOption` retrasando la destrucción del DOM y garantizando el flujo de datos.
 - **Tipado Fuerte de Select2**: Al descartar el uso de elementos nativos de Windows, el componente recuperó su capacidad de emitir valores reales (`number` o objetos) en lugar de strings literales, solucionando fallas de carga en la Grilla de Wails.
 
 #### Fixed (Backend - Tauri)
+
 - **Tiberius TLS Handshake**: El servidor SQL antiguo 10.100.6.11 rechaza certificados TLS modernos (Error de algoritmo común -2146893007). Se ha regresado a la cadena de conexión con `encrypt=DANGER_PLAINTEXT` para saltar el handshake.
 - **Anti-Panic Data Extraction**: El puente de datos en `tiberius_repository.rs` se refactorizó para usar `.try_get::<T, _>().ok().flatten().unwrap_or(0)` en todas las columnas. El backend ahora es inmune a inconsistencias de tipos y retornos nulos desde SQL Server, impidiendo crasheos silentes que forzaban la activación de Mock Data.
 
@@ -320,11 +444,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ### Refactorización del Indicador 11 y DB-First
 
 #### Fixed (Base de Datos & Arquitectura)
+
 - **Filtros Estrictos en Vistas**: Se corrigió la vista `ind.VW_NOMINAL_ID11` para excluir correctamente a las gestantes y filtrar población de 15 a 49 años, según la Ficha Técnica 11.
 - **Sincronización SP-Vista**: Se eliminó la lógica duplicada de tablas de origen en el SP de paginación `ind.USP_SEL_GRILLA_NOMINAL_ID11`, haciendo que consuma directamente la vista `VW_NOMINAL_ID11`. Esto corrigió el bug de los "62856 registros basura" persistentes.
 - **Views de Dashboards**: Se crearon las vistas de datos `VW_DASHBOARD_STATS_ID11` (para métricas macro) y `VW_DASHBOARD_MONTHLY_ID11` (para avance en barras) centralizando todo cálculo matemático en SQL Server (DB-First).
 
 #### Added (Frontend - Wails & Tauri)
+
 - **Dashboards Temáticos**: Reorganización de las tarjetas del nivel gerencial mostrando la "Población Denominador", el "Logro Indicador 11" (%) y la alerta de "Próximos a Vencer".
 - **Gráficos Dinámicos**: Integración del doughnut chart "Métodos Modernos" comparando Preservativos vs Otros, y el Bar chart "Avance Mensual 2026".
 
@@ -335,25 +461,25 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 ### Refactorización de Tablas, Scrolling Avanzado y Pulido Visual UI
 
 #### Added
+
 - **`app-table` & `ScrollOverlayComponent`**: Se completó la integración del contenedor inteligente de scroll (`app-scroll-overlay`) dentro del componente nativo `<app-table>`. Ahora las tablas admiten scroll horizontal y vertical perfecto con sincronización de columnas (`lockColumnTemplate`), evitando el desbordamiento sin romper la estructura HTML semántica.
 - **`table.component.ts`**: Nuevo `@Input() columnTemplate: string` para permitir definir anchos estrictos en grid (ej. `minmax(200px, 1fr) 120px...`), evitando que el navegador autoajuste y aplaste columnas cuando hay contenido largo.
 - **`SidebarMenuItem`**: Se añadió la propiedad `iconColor?: string` para permitir colores temáticos/personalizados en los iconos de la barra de navegación lateral, mejorando drásticamente el peso visual de la interfaz.
 
 #### Fixed (Visual & Arquitectura)
+
 - **Alineación de Tarjetas (Dashboard)**: Se detectó que las tarjetas (`app-card`) del tablero gerencial no mantenían una altura uniforme debido a la ausencia de subtítulos en el indicador "Total Pacientes". Se insertó un espaciador fantasma (`&nbsp;`) transparente y no seleccionable (`user-select: none`) en dicho bloque, equilibrando la grilla CSS y logrando una uniformidad absoluta sin alterar semántica HTML.
-- **`ScrollOverlayComponent` y Scrollbars superpuestos**: Se detectó y solucionó una colisión visual en donde la barra de scroll vertical custom (`.so-scrollbar-y`) se dibujaba sobre la cabecera de la tabla (`thead`). Ahora el componente detecta dinámicamente la altura del header (`this.tableHead.offsetHeight`) y aplica un *offset* automático al inicio de la barra y su altura, manteniéndola perfectamente confinada en la zona de datos (tbody).
+- **`ScrollOverlayComponent` y Scrollbars superpuestos**: Se detectó y solucionó una colisión visual en donde la barra de scroll vertical custom (`.so-scrollbar-y`) se dibujaba sobre la cabecera de la tabla (`thead`). Ahora el componente detecta dinámicamente la altura del header (`this.tableHead.offsetHeight`) y aplica un _offset_ automático al inicio de la barra y su altura, manteniéndola perfectamente confinada en la zona de datos (tbody).
 
 #### Fixed (Visual & CSS)
+
 - **Modo Claro (Tablas)**: El `thead` ahora se renderiza como un bloque de color primario sólido con texto en blanco, reemplazando la débil línea inferior que lo hacía ilegible sobre fondos blancos.
 - **Modo Oscuro (Tablas)**: Se han corregido las variables de zebra (`--rtc-color-stripe`) para utilizar `rgba(255, 255, 255, 0.03)`, logrando un contraste limpio y solucionando el efecto visual de "bloque cuadrado oscuro".
 - **Bordes Perimetrales (Tablas)**: El contenedor inteligente exterior (`ScrollOverlay`) asume ahora la responsabilidad del `border` y `border-radius` cortando dinámicamente (`overflow: hidden`) las filas internas. Esto restaura las preciadas esquinas redondeadas en todas las vistas de escritorio al colapsar las tablas.
-- **Alineación y Espaciado de Acciones**: 
+- **Alineación y Espaciado de Acciones**:
   - Se añadieron las utilidades `.rtc-text-center` y `.rtc-text-right` al core CSS para alinear estrictamente flex-containers internos (como los menús de botones y `app-action-group`).
-  - Se implementó un margen de seguridad nativo (`padding-right: var(--space-6)`) en la última celda de todas las tablas para erradicar definitivamente las colisiones visuales entre el contenido y el *scrollbar* nativo de la UI.
-- **Sombras Premium (Paneles / Modo Claro)**: Se incrementaron sustancialmente las opacidades (canales alpha) de todas las elevaciones en modo claro (tokens `--shadow-sm` a `--shadow-xl`), logrando que las transiciones interactivas (*mouse move / hover effects*) en los *Cards* y *Panels* luzcan realmente elevadas.
-
-
-
+  - Se implementó un margen de seguridad nativo (`padding-right: var(--space-6)`) en la última celda de todas las tablas para erradicar definitivamente las colisiones visuales entre el contenido y el _scrollbar_ nativo de la UI.
+- **Sombras Premium (Paneles / Modo Claro)**: Se incrementaron sustancialmente las opacidades (canales alpha) de todas las elevaciones en modo claro (tokens `--shadow-sm` a `--shadow-xl`), logrando que las transiciones interactivas (_mouse move / hover effects_) en los _Cards_ y _Panels_ luzcan realmente elevadas.
 
 ## [4.3.0] - 2026-05-29
 
@@ -383,36 +509,36 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 #### 🔴 Críticos — Routing completamente inoperativo
 
-| # | Problema | Archivo |
-| --- | --- | --- |
-| A1 | Sin `<router-outlet>` en `app.html` ni `RouterOutlet` importado en `app.ts` — las rutas definidas no renderizan nada | `app.html`, `app.ts` |
-| A2 | `onSidebarNavigate()` solo cierra el sidebar en móvil; nunca llama `Router.navigate()` — los clicks del sidebar no navegan | `app.ts` |
-| A3 | Los blueprints tienen su propio `<app-layout-shell>` — si se añade `router-outlet` sin refactorizar `app.html`, se producirá doble layout anidado | `app.html`, blueprints |
+| #   | Problema                                                                                                                                          | Archivo                |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
+| A1  | Sin `<router-outlet>` en `app.html` ni `RouterOutlet` importado en `app.ts` — las rutas definidas no renderizan nada                              | `app.html`, `app.ts`   |
+| A2  | `onSidebarNavigate()` solo cierra el sidebar en móvil; nunca llama `Router.navigate()` — los clicks del sidebar no navegan                        | `app.ts`               |
+| A3  | Los blueprints tienen su propio `<app-layout-shell>` — si se añade `router-outlet` sin refactorizar `app.html`, se producirá doble layout anidado | `app.html`, blueprints |
 
 #### 🟡 Altos — CSS / Tokens
 
-| # | Problema | Archivo | Línea |
-| --- | --- | --- | --- |
-| A4 | `rgba(var(--brand-primary-500-rgb), 0.3)` sin valor de fallback en `brand-dark` — si la variable no está en scope, el focus ring desaparece silenciosamente | `_tokens-components.css` | 458 |
-| A5 | `--brand-primary-500-rgb` definido solo en `:root` — temas oscuros usan el color del tema claro para el anillo de focus de inputs | `_tokens-brand.css` | 31 |
-| A6 | Tokens faltantes en `[data-theme="dark"]` y `[data-theme="brand-dark"]`: todas las variantes de `--badge-*`, todos los `--alert-*`, `--breadcrumb-*`, `--switch-thumb`, `--avatar-border` | `_tokens-components.css` | variado |
+| #   | Problema                                                                                                                                                                                  | Archivo                  | Línea   |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | ------- |
+| A4  | `rgba(var(--brand-primary-500-rgb), 0.3)` sin valor de fallback en `brand-dark` — si la variable no está en scope, el focus ring desaparece silenciosamente                               | `_tokens-components.css` | 458     |
+| A5  | `--brand-primary-500-rgb` definido solo en `:root` — temas oscuros usan el color del tema claro para el anillo de focus de inputs                                                         | `_tokens-brand.css`      | 31      |
+| A6  | Tokens faltantes en `[data-theme="dark"]` y `[data-theme="brand-dark"]`: todas las variantes de `--badge-*`, todos los `--alert-*`, `--breadcrumb-*`, `--switch-thumb`, `--avatar-border` | `_tokens-components.css` | variado |
 
 #### 🟠 Medios — Calidad de código
 
-| # | Problema | Archivo |
-| --- | --- | --- |
-| A7 | `ButtonComponent` importado en `app.ts` pero ausente en `app.html` — import sin uso | `app.ts` |
-| A8 | `TableRow` tiene `col9` pero salta `col8` — inconsistencia en naming de columnas | `app.ts` |
-| A9 | `statusOptions` values son claves i18n (`'data.status.active'`) — el filtro por value nunca coincide con los datos reales de la tabla | `app.ts` |
-| A10 | Catch-all `{ path: '**', component: ErrorPagesComponent }` usa carga eager mientras todas las demás rutas de error usan `loadComponent` (lazy) | `app.routes.ts` |
+| #   | Problema                                                                                                                                                        | Archivo         |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| A7  | `ButtonComponent` importado en `app.ts` pero ausente en `app.html` — import sin uso                                                                             | `app.ts`        |
+| A8  | `TableRow` tiene `col9` pero salta `col8` — inconsistencia en naming de columnas                                                                                | `app.ts`        |
+| A9  | `statusOptions` values son claves i18n (`'data.status.active'`) — el filtro por value nunca coincide con los datos reales de la tabla                           | `app.ts`        |
+| A10 | Catch-all `{ path: '**', component: ErrorPagesComponent }` usa carga eager mientras todas las demás rutas de error usan `loadComponent` (lazy)                  | `app.routes.ts` |
 | A11 | `provideRouter(routes)` sin `withPreloading(PreloadAllModules)` ni `withScrollPositionRestoration` — el propio comentario del archivo indica que debería usarse | `app.config.ts` |
 
 #### 🔵 Bajos — Valores hardcoded en tokens
 
-| # | Problema | Archivo |
-| --- | --- | --- |
-| A12 | `--nav-shadow: rgba(122,120,120,0.2)` — gris hardcoded, debería usar variable semántica de sombra | `_tokens-components.css` |
-| A13 | `--button-shadow-inset: inset 0 1px 0 hsl(224,84%,74%)` — azul hardcoded, no sigue el sistema de tokens | `_tokens-components.css` |
+| #   | Problema                                                                                                                                     | Archivo                  |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| A12 | `--nav-shadow: rgba(122,120,120,0.2)` — gris hardcoded, debería usar variable semántica de sombra                                            | `_tokens-components.css` |
+| A13 | `--button-shadow-inset: inset 0 1px 0 hsl(224,84%,74%)` — azul hardcoded, no sigue el sistema de tokens                                      | `_tokens-components.css` |
 | A14 | `--ng-select-border: #999999` y `--ng-select-shadow: 0 0 4px #9fa1a3` en light theme — hex fijos que no respetan el sistema de design tokens | `_tokens-components.css` |
 
 ---
@@ -571,5 +697,6 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 - La validacion tecnica completa queda automatizada en GitHub Actions mediante `ci.yml`.
 
 ### Fixed
+
 - Corrección visual en cuadros de mando (Gerencial y Operativo) asegurando el uso de variant="elevated" para mantener jerarquías de color consistentes.
 - Alineación vertical perfecta mediante Flexbox en todas las tarjetas de estadísticas.

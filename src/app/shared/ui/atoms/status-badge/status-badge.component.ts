@@ -1,13 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 export type StatusBadgeStatus =
-  | 'active'
-  | 'inactive'
-  | 'degraded'
-  | 'unconfigured'
-  | 'success'
-  | 'warning'
-  | 'danger';
+  'active' | 'inactive' | 'degraded' | 'unconfigured' | 'info' | 'success' | 'warning' | 'danger';
 export type StatusBadgeChannel = 'web' | 'telegram' | 'sms';
 export type StatusBadgeSize = 'sm' | 'md';
 
@@ -16,6 +10,7 @@ const STATUS_LABELS: Readonly<Record<StatusBadgeStatus, string>> = {
   inactive: 'Inactivo',
   degraded: 'Con incidencias',
   unconfigured: 'Sin configurar',
+  info: 'Informativo',
   success: 'Correcto',
   warning: 'Advertencia',
   danger: 'Crítico',
@@ -136,6 +131,12 @@ const CHANNELS: Readonly<
       }
 
       .status-badge--unconfigured {
+        border-color: var(--info-color-light);
+        background: var(--info-color-lighter);
+        color: var(--info-color-text, var(--info-color-dark));
+      }
+
+      .status-badge--info {
         border-color: var(--info-color-light);
         background: var(--info-color-lighter);
         color: var(--info-color-text, var(--info-color-dark));

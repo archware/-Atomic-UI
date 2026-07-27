@@ -1,48 +1,48 @@
 <div class="data-table__region">
-  @if (totalRecords() !== null) {
-    <header class="data-table__toolbar">
-      <div class="data-table__summary">
-        <span
-          >Mostrando <strong>{{ rangeStart() }} - {{ rangeEnd() }}</strong> de
-          <strong>{{ totalRecords() }}</strong> registro(s)</span
+  <header class="data-table__toolbar">
+    <div class="data-table__summary">
+      <span
+        >Mostrando <strong>{{ rangeStart() }} - {{ rangeEnd() }}</strong> de
+        <strong>{{ effectiveTotalRecords() }}</strong> registro(s)</span
+      >
+    </div>
+
+    <div class="data-table__pagination">
+      <label class="data-table__page-size">
+        <span>POR PÁGINA:</span>
+        <select [value]="effectivePageSize()" (change)="onPageSizeChange($event)">
+          @for (size of pageSizeOptions(); track size) {
+            <option [value]="size" [selected]="size === effectivePageSize()">{{ size }}</option>
+          }
+        </select>
+      </label>
+
+      <span class="data-table__page-info">
+        Página {{ effectivePage() }} de {{ effectiveTotalPages() }}
+      </span>
+
+      <div class="data-table__page-buttons">
+        <button
+          class="data-table__page-btn"
+          type="button"
+          [disabled]="!effectiveHasPreviousPage() || status() === 'loading'"
+          (click)="onPageChange(effectivePage() - 1)"
+          aria-label="Página anterior"
         >
+          <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <button
+          class="data-table__page-btn"
+          type="button"
+          [disabled]="!effectiveHasNextPage() || status() === 'loading'"
+          (click)="onPageChange(effectivePage() + 1)"
+          aria-label="Página siguiente"
+        >
+          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+        </button>
       </div>
-
-      <div class="data-table__pagination">
-        <label class="data-table__page-size">
-          <span>POR PÁGINA:</span>
-          <select [value]="pageSize()" (change)="onPageSizeChange($event)">
-            @for (size of pageSizeOptions(); track size) {
-              <option [value]="size" [selected]="size === pageSize()">{{ size }}</option>
-            }
-          </select>
-        </label>
-
-        <span class="data-table__page-info"> Página {{ page() }} de {{ totalPages() }} </span>
-
-        <div class="data-table__page-buttons">
-          <button
-            class="data-table__page-btn"
-            type="button"
-            [disabled]="!hasPreviousPage() || status() === 'loading'"
-            (click)="pageChange.emit(page() - 1)"
-            aria-label="Página anterior"
-          >
-            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
-          </button>
-          <button
-            class="data-table__page-btn"
-            type="button"
-            [disabled]="!hasNextPage() || status() === 'loading'"
-            (click)="pageChange.emit(page() + 1)"
-            aria-label="Página siguiente"
-          >
-            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-          </button>
-        </div>
-      </div>
-    </header>
-  }
+    </div>
+  </header>
 
   <app-scroll-overlay
     class="data-table__viewport"
@@ -60,6 +60,17 @@
 
       <thead>
         <tr>
+          @if (showRowNumber()) {
+            <th
+              scope="col"
+              data-column="rowNumber"
+              class="data-table__cell--end"
+              [style.--data-table-column-width]="rowNumberWidth()"
+            >
+              <span class="data-table__heading">{{ rowNumberHeader() }}</span>
+            </th>
+          }
+
           @for (column of columns(); track column.key) {
             <th
               scope="col"
@@ -143,8 +154,20 @@
           @default {
             @for (row of displayedRows(); track identifyRow($index, row); let rowIndex = $index) {
               <tr>
+                @if (showRowNumber()) {
+                  <td
+                    data-column="rowNumber"
+                    [attr.data-label]="rowNumberHeader()"
+                    class="data-table__cell--end"
+                    [style.--data-table-column-width]="rowNumberWidth()"
+                  >
+                    {{ rowNumber(rowIndex) }}
+                  </td>
+                }
+
                 @for (column of columns(); track column.key) {
                   <td
+                    [attr.data-column]="column.key"
                     [attr.data-label]="column.header"
                     [style.--data-table-column-width]="column.width ?? null"
                     [class.data-table__cell--center]="column.align === 'center'"

@@ -22,6 +22,7 @@ describe('StatusBadgeComponent', () => {
       inactive: 'Inactivo',
       degraded: 'Con incidencias',
       unconfigured: 'Sin configurar',
+      info: 'Informativo',
       success: 'Correcto',
       warning: 'Advertencia',
       danger: 'Crítico',
@@ -47,6 +48,17 @@ describe('StatusBadgeComponent', () => {
     expect(badge.classList).toContain('status-badge--danger');
     expect(badge.textContent).toContain('Cuota vencida');
     expect(badge.getAttribute('aria-label')).toBe('Cuota vencida');
+  });
+
+  it('exposes an informational state for neutral in-progress domain labels', () => {
+    fixture.componentRef.setInput('status', 'info');
+    fixture.componentRef.setInput('label', 'Parcial');
+    fixture.detectChanges();
+
+    const badge = fixture.nativeElement.querySelector('.status-badge') as HTMLElement;
+    expect(badge.classList).toContain('status-badge--info');
+    expect(badge.textContent).toContain('Parcial');
+    expect(badge.getAttribute('aria-label')).toBe('Parcial');
   });
 
   it('adds an accessible, secret-free visual identity for Telegram', () => {

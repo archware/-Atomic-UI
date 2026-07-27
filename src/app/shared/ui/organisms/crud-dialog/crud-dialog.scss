@@ -15,10 +15,18 @@
   box-shadow: var(--modal-shadow);
 }
 
-.crud-dialog--sm { --crud-dialog-current-max-width: var(--crud-dialog-max-width-sm); }
-.crud-dialog--md { --crud-dialog-current-max-width: var(--crud-dialog-max-width-md); }
-.crud-dialog--lg { --crud-dialog-current-max-width: var(--crud-dialog-max-width-lg); }
-.crud-dialog--xl { --crud-dialog-current-max-width: var(--crud-dialog-max-width-xl); }
+.crud-dialog--sm {
+  --crud-dialog-current-max-width: var(--crud-dialog-max-width-sm);
+}
+.crud-dialog--md {
+  --crud-dialog-current-max-width: var(--crud-dialog-max-width-md);
+}
+.crud-dialog--lg {
+  --crud-dialog-current-max-width: var(--crud-dialog-max-width-lg);
+}
+.crud-dialog--xl {
+  --crud-dialog-current-max-width: var(--crud-dialog-max-width-xl);
+}
 
 .crud-dialog::backdrop {
   background: var(--modal-overlay);

@@ -8,7 +8,9 @@ import {
 } from '@angular/core';
 
 const DEFAULT_FOCUS_SELECTOR = [
-  'input:not([disabled])',
+  '[data-dialog-initial-focus]:not([disabled])',
+  '[data-control-focus]:not([disabled])',
+  'input:not([disabled]):not([tabindex="-1"]):not([aria-hidden="true"])',
   'select:not([disabled])',
   'textarea:not([disabled])',
   'button:not([disabled])',
@@ -35,6 +37,7 @@ export class CrudDialog {
   readonly closed = output<void>();
 
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('nativeDialog');
+  private returnFocusTarget: HTMLElement | null = null;
 
   get nativeElement(): HTMLDialogElement {
     return this.dialog().nativeElement;
@@ -47,6 +50,13 @@ export class CrudDialog {
   showModal(focusSelector = DEFAULT_FOCUS_SELECTOR): void {
     const element = this.nativeElement;
     if (!element.open) {
+      const activeElement = element.ownerDocument.activeElement;
+      this.returnFocusTarget =
+        activeElement instanceof HTMLElement &&
+        activeElement !== element.ownerDocument.body &&
+        !element.contains(activeElement)
+          ? activeElement
+          : null;
       if (typeof element.showModal === 'function') {
         element.showModal();
       } else {
@@ -65,7 +75,7 @@ export class CrudDialog {
       element.close(returnValue);
     } else {
       element.removeAttribute('open');
-      this.closed.emit();
+      this.handleClosed();
     }
   }
 
@@ -76,5 +86,14 @@ export class CrudDialog {
   protected handleCancel(event: Event): void {
     event.preventDefault();
     this.cancelled.emit(event);
+  }
+
+  protected handleClosed(): void {
+    this.closed.emit();
+    const target = this.returnFocusTarget;
+    this.returnFocusTarget = null;
+    if (target?.isConnected) {
+      queueMicrotask(() => target.focus({ preventScroll: true }));
+    }
   }
 }

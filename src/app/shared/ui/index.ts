@@ -197,7 +197,12 @@ export type { NavBarItem, NavBarBrand } from './organisms/navbar/navbar.componen
 export { MetricsGridComponent } from './organisms/metrics-grid/metrics-grid.component';
 export type { KpiMetric } from './organisms/metrics-grid/metrics-grid.component';
 
+export { ReceiptPanel } from './organisms/receipt-panel/receipt-panel';
+export type { ReceiptPanelField } from './organisms/receipt-panel/receipt-panel';
+
 export { CrudDialog } from './organisms/crud-dialog/crud-dialog';
+
+export { FormDialog, FormDialogActions } from './organisms/form-dialog/form-dialog';
 
 export { DataTable } from './organisms/data-table/data-table';
 export type {
