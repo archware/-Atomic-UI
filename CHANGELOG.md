@@ -3,6 +3,25 @@
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
+## [5.1.28] - 2026-07-28
+
+### Cambiado
+
+- `PREST-20260728-110`: `DenominationCounter` puede comunicar explícitamente
+  que el desglose es opcional y referencial para auditoría. La historia
+  principal queda plegada por defecto para mantener el monto de la operación
+  como dato primario. En ese modo opcional, sus once controles se crean al
+  expandir el acordeón, reduciendo el trabajo inicial de los diálogos sin
+  alterar los contadores obligatorios de recaudación.
+- `Card` permite que su host, contenedor y cuerpo flexible se reduzcan con
+  `min-width: 0`, evitando desbordes cuando aloja tablas responsive.
+
+### Verificación
+
+- Gobierno Atomic, build y 219/219 pruebas, incluida la carga diferida
+  accesible del modo opcional.
+- Rollback: retirar la entrada `optional`; el CVA y el cálculo no cambian.
+
 ## [5.1.27] - 2026-07-28
 
 ### Añadido

@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {
-  DenominationCounter,
-  DenominationDefinition,
-} from './denomination-counter';
+import { DenominationCounter, DenominationDefinition } from './denomination-counter';
 
 @Component({
   standalone: true,
@@ -12,6 +9,7 @@ import {
   template: `
     <prest-denomination-counter
       title="Efectivo recibido"
+      [optional]="true"
       [open]="true"
       [denominations]="denominations"
       [formControl]="control"
@@ -39,6 +37,7 @@ describe('DenominationCounter', () => {
     const host = fixture.nativeElement as HTMLElement;
 
     expect(host.querySelector('app-accordion')).not.toBeNull();
+    expect(host.textContent).toContain('Opcional para auditoría');
     expect(host.textContent).toContain('S/ 200');
     expect(host.textContent).toContain('S/ 0.50');
     expect(host.textContent).toContain('S/ 400.00');
@@ -58,6 +57,18 @@ describe('DenominationCounter', () => {
       { code: 'PEN_050_COIN', quantity: 3 },
     ]);
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('S/ 401.50');
+  });
+
+  it('defers denomination controls while the optional audit is collapsed', () => {
+    const component = fixture.debugElement.children[0].componentInstance as DenominationCounter;
+
+    component.open = false;
+    fixture.detectChanges();
+
+    expect(
+      (fixture.nativeElement as HTMLElement).querySelectorAll('input[type="number"]'),
+    ).toHaveSize(0);
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('Opcional para auditoría');
   });
 
   it('removes invalid and duplicate definitions without emitting fractional quantities', () => {

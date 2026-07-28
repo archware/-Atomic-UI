@@ -62,8 +62,11 @@ export interface DenominationCounterRow extends DenominationDefinition {
         [description]="accordionDescription()"
         [open]="open"
         [disabled]="disabled"
+        (openChange)="setExpanded($event)"
       >
-        @if (rows().length === 0) {
+        @if (optional && !expanded()) {
+          <span aria-hidden="true"></span>
+        } @else if (rows().length === 0) {
           <p class="denomination-counter__empty">{{ emptyMessage }}</p>
         } @else {
           <div class="denomination-counter__head" aria-hidden="true">
@@ -220,7 +223,14 @@ export class DenominationCounter implements ControlValueAccessor {
   @Input() description = 'Registre la cantidad por denominación.';
   @Input() totalLabel = 'Total contado';
   @Input() emptyMessage = 'No hay denominaciones disponibles.';
-  @Input() open = false;
+  @Input() optional = false;
+  @Input() set open(value: boolean) {
+    this.openState = value;
+    this.expanded.set(value);
+  }
+  get open(): boolean {
+    return this.openState;
+  }
   @Input() maxQuantity = 9999;
   @Input() locale = 'es-PE';
   @Input() currency = 'PEN';
@@ -236,6 +246,8 @@ export class DenominationCounter implements ControlValueAccessor {
 
   private readonly definitions = signal<readonly DenominationDefinition[]>([]);
   private readonly quantities = signal<ReadonlyMap<string, number>>(new Map());
+  private openState = false;
+  readonly expanded = signal(false);
 
   readonly rows = computed<readonly DenominationCounterRow[]>(() =>
     this.definitions().map((definition) => {
@@ -254,9 +266,11 @@ export class DenominationCounter implements ControlValueAccessor {
 
   readonly accordionDescription = computed(() => {
     const formattedTotal = this.formatMoney(this.total());
-    return this.description.trim().length > 0
-      ? `${this.description} Total: ${formattedTotal}.`
-      : `Total: ${formattedTotal}.`;
+    const description =
+      this.description.trim().length > 0
+        ? `${this.description} Total: ${formattedTotal}.`
+        : `Total: ${formattedTotal}.`;
+    return this.optional ? `Opcional para auditoría. ${description}` : description;
   });
 
   private onChange: (value: readonly DenominationCount[]) => void = () => {};
@@ -285,6 +299,10 @@ export class DenominationCounter implements ControlValueAccessor {
 
   setDisabledState(disabled: boolean): void {
     this.disabled = disabled;
+  }
+
+  setExpanded(open: boolean): void {
+    this.expanded.set(open);
   }
 
   setQuantity(code: string, value: number): void {
@@ -325,12 +343,7 @@ export class DenominationCounter implements ControlValueAccessor {
 
     for (const definition of definitions) {
       const code = definition.code?.trim();
-      if (
-        !code ||
-        seen.has(code) ||
-        !Number.isFinite(definition.value) ||
-        definition.value <= 0
-      ) {
+      if (!code || seen.has(code) || !Number.isFinite(definition.value) || definition.value <= 0) {
         continue;
       }
 
@@ -348,9 +361,7 @@ export class DenominationCounter implements ControlValueAccessor {
 
   private pruneUnknownCounts(): void {
     const knownCodes = new Set(this.definitions().map((definition) => definition.code));
-    const next = new Map(
-      [...this.quantities()].filter(([code]) => knownCodes.has(code)),
-    );
+    const next = new Map([...this.quantities()].filter(([code]) => knownCodes.has(code)));
     this.quantities.set(next);
   }
 

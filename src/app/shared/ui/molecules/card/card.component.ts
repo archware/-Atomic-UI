@@ -23,7 +23,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'style': 'display: block; width: 100%;'
+    'style': 'display: block; width: 100%; min-width: 0;'
   },
   template: `
     <article
@@ -74,6 +74,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
     /* === Base Structure === */
     .card {
       display: flex;
+      min-width: 0;
       flex-direction: column;
       height: 100%;
       background: var(--surface-background);
@@ -231,6 +232,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
     /* === Body === */
     .card__body {
       flex: 1;
+      min-width: 0;
       font-size: var(--text-md);
       color: var(--text-color);
       line-height: 1.6;

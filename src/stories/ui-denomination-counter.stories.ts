@@ -25,7 +25,8 @@ const meta: Meta<DenominationCounter> = {
     title: 'Efectivo recibido',
     description: 'Cuente los billetes y monedas.',
     denominations: penDenominations,
-    open: true,
+    optional: true,
+    open: false,
   },
 };
 
@@ -33,6 +34,13 @@ export default meta;
 type Story = StoryObj<DenominationCounter>;
 
 export const Default: Story = {};
+
+export const DetailedAudit: Story = {
+  args: {
+    optional: false,
+    open: true,
+  },
+};
 
 export const Empty: Story = {
   args: {
