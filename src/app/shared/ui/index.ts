@@ -170,6 +170,13 @@ export type { AvatarGroupItem } from './molecules/avatar-group/avatar-group.comp
 // ============================================
 export { AccordionComponent, AccordionItemComponent } from './organisms/accordion/accordion.component';
 
+export { DenominationCounter } from './organisms/denomination-counter/denomination-counter';
+export type {
+  DenominationCount,
+  DenominationCounterRow,
+  DenominationDefinition,
+} from './organisms/denomination-counter/denomination-counter';
+
 export { DataPagerComponent } from './organisms/data-pager/data-pager.component';
 
 export { FiltersComponent } from './organisms/filters/filters.component';

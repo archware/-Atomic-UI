@@ -45,6 +45,11 @@ describe('FormDialogActions', () => {
     const fixture = TestBed.createComponent(FormDialogActions);
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.form-dialog-actions')).not.toBeNull();
+    const actions = fixture.nativeElement.querySelector('.form-dialog-actions') as HTMLElement;
+    const host = fixture.nativeElement as HTMLElement;
+
+    expect(actions).not.toBeNull();
+    expect(getComputedStyle(host).position).toBe('sticky');
+    expect(getComputedStyle(host).bottom).toBe('0px');
   });
 });

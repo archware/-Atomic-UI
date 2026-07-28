@@ -63,6 +63,7 @@ export class CrudDialog {
         element.setAttribute('open', '');
       }
     }
+    element.scrollTop = 0;
     element.querySelector<HTMLElement>(focusSelector)?.focus({ preventScroll: true });
   }
 

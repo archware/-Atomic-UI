@@ -41,4 +41,20 @@ describe('CrudDialog', () => {
 
     launcher.remove();
   });
+
+  it('reinicia el desplazamiento al volver a abrir el diálogo', async () => {
+    await TestBed.configureTestingModule({ imports: [CrudDialog] }).compileComponents();
+    const fixture = TestBed.createComponent(CrudDialog);
+    fixture.componentRef.setInput('labelledBy', 'editor-title');
+    fixture.detectChanges();
+
+    const dialog = fixture.componentInstance.nativeElement;
+    fixture.componentInstance.showModal();
+    dialog.scrollTop = 120;
+    fixture.componentInstance.close();
+
+    fixture.componentInstance.showModal();
+    expect(dialog.scrollTop).toBe(0);
+    fixture.componentInstance.close();
+  });
 });

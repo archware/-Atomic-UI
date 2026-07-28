@@ -3,6 +3,85 @@
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
+## [5.1.27] - 2026-07-28
+
+### Añadido
+
+- `PREST-20260728-109`: nuevo organismo `DenominationCounter`, compuesto
+  dentro del `Accordion` canónico. Recibe del consumidor códigos, valores y
+  etiquetas de denominaciones; normaliza cantidades enteras y publica el
+  desglose y total sin incorporar reglas de caja ni un catálogo PEN.
+- Contrato CVA, estados vacío/deshabilitado, diseño responsive, subtotales
+  accesibles y export público para propagación controlada.
+
+### Verificación
+
+- Pruebas focalizadas para composición, cálculo y normalización; la suite
+  completa y el gobierno Atomic se ejecutan antes de propagar al consumidor.
+- Rollback: retirar el organismo y su export. No cambia contratos existentes.
+
+## [5.1.26] - 2026-07-28
+
+### Corregido
+
+- `PREST-20260728-105`: `CrudDialog` reinicia su desplazamiento vertical cada
+  vez que se abre. Un mismo `FormDialog` puede reutilizarse para varios
+  formularios sin conservar la posición del flujo anterior ni presentar el
+  encabezado recortado.
+
+### Verificación
+
+- Prueba focalizada de reapertura, gobierno Atomic, 214/214 pruebas y build.
+- Rollback: retirar la asignación de `scrollTop`; no cambia la API pública ni
+  los tokens del organismo.
+
+## [5.1.25] - 2026-07-28
+
+### Corregido
+
+- `PREST-20260728-104`: el pie de acciones de `FormDialog` permanece visible
+  dentro de formularios modales extensos, incluso al desplazarse en pantallas
+  estrechas. Conserva el orden del documento, los tokens de superficie y la
+  composición de botones existente.
+
+### Verificación
+
+- Prueba focalizada de `FormDialog`, gobierno Atomic, suite completa y build.
+- Rollback: retirar el posicionamiento adherente del host de
+  `FormDialogActions`; no cambia su API.
+
+## [5.1.24] - 2026-07-27
+
+### Cambiado
+
+- `PREST-20260727-099`: el sistema de tokens publica
+  `--action-bar-gap` con la separación canónica de 36 px para grupos de
+  acciones primarias distribuidas proporcionalmente. La composición y los
+  permisos continúan perteneciendo a cada consumidor.
+
+### Verificación
+
+- Gobierno y blueprints conformes, suite completa 213/213 y build Angular
+  correctos.
+- Rollback: retirar `--action-bar-gap`; no modifica contratos de componentes.
+
+## [5.1.23] - 2026-07-27
+
+### Cambiado
+
+- `PREST-20260727-096`: el organismo `Accordion` incorpora modo de apertura
+  única, encabezados con descripción y estado deshabilitado, relaciones ARIA
+  completas, contenido colapsado `inert`, navegación por flechas/Home/End,
+  foco visible y respeto a movimiento reducido. Conserva la API `open` y el
+  modo múltiple por defecto para consumidores existentes.
+
+### Verificación
+
+- Prueba focalizada del organismo: 3/3; gobierno y blueprints conformes,
+  suite completa 213/213 y build Angular correctos.
+- Rollback: restaurar el organismo anterior; los consumidores que no usan
+  `single`, `description` o `disabled` conservan el contrato previo.
+
 ## [5.1.22] - 2026-07-25
 
 ### Añadido
