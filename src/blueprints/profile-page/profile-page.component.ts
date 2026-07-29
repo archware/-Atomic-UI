@@ -1,4 +1,4 @@
-﻿import { Observable, of, delay, tap } from 'rxjs';
+﻿import { of, delay } from 'rxjs';
 import { Component, inject, signal, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -48,8 +48,6 @@ interface ChangePasswordResponse {
   message: string;
 }
 
-const PROFILE_ENDPOINT         = '/Users/GetProfile';
-const SAVE_PROFILE_ENDPOINT    = '/Users/UpdateProfile';
 const CHANGE_PASSWORD_ENDPOINT = '/Authentication/ChangePassword';
 
 /**

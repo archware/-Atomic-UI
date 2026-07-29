@@ -1,10 +1,9 @@
-import { Component, inject, signal, computed, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   LayoutShellComponent,
   TopbarComponent,
   SidebarComponent,
-  SidebarUser,
   PanelComponent,
   RowComponent,
   AvatarComponent,

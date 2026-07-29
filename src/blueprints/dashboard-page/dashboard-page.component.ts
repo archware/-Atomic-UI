@@ -1,5 +1,4 @@
 import { Component, inject, signal, computed, OnInit, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import {
   LayoutShellComponent, TopbarComponent, SidebarComponent, SidebarUser,
@@ -125,7 +124,7 @@ export class DashboardPageComponent implements OnInit {
   closeSidebar() { this.sidebarVisible.set(false); }
   toggleSidebar() { this.sidebarVisible.update(v => !v); }
   onMenuItemClick(item: any) { if (item.route) this.router.navigate([item.route]); }
-  onUserAction(action: any) {}
+  onUserAction(_action: any) {}
   onLogout() {}
   loadDashboardStats() {}
 

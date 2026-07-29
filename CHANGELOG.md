@@ -3,6 +3,23 @@
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
+## [5.1.34] - 2026-07-28
+
+### Corregido
+
+- `PREST-20260728-123`: se recuperan las puertas CI de Atomic. ESLint reconoce
+  los selectores canónicos `app-*` y `prest-*`, se eliminan imports y variables
+  obsoletos, y Storybook usa la versión Node declarada por el repositorio.
+- La publicación de Storybook carga el directorio real generado por el builder
+  Angular en lugar de buscar `storybook-static`.
+
+### Verificación
+
+- Lint sin errores, gobierno Atomic, pruebas, build de aplicación y build de
+  Storybook antes de publicar el checkpoint.
+- Rollback: revertir este incremento restaura la configuración anterior; no
+  modifica contratos ni componentes consumidos por las aplicaciones.
+
 ## [5.1.33] - 2026-07-28
 
 ### Corregido
