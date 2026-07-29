@@ -235,6 +235,9 @@ export class DenominationCounter implements ControlValueAccessor {
   @Input() locale = 'es-PE';
   @Input() currency = 'PEN';
   @Input() disabled = false;
+  @Input() set value(value: readonly DenominationCount[] | null | undefined) {
+    this.writeValue(value);
+  }
 
   @Input() set denominations(value: readonly DenominationDefinition[] | null | undefined) {
     this.definitions.set(this.normalizeDefinitions(value ?? []));

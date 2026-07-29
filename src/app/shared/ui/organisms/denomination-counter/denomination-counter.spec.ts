@@ -59,6 +59,15 @@ describe('DenominationCounter', () => {
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('S/ 401.50');
   });
 
+  it('refreshes the total when a controlled value is supplied programmatically', () => {
+    const component = fixture.debugElement.children[0].componentInstance as DenominationCounter;
+
+    component.value = [{ code: 'PEN_050_COIN', quantity: 3 }];
+    fixture.detectChanges();
+
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('S/ 1.50');
+  });
+
   it('defers denomination controls while the optional audit is collapsed', () => {
     const component = fixture.debugElement.children[0].componentInstance as DenominationCounter;
 

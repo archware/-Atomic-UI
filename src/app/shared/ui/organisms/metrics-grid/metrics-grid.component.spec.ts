@@ -32,7 +32,28 @@ describe('MetricsGridComponent', () => {
     expect(grid.getAttribute('aria-label')).toBe('Indicadores financieros');
     expect(cards.length).toBe(2);
     expect(grid.style.getPropertyValue('--min-col-width')).toBe('13.75rem');
-    expect(getComputedStyle(grid).gridTemplateColumns.split(' ')).toHaveSize(4);
+    const visibleColumns = getComputedStyle(grid).gridTemplateColumns
+      .split(' ')
+      .filter((column) => Number.parseFloat(column) > 0);
+    expect(visibleColumns).toHaveSize(2);
+    expect(Number.parseFloat(visibleColumns[0])).toBeCloseTo(
+      Number.parseFloat(visibleColumns[1]),
+      0,
+    );
+  });
+
+  it('uses the supplied minimum width without reserving empty metric columns', () => {
+    component.metrics = [...metrics, { id: 'balance', title: 'Saldo', value: 80 }];
+    component.minCardWidth = '11rem';
+    fixture.detectChanges();
+
+    const grid = fixture.nativeElement.querySelector('.metrics-grid') as HTMLElement;
+    expect(grid.style.getPropertyValue('--min-col-width')).toBe('11rem');
+    const visibleColumns = getComputedStyle(grid).gridTemplateColumns
+      .split(' ')
+      .filter((column) => Number.parseFloat(column) > 0);
+    expect(visibleColumns).toHaveSize(3);
+    expect(fixture.nativeElement.querySelectorAll('app-kpi-card')).toHaveSize(3);
   });
 
   it('tracks cards by stable id when their order changes', () => {

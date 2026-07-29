@@ -63,18 +63,13 @@ export interface KpiMetric {
         min-width: 0;
         max-width: 100%;
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns:
+          repeat(auto-fit, minmax(min(100%, var(--min-col-width)), 1fr));
         gap: var(--space-3);
       }
 
       .metrics-grid > * {
         min-width: 0;
-      }
-
-      @media (max-width: 72rem) {
-        .metrics-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
       }
 
       @media (max-width: 36rem) {

@@ -3,6 +3,62 @@
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
+## [5.1.32] - 2026-07-28
+
+### Corregido
+
+- `PREST-20260728-117`: `TableAction` incorpora el tono semántico `info` y lo
+  asigna a `view`. El ojo habilitado conserva una señal cromática clara en azul
+  informativo sin competir con el morado primario reservado para acciones
+  principales. El estado deshabilitado mantiene su semántica y opacidad.
+
+### Verificación
+
+- Contrato de tono informativo, gobierno Atomic, 222/222 pruebas y build antes
+  de propagar al consumidor.
+
+## [5.1.31] - 2026-07-28
+
+### Corregido
+
+- `PREST-20260728-116`: `TableAction` presenta la acción semántica `view`
+  con el color primario cuando está habilitada. El estado deshabilitado
+  conserva su atributo nativo, cursor y opacidad diferenciada, por lo que un
+  icono de consulta disponible ya no parece inactivo.
+
+### Verificación
+
+- Prueba de contrato para el tono activo, gobierno Atomic, suite completa y
+  build antes de propagar al consumidor.
+
+## [5.1.30] - 2026-07-28
+
+### Corregido
+
+- `PREST-20260728-114`: `MetricsGrid` distribuye únicamente las métricas
+  presentes en columnas fluidas del mismo ancho. Un resumen de tres tarjetas
+  deja de reservar una cuarta columna vacía y continúa apilándose en móvil.
+
+### Verificación
+
+- Gobierno Atomic, 221/221 pruebas y build.
+
+## [5.1.29] - 2026-07-28
+
+### Corregido
+
+- `PREST-20260728-113`: `DenominationCounter` incorpora el valor controlado
+  `value` además de su contrato CVA. Los consumidores pueden actualizar
+  sugerencias programáticas de denominaciones y el resumen plegado recalcula
+  el total sin simular una edición del operador.
+
+### Verificación
+
+- Prueba focalizada de actualización programática, gobierno Atomic, suite
+  completa y build antes de propagar al consumidor.
+- Rollback: retirar el `@Input() value`; el contrato CVA anterior permanece
+  intacto.
+
 ## [5.1.28] - 2026-07-28
 
 ### Cambiado
