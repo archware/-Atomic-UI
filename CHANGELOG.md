@@ -12,6 +12,8 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
   obsoletos, y Storybook usa la versión Node declarada por el repositorio.
 - La publicación de Storybook carga el directorio real generado por el builder
   Angular en lugar de buscar `storybook-static`.
+- Karma usa en CI el lanzador `ChromeHeadlessNoSandbox` provisto por Angular 22
+  para ejecutar Chrome de forma estable en Linux.
 
 ### Verificación
 

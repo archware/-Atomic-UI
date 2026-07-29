@@ -40,7 +40,7 @@ jobs:
       - name: Unit tests (headless)
         env:
           CHROME_BIN: ${{ steps.setup-chrome.outputs.chrome-path }}
-        run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
+        run: npm run test -- --watch=false --browsers=ChromeHeadlessNoSandbox --code-coverage
 
       - name: Build Storybook
         run: npm run build-storybook
