@@ -1,4 +1,10 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import {
+  afterRenderEffect,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+} from '@angular/core';
 import { ToastService } from '../../services/toast.service';
 
 export type ToastType = 'info' | 'success' | 'warning' | 'error';
@@ -32,6 +38,10 @@ export interface ToastConfig {
   selector: 'app-toast',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    popover: 'manual',
+    'aria-label': 'Notificaciones',
+  },
   template: `
     @for (toast of toastService.toasts(); track toast.id) {
       <div 
@@ -66,6 +76,11 @@ export interface ToastConfig {
       flex-direction: column;
       gap: var(--space-2);
       max-width: 360px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      overflow: visible;
+      background: transparent;
       pointer-events: none;
     }
 
@@ -149,4 +164,38 @@ export interface ToastConfig {
 })
 export class ToastComponent {
   protected readonly toastService = inject(ToastService);
+  private readonly host = inject(ElementRef<HTMLElement>);
+  private latestToastId = 0;
+
+  private readonly topLayerSync = afterRenderEffect(() => {
+    const toasts = this.toastService.toasts();
+    const latestToastId = toasts[toasts.length - 1]?.id ?? 0;
+    const host = this.host.nativeElement;
+
+    if (
+      !host.isConnected ||
+      typeof host.showPopover !== 'function' ||
+      typeof host.hidePopover !== 'function'
+    ) {
+      return;
+    }
+
+    const isOpen = host.matches(':popover-open');
+    if (latestToastId === 0) {
+      if (isOpen) {
+        host.hidePopover();
+      }
+      this.latestToastId = 0;
+      return;
+    }
+
+    if (isOpen && latestToastId === this.latestToastId) {
+      return;
+    }
+    if (isOpen) {
+      host.hidePopover();
+    }
+    host.showPopover();
+    this.latestToastId = latestToastId;
+  });
 }

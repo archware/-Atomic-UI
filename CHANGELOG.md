@@ -3,6 +3,22 @@
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
+## [5.1.33] - 2026-07-28
+
+### Corregido
+
+- `PREST-20260728-122`: `Toast` usa un popover manual para compartir la capa
+  superior del navegador con los diálogos nativos. Cada notificación nueva se
+  eleva sobre el popup activo y la región se retira cuando ya no quedan
+  mensajes.
+
+### Verificación
+
+- Contrato de visibilidad sobre `<dialog>`, gobierno Atomic, pruebas y build
+  antes de propagar al consumidor.
+- Rollback: retirar el host `popover` y la sincronización de capa superior; el
+  servicio y su API pública permanecen compatibles.
+
 ## [5.1.32] - 2026-07-28
 
 ### Corregido
