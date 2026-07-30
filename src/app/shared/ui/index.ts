@@ -206,6 +206,14 @@ export type { KpiMetric } from './organisms/metrics-grid/metrics-grid.component'
 
 export { ReceiptPanel } from './organisms/receipt-panel/receipt-panel';
 export type { ReceiptPanelField } from './organisms/receipt-panel/receipt-panel';
+export { PrintDocumentPanel } from './organisms/print-document-panel/print-document-panel';
+export type {
+  PrintDocumentField,
+  PrintDocumentPage,
+  PrintDocumentSection,
+  PrintDocumentTable,
+  PrintDocumentTableColumn,
+} from './organisms/print-document-panel/print-document-panel';
 
 export { CrudDialog } from './organisms/crud-dialog/crud-dialog';
 

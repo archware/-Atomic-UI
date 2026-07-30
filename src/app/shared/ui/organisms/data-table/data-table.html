@@ -1,4 +1,7 @@
-<div class="data-table__region">
+<div
+  class="data-table__region"
+  [class.data-table__region--compact]="density() === 'compact'"
+>
   <header class="data-table__toolbar">
     <div class="data-table__summary">
       <span

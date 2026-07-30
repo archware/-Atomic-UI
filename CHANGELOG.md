@@ -1,7 +1,53 @@
 # Changelog
 
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
+
+- `PREST-20260729-133`: incorpora `PrintDocumentPanel`, organismo tipado para
+  previsualizar y enviar paquetes A4 a un documento aislado. Admite páginas,
+  campos, secciones, tablas y firmas sin conocer contratos financieros; todos
+  los valores se insertan con `textContent`, y el consumidor decide contenido
+  y permisos. Validación: gobierno Atomic, 227/227 pruebas y build.
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
+
+## [5.1.36] - 2026-07-29
+
+### Corregido
+
+- `PREST-20260729-136`: `ScrollOverlay` agrupa señales consecutivas de
+  `ResizeObserver` y `MutationObserver` en una sola sincronización de geometría
+  por frame. El render progresivo de filas deja de provocar una lectura de
+  layout por cada mutación del DOM.
+
+### Verificación
+
+- La regresión combina eventos de tamaño y mutación y exige una única
+  sincronización programada; gobierno Atomic, lint sin errores, 229/229 pruebas
+  y build correctos antes de propagar la adaptación al consumidor.
+- Rollback: restaurar las llamadas inmediatas de los observadores. No cambia
+  HTML, CSS, accesibilidad, API pública ni reglas de negocio.
+
+## [5.1.35] - 2026-07-29
+
+### Corregido
+
+- `PREST-20260729-135`: `DataTable` deja el desplazamiento horizontal
+  exclusivamente en el viewport interno de `ScrollOverlay`. El host recorta el
+  contenido y ya no dibuja una segunda barra nativa.
+
+### Añadido
+
+- `DataTable` publica la densidad tipada `compact` para grillas operativas con
+  muchas columnas. La variante reduce el espaciado de celdas con tokens sin
+  alterar la densidad cómoda predeterminada ni la presentación móvil en
+  tarjetas.
+
+### Verificación
+
+- Prueba de regresión que exige un único propietario del scroll y contrato de
+  densidad compacta; gobierno Atomic, 228/228 pruebas y build correctos antes
+  de propagar al consumidor.
+- Rollback: retirar `density` y restaurar el overflow del host. No modifica
+  datos, contratos HTTP ni reglas de negocio.
 
 ## [5.1.34] - 2026-07-28
 

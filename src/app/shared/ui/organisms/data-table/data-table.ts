@@ -17,6 +17,7 @@ import {
 import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
 
 export type DataTableAlignment = 'start' | 'center' | 'end';
+export type DataTableDensity = 'comfortable' | 'compact';
 export type DataTableStatus = 'idle' | 'loading' | 'success' | 'empty' | 'error';
 export type DataTableSortDirection = 'asc' | 'desc' | null;
 
@@ -76,6 +77,7 @@ export class DataTable<T extends object = Record<string, unknown>> {
   readonly rows = input.required<readonly T[]>();
   readonly caption = input.required<string>();
   readonly captionVisible = input(false);
+  readonly density = input<DataTableDensity>('comfortable');
   readonly status = input<DataTableStatus>('success');
   readonly loadingMessage = input('Cargando información…');
   readonly idleMessage = input('Aún no se ha cargado información.');

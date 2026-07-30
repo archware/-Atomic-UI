@@ -100,15 +100,30 @@ describe('DataTable', () => {
     expect(firstRowCells[3]?.textContent?.trim()).toBe('—');
   });
 
-  it('delegates vertical scrolling to the page and keeps only horizontal overflow', async () => {
+  it('keeps a single horizontal scroll owner inside ScrollOverlay', async () => {
     const fixture = await createTable();
-    const viewport = fixture.nativeElement.querySelector(
+    const overlay = fixture.nativeElement.querySelector(
       '.data-table__viewport',
     ) as HTMLElement;
-    const style = getComputedStyle(viewport);
+    const viewport = overlay.querySelector('.so-scroll-area') as HTMLElement;
+    const overlayStyle = getComputedStyle(overlay);
+    const viewportStyle = getComputedStyle(viewport);
 
-    expect(style.maxHeight).toBe('none');
-    expect(style.overflowX).toBe('auto');
+    expect(overlayStyle.maxHeight).toBe('none');
+    expect(overlayStyle.overflowX).toBe('hidden');
+    expect(viewportStyle.overflowX).toBe('auto');
+  });
+
+  it('exposes an explicit compact density for wide operational grids', async () => {
+    const fixture = await createTable();
+    fixture.componentRef.setInput('density', 'compact');
+    await fixture.whenStable();
+
+    expect(
+      fixture.nativeElement
+        .querySelector('.data-table__region')
+        ?.classList.contains('data-table__region--compact'),
+    ).toBe(true);
   });
 
   it('keeps configured column widths in a CSS variable instead of inline width', async () => {

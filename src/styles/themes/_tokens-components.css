@@ -230,6 +230,17 @@
    --receipt-panel-detail-background: var(--surface-section);
    --receipt-panel-emphasis: var(--primary-color);
    --receipt-panel-shadow: var(--shadow-sm);
+   --print-document-background: var(--surface-background);
+   --print-document-border: var(--border-color);
+   --print-document-detail-background: var(--surface-section);
+   --print-document-accent: var(--primary-color);
+   --print-document-shadow: var(--shadow-sm);
+   --print-document-paper-background: var(--gray-0);
+   --print-document-paper-color: var(--gray-950);
+   --print-document-muted-color: var(--gray-700);
+   --print-document-border-color: var(--gray-300);
+   --print-document-accent-color: var(--brand-primary-700);
+   --print-document-font-family: Arial, sans-serif;
    --receipt-paper-width: 58mm;
    --receipt-printable-width: 48mm;
    --receipt-print-padding: 1mm;
