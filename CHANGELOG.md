@@ -1,13 +1,32 @@
 # Changelog
 
-Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
+Todas las modificaciones importantes de este proyecto se documentan en este archivo.
+
+- `PREST-20260729-137`: fortalece el átomo `FileInput` como fuente canónica
+  para carga documental: identificador estable, validación visible de
+  extensiones/MIME y tamaño, estado touched, ARIA y estilos basados únicamente
+  en tokens semánticos. El componente permanece agnóstico a créditos, contratos
+  y almacenamiento.
 
 - `PREST-20260729-133`: incorpora `PrintDocumentPanel`, organismo tipado para
   previsualizar y enviar paquetes A4 a un documento aislado. Admite páginas,
   campos, secciones, tablas y firmas sin conocer contratos financieros; todos
   los valores se insertan con `textContent`, y el consumidor decide contenido
   y permisos. Validación: gobierno Atomic, 227/227 pruebas y build.
-Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
+  Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
+
+## [5.1.37] - 2026-07-29
+
+### Mejorado
+
+- `FileInput` informa por qué rechaza un archivo y conserva el mismo contrato
+  para selección, teclado y arrastre. Se elimina el ID aleatorio y cualquier
+  color o radio de respaldo ajeno al sistema de tokens.
+
+### Verificación
+
+- Pruebas del átomo, gobierno Atomic, lint y build antes de propagar la
+  adaptación al frontend.
 
 ## [5.1.36] - 2026-07-29
 
