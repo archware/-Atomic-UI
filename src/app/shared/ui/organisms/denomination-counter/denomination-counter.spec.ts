@@ -11,12 +11,14 @@ import { DenominationCounter, DenominationDefinition } from './denomination-coun
       title="Efectivo recibido"
       [optional]="true"
       [open]="true"
+      [state]="state"
       [denominations]="denominations"
       [formControl]="control"
     />
   `,
 })
 class TestHost {
+  state: 'empty' | 'suggested' | 'confirmed' = 'confirmed';
   readonly denominations: readonly DenominationDefinition[] = [
     { code: 'PEN_200', value: 200, label: 'S/ 200', description: 'Billete' },
     { code: 'PEN_050_COIN', value: 0.5, label: 'S/ 0.50', description: 'Moneda' },
@@ -66,6 +68,35 @@ describe('DenominationCounter', () => {
     fixture.detectChanges();
 
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('S/ 1.50');
+  });
+
+  it('emits the controlled suggestion only after the operator confirms it', () => {
+    const host = fixture.componentInstance;
+    const component = fixture.debugElement.children[0].componentInstance as DenominationCounter;
+    const emitted: unknown[] = [];
+    component.valueChange.subscribe((value) => emitted.push(value));
+    host.state = 'suggested';
+    fixture.detectChanges();
+
+    const button = (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>(
+      '.denomination-counter__status button',
+    );
+    expect(button).not.toBeNull();
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain(
+      'Sugerido, pendiente de confirmar',
+    );
+
+    button?.click();
+    fixture.detectChanges();
+
+    expect(emitted.at(-1)).toEqual([{ code: 'PEN_200', quantity: 2 }]);
+  });
+
+  it('does not render a confirmation action for an already confirmed count', () => {
+    expect(
+      (fixture.nativeElement as HTMLElement).querySelector('.denomination-counter__status button'),
+    ).toBeNull();
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('Desglose confirmado');
   });
 
   it('defers denomination controls while the optional audit is collapsed', () => {

@@ -14,7 +14,7 @@ describe('ButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ButtonComponent],
-      providers: [provideZonelessChangeDetection()]
+      providers: [provideZonelessChangeDetection()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ButtonComponent);
@@ -27,9 +27,17 @@ describe('ButtonComponent', () => {
   });
 
   describe('variant classes', () => {
-    const variants: ButtonVariant[] = ['primary', 'secondary', 'success', 'warning', 'danger', 'outline', 'ghost'];
+    const variants: ButtonVariant[] = [
+      'primary',
+      'secondary',
+      'success',
+      'warning',
+      'danger',
+      'outline',
+      'ghost',
+    ];
 
-    variants.forEach(variant => {
+    variants.forEach((variant) => {
       it(`should apply btn-${variant} class when variant is ${variant}`, () => {
         setInput('variant', variant);
 
@@ -98,6 +106,24 @@ describe('ButtonComponent', () => {
 
       const button = fixture.nativeElement.querySelector('button');
       expect(button.type).toBe('submit');
+    });
+  });
+
+  describe('font icon class', () => {
+    [
+      ['save', 'fa-solid fa-save'],
+      ['fa-save', 'fa-solid fa-save'],
+      ['fa-solid fa-save', 'fa-solid fa-save'],
+    ].forEach(([iconClass, expected]) => {
+      it(`normalizes the Font Awesome contract for ${iconClass}`, () => {
+        setInput('iconClass', iconClass);
+
+        const icon = fixture.nativeElement.querySelector('i');
+        expect(icon?.classList.contains('fa-solid')).toBeTrue();
+        expect(icon?.classList.contains('fa-save')).toBeTrue();
+        expect(new Set(icon?.className.split(/\s+/))).toEqual(new Set(expected.split(/\s+/)));
+        expect(icon?.className).not.toContain('fa-fa-');
+      });
     });
   });
 

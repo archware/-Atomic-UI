@@ -14,7 +14,7 @@
 export { AvatarComponent } from './atoms/avatar/avatar.component';
 export type { AvatarSize, AvatarStatus } from './atoms/avatar/avatar.component';
 
-export { ButtonComponent } from './atoms/button/button.component';
+export { ButtonComponent, normalizeFontAwesomeIconClass } from './atoms/button/button.component';
 
 export { CheckboxComponent } from './atoms/checkbox/checkbox.component';
 
@@ -37,7 +37,10 @@ export type { BreadcrumbItem } from './atoms/breadcrumb/breadcrumb.component';
 export { DividerComponent } from './atoms/divider/divider.component';
 
 export { FloatingInputComponent } from './atoms/floating-input/floating-input.component';
-export type { FloatingInputType, FloatingInputVariant } from './atoms/floating-input/floating-input.component';
+export type {
+  FloatingInputType,
+  FloatingInputVariant,
+} from './atoms/floating-input/floating-input.component';
 
 export { FormErrorComponent } from './atoms/form-error/form-error.component';
 export { FormRowComponent } from './atoms/form-row/form-row.component';
@@ -142,7 +145,13 @@ export type { KpiTrend, KpiFormat } from './molecules/kpi-card/kpi-card.componen
 
 export { PopupContainerComponent } from './molecules/popup/popup-container.component';
 export { PopupService } from './services/popup.service';
-export type { PopupConfig, PopupItem, PopupButton, PopupSize, PopupType } from './services/popup.service';
+export type {
+  PopupConfig,
+  PopupItem,
+  PopupButton,
+  PopupSize,
+  PopupType,
+} from './services/popup.service';
 
 export { ModalContainerComponent } from './molecules/modal/modal-container.component';
 export { ModalService } from './services/modal.service';
@@ -168,12 +177,16 @@ export type { AvatarGroupItem } from './molecules/avatar-group/avatar-group.comp
 // ============================================
 // ORGANISMS - Estructuras complejas
 // ============================================
-export { AccordionComponent, AccordionItemComponent } from './organisms/accordion/accordion.component';
+export {
+  AccordionComponent,
+  AccordionItemComponent,
+} from './organisms/accordion/accordion.component';
 
 export { DenominationCounter } from './organisms/denomination-counter/denomination-counter';
 export type {
   DenominationCount,
   DenominationCounterRow,
+  DenominationCounterState,
   DenominationDefinition,
 } from './organisms/denomination-counter/denomination-counter';
 
@@ -277,10 +290,10 @@ export type { TokenConfig, JwtPayload } from './services/token.service';
 
 export { AuthService } from './services/auth.service';
 export type {
-    UserProfile,
-    LoginRequest,
-    LoginResponse,
-    RefreshTokenRequest
+  UserProfile,
+  LoginRequest,
+  LoginResponse,
+  RefreshTokenRequest,
 } from './services/auth.service';
 
 export { authGuard, guestGuard, passwordChangeGuard } from './guards/auth.guard';

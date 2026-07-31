@@ -10,6 +10,7 @@ import {
   signal,
 } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ButtonComponent } from '../../atoms/button/button.component';
 import { NumberInputComponent } from '../../atoms/number-input/number-input.component';
 import { AccordionComponent, AccordionItemComponent } from '../accordion/accordion.component';
 
@@ -24,6 +25,8 @@ export interface DenominationCount {
   readonly code: string;
   readonly quantity: number;
 }
+
+export type DenominationCounterState = 'empty' | 'suggested' | 'confirmed';
 
 export interface DenominationCounterRow extends DenominationDefinition {
   readonly quantity: number;
@@ -43,6 +46,7 @@ export interface DenominationCounterRow extends DenominationDefinition {
   imports: [
     AccordionComponent,
     AccordionItemComponent,
+    ButtonComponent,
     CommonModule,
     FormsModule,
     NumberInputComponent,
@@ -69,6 +73,20 @@ export interface DenominationCounterRow extends DenominationDefinition {
         } @else if (rows().length === 0) {
           <p class="denomination-counter__empty">{{ emptyMessage }}</p>
         } @else {
+          <div class="denomination-counter__status" [attr.data-state]="state" aria-live="polite">
+            <span>{{ stateLabel() }}</span>
+            @if (state === 'suggested' && total() > 0 && !disabled) {
+              <app-button
+                type="button"
+                variant="outline"
+                size="sm"
+                iconClass="check"
+                (buttonClick)="confirmCurrentValue()"
+              >
+                {{ suggestionActionLabel }}
+              </app-button>
+            }
+          </div>
           <div class="denomination-counter__head" aria-hidden="true">
             <span>Denominación</span>
             <span>Cantidad</span>
@@ -116,6 +134,24 @@ export interface DenominationCounterRow extends DenominationDefinition {
       :host {
         display: block;
         min-width: 0;
+      }
+
+      .denomination-counter__status {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        padding-block-end: var(--space-3);
+        color: var(--text-color-muted);
+        font-size: var(--text-sm);
+      }
+
+      .denomination-counter__status[data-state='suggested'] {
+        color: var(--warning-color);
+      }
+
+      .denomination-counter__status[data-state='confirmed'] {
+        color: var(--success-color);
       }
 
       .denomination-counter__head,
@@ -224,6 +260,8 @@ export class DenominationCounter implements ControlValueAccessor {
   @Input() totalLabel = 'Total contado';
   @Input() emptyMessage = 'No hay denominaciones disponibles.';
   @Input() optional = false;
+  @Input() state: DenominationCounterState = 'empty';
+  @Input() suggestionActionLabel = 'Confirmar desglose sugerido';
   @Input() set open(value: boolean) {
     this.openState = value;
     this.expanded.set(value);
@@ -267,14 +305,28 @@ export class DenominationCounter implements ControlValueAccessor {
     this.roundMoney(this.rows().reduce((sum, row) => sum + row.subtotal, 0)),
   );
 
-  readonly accordionDescription = computed(() => {
+  accordionDescription(): string {
     const formattedTotal = this.formatMoney(this.total());
     const description =
       this.description.trim().length > 0
         ? `${this.description} Total: ${formattedTotal}.`
         : `Total: ${formattedTotal}.`;
-    return this.optional ? `Opcional para auditoría. ${description}` : description;
-  });
+    const state = this.stateLabel();
+    return this.optional
+      ? `Opcional para auditoría. ${state}. ${description}`
+      : `${state}. ${description}`;
+  }
+
+  stateLabel(): string {
+    switch (this.state) {
+      case 'suggested':
+        return 'Sugerido, pendiente de confirmar';
+      case 'confirmed':
+        return 'Desglose confirmado';
+      default:
+        return 'Sin desglose';
+    }
+  }
 
   private onChange: (value: readonly DenominationCount[]) => void = () => {};
   private onTouched: () => void = () => {};
@@ -316,6 +368,15 @@ export class DenominationCounter implements ControlValueAccessor {
     const next = new Map(this.quantities());
     next.set(code, this.normalizeQuantity(value));
     this.quantities.set(next);
+    this.onTouched();
+    this.emitValue();
+  }
+
+  confirmCurrentValue(): void {
+    if (this.disabled || this.state !== 'suggested' || this.total() <= 0) {
+      return;
+    }
+
     this.onTouched();
     this.emitValue();
   }

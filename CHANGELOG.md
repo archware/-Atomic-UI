@@ -2,6 +2,12 @@
 
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.
 
+- `PREST-20260731-155`: `DenominationCounter` distingue los estados vacío,
+  sugerido y confirmado, y permite confirmar en un clic una sugerencia
+  controlada sin convertirla automáticamente en evidencia física. `Button`
+  normaliza tokens y clases Font Awesome (`save`, `fa-save` o
+  `fa-solid fa-save`) para impedir prefijos duplicados.
+
 - `PREST-20260729-137`: fortalece el átomo `FileInput` como fuente canónica
   para carga documental: identificador estable, validación visible de
   extensiones/MIME y tamaño, estado touched, ARIA y estilos basados únicamente
@@ -14,6 +20,20 @@ Todas las modificaciones importantes de este proyecto se documentan en este arch
   los valores se insertan con `textContent`, y el consumidor decide contenido
   y permisos. Validación: gobierno Atomic, 227/227 pruebas y build.
   Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
+
+## [5.1.38] - 2026-07-31
+
+### Mejorado
+
+- El contador de denominaciones expone el estado de la información y una
+  acción explícita para aceptar sugerencias proporcionadas por el consumidor.
+- Los botones aceptan formas abreviadas o completas de Font Awesome mediante
+  un único normalizador compatible.
+
+### Verificación
+
+- Pruebas unitarias de los tres estados del contador, confirmación de una
+  sugerencia y normalización de iconos antes de propagar al consumidor.
 
 ## [5.1.37] - 2026-07-29
 
