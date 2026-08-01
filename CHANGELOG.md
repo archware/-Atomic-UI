@@ -2,6 +2,11 @@
 
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.
 
+- `PREST-20260731-162`: `FileInput` incorpora la densidad `compact` para
+  formularios modales. Mantiene selección, arrastre, validación y accesibilidad,
+  pero organiza el icono y la ayuda en una fila tokenizada que evita comprimir
+  los demás campos del flujo de carga.
+
 - `PREST-20260731-155`: `DenominationCounter` distingue los estados vacío,
   sugerido y confirmado, y permite confirmar en un clic una sugerencia
   controlada sin convertirla automáticamente en evidencia física. `Button`

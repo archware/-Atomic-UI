@@ -24,6 +24,8 @@ export interface FileInputFile {
   preview?: string;
 }
 
+export type FileInputDensity = 'comfortable' | 'compact';
+
 /**
  * FileInputComponent — Campo de carga de archivos con drag & drop.
  *
@@ -50,6 +52,7 @@ export interface FileInputFile {
       [class.disabled]="disabled"
       [class.drag-over]="isDragging()"
       [class.invalid]="visibleError"
+      [class.compact]="density === 'compact'"
     >
       @if (label) {
         <label class="file-label" [for]="inputId">{{ label }}</label>
@@ -74,13 +77,15 @@ export interface FileInputFile {
         aria-label="Seleccionar archivo"
       >
         <i class="fa-solid fa-cloud-arrow-up drop-icon" aria-hidden="true"></i>
-        <p class="drop-text"><strong>Haz clic</strong> o arrastra archivos aquí</p>
-        @if (accept) {
-          <p class="drop-hint">Formatos: {{ accept }}</p>
-        }
-        @if (maxSizeMB) {
-          <p class="drop-hint">Máximo {{ maxSizeMB }} MB por archivo</p>
-        }
+        <div class="drop-copy">
+          <p class="drop-text"><strong>Haz clic</strong> o arrastra archivos aquí</p>
+          @if (accept) {
+            <p class="drop-hint">Formatos: {{ accept }}</p>
+          }
+          @if (maxSizeMB) {
+            <p class="drop-hint">Máximo {{ maxSizeMB }} MB por archivo</p>
+          }
+        </div>
       </div>
 
       <input
@@ -177,11 +182,40 @@ export interface FileInputFile {
         cursor: not-allowed;
       }
 
+      .compact .drop-zone {
+        display: flex;
+        min-height: var(--control-height);
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-3) var(--space-4);
+        text-align: left;
+      }
+
+      .compact .drop-icon {
+        display: grid;
+        flex: 0 0 auto;
+        width: var(--space-10);
+        height: var(--space-10);
+        margin: 0;
+        place-items: center;
+        border-radius: var(--radius-md);
+        background: var(--surface-section);
+        font-size: var(--text-lg);
+      }
+
+      .compact .drop-text,
+      .compact .drop-hint {
+        margin: 0;
+      }
+
       .drop-icon {
         font-size: var(--space-6);
         color: var(--text-color-muted);
         display: block;
         margin-bottom: var(--space-2);
+      }
+      .drop-copy {
+        min-width: 0;
       }
       .drop-text {
         margin: var(--space-1) 0;
@@ -291,6 +325,9 @@ export class FileInputComponent implements ControlValueAccessor {
   @Input() error = '';
 
   @Output() filesChange = new EventEmitter<FileInputFile[]>();
+
+  /** Densidad visual. `compact` conserva el mismo contrato dentro de formularios modales. */
+  @Input() density: FileInputDensity = 'comfortable';
 
   readonly files = signal<FileInputFile[]>([]);
   readonly isDragging = signal(false);

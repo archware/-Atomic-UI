@@ -93,7 +93,7 @@ export { TableHeaderCellComponent } from './atoms/table/table-header-cell.compon
 export type { SortDirection } from './atoms/table/table-header-cell.component';
 
 export { FileInputComponent } from './atoms/file-input/file-input.component';
-export type { FileInputFile } from './atoms/file-input/file-input.component';
+export type { FileInputDensity, FileInputFile } from './atoms/file-input/file-input.component';
 
 export { NumberInputComponent } from './atoms/number-input/number-input.component';
 

@@ -76,4 +76,13 @@ describe('FileInputComponent', () => {
     expect(component.files()).toEqual([]);
     expect(fixture.nativeElement.querySelector('.drop-zone').getAttribute('tabindex')).toBe('-1');
   });
+
+  it('expone la densidad compacta para formularios modales', () => {
+    fixture.componentRef.setInput('density', 'compact');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.file-input-wrapper')?.classList).toContain(
+      'compact',
+    );
+  });
 });
