@@ -11,6 +11,6 @@
   @if (loading()) {
     <span class="table-action__spinner" aria-hidden="true"></span>
   } @else {
-    <i class="fa-solid {{ iconClass() }}" aria-hidden="true"></i>
+    <i [class]="renderedIconClasses()" aria-hidden="true"></i>
   }
 </button>

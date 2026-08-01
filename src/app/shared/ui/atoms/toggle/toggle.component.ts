@@ -1,9 +1,15 @@
-import { Component, Input, forwardRef, ChangeDetectionStrategy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  forwardRef
+} from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'app-toggle',
+  selector: 'app-toggle, prest-toggle',
   standalone: true,
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,9 +24,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     <label class="toggle-wrapper" [class.disabled]="disabled">
       <input
         type="checkbox"
+        role="switch"
         class="toggle-input"
         [checked]="checked"
         [disabled]="disabled"
+        [attr.aria-checked]="checked"
+        [attr.aria-label]="label ? null : ariaLabel"
         (change)="onToggleChange($event)"
       />
       <span class="toggle-track">
@@ -110,11 +119,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class ToggleComponent implements ControlValueAccessor {
   @Input() label = '';
+  @Input() ariaLabel = 'Alternar opción';
   @Input() disabled = false;
 
   checked = false;
   onChange: (value: boolean) => void = () => { /* noop */ };
   onTouched: () => void = () => { /* noop */ };
+
+  constructor(private readonly changeDetector: ChangeDetectorRef) {}
 
   onToggleChange(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -124,7 +136,8 @@ export class ToggleComponent implements ControlValueAccessor {
   }
 
   writeValue(value: boolean): void {
-    this.checked = value || false;
+    this.checked = value === true;
+    this.changeDetector.markForCheck();
   }
 
   registerOnChange(fn: (value: boolean) => void): void {
@@ -137,5 +150,6 @@ export class ToggleComponent implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+    this.changeDetector.markForCheck();
   }
 }

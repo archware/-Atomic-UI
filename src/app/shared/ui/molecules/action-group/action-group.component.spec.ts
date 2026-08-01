@@ -20,6 +20,10 @@ describe('ActionGroupComponent', () => {
     ];
   });
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   it('renders accessible labels and preserves the 28px small variant', () => {
     component.size = 'sm';
     fixture.detectChanges();
@@ -43,5 +47,68 @@ describe('ActionGroupComponent', () => {
     (fixture.nativeElement.querySelector('.action-btn') as HTMLButtonElement).click();
 
     expect(actionClick).toHaveBeenCalledOnceWith('view');
+  });
+
+  it('shows up to three actions without an overflow trigger', () => {
+    component.actions = [
+      { id: 'view', action: 'view', label: 'Ver' },
+      { id: 'edit', action: 'edit', label: 'Editar' },
+      { id: 'print', action: 'print', label: 'Imprimir' },
+    ];
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('.action-btn')).toHaveSize(3);
+    expect(fixture.nativeElement.querySelector('.action-btn--more')).toBeNull();
+  });
+
+  it('keeps three actions visible and moves the fourth behind a caret menu', () => {
+    const actionClick = jasmine.createSpy('actionClick');
+    component.actionClick.subscribe(actionClick);
+    component.actions = [
+      { id: 'view', action: 'view', label: 'Ver' },
+      { id: 'edit', action: 'edit', label: 'Editar' },
+      { id: 'print', action: 'print', label: 'Imprimir' },
+      { id: 'reverse', action: 'reverse', label: 'Revertir' },
+    ];
+    fixture.detectChanges();
+
+    const trigger = fixture.nativeElement.querySelector('.action-btn--more') as HTMLButtonElement;
+    const visible = fixture.nativeElement.querySelectorAll('.action-btn:not(.action-btn--more)');
+    expect(visible).toHaveSize(3);
+    expect(trigger.querySelector('.fa-caret-down')).not.toBeNull();
+    expect(trigger.querySelector('.fa-ellipsis, .fa-ellipsis-vertical')).toBeNull();
+
+    trigger.click();
+
+    const menu = document.body.querySelector(`#${component.menuId}`) as HTMLElement;
+    const menuItems = menu.querySelectorAll<HTMLButtonElement>('[role="menuitem"]');
+    expect(menu.getAttribute('role')).toBe('menu');
+    expect(menuItems).toHaveSize(1);
+    expect(menuItems[0].getAttribute('aria-label')).toBe('Revertir');
+    expect(menuItems[0].querySelector('.fa-rotate-left')).not.toBeNull();
+
+    menuItems[0].click();
+    expect(actionClick).toHaveBeenCalledOnceWith('reverse');
+    expect(document.body.querySelector(`#${component.menuId}`)).toBeNull();
+  });
+
+  it('filters disabled menu items from keyboard focus and restores the trigger on Escape', () => {
+    component.actions = [
+      { id: 'view', action: 'view', label: 'Ver' },
+      { id: 'edit', action: 'edit', label: 'Editar' },
+      { id: 'print', action: 'print', label: 'Imprimir' },
+      { id: 'reverse', action: 'reverse', label: 'Revertir', disabled: true },
+      { id: 'channels', action: 'channels', label: 'Canales' },
+    ];
+    fixture.detectChanges();
+
+    const trigger = fixture.nativeElement.querySelector('.action-btn--more') as HTMLButtonElement;
+    trigger.click();
+    const menu = document.body.querySelector(`#${component.menuId}`) as HTMLElement;
+    const enabled = menu.querySelectorAll<HTMLButtonElement>('.menu-item:not(:disabled)');
+    expect(enabled).toHaveSize(1);
+
+    component.onEscape();
+    expect(document.activeElement).toBe(trigger);
   });
 });

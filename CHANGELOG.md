@@ -1,6 +1,20 @@
 # Changelog
 
+## PREST-20260731-168
+
+- `Toggle` incorpora el selector compatible `prest-toggle`, semántica accesible
+  de switch y notificación explícita de cambios para formularios zoneless.
+- El contrato queda preparado para seleccionar configuraciones financieras sin
+  trasladar reglas de cálculo al componente visual.
+
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.
+
+- `PREST-20260731-167`: `ActionGroup` formaliza el contrato de tres acciones
+  visibles y desplaza desde la cuarta a un menú identificado por caret. El
+  portal incorpora semántica de menú, navegación por teclado, retorno de foco y
+  estados disabled/loading. `TableAction` agrega acciones semánticas de
+  impresión, reversión, canales y contraseña, y normaliza `iconClass` para que
+  un icono válido no se degrade al fallback de tres puntos.
 
 - `PREST-20260731-162`: `FileInput` incorpora la densidad `compact` para
   formularios modales. Mantiene selección, arrastre, validación y accesibilidad,

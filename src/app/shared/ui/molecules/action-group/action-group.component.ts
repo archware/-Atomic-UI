@@ -4,6 +4,13 @@ import {
   ViewEncapsulation, OnInit, OnDestroy, Renderer2
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import {
+  resolveTableActionIcon,
+  resolveTableActionTone,
+  TableActionName,
+} from '../../atoms/table-action/table-action';
+
+let nextActionGroupId = 0;
 
 /**
  * Representa una acción individual en el grupo
@@ -12,13 +19,17 @@ export interface ActionItem {
   /** Identificador único de la acción */
   id: string;
   /** Clase de icono FontAwesome, e.g. 'fa-solid fa-eye' */
-  icon: string;
+  icon?: string;
+  /** Nombre semantico del atomo TableAction. */
+  action?: TableActionName;
   /** Texto del tooltip y label en el menú */
   label: string;
   /** Variante de color */
   variant?: 'default' | 'primary' | 'secondary' | 'danger' | 'warning' | 'success' | 'info';
   /** Si la acción está deshabilitada */
   disabled?: boolean;
+  /** Presenta carga y bloquea temporalmente la accion. */
+  loading?: boolean;
 }
 
 type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
@@ -28,7 +39,7 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
  * 
  * Características:
  * - Muestra los primeros N botones directamente (default 3)
- * - Oculta el resto en un menú desplegable al hacer clic en "⋮"
+ * - Oculta el resto en un menú desplegable identificado por un caret
  * - Posicionamiento inteligente que evita solapamiento con bordes de pantalla
  * - Soporte para modo compacto (todas las acciones en menú)
  * 
@@ -46,7 +57,7 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
  * ```
  */
 @Component({
-  selector: 'app-action-group',
+  selector: 'app-action-group, prest-action-group',
   standalone: true,
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -59,20 +70,25 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
           <button
             type="button"
             class="action-btn"
-            [class]="'action-btn--' + (action.variant || 'default')"
-            [class.disabled]="action.disabled"
+            [class]="'action-btn--' + actionVariant(action)"
+            [class.disabled]="action.disabled || action.loading"
             [title]="action.label"
             [attr.aria-label]="action.label"
-            [disabled]="action.disabled"
+            [disabled]="action.disabled || action.loading"
+            [attr.aria-busy]="action.loading || null"
             (click)="onActionClick(action)"
           >
-            <i [class]="action.icon"></i>
+            @if (action.loading) {
+              <span class="action-spinner" aria-hidden="true"></span>
+            } @else {
+              <i [class]="actionIconClass(action)" aria-hidden="true"></i>
+            }
           </button>
         }
       }
 
       <!-- More Button (if there are overflow actions or compact mode) -->
-      @if (hasOverflow() || compact) {
+      @if ((hasOverflow() || compact) && menuActions().length > 0) {
         <div class="more-wrapper" [class.open]="isOpen()">
           <button
             type="button"
@@ -81,9 +97,11 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
             [attr.aria-label]="compact ? 'Acciones' : 'Más acciones'"
             (click)="toggleMenu($event)"
             [attr.aria-expanded]="isOpen()"
+            [attr.aria-controls]="menuId"
             aria-haspopup="menu"
+            (keydown.arrowdown)="openMenuFromKeyboard($event)"
           >
-            <i class="fa-solid fa-ellipsis-vertical"></i>
+            <i class="fa-solid fa-caret-down action-more-icon" aria-hidden="true"></i>
           </button>
           <!-- Menu se crea dinámicamente en document.body -->
         </div>
@@ -91,7 +109,8 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
     </div>
   `,
   styles: [`
-    app-action-group {
+    app-action-group,
+    prest-action-group {
       display: inline-flex;
     }
 
@@ -128,6 +147,27 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
       height: 65%;
       font-size: inherit;
       line-height: 1;
+    }
+
+    .action-more-icon {
+      transition: transform 150ms ease;
+    }
+
+    .more-wrapper.open .action-more-icon {
+      transform: rotate(180deg);
+    }
+
+    .action-spinner {
+      width: 45%;
+      height: 45%;
+      border: 2px solid currentColor;
+      border-right-color: transparent;
+      border-radius: var(--radius-full);
+      animation: actionSpin 700ms linear infinite;
+    }
+
+    @keyframes actionSpin {
+      to { transform: rotate(360deg); }
     }
 
     /* Size variants */
@@ -192,14 +232,13 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
       color: var(--text-color-muted);
     }
 
-    .more-wrapper.open .action-btn--info { color: var(--info-color); }
-    .action-btn--info:hover:not(:disabled) { 
-      background: var(--info-color-lighter); 
-      color: var(--info-color);
-    }
-
     .action-btn--more {
       background: var(--surface-hover);
+      color: var(--primary-color);
+    }
+
+    .more-wrapper.open .action-btn--more {
+      background: var(--primary-color-lighter);
       color: var(--primary-color);
     }
 
@@ -323,8 +362,21 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
     .menu-item--success { color: var(--success-color); }
     .menu-item--success:hover:not(:disabled) { background: var(--success-color-lighter); }
 
+    .menu-item--info { color: var(--info-color); }
+    .menu-item--info:hover:not(:disabled) { background: var(--info-color-lighter); }
+
     .menu-item-label {
       flex: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .action-more-icon {
+        transition: none;
+      }
+
+      .action-spinner {
+        animation-duration: 1.4s;
+      }
     }
   `]
 })
@@ -353,6 +405,9 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
   /** Estado del menú */
   isOpen = signal(false);
 
+  /** Relaciona el disparador con el menu portal para lectores de pantalla. */
+  readonly menuId = `action-group-menu-${nextActionGroupId++}`;
+
 
   private readonly elementRef = inject(ElementRef);
   private readonly renderer = inject(Renderer2);
@@ -360,6 +415,7 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
 
   // Elemento del menú en el body
   private menuElement: HTMLElement | null = null;
+  private menuListenerCleanups: (() => void)[] = [];
 
   // Bound listeners para poder removerlos
   private scrollListener = () => this.onScrollOrResize();
@@ -383,6 +439,8 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
 
   /** Destruir menú del body */
   private destroyMenu(): void {
+    this.menuListenerCleanups.forEach((cleanup) => cleanup());
+    this.menuListenerCleanups = [];
     if (this.menuElement) {
       this.renderer.removeChild(this.document.body, this.menuElement);
       this.menuElement = null;
@@ -399,18 +457,30 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
   /** Acciones visibles (primeras N) */
   visibleActions(): ActionItem[] {
     if (this.compact) return [];
-    return this.actions.slice(0, this.maxVisible);
+    return this.actions.slice(0, this.visibleLimit());
   }
 
   /** Acciones en el menú overflow */
   menuActions(): ActionItem[] {
     if (this.compact) return this.actions;
-    return this.actions.slice(this.maxVisible);
+    return this.actions.slice(this.visibleLimit());
   }
 
   /** ¿Hay acciones en overflow? */
   hasOverflow(): boolean {
-    return this.actions.length > this.maxVisible;
+    return this.actions.length > this.visibleLimit();
+  }
+
+  actionIconClass(action: ActionItem): string {
+    return resolveTableActionIcon(action.action ?? 'custom', action.icon);
+  }
+
+  actionVariant(action: ActionItem): string {
+    return action.variant ?? resolveTableActionTone(action.action ?? 'custom');
+  }
+
+  private visibleLimit(): number {
+    return Number.isFinite(this.maxVisible) ? Math.max(0, Math.floor(this.maxVisible)) : 3;
   }
 
   /** Toggle del menú */
@@ -422,12 +492,33 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
 
     if (wasOpen) {
       // Cerrar menú
-      this.isOpen.set(false);
-      this.destroyMenu();
+      this.closeMenu(true);
     } else {
       // Abrir menú
-      this.isOpen.set(true);
-      this.createMenuInBody();
+      this.openMenu();
+    }
+  }
+
+  openMenuFromKeyboard(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    if (!this.isOpen()) {
+      this.openMenu();
+    }
+  }
+
+  private openMenu(): void {
+    if (this.menuActions().length === 0) return;
+    this.isOpen.set(true);
+    this.createMenuInBody();
+  }
+
+  private closeMenu(restoreFocus = false): void {
+    this.isOpen.set(false);
+    this.destroyMenu();
+    if (restoreFocus) {
+      (this.elementRef.nativeElement.querySelector('.action-btn--more') as HTMLElement | null)
+        ?.focus();
     }
   }
 
@@ -439,6 +530,10 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
     // Crear elemento del menú
     this.menuElement = this.renderer.createElement('div');
     this.renderer.addClass(this.menuElement, 'action-menu-portal');
+    this.renderer.setAttribute(this.menuElement, 'id', this.menuId);
+    this.renderer.setAttribute(this.menuElement, 'role', 'menu');
+    this.renderer.setAttribute(this.menuElement, 'aria-label', 'Acciones adicionales');
+    this.renderer.setAttribute(this.menuElement, 'aria-orientation', this.direction);
     if (this.direction === 'horizontal') {
       this.renderer.addClass(this.menuElement, 'horizontal');
     }
@@ -449,20 +544,31 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
       const btn = this.renderer.createElement('button');
       this.renderer.setAttribute(btn, 'type', 'button');
       this.renderer.addClass(btn, 'menu-item');
-      if (action.variant) {
-        this.renderer.addClass(btn, `menu-item--${action.variant}`);
-      }
-      if (action.disabled) {
+      this.renderer.addClass(btn, `menu-item--${this.actionVariant(action)}`);
+      if (action.disabled || action.loading) {
         this.renderer.addClass(btn, 'disabled');
         this.renderer.setAttribute(btn, 'disabled', 'true');
       }
       this.renderer.setAttribute(btn, 'role', 'menuitem');
       this.renderer.setAttribute(btn, 'aria-label', action.label);
+      if (action.loading) {
+        this.renderer.setAttribute(btn, 'aria-busy', 'true');
+      }
 
       // Icono
-      const icon = this.renderer.createElement('i');
-      action.icon.split(' ').forEach(cls => this.renderer.addClass(icon, cls));
-      this.renderer.appendChild(btn, icon);
+      if (action.loading) {
+        const spinner = this.renderer.createElement('span');
+        this.renderer.addClass(spinner, 'action-spinner');
+        this.renderer.setAttribute(spinner, 'aria-hidden', 'true');
+        this.renderer.appendChild(btn, spinner);
+      } else {
+        const icon = this.renderer.createElement('i');
+        this.actionIconClass(action)
+          .split(' ')
+          .forEach(cls => this.renderer.addClass(icon, cls));
+        this.renderer.setAttribute(icon, 'aria-hidden', 'true');
+        this.renderer.appendChild(btn, icon);
+      }
 
       // Label (para vertical o compact)
       if (this.direction === 'vertical' || this.compact) {
@@ -474,15 +580,15 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
       }
 
       // Event listener
-      this.renderer.listen(btn, 'click', (e: Event) => {
+      const cleanup = this.renderer.listen(btn, 'click', (e: Event) => {
         e.stopPropagation();
         e.preventDefault();
-        if (!action.disabled) {
+        if (!action.disabled && !action.loading) {
           this.actionClick.emit(action.id);
-          this.isOpen.set(false);
-          this.destroyMenu();
+          this.closeMenu(true);
         }
       });
+      this.menuListenerCleanups.push(cleanup);
 
       this.renderer.appendChild(this.menuElement, btn);
     });
@@ -490,15 +596,22 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
     // Añadir al body
     this.renderer.appendChild(this.document.body, this.menuElement);
 
+    this.menuListenerCleanups.push(
+      this.renderer.listen(this.menuElement, 'keydown', (event: KeyboardEvent) =>
+        this.onMenuKeydown(event),
+      ),
+    );
+
     // Calcular posición
     requestAnimationFrame(() => {
       this.updatePosition();
+      this.enabledMenuItems()[0]?.focus();
     });
   }
 
   /** Click en acción visible */
   onActionClick(action: ActionItem): void {
-    if (action.disabled) return;
+    if (action.disabled || action.loading) return;
     this.actionClick.emit(action.id);
   }
 
@@ -513,16 +626,44 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
     const isOutsideMenu = !this.menuElement || !this.menuElement.contains(target);
 
     if (isOutsideComponent && isOutsideMenu) {
-      this.isOpen.set(false);
-      this.destroyMenu();
+      this.closeMenu();
     }
   }
 
   /** Cerrar menú con Escape */
   @HostListener('document:keydown.escape')
   onEscape(): void {
-    this.isOpen.set(false);
-    this.destroyMenu();
+    if (this.isOpen()) {
+      this.closeMenu(true);
+    }
+  }
+
+  private enabledMenuItems(): HTMLButtonElement[] {
+    return this.menuElement
+      ? Array.from(this.menuElement.querySelectorAll<HTMLButtonElement>('.menu-item:not(:disabled)'))
+      : [];
+  }
+
+  private onMenuKeydown(event: KeyboardEvent): void {
+    const items = this.enabledMenuItems();
+    if (items.length === 0) return;
+    const activeIndex = items.indexOf(this.document.activeElement as HTMLButtonElement);
+    let nextIndex: number | null = null;
+
+    if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+      nextIndex = activeIndex < 0 ? 0 : (activeIndex + 1) % items.length;
+    } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+      nextIndex = activeIndex <= 0 ? items.length - 1 : activeIndex - 1;
+    } else if (event.key === 'Home') {
+      nextIndex = 0;
+    } else if (event.key === 'End') {
+      nextIndex = items.length - 1;
+    }
+
+    if (nextIndex !== null) {
+      event.preventDefault();
+      items[nextIndex]?.focus();
+    }
   }
 
   /** Calcular posición óptima del menú (position: fixed) */

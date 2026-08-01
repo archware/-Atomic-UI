@@ -69,6 +69,15 @@ describe('ToggleComponent', () => {
       expect(component.checked).toBeTrue();
     });
 
+    it('should notify a zoneless view after writeValue', async () => {
+      component.writeValue(true);
+      await fixture.whenStable();
+
+      const input: HTMLInputElement = fixture.nativeElement.querySelector('input');
+      expect(input.checked).toBeTrue();
+      expect(input.getAttribute('aria-checked')).toBe('true');
+    });
+
     it('should set checked=false via writeValue(false)', () => {
       component.writeValue(false);
       expect(component.checked).toBeFalse();
@@ -108,5 +117,12 @@ describe('ToggleComponent', () => {
 
       expect(component.checked).toBeTrue();
     });
+  });
+
+  it('should expose switch semantics and an accessible fallback name', () => {
+    const input: HTMLInputElement = fixture.nativeElement.querySelector('input');
+
+    expect(input.getAttribute('role')).toBe('switch');
+    expect(input.getAttribute('aria-label')).toBe('Alternar opción');
   });
 });

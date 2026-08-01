@@ -14,7 +14,7 @@ const meta: Meta<ActionGroupComponent> = {
     argTypes: {
         maxVisible: {
             control: { type: 'number', min: 1, max: 10 },
-            description: 'Número máximo de acciones visibles antes del overflow'
+            description: 'Número máximo de acciones visibles antes del menú con caret'
         },
         direction: {
             control: 'radio',
@@ -68,6 +68,17 @@ export const Basic: Story = {
 export const WithOverflow: Story = {
     args: {
         actions: extendedActions,
+        maxVisible: 3,
+        direction: 'vertical'
+    }
+};
+
+/**
+ * Frontera contractual: tres acciones visibles y la cuarta dentro del caret.
+ */
+export const ExactlyFourActions: Story = {
+    args: {
+        actions: extendedActions.slice(0, 4),
         maxVisible: 3,
         direction: 'vertical'
     }
