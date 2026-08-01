@@ -18,6 +18,11 @@ const meta: Meta<KpiCardComponent> = {
     fractionDigits: {
       control: { type: 'number', min: 0, max: 6 },
     },
+    tone: {
+      control: 'select',
+      options: ['neutral', 'brand', 'info', 'success', 'warning', 'danger'],
+      description: 'Énfasis semántico del icono y la serie; neutral es el valor predeterminado.',
+    },
   },
 };
 
@@ -44,6 +49,7 @@ export const AuthoritativeFinancialValue: Story = {
     trendValue: '+8.5%',
     comparisonLabel: 'frente al periodo anterior',
     iconClass: 'fa-solid fa-hand-holding-dollar',
+    tone: 'success',
     series: [120, 132, 141, 160, 154, 170, 182],
   },
 };

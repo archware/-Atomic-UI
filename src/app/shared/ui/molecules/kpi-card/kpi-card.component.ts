@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 export type KpiTrend = 'up' | 'down' | 'neutral' | null;
 export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duration';
+export type KpiTone = 'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'danger';
 
 @Component({
   selector: 'app-kpi-card',
@@ -9,7 +10,11 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <article class="kpi-card" [attr.aria-label]="accessibleLabel">
+    <article
+      class="kpi-card"
+      [class]="'kpi-card kpi-card--' + tone"
+      [attr.aria-label]="accessibleLabel"
+    >
       <header class="kpi-card__header">
         <div class="kpi-card__heading">
           <p class="kpi-card__title">{{ title }}</p>
@@ -77,6 +82,8 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
       }
 
       .kpi-card {
+        --kpi-accent: var(--text-color-secondary);
+        --kpi-accent-background: var(--surface-section);
         width: 100%;
         min-width: 0;
         min-height: 6.5rem;
@@ -88,6 +95,31 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
         border-radius: var(--radius-lg);
         background: var(--surface-background);
         box-shadow: var(--shadow-sm);
+      }
+
+      .kpi-card--brand {
+        --kpi-accent: var(--primary-color);
+        --kpi-accent-background: var(--primary-color-lighter);
+      }
+
+      .kpi-card--info {
+        --kpi-accent: var(--info-color-text);
+        --kpi-accent-background: var(--info-color-lighter);
+      }
+
+      .kpi-card--success {
+        --kpi-accent: var(--success-color-text);
+        --kpi-accent-background: var(--success-color-lighter);
+      }
+
+      .kpi-card--warning {
+        --kpi-accent: var(--warning-color-text);
+        --kpi-accent-background: var(--warning-color-lighter);
+      }
+
+      .kpi-card--danger {
+        --kpi-accent: var(--danger-color-text);
+        --kpi-accent-background: var(--danger-color-lighter);
       }
 
       .kpi-card__header {
@@ -133,8 +165,8 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
         justify-content: center;
         flex: 0 0 auto;
         border-radius: var(--radius-md);
-        background: var(--surface-section);
-        color: var(--primary-color);
+        background: var(--kpi-accent-background);
+        color: var(--kpi-accent);
       }
 
       .kpi-card__value {
@@ -196,7 +228,7 @@ export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duratio
         height: 2rem;
         display: flex;
         align-items: flex-end;
-        color: var(--primary-color);
+        color: var(--kpi-accent);
         opacity: 0.85;
       }
 
@@ -233,6 +265,9 @@ export class KpiCardComponent {
 
   /** Decimal places for number/currency/percent. Null keeps each format default. */
   @Input() fractionDigits: number | null = null;
+
+  /** Semantic emphasis. Neutral avoids turning every metric into a brand action. */
+  @Input() tone: KpiTone = 'neutral';
 
   /** Null intentionally means that no comparison trend is available. */
   @Input() trend: KpiTrend = null;

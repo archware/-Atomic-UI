@@ -78,4 +78,17 @@ describe('KpiCardComponent', () => {
     expect(getComputedStyle(card).minHeight).toBe('104px');
     expect(getComputedStyle(value).fontSize).toBe('21.6px');
   });
+
+  it('uses neutral emphasis by default and exposes semantic tones explicitly', () => {
+    component.iconClass = 'fa-solid fa-wallet';
+    fixture.detectChanges();
+
+    const card = fixture.nativeElement.querySelector('.kpi-card') as HTMLElement;
+    expect(card.classList).toContain('kpi-card--neutral');
+
+    fixture.componentRef.setInput('tone', 'danger');
+    fixture.detectChanges();
+    expect(card.classList).toContain('kpi-card--danger');
+    expect(card.classList).not.toContain('kpi-card--neutral');
+  });
 });

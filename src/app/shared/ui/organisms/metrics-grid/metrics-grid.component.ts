@@ -1,5 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { KpiCardComponent, KpiFormat, KpiTrend } from '../../molecules/kpi-card/kpi-card.component';
+import {
+  KpiCardComponent,
+  KpiFormat,
+  KpiTone,
+  KpiTrend,
+} from '../../molecules/kpi-card/kpi-card.component';
 
 export interface KpiMetric {
   /** Stable identity. New consumers should always provide it. */
@@ -12,6 +17,7 @@ export interface KpiMetric {
   readonly currency?: string;
   readonly locale?: string;
   readonly fractionDigits?: number | null;
+  readonly tone?: KpiTone;
   readonly trend?: KpiTrend;
   readonly trendValue?: string;
   readonly comparisonLabel?: string;
@@ -40,6 +46,7 @@ export interface KpiMetric {
           [currency]="metric.currency ?? 'PEN'"
           [locale]="metric.locale ?? 'es-PE'"
           [fractionDigits]="metric.fractionDigits ?? null"
+          [tone]="metric.tone ?? 'neutral'"
           [trend]="metric.trend ?? null"
           [trendValue]="metric.trendValue ?? ''"
           [comparisonLabel]="metric.comparisonLabel ?? ''"

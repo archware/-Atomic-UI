@@ -1,5 +1,22 @@
 # Changelog
 
+## [5.1.39] - 2026-07-31
+
+### Mejorado
+
+- `PREST-20260731-173`: establece una jerarquía cromática de acciones. Las
+  variantes `outline` y `ghost` son neutrales; el color primario queda reservado
+  para la acción dominante de cada región.
+- `KpiCard` incorpora tonos semánticos con `neutral` como valor predeterminado,
+  evitando que todos los iconos compitan con las acciones de marca.
+- Se publica `docs/POLITICA_COLOR_ACCIONES.md` como regla del ADN para nuevos
+  diseños y propagaciones.
+
+### Verificación
+
+- Pruebas de botón, KPI, grilla de métricas, gobierno y build antes de propagar
+  el cambio al frontend.
+
 ## PREST-20260731-168
 
 - `Toggle` incorpora el selector compatible `prest-toggle`, semántica accesible

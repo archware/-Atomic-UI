@@ -164,11 +164,11 @@
    --button-secondary-bg-hover: var(--secondary-color-hover);
    --button-secondary-text: var(--text-color-on-secondary);
 
-   --button-outline-border: var(--primary-color);
-   --button-outline-text: var(--primary-color);
-   --button-outline-hover-bg: var(--primary-color-lighter);
+   --button-outline-border: var(--border-color-strong);
+   --button-outline-text: var(--text-color-secondary);
+   --button-outline-hover-bg: var(--hover-background-subtle);
 
-   --button-ghost-text: var(--primary-color);
+   --button-ghost-text: var(--text-color-secondary);
    --button-ghost-hover-bg: var(--hover-background-subtle);
    --action-bar-gap: 2.25rem;
 
@@ -437,11 +437,11 @@ html.dark {
    --button-secondary-bg-hover: var(--brand-secondary-500);
    --button-secondary-text: var(--gray-0);
 
-   --button-outline-border: var(--primary-color);
-   --button-outline-text: var(--primary-color);
-   --button-outline-hover-bg: var(--hover-background);
+   --button-outline-border: var(--border-color-strong);
+   --button-outline-text: var(--text-color-secondary);
+   --button-outline-hover-bg: var(--hover-background-subtle);
 
-   --button-ghost-text: var(--primary-color);
+   --button-ghost-text: var(--text-color-secondary);
    --button-ghost-hover-bg: var(--hover-background-subtle);
 
    /* Button Shadows (Dark Mode - more subtle) */
@@ -675,11 +675,11 @@ html.dark {
    --button-secondary-bg-hover: var(--brand-secondary-500);
    --button-secondary-text: var(--gray-0);
 
-   --button-outline-border: var(--primary-color);
-   --button-outline-text: var(--primary-color);
-   --button-outline-hover-bg: var(--hover-background);
+   --button-outline-border: var(--border-color-strong);
+   --button-outline-text: var(--text-color-secondary);
+   --button-outline-hover-bg: var(--hover-background-subtle);
 
-   --button-ghost-text: var(--primary-color);
+   --button-ghost-text: var(--text-color-secondary);
    --button-ghost-hover-bg: var(--hover-background-subtle);
 
    /* Button Shadows (Brand-Dark Mode) */
