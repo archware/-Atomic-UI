@@ -39,11 +39,33 @@ export default tseslint.config(
           style: "camelCase",
         },
       ],
+      // `app` es el único prefijo canónico para componentes nuevos.
       "@angular-eslint/component-selector": [
         "error",
         {
           type: ["element", "attribute"],
           prefix: "app",
+          style: "kebab-case",
+        },
+      ],
+    },
+  },
+  {
+    // Excepción transitoria y cerrada para aliases incorporados antes de que
+    // `app-*` se estableciera como prefijo canónico. El gate de selectores
+    // exige que cada alias `prest-*` conserve el `app-*` equivalente primero.
+    files: [
+      "src/app/shared/ui/organisms/denomination-counter/denomination-counter.ts",
+      "src/app/shared/ui/organisms/form-dialog/form-dialog.ts",
+      "src/app/shared/ui/organisms/print-document-panel/print-document-panel.ts",
+      "src/app/shared/ui/organisms/receipt-panel/receipt-panel.ts",
+    ],
+    rules: {
+      "@angular-eslint/component-selector": [
+        "error",
+        {
+          type: ["element", "attribute"],
+          prefix: ["app", "prest"],
           style: "kebab-case",
         },
       ],

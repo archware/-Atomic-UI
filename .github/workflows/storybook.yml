@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version-file: ".node-version"
           cache: "npm"
 
       - name: Install dependencies
@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: storybook-static
-          path: storybook-static
+          path: dist/storybook/angular-scrollable-table
           if-no-files-found: error
 
   deploy:

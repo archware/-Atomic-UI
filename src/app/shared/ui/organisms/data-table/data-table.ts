@@ -6,6 +6,7 @@ import {
   computed,
   contentChild,
   input,
+  linkedSignal,
   output,
   signal,
 } from '@angular/core';
@@ -17,6 +18,8 @@ import {
 import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
 
 export type DataTableAlignment = 'start' | 'center' | 'end';
+export type DataTableDensity = 'comfortable' | 'compact';
+export type DataTablePaginationMode = 'none' | 'client' | 'server';
 export type DataTableStatus = 'idle' | 'loading' | 'success' | 'empty' | 'error';
 export type DataTableSortDirection = 'asc' | 'desc' | null;
 
@@ -76,6 +79,7 @@ export class DataTable<T extends object = Record<string, unknown>> {
   readonly rows = input.required<readonly T[]>();
   readonly caption = input.required<string>();
   readonly captionVisible = input(false);
+  readonly density = input<DataTableDensity>('comfortable');
   readonly status = input<DataTableStatus>('success');
   readonly loadingMessage = input('Cargando información…');
   readonly idleMessage = input('Aún no se ha cargado información.');
@@ -86,8 +90,13 @@ export class DataTable<T extends object = Record<string, unknown>> {
   readonly actionsWidth = input('12rem');
   readonly emptyValue = input('—');
   readonly trackBy = input<DataTableTrackBy<T>>(trackByIdentity);
+  readonly showRowNumber = input(true);
+  readonly rowNumberHeader = input('N.º');
+  readonly rowNumberWidth = input('4.5rem');
 
-  // Pagination inputs & outputs
+  // Row numbering and local pagination remain the published defaults.
+  // Consumers may opt out of pagination explicitly with `none`.
+  readonly pagination = input<DataTablePaginationMode>('client');
   readonly totalRecords = input<number | null>(null);
   readonly page = input(1);
   readonly pageSize = input(10);
@@ -105,28 +114,91 @@ export class DataTable<T extends object = Record<string, unknown>> {
     contentChild<TemplateRef<DataTableActionContext<T>>>('actions');
 
   private readonly activeSort = signal<ActiveSort<T> | null>(null);
+  private readonly clientPage = linkedSignal(() => Math.max(this.page(), 1));
+  private readonly clientPageSize = linkedSignal(() => Math.max(this.pageSize(), 1));
   private readonly collator = new Intl.Collator('es-PE', {
     numeric: true,
     sensitivity: 'base',
   });
 
+  protected readonly usesClientPagination = computed(
+    () => this.pagination() === 'client' && this.totalRecords() === null,
+  );
+  protected readonly paginationEnabled = computed(
+    () => this.pagination() !== 'none',
+  );
+  protected readonly effectivePageSize = computed(() =>
+    this.usesClientPagination()
+      ? this.clientPageSize()
+      : Math.max(this.pageSize(), 1),
+  );
+  protected readonly effectiveTotalRecords = computed(
+    () => this.totalRecords() ?? this.rows().length,
+  );
+  protected readonly effectiveTotalPages = computed(() => {
+    if (!this.paginationEnabled()) {
+      return 1;
+    }
+    if (!this.usesClientPagination()) {
+      return Math.max(this.totalPages(), 1);
+    }
+    return Math.max(
+      Math.ceil(this.effectiveTotalRecords() / this.effectivePageSize()),
+      1,
+    );
+  });
+  protected readonly effectivePage = computed(() => {
+    if (!this.paginationEnabled()) {
+      return 1;
+    }
+    return this.usesClientPagination()
+      ? Math.min(this.clientPage(), this.effectiveTotalPages())
+      : Math.max(this.page(), 1);
+  });
+  protected readonly effectiveHasPreviousPage = computed(() =>
+    this.usesClientPagination()
+      ? this.effectivePage() > 1
+      : this.hasPreviousPage(),
+  );
+  protected readonly effectiveHasNextPage = computed(() =>
+    this.usesClientPagination()
+      ? this.effectivePage() < this.effectiveTotalPages()
+      : this.hasNextPage(),
+  );
+
   protected readonly rangeStart = computed(() => {
-    const total = this.totalRecords() ?? 0;
+    const total = this.effectiveTotalRecords();
     if (total === 0) return 0;
-    return (this.page() - 1) * this.pageSize() + 1;
+    return (this.effectivePage() - 1) * this.effectivePageSize() + 1;
   });
 
   protected readonly rangeEnd = computed(() => {
-    const total = this.totalRecords() ?? 0;
+    const total = this.effectiveTotalRecords();
     if (total === 0) return 0;
-    return Math.min(this.page() * this.pageSize(), total);
+    return Math.min(this.effectivePage() * this.effectivePageSize(), total);
   });
 
   protected onPageSizeChange(event: Event): void {
     const target = event.target;
     if (target instanceof HTMLSelectElement) {
-      this.pageSizeChange.emit(Number(target.value));
+      const pageSize = Number(target.value);
+      if (this.usesClientPagination()) {
+        this.clientPageSize.set(pageSize);
+        this.clientPage.set(1);
+        return;
+      }
+      this.pageSizeChange.emit(pageSize);
     }
+  }
+
+  protected onPageChange(page: number): void {
+    if (this.usesClientPagination()) {
+      this.clientPage.set(
+        Math.min(Math.max(page, 1), this.effectiveTotalPages()),
+      );
+      return;
+    }
+    this.pageChange.emit(page);
   }
 
   protected readonly effectiveStatus = computed<DataTableStatus>(() => {
@@ -138,14 +210,19 @@ export class DataTable<T extends object = Record<string, unknown>> {
   });
 
   protected readonly columnSpan = computed(() =>
-    Math.max(this.columns().length + (this.actionsTemplate() ? 1 : 0), 1),
+    Math.max(
+      this.columns().length +
+        (this.showRowNumber() ? 1 : 0) +
+        (this.actionsTemplate() ? 1 : 0),
+      1,
+    ),
   );
 
   protected readonly regionLabel = computed(
     () => `${this.caption()}. Desplace horizontalmente para ver más columnas.`,
   );
 
-  protected readonly displayedRows = computed<readonly T[]>(() => {
+  private readonly sortedRows = computed<readonly T[]>(() => {
     const rows = this.rows();
     const sort = this.activeSort();
     if (!sort) {
@@ -167,6 +244,23 @@ export class DataTable<T extends object = Record<string, unknown>> {
       })
       .map(({ row }) => row);
   });
+
+  protected readonly displayedRows = computed<readonly T[]>(() => {
+    const rows = this.sortedRows();
+    if (!this.usesClientPagination()) {
+      return rows;
+    }
+    const offset = (this.effectivePage() - 1) * this.effectivePageSize();
+    return rows.slice(offset, offset + this.effectivePageSize());
+  });
+
+  protected rowNumber(index: number): number {
+    return (
+      (this.effectivePage() - 1) * this.effectivePageSize() +
+      index +
+      1
+    );
+  }
 
   protected identifyRow(index: number, row: T): unknown {
     return this.trackBy()(index, row);
@@ -230,6 +324,9 @@ export class DataTable<T extends object = Record<string, unknown>> {
     }
 
     this.activeSort.set(direction ? { key: column.key, direction } : null);
+    if (this.usesClientPagination()) {
+      this.clientPage.set(1);
+    }
     this.sortChange.emit({ key: column.key, direction });
   }
 

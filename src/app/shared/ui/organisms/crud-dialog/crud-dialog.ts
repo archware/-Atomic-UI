@@ -7,14 +7,24 @@ import {
   viewChild,
 } from '@angular/core';
 
-const DEFAULT_FOCUS_SELECTOR = [
-  'input:not([disabled])',
-  'select:not([disabled])',
-  'textarea:not([disabled])',
-  'button:not([disabled])',
-  '[href]',
-  '[tabindex]:not([tabindex="-1"])',
-].join(',');
+const DEFAULT_FOCUS_SELECTORS = [
+  '[data-dialog-initial-focus]:not([disabled]):not([hidden]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  '[data-control-focus]:not([disabled]):not([hidden]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  'input:not([type="hidden"]):not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  'select:not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  'textarea:not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  'button:not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  '[href]:not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  '[tabindex]:not([tabindex="-1"]):not([hidden]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+] as const;
+
+const INVALID_FOCUS_SELECTORS = [
+  '[aria-invalid="true"][data-dialog-initial-focus]:not([disabled]):not([hidden])',
+  'input.ng-invalid:not([type="hidden"]):not([disabled]):not([hidden]):not([tabindex="-1"])',
+  'select.ng-invalid:not([disabled]):not([hidden]):not([tabindex="-1"])',
+  'textarea.ng-invalid:not([disabled]):not([hidden]):not([tabindex="-1"])',
+  '[aria-invalid="true"]:not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+] as const;
 
 /**
  * Organismo modal canónico para altas y ediciones CRUD.
@@ -35,6 +45,7 @@ export class CrudDialog {
   readonly closed = output<void>();
 
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('nativeDialog');
+  private returnFocusTarget: HTMLElement | null = null;
 
   get nativeElement(): HTMLDialogElement {
     return this.dialog().nativeElement;
@@ -44,16 +55,24 @@ export class CrudDialog {
     return this.nativeElement.open;
   }
 
-  showModal(focusSelector = DEFAULT_FOCUS_SELECTOR): void {
+  showModal(focusSelectors: string | readonly string[] = DEFAULT_FOCUS_SELECTORS): void {
     const element = this.nativeElement;
     if (!element.open) {
+      const activeElement = element.ownerDocument.activeElement;
+      this.returnFocusTarget =
+        activeElement instanceof HTMLElement &&
+        activeElement !== element.ownerDocument.body &&
+        !element.contains(activeElement)
+          ? activeElement
+          : null;
       if (typeof element.showModal === 'function') {
         element.showModal();
       } else {
         element.setAttribute('open', '');
       }
     }
-    element.querySelector<HTMLElement>(focusSelector)?.focus({ preventScroll: true });
+    element.scrollTop = 0;
+    this.focusFirst(element, focusSelectors);
   }
 
   close(returnValue?: string): void {
@@ -65,16 +84,37 @@ export class CrudDialog {
       element.close(returnValue);
     } else {
       element.removeAttribute('open');
-      this.closed.emit();
+      this.handleClosed();
     }
   }
 
   focusInvalid(): void {
-    this.nativeElement.querySelector<HTMLElement>('.ng-invalid')?.focus({ preventScroll: true });
+    this.focusFirst(this.nativeElement, INVALID_FOCUS_SELECTORS);
+  }
+
+  private focusFirst(root: ParentNode, selectors: string | readonly string[]): boolean {
+    const selectorList = typeof selectors === 'string' ? [selectors] : selectors;
+    for (const selector of selectorList) {
+      const target = root.querySelector<HTMLElement>(selector);
+      if (target) {
+        target.focus({ preventScroll: true });
+        return true;
+      }
+    }
+    return false;
   }
 
   protected handleCancel(event: Event): void {
     event.preventDefault();
     this.cancelled.emit(event);
+  }
+
+  protected handleClosed(): void {
+    this.closed.emit();
+    const target = this.returnFocusTarget;
+    this.returnFocusTarget = null;
+    if (target?.isConnected) {
+      queueMicrotask(() => target.focus({ preventScroll: true }));
+    }
   }
 }

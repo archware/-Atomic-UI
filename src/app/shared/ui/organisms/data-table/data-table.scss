@@ -19,8 +19,8 @@
   height: auto;
   min-height: 18rem;
   max-height: none;
-  overflow-x: auto;
-  overflow-y: visible;
+  overflow-x: hidden;
+  overflow-y: hidden;
   background: var(--surface-background);
 }
 
@@ -61,6 +61,11 @@ td {
   padding: var(--space-4) var(--space-5);
   border-bottom: 1px solid var(--border-color);
   vertical-align: middle;
+}
+
+.data-table__region--compact th,
+.data-table__region--compact td {
+  padding: var(--space-3);
 }
 
 th {

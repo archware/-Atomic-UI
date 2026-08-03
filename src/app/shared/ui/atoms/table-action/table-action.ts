@@ -11,7 +11,13 @@ export type TableActionName =
   | 'delete'
   | 'custom';
 
-export type TableActionTone = 'neutral' | 'primary' | 'success' | 'warning' | 'danger';
+export type TableActionTone =
+  | 'neutral'
+  | 'primary'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'danger';
 export type TableActionSize = 'sm' | 'md' | 'lg';
 
 const ICONS: Readonly<Record<TableActionName, string>> = {
@@ -27,7 +33,7 @@ const ICONS: Readonly<Record<TableActionName, string>> = {
 };
 
 const TONES: Readonly<Record<TableActionName, TableActionTone>> = {
-  view: 'neutral',
+  view: 'info',
   edit: 'primary',
   activate: 'success',
   deactivate: 'danger',

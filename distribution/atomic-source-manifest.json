@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "4.4.0",
+  "packageVersion": "5.1.38",
   "distributionStatus": "blocked-scaffold",
   "algorithm": "sha256",
-  "sourceTreeSha256": "1cacf836274879e01e4a17564e75b725c3ffcd5c472674d51d0481688bf184ab",
-  "fileCount": 134,
+  "sourceTreeSha256": "0d391bd3b16c2e0c3f30f226eca6473a038a0af1678173bdd9bfd1721a698684",
+  "fileCount": 145,
   "files": [
     {
       "path": "src/app/shared/ui/atoms/avatar/avatar.component.ts",
@@ -59,8 +59,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/file-input/file-input.component.ts",
-      "bytes": 9271,
-      "sha256": "9f13aef4fd1c4ff32414aa55e56a7effe2d47b08ddb0429764c273ba89481435"
+      "bytes": 13199,
+      "sha256": "f13657f2b70d2d558c458a7fcdca35aca90151a40d4f8b7a920784aa54b655d5"
     },
     {
       "path": "src/app/shared/ui/atoms/floating-input/floating-input.component.ts",
@@ -169,8 +169,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/status-badge/status-badge.component.ts",
-      "bytes": 5534,
-      "sha256": "11eb360190f8409355496df08ae452da1e758bf9c6a9416d1fb2d0978e9b6d9e"
+      "bytes": 5747,
+      "sha256": "5d48c81b116d6a2da3c13a552f5ba70e5dce3f21a6d60a8ba386824e594f9f55"
     },
     {
       "path": "src/app/shared/ui/atoms/table-action/table-action.html",
@@ -179,13 +179,13 @@
     },
     {
       "path": "src/app/shared/ui/atoms/table-action/table-action.scss",
-      "bytes": 2081,
-      "sha256": "0ed8db1776bf16aef319e4eb6a46f409c7c496a83cc4d88dbd2d4ac960aa578d"
+      "bytes": 2132,
+      "sha256": "517a5b31002796d87c1ed20311fd0ac35a8c03c1cc9ee27e4708f4655df54669"
     },
     {
       "path": "src/app/shared/ui/atoms/table-action/table-action.ts",
-      "bytes": 2112,
-      "sha256": "071a6ccb95fff058c9897c3a6260bed5c66cfc9e781365f38a60ad0ac84db02e"
+      "bytes": 2139,
+      "sha256": "6f14160ef0741f1e49ffd5575f8df64281ba7215b38c3c377bfa6209a4da2d8f"
     },
     {
       "path": "src/app/shared/ui/atoms/table/table-cell.component.ts",
@@ -254,8 +254,8 @@
     },
     {
       "path": "src/app/shared/ui/index.ts",
-      "bytes": 12068,
-      "sha256": "68f14f88cda38af18c118db6caf135f39ca4e1c17c00c510b70c802ed5e39f64"
+      "bytes": 12903,
+      "sha256": "e781400e592382c2a382045d35a46e2c56710f9131fb53c1bfbc760393d858c6"
     },
     {
       "path": "src/app/shared/ui/interceptors/auth.interceptor.ts",
@@ -284,8 +284,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/card/card.component.ts",
-      "bytes": 7920,
-      "sha256": "9563ddec25e52bd980bcaa597c12a8dbc3187f295659c53c0dfa21f6222e2b88"
+      "bytes": 7976,
+      "sha256": "18011e9164507cd343034ce33a7535c0f451b094982369ae979a6bf7353c6764"
     },
     {
       "path": "src/app/shared/ui/molecules/combobox/combobox.component.ts",
@@ -374,8 +374,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/toast/toast.component.ts",
-      "bytes": 4458,
-      "sha256": "b1ee343cb70e8b7744bb03c203e15c14561cb13cbb49417b3a5328b05bbd484e"
+      "bytes": 5576,
+      "sha256": "af5fdaf4438d3acf2e902ca12fccb70cd61d4f8425ff8aae8fda7664e4abb125"
     },
     {
       "path": "src/app/shared/ui/molecules/user-menu/user-menu.component.ts",
@@ -384,8 +384,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/accordion/accordion.component.ts",
-      "bytes": 4337,
-      "sha256": "3ec5301a45494c1f438db91b5abd9c55158313686f7dea1566c0873f6fcd4363"
+      "bytes": 8570,
+      "sha256": "2823a65047672db325193cd1e2b746df3111485cd01be0b9b81c5101ed32d6b2"
     },
     {
       "path": "src/app/shared/ui/organisms/chart/chart.component.ts",
@@ -394,18 +394,18 @@
     },
     {
       "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.html",
-      "bytes": 272,
-      "sha256": "bfeb07d6b9d5b20ba0d45e87eef6f0ff69110761c4ea693af99a9225a73a43bf"
+      "bytes": 273,
+      "sha256": "35aa250f570d681f0cbe6614ad59b2d4380003600e9051f8e581f1157eacc380"
     },
     {
       "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.scss",
-      "bytes": 1079,
-      "sha256": "49935e518e8b0c345aab58658fe341f0e2ff53dbc30e0bf298627dde21f5d4a4"
+      "bytes": 1095,
+      "sha256": "c8702e22b3ecc16533673fd5c5966385affc413d25b63183b1aeb7d9a1a9ad80"
     },
     {
       "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.ts",
-      "bytes": 2190,
-      "sha256": "97cba423d4133ed8dbe8a5b2a54764e5eb354623b427bb04e3881cf538d81099"
+      "bytes": 4437,
+      "sha256": "138454fd9cd6deea11f24db96416d5c776daa27a56eadedf2ad6a167ef6eec26"
     },
     {
       "path": "src/app/shared/ui/organisms/data-pager/data-pager.component.ts",
@@ -414,18 +414,23 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.html",
-      "bytes": 7048,
-      "sha256": "ba44c3e3a17f714b9fe2fdcc27da1bcdf654f522cde2c890cc218219b11f4a9d"
+      "bytes": 7983,
+      "sha256": "48b34e7f7f82b05ca0bc4d9d2650f894f8a7a46f4e937f610d7f74cdf0a9115c"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.scss",
-      "bytes": 9217,
-      "sha256": "8729efd4be07f455ec73f5ad483987d61e06d64dbd3f4525fe46fa1ff97f47b8"
+      "bytes": 9320,
+      "sha256": "c03232a9b719fb0323d51b37ce7bca79d2cdb51b852d0b0ec2fd28a11d75feec"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.ts",
-      "bytes": 10787,
-      "sha256": "086eb1f1183e7333e4a2a3753c5fa7f3ac8c206c010aa95a82a72ecf45f0c871"
+      "bytes": 14013,
+      "sha256": "deb17a022547ec5b08e059b911be303df56ee2e0eb7fe86bfa979439ddd5b634"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/denomination-counter/denomination-counter.ts",
+      "bytes": 13536,
+      "sha256": "e517f22341042b0427603e141b17069e53f852e76c9a39e5d666b8d9bd1afecd"
     },
     {
       "path": "src/app/shared/ui/organisms/filters/filters.component.css",
@@ -448,14 +453,64 @@
       "sha256": "60986b87dfa63ed81c88593da20e04a08fdfc13bf45d3ff892cecc330feb8e19"
     },
     {
+      "path": "src/app/shared/ui/organisms/form-dialog/form-dialog-actions.scss",
+      "bytes": 476,
+      "sha256": "ca656b3c3a1b85329f032585f14d15186e069704f5b6f0f6031f9ffaf09ac640"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/form-dialog/form-dialog.html",
+      "bytes": 902,
+      "sha256": "3c1b06c389653ab7eb2efbce2f70f196d2bfe96d3019af3f25dc572860867ea8"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/form-dialog/form-dialog.scss",
+      "bytes": 1334,
+      "sha256": "ae2dacb12a4a5ea5b9bd0aa70dc25e312e2ee71a918ca855712a6810dce6ca7c"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/form-dialog/form-dialog.ts",
+      "bytes": 3100,
+      "sha256": "df7985b295f5f5920de4a27b9758121bb18b52d85f3cca7de8d19a25b51b63be"
+    },
+    {
       "path": "src/app/shared/ui/organisms/metrics-grid/metrics-grid.component.ts",
-      "bytes": 2674,
-      "sha256": "b46cadc4c90263a9b2c3753308bf07df6a446716bcddeca2f40f6e8635522333"
+      "bytes": 3262,
+      "sha256": "5b42e3cc408035a205c618b2588f2c87d01ff6937cee0a7656e50b82fab61492"
     },
     {
       "path": "src/app/shared/ui/organisms/navbar/navbar.component.ts",
       "bytes": 9631,
       "sha256": "eba57041b402f5f51201b9b8c69d719da5fd172ff827ee893d53fa7ce399226a"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/print-document-panel/print-document-panel.html",
+      "bytes": 2585,
+      "sha256": "a969e9996227ce46ecf21916d0734d1e9301218fe94d7682cacbbbaf3b56cd28"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/print-document-panel/print-document-panel.scss",
+      "bytes": 3177,
+      "sha256": "7e00e61361da95b83c70688cd26825db12e8c09c12bc8beeb0df0e4e0f81eb9a"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/print-document-panel/print-document-panel.ts",
+      "bytes": 10186,
+      "sha256": "56e7cdafb4b2349078904bbdcacd2fea19d8ad42fd36ccb92d03523083a26bcd"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/receipt-panel/receipt-panel.html",
+      "bytes": 893,
+      "sha256": "384faa25f5d85fc0686c4bea584e07c5ceba9a0859bc3ff4d6df3ba67af1ee61"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/receipt-panel/receipt-panel.scss",
+      "bytes": 2280,
+      "sha256": "c01bab1e7142ae599096e7944b47b3210040c3f6f88b417449fbfdbc160b7bc2"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/receipt-panel/receipt-panel.ts",
+      "bytes": 5222,
+      "sha256": "1aad32cfa99bbb37c6ec40907bc60d113bb8780a2d4d95674103f5e966673d9c"
     },
     {
       "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css",
@@ -469,8 +524,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts",
-      "bytes": 36958,
-      "sha256": "f6db0471254940729c89efc4658bff83700f26921bd72988b17927844dde0d2b"
+      "bytes": 37339,
+      "sha256": "bbb401feb7a1c85f566a2a6199f94d672291def7d2c858bbd886115cb54132fe"
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.css",
@@ -654,8 +709,8 @@
     },
     {
       "path": "src/styles/themes/_tokens-components.css",
-      "bytes": 34459,
-      "sha256": "ebdbe6df100b9d3eb3d9ba91caea26ec9587d31cf37b8ab80e09ea9fc9aa8a2d"
+      "bytes": 35790,
+      "sha256": "27d9b6ac5cbbfe8c1a5d24852ede5dd8b67689586076af8d4836348d91b29333"
     },
     {
       "path": "src/styles/themes/_tokens-primitives.css",

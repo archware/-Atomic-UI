@@ -173,6 +173,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   private verticalBarHeight = 0;
   private resizeObserver?: ResizeObserver;
   private mutationObserver?: MutationObserver;
+  private geometryFrameId?: number;
 
   private draggingY = false;
   private draggingX = false;
@@ -227,6 +228,10 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     }
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
+    }
+    if (this.geometryFrameId !== undefined) {
+      cancelAnimationFrame(this.geometryFrameId);
+      this.geometryFrameId = undefined;
     }
     if (this.verticalScroller?.hasAttribute('data-so-vertical-temp')) {
       this.verticalScroller.removeAttribute('data-so-vertical');
@@ -451,11 +456,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     const supportsMutation = typeof MutationObserver !== 'undefined';
 
     if (supportsResize) {
-      this.resizeObserver = new ResizeObserver(() => {
-        requestAnimationFrame(() => {
-          this.syncGeometry();
-        });
-      });
+      this.resizeObserver = new ResizeObserver(() => this.scheduleGeometrySync());
 
       // Observe the host element for container size changes
       this.resizeObserver.observe(this.hostEl);
@@ -476,9 +477,20 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     }
 
     if (supportsMutation && this.verticalScroller) {
-      this.mutationObserver = new MutationObserver(() => this.syncGeometry());
+      this.mutationObserver = new MutationObserver(() => this.scheduleGeometrySync());
       this.mutationObserver.observe(this.verticalScroller, { childList: true, subtree: true });
     }
+  }
+
+  private scheduleGeometrySync(): void {
+    if (this.geometryFrameId !== undefined) {
+      return;
+    }
+
+    this.geometryFrameId = requestAnimationFrame(() => {
+      this.geometryFrameId = undefined;
+      this.syncGeometry();
+    });
   }
 
   private showBar(): void {

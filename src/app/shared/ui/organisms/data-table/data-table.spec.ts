@@ -94,20 +94,37 @@ describe('DataTable', () => {
     expect(region.tabIndex).toBe(0);
     expect(region.getAttribute('aria-label')).toContain('Créditos vigentes');
     expect(caption?.textContent?.trim()).toBe('Créditos vigentes');
-    expect(headers.length).toBe(3);
-    expect(firstRowCells[1]?.textContent?.trim()).toBe('Zeta');
-    expect(firstRowCells[2]?.textContent?.trim()).toBe('—');
+    expect(headers.length).toBe(4);
+    expect(firstRowCells[0]?.textContent?.trim()).toBe('1');
+    expect(firstRowCells[2]?.textContent?.trim()).toBe('Zeta');
+    expect(firstRowCells[3]?.textContent?.trim()).toBe('—');
+    expect(fixture.nativeElement.querySelector('.data-table__toolbar')).not.toBeNull();
   });
 
-  it('delegates vertical scrolling to the page and keeps only horizontal overflow', async () => {
+  it('keeps a single horizontal scroll owner inside ScrollOverlay', async () => {
     const fixture = await createTable();
-    const viewport = fixture.nativeElement.querySelector(
+    const overlay = fixture.nativeElement.querySelector(
       '.data-table__viewport',
     ) as HTMLElement;
-    const style = getComputedStyle(viewport);
+    const viewport = overlay.querySelector('.so-scroll-area') as HTMLElement;
+    const overlayStyle = getComputedStyle(overlay);
+    const viewportStyle = getComputedStyle(viewport);
 
-    expect(style.maxHeight).toBe('none');
-    expect(style.overflowX).toBe('auto');
+    expect(overlayStyle.maxHeight).toBe('none');
+    expect(overlayStyle.overflowX).toBe('hidden');
+    expect(viewportStyle.overflowX).toBe('auto');
+  });
+
+  it('exposes an explicit compact density for wide operational grids', async () => {
+    const fixture = await createTable();
+    fixture.componentRef.setInput('density', 'compact');
+    await fixture.whenStable();
+
+    expect(
+      fixture.nativeElement
+        .querySelector('.data-table__region')
+        ?.classList.contains('data-table__region--compact'),
+    ).toBe(true);
   });
 
   it('keeps configured column widths in a CSS variable instead of inline width', async () => {
@@ -122,7 +139,7 @@ describe('DataTable', () => {
       'th[data-column="id"]',
     ) as HTMLTableCellElement;
     const cell = fixture.nativeElement.querySelector(
-      'tbody tr:not(.data-table__state-row) td:first-child',
+      'tbody tr:not(.data-table__state-row) td[data-column="id"]',
     ) as HTMLTableCellElement;
 
     expect(header.style.width).toBe('');
@@ -253,6 +270,7 @@ describe('DataTable', () => {
     fixture.componentRef.setInput('totalPages', 3);
     fixture.componentRef.setInput('hasPreviousPage', true);
     fixture.componentRef.setInput('hasNextPage', true);
+    fixture.componentRef.setInput('showRowNumber', true);
     await fixture.whenStable();
 
     const summary = fixture.nativeElement.querySelector('.data-table__summary') as HTMLElement;
@@ -266,6 +284,11 @@ describe('DataTable', () => {
     );
     expect(pageInfo.textContent).toContain('2 de 3');
     expect(pageSize.value).toBe('20');
+    expect(
+      fixture.nativeElement.querySelector(
+        'tbody tr:not(.data-table__state-row) td[data-column="rowNumber"]',
+      )?.textContent?.trim(),
+    ).toBe('21');
   });
 
   it('renders a zero range and disables pagination for an empty result', async () => {
@@ -291,10 +314,47 @@ describe('DataTable', () => {
     expect(buttons[1]?.disabled).toBe(true);
   });
 
-  it('keeps the pagination toolbar absent when total records are not provided', async () => {
+  it('paginates complete local collections and keeps the row number continuous', async () => {
     const fixture = await createTable();
+    fixture.componentRef.setInput('pagination', 'client');
+    fixture.componentRef.setInput('page', 2);
+    fixture.componentRef.setInput('pageSize', 10);
+    fixture.componentRef.setInput('showRowNumber', true);
+    fixture.componentRef.setInput(
+      'rows',
+      Array.from({ length: 12 }, (_, index) => ({
+        id: index + 1,
+        customer: `Cliente ${index + 1}`,
+        balance: index + 1,
+      })),
+    );
+    await fixture.whenStable();
+
+    const toolbar = fixture.nativeElement.querySelector('.data-table__toolbar');
+    const buttons = fixture.nativeElement.querySelectorAll(
+      '.data-table__page-btn',
+    ) as NodeListOf<HTMLButtonElement>;
+
+    expect(toolbar).not.toBeNull();
+    expect(renderedCustomers(fixture.nativeElement).length).toBe(2);
+    expect(renderedCustomers(fixture.nativeElement)).toEqual(['Cliente 11', 'Cliente 12']);
+    expect(
+      fixture.nativeElement.querySelector(
+        'tbody tr:not(.data-table__state-row) td[data-column="rowNumber"]',
+      )?.textContent?.trim(),
+    ).toBe('11');
+    expect(buttons[0]?.disabled).toBe(false);
+    expect(buttons[1]?.disabled).toBe(true);
+  });
+
+  it('honors an explicit pagination opt-out even when totalRecords is supplied', async () => {
+    const fixture = await createTable();
+    fixture.componentRef.setInput('pagination', 'none');
+    fixture.componentRef.setInput('totalRecords', 45);
+    await fixture.whenStable();
 
     expect(fixture.nativeElement.querySelector('.data-table__toolbar')).toBeNull();
+    expect(renderedCustomers(fixture.nativeElement)).toEqual(['Zeta', 'Álvaro', 'Beatriz']);
   });
 
   it('emits page size and previous or next one-based pages from the toolbar', async () => {
@@ -356,6 +416,8 @@ describe('DataTable', () => {
 
 function renderedCustomers(root: HTMLElement): string[] {
   return Array.from(
-    root.querySelectorAll('tbody tr:not(.data-table__state-row) td:nth-child(2)'),
+    root.querySelectorAll(
+      'tbody tr:not(.data-table__state-row) td[data-column="customer"]',
+    ),
   ).map((cell) => cell.textContent?.trim() ?? '');
 }

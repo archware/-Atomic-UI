@@ -1,7 +1,15 @@
-# 🎨 Atomic UI - Sistema de Componentes y Temas Avanzado
+---
+title: "Atomic UI: sistema de componentes y temas"
+subtitle: "Fuente visual canónica para aplicaciones de escritorio HRA"
+author: "Ing. Havel CONTRERAS TAPAHUASCO"
+date: "2026-08-03"
+version: "5.1.38"
+---
 
-[![Angular](https://img.shields.io/badge/Angular-20+-red.svg)](https://angular.io/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+# Atomic UI: sistema de componentes y temas
+
+[![Angular](https://img.shields.io/badge/Angular-22-red.svg)](https://angular.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue.svg)](https://www.typescriptlang.org/)
 
 Sistema de diseño **Atomic Design** con temas **Light/Dark/System**, paleta de colores **Púrpura (Primary)**, **Rosa (Accent)** y **Ámbar/Dorado (Secondary)**, optimizado para accesibilidad WCAG 2.1 Level AA.
 
@@ -110,11 +118,13 @@ Si necesitas integrar Atomic UI en un proyecto ya existente, consulta los workfl
 
 ### Inventario de Componentes
 
-| Capa | Componentes | Descripción |
+El listado es representativo; el conteo corresponde a los directorios vigentes del catálogo.
+
+| Capa | Ejemplos de componentes | Descripción |
 | ------ | ----------- | ----------- |
-| **Atoms (27)** | Avatar, Badge, Breadcrumb, Button, Checkbox, Chip, Divider, FileInput, FloatingInput, FormError, FormRow, IconButton, Input, LanguageSwitcher, Loader, NumberInput, Progress, Radio, Rating, Row, Select, Skeleton, Spinner, Table, Text, Textarea, Toggle | Elementos básicos e indivisibles |
-| **Molecules (17)** | ActionGroup, Alert, AvatarGroup, Card, Combobox, DataState, Datepicker, Dropdown, Modal, Pagination, Popup, Select2, TableActions, TagInput, Timeline, Toast, UserMenu | Combinaciones de átomos con funcionalidad |
-| **Organisms (10)** | Accordion, Filters, Footer, NavBar, ScrollOverlay, Sidebar, Stepper, Tabs, ThemeSwitcher, Topbar | Secciones complejas de UI |
+| **Atoms (34)** | Avatar, Badge, Breadcrumb, Button, Checkbox, Chip, Divider, FileInput, FloatingInput, FormError, FormRow, IconButton, Input, LanguageSwitcher, Loader, NumberInput, Progress, Radio, Rating, Row, Select, Skeleton, Spinner, Table, Text, Textarea, Toggle | Elementos básicos e indivisibles |
+| **Molecules (18)** | ActionGroup, Alert, AvatarGroup, Card, Combobox, DataState, Datepicker, Dropdown, Modal, Pagination, Popup, Select2, TableActions, TagInput, Timeline, Toast, UserMenu | Combinaciones de átomos con funcionalidad |
+| **Organisms (19)** | Accordion, Filters, Footer, NavBar, ScrollOverlay, Sidebar, Stepper, Tabs, ThemeSwitcher, Topbar | Secciones complejas de UI |
 | **Surfaces (1)** | Panel | Contenedores y superficies |
 | **Templates (2)** | AuthLayout, LayoutShell | Layouts de página completos |
 
@@ -218,9 +228,9 @@ src/
 │   │   └── ui-showcase/          # Demo de todos los componentes
 │   └── shared/
 │       └── ui/
-│           ├── atoms/            # 27 componentes básicos
-│           ├── molecules/        # 17 componentes compuestos
-│           ├── organisms/        # 10 componentes complejos
+│           ├── atoms/            # 34 directorios de componentes básicos
+│           ├── molecules/        # 18 directorios de componentes compuestos
+│           ├── organisms/        # 19 directorios de componentes complejos
 │           ├── surfaces/         # 1 contenedor (Panel)
 │           ├── templates/        # 2 layouts
 │           ├── services/         # ThemeService, ToastService, etc.
@@ -276,8 +286,8 @@ Este proyecto está bajo la Licencia MIT.
 
 ---
 
-**Versión:** 4.4.0 (Atomic Design System)  
-**Última Actualización:** Mayo 2026  
-**Angular Version:** 21+  
-**TypeScript:** 5.0+
+**Versión:** 5.1.38
+**Última actualización:** agosto de 2026
+**Angular:** 22
+**TypeScript:** 6.0
 

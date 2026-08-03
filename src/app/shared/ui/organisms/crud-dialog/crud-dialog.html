@@ -4,7 +4,7 @@
   [attr.aria-labelledby]="labelledBy()"
   [attr.aria-describedby]="describedBy()"
   (cancel)="handleCancel($event)"
-  (close)="closed.emit()"
+  (close)="handleClosed()"
 >
   <ng-content />
 </dialog>

@@ -170,6 +170,13 @@ export type { AvatarGroupItem } from './molecules/avatar-group/avatar-group.comp
 // ============================================
 export { AccordionComponent, AccordionItemComponent } from './organisms/accordion/accordion.component';
 
+export { DenominationCounter } from './organisms/denomination-counter/denomination-counter';
+export type {
+  DenominationCount,
+  DenominationCounterRow,
+  DenominationDefinition,
+} from './organisms/denomination-counter/denomination-counter';
+
 export { DataPagerComponent } from './organisms/data-pager/data-pager.component';
 
 export { FiltersComponent } from './organisms/filters/filters.component';
@@ -197,13 +204,28 @@ export type { NavBarItem, NavBarBrand } from './organisms/navbar/navbar.componen
 export { MetricsGridComponent } from './organisms/metrics-grid/metrics-grid.component';
 export type { KpiMetric } from './organisms/metrics-grid/metrics-grid.component';
 
+export { ReceiptPanel } from './organisms/receipt-panel/receipt-panel';
+export type { ReceiptPanelField } from './organisms/receipt-panel/receipt-panel';
+export { PrintDocumentPanel } from './organisms/print-document-panel/print-document-panel';
+export type {
+  PrintDocumentField,
+  PrintDocumentPage,
+  PrintDocumentSection,
+  PrintDocumentTable,
+  PrintDocumentTableColumn,
+} from './organisms/print-document-panel/print-document-panel';
+
 export { CrudDialog } from './organisms/crud-dialog/crud-dialog';
+
+export { FormDialog, FormDialogActions } from './organisms/form-dialog/form-dialog';
 
 export { DataTable } from './organisms/data-table/data-table';
 export type {
   DataTableActionContext,
   DataTableAlignment,
   DataTableColumn,
+  DataTableDensity,
+  DataTablePaginationMode,
   DataTableSortChange,
   DataTableSortDirection,
   DataTableStatus,

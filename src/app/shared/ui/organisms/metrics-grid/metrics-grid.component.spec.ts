@@ -11,6 +11,20 @@ describe('MetricsGridComponent', () => {
     { id: 'expense', title: 'Egresos', value: 40, displayValue: 'S/ 40.00' },
   ];
 
+  const responsiveCapacity = (): number => {
+    const rootFontSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
+    return window.innerWidth <= 36 * rootFontSize
+      ? 1
+      : window.innerWidth <= 72 * rootFontSize
+        ? 2
+        : 4;
+  };
+
+  const visibleColumns = (grid: HTMLElement): string[] =>
+    getComputedStyle(grid)
+      .gridTemplateColumns.split(' ')
+      .filter((column) => Number.parseFloat(column) > 0);
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MetricsGridComponent],
@@ -32,13 +46,53 @@ describe('MetricsGridComponent', () => {
     expect(grid.getAttribute('aria-label')).toBe('Indicadores financieros');
     expect(cards.length).toBe(2);
     expect(grid.style.getPropertyValue('--min-col-width')).toBe('13.75rem');
-    const rootFontSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
-    const expectedColumns = window.innerWidth <= 36 * rootFontSize
-      ? 1
-      : window.innerWidth <= 72 * rootFontSize
-        ? 2
-        : 4;
-    expect(getComputedStyle(grid).gridTemplateColumns.split(' ')).toHaveSize(expectedColumns);
+    const columns = visibleColumns(grid);
+    expect(columns).toHaveSize(Math.min(2, responsiveCapacity()));
+    if (columns.length === 2) {
+      expect(Number.parseFloat(columns[0])).toBeCloseTo(Number.parseFloat(columns[1]), 0);
+    }
+  });
+
+  it('uses the supplied minimum width without reserving empty metric columns', () => {
+    component.metrics = [...metrics, { id: 'balance', title: 'Saldo', value: 80 }];
+    component.minCardWidth = '11rem';
+    fixture.detectChanges();
+
+    const grid = fixture.nativeElement.querySelector('.metrics-grid') as HTMLElement;
+    expect(grid.style.getPropertyValue('--min-col-width')).toBe('11rem');
+    expect(grid.style.getPropertyValue('--metric-columns-desktop')).toBe('3');
+    expect(grid.style.getPropertyValue('--metric-columns-tablet')).toBe('2');
+    expect(grid.style.getPropertyValue('--metric-columns-mobile')).toBe('1');
+
+    expect(visibleColumns(grid)).toHaveSize(Math.min(3, responsiveCapacity()));
+    expect(fixture.nativeElement.querySelectorAll('app-kpi-card')).toHaveSize(3);
+  });
+
+  it('caps columns at four on desktop, two on tablet, and one on mobile', () => {
+    component.metrics = Array.from({ length: 6 }, (_, index) => ({
+      id: `metric-${index}`,
+      title: `Métrica ${index + 1}`,
+      value: index + 1,
+    }));
+    fixture.detectChanges();
+
+    const grid = fixture.nativeElement.querySelector('.metrics-grid') as HTMLElement;
+    expect(component.columnCount(4)).toBe(4);
+    expect(component.columnCount(2)).toBe(2);
+    expect(component.columnCount(1)).toBe(1);
+    expect(grid.style.getPropertyValue('--metric-columns-desktop')).toBe('4');
+    expect(grid.style.getPropertyValue('--metric-columns-tablet')).toBe('2');
+    expect(grid.style.getPropertyValue('--metric-columns-mobile')).toBe('1');
+    expect(fixture.nativeElement.querySelectorAll('app-kpi-card')).toHaveSize(6);
+  });
+
+  it('does not create a grid track when there are no metrics', () => {
+    fixture.detectChanges();
+
+    const grid = fixture.nativeElement.querySelector('.metrics-grid') as HTMLElement;
+    expect(grid.classList.contains('metrics-grid--empty')).toBeTrue();
+    expect(component.columnCount(4)).toBe(0);
+    expect(fixture.nativeElement.querySelectorAll('app-kpi-card')).toHaveSize(0);
   });
 
   it('tracks cards by stable id when their order changes', () => {
