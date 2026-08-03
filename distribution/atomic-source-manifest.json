@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.1.38",
+  "packageVersion": "5.1.39",
   "distributionStatus": "blocked-scaffold",
   "algorithm": "sha256",
   "sourceTreeSha256": "0d391bd3b16c2e0c3f30f226eca6473a038a0af1678173bdd9bfd1721a698684",

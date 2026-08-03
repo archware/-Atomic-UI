@@ -6,6 +6,19 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
 
+## [5.1.39] - 2026-08-03
+
+### Corregido
+
+- La prueba canónica de `Accordion` utiliza un matcher booleano compatible con
+  Jasmine y Vitest. La corrección permite conservar una copia exacta del
+  componente y su prueba en consumidores Angular con ejecutores distintos.
+
+### Verificación
+
+- El manifiesto de fuentes se regenera después de la corrección y la adopción
+  se valida nuevamente en los cuatro consumidores gobernados.
+
 ## [5.1.38] - 2026-08-03
 
 ### Añadido

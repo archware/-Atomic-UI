@@ -40,7 +40,7 @@ describe('AccordionComponent', () => {
     expect(headers[0].getAttribute('aria-controls')).toBe(regions[0].id);
     expect(regions[0].getAttribute('aria-labelledby')).toBe(headers[0].id);
     expect(regions[1].getAttribute('aria-hidden')).toBe('true');
-    expect(regions[1].hasAttribute('inert')).toBeTrue();
+    expect(regions[1].hasAttribute('inert')).toBe(true);
   });
 
   it('keeps only one item open in single mode', () => {
