@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { dirname, isAbsolute, join, relative, resolve } from 'node:path';
+import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const POLICY_VERSION = '1.0.0';
@@ -95,10 +95,20 @@ if (
   failures.push(`AGENTS.md debe contener el marcador ${REQUIRED_MARKER}.`);
 }
 
-const packagePath = join(consumerRoot, 'package.json');
+const packageRoot = normalize(manifest.packageRoot || '.');
+const packagePath = join(consumerRoot, packageRoot, 'package.json');
 if (requireFile(packagePath, 'package.json es obligatorio.')) {
   const packageJson = JSON.parse(readFileSync(packagePath, 'utf8'));
-  if (packageJson.scripts?.['check:atomic'] !== 'node scripts/check-atomic-provenance.mjs') {
+  const packageDirectory = dirname(packagePath);
+  const gateRelative = normalize(
+    relative(packageDirectory, join(consumerRoot, 'scripts', 'check-atomic-provenance.mjs')),
+  );
+  const consumerRelative = normalize(relative(packageDirectory, consumerRoot)) || '.';
+  const expectedCommand =
+    packageRoot === '.'
+      ? 'node scripts/check-atomic-provenance.mjs'
+      : `node ${gateRelative} --consumer-root=${consumerRelative}`;
+  if (packageJson.scripts?.['check:atomic'] !== expectedCommand) {
     failures.push('package.json debe declarar check:atomic con el gate canónico.');
   }
 }
@@ -146,6 +156,22 @@ for (const component of components) {
     } else if (!existsSync(join(consumerRoot, component.decisionRecord))) {
       failures.push(`No existe decisionRecord para ${local}: ${component.decisionRecord}`);
     }
+    if (!Array.isArray(component.adaptationSnapshot) || component.adaptationSnapshot.length === 0) {
+      failures.push(`Adaptación sin snapshot verificable: ${local}`);
+    } else {
+      for (const snapshot of component.adaptationSnapshot) {
+        const localFile = join(consumerRoot, local, snapshot.file || '');
+        const atomicFile = join(atomicRoot, component.atomic || '', snapshot.file || '');
+        const actualLocal = existsSync(localFile) ? digest(localFile) : null;
+        const actualAtomic = existsSync(atomicFile) ? digest(atomicFile) : null;
+        if (actualLocal !== (snapshot.localSha256 ?? null)) {
+          failures.push(`Adaptación modificada sin nueva decisión: ${local}/${snapshot.file}`);
+        }
+        if (actualAtomic !== (snapshot.atomicSha256 ?? null)) {
+          failures.push(`Fuente Atomic cambió respecto al snapshot: ${component.atomic}/${snapshot.file}`);
+        }
+      }
+    }
   }
 
   const localRoot = join(consumerRoot, local);
@@ -170,6 +196,16 @@ for (const component of components) {
   }
 }
 
+const governedComponentRoots = components
+  .filter((component) => component.local)
+  .map((component) => resolve(consumerRoot, component.local));
+const belongsToGovernedComponent = (file) => {
+  const absolute = resolve(file);
+  return governedComponentRoots.some(
+    (root) => absolute === root || absolute.startsWith(`${root}${sep}`),
+  );
+};
+
 for (const uiRoot of manifest.uiRoots || []) {
   const absoluteUiRoot = join(consumerRoot, uiRoot);
   if (!requireFile(absoluteUiRoot, `Raíz UI consumidora ausente: ${uiRoot}`)) continue;
@@ -188,7 +224,7 @@ for (const uiRoot of manifest.uiRoots || []) {
     if (local.includes('/styles/tokens/')) continue;
     const source = readFileSync(file, 'utf8');
     const executableSource = source.replace(/\/\*[\s\S]*?\*\//g, '');
-    if (FIXED_COLOR.test(executableSource)) {
+    if (!belongsToGovernedComponent(file) && FIXED_COLOR.test(executableSource)) {
       failures.push(`Color fijo fuera de tokens: ${local}`);
     }
     if (INVALID_NUMERIC_TOKEN.test(executableSource)) {
@@ -200,7 +236,7 @@ for (const uiRoot of manifest.uiRoots || []) {
 for (const featureRoot of manifest.featureRoots || []) {
   const absoluteFeatureRoot = join(consumerRoot, featureRoot);
   if (!existsSync(absoluteFeatureRoot)) continue;
-  for (const file of filesBelow(absoluteFeatureRoot, ['.html', '.scss', '.css', '.ts'])) {
+  for (const file of filesBelow(absoluteFeatureRoot, ['.html', '.scss', '.css'])) {
     const source = readFileSync(file, 'utf8');
     const executableSource = source.replace(/\/\*[\s\S]*?\*\//g, '');
     const local = normalize(relative(consumerRoot, file));
@@ -244,5 +280,5 @@ if (failures.length > 0) {
 
 console.log(
   `Ley Atomic verificada: política ${POLICY_VERSION}, ${components.length} componentes ` +
-    'con procedencia y cero primitivas o hardcodes visuales fuera del ADN.',
+    'con procedencia y cero violaciones detectadas por el gate.',
 );

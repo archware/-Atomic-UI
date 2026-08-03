@@ -205,6 +205,95 @@ try {
     throw new Error('El instalador modificó package.json antes de rechazar la divergencia.');
   }
 
+  write(
+    path.join(divergentConsumer, 'docs/decisions/ADR-atomic-baseline.md'),
+    '---\ntitle: "Línea base Atomic"\nauthor: "QA"\ndate: "2026-08-03"\n---\n',
+  );
+  fs.mkdirSync(path.join(divergentConsumer, 'src/styles/themes'), { recursive: true });
+  fs.copyFileSync(
+    path.join(atomicRoot, 'src/styles/themes/_tokens-components.css'),
+    path.join(divergentConsumer, 'src/styles/themes/_tokens-components.css'),
+  );
+  execFileSync(
+    process.execPath,
+    [
+      path.join(atomicRoot, 'tools/install-consumer-governance.js'),
+      divergentConsumer,
+      '--adaptation-decision=docs/decisions/ADR-atomic-baseline.md',
+      '--change-id=ATOMIC-ADAPTATION-TEST',
+    ],
+    { stdio: 'pipe' },
+  );
+  const adaptedGate = spawnSync(
+    process.execPath,
+    [path.join(divergentConsumer, 'scripts/check-atomic-provenance.mjs')],
+    { cwd: divergentConsumer, encoding: 'utf8' },
+  );
+  if (adaptedGate.status !== 0) {
+    throw new Error(`La adaptación aprobada no supera el gate:\n${adaptedGate.stderr}`);
+  }
+  write(
+    path.join(divergentConsumer, 'src/app/shared/ui/atoms/choice-control/choice-control.ts'),
+    'export const consumerAdaptation = false;\n',
+  );
+  const changedAdaptation = spawnSync(
+    process.execPath,
+    [path.join(divergentConsumer, 'scripts/check-atomic-provenance.mjs')],
+    { cwd: divergentConsumer, encoding: 'utf8' },
+  );
+  if (
+    changedAdaptation.status === 0 ||
+    !changedAdaptation.stderr.includes('Adaptación modificada sin nueva decisión')
+  ) {
+    throw new Error('El gate no detectó deriva posterior sobre una adaptación aprobada.');
+  }
+
+  const nestedConsumer = path.join(tempRoot, 'nested-consumer');
+  write(
+    path.join(nestedConsumer, 'frontend/package.json'),
+    JSON.stringify({ name: 'nested-consumer', scripts: {} }, null, 2),
+  );
+  fs.cpSync(
+    path.join(atomicRoot, 'src/app/shared/ui/atoms/choice-control'),
+    path.join(nestedConsumer, 'frontend/src/app/shared/ui/atoms/choice-control'),
+    { recursive: true },
+  );
+  fs.mkdirSync(path.join(nestedConsumer, 'frontend/src/styles/themes'), { recursive: true });
+  fs.copyFileSync(
+    path.join(atomicRoot, 'src/styles/themes/_tokens-components.css'),
+    path.join(nestedConsumer, 'frontend/src/styles/themes/_tokens-components.css'),
+  );
+  execFileSync(
+    process.execPath,
+    [
+      path.join(atomicRoot, 'tools/install-consumer-governance.js'),
+      nestedConsumer,
+      '--package-root=frontend',
+      '--ui-root=frontend/src/app/shared/ui',
+    ],
+    { stdio: 'pipe' },
+  );
+  const nestedPackage = JSON.parse(
+    fs.readFileSync(path.join(nestedConsumer, 'frontend/package.json'), 'utf8'),
+  );
+  if (
+    nestedPackage.scripts?.['check:atomic'] !==
+    'node ../scripts/check-atomic-provenance.mjs --consumer-root=..'
+  ) {
+    throw new Error('El instalador no configuró el frontend anidado.');
+  }
+  const nestedGate = spawnSync(
+    process.execPath,
+    [
+      path.join(nestedConsumer, 'scripts/check-atomic-provenance.mjs'),
+      '--consumer-root=..',
+    ],
+    { cwd: path.join(nestedConsumer, 'frontend'), encoding: 'utf8' },
+  );
+  if (nestedGate.status !== 0) {
+    throw new Error(`El consumidor anidado no supera el gate:\n${nestedGate.stderr}`);
+  }
+
   console.log(
     'Contrato Atomic probado: bootstrap válido, cuatro violaciones y una adaptación no documentada bloqueadas.',
   );

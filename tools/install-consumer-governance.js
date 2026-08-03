@@ -72,6 +72,15 @@ function auditComponents(consumerRoot, uiRoot) {
         classification: differences.length === 0 ? 'exact' : 'adaptation-required',
         files: sourceFiles,
         differences,
+        snapshot: candidates.map((file) => ({
+          file,
+          localSha256: fs.existsSync(path.join(localRoot, file))
+            ? digest(path.join(localRoot, file))
+            : null,
+          atomicSha256: fs.existsSync(path.join(sourceRoot, file))
+            ? digest(path.join(sourceRoot, file))
+            : null,
+        })),
       });
     }
   }
@@ -112,10 +121,13 @@ function main() {
   }
 
   const consumerRoot = path.resolve(consumerArg);
+  const packageRoot = normalize(option('package-root', '.'));
   const uiRoot = normalize(option('ui-root', 'src/app/shared/ui'));
-  const packagePath = path.join(consumerRoot, 'package.json');
+  const packagePath = path.join(consumerRoot, packageRoot, 'package.json');
   const absoluteUiRoot = path.join(consumerRoot, uiRoot);
   const auditOnly = process.argv.includes('--audit-only');
+  const adaptationDecision = normalize(option('adaptation-decision', ''));
+  const changeId = option('change-id', 'ATOMIC-BOOTSTRAP');
 
   if (!fs.existsSync(packagePath) || !fs.existsSync(absoluteUiRoot)) {
     console.error('El consumidor debe contener package.json y la raíz UI indicada.');
@@ -140,6 +152,7 @@ function main() {
     status: adaptations.length === 0 ? 'exact' : 'adaptation-records-required',
     atomicRef: atomicRef(),
     consumerRoot: normalize(consumerRoot),
+    packageRoot,
     uiRoot,
     exactCount: exactComponents.length,
     adaptationRequiredCount: adaptations.length,
@@ -154,7 +167,16 @@ function main() {
     console.log(JSON.stringify(auditReport, null, 2));
     return;
   }
-  if (adaptations.length > 0) {
+  if (adaptations.length > 0 && adaptationDecision) {
+    const decisionPath = path.resolve(consumerRoot, adaptationDecision);
+    const decisionInsideConsumer =
+      decisionPath === consumerRoot || decisionPath.startsWith(`${consumerRoot}${path.sep}`);
+    if (!decisionInsideConsumer || !fs.existsSync(decisionPath)) {
+      console.error('El registro de decisión Atomic debe existir dentro del consumidor.');
+      process.exit(2);
+    }
+  }
+  if (adaptations.length > 0 && !adaptationDecision) {
     console.error(JSON.stringify(auditReport, null, 2));
     console.error(
       'Instalación detenida antes de modificar el consumidor. Cada divergencia requiere una justificación y un decisionRecord concretos; el instalador no los genera automáticamente.',
@@ -181,22 +203,53 @@ function main() {
   }
   appendAgentPolicy(consumerRoot);
 
-  const components = exactComponents.map((component) => ({
-    local: component.local,
-    atomic: component.atomic,
-    mode: 'exact',
-    files: component.files,
-  }));
+  const components = auditedComponents.map((component) => {
+    if (component.classification === 'exact') {
+      return {
+        local: component.local,
+        atomic: component.atomic,
+        mode: 'exact',
+        files: component.files,
+      };
+    }
+    const kinds = [...new Set(component.differences.map((difference) => difference.kind))].sort();
+    return {
+      local: component.local,
+      atomic: component.atomic,
+      mode: 'adapted',
+      justification:
+        `Línea base auditada: ${component.differences.length} diferencia(s) ` +
+        `de tipo ${kinds.join(', ')}. La adaptación se conserva hasta su migración funcional.`,
+      decisionRecord: adaptationDecision,
+      adaptationSnapshot: component.snapshot,
+    };
+  });
+
+  const packageDirectory = path.dirname(packagePath);
+  const gateRelative = normalize(
+    path.relative(packageDirectory, path.join(consumerRoot, 'scripts', 'check-atomic-provenance.mjs')),
+  );
+  const consumerRelative = normalize(path.relative(packageDirectory, consumerRoot)) || '.';
+  const checkAtomicCommand =
+    packageRoot === '.'
+      ? 'node scripts/check-atomic-provenance.mjs'
+      : `node ${gateRelative} --consumer-root=${consumerRelative}`;
+  const packagePrefix = packageRoot === '.' ? '' : `${packageRoot}/`;
 
   const manifest = {
     schemaVersion: 1,
     policyVersion: '1.0.0',
-    changeId: 'ATOMIC-BOOTSTRAP',
+    changeId,
     atomicRepository: normalize(path.relative(consumerRoot, atomicRoot)),
     atomicRemote: 'archware/-Atomic-UI',
     atomicRef: atomicRef(),
+    packageRoot,
     uiRoots: [uiRoot],
-    featureRoots: ['src/app/features', 'src/app/pages', 'src/app/dashboard'],
+    featureRoots: [
+      `${packagePrefix}src/app/features`,
+      `${packagePrefix}src/app/pages`,
+      `${packagePrefix}src/app/dashboard`,
+    ],
     layers,
     components,
     governanceArtifacts: [
@@ -215,7 +268,7 @@ function main() {
     ],
     tokens: {
       atomic: 'src/styles/themes/_tokens-components.css',
-      consumer: 'src/styles/themes/_tokens-components.css',
+      consumer: `${packagePrefix}src/styles/themes/_tokens-components.css`,
       required: [],
     },
   };
@@ -225,7 +278,7 @@ function main() {
 
   const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
   packageJson.scripts ||= {};
-  packageJson.scripts['check:atomic'] = 'node scripts/check-atomic-provenance.mjs';
+  packageJson.scripts['check:atomic'] = checkAtomicCommand;
   if (!packageJson.scripts.check) {
     packageJson.scripts.check = 'npm run check:atomic && npm test -- --watch=false && npm run build';
   } else if (!packageJson.scripts.check.includes('check:atomic')) {
@@ -234,7 +287,8 @@ function main() {
   fs.writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`, 'utf8');
 
   console.log(
-    `Gobierno Atomic instalado: ${components.length} componentes exactos, política, gate y CI obligatorios.`,
+    `Gobierno Atomic instalado: ${exactComponents.length} componentes exactos y ` +
+      `${adaptations.length} adaptados, política, gate y CI obligatorios.`,
   );
 }
 
