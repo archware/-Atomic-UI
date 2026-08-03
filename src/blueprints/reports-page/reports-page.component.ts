@@ -4,9 +4,9 @@ import {
   LayoutShellComponent,
   TopbarComponent,
   SidebarComponent,
+  SidebarMenuItem,
   PanelComponent,
   RowComponent,
-  AvatarComponent,
   TextComponent,
   ButtonComponent,
   ThemeSwitcherComponent
@@ -21,7 +21,6 @@ import {
     SidebarComponent,
     PanelComponent,
     RowComponent,
-    AvatarComponent,
     TextComponent,
     ButtonComponent,
     ThemeSwitcherComponent
@@ -77,7 +76,7 @@ export class ReportsPageComponent {
     { id: 3, name: 'Auditoría de Personal', date: '05 Jun 2026', size: '4.8 MB' }
   ];
 
-  menuItems = [
+  menuItems: SidebarMenuItem[] = [
     { id: 'dashboard', label: 'Resumen', icon: 'fa-solid fa-chart-pie', route: '/dashboard' },
     { id: 'analytics', label: 'Analíticas', icon: 'fa-solid fa-chart-line', route: '/analytics' },
     { id: 'projects', label: 'Proyectos', icon: 'fa-solid fa-folder-open', route: '/crud' },
@@ -88,7 +87,7 @@ export class ReportsPageComponent {
 
   sidebarUser = computed(() => ({ name: 'Usuario', role: 'Admin', initials: 'US', photo: '' }));
 
-  onNavigate(item: any) {
+  onNavigate(item: SidebarMenuItem): void {
     if (item.route) this.router.navigate([item.route]);
   }
 }

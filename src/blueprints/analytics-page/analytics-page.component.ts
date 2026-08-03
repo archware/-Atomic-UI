@@ -1,12 +1,13 @@
 import { Component, inject, signal, computed } from '@angular/core';
 import { Router } from '@angular/router';
+import type { ChartConfiguration } from 'chart.js';
 import {
   LayoutShellComponent,
   TopbarComponent,
   SidebarComponent,
+  SidebarMenuItem,
   PanelComponent,
   RowComponent,
-  AvatarComponent,
   TextComponent,
   ButtonComponent,
   ChartComponent,
@@ -22,7 +23,6 @@ import {
     SidebarComponent,
     PanelComponent,
     RowComponent,
-    AvatarComponent,
     TextComponent,
     ButtonComponent,
     ChartComponent,
@@ -67,7 +67,7 @@ export class AnalyticsPageComponent {
   sidebarVisible = signal(true);
   router = inject(Router);
 
-  menuItems = [
+  menuItems: SidebarMenuItem[] = [
     { id: 'dashboard', label: 'Resumen', icon: 'fa-solid fa-chart-pie', route: '/dashboard' },
     { id: 'analytics', label: 'Analíticas', icon: 'fa-solid fa-chart-line', route: '/analytics', active: true },
     { id: 'projects', label: 'Proyectos', icon: 'fa-solid fa-folder-open', route: '/crud' },
@@ -78,7 +78,7 @@ export class AnalyticsPageComponent {
 
   sidebarUser = computed(() => ({ name: 'Usuario', role: 'Admin', initials: 'US', photo: '' }));
 
-  onNavigate(item: any) {
+  onNavigate(item: SidebarMenuItem): void {
     if (item.route) this.router.navigate([item.route]);
   }
 
@@ -94,7 +94,7 @@ export class AnalyticsPageComponent {
     return getComputedStyle(document.documentElement).getPropertyValue('--chart-grid-color').trim() || 'rgba(15, 23, 42, 0.16)';
   }
 
-  chartOptions: any = {
+  chartOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: { legend: { position: 'bottom' } },
@@ -104,7 +104,7 @@ export class AnalyticsPageComponent {
     }
   };
 
-  donutOptions: any = {
+  donutOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: { legend: { position: 'right' } }

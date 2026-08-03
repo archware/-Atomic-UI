@@ -6,7 +6,7 @@
     }
   </div>
 
-  <nav class="sidebar-nav" (keydown)="handleKeydown($event)" aria-label="Navegación principal">
+  <nav class="sidebar-nav" (keydown)="handleKeydown($event)" tabindex="-1" aria-label="Navegación principal">
     <ng-template #menuTree let-items let-level="level">
       @for (item of items; track item.id ?? item.route ?? item.label) {
         <li class="nav-item" [class.nav-item--group]="hasChildren(item)" role="none">

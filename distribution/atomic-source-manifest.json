@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.1.39",
+  "packageVersion": "5.1.40",
   "distributionStatus": "blocked-scaffold",
   "algorithm": "sha256",
-  "sourceTreeSha256": "0d391bd3b16c2e0c3f30f226eca6473a038a0af1678173bdd9bfd1721a698684",
+  "sourceTreeSha256": "f8a6ac04d396bb08bce0777d4413409b8f00aef12c038b718f7ad8961e1ef9f5",
   "fileCount": 145,
   "files": [
     {
@@ -344,8 +344,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/select2/select2.component.ts",
-      "bytes": 20879,
-      "sha256": "ea118bae423f06c00812447750744c9b9e5a566b4f3eb321e5ba81cc792549c6"
+      "bytes": 20804,
+      "sha256": "f0cb9abf5e55cb64d944119e1c429eef239448c3c56a6b17c8b51a7acf218f0a"
     },
     {
       "path": "src/app/shared/ui/molecules/table-actions/table-actions.component.css",
@@ -389,8 +389,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/chart/chart.component.ts",
-      "bytes": 7541,
-      "sha256": "74573fed8988067da134cd30d7f720cde42aa714232c2c8a513e9c8412d9102a"
+      "bytes": 7989,
+      "sha256": "42f205b777d96c917590a9d6efa6a79b7e4ecef2c5f28af6f9a9c43c323a2e7e"
     },
     {
       "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.html",
@@ -534,8 +534,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.html",
-      "bytes": 3014,
-      "sha256": "d19fabae02f417d5f37ea4e57784a2f140cd82e406378e4877de1c7d2576d0ba"
+      "bytes": 3027,
+      "sha256": "893db6cb41a75b897e5dd18ff7aa50b35f85398e24e501d5568cada9381531a5"
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.ts",

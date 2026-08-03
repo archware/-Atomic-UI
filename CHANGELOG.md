@@ -1,10 +1,45 @@
-# Changelog
+---
+title: "Registro de cambios de Atomic UI"
+document_type: "changelog"
+version: "5.1.40"
+status: "vigente"
+updated: "2026-08-03"
+owner: "Hospital Regional de Ayacucho"
+---
+
+# Registro de cambios
 
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.1.40] - 2026-08-03
+
+### Corregido
+
+- Se eliminan las 29 advertencias de lint mediante contratos TypeScript
+  explícitos, observables tipados y controles de teclado y foco verificables.
+- `Chart` conserva el comportamiento de sombras y etiquetas sin recurrir a
+  tipos `any`; `Select2` evita manejadores redundantes porque la detección de
+  clic externo ya comprueba la pertenencia al elemento anfitrión.
+- Los blueprints de analítica, CRUD, tablero, perfil y reportes publican tipos
+  de navegación, formularios y opciones de gráficos coherentes con sus APIs.
+
+### Gobierno
+
+- El umbral preventivo del paquete inicial se alinea con el tamaño real de la
+  aplicación SSR en 1,2 MB y conserva el límite de error en 1,5 MB. El ajuste
+  evita una advertencia permanente sin ampliar el límite que bloquea el build.
+
+### Verificación
+
+- Lint, 249/249 pruebas en `ChromeHeadlessNoSandbox`, build Angular y gobierno
+  Atomic se ejecutan sin advertencias de código o presupuesto.
+- El manifiesto de 145 fuentes se regenera con SHA-256
+  `f8a6ac04d396bb08bce0777d4413409b8f00aef12c038b718f7ad8961e1ef9f5`
+  antes de distribuir la versión a los consumidores gobernados.
 
 ## [5.1.39] - 2026-08-03
 

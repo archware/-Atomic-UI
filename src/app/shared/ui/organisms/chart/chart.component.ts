@@ -1,7 +1,8 @@
 import { Component, Input, ViewChild, ElementRef, OnInit, OnDestroy, PLATFORM_ID, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartConfiguration, ChartType } from 'chart.js';
+import type { ChartConfiguration, ChartType, Plugin } from 'chart.js';
+import type { Context as DataLabelsContext } from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-chart',
@@ -53,10 +54,8 @@ export class ChartComponent implements OnInit, OnDestroy {
   private themeObserver: MutationObserver | null = null;
   private resizeObserver: ResizeObserver | null = null;
   private resizeFrame: number | null = null;
-  private ChartRef: any = null;
-
   /** Lee los tokens CSS actuales y los aplica a los defaults globales de Chart.js */
-  private applyChartTheme(Chart: any): void {
+  private applyChartTheme(Chart: typeof import('chart.js').Chart): void {
     const style = getComputedStyle(this.el.nativeElement);
     Chart.defaults.color = style.getPropertyValue('--chart-text-color').trim() || '#a1a1aa';
     Chart.defaults.font.family = 'Inter, sans-serif';
@@ -119,26 +118,27 @@ export class ChartComponent implements OnInit, OnDestroy {
         import('chartjs-plugin-datalabels').then((DataLabels) => {
           const { Chart, registerables } = ChartJs;
           Chart.register(...registerables, DataLabels.default);
-          this.ChartRef = Chart;
-
           // Aplicar tema inicial
           this.applyChartTheme(Chart);
 
         // Custom Shadow Plugin for 3D depth on Doughnuts
         // FIX (WebView2): save/restore MUST be unconditional for all chart types.
-        const shadowPlugin = {
+        const shadowPlugin: Plugin = {
           id: 'shadowPlugin',
-          beforeDatasetDraw: (chart: any) => {
+          beforeDatasetDraw: (chart) => {
             const ctx = chart.ctx;
+            const chartType = 'type' in chart.config
+              ? chart.config.type
+              : chart.config.data.datasets[0]?.type;
             ctx.save(); // Always save — never skip, regardless of chart type
-            if (chart.config.type === 'doughnut' || chart.config.type === 'pie') {
+            if (chartType === 'doughnut' || chartType === 'pie') {
               ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
               ctx.shadowBlur = 12;
               ctx.shadowOffsetX = 0;
               ctx.shadowOffsetY = 5;
             }
           },
-          afterDatasetDraw: (chart: any) => {
+          afterDatasetDraw: (chart) => {
             chart.ctx.restore(); // Always restore — mirrors the unconditional save above
           }
         };
@@ -147,17 +147,22 @@ export class ChartComponent implements OnInit, OnDestroy {
         if (Chart.defaults.plugins.datalabels) {
           Chart.defaults.plugins.datalabels.color = 'var(--gray-0)';
           Chart.defaults.plugins.datalabels.font = { weight: 'bold', size: 14 };
-          Chart.defaults.plugins.datalabels.formatter = function(value: any, context: any) {
+          Chart.defaults.plugins.datalabels.formatter = function(value: unknown, context: DataLabelsContext) {
             if (typeof value === 'number') {
-              if (context.chart.config.type === 'bar') {
+              const chartType = 'type' in context.chart.config
+                ? context.chart.config.type
+                : context.chart.config.data.datasets[0]?.type;
+              if (chartType === 'bar') {
                 return (Math.round(value * 100) / 100) + '%';
               }
               return Math.round(value * 100) / 100;
             }
             return value;
           };
-          Chart.defaults.plugins.datalabels.display = function(context: any) {
-            const chartType = context.chart.config.type;
+          Chart.defaults.plugins.datalabels.display = function(context: DataLabelsContext) {
+            const chartType = 'type' in context.chart.config
+              ? context.chart.config.type
+              : context.chart.config.data.datasets[0]?.type;
             const isPieOrDoughnut = chartType === 'pie' || chartType === 'doughnut' || chartType === 'polarArea';
             const isVisible = isPieOrDoughnut
               ? context.chart.getDataVisibility(context.dataIndex)

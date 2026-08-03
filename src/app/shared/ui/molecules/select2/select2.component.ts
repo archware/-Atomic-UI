@@ -86,7 +86,7 @@ export interface Select2Option {
       </div>
 
       @if (isOpen()) {
-        <div class="select2-dropdown" (click)="$event.stopPropagation()" (mousedown)="$event.stopPropagation()">
+        <div class="select2-dropdown">
           <!-- Search box -->
           @if (searchable) {
             <div class="select2-search">

@@ -1,7 +1,8 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import type { ChartConfiguration, ScriptableContext } from 'chart.js';
 import {
-  LayoutShellComponent, TopbarComponent, SidebarComponent, SidebarUser,
+  LayoutShellComponent, TopbarComponent, SidebarComponent, SidebarMenuItem, SidebarUser,
   PanelComponent, RowComponent, AvatarComponent, TextComponent,
   ButtonComponent, SkeletonComponent, MetricsGridComponent, ThemeSwitcherComponent,
   ChartComponent, ApiService, useApi, KpiMetric,
@@ -10,7 +11,6 @@ import {
 
 interface User { id: string; name: string; email: string; role?: string; avatar?: string; }
 interface DashboardStats { totalUsers: number; activeProjects: number; pendingTasks: number; revenue: number; }
-interface MenuItem { id?: string; label: string; icon: string; iconColor?: string; route?: string; badge?: number | string; active?: boolean; }
 
 @Component({
   selector: 'app-dashboard-page',
@@ -99,7 +99,7 @@ export class DashboardPageComponent implements OnInit {
     ];
   });
 
-  get menuItems(): MenuItem[] {
+  get menuItems(): SidebarMenuItem[] {
     return [
       { id: 'showcase', label: 'Volver a Showcase', icon: 'fa-solid fa-palette', route: '/showcase', iconColor: 'var(--secondary-color)' },
       { id: 'dashboard', label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard', active: true, iconColor: 'var(--info-color)' },
@@ -116,13 +116,13 @@ export class DashboardPageComponent implements OnInit {
 
   ngOnInit() {
     import('rxjs').then(({ of }) => {
-      this.statsApi.execute(of({ totalUsers: 10600, activeProjects: 22, pendingTasks: 39, revenue: 244000 }) as any);
+      this.statsApi.execute(of({ totalUsers: 10600, activeProjects: 22, pendingTasks: 39, revenue: 244000 }));
     });
   }
 
   closeSidebar() { this.sidebarVisible.set(false); }
   toggleSidebar() { this.sidebarVisible.update(v => !v); }
-  onMenuItemClick(item: any) { if (item.route) this.router.navigate([item.route]); }
+  onMenuItemClick(item: SidebarMenuItem): void { if (item.route) this.router.navigate([item.route]); }
   onUserAction(_action: unknown) {}
   onLogout() {}
   loadDashboardStats() {}
@@ -166,18 +166,18 @@ export class DashboardPageComponent implements OnInit {
     return color;
   }
 
-  revenueOptions: any = {
+  revenueOptions: ChartConfiguration<'line'>['options'] = {
     responsive: true, maintainAspectRatio: false,
     plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false, backgroundColor: this.chartTooltipBg(), padding: 12, titleFont: { size: 14 }, bodyFont: { size: 14 } } },
     interaction: { mode: 'nearest', axis: 'x', intersect: false },
-    scales: { y: { beginAtZero: true, grid: { color: () => this.chartGridColor(), drawBorder: false } }, x: { grid: { display: false, drawBorder: false } } }
+    scales: { y: { beginAtZero: true, grid: { color: () => this.chartGridColor() }, border: { display: false } }, x: { grid: { display: false }, border: { display: false } } }
   };
-  donutOptions: any = { 
+  donutOptions: ChartConfiguration<'doughnut'>['options'] = {
     responsive: true, maintainAspectRatio: false, 
     plugins: { legend: { position: 'right', labels: { usePointStyle: true, padding: 20 } } }, 
     cutout: '75%', elements: { arc: { borderWidth: 0 } } 
   };
-  performanceOptions: any = { 
+  performanceOptions: ChartConfiguration<'bar'>['options'] = {
     responsive: true, maintainAspectRatio: false, 
     plugins: { legend: { position: 'top', labels: { usePointStyle: true } } }, 
     scales: { y: { stacked: true, grid: { display: false } }, x: { stacked: true, grid: { display: false } } } 
@@ -189,7 +189,7 @@ export class DashboardPageComponent implements OnInit {
       data: [180, 195, 185, 215, 240, 230, 260, 290], 
       label: 'Ingresos (USD)', 
       borderColor: this.chartColor(2, '#3b82f6'),
-      backgroundColor: (context: any) => {
+      backgroundColor: (context: ScriptableContext<'line'>) => {
         const chart = context.chart;
         if (!chart || !chart.chartArea) {
           return this.chartColorAlpha(2, '#3b82f6', 0.2);
