@@ -229,7 +229,7 @@ export interface Step {
      */
 
     /* RESPONSIVE: Compact mobile layout */
-    @media (max-width: 76var(--space-2)) {
+    @media (max-width: 768px) {
       .stepper {
         flex-direction: column;
         align-items: stretch;

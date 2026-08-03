@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "targetPackage": "@hra/atomic-ui",
+  "versionSource": "package.json",
+  "status": "blocked-scaffold",
+  "runtimeInstallable": false,
+  "sourceInventory": {
+    "algorithm": "sha256",
+    "roots": [
+      {
+        "path": "src/app/shared/ui",
+        "extensions": [".ts", ".html", ".css", ".scss"],
+        "excludeSuffixes": [".spec.ts"]
+      },
+      {
+        "path": "src/styles/themes",
+        "extensions": [".css"],
+        "excludeSuffixes": []
+      }
+    ]
+  },
+  "dryRunArtifact": {
+    "kind": "contract-only",
+    "private": true,
+    "containsCompiledAngularLibrary": false,
+    "allowedFiles": [
+      "PACKAGE_STATUS.md",
+      "atomic-source-manifest.json",
+      "package-contract.json",
+      "package.json",
+      "public-exports.json"
+    ]
+  },
+  "requiredBlockers": [
+    {
+      "code": "ANGULAR_PROJECT_IS_APPLICATION",
+      "resolution": "Crear un proyecto Angular de tipo library sin mover ni eliminar la aplicación de demostración existente."
+    },
+    {
+      "code": "NG_PACKAGR_NOT_DECLARED",
+      "resolution": "Declarar una versión compatible de ng-packagr y fijarla en el lockfile mediante un cambio de dependencias revisado."
+    },
+    {
+      "code": "PUBLIC_API_CONTAINS_APPLICATION_CONCERNS",
+      "resolution": "Definir un public-api visual separado y extraer autenticación, transporte HTTP, caché y permisos hacia los consumidores."
+    }
+  ],
+  "releaseRequirements": [
+    "El proyecto library compila mediante ng-packagr.",
+    "El paquete expone JavaScript, declaraciones TypeScript y estilos; no expone fuentes TypeScript como artefacto ejecutable.",
+    "Las dependencias Angular se declaran como peerDependencies compatibles.",
+    "npm pack --dry-run contiene únicamente la lista autorizada de artefactos compilados y metadatos.",
+    "El manifiesto SHA-256 coincide con el contenido liberado y con una referencia Git inmutable.",
+    "Los consumidores instalan una versión exacta y conservan procedencia verificable."
+  ]
+}

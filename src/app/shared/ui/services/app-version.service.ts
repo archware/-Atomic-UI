@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, InjectionToken, inject, signal } from '@angular/core';
 
 export interface AppVersionInfo {
   appName: string;
@@ -8,59 +8,36 @@ export interface AppVersionInfo {
   isNative: boolean;
 }
 
+/**
+ * Adaptador opcional proporcionado por cada consumidor.
+ *
+ * Atomic UI no detecta Tauri, Wails ni PyWebView. El runtime propietario
+ * traduce sus metadatos al contrato visual común y los inyecta al arrancar.
+ */
+export const APP_VERSION_INFO = new InjectionToken<Partial<AppVersionInfo>>(
+  'ATOMIC_APP_VERSION_INFO'
+);
+
+const DEFAULT_VERSION_INFO: AppVersionInfo = {
+  appName: '',
+  version: 'v1.0.0',
+  environment: 'BETA',
+  buildDate: '',
+  isNative: false
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class AppVersionService {
+  private readonly providedInfo = inject(APP_VERSION_INFO, { optional: true });
+
   readonly versionInfo = signal<AppVersionInfo>({
-    appName: '',
-    version: 'v1.1.0',
-    environment: 'BETA',
-    buildDate: '',
-    isNative: false
+    ...DEFAULT_VERSION_INFO,
+    ...this.providedInfo
   });
 
-  constructor() {
-    this.initVersion();
-  }
-
-  private async initVersion(): Promise<void> {
-    try {
-      // 1. Intentar cargar datos de environment.ts dinámicamente
-      const envModule = await import('../../../../environments/environment').catch(() => null);
-      if (envModule?.environment) {
-        const env = envModule.environment;
-        this.versionInfo.set({
-          appName: env.appName || '',
-          version: env.version?.startsWith('v') ? env.version : `v${env.version || '1.1.0'}`,
-          environment: env.environment || 'BETA',
-          buildDate: env.buildDate || '',
-          isNative: false
-        });
-      }
-
-      // 2. Autodetectar si corre en Tauri
-      const tauriApp = await import('@tauri-apps/api/app').catch(() => null);
-      if (tauriApp?.getVersion) {
-        const nativeVer = await tauriApp.getVersion();
-        if (nativeVer) {
-          this.versionInfo.update((prev) => ({
-            ...prev,
-            version: nativeVer.startsWith('v') ? nativeVer : `v${nativeVer}`,
-            isNative: true
-          }));
-        }
-      }
-
-      // 3. Autodetectar si corre en PyWebView / Wails
-      if ((window as any).pywebview || (window as any).runtime || (window as any).go) {
-        this.versionInfo.update((prev) => ({
-          ...prev,
-          isNative: true
-        }));
-      }
-    } catch {
-      // Mantener valores estáticos por defecto (v1.1.0 BETA)
-    }
+  setVersionInfo(info: Partial<AppVersionInfo>): void {
+    this.versionInfo.update((current) => ({ ...current, ...info }));
   }
 }

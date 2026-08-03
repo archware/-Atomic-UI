@@ -245,7 +245,7 @@
  */
 
 /* === RESPONSIVE === */
-@media (max-width: 76var(--space-2)) {
+@media (max-width: 768px) {
   .panel__header {
     padding: var(--space-3) var(--space-4);
   }

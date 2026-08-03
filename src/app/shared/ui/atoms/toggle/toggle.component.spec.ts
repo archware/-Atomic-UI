@@ -6,6 +6,11 @@ describe('ToggleComponent', () => {
   let component: ToggleComponent;
   let fixture: ComponentFixture<ToggleComponent>;
 
+  function setInput(name: string, value: unknown): void {
+    fixture.componentRef.setInput(name, value);
+    fixture.detectChanges();
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ToggleComponent],
@@ -29,8 +34,7 @@ describe('ToggleComponent', () => {
     });
 
     it('should render label text when label is set', () => {
-      component.label = 'Activar notificaciones';
-      fixture.detectChanges();
+      setInput('label', 'Activar notificaciones');
       const label = fixture.nativeElement.querySelector('.toggle-label');
       expect(label?.textContent?.trim()).toBe('Activar notificaciones');
     });
@@ -39,15 +43,13 @@ describe('ToggleComponent', () => {
   // ── Disabled ──────────────────────────────────────────────────────────────
   describe('disabled', () => {
     it('should apply disabled class on wrapper when disabled is true', () => {
-      component.disabled = true;
-      fixture.detectChanges();
+      setInput('disabled', true);
       const wrapper = fixture.nativeElement.querySelector('.toggle-wrapper');
       expect(wrapper.classList.contains('disabled')).toBeTrue();
     });
 
     it('should disable the checkbox input', () => {
-      component.disabled = true;
-      fixture.detectChanges();
+      setInput('disabled', true);
       const input: HTMLInputElement = fixture.nativeElement.querySelector('input[type=checkbox]');
       expect(input.disabled).toBeTrue();
     });

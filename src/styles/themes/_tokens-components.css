@@ -216,6 +216,12 @@
    --modal-header-bg: var(--surface-section);
    --modal-footer-bg: var(--surface-section);
    --modal-border: var(--border-color-light);
+   --crud-dialog-max-width-sm: 32rem;
+   --crud-dialog-max-width-md: 42rem;
+   --crud-dialog-max-width-lg: 48rem;
+   --crud-dialog-max-width-xl: 58rem;
+   --crud-dialog-max-height: calc(100dvh - var(--space-8));
+   --crud-dialog-padding: 0;
 
    /* === ALERTS === */
    --alert-info-bg: var(--info-color-lighter);
@@ -230,6 +236,8 @@
    --alert-danger-bg: var(--danger-color-lighter);
    --alert-danger-border: var(--danger-color);
    --alert-danger-text: var(--danger-color-text);
+   --alert-flow-gap: 2.25rem;
+   --alert-flow-gap-compact: var(--space-4);
 
    /* === SCROLLBAR === */
    --scrollbar-track: color-mix(in srgb, var(--info-color), transparent 92%);
@@ -454,6 +462,12 @@ html.dark {
    --modal-header-bg: var(--surface-section);
    --modal-footer-bg: var(--surface-section);
    --modal-border: var(--border-color);
+   --crud-dialog-max-width-sm: 32rem;
+   --crud-dialog-max-width-md: 42rem;
+   --crud-dialog-max-width-lg: 48rem;
+   --crud-dialog-max-width-xl: 58rem;
+   --crud-dialog-max-height: calc(100dvh - var(--space-8));
+   --crud-dialog-padding: 0;
 
    /* === ALERTS === */
    --alert-info-bg: var(--info-color-lighter);
@@ -683,6 +697,12 @@ html.dark {
    --modal-header-bg: var(--surface-section);
    --modal-footer-bg: var(--surface-section);
    --modal-border: var(--border-color);
+   --crud-dialog-max-width-sm: 32rem;
+   --crud-dialog-max-width-md: 42rem;
+   --crud-dialog-max-width-lg: 48rem;
+   --crud-dialog-max-width-xl: 58rem;
+   --crud-dialog-max-height: calc(100dvh - var(--space-8));
+   --crud-dialog-padding: 0;
 
    /* === ALERTS === */
    --alert-info-bg: var(--info-color-lighter);

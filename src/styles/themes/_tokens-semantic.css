@@ -30,8 +30,8 @@
    /* Elementos hundidos / Deshabilitados */
 
    /* === TEXTO === */
-   --text-color: var(--gray-900);
-   /* Texto principal */
+   --text-color: var(--gray-800);
+   /* Texto principal - Slate soft */
    --text-color-secondary: var(--gray-600);
    /* Texto secundario */
    --text-color-muted: var(--gray-500);

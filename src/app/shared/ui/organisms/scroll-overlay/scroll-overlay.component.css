@@ -16,7 +16,7 @@
 
 /* Outer border for tables to provide rounded corners and enclosing border */
 .so-root[data-so-table] {
-  border: 1px solid var(--table-color-border, var(--border-color, #ccc));
+  border: 1px solid var(--table-color-border, var(--border-color));
   border-radius: var(--table-border-radius, var(--space-2));
 }
 

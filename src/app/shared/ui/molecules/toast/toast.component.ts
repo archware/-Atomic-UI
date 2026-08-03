@@ -70,7 +70,7 @@ export interface ToastConfig {
     }
 
     /* Responsive: mobile ajuste */
-    @media (max-width: 76var(--space-2)) {
+    @media (max-width: 768px) {
       :host {
         top: auto;
         bottom: var(--space-4);

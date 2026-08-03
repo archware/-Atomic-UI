@@ -17,6 +17,15 @@ export class LayoutShellComponent {
   /** Sidebar width (default: 260px). Supports any CSS value: '260px', '25%', 'clamp(200px, 20%, 300px)' */
   @Input() sidebarWidth = '260px';
 
+  /** Controls the canonical footer row outside the scroll viewport. */
+  @Input() footerVisible = true;
+  @Input() footerCompanyName = 'Company';
+  @Input() footerYear = new Date().getFullYear();
+  @Input() footerCopyrightText = 'Todos los derechos reservados.';
+  @Input() footerShowVersion = true;
+  @Input() footerVersion = 'v1.0.0';
+  @Input() footerEnvironment = 'BETA';
+
   /** Event emitted when sidebar backdrop is clicked */
   @Output() closeSidebar = new EventEmitter<void>();
 

@@ -144,9 +144,16 @@ export class ThemeService {
       const { x, y } = this.transitionOrigin();
       htmlElement.style.setProperty('--vt-x', `${x}px`);
       htmlElement.style.setProperty('--vt-y', `${y}px`);
-      (document as Document & {
-        startViewTransition: (cb: () => void) => void;
+      const transition = (document as Document & {
+        startViewTransition: (cb: () => void) => {
+          ready: Promise<unknown>;
+          updateCallbackDone: Promise<unknown>;
+          finished: Promise<unknown>;
+        };
       }).startViewTransition(doApply);
+      void transition.ready.catch(() => undefined);
+      void transition.updateCallbackDone.catch(() => undefined);
+      void transition.finished.catch(() => undefined);
       return;
     }
 
@@ -187,13 +194,15 @@ export class ThemeService {
   }
 
   /**
-   * Alternar entre claro y oscuro (por defecto alterna a brand-dark si no es standard)
+   * Alterna entre claro y oscuro neutral.
+   * `brand-dark` se conserva como una elección explícita y no se activa desde
+   * el control binario etiquetado como tema oscuro.
    */
   toggleTheme(): void {
     if (this.isDarkMode()) {
       this.setLightTheme();
     } else {
-      this.setBrandDarkTheme(); // Default to brand dark on toggle
+      this.setDarkTheme();
     }
   }
 

@@ -43,8 +43,8 @@ export type SpinnerVariant = 'primary' | 'secondary' | 'white' | 'current';
 
     .visually-hidden {
       position: absolute;
-      width: 1px;
-      height: 1px;
+      width: var(--border-width-thin);
+      height: var(--border-width-thin);
       overflow: hidden;
       clip: rect(0 0 0 0);
       white-space: nowrap;
@@ -57,25 +57,25 @@ export type SpinnerVariant = 'primary' | 'secondary' | 'white' | 'current';
     }
 
     /* Sizes */
-    .spinner--xs  { --sz: 1var(--space-1); --border: 1.5px; }
-    .spinner--sm  { --sz: 1var(--space-2); --border: var(--space-1);   }
-    .spinner--md  { --sz: 24px; --border: 2.5px; }
-    .spinner--lg  { --sz: 3var(--space-2); --border: var(--space-1);   }
-    .spinner--xl  { --sz: 4var(--space-2); --border: 4px;   }
+    .spinner--xs  { --sz: var(--icon-xs); --border: var(--border-width-thin); }
+    .spinner--sm  { --sz: var(--icon-sm); --border: var(--border-width-medium); }
+    .spinner--md  { --sz: var(--icon-md); --border: var(--border-width-medium); }
+    .spinner--lg  { --sz: var(--icon-lg); --border: var(--border-width-thick); }
+    .spinner--xl  { --sz: var(--space-7); --border: var(--space-1); }
 
     /* Variants — track color */
-    .spinner--primary .spinner__ring  { border-color: var(--primary-color-alpha, rgba(59,130,246,.25)); border-top-color: var(--primary-color, #3b82f6); }
-    .spinner--secondary .spinner__ring { border-color: var(--secondary-color-alpha, rgba(100,116,139,.25)); border-top-color: var(--secondary-color, #64748b); }
+    .spinner--primary .spinner__ring  { border-color: var(--primary-color-lighter); border-top-color: var(--primary-color); }
+    .spinner--secondary .spinner__ring { border-color: var(--secondary-color-lighter); border-top-color: var(--secondary-color); }
     .spinner--white .spinner__ring    { border-color: var(--border-color); border-top-color: var(--gray-0); }
     .spinner--current .spinner__ring  { border-color: transparent; border-top-color: currentColor; }
 
     .spinner__ring {
       display: block;
-      width: var(--sz, 24px);
-      height: var(--sz, 24px);
-      border-width: var(--border, 2.5px);
+      width: var(--sz, var(--icon-md));
+      height: var(--sz, var(--icon-md));
+      border-width: var(--border, var(--border-width-medium));
       border-style: solid;
-      border-radius: 50%;
+      border-radius: var(--radius-full);
       animation: spin 0.7s linear infinite;
     }
 

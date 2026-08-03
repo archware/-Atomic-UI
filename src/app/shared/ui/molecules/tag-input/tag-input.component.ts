@@ -99,9 +99,9 @@ export interface TagInputOption {
       flex-wrap: wrap;
       align-items: center;
       gap: var(--space-1);
-      min-height: 4var(--space-1);
+      min-height: var(--space-7);
       padding: var(--space-2) var(--space-3);
-      border: 1px solid var(--border-color);
+      border: var(--border-width-thin) solid var(--border-color);
       border-radius: var(--radius-md);
       background: var(--input-background, var(--surface-background));
       cursor: text;
@@ -121,7 +121,7 @@ export interface TagInputOption {
 
     .tag-input__input {
       flex: 1;
-      min-width: 80px;
+      min-width: 5rem;
       border: none;
       outline: none;
       background: transparent;
@@ -141,7 +141,7 @@ export interface TagInputOption {
       display: block;
       margin-top: var(--space-1);
       font-size: var(--text-xs);
-      color: var(--color-danger-600, #dc2626);
+      color: var(--danger-color);
     }
   `],
 })

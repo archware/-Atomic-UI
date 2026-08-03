@@ -24,6 +24,13 @@ export type { ChipVariant, ChipSize } from './atoms/chip/chip.component';
 export { BadgeComponent } from './atoms/badge/badge.component';
 export type { BadgeVariant, BadgeSize, BadgePosition } from './atoms/badge/badge.component';
 
+export { StatusBadgeComponent } from './atoms/status-badge/status-badge.component';
+export type {
+  StatusBadgeStatus,
+  StatusBadgeChannel,
+  StatusBadgeSize,
+} from './atoms/status-badge/status-badge.component';
+
 export { BreadcrumbComponent } from './atoms/breadcrumb/breadcrumb.component';
 export type { BreadcrumbItem } from './atoms/breadcrumb/breadcrumb.component';
 
@@ -39,6 +46,9 @@ export { IconButtonComponent } from './atoms/icon-button/icon-button.component';
 
 export { InputComponent } from './atoms/input/input.component';
 
+export { Input } from './atoms/form-input/input';
+export type { InputMode, InputType } from './atoms/form-input/input';
+
 export { LanguageSwitcherComponent } from './atoms/language-switcher/language-switcher.component';
 export type { Language } from './atoms/language-switcher/language-switcher.component';
 
@@ -50,6 +60,12 @@ export { RatingComponent } from './atoms/rating/rating.component';
 export { RowComponent } from './atoms/row/row.component';
 
 export { SelectComponent } from './atoms/select/select.component';
+
+export { Select } from './atoms/form-select/select';
+export type { SelectOption } from './atoms/form-select/select';
+
+export { ChoiceControl } from './atoms/choice-control/choice-control';
+export type { ChoiceControlType } from './atoms/choice-control/choice-control';
 
 export { SkeletonComponent } from './atoms/skeleton/skeleton.component';
 
@@ -83,6 +99,13 @@ export type { ProgressVariant, ProgressSize } from './atoms/progress/progress.co
 
 export { SpinnerComponent } from './atoms/spinner/spinner.component';
 export type { SpinnerSize, SpinnerVariant } from './atoms/spinner/spinner.component';
+
+export { TableAction } from './atoms/table-action/table-action';
+export type {
+  TableActionName,
+  TableActionTone,
+  TableActionSize,
+} from './atoms/table-action/table-action';
 
 export { TooltipDirective } from './atoms/tooltip/tooltip.directive';
 
@@ -128,7 +151,7 @@ export type { ModalConfig, ModalItem, ModalButton, ModalSize } from './services/
 export { UserMenuComponent } from './molecules/user-menu/user-menu.component';
 
 export { AlertComponent } from './molecules/alert/alert.component';
-export type { AlertVariant, AlertSize } from './molecules/alert/alert.component';
+export type { AlertVariant, AlertSize, AlertFlowSpacing } from './molecules/alert/alert.component';
 
 export { TagInputComponent } from './molecules/tag-input/tag-input.component';
 export type { TagInputOption } from './molecules/tag-input/tag-input.component';
@@ -173,6 +196,19 @@ export type { NavBarItem, NavBarBrand } from './organisms/navbar/navbar.componen
 
 export { MetricsGridComponent } from './organisms/metrics-grid/metrics-grid.component';
 export type { KpiMetric } from './organisms/metrics-grid/metrics-grid.component';
+
+export { CrudDialog } from './organisms/crud-dialog/crud-dialog';
+
+export { DataTable } from './organisms/data-table/data-table';
+export type {
+  DataTableActionContext,
+  DataTableAlignment,
+  DataTableColumn,
+  DataTableSortChange,
+  DataTableSortDirection,
+  DataTableStatus,
+  DataTableTrackBy,
+} from './organisms/data-table/data-table';
 
 // ============================================
 // SURFACES

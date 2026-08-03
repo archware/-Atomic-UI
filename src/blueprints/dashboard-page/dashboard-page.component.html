@@ -39,7 +39,7 @@
     
     <!-- Main Chart: Revenue (Span 8) -->
     <app-panel class="bento-item bento-card bento-large" title="Evolución de Ingresos (Mensual)">
-      <div style="position: absolute; top: 1.5rem; right: 1.5rem;">
+      <div class="trend-chip">
         <app-chip variant="success" size="sm">+15% vs Mes Anterior</app-chip>
       </div>
       <div class="chart-wrapper">
@@ -49,7 +49,7 @@
 
     <!-- Goal Widget (Span 4) -->
     <app-panel class="bento-item bento-card bento-medium premium-gradient-bg" title="Meta de Ventas">
-      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+      <div class="goal-content">
         <div class="radial-progress">
           <svg viewBox="0 0 36 36" class="circular-chart primary">
             <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
@@ -57,7 +57,7 @@
             <text x="18" y="20.35" class="percentage">85%</text>
           </svg>
         </div>
-        <div style="font-size: 1.5rem; font-weight: 700; margin-top: 1rem; text-align: center;">$125k / $150k</div>
+        <div class="goal-amount">$125k / $150k</div>
         <app-text variant="body-sm" color="muted">Faltan 15 días para el cierre</app-text>
       </div>
     </app-panel>
@@ -82,7 +82,7 @@
   <div class="bento-grid mb-6">
     <!-- Mini Table (Span 8) -->
     <app-panel class="bento-item bento-card bento-large" title="Últimas Transacciones">
-      <div class="table-container" style="width: 100%;">
+      <div class="table-container">
         <app-table [columnTemplate]="'minmax(180px, 1.5fr) minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr)'">
           <app-table-head>
             <tr>
@@ -96,7 +96,7 @@
             @for (tx of recentTransactions; track tx.id) {
             <tr app-table-row>
               <td app-table-cell>
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <div class="transaction-client">
                   <app-avatar [name]="tx.client" size="sm"></app-avatar>
                   <app-text variant="body" weight="semibold">{{ tx.client }}</app-text>
                 </div>
@@ -109,7 +109,7 @@
           </tbody>
         </app-table>
       </div>
-      <div class="mt-4" style="text-align: center; margin-top: auto;">
+      <div class="table-footer mt-4">
         <app-button variant="ghost" iconClass="fa-solid fa-arrow-right">Ver todas las transacciones</app-button>
       </div>
     </app-panel>

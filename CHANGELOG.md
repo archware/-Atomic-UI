@@ -3,6 +3,155 @@
 Todas las modificaciones importantes de este proyecto se documentan en este archivo.  
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
+## [Sin publicar]
+
+### Añadido
+
+- `ATOMIC-DIST-20260803-001`: se incorpora un contrato transicional para el
+  futuro paquete `@hra/atomic-ui`, con inventario de exportaciones, manifiesto
+  SHA-256 determinista y `npm pack --dry-run` privado, sin red y sin archivo
+  `.tgz`.
+- El gate de distribución documenta y comprueba que el repositorio continúa
+  siendo una aplicación Angular, que `ng-packagr` no está disponible y que el
+  barrel todavía expone responsabilidades propias de los consumidores. Un gate
+  verde no se presenta como biblioteca compilada ni autoriza publicación.
+
+### Gobierno
+
+- El instalador clasifica una copia como `exact` solamente cuando coinciden el
+  conjunto de archivos y sus hashes. `--audit-only` produce un reporte de solo
+  lectura; una divergencia detiene la instalación antes de modificar el
+  consumidor y exige un registro de decisión concreto.
+- La guía del ecosistema elimina el fallback productivo a datos simulados y la
+  recomendación de almacenar `.env` con credenciales junto al ejecutable.
+
+### Verificación
+
+- El manifiesto transicional cubre 134 fuentes y el empaquetado seco admite solo
+  cinco archivos contractuales. La prueba del instalador también bloquea una
+  adaptación no documentada.
+
+## [5.1.18] - 2026-07-24
+
+### Corregido
+
+- `PREST-20260724-060`: el ADN incorpora las variantes semánticas
+  `success`, `warning` y `danger` de `StatusBadge`, con texto accesible además
+  del color.
+- KPI y `MetricsGrid` adoptan la geometría ejecutiva compacta de cuatro
+  columnas; la tabla elimina su límite vertical rígido y delega el scroll
+  vertical al layout.
+
+### Verificación
+
+- 200/200 pruebas Atomic aprobadas. El consumidor solo puede actualizar su
+  procedencia después de validar y consolidar este cambio en la fuente.
+
+## [5.1.17] - 2026-07-22
+
+### Gobierno obligatorio
+
+- `PREST-20260722-031`: la política Atomic-first deja de ser recomendación. Se
+  incorpora un kit canónico con contrato para agentes, manifiesto, gate exacto,
+  instalador y workflow de CI para todo consumidor nuevo o existente.
+- `create:project` instala automáticamente esos cerrojos; las adaptaciones
+  requieren justificación y registro de decisión, y el gate se protege a sí
+  mismo mediante comparación de hashes contra `-Atomic-UI`.
+- Los blueprints eliminan primitivas visuales nativas, estilos inline y colores
+  fijos para que una aplicación nueva nazca cumpliendo la misma ley.
+
+### Verificación
+
+- El contrato prueba un bootstrap real y bloquea cuatro violaciones: control
+  nativo, componente desconocido, copia divergente y adaptación injustificada.
+- Gate normativo y build completo de Atomic aprobados.
+
+## [5.1.16] - 2026-07-22
+
+### Añadido
+- `PREST-20260722-030`: nuevos átomos canónicos `Input`, `Select` y
+  `ChoiceControl`, con CVA zoneless, accesibilidad, estados de ayuda/error y
+  contratos reutilizables. `Select` conserva el tipo real de opciones numéricas
+  y `ChoiceControl` publica los estados marcado/deshabilitado en el host.
+
+### Corregido
+- La suite histórica OnPush usa `componentRef.setInput`; `Avatar` deja de
+  memoizar propiedades `@Input` no reactivas y `ThemeService` consume de forma
+  segura los rechazos de View Transitions.
+- La prueba del shell incorpora sus proveedores reales y valida la composición
+  vigente en lugar de un título obsoleto.
+
+### Verificación
+- Suite completa: 197/197 pruebas aprobadas. Build Angular correcto. La deuda de
+  68 fallos históricos documentada en versiones anteriores queda cerrada.
+
+## [5.1.15] - 2026-07-22
+
+### Añadido
+- `PREST-20260722-029`: `TableAction`, `DataTable` y `CrudDialog` pasan a existir
+  realmente en Atomic UI. El átomo cubre tres tamaños sin ocultar acciones, la
+  tabla integra estados, orden, paginación y tarjetas móviles, y el diálogo
+  encapsula el elemento nativo para altas y ediciones accesibles.
+- Se incorporan tokens específicos del diálogo CRUD y exports públicos para que
+  los consumidores propaguen los componentes sin recrear estilos o contratos.
+- Validación del incremento: build correcto, auditoría npm de producción sin
+  vulnerabilidades y 16/16 pruebas focalizadas aprobadas.
+
+### Regla de propagación
+- Todo objeto visual nuevo se implementa y valida en `-Atomic-UI` antes de
+  copiarse o adaptarse en una aplicación. La lógica de dominio permanece fuera
+  del ADN.
+
+## [5.1.14] - 2026-07-21
+
+### Añadido
+- **Paginación integrada en `DataTable`:** Se integró el footer de paginación y resumen de registros (`Mostrando X - Y de Z registros`) dentro del Organismo `<prest-data-table>`.
+- **Propiedad `size` en `TableAction`:** Soporte para tamaños `sm` (28px), `md` (36px) y `lg` (44px) en el componente de acciones de grilla.
+
+### Corregido
+- **Aislamiento de tokens de layout:** Se documentó la regla de paridad para evitar que los scripts de sincronización de temas sobreescriban variables locales de maquetación (`--sidebar-width`, `--header-height`) en aplicaciones consumidoras.
+- **Grids de métricas en Angular:** Se validó la regla de maquetación con `:host { height: 100% }` para asegurar alineación estricta de bordes en tarjetas KPI.
+
+---
+
+## [5.1.13] - 2026-07-20
+
+### Añadido
+- **Estado semántico independiente:** `StatusBadgeComponent` representa `active`, `inactive`, `degraded` y `unconfigured` con texto visible además del color. Puede mostrar identidad WEB, TELEGRAM o SMS mediante FontAwesome sin aceptar ni exponer credenciales.
+- **Identidad estable de indicadores:** `MetricsGridComponent` admite `KpiMetric.id` para conservar cada tarjeta al reordenar datos y expone un nombre accesible para la sección.
+- **Pruebas y catálogo:** KPI, MetricsGrid y StatusBadge incorporan specs zoneless y stories coherentes, incluidas composiciones estrechas, títulos repetidos e importes preformateados.
+
+### Corregido
+- **KPI financiero:** se restauraron dimensiones CSS válidas, la moneda conserva dos decimales por defecto y `displayValue` permite presentar exactamente el importe autoritativo recibido por el consumidor.
+- **Comparaciones honestas:** una KPI no muestra tendencia, icono ni texto comparativo por defecto; la tendencia solo aparece cuando el consumidor la entrega explícitamente.
+- **Responsive sin desborde:** MetricsGrid usa `minmax(min(100%, var(--min-col-width)), 1fr)` y sus hosts permiten encogimiento desde 320 px.
+- **Sparkline liviano:** las series finitas generan un SVG decorativo sin Chart.js, animaciones ni valores `NaN`/`Infinity`.
+- **Cadena Angular 22 alineada:** Angular y DevKit pasan a `22.0.7`; Storybook, ESLint, Compodoc y la herramienta de publicación se actualizan a líneas compatibles, sin usar `npm audit fix --force` ni degradar el framework.
+- **Entorno reproducible:** `.node-version`, `.nvmrc`, `engines` y `packageManager` fijan Node `24.15.0` y npm `11.12.1`; Vite queda sobreescrito a una revisión corregida para Windows.
+- **Dependencias transitivas de desarrollo:** `webpack-dev-server` queda fijado en `5.2.6` y el `uuid` interno de `sockjs` en `11.1.1`, ambos dentro del contrato usado y comprobado por Angular/Storybook, para cerrar los avisos moderados sin degradar Angular.
+
+### Verificación
+- Incremento de diseño `PREST-20260720-014`, limitado al ADN Atomic UI. La propagación a consumidores queda separada y exige sus propias pruebas de contrato y responsive.
+- Con Node 24.15.0: 24/24 pruebas dirigidas, build Angular y build Storybook correctos. Tanto `npm audit --omit=dev` como la auditoría completa reportan 0 vulnerabilidades.
+- La suite histórica completa deja 106 pruebas correctas y 68 fallos en componentes no modificados por el incremento —principalmente specs que mutan `input()` sin `setInput`—. No se oculta como gate aprobado; la fuente propagada por PREST-014 queda cubierta por la suite dirigida y el saneamiento global se mantiene como deuda independiente.
+
+---
+
+## [5.1.12] - 2026-07-20
+
+### Añadido
+- **Navegación jerárquica:** `SidebarComponent` admite árboles mediante `children`, expansión declarativa con `expanded`, apertura automática del ancestro activo e iconos FontAwesome en padres e hijos sin alterar el contrato de los elementos planos.
+- **Sesión completa en Topbar:** idioma y notificaciones pueden ocultarse independientemente; el menú de usuario muestra `userRole` y las acciones de sesión se presentan en mayúsculas.
+- **Espaciado de feedback:** `AlertComponent` incorpora `flowSpacing="default|compact|none"`; el valor predeterminado reserva 36 px después del mensaje mediante tokens y conserva la capitalización del cuerpo.
+
+### Corregido
+- **Responsive recuperado:** se restauraron a `768px` los breakpoints dañados de LayoutShell, Panel, Card, Toast, Stepper, Topbar, Footer, Tabs y Navbar. El logo y el botón móvil de Navbar recuperan 28 px y 36 px respectivamente.
+- **Alertas semánticas:** las cuatro variantes consumen `--alert-*-bg|border|text`; la advertencia deja de depender de un fallback CSS inválido.
+- **Acciones de icono accesibles:** `ActionGroup` y `TableActions` exponen `aria-label` y delegan Enter/Espacio al comportamiento nativo del botón para emitir una sola acción. `ActionGroup size="sm"` conserva 28 px.
+
+### Verificación
+- Incremento de diseño `PREST-20260720-013`, limitado a la fuente Atomic UI y sin propagación automática a consumidores.
+
 ---
 
 ## [5.1.12] - 2026-07-20

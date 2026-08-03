@@ -1,4 +1,13 @@
-# Lecciones Aprendidas (Lessons Learned)
+---
+title: "Lecciones aprendidas de Atomic UI"
+document_type: "registro técnico"
+status: "en revisión"
+last_updated: "2026-08-03"
+owners:
+  - "Hospital Regional de Ayacucho"
+---
+
+# Lecciones aprendidas de Atomic UI
 
 Este documento centraliza el conocimiento adquirido tras solucionar problemas complejos de arquitectura, diseño e integración en el ecosistema de Atomic-UI, sirviendo como guía maestra para que agentes y desarrolladores entiendan el "por qué" de ciertas decisiones técnicas críticas y puedan portar este comportamiento a otros ecosistemas (Wails, Tauri, Web, etc).
 
@@ -24,6 +33,289 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
    ```
 2. **Independencia Total de i18n:** El `FooterComponent` de Atomic-UI debe usar valores en texto plano con fallbacks por defecto (`copyrightText || 'Todos los derechos reservados.'`), evitando dependencias duras de `@ngx-translate/core` para garantizar un renderizado atómico 100% libre de errores en cualquier entorno.
 3. **Estilos de Host Blindados:** `:host { display: block !important; width: 100% !important; margin-top: auto !important; }` asegura que el pie de página ocupe el ancho completo y permanezca fijo en la base del viewport.
+**Actualización 2026-08-03:** El ejemplo histórico con estilos inline queda sustituido por clases y tokens de Atomic UI. El pie de página se ubica como hermano inferior del área desplazable del shell, recibe la información de versión mediante entradas tipadas y no importa servicios específicos de Tauri, Wails o PyWebView.
+
+---
+## [2026-07-23] - Prohibición de Bypass Atomic UI: Scrollbars de SO en Tema Oscuro y Grillas Rígidas
+
+**Evidencia:** En aplicaciones consumidoras (`prestamo_front_atomic`), se detectaron fallas visuales graves:
+1. El navegador renderizaba la barra gris nativa del sistema operativo en tema oscuro al no incluir `::-webkit-scrollbar` en la capa base de tokens `_base.scss`.
+2. Los organismos de tablas imponían `max-height` con `overflow-y: auto` compitiendo contra el scroll de `AppShell`, creando un doble scrollbar vertical nativo.
+3. Se forzaron reglas CSS ad-hoc con píxeles hardcodeados (`width: 220px`) y grillas de 3 columnas gigantescas en el Dashboard.
+
+**Decisión y Regla de Gobernanza:**
+1. **Scrollbars Estilizados en Capa Base:** `-Atomic-UI` define obligatoriamente los seudoelementos `::-webkit-scrollbar` (ancho 6px, thumb `var(--border-color)`, hover `var(--primary-color)`) y `scrollbar-color` para garantizar que ninguna aplicación consumidora muestre barras nativas del SO en tema oscuro.
+2. **Eliminación de Scroll Anidado:** `DataTable` no impone restricciones rígidas de altura ni scrollbar vertical compitiendo con el layout global del consumidor.
+3. **Métricas en 4 Cajas Compactas:** `MetricsGrid` y `Card` invocan `minCardWidth="14rem"` y `size="sm"` para distribuir 4 métricas compactas por fila en escritorio.
+4. **Enforcement de Tokens:** Prohibido el uso de píxeles hardcodeados (`px`); se exige el uso estricto de Design Tokens (`var(--space-*)`, `var(--radius-*)`).
+
+---
+
+## [2026-07-22] - La fuente visual se corrige antes que el consumidor
+
+**Evidencia:** `prestamo_front_atomic` había evolucionado la tabla, las acciones
+y los diálogos CRUD, mientras el changelog de Atomic mencionaba parte de esos
+objetos sin que los componentes existieran realmente en su árbol.
+
+**Decisión:** `TableAction`, `DataTable`, `CrudDialog` y sus tokens viven primero
+en `-Atomic-UI`. Cada consumidor mantiene un manifiesto de procedencia; los
+archivos exactos se comparan por contenido y las adaptaciones declaran su motivo.
+
+**Prevención:** ningún cambio visual se cierra sin build de Atomic previo,
+propagación posterior y una auditoría que rechace objetos desconocidos, diálogos
+directos, estilos inline y colores fijos.
+
+---
+
+## [2026-07-21] - Auditoría Agresiva ADN: Cabecera `th` 100% Opaca con Tinte Azul, Elevación `shadow-sm` en Botones y Estilo Forzado en Paginación
+
+**Contexto:**
+Tras una auditoría visual agresiva, se resolvieron 3 defectos sutiles pero críticos:
+1. La cabecera `th` utilizaba `color-mix` que en ciertas encapsulaciones provocaba transparencia e interferencia visual con las filas al desplazarse.
+2. Los botones carecían de sombra de reposo (`box-shadow: var(--shadow-sm)`), luciendo planos sin profundidad.
+3. El combo de paginación sufría interferencia de especificidad en reglas SCSS locales.
+
+**La Lección:**
+1. **Fondo de Cabecera 100% Opaco y Azulado:** Las celdas `th` DEBEN vestir un fondo sólido opaco (nunca transparente o dinámico inestable):
+   - **Modo Claro:** `background-color: #dbeafe !important; color: #1e40af !important; border-bottom: 2px solid #2563eb !important;` (Fondo azul cielo opaco con texto azul marino).
+   - **Modo Oscuro:** `background-color: #1e293b !important; color: #93c5fd !important; border-bottom: 2px solid #38bdf8 !important;` (Fondo pizarra azul noche opaco con texto azul celeste).
+2. **Elevación Obligatoria en Botones (`box-shadow: var(--shadow-sm)`):** La clase `.button` e instancias `<prest-button>` DEBEN incluir `box-shadow: var(--shadow-sm)` en reposo y `box-shadow: var(--shadow-md)` en `:hover` con traslación `translateY(-1px)` para garantizar profundidad visual ejecutiva.
+3. **Especificidad Forzada en Paginación:** `.data-table__page-size select` debe declarar sus propiedades de borde, fondo y sombras con especificidad estricta para no ceder frente a contenedores de tabla contenedores.
+
+---
+
+## [2026-07-21] - Auditoría ADN de Estados de Entrada: Borde Morado en Hover (`:hover`) y Borde Azul en Enfoque/Escritura (`:focus`)
+
+**Contexto:**
+Se identificó una inconsistencia en los estados de entrada: los campos de texto e inputs de paginación no conservaban la sombra de reposo al tener contenido (`:not(:placeholder-shown)`), y el comportamiento ADN original (borde **morado de marca en `:hover`** y borde **azul de escritura en `:focus`**) se había distorsionado por reglas ad-hoc en vistas locales.
+
+**La Lección:**
+1. **Regla de Estados ADN Unificada:** Todos los componentes de entrada de la arquitectura (`input`, `select`, `textarea`, `.form-input`, `.form-select`, `.form-textarea`, `.data-table__page-size select`) DEBEN heredar estrictamente la misma secuencia cromática de interacción:
+   - **Reposo / Con Contenido:** `border-color: var(--input-border); box-shadow: var(--shadow-sm);` (La sombra `shadow-sm` se conserva SIEMPRE, con o sin texto escrito).
+   - **Paso del Ratón (`:hover`):** **BORDE MORADO DE MARCA** (`border-color: var(--primary-color)`) con elevación (`box-shadow: var(--shadow-md)`).
+   - **Enfoque / Digitando (`:focus` / `:focus-visible`):** **BORDE AZUL DE ESCRITURA** (`border-color: var(--info-color)`) con resplandor cian/azul (`box-shadow: var(--shadow-focus-secondary)`).
+2. **Eliminación de Estilos Ad-Hoc:** Ninguna vista local debe declarar estados de enfoque o hover aislados; la totalidad de formularios, paginación y controles de búsqueda consumen esta definición unificada desde los tokens globales (`_base.scss` y `_forms.css`).
+
+---
+
+## [2026-07-21] - Sombra de Elevación Reposo (`shadow-sm`) en Todos los Inputs, Resaltado en Paginación y Cabecera Azul Adaptativa con `color-mix`
+
+**Contexto:**
+1. Los campos de texto `<input>` no poseían sombra de reposo (`box-shadow`), luciendo planos en comparación con los combos `<select>`.
+2. El selector de paginación no activaba el borde púrpura de marca al pasar el ratón.
+3. La cabecera `thead` requería un tinte azul elegante que se adaptara a modo claro y modo oscuro sin romper el esquema visual.
+
+**La Lección:**
+1. **Sombra de Reposo Obligatoria (`box-shadow: var(--shadow-sm)`):** Todos los elementos de entrada (`input`, `select`, `textarea`) DEBEN poseer `box-shadow: var(--shadow-sm)` en estado de reposo para transmitir profundidad y elevación consistente desde el primer vistazo.
+2. **Resaltado en Combo de Paginación:** `.data-table__page-size select` debe incluir las mismas reglas de `:hover` (`border-color: var(--primary-color); box-shadow: var(--shadow-md);`) y `:focus` que el resto de los componentes.
+3. **Cabecera Azul Adaptativa (`color-mix`):** Usar `background: color-mix(in srgb, var(--info-color) 12%, var(--surface-section));` en las celdas `th`. En modo claro produce un azul suave `#e0f2fe`, y en modo oscuro produce un elegante azul noche `#243656` totalmente integrado al tema.
+
+---
+
+## [2026-07-21] - Propagación Global del Estado Hover (`:hover`) y Glow en Todos los Inputs y Selects
+
+**Contexto:**
+Los combos `<select>` tenían un efecto de resaltado al pasar el cursor (`:hover`), mientras que los campos de texto `<input>` permanecían estáticos, generando inconsistencia visual en los formularios.
+
+**La Lección:**
+1. **Consistencia Visual en Formularios:** Todos los elementos interactivos de entrada (`input`, `select`, `textarea`, `.form-input`, `.form-select`, `.form-textarea`) DEBEN compartir la misma regla global de `:hover` y `:focus`:
+   ```css
+   input:hover:not(:disabled):not(:focus),
+   select:hover:not(:disabled):not(:focus),
+   textarea:hover:not(:disabled):not(:focus) {
+     border-color: var(--primary-color);
+     box-shadow: var(--shadow-md);
+   }
+   ```
+2. **Experiencia Fluida:** Al asegurar que tanto campos de texto como desplegables reaccionen con el mismo resplandor púrpura de la marca, los formularios lucen uniformes y armónicos al interactuar con ellos.
+
+---
+
+## [2026-07-21] - Fondo Oscuro Integrado (`var(--surface-section)`) con Texto Azul (`var(--info-color-text)`) y Línea de Acento Azul (`var(--info-color)`)
+
+**Contexto:**
+El usuario confirmó que la tipografía azul y la línea de acento azul eran ideales, pero cualquier fondo claro estático en la cabecera `thead` rompía el look and feel del Tema Oscuro.
+
+**La Lección:**
+1. **Fondo de Superficie Integrado + Letras y Línea Azules:** Las celdas `th` DEBEN mantener el fondo de superficie nativo del tema (`background: var(--surface-section)`), combinando únicamente **letras azules** (`color: var(--info-color-text)`) y una **línea de acento inferior azul** (`border-bottom: 2px solid var(--info-color)`).
+2. **Harmonía Visual en Tema Oscuro:** De este modo, en Tema Oscuro el fondo de la cabecera se integra al 100% con las tarjetas azul noche/negras sin ninguna franja clara desencajada, manteniendo los títulos y la línea de acento en un elegante tono azul luminoso (`#93c5fd` / `#0a84ff`).
+
+---
+
+## [2026-07-21] - Fondo de Cabecera Integrado `var(--surface-section)`, Restablecimiento de Combos de Búsqueda a 220px y Ultra-Recorte de Paginación (`3.25rem`)
+
+**Contexto:**
+1. Usar tonos fijos o slate-200 en `thead` desentonaba en Tema Oscuro ("desencajaba mucho") al crear una franja brillante estridente.
+2. Los combos de búsqueda debían permanecer en su estándar amplio de 220px.
+3. El combo de paginación (`POR PÁGINA: [10]`) requería un recorte adicional a un tamaño ultra-compacto.
+
+**La Lección:**
+1. **Fondo de Cabecera Seamless Integrado (`var(--surface-section)`):** Las celdas `th` DEBEN emplear `background: var(--surface-section)` con `color: var(--text-color)` y `border-bottom: 2px solid var(--primary-color)`. De este modo, en modo claro la cabecera es de un gris suave `#efeff4`, y en modo oscuro adopta el tono azul noche/oscuro `#2a3556` / `#252525` del tema, integrándose 100% sin bandas desentonadas.
+2. **Combos de Búsqueda a 220px:** Los desplegables de búsqueda en formularios se mantienen en su estándar amplio de `220px` (`width: 220px; min-width: 220px; max-width: 220px;`).
+3. **Ultra-Recorte de Paginación (`3.25rem`):** `.data-table__page-size select` se redujo a `3.25rem` (~52px), envolviendo apretadamente las cifras de paginación (`10`, `30`, `50`) con ícono de flecha SVG adaptable según el tema.
+
+---
+
+## [2026-07-21] - Cabecera `thead` de Alto Contraste en Modo Oscuro (`#1e293b` con Texto Blanco `#f8fafc`) y Reducción del 45% en Combos (120px)
+
+**Contexto:**
+1. En Modo Oscuro (`brand-dark` y `dark`), el texto azul sobre fondo azul oscuro en `thead` producía una relación de contraste deficiente y baja legibilidad.
+2. Los combos de búsqueda requerían reducirse un 45% (de 220px a 120px) para lucir ultra-compactos y estilizados.
+
+**La Lección:**
+1. **Contraste de Alto Nivel en Modo Oscuro (`#1e293b` + `#f8fafc`):** En Tema Oscuro, las celdas `th` DEBEN vestir un fondo pizarra oscuro azulado (`background: #1e293b !important;`) con texto blanco brillante de alto contraste (`color: #f8fafc !important;`) y un borde inferior cian/azul luminoso (`border-bottom: 2px solid #60a5fa !important;`), garantizando legibilidad y legibilidad ejecutiva al 100%.
+2. **Ancho Compacto de 120px (Reducción 45%):** Los campos `<select>` de búsqueda en formularios deben acotarse a `120px` (`width: 120px; min-width: 120px; max-width: 120px;`), logrando un diseño ultra-compacto, estilizado y ágil.
+
+---
+
+## [2026-07-21] - Cabecera Azul Semántica Reactiva a Temas (`var(--info-color-*)`), Restauración del Ícono SVG de Flecha en Paginación y Reducción del 30% en Combos (154px)
+
+**Contexto:**
+1. Al usar tonos HEX fijos (`#ebf5ff` / `#1e40af`), la cabecera azul no reaccionaba al cambiar entre tema claro y tema oscuro.
+2. El combo de paginación perdió su flecha SVG de despliegue al recortar excesivamente los márgenes de relleno.
+3. El usuario solicitó reducir el ancho de los combos de búsqueda en un 30% (de 220px a 154px).
+
+**La Lección:**
+1. **Tokens Semánticos Reactivos para Cabeceras Azul (`var(--info-color-*)`):** Las celdas `th` DEBEN emplear tokens semánticos contextuales (`background: var(--info-color-lighter); color: var(--info-color-text); border-bottom: 2px solid var(--info-color)`). De este modo, la cabecera reacciona dinámicamente y se adapta impecablemente a Tema Claro, Tema Oscuro y Tema Brand Dark.
+2. **Preservación del Ícono SVG de Flecha en Paginación:** El selector `.data-table__page-size select` debe declarar explícitamente `background-image: url(...)` con `background-position: right 0.25rem center;` y `padding-right: 1.25rem !important;`, garantizando que la flecha `chevron` sea siempre visible.
+3. **Ancho Reducido un 30% (154px):** Los campos `<select>` de formularios de búsqueda deben acotarse a `154px` (`width: 154px; min-width: 154px; max-width: 154px;`), ofreciendo un equilibrio compacto de espacio.
+
+---
+
+## [2026-07-21] - Cabecera Azul Distintiva (`#ebf5ff` / `#1e40af`) y Reducción al 50% del Combo de Paginación (`3.85rem`)
+
+**Contexto:**
+1. El usuario solicitó evaluar una tonalidad azul ejecutiva en la cabecera `thead` de las tablas.
+2. El selector de paginación (`POR PÁGINA: [40]`) requería reducirse a la mitad para lucir ultra-compacto y afinado.
+
+**La Lección:**
+1. **Cabecera Azul Corporativa (`#ebf5ff` / `#1e40af`):** Las celdas `th` lucen una tonalidad azul suave de contraste (`background: #ebf5ff; color: #1e40af; border-bottom: 2px solid #2563eb;`), proporcionando una lectura clara, fresca y profesional.
+2. **Reducción al 50% del Combo de Paginación (`3.85rem`):** `.data-table__page-size select` se ajustó a `3.85rem` (~58px), recortando el tamaño a la mitad para albergar estrictamente las cifras de página (`10`, `30`, `40`, `50`, `100`) de forma minimalista.
+
+---
+
+## [2026-07-21] - Combo de Paginación Compacto (Máx 3 Cifras / `5.25rem`) y Fondo de Cabecera con Color Secundario de Marca
+
+**Contexto:**
+1. Al estandarizar los combos de búsqueda en 220px, el desplegable de paginación (`POR PÁGINA: [40]`) heredó esa anchura excesiva.
+2. El color de la cabecera `thead` requería mayor expresividad utilizando la paleta secundaria de la marca.
+
+**La Lección:**
+1. **Diferenciación de Combo de Paginación:** Mientras que los campos de búsqueda miden 220px, el selector de paginación (`.data-table__page-size select`) DEBE estar acotado a un tamaño compacto de `width: 5.25rem !important` (aprox. 84px), permitiendo alojar como máximo 3 dígitos (ej. `10`, `30`, `50`, `100`) sin desperdiciar espacio.
+2. **Cabecera con Color Secundario:** Las celdas `th` deben vestir el tono secundario contextual `background: var(--secondary-color-lighter)`, `color: var(--secondary-color-text)` y un borde inferior pronunciado `border-bottom: 2px solid var(--secondary-color)`, otorgando una apariencia fresca, distintiva y armonizada con la marca.
+
+---
+
+## [2026-07-21] - Requisito Obligatorio `[fill]="true"` en ScrollOverlay, Tamaño Estándar de 220px para Combos y Color Distintivo en `thead`
+
+**Contexto:**
+1. Al incrustar `<prest-scroll-overlay class="data-table__viewport">` sin la propiedad `[fill]="true"`, el viewport interno tenía `height: auto` en lugar de `height: 100%`, impidiendo la activación del scroll vertical.
+2. La anchura de 185px resultaba aún muy ajustada para ciertas opciones largas; el estándar definitivo solicitado es de **220px**.
+3. Las cabeceras `thead` se confundían con el fondo de la tarjeta al usar `var(--surface-ground)`.
+
+**La Lección:**
+1. **`[fill]="true"` Obligatorio en ScrollOverlay:** Todo uso de `<prest-scroll-overlay>` en componentes de alto rígido (como tablas y paneles) DEBE incluir `[fill]="true"` para forzar `height: 100%` en la vista interna y permitir el disparo de `overflow-y: auto`.
+2. **Ancho Estándar Definitivo de 220px:** Todos los desplegables `<select>` en formularios deben medir estrictamente `width: 220px; min-width: 220px; max-width: 220px;`.
+3. **Fondo de Cabecera Contrastante (`var(--border-color-light)`):** Las celdas `th` deben usar `background: var(--border-color-light)` con un borde inferior de marca `border-bottom: 2px solid var(--primary-color)` y sombra sutil `box-shadow: 0 2px 4px rgba(0,0,0,0.08)`, destacando la cabecera tanto en modo claro (`#e2e8f0`) como en oscuro.
+
+---
+
+## [2026-07-21] - Estandarización de Ancho de Combos (185px), Unificación de Tabla y Color Distintivo de Cabecera `thead`
+
+**Contexto:**
+1. Los desplegables `<select>` cambiaban de ancho dinámicamente según la etiqueta o la opción seleccionada, produciendo desalineación visual.
+2. Dividir la tabla en dos elementos `<table>` separados desalineaba las columnas e impedía el funcionamiento correcto del scroll.
+3. Las cabeceras `thead` carecían de un tono de fondo distintivo.
+
+**La Lección:**
+1. **Ancho Estándar de 185px:** Todos los campos `<select>` y combos de formulario deben poseer una anchura estándar estricta de `width: 185px; min-width: 185px; max-width: 185px;`. Esto garantiza una retícula limpia, predecible y uniforme en todos los formularios.
+2. **Tabla Única con Cabecera Pegajosa (`sticky`):** La estructura HTML de una grilla debe consistir en una **ÚNICA tabla `<table>`** dentro del contenedor `<prest-scroll-overlay class="data-table__viewport">`. Esto asegura la alineación matemática exacta de todas las columnas entre `thead` y `tbody`.
+3. **Color Distintivo de Cabecera `thead`:** Las celdas `th` deben declarar `background: var(--surface-ground)` con un borde inferior pronunciado (`border-bottom: 2px solid var(--border-color-strong)`), otorgándole un color de cabecera limpio y distinguible.
+
+---
+
+## [2026-07-21] - Separación de `thead`, Envoltura de `tbody` con Scroll Auto-Ocultable, Distinción de Cabecera y Variación de Botones
+
+**Contexto:**
+1. El scrollbar de la tabla se extendía erróneamente cubriendo el `thead` y permanecía visible de forma tosca.
+2. El fondo de `thead` usaba el mismo tono que la barra de paginación (`.data-table__toolbar`), provocando confusión visual.
+3. El botón "BUSCAR" en formularios usaba el color primario idéntico al botón de acción principal ("NUEVO CLIENTE") y carecía de íconos.
+4. El espaciado horizontal entre filtros era excesivo (36px).
+
+**La Lección:**
+1. **Aislamiento de `tbody` en Scroll Overlay:** `thead` debe residir en su propio contenedor fijo (`.data-table__header-container`), mientras que `<prest-scroll-overlay>` envuelve **únicamente al `<tbody>`**. Esto garantiza que el scrollbar sea auto-ocultable al mover el ratón y NUNCA se extienda hasta las cabeceras `thead`.
+2. **Distinción Visual de `thead`:** `thead` debe pintar un fondo contrastante (`background: var(--surface-ground)`) con un borde inferior pronunciado (`border-bottom: 2px solid var(--border-color)`), separándolo claramente de la barra de paginación superior.
+3. **Variantes de Botón e Íconos Obligatorios:** Los botones de búsqueda de formulario deben usar `variant="secondary"` (o `outline`/`ghost`) e incluir siempre un ícono explícito (ej. `icon="magnifying-glass"`, `icon="plus"`, `icon="rotate-left"`), diferenciándose visualmente del botón de creación principal.
+4. **Espaciado Horizontal de Filtros:** Los elementos de formularios de búsqueda en línea deben distanciarse con `gap: var(--space-4)` (16px) en lugar de espaciados gigantescos.
+
+---
+
+## [2026-07-21] - Auditoría Profunda: Habilitación de Scroll Vertical (`[vertical]="true"`), Preservación de Flechas SVG (`background-color`) y Espaciado Holgado en Filas
+
+**Contexto:** Se detectaron 4 problemas en auditoría profunda:
+1. El scrollbar vertical de la tabla no funcionaba y solo mostraba 18 de 40 filas por tener `[vertical]="false"` en la envoltura `<prest-scroll-overlay>`.
+2. Las flechas SVG de los combos se borraban silenciosamente por usar `background: var(--input-bg)` en lugar de `background-color`.
+3. Los combos lucían desproporcionadamente grandes en los formularios.
+4. El espaciado interno de las filas de las tablas se sentía apretado y comprimido.
+
+**La Lección:**
+1. **Activación de Scrollbar Vertical:** `<prest-scroll-overlay>` en tablas de datos debe declarar explícitamente `[vertical]="true"` y el contenedor `.data-table__viewport` debe poseer `overflow-y: auto` con scrollbars WebKit estilizados (`::-webkit-scrollbar`).
+2. **Preservación de SVG de Flecha:** Usar estrictamente la propiedad singular `background-color: var(--input-bg)` en lugar del taquigráfico `background: ...`, para evitar la anulación accidental de `background-image: url(...)`.
+3. **Ancho Compacto de Combos:** Los desplegables `<select>` en formularios deben acotarse a `max-width: 14rem; min-height: 2.375rem;` para lucir elegantes y estilizados.
+4. **Espaciado Holgado y Ejecutivo de Filas:** `th` y `td` deben emplear un relleno holgado `padding: var(--space-4) var(--space-5)` (16px top/bottom, 20px left/right), proporcionando un diseño respirable y de alta gama.
+
+---
+
+## [2026-07-21] - Contraste en Modo Oscuro (Hover de Filas), Margen Respirable (36px) y Flechas SVG de Combos
+
+**Contexto:** Al pasar el ratón (`hover`) por las filas de las tablas en Tema Oscuro, las filas se pintaban de blanco brillante cegador, tornando ilegible el texto. Además, los combos `<select>` perdían las flechas de despliegue en modo oscuro y las tarjetas de tabla quedaban pegadas al borde inferior sin espacio respirable.
+
+**La Lección:**
+1. **Hover Semántico de Filas (`var(--hover-background)`):** Jamás usar colores claros rígidos (como `var(--brand-primary-50)`) para eventos `:hover` en elementos de tabla. Utilizar siempre el token semántico de interacción `var(--hover-background)` (que en tema claro es celeste suave `#e8f0fe` y en tema oscuro es azul naval/slate `#202f61` / `#2d2d2d`).
+2. **Margen Respirable de 36px:** Todo contenedor de tabla acotado debe acotar su viewport (`height: calc(100vh - 27rem)`) para garantizar una holgura o aire de al menos 36px (`2.25rem`) por encima del borde inferior de la pantalla.
+3. **Flecha SVG Dinámica en Combos:** El SVG inyectado en `background-image` para desplegables `<select>` debe alternar su trazo (`stroke='%23cbd5e1'`) en selectores oscuros (`[data-theme='dark'] select`), asegurando legibilidad perfecta.
+
+---
+
+## [2026-07-21] - Supresión de Contenedores Dobles (Single Card Boxing) y Estilos de Combos Atómicos
+
+**Contexto:** Los componentes de tabla (`DataTableComponent`) se estaban envolviendo erróneamente dentro de tarjetas adicionales (`<prest-card>`), lo que creaba bordes y sombras dobles anidadas y desbordaba la pantalla. Además, los desplegables `<select>` mostraban los menús rectangulares por defecto del SO.
+
+**La Lección:**
+1. **Contenedor Único Atómico:** Los componentes de organismo como `DataTableComponent` constituyen su propia tarjeta atómica. Prohibido envolver un `DataTableComponent` dentro de un `<prest-card>`.
+2. **Estilizado Universal de Combos y Desplegables:** Todos los elementos `<select>` u `<option>` deben anular la apariencia nativa (`appearance: none`), incluir íconos SVG de despliegue estilizados y utilizar el token de superficie `var(--surface-background)` con bordes redondeados y estados `:hover`/`:focus` atómicos.
+3. **Cálculo de Altura del Viewport:** La altura del viewport de tablas dentro de la aplicación principal debe acotarse exactamente a `height: calc(100vh - 23.5rem)` para garantizar cero desbordamiento vertical y un margen inferior respirable.
+
+---
+
+## [2026-07-21] - Contenedores de Tabla con Altura Fija e Integridad de thead
+
+**Contexto:** Al seleccionar 40 o 50 registros por página, la tarjeta contenedora de la tabla se expandía libremente hacia abajo empujando el layout y creando scrollbars innecesarias en la ventana del navegador. Además, el `thead` dejaba un espacio blanco no pintado a la derecha junto al scrollbar de las filas.
+
+**Causa Raíz:** Las tablas dependían de `height: auto` o `max-height` variable en el contenedor viewport, y la propiedad `border-collapse: separate` dejaba sin pintar el fondo del gutter sobre el scrollbar.
+
+**La Lección:**
+1. Los contenedores de tablas de datos (`data-table__viewport`) deben declarar una altura fija o acotada (`height: calc(100vh - 18.5rem); overflow: auto; background: var(--surface-section)`). Seleccionar 10, 20 o 50 filas por página NUNCA debe alterar la altura del contenedor principal.
+2. Para evitar esquinas superiores sin pintar en `thead`, el contenedor `.data-table__viewport` debe pintar su fondo con `var(--surface-section)`, heredando la continuidad visual perfecta sobre el gutter del scrollbar.
+3. Se deben eliminar los subtítulos y títulos duplicados "BÚSQUEDA" y "RESULTADOS" de los contenedores cuando la estructura visual es auto-explicativa, ahorrando espacio vertical valioso para los datos de negocio.
+
+---
+
+## [2026-07-21] - Anclaje del Viewport y Bloqueo de Scroll Nivel Navegador
+
+**Contexto:** En aplicaciones consumidoras Web/Angular, al mover la rueda del ratón el documento entero (`body`) se desplazaba verticalmente, destruyendo el encuadre fijo del layout del tablero.
+
+**Causa Raíz:** Las etiquetas raíz `html` y `body` declaraban `min-height: 100vh` sin `overflow: hidden`, lo que permitía la generación de una barra de scroll nativa externa del navegador.
+
+**La Lección:** Todo layout SPA debe declarar en `html` y `body`: `width: 100%; height: 100dvh; overflow: hidden;`. Ningún scroll debe ocurrir en la ventana principal del navegador. Todo scroll se delega internamente a los contenedores `<prest-scroll-overlay>`.
+
+---
+
+## [2026-07-21] - Transformación Automática de Estados a StatusBadge
+
+**Contexto:** Los desarrolladores solían inyectar valores de estado ("Activo", "Inactivo", "Vigente") como cadenas de texto plano dentro de las tablas de datos (`DataTable`).
+
+**La Lección:** Ninguna tabla del ecosistema debe mostrar estados en texto plano. El componente `DataTable` intercepta automáticamente las columnas de estado (`stateLabel`, `status`, `b_STATE`, `isBadge`) y las convierte al átomo `StatusBadgeComponent`, ofreciendo código de color y voz accesible ARIA nativa.
 
 ---
 
@@ -39,6 +331,32 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 Queda estrictamente prohibido usar `(click)` sobre elementos custom de la libreria Atomic UI como `<app-button>`, `<app-icon-button>` o `<app-chip>`. Se debe usar siempre el `@Output()` disenado para tal fin:
 - ✅ Correcto: `<app-button (buttonClick)="save()">`
 - ❌ Incorrecto: `<app-button (click)="save()">`
+
+---
+
+## [2026-07-20] - El componente visual no debe reinterpretar importes ni tendencias
+
+**Contexto:** Una tarjeta KPI genérica redondeaba monedas a cero decimales y mostraba una tendencia neutral aun cuando el consumidor no había recibido comparación. Además de perder precisión visible, esto convertía una ausencia de datos en una afirmación visual.
+
+**La lección:** Los componentes de presentación financiera deben aceptar un `displayValue` ya formateado por la frontera autorizada y conservar dos decimales cuando deban aplicar un formato monetario genérico. Tendencias, comparaciones y estados no se infieren: permanecen ausentes hasta que el consumidor los entrega explícitamente.
+
+**Regla de estado:** Un estado operativo siempre incluye texto; el color y el icono son apoyos visuales. Los badges de estado se mantienen separados de los contadores de notificaciones para no generar nombres accesibles engañosos.
+
+**Regla responsive:** Una grilla reutilizable debe permitir que la columna mínima nunca supere a su contenedor mediante `min(100%, medida)`, y cada host participante debe declarar `min-width: 0`.
+
+---
+
+## [2026-07-20] - Propagación visual sólo después de validar la fuente
+
+**Contexto:** Una sustitución mecánica de píxeles por tokens dejó expresiones como `76var(...)` dentro de media queries y tamaños. CSS descarta esas declaraciones sin generar un error de compilación, por lo que el defecto responsive puede propagarse silenciosamente a todos los consumidores.
+
+**La lección:** La fuente de diseño debe pasar una búsqueda estática de valores inválidos, pruebas de componente y validación en los breakpoints nominales antes de copiarse. Los valores numéricos dañados se restauran únicamente cuando se conoce su medida original; no se hacen reemplazos globales especulativos.
+
+**Regla de feedback:** El espacio posterior a un mensaje forma parte del contrato del componente y debe expresarse con un token y una variante explícita. La mayúscula corresponde a títulos o etiquetas de interfaz; nunca se transforma el cuerpo del mensaje ni datos del usuario.
+
+**Regla de navegación:** Un padre con hijos controla expansión y una hoja controla navegación. La presentación en mayúsculas se resuelve con CSS para no mutar etiquetas, rutas ni contratos de backend.
+
+**Regla de acciones de icono:** Todo botón que sólo contiene un icono necesita nombre accesible. Enter y Espacio ya activan un `<button>` nativo; añadir handlers de teclado paralelos duplica eventos y puede ejecutar una mutación dos veces.
 
 ---
 
@@ -149,6 +467,36 @@ La solución robusta es detener la propagación del evento `click` en la opción
 - **Contexto:** Al usar el sistema en aplicaciones como el Acopiador HRA en Python, ciertas tarjetas de consola de texto forzaban el crecimiento vertical de la ventana más allá de `100vh`.
 - **Problema:** En `app-card`, el contenedor interno `.card__body` es un bloque tradicional que crece con su contenido. Si un consumidor inyecta un `div` con `flex: 1` asumiendo que llenará el espacio, el texto largo puede expandir la grilla.
 - **Lección aprendida:** No se debe mutar `.card__body` a `display: flex` de forma global en Atomic UI, ya que rompería el flujo normal de texto y botones de las tarjetas tradicionales. Cuando un proyecto consumidor necesite que el contenido interno de una tarjeta ocupe el resto del layout, por ejemplo una terminal, el consumidor debe inyectar una regla estricta local: `:host ::ng-deep .mi-tarjeta .card__body { display: flex; flex-direction: column; min-height: 0; }`.
+
+## Una corrección automática de auditoría puede degradar el framework
+
+- **Contexto:** la fuente Atomic usaba Angular 22.0.0 y herramientas de diseño con rangos de compatibilidad anteriores; la auditoría proponía resolver avisos del entorno instalando Angular 21.
+- **Decisión:** alinear primero Angular, DevKit, Storybook y ESLint dentro de Angular 22, fijar el motor Node compatible y validar pruebas/builds; no aceptar una solución `--force` que cambie la línea arquitectónica.
+- **Prevención:** separar vulnerabilidades de producción y desarrollo, revisar el plan exacto de actualización y conservar explícitos `engines`, `.node-version` y el lockfile.
+
+## Un aviso transitivo puede cerrarse sin cambiar la línea Angular
+
+- **Contexto:** Angular 22.0.7 aún resolvía `webpack-dev-server 5.2.3` y
+  `sockjs → uuid 8.3.2`, aunque sus revisiones compatibles ya corregían los
+  avisos publicados.
+- **Decisión:** fijar únicamente `webpack-dev-server 5.2.6` y el `uuid` interno
+  en `11.1.1`, y volver a ejecutar pruebas dirigidas, build Angular, Storybook y
+  auditoría completa con el Node fijado.
+- **Prevención:** un `override` mayor solo se acepta cuando la API consumida se
+  inspecciona y todo el toolchain se ejecuta; nunca se usa el cero de auditoría
+  como sustituto de las pruebas.
+
+## Una suite histórica roja debe reportarse por separado
+
+- **Contexto:** los 24 casos del ADN propagado pasan, pero la corrida completa
+  descubrió 68 specs antiguos que establecen inputs de componentes Angular como
+  propiedades ordinarias y ya no ejercitan la plantilla real.
+- **Decisión:** no mezclar su reparación con PREST-014 ni declarar la suite global
+  aprobada; registrar 106 éxitos/68 fallos y mantener como gate la suite dirigida,
+  los builds y las pruebas del consumidor.
+- **Prevención:** al migrar componentes a `input()`, actualizar sus fixtures con
+  `ComponentRef.setInput()` en un incremento dedicado y conservar una línea base
+  explícita de la suite completa.
 
 ## Modales personalizados y modo oscuro
 - **Contexto:** En aplicaciones híbridas a veces se inyectan modales HTML custom en lugar de los componentes estándar de Atomic UI.

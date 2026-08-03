@@ -17,18 +17,24 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
   template: `
     <div class="user-menu" [class.open]="isOpen()">
       <!-- Avatar Button -->
-      <button type="button" class="user-menu__trigger" (click)="toggle()" (keydown.enter)="toggle()" (keydown.space)="toggle()" [attr.title]="'Menú de usuario'">
+      <button type="button" class="user-menu__trigger" (click)="toggle()"
+        [attr.aria-expanded]="isOpen()" aria-haspopup="menu" [attr.title]="'Menú de usuario'">
         <app-avatar [initials]="initials" [name]="userName" size="md"></app-avatar>
       </button>
 
       <!-- Dropdown Menu -->
-      <div class="user-menu__dropdown">
+      <div class="user-menu__dropdown" role="menu">
         <!-- User Info Header -->
         <div class="user-menu__header">
           <app-avatar [initials]="initials" [name]="userName" size="lg"></app-avatar>
           <div class="user-menu__info">
             <span class="user-menu__name">{{ userName }}</span>
-            <span class="user-menu__email">{{ userEmail }}</span>
+            @if (userRole) {
+              <span class="user-menu__role">{{ userRole }}</span>
+            }
+            @if (userEmail) {
+              <span class="user-menu__email">{{ userEmail }}</span>
+            }
           </div>
         </div>
 
@@ -40,9 +46,8 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
           <button type="button"
             class="user-menu__item"
             [class.user-menu__item--danger]="action.danger"
-            (click)="onAction(action)"
-            (keydown.enter)="onAction(action)"
-            (keydown.space)="onAction(action)">
+            role="menuitem"
+            (click)="onAction(action)">
             <span class="user-menu__item-icon"><i [class]="action.icon"></i></span>
             <span class="user-menu__item-label">{{ action.label }}</span>
           </button>
@@ -137,6 +142,13 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
       text-overflow: ellipsis;
     }
 
+    .user-menu__role {
+      color: var(--primary-color);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
     /* === Divider === */
     .user-menu__divider {
       height: 1px;
@@ -180,6 +192,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
 
     .user-menu__item-label {
       flex: 1;
+      text-transform: uppercase;
     }
 
     /*
@@ -198,6 +211,9 @@ export class UserMenuComponent {
 
   /** User email */
   @Input() userEmail = 'usuario@email.com';
+
+  /** User role displayed as session metadata */
+  @Input() userRole = '';
 
   /** Menu actions */
   @Input() menuActions: UserMenuAction[] = [

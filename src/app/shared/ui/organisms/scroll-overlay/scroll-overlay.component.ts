@@ -337,7 +337,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       this.horizontalScroller.removeAttribute('data-so-horizontal-temp');
     }
 
-    let vertical = searchDirect(this.verticalSelector);
+    const vertical = searchDirect(this.verticalSelector);
     // If vertical is explicitly set via selector, use it. Otherwise, always use scrollArea.
     // We intentionally DO NOT default to tbody anymore, to avoid browser bugs with table height limits.
     this.verticalScroller = vertical ?? scrollArea;

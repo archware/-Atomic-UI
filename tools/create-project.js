@@ -18,7 +18,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execFileSync, execSync } = require('child_process');
 
 // ============================================
 // CONFIGURATION
@@ -27,6 +27,7 @@ const { execSync } = require('child_process');
 const BLUEPRINTS_DIR = path.join(__dirname, '..', 'src', 'blueprints');
 const STYLES_DIR = path.join(__dirname, '..', 'src', 'styles');
 const UI_DIR = path.join(__dirname, '..', 'src', 'app', 'shared', 'ui');
+const GOVERNANCE_INSTALLER = path.join(__dirname, 'install-consumer-governance.js');
 
 const TEMPLATES = {
   'login': ['login'],
@@ -214,6 +215,14 @@ Examples:
   copyRecursive(STYLES_DIR, destStyles);
   log('Styles copied', 'success');
 
+  // Step 3.5: Install the non-optional Atomic-first governance contract
+  log('Installing mandatory Atomic governance...', 'step');
+  execFileSync(process.execPath, [GOVERNANCE_INSTALLER, projectPath], {
+    cwd: path.join(__dirname, '..'),
+    stdio: 'inherit'
+  });
+  log('Atomic governance installed', 'success');
+
   // Step 4: Copy selected blueprints
   log(`Copying blueprints: ${template}...`, 'step');
   const blueprints = TEMPLATES[template];
@@ -384,7 +393,6 @@ export const appConfig: ApplicationConfig = {
   if (!skipInstall) {
     log('Installing dependencies...', 'step');
     try {
-      execSync('npm install', { cwd: projectPath, stdio: 'inherit' });
       execSync('npm install', { cwd: projectPath, stdio: 'inherit' });
       execSync('npm install zone.js @fontsource/open-sans @fortawesome/fontawesome-free @ngx-translate/core @ngx-translate/http-loader @angular/animations',
         { cwd: projectPath, stdio: 'inherit' });

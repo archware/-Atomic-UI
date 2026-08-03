@@ -178,7 +178,7 @@ export interface NavBarBrand {
       text-decoration: none;
       flex-shrink: 0;
     }
-    .navbar__logo { height: 2var(--space-2); width: auto; }
+    .navbar__logo { height: 28px; width: auto; }
     .navbar__brand-name {
       font-size: var(--text-base);
       font-weight: var(--font-semibold, 600);
@@ -237,8 +237,8 @@ export interface NavBarBrand {
       display: none;
       align-items: center;
       justify-content: center;
-      width: 3var(--space-2);
-      height: 3var(--space-2);
+      width: 36px;
+      height: 36px;
       border: none;
       border-radius: var(--radius-md);
       background: transparent;
@@ -279,7 +279,7 @@ export interface NavBarBrand {
     }
 
     /* Responsive */
-    @media (max-width: 76var(--space-2)) {
+    @media (max-width: 768px) {
       .navbar__nav { display: none; }
       .navbar__actions { display: none; }
       .navbar__mobile-toggle { display: flex; }

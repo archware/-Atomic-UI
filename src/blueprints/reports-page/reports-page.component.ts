@@ -4,7 +4,6 @@ import {
   LayoutShellComponent,
   TopbarComponent,
   SidebarComponent,
-  SidebarUser,
   PanelComponent,
   RowComponent,
   AvatarComponent,

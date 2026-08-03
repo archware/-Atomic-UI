@@ -1,5 +1,4 @@
-import { Component, inject, signal, computed, OnInit, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   LayoutShellComponent, TopbarComponent, SidebarComponent, SidebarUser,
@@ -85,7 +84,6 @@ interface MenuItem { id?: string; label: string; icon: string; iconColor?: strin
 export class DashboardPageComponent implements OnInit {
   private api = inject(ApiService);
   router = inject(Router);
-  private platformId = inject(PLATFORM_ID);
 
   sidebarVisible = signal(true);
   activeMenuItem = signal<string>('dashboard');
@@ -125,7 +123,7 @@ export class DashboardPageComponent implements OnInit {
   closeSidebar() { this.sidebarVisible.set(false); }
   toggleSidebar() { this.sidebarVisible.update(v => !v); }
   onMenuItemClick(item: any) { if (item.route) this.router.navigate([item.route]); }
-  onUserAction(action: any) {}
+  onUserAction(_action: unknown) {}
   onLogout() {}
   loadDashboardStats() {}
 

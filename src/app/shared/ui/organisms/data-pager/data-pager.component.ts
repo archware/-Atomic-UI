@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, computed } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TextComponent } from '../../atoms/text/text.component';
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
@@ -83,9 +83,9 @@ import { Select2Component } from '../../molecules/select2/select2.component';
       width: 100%;
       padding: var(--space-3) var(--space-4);
       background: var(--surface-background);
-      border: 1px solid var(--border-color);
+      border: var(--border-width-thin) solid var(--border-color);
       border-radius: var(--radius-md);
-      box-shadow: 0 1px var(--space-1) rgba(0,0,0,0.02);
+      box-shadow: var(--shadow-sm);
     }
 
     .pager-group {
@@ -101,8 +101,8 @@ import { Select2Component } from '../../molecules/select2/select2.component';
     }
 
     .page-size-select-wrapper {
-      width: 70px;
-      --select2-min-width: 60px;
+      width: 4.375rem;
+      --select2-min-width: 3.75rem;
     }
 
     .pager-controls {
@@ -116,20 +116,20 @@ import { Select2Component } from '../../molecules/select2/select2.component';
       width: 100%;
     }
     ::ng-deep .page-size-select-wrapper .select2-trigger {
-      min-height: 3var(--space-1) !important;
-      height: 3var(--space-1) !important;
+      min-height: var(--control-height-sm) !important;
+      height: var(--control-height-sm) !important;
       padding: 0 var(--space-2) !important;
       border-radius: var(--radius-sm);
       font-size: var(--text-sm);
       font-weight: 600;
     }
     ::ng-deep .page-size-select-wrapper .select2-value {
-      line-height: 3var(--space-1);
+      line-height: var(--control-height-sm);
       margin: 0;
     }
 
     /* En pantallas móviles se apila */
-    @media (max-width: 640px) {
+    @media (max-width: 40rem) {
       .data-pager-container {
         flex-direction: column;
         gap: var(--space-4);

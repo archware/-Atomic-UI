@@ -8,6 +8,24 @@
   align-items: start;
 }
 
+.profile-cover {
+  position: relative;
+  height: 7.5rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.profile-summary {
+  position: relative;
+  z-index: 2;
+  padding: var(--space-6);
+  margin-top: -3.75rem;
+}
+
+.panel-description {
+  margin-bottom: var(--space-6);
+}
+
 @media (max-width: 1024px) {
   .profile-layout {
     grid-template-columns: 1fr;
@@ -43,6 +61,7 @@
 .form-actions {
   display: flex;
   justify-content: flex-end;
+  gap: var(--space-4);
   margin-top: var(--space-4);
 }
 

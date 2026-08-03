@@ -1,5 +1,13 @@
-﻿import { Component, Input, Output, EventEmitter, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+﻿import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  inject,
+  PLATFORM_ID,
+} from '@angular/core';
+import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import { AvatarComponent } from '../../atoms/avatar/avatar.component';
 
 export interface SidebarMenuItem {
@@ -10,6 +18,8 @@ export interface SidebarMenuItem {
   active?: boolean;
   route?: string;
   badge?: string | number;
+  children?: SidebarMenuItem[];
+  expanded?: boolean;
 }
 
 export interface SidebarUser {
@@ -22,12 +32,13 @@ export interface SidebarUser {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [AvatarComponent],
+  imports: [AvatarComponent, NgTemplateOutlet],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   /** Menu items to display */
   @Input() menuItems: SidebarMenuItem[] = [];
@@ -47,44 +58,68 @@ export class SidebarComponent {
   /** Event emitted when a menu item is clicked */
   @Output() navigate = new EventEmitter<SidebarMenuItem>();
 
-  focusedIndex = 0;
+  private readonly expansionOverrides = new Map<string, boolean>();
 
-  onItemClick(item: SidebarMenuItem, index?: number) {
-    if (index !== undefined) {
-      this.focusedIndex = index;
+  onItemClick(item: SidebarMenuItem): void {
+    if (this.hasChildren(item)) {
+      this.expansionOverrides.set(this.itemKey(item), !this.isExpanded(item));
+      return;
     }
     this.navigate.emit(item);
   }
 
-  handleKeydown(event: KeyboardEvent) {
-    if (!this.menuItems.length) return;
+  hasChildren(item: SidebarMenuItem): boolean {
+    return (item.children?.length ?? 0) > 0;
+  }
+
+  isExpanded(item: SidebarMenuItem): boolean {
+    const override = this.expansionOverrides.get(this.itemKey(item));
+    if (override !== undefined) {
+      return override;
+    }
+    return item.expanded ?? this.containsActiveItem(item);
+  }
+
+  itemKey(item: SidebarMenuItem): string {
+    return item.id ?? item.route ?? item.label;
+  }
+
+  handleKeydown(event: KeyboardEvent): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const items = Array.from(
+      this.host.nativeElement.querySelectorAll<HTMLElement>('.sidebar-nav .nav-link'),
+    );
+    if (!items.length) return;
+
+    const activeIndex = Math.max(
+      items.indexOf(this.host.nativeElement.ownerDocument.activeElement as HTMLElement),
+      0,
+    );
+    let nextIndex: number | undefined;
 
     switch (event.key) {
       case 'ArrowDown':
-        this.focusedIndex = (this.focusedIndex + 1) % this.menuItems.length;
-        this.focusItem(this.focusedIndex);
-        event.preventDefault();
+        nextIndex = (activeIndex + 1) % items.length;
         break;
       case 'ArrowUp':
-        this.focusedIndex = (this.focusedIndex - 1 + this.menuItems.length) % this.menuItems.length;
-        this.focusItem(this.focusedIndex);
-        event.preventDefault();
+        nextIndex = (activeIndex - 1 + items.length) % items.length;
         break;
-      case 'Enter':
-      case ' ':
-        if (this.focusedIndex >= 0) {
-          this.onItemClick(this.menuItems[this.focusedIndex], this.focusedIndex);
-          event.preventDefault();
-        }
+      case 'Home':
+        nextIndex = 0;
         break;
+      case 'End':
+        nextIndex = items.length - 1;
+        break;
+    }
+
+    if (nextIndex !== undefined) {
+      items[nextIndex]?.focus();
+      event.preventDefault();
     }
   }
 
-  private focusItem(index: number) {
-    if (!isPlatformBrowser(this.platformId)) return;
-    const items = document.querySelectorAll('.sidebar-nav .nav-link');
-    (items[index] as HTMLElement)?.focus();
+  private containsActiveItem(item: SidebarMenuItem): boolean {
+    return !!item.active || !!item.children?.some((child) => this.containsActiveItem(child));
   }
 }
-
-

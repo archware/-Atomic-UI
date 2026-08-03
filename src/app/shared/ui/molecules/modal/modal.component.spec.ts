@@ -6,6 +6,11 @@ describe('ModalComponent', () => {
   let component: ModalComponent;
   let fixture: ComponentFixture<ModalComponent>;
 
+  function setInput(name: string, value: unknown): void {
+    fixture.componentRef.setInput(name, value);
+    fixture.detectChanges();
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ModalComponent],
@@ -24,8 +29,7 @@ describe('ModalComponent', () => {
   // ── Title ─────────────────────────────────────────────────────────────────
   describe('title', () => {
     it('should render the title text', () => {
-      component.title = 'Confirmar acción';
-      fixture.detectChanges();
+      setInput('title', 'Confirmar acción');
       const title: HTMLElement = fixture.nativeElement.querySelector('.modal-title');
       expect(title.textContent?.trim()).toBe('Confirmar acción');
     });
@@ -39,15 +43,13 @@ describe('ModalComponent', () => {
     });
 
     it('should apply modal-sm class for size sm', () => {
-      component.size = 'sm';
-      fixture.detectChanges();
+      setInput('size', 'sm');
       const modal: HTMLElement = fixture.nativeElement.querySelector('.modal');
       expect(modal.classList.contains('modal-sm')).toBeTrue();
     });
 
     it('should apply modal-lg class for size lg', () => {
-      component.size = 'lg';
-      fixture.detectChanges();
+      setInput('size', 'lg');
       const modal: HTMLElement = fixture.nativeElement.querySelector('.modal');
       expect(modal.classList.contains('modal-lg')).toBeTrue();
     });
@@ -67,7 +69,7 @@ describe('ModalComponent', () => {
 
     it('should emit closed on backdrop click when closeOnBackdrop=true', () => {
       let emitted = false;
-      component.closeOnBackdrop = true;
+      setInput('closeOnBackdrop', true);
       component.closed.subscribe(() => { emitted = true; });
 
       component.onBackdropClick();
@@ -77,7 +79,7 @@ describe('ModalComponent', () => {
 
     it('should NOT emit closed on backdrop click when closeOnBackdrop=false', () => {
       let emitted = false;
-      component.closeOnBackdrop = false;
+      setInput('closeOnBackdrop', false);
       component.closed.subscribe(() => { emitted = true; });
 
       component.onBackdropClick();
@@ -87,7 +89,7 @@ describe('ModalComponent', () => {
 
     it('should emit closed on Escape when closeOnBackdrop=true', () => {
       let emitted = false;
-      component.closeOnBackdrop = true;
+      setInput('closeOnBackdrop', true);
       component.closed.subscribe(() => { emitted = true; });
 
       component.onEscape();
@@ -97,7 +99,7 @@ describe('ModalComponent', () => {
 
     it('should NOT emit closed on Escape when closeOnBackdrop=false', () => {
       let emitted = false;
-      component.closeOnBackdrop = false;
+      setInput('closeOnBackdrop', false);
       component.closed.subscribe(() => { emitted = true; });
 
       component.onEscape();
@@ -109,15 +111,13 @@ describe('ModalComponent', () => {
   // ── Footer ────────────────────────────────────────────────────────────────
   describe('footer', () => {
     it('should render footer section when hasFooter=true', () => {
-      component.hasFooter = true;
-      fixture.detectChanges();
+      setInput('hasFooter', true);
       const footer = fixture.nativeElement.querySelector('.modal-footer');
       expect(footer).not.toBeNull();
     });
 
     it('should hide footer section when hasFooter=false', () => {
-      component.hasFooter = false;
-      fixture.detectChanges();
+      setInput('hasFooter', false);
       const footer = fixture.nativeElement.querySelector('.modal-footer');
       expect(footer).toBeNull();
     });

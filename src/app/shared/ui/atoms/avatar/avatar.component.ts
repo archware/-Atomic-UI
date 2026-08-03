@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, computed, signal } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Important for NgClass
 
 /** Avatar size options */
@@ -146,8 +146,7 @@ export class AvatarComponent {
 
   imageFailed = signal(false);
 
-  // Memoized computed values
-  computedInitials = computed(() => {
+  computedInitials(): string {
     if (this.initials) return this.initials.slice(0, 2);
     if (!this.name) return '';
     return this.name
@@ -156,7 +155,7 @@ export class AvatarComponent {
       .join('')
       .slice(0, 2)
       .toUpperCase();
-  });
+  }
 
   private readonly colors = [
     'var(--purple-600)',
@@ -169,14 +168,14 @@ export class AvatarComponent {
     'var(--teal-500)'
   ];
 
-  colorFromName = computed(() => {
+  colorFromName(): string {
     if (!this.name) return 'var(--gray-500)';
     let hash = 0;
     for (let i = 0; i < this.name.length; i++) {
       hash = this.name.charCodeAt(i) + ((hash << 5) - hash);
     }
     return this.colors[Math.abs(hash) % this.colors.length];
-  });
+  }
 
   onImageError() {
     this.imageFailed.set(true);

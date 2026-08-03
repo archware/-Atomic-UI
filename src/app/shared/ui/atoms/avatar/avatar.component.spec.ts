@@ -6,6 +6,11 @@ describe('AvatarComponent', () => {
   let component: AvatarComponent;
   let fixture: ComponentFixture<AvatarComponent>;
 
+  function setInput(name: string, value: unknown): void {
+    fixture.componentRef.setInput(name, value);
+    fixture.detectChanges();
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AvatarComponent],
@@ -23,37 +28,32 @@ describe('AvatarComponent', () => {
 
   describe('initials generation', () => {
     it('should generate initials from full name', () => {
-      component.name = 'Juan Pérez';
-      fixture.detectChanges();
+      setInput('name', 'Juan Pérez');
 
       expect(component.computedInitials()).toBe('JP');
     });
 
     it('should generate initials from single name', () => {
-      component.name = 'María';
-      fixture.detectChanges();
+      setInput('name', 'María');
 
       expect(component.computedInitials()).toBe('M');
     });
 
     it('should limit initials to 2 characters', () => {
-      component.name = 'Juan Carlos López';
-      fixture.detectChanges();
+      setInput('name', 'Juan Carlos López');
 
       expect(component.computedInitials().length).toBeLessThanOrEqual(2);
     });
 
     it('should use provided initials over name', () => {
-      component.name = 'Juan Pérez';
-      component.initials = 'AB';
-      fixture.detectChanges();
+      setInput('name', 'Juan Pérez');
+      setInput('initials', 'AB');
 
       expect(component.computedInitials()).toBe('AB');
     });
 
     it('should uppercase initials', () => {
-      component.name = 'juan pérez';
-      fixture.detectChanges();
+      setInput('name', 'juan pérez');
 
       expect(component.computedInitials()).toBe('JP');
     });
@@ -64,8 +64,7 @@ describe('AvatarComponent', () => {
 
     sizes.forEach(size => {
       it(`should apply avatar-${size} class when size is ${size}`, () => {
-        component.size = size;
-        fixture.detectChanges();
+        setInput('size', size);
 
         const avatar = fixture.nativeElement.querySelector('.avatar');
         expect(avatar.classList.contains(`avatar-${size}`)).toBeTrue();
@@ -78,8 +77,7 @@ describe('AvatarComponent', () => {
 
     statuses.forEach(status => {
       it(`should show status-${status} indicator when status is ${status}`, () => {
-        component.status = status;
-        fixture.detectChanges();
+        setInput('status', status);
 
         const statusEl = fixture.nativeElement.querySelector('.avatar-status');
         expect(statusEl).toBeTruthy();
@@ -88,16 +86,14 @@ describe('AvatarComponent', () => {
     });
 
     it('should not show status indicator when status is undefined', () => {
-      component.status = undefined;
-      fixture.detectChanges();
+      setInput('status', undefined);
 
       const statusEl = fixture.nativeElement.querySelector('.avatar-status');
       expect(statusEl).toBeNull();
     });
 
     it('should have aria-label on status indicator', () => {
-      component.status = 'online';
-      fixture.detectChanges();
+      setInput('status', 'online');
 
       const statusEl = fixture.nativeElement.querySelector('.avatar-status');
       expect(statusEl.getAttribute('aria-label')).toBe('online');
@@ -106,29 +102,25 @@ describe('AvatarComponent', () => {
 
   describe('color generation', () => {
     it('should generate consistent color for same name', () => {
-      component.name = 'Test User';
-      fixture.detectChanges();
+      setInput('name', 'Test User');
       const color1 = component.colorFromName();
 
-      component.name = 'Test User';
-      fixture.detectChanges();
+      setInput('name', 'Test User');
       const color2 = component.colorFromName();
 
       expect(color1).toBe(color2);
     });
 
     it('should use fallback color when no name', () => {
-      component.name = '';
-      fixture.detectChanges();
+      setInput('name', '');
 
-      expect(component.colorFromName()).toBe('#6b7280');
+      expect(component.colorFromName()).toBe('var(--gray-500)');
     });
   });
 
   describe('image', () => {
     it('should display image when src is provided', () => {
-      component.src = 'https://example.com/avatar.jpg';
-      fixture.detectChanges();
+      setInput('src', 'https://example.com/avatar.jpg');
 
       const img = fixture.nativeElement.querySelector('img');
       expect(img).toBeTruthy();
@@ -136,9 +128,8 @@ describe('AvatarComponent', () => {
     });
 
     it('should show initials on image error', () => {
-      component.src = 'invalid-url.jpg';
-      component.name = 'John Doe';
-      fixture.detectChanges();
+      setInput('src', 'invalid-url.jpg');
+      setInput('name', 'John Doe');
 
       component.onImageError();
       fixture.detectChanges();
@@ -150,8 +141,7 @@ describe('AvatarComponent', () => {
 
   describe('rounded variant', () => {
     it('should add rounded class when rounded is true', () => {
-      component.rounded = true;
-      fixture.detectChanges();
+      setInput('rounded', true);
 
       const avatar = fixture.nativeElement.querySelector('.avatar');
       expect(avatar.classList.contains('avatar-rounded')).toBeTrue();
@@ -160,10 +150,9 @@ describe('AvatarComponent', () => {
 
   describe('placeholder', () => {
     it('should show placeholder when no name, initials, or src', () => {
-      component.name = '';
-      component.initials = undefined;
-      component.src = undefined;
-      fixture.detectChanges();
+      setInput('name', '');
+      setInput('initials', undefined);
+      setInput('src', undefined);
 
       const placeholder = fixture.nativeElement.querySelector('.avatar-placeholder');
       expect(placeholder).toBeTruthy();

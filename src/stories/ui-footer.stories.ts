@@ -1,35 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { moduleMetadata } from '@storybook/angular';
 import { FooterComponent, SocialLink, LegalLink } from '../app/shared/ui/organisms/footer/footer.component';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { of } from 'rxjs';
-
-// Fake translation loader for Storybook
-class FakeTranslateLoader implements TranslateLoader {
-  getTranslation() {
-    return of({
-      'FOOTER.LEGAL': 'Legal',
-      'FOOTER.FOLLOW_US': 'Follow Us',
-      'FOOTER.ALL_RIGHTS_RESERVED': 'All rights reserved.',
-      'FOOTER.TERMS': 'Terms of Use',
-      'FOOTER.PRIVACY': 'Privacy Policy',
-      'FOOTER.CONTACT': 'Contact'
-    });
-  }
-}
 
 const meta: Meta<FooterComponent> = {
   title: '3. Organisms/Footer',
   component: FooterComponent,
-  decorators: [
-    moduleMetadata({
-      imports: [
-        TranslateModule.forRoot({
-          loader: { provide: TranslateLoader, useClass: FakeTranslateLoader }
-        })
-      ],
-    }),
-  ],
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -64,9 +38,9 @@ const socialLinks: SocialLink[] = [
 ];
 
 const legalLinks: LegalLink[] = [
-  { label: 'FOOTER.TERMS', url: '/terms' },
-  { label: 'FOOTER.PRIVACY', url: '/privacy' },
-  { label: 'FOOTER.CONTACT', url: '/contact' },
+  { label: 'Terms of Use', url: '/terms' },
+  { label: 'Privacy Policy', url: '/privacy' },
+  { label: 'Contact', url: '/contact' },
 ];
 
 export const Simple: Story = {

@@ -2,47 +2,84 @@
   <div class="sidebar-logo">
     <i [class]="logoIcon + ' logo-icon'"></i>
     @if (!collapsed) {
-    <span class="logo-text">{{ logoText }}</span>
+      <span class="logo-text">{{ logoText }}</span>
     }
   </div>
 
-  <nav class="sidebar-nav" (keydown)="handleKeydown($event)" tabindex="0">
-    <ul class="nav-list" role="menu">
-      @for (item of menuItems; track item.label; let i = $index) {
-      <li class="nav-item" role="none">
-        <button type="button" class="nav-link" [class.active]="item.active" (click)="onItemClick(item, i)"
-          role="menuitem" [attr.aria-current]="item.active ? 'page' : null"
-          [attr.tabindex]="focusedIndex === i ? 0 : -1">
-          <i [class]="item.icon + ' nav-icon'" [style.color]="item.active ? null : (item.iconColor || null)"></i>
-          @if (!collapsed) {
-          <span class="nav-label">
-            {{ item.label }}
-            @if(item.badge) { <span class="nav-badge">{{ item.badge }}</span> }
-          </span>
+  <nav class="sidebar-nav" (keydown)="handleKeydown($event)" aria-label="Navegación principal">
+    <ng-template #menuTree let-items let-level="level">
+      @for (item of items; track item.id ?? item.route ?? item.label) {
+        <li class="nav-item" [class.nav-item--group]="hasChildren(item)" role="none">
+          <button
+            type="button"
+            class="nav-link"
+            [class.active]="item.active"
+            [class.nav-link--child]="level > 0"
+            [class.expanded]="hasChildren(item) && isExpanded(item)"
+            (click)="onItemClick(item)"
+            role="menuitem"
+            [attr.aria-current]="item.active ? 'page' : null"
+            [attr.aria-expanded]="hasChildren(item) ? isExpanded(item) : null"
+            [attr.aria-haspopup]="hasChildren(item) ? 'menu' : null"
+          >
+            <i
+              [class]="item.icon + ' nav-icon'"
+              [style.color]="item.active ? null : item.iconColor || null"
+              aria-hidden="true"
+            ></i>
+            @if (!collapsed) {
+              <span class="nav-label">
+                <span class="nav-label-text">{{ item.label }}</span>
+                @if (item.badge) {
+                  <span class="nav-badge">{{ item.badge }}</span>
+                }
+              </span>
+              @if (hasChildren(item)) {
+                <i
+                  class="fa-solid fa-chevron-down nav-chevron"
+                  [class.expanded]="isExpanded(item)"
+                  aria-hidden="true"
+                ></i>
+              }
+            }
+          </button>
+
+          @if (!collapsed && hasChildren(item) && isExpanded(item)) {
+            <ul class="nav-list nav-list--children" role="menu">
+              <ng-container
+                [ngTemplateOutlet]="menuTree"
+                [ngTemplateOutletContext]="{ $implicit: item.children, level: level + 1 }"
+              ></ng-container>
+            </ul>
           }
-        </button>
-      </li>
+        </li>
       }
+    </ng-template>
+
+    <ul class="nav-list" role="menu">
+      <ng-container
+        [ngTemplateOutlet]="menuTree"
+        [ngTemplateOutletContext]="{ $implicit: menuItems, level: 0 }"
+      ></ng-container>
     </ul>
   </nav>
 
   @if (user) {
-  <div class="sidebar-footer">
-    <div class="user-profile">
-      <app-avatar [name]="user.name || 'User'" [initials]="user.initials" [size]="'md'"></app-avatar>
-      @if (!collapsed && user) {
-      <div class="user-info">
-        <span class="user-name">{{ user.name }}</span>
-        <span class="user-role">{{ user.role }}</span>
+    <div class="sidebar-footer">
+      <div class="user-profile">
+        <app-avatar
+          [name]="user.name || 'User'"
+          [initials]="user.initials"
+          [src]="user.photo"
+          [size]="'md'"
+        ></app-avatar>
+        @if (!collapsed && user) {
+          <div class="user-info">
+            <span class="user-name">{{ user.name }}</span>
+            <span class="user-role">{{ user.role }}</span>
+          </div>
+        }
       </div>
-      }
     </div>
-  </div>
-  } 
+  }
 </div>
-
-
-
-
-
-

@@ -1,52 +1,41 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { moduleMetadata } from '@storybook/angular';
-import { MetricsGridComponent, KpiMetric } from '../app/shared/ui/organisms/metrics-grid/metrics-grid.component';
+import {
+  KpiMetric,
+  MetricsGridComponent,
+} from '../app/shared/ui/organisms/metrics-grid/metrics-grid.component';
 
-const demoMetrics: KpiMetric[] = [
+const demoMetrics: readonly KpiMetric[] = [
   {
-    title: 'Usuarios activos',
-    subtitle: 'Ultimos 30 dias',
-    value: 12480,
-    format: 'compact',
-    trend: 'up',
-    trendValue: '+12.4%',
-    comparisonLabel: 'vs mes pasado',
-    iconClass: 'fa-solid fa-users',
-    series: [10, 14, 13, 17, 21, 19, 23],
+    id: 'active-accounts',
+    title: 'Cuentas activas',
+    subtitle: 'Conteo reportado',
+    value: 128,
+    iconClass: 'fa-solid fa-wallet',
   },
   {
-    title: 'Ingresos',
-    subtitle: 'Mes actual',
-    value: 248900,
-    format: 'currency',
-    currency: 'PEN',
-    trend: 'up',
-    trendValue: '+8.5%',
-    comparisonLabel: 'objetivo trimestral',
-    iconClass: 'fa-solid fa-sack-dollar',
+    id: 'monthly-income',
+    title: 'Ingresos del mes',
+    subtitle: 'Importe reportado',
+    value: 248900.5,
+    displayValue: 'S/ 248,900.50',
+    iconClass: 'fa-solid fa-arrow-trend-up',
     series: [120, 132, 141, 160, 154, 170, 182],
   },
   {
-    title: 'Churn',
-    subtitle: 'Clientes perdidos',
-    value: 6.2,
-    format: 'percent',
-    trend: 'down',
-    trendValue: '-1.1 pp',
-    comparisonLabel: 'mejor que la media',
-    iconClass: 'fa-solid fa-user-minus',
-    series: [9.1, 8.7, 8.4, 7.8, 7.1, 6.8, 6.2],
+    id: 'monthly-expense',
+    title: 'Egresos del mes',
+    subtitle: 'Importe reportado',
+    value: 82400.25,
+    displayValue: 'S/ 82,400.25',
+    iconClass: 'fa-solid fa-arrow-trend-down',
   },
   {
+    id: 'response-time',
     title: 'Tiempo medio de respuesta',
-    subtitle: 'Mesa de soporte',
+    subtitle: 'Canales configurados',
     value: 96,
     format: 'duration',
-    trend: 'down',
-    trendValue: '-14m',
-    comparisonLabel: 'SLA en objetivo',
     iconClass: 'fa-solid fa-stopwatch',
-    series: [132, 128, 121, 114, 108, 101, 96],
   },
 ];
 
@@ -54,11 +43,6 @@ const meta: Meta<MetricsGridComponent> = {
   title: '3. Organisms/MetricsGrid',
   component: MetricsGridComponent,
   tags: ['autodocs'],
-  decorators: [
-    moduleMetadata({
-      imports: [MetricsGridComponent],
-    }),
-  ],
 };
 
 export default meta;
@@ -67,13 +51,36 @@ type Story = StoryObj<MetricsGridComponent>;
 export const Default: Story = {
   args: {
     metrics: demoMetrics,
-    minCardWidth: '220px',
+    minCardWidth: '13.75rem',
+    ariaLabel: 'Indicadores de demostración',
   },
 };
 
-export const CompactMobile: Story = {
+export const ResponsiveAt320Px: Story = {
   args: {
     metrics: demoMetrics,
-    minCardWidth: '180px',
+    minCardWidth: '15rem',
+    ariaLabel: 'Indicadores en contenedor estrecho',
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+      <div style="width: 320px; max-width: 100%; padding: 1rem; box-sizing: border-box;">
+        <app-metrics-grid
+          [metrics]="metrics"
+          [minCardWidth]="minCardWidth"
+          [ariaLabel]="ariaLabel"
+        />
+      </div>
+    `,
+  }),
+};
+
+export const RepeatedTitlesWithStableIds: Story = {
+  args: {
+    metrics: [
+      { id: 'income-today', title: 'Ingresos', value: 120, displayValue: 'S/ 120.00' },
+      { id: 'income-month', title: 'Ingresos', value: 900, displayValue: 'S/ 900.00' },
+    ],
   },
 };
