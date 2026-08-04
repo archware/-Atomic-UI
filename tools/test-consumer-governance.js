@@ -47,6 +47,15 @@ try {
   ]) {
     copy(artifact);
   }
+  copy('package.json');
+  copy('distribution/atomic-source-manifest.json');
+  const atomicPackage = JSON.parse(fs.readFileSync(path.join(sourceRoot, 'package.json'), 'utf8'));
+  const atomicSourceManifest = JSON.parse(
+    fs.readFileSync(
+      path.join(sourceRoot, 'distribution/atomic-source-manifest.json'),
+      'utf8',
+    ),
+  );
   write(path.join(sourceRoot, 'src/app/shared/ui/atoms/example/example.ts'), 'export const example = true;\n');
   write(path.join(sourceRoot, 'src/styles/themes/_tokens-components.css'), ':root { --example: 1; }\n');
 
@@ -78,6 +87,8 @@ try {
     atomicRepository: '../atomic',
     atomicRemote: 'archware/-Atomic-UI',
     atomicRef: 'main',
+    atomicVersion: atomicPackage.version,
+    atomicSourceTreeSha256: atomicSourceManifest.sourceTreeSha256,
     uiRoots: ['src/app/ui'],
     featureRoots: ['src/app/features'],
     layers: ['atoms', 'molecules', 'organisms', 'surfaces', 'templates'],
@@ -113,6 +124,16 @@ try {
   write(manifestPath, JSON.stringify(manifest, null, 2));
 
   runGate(true, 'Ley Atomic verificada');
+
+  manifest.atomicVersion = '0.0.0-invalid';
+  write(manifestPath, JSON.stringify(manifest, null, 2));
+  runGate(false, 'Versi\u00f3n Atomic divergente');
+  manifest.atomicVersion = atomicPackage.version;
+  manifest.atomicSourceTreeSha256 = '0'.repeat(64);
+  write(manifestPath, JSON.stringify(manifest, null, 2));
+  runGate(false, 'La huella de fuentes Atomic no coincide');
+  manifest.atomicSourceTreeSha256 = atomicSourceManifest.sourceTreeSha256;
+  write(manifestPath, JSON.stringify(manifest, null, 2));
 
   write(path.join(consumerRoot, 'src/app/features/home/home.html'), '<button>Prohibido</button>\n');
   runGate(false, 'Primitiva visual nativa fuera del ADN');

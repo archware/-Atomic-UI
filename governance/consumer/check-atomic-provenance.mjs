@@ -75,6 +75,12 @@ if (manifest.policyVersion !== POLICY_VERSION) {
 if (!manifest.changeId?.trim()) failures.push('changeId es obligatorio.');
 if (!manifest.atomicRemote?.trim()) failures.push('atomicRemote es obligatorio para CI.');
 if (!manifest.atomicRef?.trim()) failures.push('atomicRef es obligatorio para CI reproducible.');
+if (!manifest.atomicVersion?.trim()) {
+  failures.push('atomicVersion es obligatorio para fijar la versi\u00f3n consumida.');
+}
+if (!/^[0-9a-f]{64}$/i.test(manifest.atomicSourceTreeSha256 || '')) {
+  failures.push('atomicSourceTreeSha256 debe ser una huella SHA-256 v\u00e1lida.');
+}
 if (!Array.isArray(manifest.uiRoots) || manifest.uiRoots.length === 0) {
   failures.push('uiRoots debe declarar al menos una raíz UI consumidora.');
 }
@@ -86,6 +92,37 @@ if (!Array.isArray(manifest.layers) || manifest.layers.length === 0) {
 }
 if (!Array.isArray(manifest.components)) failures.push('components debe ser un arreglo.');
 if (!existsSync(atomicRoot)) failures.push(`No existe el repositorio fuente Atomic: ${atomicRoot}`);
+
+if (existsSync(atomicRoot)) {
+  const atomicPackagePath = join(atomicRoot, 'package.json');
+  const atomicSourceManifestPath = join(
+    atomicRoot,
+    'distribution',
+    'atomic-source-manifest.json',
+  );
+  if (
+    requireFile(atomicPackagePath, 'package.json de Atomic es obligatorio.') &&
+    requireFile(
+      atomicSourceManifestPath,
+      'distribution/atomic-source-manifest.json de Atomic es obligatorio.',
+    )
+  ) {
+    const atomicPackage = JSON.parse(readFileSync(atomicPackagePath, 'utf8'));
+    const atomicSourceManifest = JSON.parse(readFileSync(atomicSourceManifestPath, 'utf8'));
+    if (manifest.atomicVersion !== atomicPackage.version) {
+      failures.push(
+        `Versi\u00f3n Atomic divergente: se declar\u00f3 ${manifest.atomicVersion || '(vac\u00eda)'} ` +
+          `y la fuente disponible es ${atomicPackage.version || '(vac\u00eda)'}.`,
+      );
+    }
+    if (atomicSourceManifest.packageVersion !== atomicPackage.version) {
+      failures.push('El manifiesto de fuentes Atomic no coincide con la versi\u00f3n del paquete.');
+    }
+    if (manifest.atomicSourceTreeSha256 !== atomicSourceManifest.sourceTreeSha256) {
+      failures.push('La huella de fuentes Atomic no coincide con la referencia disponible.');
+    }
+  }
+}
 
 const agentsPath = join(consumerRoot, 'AGENTS.md');
 if (

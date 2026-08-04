@@ -15,7 +15,8 @@ tokens y patrones visuales reutilizables de todas las aplicaciones consumidoras.
    crea, prueba, documenta y valida primero en `-Atomic-UI`.
 3. Solo después de quedar verde en Atomic puede propagarse al consumidor.
 4. Cada componente local debe figurar en `docs/atomic-provenance.json` con su
-   ruta fuente.
+   ruta fuente. El manifiesto debe fijar la referencia Git, la versi\u00f3n y la
+   huella SHA-256 del \u00e1rbol de fuentes Atomic.
 5. Una copia `exact` debe conservar hashes idénticos. Una copia `adapted` exige
    una justificación concreta y un registro de decisión versionado.
 6. Las features no pueden recrear botones, diálogos, tablas ni controles de

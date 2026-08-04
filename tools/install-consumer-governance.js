@@ -99,6 +99,34 @@ function atomicRef() {
   }
 }
 
+function atomicIdentity() {
+  const packageJson = JSON.parse(fs.readFileSync(path.join(atomicRoot, 'package.json'), 'utf8'));
+  const sourceManifestPath = path.join(
+    atomicRoot,
+    'distribution',
+    'atomic-source-manifest.json',
+  );
+  if (!fs.existsSync(sourceManifestPath)) {
+    throw new Error(
+      'No existe distribution/atomic-source-manifest.json. Ejecute npm run package:manifest.',
+    );
+  }
+  const sourceManifest = JSON.parse(fs.readFileSync(sourceManifestPath, 'utf8'));
+  if (!packageJson.version?.trim() || !sourceManifest.sourceTreeSha256?.trim()) {
+    throw new Error('La identidad versionada de Atomic est\u00e1 incompleta.');
+  }
+  if (sourceManifest.packageVersion !== packageJson.version) {
+    throw new Error(
+      'La versi\u00f3n del manifiesto de fuentes no coincide con package.json. ' +
+        'Ejecute npm run package:manifest.',
+    );
+  }
+  return {
+    atomicVersion: packageJson.version,
+    atomicSourceTreeSha256: sourceManifest.sourceTreeSha256,
+  };
+}
+
 function appendAgentPolicy(consumerRoot) {
   const agentsPath = path.join(consumerRoot, 'AGENTS.md');
   const template = fs.readFileSync(path.join(kitRoot, 'AGENTS.template.md'), 'utf8');
@@ -128,6 +156,14 @@ function main() {
   const auditOnly = process.argv.includes('--audit-only');
   const adaptationDecision = normalize(option('adaptation-decision', ''));
   const changeId = option('change-id', 'ATOMIC-BOOTSTRAP');
+  let identity;
+
+  try {
+    identity = atomicIdentity();
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
 
   if (!fs.existsSync(packagePath) || !fs.existsSync(absoluteUiRoot)) {
     console.error('El consumidor debe contener package.json y la raíz UI indicada.');
@@ -151,6 +187,7 @@ function main() {
     schemaVersion: 1,
     status: adaptations.length === 0 ? 'exact' : 'adaptation-records-required',
     atomicRef: atomicRef(),
+    ...identity,
     consumerRoot: normalize(consumerRoot),
     packageRoot,
     uiRoot,
@@ -243,6 +280,7 @@ function main() {
     atomicRepository: normalize(path.relative(consumerRoot, atomicRoot)),
     atomicRemote: 'archware/-Atomic-UI',
     atomicRef: atomicRef(),
+    ...identity,
     packageRoot,
     uiRoots: [uiRoot],
     featureRoots: [

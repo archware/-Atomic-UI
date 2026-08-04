@@ -37,8 +37,11 @@ archivo. El formato se basa en
   CSS, generador declarativo y contrato transicional de distribución. El smoke
   test crea sin red un shell gobernado con 76 componentes y verifica cero
   violaciones de procedencia.
+- El manifiesto de cada consumidor fija de forma conjunta la referencia Git,
+  la versión y la huella SHA-256 de Atomic. El gate rechaza versiones o huellas
+  que no correspondan a la fuente disponible.
 - El manifiesto registra 151 fuentes con SHA-256 del árbol
-  `fea2de5195254f0c47a96b4ab9006ebf5aabd3661a8ab6dd0bb0b5678d2a20d4`.
+  `9e50ba997303dbf1cd5c11b505cad2bc18e383b0dc2326d92bd3d4442ccc423d`.
   La biblioteca Angular compilada continúa bloqueada por contrato; estas
   verificaciones no autorizan su publicación.
 

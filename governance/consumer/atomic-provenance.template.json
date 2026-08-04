@@ -5,6 +5,8 @@
   "atomicRepository": "../-Atomic-UI",
   "atomicRemote": "archware/-Atomic-UI",
   "atomicRef": "main",
+  "atomicVersion": "<atomic-version>",
+  "atomicSourceTreeSha256": "<sha256>",
   "packageRoot": ".",
   "uiRoots": ["src/app/shared/ui"],
   "featureRoots": ["src/app/features", "src/app/pages", "src/app/dashboard"],
