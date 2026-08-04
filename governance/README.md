@@ -1,3 +1,10 @@
+---
+title: "Gobierno obligatorio para consumidores Atomic"
+subtitle: "Procedencia, instalación y compuertas de conformidad"
+author: "Ing. Havel CONTRERAS TAPAHUASCO"
+date: "2026-08-03"
+---
+
 # Gobierno obligatorio para consumidores Atomic
 
 La carpeta `governance/consumer` es la fuente canónica de la política que deben
@@ -22,10 +29,44 @@ proyecto no se considera creado si ese bootstrap falla.
 npm run governance:install -- C:\ruta\al\consumidor --ui-root=src/app/shared/ui
 ```
 
+Cuando Angular se encuentra en una carpeta anidada, el repositorio se mantiene
+como raíz de gobierno y se declara la ubicación de `package.json`:
+
+```bash
+npm run governance:install -- C:\ruta\al\consumidor \
+  --package-root=frontend \
+  --ui-root=frontend/src/app/shared/ui
+```
+
 Después se ejecuta `npm run check:atomic` en el consumidor. Las adaptaciones
 existentes deben declararse manualmente como `adapted`, con `justification` y
 `decisionRecord`; el instalador registra como `exact` todo lo que acaba de
-copiarse desde Atomic.
+comprobarse idéntico a Atomic.
+
+Antes de instalar gobierno sobre un consumidor con trabajo previo se ejecuta una
+auditoría de solo lectura:
+
+```bash
+npm run governance:install -- C:\ruta\al\consumidor --ui-root=src/app/shared/ui --audit-only
+```
+
+El reporte clasifica un componente como `exact` únicamente cuando coinciden el
+conjunto de archivos y todos sus hashes SHA-256. Si existe una divergencia, la
+instalación normal se detiene antes de copiar políticas o modificar
+`package.json`. La adaptación deberá revisarse y asociarse a un registro de
+decisión concreto; el instalador no crea justificaciones genéricas.
+
+Después de aprobar una línea base, la instalación exige el registro de decisión
+existente y conserva un snapshot SHA-256 de cada archivo adaptado:
+
+```bash
+npm run governance:install -- C:\ruta\al\consumidor \
+  --adaptation-decision=docs/decisions/ADR-atomic-baseline.md \
+  --change-id=ATOMIC-BASELINE-2026-08
+```
+
+Una modificación posterior de un archivo adaptado invalida el gate hasta que se
+registre una nueva decisión y se renueve deliberadamente el snapshot.
 
 ## Controles que convierten la política en ley
 
@@ -35,6 +76,9 @@ copiarse desde Atomic.
 - Una adaptación sin justificación o registro de decisión falla.
 - Features y páginas no admiten primitivas visuales nativas, estilos inline,
   colores fijos ni selectores hacia el DOM interno de controles.
+- El gate canónico inspecciona plantillas HTML y hojas CSS/SCSS externas. Los
+  consumidores que mantienen plantillas inline en TypeScript deben conservar su
+  validador específico hasta completar la migración hacia archivos externos.
 - El workflow `Atomic governance` ejecuta la compuerta en push y pull request.
 - La CI de `-Atomic-UI` prueba el bootstrap y cuatro violaciones negativas,
   rechaza blueprints productivos que incumplan la norma y mantiene los demos

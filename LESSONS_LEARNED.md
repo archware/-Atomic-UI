@@ -1,4 +1,13 @@
-# Lecciones Aprendidas (Lessons Learned)
+---
+title: "Lecciones aprendidas de Atomic UI"
+document_type: "registro técnico"
+status: "en revisión"
+last_updated: "2026-08-03"
+owners:
+  - "Hospital Regional de Ayacucho"
+---
+
+# Lecciones aprendidas de Atomic UI
 
 Este documento centraliza el conocimiento adquirido tras solucionar problemas complejos de arquitectura, diseño e integración en el ecosistema de Atomic-UI, sirviendo como guía maestra para que agentes y desarrolladores entiendan el "por qué" de ciertas decisiones técnicas críticas y puedan portar este comportamiento a otros ecosistemas (Wails, Tauri, Web, etc).
 
@@ -22,6 +31,33 @@ como `legacy-demo`, y el bootstrap productivo nunca los copia.
 story y catálogo. Todo agente revisa `--dry-run`; el gate bloquea referencias
 ausentes, sobrescritura, integración inferida, tokens sin resolver y blueprints
 productivos fuera del ADN.
+
+---
+
+## [2026-07-22] - Anclaje del pie de página en el shell de la aplicación y desacoplamiento de pipes de traducción
+
+**Contexto:** En aplicaciones Angular empaquetadas (Tauri, Wails, PyWebView), el pie de página (`<app-footer>`) no era visible en ciertas vistas o pestañas internas (`GerencialComponent`, `OperativoComponent`), o se colapsaba visualmente debido a desbordamientos de layout y a la dependencia implícita del pipe `| translate` de `@ngx-translate/core`.
+
+**Causa raíz:**
+
+1. **Alcance del layout y del scroll:** Al renderizar pestañas (`<app-tabs>`) con contenedores de scroll independientes (`<app-scroll-overlay>` o `overflow: auto`), colocar el pie de página dentro de componentes secundarios o sub-vistas provocaba que quedara recortado por la altura de las tablas o desplazado fuera del área visible (*below the fold*).
+2. **Fallo de los pipes de traducción:** El componente `FooterComponent` incluía `| translate` en plantillas por defecto sin que los proyectos consumidores proveyeran explícitamente `TranslateService` o archivos i18n JSON, generando fallos de inyección que cancelaban la renderización del DOM.
+
+**Lección y solución arquitectónica:**
+
+1. **Layout anclado en el shell raíz:** El pie de página no debe incrustarse dentro de componentes de pestañas ni vistas secundarias. Debe declararse exclusivamente en el `AppComponent` raíz mediante un contenedor flexbox de pantalla completa:
+   ```html
+   <div class="app-root-shell" style="display: flex; flex-direction: column; height: 100vh; width: 100vw; overflow: hidden; background: var(--surface-base, #0f172a);">
+     <div class="app-root-content" style="flex: 1; overflow-y: auto; min-height: 0;">
+       <app-dashboard></app-dashboard>
+     </div>
+     <app-footer variant="inline" companyName="Hospital Regional Ayacucho"></app-footer>
+   </div>
+   ```
+2. **Independencia total de i18n:** El `FooterComponent` de Atomic UI debe usar valores en texto plano con valores predeterminados (`copyrightText || 'Todos los derechos reservados.'`), evitando dependencias duras de `@ngx-translate/core` para garantizar un renderizado atómico libre de errores en cualquier entorno.
+3. **Estilos protegidos del host:** `:host { display: block !important; width: 100% !important; margin-top: auto !important; }` asegura que el pie de página ocupe el ancho completo y permanezca fijo en la base del viewport.
+
+**Actualización 2026-08-03:** El ejemplo histórico con estilos inline queda sustituido por clases y tokens de Atomic UI. El pie de página se ubica como hermano inferior del área desplazable del shell, recibe la información de versión mediante entradas tipadas y no importa servicios específicos de Tauri, Wails o PyWebView.
 
 ---
 
@@ -283,7 +319,7 @@ El usuario confirmó que la tipografía azul y la línea de acento azul eran ide
 
 **Causa Raíz:** Las tablas dependían de `height: auto` o `max-height` variable en el contenedor viewport, y la propiedad `border-collapse: separate` dejaba sin pintar el fondo del gutter sobre el scrollbar.
 
-**La Lección:** 
+**La Lección:**
 1. Los contenedores de tablas de datos (`data-table__viewport`) deben declarar una altura fija o acotada (`height: calc(100vh - 18.5rem); overflow: auto; background: var(--surface-section)`). Seleccionar 10, 20 o 50 filas por página NUNCA debe alterar la altura del contenedor principal.
 2. Para evitar esquinas superiores sin pintar en `thead`, el contenedor `.data-table__viewport` debe pintar su fondo con `var(--surface-section)`, heredando la continuidad visual perfecta sobre el gutter del scrollbar.
 3. Se deben eliminar los subtítulos y títulos duplicados "BÚSQUEDA" y "RESULTADOS" de los contenedores cuando la estructura visual es auto-explicativa, ahorrando espacio vertical valioso para los datos de negocio.
@@ -312,7 +348,7 @@ El usuario confirmó que la tipografía azul y la línea de acento azul eran ide
 
 **Contexto:** En el Orquestador del Acopiador HRA, el boton "Ejecutar Calculo" se mostraba deshabilitado (gris, opacity reducida) cuando faltaban fuentes de datos `[disabled]="!canExecuteIndicador()"`, pero el usuario reporto que al hacer click, el calculo se ejecutaba de todas formas.
 
-**Causa Raiz:** El consumidor enlazo la accion usando el evento nativo del DOM `(click)="ejecutarIndicador()"` directamente sobre la etiqueta `<app-button>`. En Angular, esto enlaza el listener al *Host Element*. Aunque el `<button>` HTML nativo en el interior del componente este `disabled` y no dispare eventos de click, el click del usuario impactaba en el host (padding, wrapper) y disparaba la funcion.
+**Causa Raiz:** El consumidor enlazo la accion usando el evento nativo del DOM `(click)="ejecutarIndicador()"` directamente sobre la etiqueta `<app-button>`. En Angular, esto enlazar el listener al *Host Element*. Aunque el `<button>` HTML nativo en el interior del componente este `disabled` y no dispare eventos de click, el click del usuario impactaba en el host (padding, wrapper) y disparaba la funcion.
 
 **La leccion:** Los componentes de UI empaquetados (como `app-button`) gestionan su estado `disabled` bloqueando la emision de eventos desde dentro. El `ButtonComponent` de Atomic UI cuenta con un `@Output() buttonClick` que solo emite si el boton no esta deshabilitado.
 
@@ -346,7 +382,6 @@ Queda estrictamente prohibido usar `(click)` sobre elementos custom de la librer
 **Regla de navegación:** Un padre con hijos controla expansión y una hoja controla navegación. La presentación en mayúsculas se resuelve con CSS para no mutar etiquetas, rutas ni contratos de backend.
 
 **Regla de acciones de icono:** Todo botón que sólo contiene un icono necesita nombre accesible. Enter y Espacio ya activan un `<button>` nativo; añadir handlers de teclado paralelos duplica eventos y puede ejecutar una mutación dos veces.
->>>>>>> Stashed changes
 
 ---
 
@@ -417,7 +452,7 @@ La solución robusta es detener la propagación del evento `click` en la opción
 
 ### 2. Crasheos Silenciosos en Rust y Activación de Mock Data
 **Contexto**: El dashboard de Tauri mostraba "Datos de prueba" aunque el ping DB funcionara. Se debió a un panic de la librería Tiberius usando `row.get()`.
-**La Lección**: En Rust, `row.get::<T>` hace `unwrap` interno de los tipos SQL exactos. Si SQL manda un FLOAT donde Rust pide un INT, la aplicación colapsa y Angular atrapa el error como "conexión caída". Toda capa Repository en Tauri debe usar estrictamente iteradores `.try_get()` aplanados a defaults: `row.try_get::<i32, _>("col").ok().flatten().unwrap_or(0)`.
+**La Lección**: En Rust, `row.get::<T>` hace `unwrap` interno de los tipos SQL exactos. Si SQL manda un FLOAT donde Rust pide un INT, la aplicación colapsa y Angular atrapa el error como "conexión caída". Toda capa Repository en Tauri debe usar strictly iteradores `.try_get()` aplanados a defaults: `row.try_get::<i32, _>("col").ok().flatten().unwrap_or(0)`.
 
 ### 3. Excepción TLS en Bases de Datos Legacy
 **Contexto**: El intento de forzar `TrustServerCertificate=true` destruyó por completo el acceso a Tauri arrojando "os error -2146893007".
@@ -451,7 +486,7 @@ La solución robusta es detener la propagación del evento `click` en la opción
 ### [2026-07-08] Desarrollo Independiente y Sintaxis Nativa (Arquitectura Desacoplada)
 - **Contexto:** Al abordar problemas en el mapeo de variables desde bases de datos, se intentó replicar (hacer análoga) la lógica del ecosistema de Wails (Go) directamente al ecosistema de Tauri (Rust).
 - **Problema:** Wails (Go) y Tauri (Rust) manejan el acceso a base de datos, mapeo JSON, y serialización de formas muy distintas (ej. `row.Scan` vs `tiberius` y `serde`). Tratar de forzar que Tauri funcionara exactamente con las convenciones, nombres de variables o estructuras parciales copiadas de Wails ocasionó roturas críticas en el frontend al intentar pintar la data.
-- **Lección Aprendida:** **NUNCA se debe asumir que una mejora en Wails es análoga a Tauri.** Queda estrictamente prohibido desarrollar mezclando o copiando sintaxis entre ecosistemas. A partir de ahora, cada ecosistema (Python, Wails, Tauri) debe ser desarrollado **de forma individual con su sintaxis nativa** y respetando sus propios paradigmas y librerías. Cualquier nueva característica o corrección requiere una auditoría profunda e independiente en su respectivo entorno para solucionar el problema de raíz, sin asumir paridad automática con los otros frameworks.
+- **Lección Aprendida:** **NUNCA se debe asumir que una mejora en Wails es análoga a Tauri.** Queda strictly prohibido desarrollar mezclando o copiando sintaxis entre ecosistemas. A partir de ahora, cada ecosistema (Python, Wails, Tauri) debe ser desarrollado **de forma individual con su sintaxis nativa** y respetando sus propios paradigmas y librerías. Cualquier nueva característica o corrección requiere una auditoría profunda e independiente en su respectivo entorno para solucionar el problema de raíz, sin asumir paridad automática con los otros frameworks.
 
 ## Desbordamiento silencioso en grillas Flexbox
 - **Contexto:** Al usar el sistema en aplicaciones como el Acopiador HRA en Python, ciertas tarjetas de consola de texto forzaban el crecimiento vertical de la ventana más allá de `100vh`.

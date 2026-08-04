@@ -41,7 +41,7 @@ export interface DenominationCounterRow extends DenominationDefinition {
  * del Accordion canónico.
  */
 @Component({
-  selector: 'prest-denomination-counter',
+  selector: 'app-denomination-counter, prest-denomination-counter',
   standalone: true,
   imports: [
     AccordionComponent,
@@ -125,6 +125,9 @@ export interface DenominationCounterRow extends DenominationDefinition {
             <span>{{ totalLabel }}</span>
             <strong>{{ formatMoney(total()) }}</strong>
           </div>
+          @if (calculationNotice) {
+            <p class="denomination-counter__notice">{{ calculationNotice }}</p>
+          }
         }
       </app-accordion-item>
     </app-accordion>
@@ -234,6 +237,12 @@ export interface DenominationCounterRow extends DenominationDefinition {
         color: var(--text-color-muted);
       }
 
+      .denomination-counter__notice {
+        margin: var(--space-2) 0 0;
+        color: var(--text-color-muted);
+        font-size: var(--text-xs);
+      }
+
       @media (max-width: 40rem) {
         .denomination-counter__head {
           display: none;
@@ -258,6 +267,8 @@ export class DenominationCounter implements ControlValueAccessor {
   @Input() title = 'Desglose de efectivo';
   @Input() description = 'Registre la cantidad por denominación.';
   @Input() totalLabel = 'Total contado';
+  @Input() calculationNotice =
+    'Total referencial. El backend conserva la autoridad sobre el monto definitivo.';
   @Input() emptyMessage = 'No hay denominaciones disponibles.';
   @Input() optional = false;
   @Input() state: DenominationCounterState = 'empty';
@@ -269,7 +280,20 @@ export class DenominationCounter implements ControlValueAccessor {
   get open(): boolean {
     return this.openState;
   }
-  @Input() maxQuantity = 9999;
+  @Input() set maxQuantity(value: number) {
+    const normalized = this.normalizeMaximumQuantity(value);
+    if (normalized === this.maximumQuantity) {
+      return;
+    }
+
+    this.maximumQuantity = normalized;
+    if (this.renormalizeQuantities()) {
+      this.emitValue();
+    }
+  }
+  get maxQuantity(): number {
+    return this.maximumQuantity;
+  }
   @Input() locale = 'es-PE';
   @Input() currency = 'PEN';
   @Input() disabled = false;
@@ -278,15 +302,26 @@ export class DenominationCounter implements ControlValueAccessor {
   }
 
   @Input() set denominations(value: readonly DenominationDefinition[] | null | undefined) {
-    this.definitions.set(this.normalizeDefinitions(value ?? []));
-    this.pruneUnknownCounts();
+    const definitions = this.normalizeDefinitions(value ?? []);
+    this.definitions.set(definitions);
+    const wasAwaitingDefinitions = this.awaitingDefinitionsForExternalValue;
+    if (wasAwaitingDefinitions && definitions.length === 0) {
+      return;
+    }
+    this.awaitingDefinitionsForExternalValue = false;
+    if (this.pruneUnknownCounts() && !wasAwaitingDefinitions) {
+      this.emitValue();
+    }
   }
 
   @Output() readonly valueChange = new EventEmitter<readonly DenominationCount[]>();
   @Output() readonly totalChange = new EventEmitter<number>();
+  @Output() readonly openChange = new EventEmitter<boolean>();
 
   private readonly definitions = signal<readonly DenominationDefinition[]>([]);
   private readonly quantities = signal<ReadonlyMap<string, number>>(new Map());
+  private maximumQuantity = 9999;
+  private awaitingDefinitionsForExternalValue = false;
   private openState = false;
   readonly expanded = signal(false);
 
@@ -341,7 +376,10 @@ export class DenominationCounter implements ControlValueAccessor {
       next.set(code, this.normalizeQuantity(item.quantity));
     }
     this.quantities.set(next);
-    this.pruneUnknownCounts();
+    this.awaitingDefinitionsForExternalValue = this.definitions().length === 0 && next.size > 0;
+    if (!this.awaitingDefinitionsForExternalValue) {
+      this.pruneUnknownCounts();
+    }
   }
 
   registerOnChange(fn: (value: readonly DenominationCount[]) => void): void {
@@ -357,7 +395,12 @@ export class DenominationCounter implements ControlValueAccessor {
   }
 
   setExpanded(open: boolean): void {
+    if (this.openState === open && this.expanded() === open) {
+      return;
+    }
+    this.openState = open;
     this.expanded.set(open);
+    this.openChange.emit(open);
   }
 
   setQuantity(code: string, value: number): void {
@@ -423,10 +466,28 @@ export class DenominationCounter implements ControlValueAccessor {
     return normalized;
   }
 
-  private pruneUnknownCounts(): void {
+  private pruneUnknownCounts(): boolean {
     const knownCodes = new Set(this.definitions().map((definition) => definition.code));
     const next = new Map([...this.quantities()].filter(([code]) => knownCodes.has(code)));
+    if (next.size === this.quantities().size) {
+      return false;
+    }
     this.quantities.set(next);
+    return true;
+  }
+
+  private renormalizeQuantities(): boolean {
+    const next = new Map<string, number>();
+    let changed = false;
+    for (const [code, quantity] of this.quantities()) {
+      const normalized = this.normalizeQuantity(quantity);
+      next.set(code, normalized);
+      changed ||= normalized !== quantity;
+    }
+    if (changed) {
+      this.quantities.set(next);
+    }
+    return changed;
   }
 
   private normalizeQuantity(value: number): number {
@@ -434,6 +495,10 @@ export class DenominationCounter implements ControlValueAccessor {
       return 0;
     }
     return Math.min(Math.max(Math.trunc(value), 0), this.maxQuantity);
+  }
+
+  private normalizeMaximumQuantity(value: number): number {
+    return Number.isFinite(value) ? Math.max(0, Math.trunc(value)) : 9999;
   }
 
   private roundMoney(value: number): number {

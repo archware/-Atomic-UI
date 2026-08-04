@@ -6,6 +6,7 @@ import {
   computed,
   contentChild,
   input,
+  linkedSignal,
   output,
   signal,
 } from '@angular/core';
@@ -18,6 +19,7 @@ import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.compone
 
 export type DataTableAlignment = 'start' | 'center' | 'end';
 export type DataTableDensity = 'comfortable' | 'compact';
+export type DataTablePaginationMode = 'none' | 'client' | 'server';
 export type DataTableStatus = 'idle' | 'loading' | 'success' | 'empty' | 'error';
 export type DataTableSortDirection = 'asc' | 'desc' | null;
 
@@ -66,7 +68,7 @@ function trackByIdentity<T extends object>(_index: number, row: T): T {
 }
 
 @Component({
-  selector: 'prest-data-table',
+  selector: 'app-data-table, prest-data-table',
   imports: [AlertComponent, NgTemplateOutlet, ScrollOverlayComponent, StatusBadgeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './data-table.html',
@@ -92,7 +94,9 @@ export class DataTable<T extends object = Record<string, unknown>> {
   readonly rowNumberHeader = input('N.º');
   readonly rowNumberWidth = input('4.5rem');
 
-  // Pagination inputs & outputs
+  // Row numbering and local pagination remain the published defaults.
+  // Consumers may opt out of pagination explicitly with `none`.
+  readonly pagination = input<DataTablePaginationMode>('client');
   readonly totalRecords = input<number | null>(null);
   readonly page = input(1);
   readonly pageSize = input(10);
@@ -110,21 +114,31 @@ export class DataTable<T extends object = Record<string, unknown>> {
     contentChild<TemplateRef<DataTableActionContext<T>>>('actions');
 
   private readonly activeSort = signal<ActiveSort<T> | null>(null);
-  private readonly clientPage = signal(1);
-  private readonly clientPageSize = signal(10);
+  private readonly clientPage = linkedSignal(() => Math.max(this.page(), 1));
+  private readonly clientPageSize = linkedSignal(() => Math.max(this.pageSize(), 1));
   private readonly collator = new Intl.Collator('es-PE', {
     numeric: true,
     sensitivity: 'base',
   });
 
-  protected readonly usesClientPagination = computed(() => this.totalRecords() === null);
+  protected readonly usesClientPagination = computed(
+    () => this.pagination() === 'client' && this.totalRecords() === null,
+  );
+  protected readonly paginationEnabled = computed(
+    () => this.pagination() !== 'none',
+  );
   protected readonly effectivePageSize = computed(() =>
-    this.usesClientPagination() ? this.clientPageSize() : this.pageSize(),
+    this.usesClientPagination()
+      ? this.clientPageSize()
+      : Math.max(this.pageSize(), 1),
   );
   protected readonly effectiveTotalRecords = computed(
     () => this.totalRecords() ?? this.rows().length,
   );
   protected readonly effectiveTotalPages = computed(() => {
+    if (!this.paginationEnabled()) {
+      return 1;
+    }
     if (!this.usesClientPagination()) {
       return Math.max(this.totalPages(), 1);
     }
@@ -133,11 +147,14 @@ export class DataTable<T extends object = Record<string, unknown>> {
       1,
     );
   });
-  protected readonly effectivePage = computed(() =>
-    this.usesClientPagination()
+  protected readonly effectivePage = computed(() => {
+    if (!this.paginationEnabled()) {
+      return 1;
+    }
+    return this.usesClientPagination()
       ? Math.min(this.clientPage(), this.effectiveTotalPages())
-      : this.page(),
-  );
+      : Math.max(this.page(), 1);
+  });
   protected readonly effectiveHasPreviousPage = computed(() =>
     this.usesClientPagination()
       ? this.effectivePage() > 1

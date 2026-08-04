@@ -1,7 +1,12 @@
-<section class="print-document-panel" role="region" [attr.aria-label]="ariaLabel()">
+<section
+  class="print-document-panel"
+  role="region"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-labelledby]="ariaLabel() ? null : titleId()"
+>
   <header class="print-document-panel__header">
     <div>
-      <h2>{{ title() }}</h2>
+      <h2 [id]="titleId()">{{ title() }}</h2>
       @if (subtitle()) {
         <p>{{ subtitle() }}</p>
       }
@@ -39,12 +44,33 @@
             @for (paragraph of section.paragraphs ?? []; track $index) {
               <p>{{ paragraph }}</p>
             }
+            @if (section.fields?.length) {
+              <dl class="print-document-panel__fields">
+                @for (field of section.fields; track field.id) {
+                  <div>
+                    <dt>{{ field.label }}</dt>
+                    <dd>{{ field.value }}</dd>
+                  </div>
+                }
+              </dl>
+            }
             @if (section.table) {
               <p class="print-document-panel__table-summary">
                 {{ section.table.caption }} · {{ section.table.rows.length }} registro(s)
               </p>
             }
           </section>
+        }
+
+        @if (document.signatures?.length) {
+          <div class="print-document-panel__signatures">
+            @for (signature of document.signatures; track $index) {
+              <span>{{ signature }}</span>
+            }
+          </div>
+        }
+        @if (document.footer) {
+          <p class="print-document-panel__footer">{{ document.footer }}</p>
         }
       </article>
     }

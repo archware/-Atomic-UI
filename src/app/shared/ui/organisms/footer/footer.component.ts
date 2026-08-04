@@ -1,6 +1,6 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { VersionComponent } from '../../atoms/version/version.component';
 
 export interface SocialLink {
   platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin' | 'github' | 'youtube';
@@ -14,321 +14,332 @@ export interface LegalLink {
 
 export type FooterVariant = 'simple' | 'inline' | 'columns';
 
+/**
+ * Pie de página genérico del sistema Atomic.
+ *
+ * El componente no depende de un proveedor de traducciones. El shell es quien
+ * reserva su fila al final de la ventana; el footer sólo controla su contenido
+ * y presentación para no competir con el contenedor que posee el scroll.
+ */
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, VersionComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <footer class="footer" [class]="'footer--' + variant">
-      <!-- SIMPLE: Solo copyright -->
+    <footer class="atomic-footer" [class]="'atomic-footer--' + variant">
       @if (variant === 'simple') {
-        <div class="footer__simple">
-          <p class="footer__copyright">© {{ year }} {{ companyName }}. {{ copyrightText | translate }}</p>
+        <div class="atomic-footer__container atomic-footer__container--bottom">
+          <span class="atomic-footer__copyright">{{ copyrightLine }}</span>
+          <ng-container *ngTemplateOutlet="versionTemplate"></ng-container>
         </div>
       }
 
-      <!-- INLINE: Redes + links en una fila -->
       @if (variant === 'inline') {
-        <div class="footer__inline">
-          <div class="footer__inline-top">
-            <!-- Social Links -->
-            @if (socialLinks.length > 0) {
-              <div class="footer__social">
-                @for (social of socialLinks; track social.platform) {
-                  <a [href]="social.url" target="_blank" rel="noopener noreferrer" class="footer__social-link" [attr.aria-label]="social.platform">
-                    <i [class]="getSocialIcon(social.platform)"></i>
-                  </a>
-                }
-              </div>
-            }
-
-            <!-- Legal Links -->
-            @if (legalLinks.length > 0) {
-              <nav class="footer__legal">
-                @for (link of legalLinks; track link.url; let last = $last) {
-                  <a [href]="link.url" class="footer__legal-link">{{ link.label | translate }}</a>
-                  @if (!last) {
-                    <span class="footer__separator">·</span>
-                  }
-                }
-              </nav>
-            }
+        <div class="atomic-footer__container atomic-footer__container--stacked">
+          @if (socialLinks.length > 0 || legalLinks.length > 0) {
+            <div class="atomic-footer__inline-top">
+              <ng-container *ngTemplateOutlet="social"></ng-container>
+              <ng-container *ngTemplateOutlet="legal"></ng-container>
+            </div>
+          }
+          <div class="atomic-footer__bottom-row">
+            <span class="atomic-footer__copyright">{{ copyrightLine }}</span>
+            <ng-container *ngTemplateOutlet="versionTemplate"></ng-container>
           </div>
-          <p class="footer__copyright">© {{ year }} {{ companyName }}</p>
         </div>
       }
 
-      <!-- COLUMNS: Logo + columnas + redes -->
       @if (variant === 'columns') {
-        <div class="footer__columns">
-          <div class="footer__columns-content">
-            <!-- Company Info -->
-            <div class="footer__company">
-              <h3 class="footer__logo">{{ companyName }}</h3>
+        <div class="atomic-footer__container atomic-footer__container--stacked">
+          <div class="atomic-footer__columns">
+            <div class="atomic-footer__company">
+              <h3 class="atomic-footer__logo">{{ companyName }}</h3>
               @if (description) {
-                <p class="footer__description">{{ description | translate }}</p>
+                <p class="atomic-footer__description">{{ description }}</p>
               }
             </div>
 
-            <!-- Legal Links Column -->
             @if (legalLinks.length > 0) {
-              <div class="footer__column">
-                <h4 class="footer__column-title">{{ 'FOOTER.LEGAL' | translate }}</h4>
-                <nav class="footer__column-links">
-                  @for (link of legalLinks; track link.url) {
-                    <a [href]="link.url" class="footer__column-link">{{ link.label | translate }}</a>
-                  }
-                </nav>
+              <div class="atomic-footer__column">
+                <h4 class="atomic-footer__column-title">{{ legalTitle }}</h4>
+                <ng-container *ngTemplateOutlet="legal"></ng-container>
               </div>
             }
 
-            <!-- Social Links Column -->
             @if (socialLinks.length > 0) {
-              <div class="footer__column">
-                <h4 class="footer__column-title">{{ 'FOOTER.FOLLOW_US' | translate }}</h4>
-                <div class="footer__social footer__social--vertical">
-                  @for (social of socialLinks; track social.platform) {
-                    <a [href]="social.url" target="_blank" rel="noopener noreferrer" class="footer__social-link footer__social-link--with-text">
-                      <i [class]="getSocialIcon(social.platform)"></i>
-                      <span>{{ social.platform | titlecase }}</span>
-                    </a>
-                  }
-                </div>
+              <div class="atomic-footer__column">
+                <h4 class="atomic-footer__column-title">{{ socialTitle }}</h4>
+                <ng-container *ngTemplateOutlet="social; context: { vertical: true }"></ng-container>
               </div>
             }
           </div>
 
-          <div class="footer__bottom">
-            <p class="footer__copyright">© {{ year }} {{ companyName }}. {{ copyrightText | translate }}</p>
+          <div class="atomic-footer__bottom-row">
+            <span class="atomic-footer__copyright">{{ copyrightLine }}</span>
+            <ng-container *ngTemplateOutlet="versionTemplate"></ng-container>
           </div>
         </div>
       }
     </footer>
+
+    <ng-template #social let-vertical="vertical">
+      @if (socialLinks.length > 0) {
+        <nav
+          class="atomic-footer__social"
+          [class.atomic-footer__social--vertical]="vertical"
+          [attr.aria-label]="socialTitle">
+          @for (link of socialLinks; track link.platform) {
+            <a
+              class="atomic-footer__social-link"
+              [class.atomic-footer__social-link--with-text]="vertical"
+              [href]="link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="link.platform">
+              <i [class]="getSocialIcon(link.platform)" aria-hidden="true"></i>
+              @if (vertical) {
+                <span>{{ link.platform | titlecase }}</span>
+              }
+            </a>
+          }
+        </nav>
+      }
+    </ng-template>
+
+    <ng-template #legal>
+      @if (legalLinks.length > 0) {
+        <nav class="atomic-footer__legal" [attr.aria-label]="legalTitle">
+          @for (link of legalLinks; track link.url; let last = $last) {
+            <a class="atomic-footer__legal-link" [href]="link.url">{{ link.label }}</a>
+            @if (!last) {
+              <span class="atomic-footer__separator" aria-hidden="true">·</span>
+            }
+          }
+        </nav>
+      }
+    </ng-template>
+
+    <ng-template #versionTemplate>
+      @if (showVersion) {
+        <app-version
+          [version]="version"
+          [environment]="environment"
+          [showBuildDate]="showBuildDate"
+          [buildDate]="buildDate"
+          variant="badge">
+        </app-version>
+      }
+    </ng-template>
   `,
   styles: [`
-    .footer {
+    :host {
+      display: block;
       width: 100%;
+      flex: 0 0 auto;
+      margin-top: auto;
+      box-sizing: border-box;
+    }
+
+    .atomic-footer {
+      width: 100%;
+      box-sizing: border-box;
+      padding: var(--space-2) var(--space-6);
       background: var(--surface-section);
       color: var(--text-color-secondary);
-      border-top: 1px solid var(--border-color);
+      border-top: var(--border-width-thin) solid var(--border-color);
+      box-shadow: var(--shadow-sm);
     }
 
-    /* === SIMPLE === */
-    .footer--simple {
-      padding: var(--space-4) var(--space-6);
-      text-align: center;
+    .atomic-footer--columns {
+      padding-block: var(--space-8) var(--space-4);
     }
 
-    .footer__copyright {
-      margin: 0;
-      font-size: var(--text-sm);
-      color: var(--text-color-muted);
+    .atomic-footer__container {
+      width: 100%;
+      box-sizing: border-box;
     }
 
-    /* === INLINE === */
-    .footer--inline {
-      padding: var(--space-6);
-    }
-
-    .footer__inline-top {
+    .atomic-footer__container--stacked {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .atomic-footer__container--bottom,
+    .atomic-footer__bottom-row,
+    .atomic-footer__inline-top {
+      display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: var(--space-4);
-      margin-bottom: var(--space-4);
-    }
-
-    .footer__social {
-      display: flex;
+      flex-wrap: wrap;
       gap: var(--space-3);
     }
 
-    .footer__social-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: var(--space-9, var(--space-7));
-      height: var(--space-9, var(--space-7));
-      background: var(--surface-hover);
-      border-radius: 50%;
+    .atomic-footer__copyright {
       color: var(--text-color-secondary);
-      font-size: var(--text-md);
-      transition: all 200ms ease;
+      font-size: var(--text-xs);
+      font-weight: 500;
+      line-height: 1.4;
     }
 
-    .footer__social-link:hover {
-      background: var(--primary-color);
-      color: var(--text-color-on-primary);
-      transform: translateY(-var(--space-1));
-    }
-
-    .footer__legal {
+    .atomic-footer__social,
+    .atomic-footer__legal {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
+      flex-wrap: wrap;
       gap: var(--space-2);
     }
 
-    .footer__legal-link {
+    .atomic-footer__social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--control-height-sm);
+      height: var(--control-height-sm);
+      color: var(--text-color-secondary);
+      background: var(--surface-hover);
+      border-radius: var(--radius-full);
+      font-size: var(--text-md);
+      text-decoration: none;
+      transition: color 150ms ease, background-color 150ms ease, transform 150ms ease;
+    }
+
+    .atomic-footer__social-link:hover,
+    .atomic-footer__social-link:focus-visible,
+    .atomic-footer__legal-link:hover,
+    .atomic-footer__legal-link:focus-visible {
+      color: var(--primary-color);
+    }
+
+    .atomic-footer__social-link:hover {
+      transform: translateY(calc(var(--space-1) * -1));
+    }
+
+    .atomic-footer__social-link:focus-visible,
+    .atomic-footer__legal-link:focus-visible {
+      outline: var(--border-width-medium) solid var(--focus-ring-color);
+      outline-offset: var(--space-1);
+    }
+
+    .atomic-footer__legal-link {
       color: var(--text-color-secondary);
       font-size: var(--text-sm);
       text-decoration: none;
       transition: color 150ms ease;
     }
 
-    .footer__legal-link:hover {
-      color: var(--primary-color);
-    }
-
-    .footer__separator {
+    .atomic-footer__separator {
       color: var(--text-color-muted);
     }
 
-    .footer--inline .footer__copyright {
-      text-align: center;
-      padding-top: var(--space-4);
-      border-top: 1px solid var(--border-color);
-    }
-
-    /* === COLUMNS === */
-    .footer--columns {
-      padding: var(--space-8) var(--space-6) var(--space-6);
-    }
-
-    .footer__columns-content {
+    .atomic-footer__columns {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
       gap: var(--space-8);
-      margin-bottom: var(--space-8);
     }
 
-    .footer__company {
-      max-width: 300px;
+    .atomic-footer__company {
+      min-width: 0;
     }
 
-    .footer__logo {
-      margin: 0 0 var(--space-3);
+    .atomic-footer__logo,
+    .atomic-footer__column-title,
+    .atomic-footer__description {
+      margin: 0;
+    }
+
+    .atomic-footer__logo {
+      color: var(--text-color);
       font-size: var(--text-xl);
       font-weight: 700;
-      color: var(--text-color);
     }
 
-    .footer__description {
-      margin: 0;
+    .atomic-footer__description {
+      margin-top: var(--space-3);
+      color: var(--text-color-secondary);
       font-size: var(--text-sm);
       line-height: 1.6;
-      color: var(--text-color-secondary);
     }
 
-    .footer__column-title {
-      margin: 0 0 var(--space-4);
+    .atomic-footer__column-title {
+      margin-bottom: var(--space-3);
+      color: var(--text-color);
       font-size: var(--text-sm);
       font-weight: 600;
-      color: var(--text-color);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
 
-    .footer__column-links {
-      display: flex;
+    .atomic-footer__social--vertical,
+    .atomic-footer__social-link--with-text {
+      align-items: flex-start;
+    }
+
+    .atomic-footer__social--vertical {
       flex-direction: column;
-      gap: var(--space-2);
     }
 
-    .footer__column-link {
-      color: var(--text-color-secondary);
-      font-size: var(--text-sm);
-      text-decoration: none;
-      transition: color 150ms ease;
-    }
-
-    .footer__column-link:hover {
-      color: var(--primary-color);
-    }
-
-    .footer__social--vertical {
-      flex-direction: column;
-      gap: var(--space-2);
-    }
-
-    .footer__social-link--with-text {
+    .atomic-footer__social-link--with-text {
       width: auto;
       height: auto;
+      justify-content: flex-start;
+      gap: var(--space-2);
       padding: var(--space-1) 0;
       background: transparent;
       border-radius: 0;
-      gap: var(--space-2);
       font-size: var(--text-sm);
-      justify-content: flex-start;
     }
 
-    .footer__social-link--with-text:hover {
-      background: transparent;
-      color: var(--primary-color);
-      transform: none;
-    }
+    @media (max-width: 48rem) {
+      .atomic-footer {
+        padding-inline: var(--space-4);
+      }
 
-    .footer__social-link--with-text i {
-      width: var(--space-5);
-      text-align: center;
-    }
-
-    .footer__bottom {
-      padding-top: var(--space-6);
-      border-top: 1px solid var(--border-color);
-      text-align: center;
-    }
-
-    /* === RESPONSIVE === */
-    @media (max-width: 768px) {
-      .footer__inline-top {
+      .atomic-footer__container--bottom,
+      .atomic-footer__bottom-row,
+      .atomic-footer__inline-top {
         flex-direction: column;
+        justify-content: center;
         text-align: center;
       }
 
-      .footer__columns-content {
-        grid-template-columns: 1fr;
+      .atomic-footer__columns {
+        grid-template-columns: minmax(0, 1fr);
         gap: var(--space-6);
         text-align: center;
       }
 
-      .footer__company {
-        max-width: 100%;
-      }
-
-      .footer__social {
+      .atomic-footer__social,
+      .atomic-footer__legal,
+      .atomic-footer__social--vertical {
         justify-content: center;
-      }
-
-      .footer__social--vertical {
-        align-items: center;
-      }
-
-      .footer__column-links {
         align-items: center;
       }
     }
-
-    /*
-     * Dark mode se maneja automáticamente via tokens semánticos.
-     * --surface-section, --border-color, etc. ya tienen valores
-     * apropiados para temas oscuros.
-     */
   `]
 })
 export class FooterComponent {
-  @Input() variant: FooterVariant = 'simple';
+  @Input() variant: FooterVariant = 'inline';
   @Input() companyName = 'Company';
   @Input() year = new Date().getFullYear();
-  @Input() copyrightText = 'footer.all_rights_reserved';
+  @Input() copyrightText = 'Todos los derechos reservados.';
+  @Input() copyrightSeparator = ' - ';
   @Input() description = '';
+  @Input() legalTitle = 'Enlaces legales';
+  @Input() socialTitle = 'Redes sociales';
+  @Input() showVersion = true;
+  @Input() showBuildDate = false;
+  @Input() version = 'v1.0.0';
+  @Input() environment = 'BETA';
+  @Input() buildDate = '';
   @Input() socialLinks: SocialLink[] = [];
   @Input() legalLinks: LegalLink[] = [];
 
-  getSocialIcon(platform: string): string {
-    const icons: Record<string, string> = {
+  get copyrightLine(): string {
+    return `© ${this.year} ${this.companyName}${this.copyrightSeparator}${this.copyrightText}`;
+  }
+
+  getSocialIcon(platform: SocialLink['platform']): string {
+    const icons: Record<SocialLink['platform'], string> = {
       facebook: 'fa-brands fa-facebook-f',
       twitter: 'fa-brands fa-x-twitter',
       instagram: 'fa-brands fa-instagram',
@@ -336,6 +347,6 @@ export class FooterComponent {
       github: 'fa-brands fa-github',
       youtube: 'fa-brands fa-youtube'
     };
-    return icons[platform] || 'fa-solid fa-link';
+    return icons[platform];
   }
 }

@@ -165,6 +165,7 @@ describe('ThemeService', () => {
       flushThemeEffects();
 
       expect(service.isDarkMode()).toBeTrue();
+      expect(service.getSelectedTheme()).toBe('dark');
     });
 
     it('should toggle from dark to light', () => {

@@ -153,7 +153,7 @@ export class ProfilePageComponent implements OnInit {
   protected saveProfile(): void {
     if (this.infoForm.invalid) { this.infoForm.markAllAsTouched(); return; }
     this.saveSuccess.set(false);
-    this.saveApi.execute(of({ message: 'Perfil guardado' }).pipe(delay(1500)));
+    this.saveApi.execute(of({ message: 'Perfil actualizado correctamente.' }).pipe(delay(1500)));
     // Mostrar éxito
     setTimeout(() => { if (this.saveApi.success()) this.saveSuccess.set(true); }, 300);
   }

@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { DenominationCounter, DenominationDefinition } from './denomination-counter';
+import {
+  DenominationCount,
+  DenominationCounter,
+  DenominationDefinition,
+} from './denomination-counter';
 
 @Component({
   standalone: true,
   imports: [DenominationCounter, ReactiveFormsModule],
   template: `
-    <prest-denomination-counter
+    <app-denomination-counter
       title="Efectivo recibido"
       [optional]="true"
       [open]="true"
@@ -43,6 +47,7 @@ describe('DenominationCounter', () => {
     expect(host.textContent).toContain('S/ 200');
     expect(host.textContent).toContain('S/ 0.50');
     expect(host.textContent).toContain('S/ 400.00');
+    expect(host.textContent).toContain('El backend conserva la autoridad');
   });
 
   it('updates the CVA value and total when a quantity changes', () => {
@@ -111,6 +116,19 @@ describe('DenominationCounter', () => {
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('Opcional para auditoría');
   });
 
+  it('synchronizes the public open state after an accordion interaction', () => {
+    const component = fixture.debugElement.children[0].componentInstance as DenominationCounter;
+    const emitted: boolean[] = [];
+    component.openChange.subscribe((open) => emitted.push(open));
+
+    component.setExpanded(false);
+    fixture.detectChanges();
+
+    expect(component.open).toBe(false);
+    expect(component.expanded()).toBe(false);
+    expect(emitted).toEqual([false]);
+  });
+
   it('removes invalid and duplicate definitions without emitting fractional quantities', () => {
     const component = fixture.debugElement.children[0].componentInstance as DenominationCounter;
     const emitted: unknown[] = [];
@@ -126,5 +144,49 @@ describe('DenominationCounter', () => {
 
     expect(component.rows().map((row) => row.code)).toEqual(['PEN_1']);
     expect(emitted.at(-1)).toEqual([{ code: 'PEN_1', quantity: 2 }]);
+  });
+
+  it('preserves a CVA value received before the asynchronous denomination catalog', () => {
+    const pendingFixture = TestBed.createComponent(DenominationCounter);
+    const component = pendingFixture.componentInstance;
+
+    component.writeValue([{ code: 'PEN_100', quantity: 2 }]);
+    component.denominations = [];
+    component.denominations = [{ code: 'PEN_100', value: 100, label: 'S/ 100' }];
+    pendingFixture.detectChanges();
+
+    expect(component.rows()).toEqual([
+      jasmine.objectContaining({ code: 'PEN_100', quantity: 2, subtotal: 200 }),
+    ]);
+    expect(component.total()).toBe(200);
+  });
+
+  it('notifies the CVA when a later catalog change removes an active denomination', () => {
+    const component = fixture.debugElement.children[0].componentInstance as DenominationCounter;
+    const changes: DenominationCount[][] = [];
+    component.writeValue([
+      { code: 'PEN_200', quantity: 2 },
+      { code: 'PEN_050_COIN', quantity: 3 },
+    ]);
+    component.registerOnChange((value) => changes.push([...value]));
+
+    component.denominations = [
+      { code: 'PEN_200', value: 200, label: 'S/ 200', description: 'Billete' },
+    ];
+
+    expect(changes).toEqual([[{ code: 'PEN_200', quantity: 2 }]]);
+  });
+
+  it('normalizes a fractional maximum and reapplies it to existing quantities', () => {
+    const component = fixture.debugElement.children[0].componentInstance as DenominationCounter;
+    const changes: DenominationCount[][] = [];
+    component.writeValue([{ code: 'PEN_200', quantity: 8 }]);
+    component.registerOnChange((value) => changes.push([...value]));
+
+    component.maxQuantity = 2.9;
+
+    expect(component.maxQuantity).toBe(2);
+    expect(component.rows()[0]?.quantity).toBe(2);
+    expect(changes).toEqual([[{ code: 'PEN_200', quantity: 2 }]]);
   });
 });

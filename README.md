@@ -1,7 +1,15 @@
-# 🎨 Atomic UI - Sistema de Componentes y Temas Avanzado
+---
+title: "Atomic UI: sistema de componentes y temas"
+subtitle: "Fuente visual canónica para aplicaciones de escritorio HRA"
+author: "Ing. Havel CONTRERAS TAPAHUASCO"
+date: "2026-08-03"
+version: "5.3.0"
+---
 
-[![Angular](https://img.shields.io/badge/Angular-20+-red.svg)](https://angular.io/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+# Atomic UI: sistema de componentes y temas
+
+[![Angular](https://img.shields.io/badge/Angular-22-red.svg)](https://angular.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue.svg)](https://www.typescriptlang.org/)
 
 Sistema de diseño **Atomic Design** con temas **Light/Dark/System**, paleta de colores **Púrpura (Primary)**, **Rosa (Accent)** y **Ámbar/Dorado (Secondary)**, optimizado para accesibilidad WCAG 2.1 Level AA.
 
@@ -13,6 +21,12 @@ Toda aplicación generada recibe política para agentes, manifiesto de procedenc
 gate protegido por hashes y CI obligatoria. Si falta un objeto visual, se crea y
 valida primero en este repositorio; el consumidor no puede inventarlo ni
 desactivar la compuerta. Véase [governance/README.md](./governance/README.md).
+
+La distribución npm permanece en estado transicional y bloqueado. El contrato,
+el manifiesto SHA-256 y el empaquetado seco reproducible se describen en
+[distribution/README.md](./distribution/README.md). Un resultado verde valida
+la procedencia del scaffold, pero no representa todavía una biblioteca Angular
+compilada o publicable.
 
 ---
 
@@ -120,13 +134,15 @@ compacto y el runtime de agentes:
 
 ### Inventario de Componentes
 
-| Capa | Componentes | Descripción |
+El listado es representativo; el conteo corresponde a los directorios vigentes del catálogo.
+
+| Capa | Ejemplos de componentes | Descripción |
 | ------ | ----------- | ----------- |
-| **Atoms** | Button, Input, NumberInput, FormSelect, ChoiceControl, TableAction y controles base | Elementos básicos e indivisibles |
-| **Molecules** | ActionGroup, Alert, Card, DataState, Datepicker, Toast y composiciones pequeñas | Combinaciones de átomos con funcionalidad |
-| **Organisms** | PageHeader, QueryToolbar, DataTable, CrudDialog, FormDialog, Sidebar, Topbar y estructuras complejas | Secciones completas de UI |
-| **Surfaces** | Panel | Contenedores y superficies |
-| **Templates** | AuthLayout, LayoutShell | Layouts de página completos |
+| **Átomos (34)** | Avatar, Badge, Breadcrumb, Button, Checkbox, Chip, ChoiceControl, Divider, FileInput, FloatingInput, FormError, FormInput, FormRow, FormSelect, IconButton, Input, LanguageSwitcher, Loader, NumberInput, Progress, Radio, Rating, Row, Select, Skeleton, Spinner, StatusBadge, Table, TableAction, Text, Textarea, Toggle, Tooltip y Version | Elementos básicos e indivisibles |
+| **Moléculas (18)** | ActionGroup, Alert, AvatarGroup, Card, Combobox, DataState, Datepicker, Dropdown, KpiCard, Modal, Pagination, Popup, Select2, TableActions, TagInput, Timeline, Toast y UserMenu | Combinaciones de átomos con funcionalidad |
+| **Organismos (21)** | Accordion, Chart, CrudDialog, DataPager, DataTable, DenominationCounter, Filters, Footer, FormDialog, MetricsGrid, NavBar, PageHeader, PrintDocumentPanel, QueryToolbar, ReceiptPanel, ScrollOverlay, Sidebar, Stepper, Tabs, ThemeSwitcher y Topbar | Secciones completas de interfaz |
+| **Superficies (1)** | Panel | Contenedores y superficies |
+| **Plantillas (2)** | AuthLayout y LayoutShell | Layouts completos de página |
 
 ### Altura Estándar Global
 
@@ -228,9 +244,9 @@ src/
 │   │   └── ui-showcase/          # Demo de todos los componentes
 │   └── shared/
 │       └── ui/
-│           ├── atoms/            # 27 componentes básicos
-│           ├── molecules/        # 17 componentes compuestos
-│           ├── organisms/        # 10 componentes complejos
+│           ├── atoms/            # 34 directorios de componentes básicos
+│           ├── molecules/        # 18 directorios de componentes compuestos
+│           ├── organisms/        # 19 directorios de componentes complejos
 │           ├── surfaces/         # 1 contenedor (Panel)
 │           ├── templates/        # 2 layouts
 │           ├── services/         # ThemeService, ToastService, etc.
@@ -286,7 +302,7 @@ Este proyecto está bajo la Licencia MIT.
 
 ---
 
-**Versión:** 4.4.0 (Atomic Design System)  
-**Última Actualización:** Mayo 2026  
-**Angular Version:** 21+  
-**TypeScript:** 5.0+
+**Versión:** 5.3.0
+**Última actualización:** 3 de agosto de 2026
+**Angular:** 22
+**TypeScript:** 6.0

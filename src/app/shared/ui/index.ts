@@ -251,6 +251,8 @@ export type {
   DataTableActionContext,
   DataTableAlignment,
   DataTableColumn,
+  DataTableDensity,
+  DataTablePaginationMode,
   DataTableSortChange,
   DataTableSortDirection,
   DataTableStatus,

@@ -66,11 +66,13 @@ export type FileInputDensity = 'comfortable' | 'compact';
         (dragover)="onDragOver($event)"
         (dragleave)="isDragging.set(false)"
         (drop)="onDrop($event)"
+        (blur)="onTouched()"
         (keydown.enter)="openFileDialog()"
         (keydown.space)="openFileDialog(); $event.preventDefault()"
         [attr.tabindex]="disabled ? -1 : 0"
         role="button"
         [attr.aria-disabled]="disabled"
+        [attr.aria-invalid]="visibleError ? 'true' : null"
         [attr.aria-describedby]="
           visibleError ? inputId + '-error' : hint ? inputId + '-hint' : null
         "
@@ -98,6 +100,7 @@ export type FileInputDensity = 'comfortable' | 'compact';
         [disabled]="disabled"
         (change)="onFileChange($event)"
         (blur)="onTouched()"
+        [attr.aria-invalid]="visibleError ? 'true' : null"
         [attr.aria-label]="label || 'Seleccionar archivo'"
         [attr.aria-describedby]="
           visibleError ? inputId + '-error' : hint ? inputId + '-hint' : null
@@ -112,10 +115,10 @@ export type FileInputDensity = 'comfortable' | 'compact';
 
       @if (files().length > 0) {
         <ul class="file-list" aria-label="Archivos seleccionados">
-          @for (f of files(); track f.name) {
+          @for (f of files(); track f.file) {
             <li class="file-item">
               @if (f.preview) {
-                <img class="file-preview" [src]="f.preview" [alt]="f.name" />
+                <img class="file-preview" [src]="f.preview" alt="" />
               } @else {
                 <i class="fa-solid fa-file file-icon" aria-hidden="true"></i>
               }
@@ -321,6 +324,8 @@ export class FileInputComponent implements ControlValueAccessor {
   @Input() accept = '';
   @Input() multiple = false;
   @Input() maxSizeMB?: number;
+  @Input() maxPreviewSizeMB = 2;
+  @Input() maxPreviewFiles = 4;
   @Input() disabled = false;
   @Input() error = '';
 
@@ -342,6 +347,7 @@ export class FileInputComponent implements ControlValueAccessor {
 
   openFileDialog() {
     if (!this.disabled) {
+      this.onTouched();
       this.fileInputRef.nativeElement.click();
     }
   }
@@ -371,7 +377,8 @@ export class FileInputComponent implements ControlValueAccessor {
   private processFiles(rawFiles: File[]) {
     this.onTouched();
     this.validationError.set('');
-    const invalidSize = rawFiles.find(
+    const selectedFiles = this.multiple ? rawFiles : rawFiles.slice(0, 1);
+    const invalidSize = selectedFiles.find(
       (file) => this.maxSizeMB && file.size > this.maxSizeMB * 1024 * 1024,
     );
     if (invalidSize) {
@@ -379,37 +386,63 @@ export class FileInputComponent implements ControlValueAccessor {
       return;
     }
 
-    const invalidType = rawFiles.find((file) => !this.isAccepted(file));
+    const invalidType = selectedFiles.find((file) => !this.isAccepted(file));
     if (invalidType) {
       this.validationError.set(`${invalidType.name} no corresponde a los formatos permitidos.`);
       return;
     }
 
-    const processed: FileInputFile[] = rawFiles.map((file) => ({
+    const processed: FileInputFile[] = selectedFiles.map((file) => ({
       file,
       name: file.name,
       size: file.size,
       type: file.type,
     }));
 
-    // Generate image previews (browser only)
-    if (isPlatformBrowser(this.platformId)) {
-      processed.forEach((pf) => {
-        if (pf.type.startsWith('image/')) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            pf.preview = e.target?.result as string;
-            this.files.update((fs) => [...fs]);
-          };
-          reader.readAsDataURL(pf.file);
-        }
-      });
-    }
+    this.generateImagePreviews(processed);
 
     const newFiles = this.multiple ? [...this.files(), ...processed] : processed;
     this.files.set(newFiles);
     this.onChange(newFiles);
     this.filesChange.emit(newFiles);
+  }
+
+  private generateImagePreviews(files: FileInputFile[]): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    const maxFiles = Number.isFinite(this.maxPreviewFiles)
+      ? Math.max(0, Math.trunc(this.maxPreviewFiles))
+      : 0;
+    const maxSize = Number.isFinite(this.maxPreviewSizeMB)
+      ? Math.max(0, this.maxPreviewSizeMB)
+      : 0;
+    const maxBytes = maxSize * 1024 * 1024;
+    const existingPreviewCount = this.multiple
+      ? this.files().filter((file) => file.preview).length
+      : 0;
+    let remaining = Math.max(0, maxFiles - existingPreviewCount);
+
+    for (const item of files) {
+      if (remaining === 0) {
+        break;
+      }
+      if (!item.type.startsWith('image/') || item.size > maxBytes) {
+        continue;
+      }
+
+      remaining -= 1;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const preview = event.target?.result;
+        if (typeof preview === 'string') {
+          item.preview = preview;
+          this.files.update((current) => [...current]);
+        }
+      };
+      reader.readAsDataURL(item.file);
+    }
   }
 
   private isAccepted(file: File): boolean {

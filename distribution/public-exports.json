@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "targetPackage": "@hra/atomic-ui",
+  "status": "planned",
+  "rootBarrel": "src/app/shared/ui/index.ts",
+  "visualLayers": ["atoms", "molecules", "organisms", "surfaces", "templates"],
+  "plannedPackageExports": {
+    ".": {
+      "status": "blocked",
+      "purpose": "Componentes visuales standalone y tipos públicos compilados"
+    },
+    "./styles": {
+      "status": "source-ready",
+      "source": "src/styles/themes/index.css"
+    },
+    "./provenance": {
+      "status": "available",
+      "source": "distribution/atomic-source-manifest.json"
+    },
+    "./contract": {
+      "status": "available",
+      "source": "distribution/package-contract.json"
+    }
+  },
+  "uiSupportServices": [
+    "src/app/shared/ui/services/theme.service.ts",
+    "src/app/shared/ui/services/toast.service.ts",
+    "src/app/shared/ui/services/popup.service.ts",
+    "src/app/shared/ui/services/modal.service.ts",
+    "src/app/shared/ui/services/app-version.service.ts"
+  ],
+  "excludedApplicationConcerns": [
+    {
+      "symbol": "ApiService",
+      "source": "src/app/shared/ui/services/api.service.ts",
+      "reason": "El transporte HTTP pertenece a cada aplicación consumidora."
+    },
+    {
+      "symbol": "UseApiService",
+      "source": "src/app/shared/ui/services/use-api.service.ts",
+      "reason": "El estado de llamadas API pertenece a la capa de aplicación."
+    },
+    {
+      "symbol": "TokenService",
+      "source": "src/app/shared/ui/services/token.service.ts",
+      "reason": "La gestión de tokens es una responsabilidad de seguridad del consumidor."
+    },
+    {
+      "symbol": "AuthService",
+      "source": "src/app/shared/ui/services/auth.service.ts",
+      "reason": "La autenticación y sus DTO no forman parte del ADN visual."
+    },
+    {
+      "symbol": "authGuard",
+      "source": "src/app/shared/ui/guards/auth.guard.ts",
+      "reason": "Las reglas de navegación y autorización pertenecen al consumidor."
+    },
+    {
+      "symbol": "authInterceptor",
+      "source": "src/app/shared/ui/interceptors/auth.interceptor.ts",
+      "reason": "La política de autenticación HTTP pertenece al consumidor."
+    },
+    {
+      "symbol": "cacheInterceptor",
+      "source": "src/app/shared/ui/interceptors/cache.interceptor.ts",
+      "reason": "La estrategia de caché depende de los contratos API de cada aplicación."
+    },
+    {
+      "symbol": "PermissionDirective",
+      "source": "src/app/shared/ui/directives/permission.directive.ts",
+      "reason": "Los permisos y roles son reglas de negocio del consumidor."
+    }
+  ]
+}

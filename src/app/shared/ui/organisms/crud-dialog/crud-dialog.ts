@@ -8,23 +8,31 @@ import {
 } from '@angular/core';
 import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
 
-const DEFAULT_FOCUS_SELECTOR = [
-  '[data-dialog-initial-focus]:not([disabled])',
-  '[data-control-focus]:not([disabled])',
-  'input:not([disabled]):not([tabindex="-1"]):not([aria-hidden="true"])',
-  'select:not([disabled])',
-  'textarea:not([disabled])',
-  'button:not([disabled])',
-  '[href]',
-  '[tabindex]:not([tabindex="-1"])',
-].join(',');
+const DEFAULT_FOCUS_SELECTORS = [
+  '[data-dialog-initial-focus]:not([disabled]):not([hidden]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  '[data-control-focus]:not([disabled]):not([hidden]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  'input:not([type="hidden"]):not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  'select:not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  'textarea:not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  'button:not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  '[href]:not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  '[tabindex]:not([tabindex="-1"]):not([hidden]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+] as const;
+
+const INVALID_FOCUS_SELECTORS = [
+  '[aria-invalid="true"][data-dialog-initial-focus]:not([disabled]):not([hidden])',
+  'input.ng-invalid:not([type="hidden"]):not([disabled]):not([hidden]):not([tabindex="-1"])',
+  'select.ng-invalid:not([disabled]):not([hidden]):not([tabindex="-1"])',
+  'textarea.ng-invalid:not([disabled]):not([hidden]):not([tabindex="-1"])',
+  '[aria-invalid="true"]:not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+] as const;
 
 /**
  * Organismo modal canónico para altas y ediciones CRUD.
  * Conserva el foco, la semántica nativa de dialog y permite proyectar formularios completos.
  */
 @Component({
-  selector: 'prest-crud-dialog',
+  selector: 'app-crud-dialog, prest-crud-dialog',
   imports: [ScrollOverlayComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './crud-dialog.html',
@@ -50,7 +58,7 @@ export class CrudDialog {
     return this.nativeElement.open;
   }
 
-  showModal(focusSelector = DEFAULT_FOCUS_SELECTOR): void {
+  showModal(focusSelectors: string | readonly string[] = DEFAULT_FOCUS_SELECTORS): void {
     const element = this.nativeElement;
     if (!element.open) {
       const activeElement = element.ownerDocument.activeElement;
@@ -68,7 +76,7 @@ export class CrudDialog {
     }
     element.scrollTop = 0;
     this.scrollSurface().nativeElement.scrollTop = 0;
-    element.querySelector<HTMLElement>(focusSelector)?.focus({ preventScroll: true });
+    this.focusFirst(element, focusSelectors);
   }
 
   close(returnValue?: string): void {
@@ -85,11 +93,19 @@ export class CrudDialog {
   }
 
   focusInvalid(): void {
-    this.nativeElement
-      .querySelector<HTMLElement>(
-        '.ng-invalid input:not([disabled]), .ng-invalid select:not([disabled]), .ng-invalid textarea:not([disabled]), input.ng-invalid:not([disabled]), select.ng-invalid:not([disabled]), textarea.ng-invalid:not([disabled])',
-      )
-      ?.focus({ preventScroll: true });
+    this.focusFirst(this.nativeElement, INVALID_FOCUS_SELECTORS);
+  }
+
+  private focusFirst(root: ParentNode, selectors: string | readonly string[]): boolean {
+    const selectorList = typeof selectors === 'string' ? [selectors] : selectors;
+    for (const selector of selectorList) {
+      const target = root.querySelector<HTMLElement>(selector);
+      if (target) {
+        target.focus({ preventScroll: true });
+        return true;
+      }
+    }
+    return false;
   }
 
   protected handleCancel(event: Event): void {

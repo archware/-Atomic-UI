@@ -10,15 +10,15 @@ import {
 } from '@angular/core';
 import { CrudDialog } from '../crud-dialog/crud-dialog';
 
-const FORM_FOCUS_SELECTOR = [
-  '.form-dialog__body [data-dialog-initial-focus]:not([disabled])',
-  '.form-dialog__body [data-control-focus]:not([disabled])',
-  '.form-dialog__body input:not([disabled]):not([tabindex="-1"]):not([aria-hidden="true"])',
-  '.form-dialog__body select:not([disabled])',
-  '.form-dialog__body textarea:not([disabled])',
-  '.form-dialog__body button:not([disabled])',
-  '[dialog-close] button:not([disabled])',
-].join(',');
+const FORM_FOCUS_SELECTORS = [
+  '.form-dialog__body [data-dialog-initial-focus]:not([disabled]):not([hidden]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  '.form-dialog__body [data-control-focus]:not([disabled]):not([hidden]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  '.form-dialog__body input:not([type="hidden"]):not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  '.form-dialog__body select:not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  '.form-dialog__body textarea:not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  '.form-dialog__body button:not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+  '[dialog-close] button:not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
+] as const;
 
 /**
  * Diálogo de formulario con encabezado, descripción y cuerpo canónicos.
@@ -27,7 +27,7 @@ const FORM_FOCUS_SELECTOR = [
  * proyectar un botón Atomic con `dialog-close` para cerrar.
  */
 @Component({
-  selector: 'prest-form-dialog',
+  selector: 'app-form-dialog, prest-form-dialog',
   imports: [CrudDialog],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './form-dialog.html',
@@ -59,7 +59,7 @@ export class FormDialog {
       }
 
       if (this.opened() && !dialog.open) {
-        dialog.showModal(FORM_FOCUS_SELECTOR);
+        dialog.showModal(FORM_FOCUS_SELECTORS);
       } else if (!this.opened() && dialog.open) {
         dialog.close();
       }
@@ -80,7 +80,7 @@ export class FormDialog {
 
   showModal(): void {
     this.opened.set(true);
-    this.dialog()?.showModal(FORM_FOCUS_SELECTOR);
+    this.dialog()?.showModal(FORM_FOCUS_SELECTORS);
   }
 
   close(returnValue?: string): void {
@@ -106,7 +106,7 @@ export class FormDialog {
 
 /** Pie canónico para acciones principales y secundarias de un formulario modal. */
 @Component({
-  selector: 'prest-form-dialog-actions',
+  selector: 'app-form-dialog-actions, prest-form-dialog-actions',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<div class="form-dialog-actions"><ng-content /></div>',
   styleUrl: './form-dialog-actions.scss',

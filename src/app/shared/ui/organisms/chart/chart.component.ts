@@ -131,8 +131,8 @@ export class ChartComponent implements OnInit, OnDestroy {
           id: 'shadowPlugin',
           beforeDatasetDraw: (chart) => {
             const ctx = chart.ctx;
-            ctx.save(); // Always save — never skip, regardless of chart type
             const chartType = getChartType(chart);
+            ctx.save(); // Always save — never skip, regardless of chart type
             if (chartType === 'doughnut' || chartType === 'pie') {
               ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
               ctx.shadowBlur = 12;

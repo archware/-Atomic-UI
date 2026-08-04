@@ -1,10 +1,18 @@
-# 📦 UI Component Library
+---
+title: "Biblioteca de componentes Atomic UI"
+subtitle: "Contrato visual portable para aplicaciones Angular"
+author: "Ing. Havel CONTRERAS TAPAHUASCO"
+date: "2026-08-03"
+version: "5.1.38"
+---
+
+# Biblioteca de componentes Atomic UI
 
 Librería de componentes Angular portables siguiendo **Atomic Design**.
 
-**Última actualización**: Diciembre 2025  
-**Versión**: 3.0.0  
-**Angular**: 20+
+**Última actualización**: agosto de 2026
+**Versión**: 5.1.38
+**Angular**: 22
 
 ---
 
@@ -238,7 +246,7 @@ shared/ui/
 │   ├── animations.css       # Keyframes compartidos
 │   └── responsive-table.css # Tablas → Cards en móvil
 │
-├── atoms/              # 🟢 Componentes básicos (16)
+├── atoms/              # 🟢 Inventario ilustrativo parcial (34 directorios en el catálogo actual)
 │   ├── avatar/         # Imagen de usuario con iniciales
 │   ├── button/         # Botón con variantes y tamaños
 │   ├── checkbox/       # Checkbox con label
@@ -256,7 +264,7 @@ shared/ui/
 │   ├── text/           # Texto con variantes
 │   └── toggle/         # Switch on/off
 │
-├── molecules/          # 🟡 Composiciones (8)
+├── molecules/          # 🟡 Inventario ilustrativo parcial (18 directorios en el catálogo actual)
 │   ├── datepicker/     # Selector de fecha con calendario
 │   ├── dropdown/       # Menú desplegable
 │   ├── modal/          # Diálogo modal
@@ -266,7 +274,7 @@ shared/ui/
 │   ├── toast/          # Notificaciones
 │   └── user-menu/      # Menú de usuario con dropdown
 │
-├── organisms/          # 🔴 Componentes complejos (8)
+├── organisms/          # 🔴 Inventario ilustrativo parcial (19 directorios en el catálogo actual)
 │   ├── accordion/      # Paneles colapsables
 │   ├── filters/        # Panel de filtros
 │   ├── scroll-overlay/ # Scroll customizado con overlays
@@ -540,7 +548,7 @@ y acciones visualmente consistentes. El consumidor conserva el formulario y
 sus reglas; el organismo únicamente gobierna estructura, foco y responsive.
 
 ```html
-<prest-form-dialog
+<app-form-dialog
   #editor
   eyebrow="Seguridad"
   title="Editar acceso"
@@ -551,12 +559,12 @@ sus reglas; el organismo únicamente gobierna estructura, foco y responsive.
 
   <form>
     <!-- Controles Atomic y reglas del consumidor -->
-    <prest-form-dialog-actions>
+    <app-form-dialog-actions>
       <app-button type="submit">Guardar</app-button>
       <app-button variant="outline" (buttonClick)="editor.close()">Cancelar</app-button>
-    </prest-form-dialog-actions>
+    </app-form-dialog-actions>
   </form>
-</prest-form-dialog>
+</app-form-dialog>
 ```
 
 El foco inicial prioriza `[data-dialog-initial-focus]` y
@@ -841,6 +849,14 @@ Fase 5 (Semana 5): Eliminar dependencias antiguas
 | Organism | `organisms/[nombre]/` | `app-`           | `app-sidebar`, `app-tabs`     |
 | Surface  | `surfaces/[nombre]/`  | `app-`           | `app-panel`, `app-card`       |
 | Template | `templates/[nombre]/` | `app-`           | `app-layout-shell`            |
+
+### Compatibilidad temporal de namespace
+
+El prefijo canónico es `app-*`. Los selectores `prest-*` incorporados por los
+componentes financieros históricos se mantienen únicamente como alias
+transitorios para evitar una ruptura inmediata de consumidores externos. Todo
+nuevo uso deberá utilizar `app-*`; el alias se retirará mediante una versión
+mayor y después de publicar una migración verificable.
 
 ### Paso 1: Generar el componente
 
@@ -1151,8 +1167,8 @@ export class MyComponent {
 
 ---
 
-📅 **Última actualización**: Diciembre 2025  
-🏷️ **Versión**: 3.0.0  
-⚡ **Angular**: 20+  
+📅 **Última actualización**: agosto de 2026
+🏷️ **Versión**: 5.1.38
+⚡ **Angular**: 22
 🌐 **i18n**: ngx-translate  
 📚 **Storybook**: Disponible

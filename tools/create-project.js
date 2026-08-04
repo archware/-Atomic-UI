@@ -12,6 +12,7 @@
  */
 
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
 
@@ -23,6 +24,8 @@ const STYLES_DIR = path.join(__dirname, '..', 'src', 'styles');
 const UI_DIR = path.join(__dirname, '..', 'src', 'app', 'shared', 'ui');
 const GOVERNANCE_INSTALLER = path.join(__dirname, 'install-consumer-governance.js');
 const NODE_INSTALL_ROOT = path.dirname(process.execPath);
+const ATOMIC_NODE_MODULES = path.join(__dirname, '..', 'node_modules');
+const LOCAL_ANGULAR_CLI_PACKAGE = path.join(ATOMIC_NODE_MODULES, '@angular', 'cli');
 
 const TEMPLATES = {
   'shell': [],
@@ -71,6 +74,20 @@ function runPackageCli(command, args, options) {
     return;
   }
   execFileSync(command, args, options);
+}
+
+function runLocalAngularCli(args, options) {
+  const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'atomic-angular-cli-'));
+  const temporaryPackage = path.join(temporaryRoot, 'cli');
+  try {
+    fs.cpSync(LOCAL_ANGULAR_CLI_PACKAGE, temporaryPackage, { recursive: true });
+    fs.symlinkSync(ATOMIC_NODE_MODULES, path.join(temporaryRoot, 'node_modules'), 'junction');
+    execFileSync(process.execPath, [path.join(temporaryPackage, 'bin', 'ng.js'), ...args], {
+      ...options,
+    });
+  } finally {
+    fs.rmSync(temporaryRoot, { recursive: true, force: true });
+  }
 }
 
 // ============================================
@@ -153,22 +170,26 @@ Examples:
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    runPackageCli(
-      'npx',
-      [
-        '--yes',
-        '--offline',
-        '--package=@angular/cli@22.0.7',
-        'ng',
-        'new',
-        projectName,
-        '--style=css',
-        '--routing',
-        '--skip-install',
-        '--skip-git',
-      ],
-      { cwd: outputDir, stdio: 'inherit' },
-    );
+    const angularArgs = [
+      'new',
+      projectName,
+      '--style=css',
+      '--routing',
+      '--skip-install',
+      '--skip-git',
+    ];
+    if (fs.existsSync(LOCAL_ANGULAR_CLI_PACKAGE)) {
+      runLocalAngularCli(angularArgs, {
+        cwd: outputDir,
+        stdio: 'inherit',
+      });
+    } else {
+      runPackageCli(
+        'npx',
+        ['--yes', '--offline', '--package=@angular/cli@22.0.7', 'ng', ...angularArgs],
+        { cwd: outputDir, stdio: 'inherit' },
+      );
+    }
   } catch (error) {
     log(`Failed to create Angular project: ${error.message}`, 'error');
     process.exit(1);

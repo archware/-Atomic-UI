@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import type { ChartConfiguration, ScriptableContext } from 'chart.js';
 import {
@@ -84,7 +84,6 @@ interface DashboardStats { totalUsers: number; activeProjects: number; pendingTa
 export class DashboardPageComponent implements OnInit {
   private api = inject(ApiService);
   router = inject(Router);
-  private platformId = inject(PLATFORM_ID);
 
   sidebarVisible = signal(true);
   activeMenuItem = signal<string>('dashboard');
@@ -123,7 +122,7 @@ export class DashboardPageComponent implements OnInit {
 
   closeSidebar() { this.sidebarVisible.set(false); }
   toggleSidebar() { this.sidebarVisible.update(v => !v); }
-  onMenuItemClick(item: SidebarMenuItem) { if (item.route) this.router.navigate([item.route]); }
+  onMenuItemClick(item: SidebarMenuItem): void { if (item.route) this.router.navigate([item.route]); }
   onUserAction(_action: unknown) {}
   onLogout() {}
   loadDashboardStats() {}
@@ -171,7 +170,7 @@ export class DashboardPageComponent implements OnInit {
     responsive: true, maintainAspectRatio: false,
     plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false, backgroundColor: this.chartTooltipBg(), padding: 12, titleFont: { size: 14 }, bodyFont: { size: 14 } } },
     interaction: { mode: 'nearest', axis: 'x', intersect: false },
-    scales: { y: { beginAtZero: true, grid: { color: () => this.chartGridColor() } }, x: { grid: { display: false } } }
+    scales: { y: { beginAtZero: true, grid: { color: () => this.chartGridColor() }, border: { display: false } }, x: { grid: { display: false }, border: { display: false } } }
   };
   donutOptions: ChartConfiguration<'doughnut'>['options'] = {
     responsive: true, maintainAspectRatio: false, 

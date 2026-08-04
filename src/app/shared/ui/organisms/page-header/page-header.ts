@@ -7,7 +7,7 @@ export type PageHeaderDensity = 'comfortable' | 'compact';
  * acciones sin conocer rutas, permisos ni reglas de negocio del consumidor.
  */
 @Component({
-  selector: 'prest-page-header',
+  selector: 'app-page-header, prest-page-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './page-header.html',
   styleUrl: './page-header.scss',

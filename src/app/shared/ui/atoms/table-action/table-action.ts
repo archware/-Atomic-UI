@@ -58,7 +58,7 @@ const TONES: Readonly<Record<TableActionName, TableActionTone>> = {
 
 /** Acción iconográfica individual para grillas y listas compactas. */
 @Component({
-  selector: 'prest-table-action',
+  selector: 'app-table-action, prest-table-action',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './table-action.html',
   styleUrl: './table-action.scss',

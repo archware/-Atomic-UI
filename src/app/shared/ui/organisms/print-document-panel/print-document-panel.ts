@@ -45,6 +45,8 @@ export interface PrintDocumentPage {
   readonly footer?: string;
 }
 
+let printDocumentPanelSequence = 0;
+
 const PRINT_DOCUMENT_TOKENS = [
   '--print-document-paper-background',
   '--print-document-paper-color',
@@ -68,8 +70,8 @@ const PRINT_DOCUMENT_STYLES = `
   body {
     margin: 0;
     padding: 0;
-    background: var(--print-document-paper-background, #ffffff);
-    color: var(--print-document-paper-color, #111111);
+    background: var(--print-document-paper-background);
+    color: var(--print-document-paper-color);
     font-family: var(--print-document-font-family, Arial, sans-serif);
     font-size: 10pt;
     line-height: 1.4;
@@ -87,7 +89,7 @@ const PRINT_DOCUMENT_STYLES = `
   .eyebrow,
   .subtitle,
   .footer {
-    color: var(--print-document-muted-color, #4b5563);
+    color: var(--print-document-muted-color);
   }
 
   .eyebrow {
@@ -100,7 +102,7 @@ const PRINT_DOCUMENT_STYLES = `
 
   h1 {
     margin: 0;
-    color: var(--print-document-accent-color, #5b2360);
+    color: var(--print-document-accent-color);
     font-size: 18pt;
   }
 
@@ -121,12 +123,12 @@ const PRINT_DOCUMENT_STYLES = `
   }
 
   dl div {
-    border-bottom: 0.2mm solid var(--print-document-border-color, #d1d5db);
+    border-bottom: 0.2mm solid var(--print-document-border-color);
     padding: 1.5mm 0;
   }
 
   dt {
-    color: var(--print-document-muted-color, #4b5563);
+    color: var(--print-document-muted-color);
     font-size: 8pt;
     font-weight: 700;
     text-transform: uppercase;
@@ -158,13 +160,17 @@ const PRINT_DOCUMENT_STYLES = `
 
   th,
   td {
-    border: 0.2mm solid var(--print-document-border-color, #d1d5db);
+    border: 0.2mm solid var(--print-document-border-color);
     padding: 1.4mm;
     vertical-align: top;
   }
 
   th {
-    background: #f3f4f6;
+    background: color-mix(
+      in srgb,
+      var(--print-document-border-color) 45%,
+      var(--print-document-paper-background)
+    );
     text-align: left;
   }
 
@@ -184,21 +190,21 @@ const PRINT_DOCUMENT_STYLES = `
   }
 
   .signature {
-    border-top: 0.3mm solid var(--print-document-paper-color, #111111);
+    border-top: 0.3mm solid var(--print-document-paper-color);
     padding-top: 2mm;
     text-align: center;
   }
 
   .footer {
     margin-top: 8mm;
-    border-top: 0.2mm solid var(--print-document-border-color, #d1d5db);
+    border-top: 0.2mm solid var(--print-document-border-color);
     padding-top: 2mm;
     font-size: 8pt;
   }
 `;
 
 @Component({
-  selector: 'prest-print-document-panel',
+  selector: 'app-print-document-panel, prest-print-document-panel',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   templateUrl: './print-document-panel.html',
@@ -206,8 +212,9 @@ const PRINT_DOCUMENT_STYLES = `
 })
 export class PrintDocumentPanel {
   readonly title = input('Documentos');
+  readonly titleId = input(`print-document-panel-title-${++printDocumentPanelSequence}`);
   readonly subtitle = input('');
-  readonly ariaLabel = input('Documentos imprimibles');
+  readonly ariaLabel = input<string | null>(null);
   readonly documents = input<readonly PrintDocumentPage[]>([]);
 
   private readonly document = inject(DOCUMENT);

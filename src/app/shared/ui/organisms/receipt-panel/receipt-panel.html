@@ -1,4 +1,9 @@
-<section class="receipt-panel__screen" role="region" [attr.aria-label]="ariaLabel()">
+<section
+  class="receipt-panel__screen"
+  role="region"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-labelledby]="ariaLabel() ? null : titleId()"
+>
   <header class="receipt-panel__header">
     <div class="receipt-panel__heading">
       @if (eyebrow()) {

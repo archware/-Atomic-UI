@@ -194,13 +194,15 @@ export class ThemeService {
   }
 
   /**
-   * Alternar entre claro y oscuro (por defecto alterna a brand-dark si no es standard)
+   * Alterna entre claro y oscuro neutral.
+   * `brand-dark` se conserva como una elección explícita y no se activa desde
+   * el control binario etiquetado como tema oscuro.
    */
   toggleTheme(): void {
     if (this.isDarkMode()) {
       this.setLightTheme();
     } else {
-      this.setBrandDarkTheme(); // Default to brand dark on toggle
+      this.setDarkTheme();
     }
   }
 

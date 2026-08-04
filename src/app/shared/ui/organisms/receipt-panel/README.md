@@ -1,6 +1,16 @@
-# ReceiptPanel
+---
+title: "Panel de comprobante térmico"
+subtitle: "Contrato visual para impresión mediante el controlador del sistema"
+author: "Ing. Havel CONTRERAS TAPAHUASCO"
+date: "2026-08-03"
+---
+
+# Panel de comprobante térmico
 
 Organismo para presentar un comprobante y generar su impresión térmica.
+
+El selector canónico es `app-receipt-panel`. El alias `prest-receipt-panel` se
+mantiene temporalmente para compatibilidad con consumidores anteriores.
 
 - El consumidor entrega campos ya formateados y el texto autoritativo.
 - La impresión usa papel de 58 mm y un ancho imprimible de 48 mm.

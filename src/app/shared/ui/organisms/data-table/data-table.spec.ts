@@ -29,7 +29,7 @@ const rows: readonly LoanRow[] = [
 @Component({
   imports: [DataTable],
   template: `
-    <prest-data-table
+    <app-data-table
       caption="Créditos vigentes"
       [columns]="columns"
       [rows]="rows"
@@ -49,7 +49,7 @@ const rows: readonly LoanRow[] = [
         <button class="view-action" type="button">Ver</button>
         <button class="delete-action" type="button">Eliminar</button>
       </ng-template>
-    </prest-data-table>
+    </app-data-table>
   `,
 })
 class DataTableHost {
@@ -98,6 +98,7 @@ describe('DataTable', () => {
     expect(firstRowCells[0]?.textContent?.trim()).toBe('1');
     expect(firstRowCells[2]?.textContent?.trim()).toBe('Zeta');
     expect(firstRowCells[3]?.textContent?.trim()).toBe('—');
+    expect(fixture.nativeElement.querySelector('.data-table__toolbar')).not.toBeNull();
   });
 
   it('keeps a single horizontal scroll owner inside ScrollOverlay', async () => {
@@ -269,6 +270,7 @@ describe('DataTable', () => {
     fixture.componentRef.setInput('totalPages', 3);
     fixture.componentRef.setInput('hasPreviousPage', true);
     fixture.componentRef.setInput('hasNextPage', true);
+    fixture.componentRef.setInput('showRowNumber', true);
     await fixture.whenStable();
 
     const summary = fixture.nativeElement.querySelector('.data-table__summary') as HTMLElement;
@@ -314,6 +316,10 @@ describe('DataTable', () => {
 
   it('paginates complete local collections and keeps the row number continuous', async () => {
     const fixture = await createTable();
+    fixture.componentRef.setInput('pagination', 'client');
+    fixture.componentRef.setInput('page', 2);
+    fixture.componentRef.setInput('pageSize', 10);
+    fixture.componentRef.setInput('showRowNumber', true);
     fixture.componentRef.setInput(
       'rows',
       Array.from({ length: 12 }, (_, index) => ({
@@ -330,19 +336,25 @@ describe('DataTable', () => {
     ) as NodeListOf<HTMLButtonElement>;
 
     expect(toolbar).not.toBeNull();
-    expect(renderedCustomers(fixture.nativeElement).length).toBe(10);
-    expect(buttons[0]?.disabled).toBe(true);
-    expect(buttons[1]?.disabled).toBe(false);
-
-    buttons[1]?.click();
-    await fixture.whenStable();
-
+    expect(renderedCustomers(fixture.nativeElement).length).toBe(2);
     expect(renderedCustomers(fixture.nativeElement)).toEqual(['Cliente 11', 'Cliente 12']);
     expect(
       fixture.nativeElement.querySelector(
         'tbody tr:not(.data-table__state-row) td[data-column="rowNumber"]',
       )?.textContent?.trim(),
     ).toBe('11');
+    expect(buttons[0]?.disabled).toBe(false);
+    expect(buttons[1]?.disabled).toBe(true);
+  });
+
+  it('honors an explicit pagination opt-out even when totalRecords is supplied', async () => {
+    const fixture = await createTable();
+    fixture.componentRef.setInput('pagination', 'none');
+    fixture.componentRef.setInput('totalRecords', 45);
+    await fixture.whenStable();
+
+    expect(fixture.nativeElement.querySelector('.data-table__toolbar')).toBeNull();
+    expect(renderedCustomers(fixture.nativeElement)).toEqual(['Zeta', 'Álvaro', 'Beatriz']);
   });
 
   it('emits page size and previous or next one-based pages from the toolbar', async () => {

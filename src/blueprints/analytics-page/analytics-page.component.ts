@@ -5,9 +5,9 @@ import {
   LayoutShellComponent,
   TopbarComponent,
   SidebarComponent,
+  SidebarMenuItem,
   PanelComponent,
   RowComponent,
-  SidebarMenuItem,
   TextComponent,
   ButtonComponent,
   ChartComponent,
@@ -67,7 +67,7 @@ export class AnalyticsPageComponent {
   sidebarVisible = signal(true);
   router = inject(Router);
 
-  menuItems = [
+  menuItems: SidebarMenuItem[] = [
     { id: 'dashboard', label: 'Resumen', icon: 'fa-solid fa-chart-pie', route: '/dashboard' },
     { id: 'analytics', label: 'Analíticas', icon: 'fa-solid fa-chart-line', route: '/analytics', active: true },
     { id: 'projects', label: 'Proyectos', icon: 'fa-solid fa-folder-open', route: '/crud' },

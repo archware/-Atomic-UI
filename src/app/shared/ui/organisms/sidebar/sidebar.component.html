@@ -13,7 +13,13 @@
     [skipTableDetection]="true"
     [disableHorizontal]="true"
   >
-    <nav class="sidebar-nav" aria-label="Navegación principal" data-sidebar-scroll-surface>
+    <nav
+      class="sidebar-nav"
+      (keydown)="handleKeydown($event)"
+      tabindex="-1"
+      aria-label="Navegación principal"
+      data-sidebar-scroll-surface
+    >
       <ng-template #menuTree let-items let-level="level">
         @for (item of items; track item.id ?? item.route ?? item.label) {
           <li class="nav-item" [class.nav-item--group]="hasChildren(item)" role="none">
@@ -24,7 +30,6 @@
               [class.nav-link--child]="level > 0"
               [class.expanded]="hasChildren(item) && isExpanded(item)"
               (click)="onItemClick(item)"
-              (keydown)="handleKeydown($event)"
               role="menuitem"
               [attr.aria-current]="item.active ? 'page' : null"
               [attr.aria-expanded]="hasChildren(item) ? isExpanded(item) : null"

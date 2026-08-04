@@ -76,7 +76,7 @@ export class ReportsPageComponent {
     { id: 3, name: 'Auditoría de Personal', date: '05 Jun 2026', size: '4.8 MB' }
   ];
 
-  menuItems = [
+  menuItems: SidebarMenuItem[] = [
     { id: 'dashboard', label: 'Resumen', icon: 'fa-solid fa-chart-pie', route: '/dashboard' },
     { id: 'analytics', label: 'Analíticas', icon: 'fa-solid fa-chart-line', route: '/analytics' },
     { id: 'projects', label: 'Proyectos', icon: 'fa-solid fa-folder-open', route: '/crud' },

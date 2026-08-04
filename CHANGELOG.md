@@ -1,4 +1,46 @@
-# Changelog
+---
+title: "Registro de cambios de Atomic UI"
+document_type: "changelog"
+version: "5.3.0"
+status: "vigente"
+updated: "2026-08-03"
+owner: "Hospital Regional de Ayacucho"
+---
+
+# Registro de cambios
+
+Todas las modificaciones importantes de este proyecto se documentan en este
+archivo. El formato se basa en
+[Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
+
+## [Sin publicar]
+
+## [5.3.0] - 2026-08-03
+
+### Integrado
+
+- Se integra la línea ascendente `5.2.1`, que incorpora el catálogo ejecutable,
+  el generador declarativo de interfaces y el control de un único propietario
+  de desplazamiento, con la línea local `5.1.40`, que incorpora el contrato de
+  distribución transicional, el gobierno de consumidores HRA y el saneamiento
+  de contratos TypeScript.
+- La resolución conserva los cambios de ambas líneas de desarrollo y explicita
+  los puntos en que el historial utilizó el mismo número de versión para
+  entregas distintas. Las entradas históricas se mantienen en sus secciones y
+  no se reinterpretan como resultados de la integración actual.
+
+### Estado de verificación
+
+- La integración supera lint, compilación Angular, construcción de Storybook y
+  299/299 pruebas en `ChromeHeadlessNoSandbox`.
+- El gobierno integral valida catálogo, blueprints, tokens, selectores, valores
+  CSS, generador declarativo y contrato transicional de distribución. El smoke
+  test crea sin red un shell gobernado con 76 componentes y verifica cero
+  violaciones de procedencia.
+- El manifiesto registra 151 fuentes con SHA-256 del árbol
+  `fea2de5195254f0c47a96b4ab9006ebf5aabd3661a8ab6dd0bb0b5678d2a20d4`.
+  La biblioteca Angular compilada continúa bloqueada por contrato; estas
+  verificaciones no autorizan su publicación.
 
 ## [5.2.1] - 2026-08-02
 
@@ -121,10 +163,33 @@
 - Las utilidades `surface-tone` aportan contexto cromático de baja intensidad a
   tarjetas de dominio y exponen un acento legible sin fijar colores en features.
 
+### Corregido
+
+- La actualización local del 3 de agosto elimina 29 advertencias de lint
+  mediante contratos TypeScript explícitos, observables tipados y controles de
+  teclado y foco verificables.
+- `Chart` conserva el comportamiento de sombras y etiquetas sin recurrir a
+  tipos `any`; `Select2` evita manejadores redundantes porque la detección de
+  clic externo ya comprueba la pertenencia al elemento anfitrión.
+- Los blueprints de analítica, CRUD, tablero, perfil y reportes publican tipos
+  de navegación, formularios y opciones de gráficos coherentes con sus API.
+
+### Gobierno
+
+- El umbral preventivo del paquete inicial se alinea con el tamaño real de la
+  aplicación SSR en 1,2 MB y conserva el límite de error en 1,5 MB. El ajuste
+  evita una advertencia permanente sin ampliar el límite que bloquea el build.
+
 ### Verificación
 
 - Contrato de variantes y tonos, gobierno Atomic, pruebas y build antes de la
   propagación al frontend de préstamos.
+- En la revisión local del 3 de agosto se ejecutaron lint, 249/249 pruebas en
+  `ChromeHeadlessNoSandbox`, build Angular y gobierno Atomic sin advertencias de
+  código o presupuesto.
+- El manifiesto local de 145 fuentes se regeneró con SHA-256
+  `f8a6ac04d396bb08bce0777d4413409b8f00aef12c038b718f7ad8961e1ef9f5`
+  antes de distribuir esa revisión a los consumidores gobernados.
 
 ## [5.1.39] - 2026-07-31
 
@@ -138,10 +203,19 @@
 - Se publica `docs/POLITICA_COLOR_ACCIONES.md` como regla del ADN para nuevos
   diseños y propagaciones.
 
+### Corregido
+
+- La actualización local del 3 de agosto utiliza en la prueba canónica de
+  `Accordion` un matcher booleano compatible con Jasmine y Vitest. La
+  corrección permite conservar una copia exacta del componente y su prueba en
+  consumidores Angular con ejecutores distintos.
+
 ### Verificación
 
 - Pruebas de botón, KPI, grilla de métricas, gobierno y build antes de propagar
   el cambio al frontend.
+- El manifiesto de fuentes se regeneró después de la corrección local y la
+  adopción se validó nuevamente en los cuatro consumidores gobernados.
 
 ## PREST-20260731-168
 
@@ -150,7 +224,7 @@
 - El contrato queda preparado para seleccionar configuraciones financieras sin
   trasladar reglas de cálculo al componente visual.
 
-Todas las modificaciones importantes de este proyecto se documentan en este archivo.
+## Registros PREST anteriores a la versión 5.1.38
 
 - `PREST-20260731-167`: `ActionGroup` formaliza el contrato de tres acciones
   visibles y desplaza desde la cuarta a un menú identificado por caret. El
@@ -170,20 +244,69 @@ Todas las modificaciones importantes de este proyecto se documentan en este arch
   normaliza tokens y clases Font Awesome (`save`, `fa-save` o
   `fa-solid fa-save`) para impedir prefijos duplicados.
 
+## [5.1.38] - 2026-07-31, actualizada el 2026-08-03
+
+### Añadido
+
 - `PREST-20260729-137`: fortalece el átomo `FileInput` como fuente canónica
   para carga documental: identificador estable, validación visible de
   extensiones/MIME y tamaño, estado touched, ARIA y estilos basados únicamente
   en tokens semánticos. El componente permanece agnóstico a créditos, contratos
   y almacenamiento.
-
 - `PREST-20260729-133`: incorpora `PrintDocumentPanel`, organismo tipado para
   previsualizar y enviar paquetes A4 a un documento aislado. Admite páginas,
   campos, secciones, tablas y firmas sin conocer contratos financieros; todos
   los valores se insertan con `textContent`, y el consumidor decide contenido
   y permisos. Validación: gobierno Atomic, 227/227 pruebas y build.
-  Formato basado en [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
+- `ATOMIC-DIST-20260803-001`: se incorpora un contrato transicional para el
+  futuro paquete `@hra/atomic-ui`, con inventario de exportaciones, manifiesto
+  SHA-256 determinista y `npm pack --dry-run` privado, sin red y sin archivo
+  `.tgz`.
+- El gate de distribución documenta y comprueba que el repositorio continúa
+  siendo una aplicación Angular, que `ng-packagr` no está disponible y que el
+  barrel todavía expone responsabilidades propias de los consumidores. Un gate
+  verde no se presenta como biblioteca compilada ni autoriza publicación.
 
-## [5.1.38] - 2026-07-31
+### Gobierno
+
+- El instalador clasifica una copia como `exact` solamente cuando coinciden el
+  conjunto de archivos y sus hashes. `--audit-only` produce un reporte de solo
+  lectura; una divergencia detiene la instalación antes de modificar el
+  consumidor y exige un registro de decisión concreto.
+- ESLint reserva `app-*` como prefijo canónico. La compatibilidad `prest-*` se
+  limita a cuatro archivos heredados y un gate rechaza aliases sin su selector
+  `app-*` equivalente, aliases fuera de la excepción o aliases declarados como
+  selector principal.
+- La guía del ecosistema elimina el fallback productivo a datos simulados y la
+  recomendación de almacenar `.env` con credenciales junto al ejecutable.
+- La versión canónica se alinea en `5.1.38` para el paquete, el lock, la
+  documentación y el manifiesto de distribución.
+
+### Corregido
+
+- La fusión conserva el comportamiento responsive de máximo 4/2/1 columnas de
+  `MetricsGrid` sin reservar columnas vacías.
+- Los componentes incorporados publican `app-*` como namespace canónico y
+  conservan `prest-*` únicamente como alias transitorio de compatibilidad.
+- `DataTable`, `FileInput`, `ReceiptPanel`, `DenominationCounter` y
+  `FormDialog` preservan la compatibilidad anterior y corrigen los defectos
+  detectados durante la integración.
+- `DataTable` conserva los valores predeterminados publicados en `5.1.37`:
+  `showRowNumber=true` y paginación local. `pagination='none'` permanece como
+  desactivación explícita y opt-in; no se redefine el modo predeterminado.
+- El barrel público exporta `DataTableDensity` junto con el resto del contrato
+  tipado de `DataTable`. Los inventarios documentales quedan alineados con los
+  34 directorios de átomos, 18 de moléculas y 19 de organismos verificados.
+
+### Verificación
+
+- El manifiesto transicional avanza de 134 a 145 fuentes y conserva el
+  empaquetado seco limitado a los archivos contractuales. El árbol resuelto
+  declara el SHA-256
+  `0d391bd3b16c2e0c3f30f226eca6473a038a0af1678173bdd9bfd1721a698684`.
+- Gobierno Atomic, lint sin errores, 249/249 pruebas en
+  `ChromeHeadlessNoSandbox` y build Angular aprobados antes de actualizar la
+  procedencia de los consumidores.
 
 ### Mejorado
 
@@ -192,7 +315,7 @@ Todas las modificaciones importantes de este proyecto se documentan en este arch
 - Los botones aceptan formas abreviadas o completas de Font Awesome mediante
   un único normalizador compatible.
 
-### Verificación
+### Verificación de la revisión original
 
 - Pruebas unitarias de los tres estados del contador, confirmación de una
   sugerencia y normalización de iconos antes de propagar al consumidor.
@@ -654,18 +777,11 @@ Todas las modificaciones importantes de este proyecto se documentan en este arch
 - **Responsive recuperado:** se restauraron a `768px` los breakpoints dañados de LayoutShell, Panel, Card, Toast, Stepper, Topbar, Footer, Tabs y Navbar. El logo y el botón móvil de Navbar recuperan 28 px y 36 px respectivamente.
 - **Alertas semánticas:** las cuatro variantes consumen `--alert-*-bg|border|text`; la advertencia deja de depender de un fallback CSS inválido.
 - **Acciones de icono accesibles:** `ActionGroup` y `TableActions` exponen `aria-label` y delegan Enter/Espacio al comportamiento nativo del botón para emitir una sola acción. `ActionGroup size="sm"` conserva 28 px.
+- **Fuga de clicks en app-button deshabilitados:** Se registro una directriz critica sobre el uso de eventos en componentes encapsulados de Atomic UI. Al utilizar <app-button>, los consumidores deben enlazar la accion a la salida nativa del componente (buttonClick)=... en lugar del evento DOM directo (click)=.... El uso de (click) se adhiere al elemento host de Angular, permitiendo que eventos de click se filtren aunque el boton interno este en estado [disabled]=true.
 
 ### Verificación
 
 - Incremento de diseño `PREST-20260720-013`, limitado a la fuente Atomic UI y sin propagación automática a consumidores.
-
----
-
-## [5.1.12] - 2026-07-20
-
-### Corregido
-
-- **Fuga de clicks en app-button deshabilitados:** Se registro una directriz critica sobre el uso de eventos en componentes encapsulados de Atomic UI. Al utilizar <app-button>, los consumidores deben enlazar la accion a la salida nativa del componente (buttonClick)=... en lugar del evento DOM directo (click)=.... El uso de (click) se adhiere al elemento host de Angular, permitiendo que eventos de click se filtren aunque el boton interno este en estado [disabled]=true.
 
 ---
 
@@ -871,6 +987,7 @@ Todas las modificaciones importantes de este proyecto se documentan en este arch
 #### Fixed (Backend - Tauri)
 
 - **Tiberius TLS Handshake**: El servidor SQL antiguo 10.100.6.11 rechaza certificados TLS modernos (Error de algoritmo común -2146893007). Se ha regresado a la cadena de conexión con `encrypt=DANGER_PLAINTEXT` para saltar el handshake.
+  **Antecedente supersedido, inseguro y no reutilizable:** esta decisión histórica no constituye una recomendación vigente. `DANGER_PLAINTEXT` desactiva la protección del canal y no debe reutilizarse en ningún proyecto, entorno o fallback. La compatibilidad heredada actual debe conservar cifrado y quedar restringida por los contratos de seguridad aprobados.
 - **Anti-Panic Data Extraction**: El puente de datos en `tiberius_repository.rs` se refactorizó para usar `.try_get::<T, _>().ok().flatten().unwrap_or(0)` en todas las columnas. El backend ahora es inmune a inconsistencias de tipos y retornos nulos desde SQL Server, impidiendo crasheos silentes que forzaban la activación de Mock Data.
 
 ---

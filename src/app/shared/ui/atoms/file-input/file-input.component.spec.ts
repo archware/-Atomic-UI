@@ -85,4 +85,75 @@ describe('FileInputComponent', () => {
       'compact',
     );
   });
+
+  it('acepta solamente el primer archivo arrastrado en modo individual', () => {
+    const first = new File(['%PDF-1.7'], 'primero.pdf', {
+      type: 'application/pdf',
+    });
+    const second = new File(['%PDF-1.7'], 'segundo.pdf', {
+      type: 'application/pdf',
+    });
+
+    component.onDrop({
+      preventDefault: () => undefined,
+      dataTransfer: { files: [first, second] },
+    } as unknown as DragEvent);
+
+    expect(component.files()).toHaveSize(1);
+    expect(component.files()[0]?.file).toBe(first);
+  });
+
+  it('mantiene archivos homónimos como filas independientes en modo múltiple', () => {
+    component.multiple = true;
+    const first = new File(['%PDF-1.7-a'], 'contrato.pdf', {
+      type: 'application/pdf',
+    });
+    const second = new File(['%PDF-1.7-b'], 'contrato.pdf', {
+      type: 'application/pdf',
+    });
+
+    component.onDrop({
+      preventDefault: () => undefined,
+      dataTransfer: { files: [first, second] },
+    } as unknown as DragEvent);
+    fixture.detectChanges();
+
+    expect(component.files()).toHaveSize(2);
+    expect(fixture.nativeElement.querySelectorAll('.file-item')).toHaveSize(2);
+  });
+
+  it('limits image preview generation to the configured memory budget', () => {
+    component.multiple = true;
+    component.accept = 'image/*';
+    component.maxPreviewFiles = 1;
+    component.maxPreviewSizeMB = 1;
+    const readAsDataUrl = spyOn(FileReader.prototype, 'readAsDataURL');
+    const first = new File(['image-a'], 'a.png', { type: 'image/png' });
+    const second = new File(['image-b'], 'b.png', { type: 'image/png' });
+
+    component.onDrop({
+      preventDefault: () => undefined,
+      dataTransfer: { files: [first, second] },
+    } as unknown as DragEvent);
+
+    expect(readAsDataUrl).toHaveBeenCalledTimes(1);
+  });
+
+  it('exposes validation state and marks the CVA as touched when opening the picker', () => {
+    const touched = jasmine.createSpy('touched');
+    component.registerOnTouched(touched);
+    spyOn(component.fileInputRef.nativeElement, 'click');
+
+    component.openFileDialog();
+    component.onDrop({
+      preventDefault: () => undefined,
+      dataTransfer: { files: [new File(['text'], 'invalid.txt', { type: 'text/plain' })] },
+    } as unknown as DragEvent);
+    fixture.detectChanges();
+
+    expect(touched).toHaveBeenCalled();
+    expect(
+      fixture.nativeElement.querySelector('.drop-zone').getAttribute('aria-invalid'),
+    ).toBe('true');
+  });
 });

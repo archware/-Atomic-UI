@@ -80,6 +80,24 @@ describe('ReceiptPanel', () => {
     ).not.toBeNull();
   });
 
+  it('generates a unique heading id for every panel instance', () => {
+    const secondFixture = TestBed.createComponent(ReceiptPanel);
+    fixture.detectChanges();
+    secondFixture.detectChanges();
+
+    const firstTitle = fixture.nativeElement.querySelector('h2') as HTMLElement;
+    const secondTitle = secondFixture.nativeElement.querySelector('h2') as HTMLElement;
+
+    expect(firstTitle.id).not.toBe('');
+    expect(secondTitle.id).not.toBe('');
+    expect(firstTitle.id).not.toBe(secondTitle.id);
+    expect(
+      (fixture.nativeElement.querySelector('[role="region"]') as HTMLElement).getAttribute(
+        'aria-labelledby',
+      ),
+    ).toBe(firstTitle.id);
+  });
+
   it('refuses to print an empty receipt', () => {
     const open = spyOn(window, 'open').and.returnValue(null);
 

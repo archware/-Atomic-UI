@@ -5,8 +5,9 @@
   "atomicRepository": "../-Atomic-UI",
   "atomicRemote": "archware/-Atomic-UI",
   "atomicRef": "main",
+  "packageRoot": ".",
   "uiRoots": ["src/app/shared/ui"],
-  "featureRoots": ["src/app/features", "src/app/pages"],
+  "featureRoots": ["src/app/features", "src/app/pages", "src/app/dashboard"],
   "layers": ["atoms", "molecules", "organisms", "surfaces", "templates"],
   "components": [],
   "governanceArtifacts": [

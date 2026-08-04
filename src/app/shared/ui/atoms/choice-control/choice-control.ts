@@ -4,7 +4,7 @@ export type ChoiceControlType = 'checkbox' | 'radio';
 
 /** Checkbox o radio controlado con etiqueta y foco visibles. */
 @Component({
-  selector: 'prest-choice-control',
+  selector: 'app-choice-control, prest-choice-control',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.choice-control--checked]': 'checked()',

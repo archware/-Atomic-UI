@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { dirname, join, relative, resolve } from 'node:path';
+import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const POLICY_VERSION = '1.0.0';
@@ -9,6 +9,7 @@ const NATIVE_VISUAL_TAGS = /<(?:button|dialog|input|select|table|textarea)\b/i;
 const NATIVE_VISUAL_SELECTORS =
   /(?<![-\w])(?:button|dialog|input|select|table|textarea)(?=\s*(?:\[|:|\.|#|\{|,|>|\+|~))/im;
 const FIXED_COLOR = /(?<!&)#[0-9a-f]{3,8}\b/i;
+const INVALID_NUMERIC_TOKEN = /\d+(?:\.\d+)?var\s*\(/i;
 const REQUIRED_GOVERNANCE_ARTIFACTS = [
   {
     local: 'docs/ATOMIC_GOVERNANCE.md',
@@ -61,9 +62,11 @@ if (!requireFile(manifestPath, `No existe el manifiesto obligatorio: ${manifestP
 }
 
 const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
-const atomicRoot = resolve(
-  process.env.ATOMIC_UI_ROOT || join(consumerRoot, manifest.atomicRepository || ''),
-);
+const configuredAtomicRoot =
+  process.env.ATOMIC_UI_ROOT || manifest.atomicRepository || '';
+const atomicRoot = isAbsolute(configuredAtomicRoot)
+  ? resolve(configuredAtomicRoot)
+  : resolve(consumerRoot, configuredAtomicRoot);
 
 if (manifest.schemaVersion !== 1) failures.push('schemaVersion debe ser 1.');
 if (manifest.policyVersion !== POLICY_VERSION) {
@@ -92,10 +95,20 @@ if (
   failures.push(`AGENTS.md debe contener el marcador ${REQUIRED_MARKER}.`);
 }
 
-const packagePath = join(consumerRoot, 'package.json');
+const packageRoot = normalize(manifest.packageRoot || '.');
+const packagePath = join(consumerRoot, packageRoot, 'package.json');
 if (requireFile(packagePath, 'package.json es obligatorio.')) {
   const packageJson = JSON.parse(readFileSync(packagePath, 'utf8'));
-  if (packageJson.scripts?.['check:atomic'] !== 'node scripts/check-atomic-provenance.mjs') {
+  const packageDirectory = dirname(packagePath);
+  const gateRelative = normalize(
+    relative(packageDirectory, join(consumerRoot, 'scripts', 'check-atomic-provenance.mjs')),
+  );
+  const consumerRelative = normalize(relative(packageDirectory, consumerRoot)) || '.';
+  const expectedCommand =
+    packageRoot === '.'
+      ? 'node scripts/check-atomic-provenance.mjs'
+      : `node ${gateRelative} --consumer-root=${consumerRelative}`;
+  if (packageJson.scripts?.['check:atomic'] !== expectedCommand) {
     failures.push('package.json debe declarar check:atomic con el gate canónico.');
   }
 }
@@ -143,6 +156,22 @@ for (const component of components) {
     } else if (!existsSync(join(consumerRoot, component.decisionRecord))) {
       failures.push(`No existe decisionRecord para ${local}: ${component.decisionRecord}`);
     }
+    if (!Array.isArray(component.adaptationSnapshot) || component.adaptationSnapshot.length === 0) {
+      failures.push(`Adaptación sin snapshot verificable: ${local}`);
+    } else {
+      for (const snapshot of component.adaptationSnapshot) {
+        const localFile = join(consumerRoot, local, snapshot.file || '');
+        const atomicFile = join(atomicRoot, component.atomic || '', snapshot.file || '');
+        const actualLocal = existsSync(localFile) ? digest(localFile) : null;
+        const actualAtomic = existsSync(atomicFile) ? digest(atomicFile) : null;
+        if (actualLocal !== (snapshot.localSha256 ?? null)) {
+          failures.push(`Adaptación modificada sin nueva decisión: ${local}/${snapshot.file}`);
+        }
+        if (actualAtomic !== (snapshot.atomicSha256 ?? null)) {
+          failures.push(`Fuente Atomic cambió respecto al snapshot: ${component.atomic}/${snapshot.file}`);
+        }
+      }
+    }
   }
 
   const localRoot = join(consumerRoot, local);
@@ -167,6 +196,16 @@ for (const component of components) {
   }
 }
 
+const governedComponentRoots = components
+  .filter((component) => component.local)
+  .map((component) => resolve(consumerRoot, component.local));
+const belongsToGovernedComponent = (file) => {
+  const absolute = resolve(file);
+  return governedComponentRoots.some(
+    (root) => absolute === root || absolute.startsWith(`${root}${sep}`),
+  );
+};
+
 for (const uiRoot of manifest.uiRoots || []) {
   const absoluteUiRoot = join(consumerRoot, uiRoot);
   if (!requireFile(absoluteUiRoot, `Raíz UI consumidora ausente: ${uiRoot}`)) continue;
@@ -180,11 +219,16 @@ for (const uiRoot of manifest.uiRoots || []) {
     }
   }
 
-  for (const file of filesBelow(absoluteUiRoot, ['.html', '.scss', '.css'])) {
+  for (const file of filesBelow(absoluteUiRoot, ['.html', '.scss', '.css', '.ts'])) {
     const local = normalize(relative(consumerRoot, file));
     if (local.includes('/styles/tokens/')) continue;
-    if (FIXED_COLOR.test(readFileSync(file, 'utf8'))) {
+    const source = readFileSync(file, 'utf8');
+    const executableSource = source.replace(/\/\*[\s\S]*?\*\//g, '');
+    if (!belongsToGovernedComponent(file) && FIXED_COLOR.test(executableSource)) {
       failures.push(`Color fijo fuera de tokens: ${local}`);
+    }
+    if (INVALID_NUMERIC_TOKEN.test(executableSource)) {
+      failures.push(`Valor CSS dañado por sustitución mecánica: ${local}`);
     }
   }
 }
@@ -194,6 +238,7 @@ for (const featureRoot of manifest.featureRoots || []) {
   if (!existsSync(absoluteFeatureRoot)) continue;
   for (const file of filesBelow(absoluteFeatureRoot, ['.html', '.scss', '.css'])) {
     const source = readFileSync(file, 'utf8');
+    const executableSource = source.replace(/\/\*[\s\S]*?\*\//g, '');
     const local = normalize(relative(consumerRoot, file));
     if (file.endsWith('.html') && NATIVE_VISUAL_TAGS.test(source)) {
       failures.push(`Primitiva visual nativa fuera del ADN: ${local}`);
@@ -204,7 +249,10 @@ for (const featureRoot of manifest.featureRoots || []) {
     if (file.endsWith('.html') && /\sstyle\s*=/i.test(source)) {
       failures.push(`Estilo inline prohibido: ${local}`);
     }
-    if (FIXED_COLOR.test(source)) failures.push(`Color fijo fuera de tokens: ${local}`);
+    if (FIXED_COLOR.test(executableSource)) failures.push(`Color fijo fuera de tokens: ${local}`);
+    if (INVALID_NUMERIC_TOKEN.test(executableSource)) {
+      failures.push(`Valor CSS dañado por sustitución mecánica: ${local}`);
+    }
   }
 }
 
@@ -232,5 +280,5 @@ if (failures.length > 0) {
 
 console.log(
   `Ley Atomic verificada: política ${POLICY_VERSION}, ${components.length} componentes ` +
-    'con procedencia y cero primitivas o hardcodes visuales fuera del ADN.',
+    'con procedencia y cero violaciones detectadas por el gate.',
 );

@@ -2,50 +2,52 @@
   class="data-table__region"
   [class.data-table__region--compact]="density() === 'compact'"
 >
-  <header class="data-table__toolbar">
-    <div class="data-table__summary">
-      <span
-        >Mostrando <strong>{{ rangeStart() }} - {{ rangeEnd() }}</strong> de
-        <strong>{{ effectiveTotalRecords() }}</strong> registro(s)</span
-      >
-    </div>
-
-    <div class="data-table__pagination">
-      <label class="data-table__page-size">
-        <span>POR PÁGINA:</span>
-        <select [value]="effectivePageSize()" (change)="onPageSizeChange($event)">
-          @for (size of pageSizeOptions(); track size) {
-            <option [value]="size" [selected]="size === effectivePageSize()">{{ size }}</option>
-          }
-        </select>
-      </label>
-
-      <span class="data-table__page-info">
-        Página {{ effectivePage() }} de {{ effectiveTotalPages() }}
-      </span>
-
-      <div class="data-table__page-buttons">
-        <button
-          class="data-table__page-btn"
-          type="button"
-          [disabled]="!effectiveHasPreviousPage() || status() === 'loading'"
-          (click)="onPageChange(effectivePage() - 1)"
-          aria-label="Página anterior"
+  @if (paginationEnabled()) {
+    <header class="data-table__toolbar">
+      <div class="data-table__summary">
+        <span
+          >Mostrando <strong>{{ rangeStart() }} - {{ rangeEnd() }}</strong> de
+          <strong>{{ effectiveTotalRecords() }}</strong> registro(s)</span
         >
-          <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
-        </button>
-        <button
-          class="data-table__page-btn"
-          type="button"
-          [disabled]="!effectiveHasNextPage() || status() === 'loading'"
-          (click)="onPageChange(effectivePage() + 1)"
-          aria-label="Página siguiente"
-        >
-          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-        </button>
       </div>
-    </div>
-  </header>
+
+      <div class="data-table__pagination">
+        <label class="data-table__page-size">
+          <span>POR PÁGINA:</span>
+          <select [value]="effectivePageSize()" (change)="onPageSizeChange($event)">
+            @for (size of pageSizeOptions(); track size) {
+              <option [value]="size" [selected]="size === effectivePageSize()">{{ size }}</option>
+            }
+          </select>
+        </label>
+
+        <span class="data-table__page-info">
+          Página {{ effectivePage() }} de {{ effectiveTotalPages() }}
+        </span>
+
+        <div class="data-table__page-buttons">
+          <button
+            class="data-table__page-btn"
+            type="button"
+            [disabled]="!effectiveHasPreviousPage() || status() === 'loading'"
+            (click)="onPageChange(effectivePage() - 1)"
+            aria-label="Página anterior"
+          >
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+          </button>
+          <button
+            class="data-table__page-btn"
+            type="button"
+            [disabled]="!effectiveHasNextPage() || status() === 'loading'"
+            (click)="onPageChange(effectivePage() + 1)"
+            aria-label="Página siguiente"
+          >
+            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+  }
 
   <app-scroll-overlay
     class="data-table__viewport"

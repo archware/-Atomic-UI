@@ -59,14 +59,14 @@ export type ProgressSize = 'sm' | 'md' | 'lg';
     }
 
     .progress-label {
-      font-size: 0.875rem;
+      font-size: var(--text-sm);
       font-weight: 500;
-      color: var(--text-primary, #111827);
+      color: var(--text-color);
     }
 
     .progress-value {
-      font-size: 0.8125rem;
-      color: var(--text-muted, #6b7280);
+      font-size: var(--text-xs);
+      color: var(--text-color-muted);
       font-variant-numeric: tabular-nums;
     }
 
@@ -74,26 +74,26 @@ export type ProgressSize = 'sm' | 'md' | 'lg';
 
     .progress-track {
       width: 100%;
-      background-color: var(--surface-200, #e5e7eb);
-      border-radius: var(--radius-full, 9999px);
+      background-color: var(--progress-bg);
+      border-radius: var(--radius-full);
       overflow: hidden;
     }
 
-    .progress-track--sm { height: 4px; }
+    .progress-track--sm { height: var(--space-1); }
     .progress-track--md { height: var(--space-2); }
-    .progress-track--lg { height: 1var(--space-1); }
+    .progress-track--lg { height: var(--space-3); }
 
     .progress-bar {
       height: 100%;
-      border-radius: var(--radius-full, 9999px);
+      border-radius: var(--radius-full);
       transition: width 0.4s ease;
     }
 
-    .progress-bar--default  { background-color: var(--text-muted, #6b7280); }
-    .progress-bar--primary  { background-color: var(--primary-color, #6366f1); }
-    .progress-bar--success  { background-color: var(--success-color, #22c55e); }
-    .progress-bar--warning  { background-color: var(--warning-color, #f59e0b); }
-    .progress-bar--danger   { background-color: var(--danger-color, #ef4444); }
+    .progress-bar--default  { background-color: var(--text-color-muted); }
+    .progress-bar--primary  { background-color: var(--primary-color); }
+    .progress-bar--success  { background-color: var(--success-color); }
+    .progress-bar--warning  { background-color: var(--warning-color); }
+    .progress-bar--danger   { background-color: var(--danger-color); }
 
     .progress-bar--indeterminate {
       width: 40% !important;

@@ -19,7 +19,7 @@ export interface SelectOption {
 
 /** Selección portable para formularios reactivos y usos controlados. */
 @Component({
-  selector: 'prest-select',
+  selector: 'app-select, prest-select, app-form-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './select.html',
   styleUrl: './select.scss',

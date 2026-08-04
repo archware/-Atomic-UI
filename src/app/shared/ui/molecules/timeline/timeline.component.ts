@@ -83,7 +83,7 @@ export interface TimelineItem {
 
     .timeline-item {
       display: grid;
-      grid-template-columns: 3var(--space-1) 1fr;
+      grid-template-columns: var(--space-6) 1fr;
       grid-template-rows: auto;
       column-gap: var(--space-3);
       position: relative;
@@ -91,7 +91,7 @@ export interface TimelineItem {
 
     .timeline-horizontal .timeline-item {
       grid-template-columns: 1fr;
-      grid-template-rows: 3var(--space-1) auto;
+      grid-template-rows: var(--space-6) auto;
       align-items: center;
       flex: 1;
     }
@@ -99,8 +99,8 @@ export interface TimelineItem {
     /* Connector */
     .timeline-connector {
       position: absolute;
-      left: 15px;
-      top: 3var(--space-1);
+      left: calc(var(--space-6) / 2);
+      top: var(--space-6);
       bottom: 0;
       width: var(--space-1);
       background: var(--border-color);
@@ -109,7 +109,7 @@ export interface TimelineItem {
 
     .timeline-horizontal .timeline-connector {
       left: 50%;
-      top: 15px;
+      top: calc(var(--space-6) / 2);
       bottom: auto;
       right: -50%;
       width: auto;
@@ -118,9 +118,9 @@ export interface TimelineItem {
 
     /* Dot */
     .timeline-dot {
-      width: 3var(--space-1);
-      height: 3var(--space-1);
-      border-radius: 50%;
+      width: var(--space-6);
+      height: var(--space-6);
+      border-radius: var(--radius-full);
       background: var(--surface-section);
       border: var(--space-1) solid var(--border-color);
       display: flex;
@@ -137,7 +137,7 @@ export interface TimelineItem {
     .timeline-completed .timeline-dot {
       background: var(--success-color);
       border-color: var(--success-color);
-      color: white;
+      color: var(--text-color-on-primary);
     }
 
     .timeline-completed .timeline-connector {
@@ -147,21 +147,21 @@ export interface TimelineItem {
     .timeline-active .timeline-dot {
       background: var(--primary-color);
       border-color: var(--primary-color);
-      color: white;
+      color: var(--text-color-on-primary);
     }
 
     .timeline-error .timeline-dot {
       background: var(--danger-color);
       border-color: var(--danger-color);
-      color: white;
+      color: var(--text-color-on-primary);
     }
 
     /* Pulse animation for active */
     .timeline-dot-pulse {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: white;
+      width: var(--space-2);
+      height: var(--space-2);
+      border-radius: var(--radius-full);
+      background: var(--text-color-on-primary);
       animation: timeline-pulse 1.5s infinite ease-in-out;
     }
 
@@ -220,21 +220,21 @@ export interface TimelineItem {
 
     /* En móvil el timeline horizontal colapsa a vertical para evitar
        que el contenido se comprima o desborde en pantallas pequeñas */
-    @media (max-width: 639px) {
+    @media (max-width: 40rem) {
       .timeline-horizontal {
         flex-direction: column;
       }
 
       .timeline-horizontal .timeline-item {
-        grid-template-columns: 3var(--space-1) 1fr;
+        grid-template-columns: var(--space-6) 1fr;
         grid-template-rows: auto;
         align-items: start;
         flex: unset;
       }
 
       .timeline-horizontal .timeline-connector {
-        left: 15px;
-        top: 3var(--space-1);
+        left: calc(var(--space-6) / 2);
+        top: var(--space-6);
         bottom: 0;
         right: auto;
         width: var(--space-1);

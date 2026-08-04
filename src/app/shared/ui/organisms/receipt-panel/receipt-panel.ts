@@ -15,6 +15,8 @@ export interface ReceiptPanelField {
   readonly emphasis?: boolean;
 }
 
+let receiptPanelSequence = 0;
+
 const RECEIPT_PRINT_TOKENS = [
   '--receipt-paper-width',
   '--receipt-printable-width',
@@ -43,8 +45,8 @@ const RECEIPT_PRINT_STYLES = `
     margin: 0;
     padding: 0;
     overflow: visible;
-    background: var(--receipt-print-background, #ffffff);
-    color: var(--receipt-print-color, #000000);
+    background: var(--receipt-print-background);
+    color: var(--receipt-print-color);
   }
 
   body {
@@ -64,8 +66,8 @@ const RECEIPT_PRINT_STYLES = `
     width: var(--receipt-printable-width, 48mm);
     margin: 0;
     overflow: visible;
-    background: var(--receipt-print-background, #ffffff);
-    color: var(--receipt-print-color, #000000);
+    background: var(--receipt-print-background);
+    color: var(--receipt-print-color);
     font-family: var(--receipt-print-font-family, 'Courier New', Courier, monospace);
     font-size: var(--receipt-print-font-size, 7pt);
     font-weight: var(--receipt-print-font-weight, 700);
@@ -85,7 +87,7 @@ const RECEIPT_PRINT_STYLES = `
  * la superficie responsive y crea un documento aislado de impresión de 58 mm.
  */
 @Component({
-  selector: 'prest-receipt-panel',
+  selector: 'app-receipt-panel, prest-receipt-panel',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   templateUrl: './receipt-panel.html',
@@ -93,10 +95,10 @@ const RECEIPT_PRINT_STYLES = `
 })
 export class ReceiptPanel {
   readonly title = input('Comprobante');
-  readonly titleId = input('receipt-panel-title');
+  readonly titleId = input(`receipt-panel-title-${++receiptPanelSequence}`);
   readonly eyebrow = input('Operación confirmada');
   readonly subtitle = input('');
-  readonly ariaLabel = input('Comprobante imprimible');
+  readonly ariaLabel = input<string | null>(null);
   readonly formatLabel = input('Tiquetera térmica de 58 mm');
   readonly fields = input<readonly ReceiptPanelField[]>([]);
   readonly printText = input('');

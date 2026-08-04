@@ -133,7 +133,7 @@
           [columnTemplate]="'50px minmax(200px, 1.5fr) minmax(200px, 1fr) 120px 100px 120px 100px'">
           <app-table-head>
             <th app-table-cell class="selection-column">
-              <prest-choice-control
+              <app-choice-control
                 ariaLabel="Seleccionar todos"
                 [checked]="allSelected()"
                 (changed)="toggleSelectAll()"
@@ -158,7 +158,7 @@
             @for (item of items(); track item.id) {
               <tr app-table-row [selected]="isSelected(item)">
                 <td app-table-cell [dataLabel]="'Sel:'" align="center">
-                  <prest-choice-control
+                  <app-choice-control
                     [ariaLabel]="'Seleccionar ' + item.name"
                     [checked]="isSelected(item)"
                     (changed)="toggleSelect(item)"

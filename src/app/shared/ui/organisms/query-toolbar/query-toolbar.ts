@@ -8,7 +8,7 @@ export type QueryToolbarLayout = 'auto' | 'inline' | 'stacked';
  * y eventos permanecen bajo responsabilidad del consumidor.
  */
 @Component({
-  selector: 'prest-query-toolbar',
+  selector: 'app-query-toolbar, prest-query-toolbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './query-toolbar.html',
   styleUrl: './query-toolbar.scss',

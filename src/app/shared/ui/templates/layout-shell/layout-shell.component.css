@@ -6,10 +6,11 @@
   /* Use CSS variable for sidebar width (default 260px) */
   --sidebar-width: 260px;
   grid-template-columns: var(--sidebar-width) 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto minmax(0, 1fr) auto;
   grid-template-areas:
     'sidebar header'
-    'sidebar content';
+    'sidebar content'
+    'sidebar footer';
   background-color: var(--surface-section);
   color: var(--text-color);
 }
@@ -67,6 +68,11 @@
   flex-direction: column;
 }
 
+.layout-footer {
+  grid-area: footer;
+  min-width: 0;
+}
+
 /* Ensure ScrollOverlay takes full space */
 .layout-content ::ng-deep app-scroll-overlay {
   flex: 1;
@@ -96,10 +102,11 @@
 @media (max-width: 768px) {
   .layout-shell {
     grid-template-columns: 1fr;
-    grid-template-rows: 64px 1fr;
+    grid-template-rows: 64px minmax(0, 1fr) auto;
     grid-template-areas:
       'header'
-      'content';
+      'content'
+      'footer';
   }
 
   .layout-sidebar {

@@ -16,7 +16,7 @@ export type InputMode = 'text' | 'numeric' | 'email' | 'tel' | 'search' | 'decim
 
 /** Entrada de formulario portable para consumidores Angular zoneless. */
 @Component({
-  selector: 'prest-input',
+  selector: 'app-input, prest-input, app-form-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './input.html',
   styleUrl: './input.scss',

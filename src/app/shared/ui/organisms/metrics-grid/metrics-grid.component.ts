@@ -33,7 +33,11 @@ export interface KpiMetric {
   template: `
     <section
       class="metrics-grid"
+      [class.metrics-grid--empty]="metrics.length === 0"
       [style.--min-col-width]="minCardWidth"
+      [style.--metric-columns-desktop]="columnCount(4)"
+      [style.--metric-columns-tablet]="columnCount(2)"
+      [style.--metric-columns-mobile]="columnCount(1)"
       [attr.aria-label]="ariaLabel"
     >
       @for (metric of metrics; track metric.id ?? metric) {
@@ -71,7 +75,7 @@ export interface KpiMetric {
         max-width: 100%;
         display: grid;
         grid-template-columns:
-          repeat(auto-fit, minmax(min(100%, var(--min-col-width)), 1fr));
+          repeat(var(--metric-columns-desktop), minmax(min(100%, var(--min-col-width)), 1fr));
         gap: var(--space-3);
       }
 
@@ -79,10 +83,22 @@ export interface KpiMetric {
         min-width: 0;
       }
 
+      @media (max-width: 72rem) {
+        .metrics-grid {
+          grid-template-columns:
+            repeat(var(--metric-columns-tablet), minmax(min(100%, var(--min-col-width)), 1fr));
+        }
+      }
+
       @media (max-width: 36rem) {
         .metrics-grid {
-          grid-template-columns: minmax(0, 1fr);
+          grid-template-columns:
+            repeat(var(--metric-columns-mobile), minmax(min(100%, var(--min-col-width)), 1fr));
         }
+      }
+
+      .metrics-grid--empty {
+        grid-template-columns: none;
       }
     `,
   ],
@@ -91,4 +107,8 @@ export class MetricsGridComponent {
   @Input() metrics: readonly KpiMetric[] = [];
   @Input() minCardWidth = '13.75rem';
   @Input() ariaLabel = 'Resumen de indicadores';
+
+  columnCount(capacity: number): number {
+    return Math.min(this.metrics.length, capacity);
+  }
 }

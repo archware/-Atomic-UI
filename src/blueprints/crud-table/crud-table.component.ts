@@ -474,24 +474,24 @@ export class CrudTableComponent implements OnInit {
       return;
     }
 
-    const data = this.entityForm.getRawValue();
+    const formValue = this.entityForm.getRawValue();
+    const currentItem = this.currentItem();
+    const data: Entity = {
+      id: currentItem?.id ?? String(idCounter++),
+      createdAt: currentItem?.createdAt ?? new Date().toISOString().split('T')[0],
+      ...formValue,
+    };
 
     if (this.isEditMode()) {
-      const item = this.currentItem();
+      const item = currentItem;
       if (item) {
         const idx = FAKE_DB.findIndex(e => e.id === item.id);
-        const updatedItem: Entity = { ...item, ...data };
-        if (idx !== -1) FAKE_DB[idx] = updatedItem;
-        this.saveApi.execute(of(updatedItem).pipe(delay(800)));
+        if (idx !== -1) FAKE_DB[idx] = data;
+        this.saveApi.execute(of(data).pipe(delay(800)));
       }
     } else {
-      const createdItem: Entity = {
-        ...data,
-        id: String(idCounter++),
-        createdAt: new Date().toISOString().split('T')[0]
-      };
-      FAKE_DB.unshift(createdItem);
-      this.saveApi.execute(of(createdItem).pipe(delay(800)));
+      FAKE_DB.unshift(data);
+      this.saveApi.execute(of(data).pipe(delay(800)));
     }
 
     // Check for success
