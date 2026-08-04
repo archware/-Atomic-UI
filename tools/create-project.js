@@ -5,43 +5,27 @@
  * Creates new Angular projects with Atomic UI components pre-configured.
  * 
  * Usage:
- *   node tools/create-project.js my-project --template=login+dashboard
- *   node tools/create-project.js my-project --template=full
+ *   node tools/create-project.js my-project --template=shell
  * 
  * Templates:
- *   - login: Login page only
- *   - dashboard: Dashboard page only
- *   - crud: CRUD table only
- *   - login+dashboard: Login + Dashboard (default)
- *   - full: All blueprints
+ *   - shell: governed Angular shell without demo or invented domain data
  */
 
 const fs = require('fs');
 const path = require('path');
-const { execFileSync, execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 
 // ============================================
 // CONFIGURATION
 // ============================================
 
-const BLUEPRINTS_DIR = path.join(__dirname, '..', 'src', 'blueprints');
 const STYLES_DIR = path.join(__dirname, '..', 'src', 'styles');
 const UI_DIR = path.join(__dirname, '..', 'src', 'app', 'shared', 'ui');
 const GOVERNANCE_INSTALLER = path.join(__dirname, 'install-consumer-governance.js');
+const NODE_INSTALL_ROOT = path.dirname(process.execPath);
 
 const TEMPLATES = {
-  'login': ['login'],
-  'dashboard': ['dashboard'],
-  'crud': ['crud'],
-  'login+dashboard': ['login', 'dashboard'],
-  'full': ['login', 'dashboard', 'crud']
-};
-
-// Map blueprint source folder to destination name
-const BLUEPRINT_MAP = {
-  'login': 'login-page',
-  'dashboard': 'dashboard-page',
-  'crud': 'crud-table'
+  'shell': [],
 };
 
 // ============================================
@@ -77,48 +61,16 @@ function copyRecursive(src, dest) {
   }
 }
 
-// Helper functions removed as they are no longer needed
-
-
-function renameComponentFiles(dir, oldName, newName) {
-  if (!fs.existsSync(dir)) return;
-
-  fs.readdirSync(dir).forEach(file => {
-    if (file.includes(oldName)) {
-      const oldPath = path.join(dir, file);
-      const newFileName = file.replace(oldName, newName);
-      const newPath = path.join(dir, newFileName);
-
-      // Read file, update component selectors and class names
-      let content = fs.readFileSync(oldPath, 'utf8');
-
-      // Update selector from app-login-page to app-login
-      const oldSelector = oldName;
-      const newSelector = newName;
-      content = content.replace(
-        new RegExp(`selector:\\s*['"]app-${oldSelector}['"]`, 'g'),
-        `selector: 'app-${newSelector}'`
-      );
-
-      // Update class name from LoginPageComponent to LoginComponent
-      const oldClassName = oldName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('') + 'Component';
-      const newClassName = newName.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('') + 'Component';
-      content = content.replace(new RegExp(oldClassName, 'g'), newClassName);
-
-      // Update template/style references
-      content = content.replace(new RegExp(oldName, 'g'), newName);
-
-      // Remove @fadeSlide animations (not configured by default)
-      content = content.replace(/@fadeSlide/g, '');
-
-      fs.writeFileSync(newPath, content, 'utf8');
-
-      // Remove old file if renamed
-      if (oldPath !== newPath) {
-        fs.unlinkSync(oldPath);
-      }
+function runPackageCli(command, args, options) {
+  if (process.platform === 'win32') {
+    const cliScript = path.join(NODE_INSTALL_ROOT, 'node_modules', 'npm', 'bin', `${command}-cli.js`);
+    if (!fs.existsSync(cliScript)) {
+      throw new Error(`${command} CLI not found at ${cliScript}`);
     }
-  });
+    execFileSync(process.execPath, [cliScript, ...args], options);
+    return;
+  }
+  execFileSync(command, args, options);
 }
 
 // ============================================
@@ -138,8 +90,8 @@ Usage:
   npm run create:project <project-name> [options]
 
 Options:
-  --template=<name>   Template to use (default: login+dashboard)
-                      Available: login, dashboard, crud, login+dashboard, full
+  --template=<name>   Template to use (default: shell)
+                      Available: shell
   
   --output=<path>     Output directory (default: ../projects)
   
@@ -147,14 +99,14 @@ Options:
 
 Examples:
   npm run create:project my-app
-  npm run create:project my-app --template=full
+  npm run create:project my-app --template=shell
   npm run create:project my-app --output=C:/Projects
     `);
     return;
   }
 
   const projectName = args[0];
-  let template = 'login+dashboard';
+  let template = 'shell';
   let outputDir = path.join(__dirname, '..', '..', 'projects');
   let skipInstall = false;
 
@@ -172,9 +124,16 @@ Examples:
   if (!TEMPLATES[template]) {
     log(`Unknown template: ${template}`, 'error');
     log(`Available templates: ${Object.keys(TEMPLATES).join(', ')}`, 'info');
+    log('Legacy demo blueprints are not published. Use generate:ui with a validated requirement.', 'info');
     process.exit(1);
   }
 
+  if (!/^[a-z][a-z0-9-]*$/.test(projectName)) {
+    log('Project name must start with a letter and contain only lowercase letters, digits, or hyphens.', 'error');
+    process.exit(1);
+  }
+
+  outputDir = path.resolve(outputDir);
   const projectPath = path.join(outputDir, projectName);
 
   console.log(`
@@ -194,12 +153,24 @@ Examples:
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    execSync(
-      `npx -y @angular/cli@latest new ${projectName} --style=css --routing --skip-install --skip-git`,
-      { cwd: outputDir, stdio: 'inherit' }
+    runPackageCli(
+      'npx',
+      [
+        '--yes',
+        '--offline',
+        '--package=@angular/cli@22.0.7',
+        'ng',
+        'new',
+        projectName,
+        '--style=css',
+        '--routing',
+        '--skip-install',
+        '--skip-git',
+      ],
+      { cwd: outputDir, stdio: 'inherit' },
     );
   } catch (error) {
-    log('Failed to create Angular project', 'error');
+    log(`Failed to create Angular project: ${error.message}`, 'error');
     process.exit(1);
   }
 
@@ -223,28 +194,10 @@ Examples:
   });
   log('Atomic governance installed', 'success');
 
-  // Step 4: Copy selected blueprints
-  log(`Copying blueprints: ${template}...`, 'step');
-  const blueprints = TEMPLATES[template];
-  const pagesDir = path.join(projectPath, 'src', 'app', 'pages');
+  // Demo blueprints remain in Atomic's showcase but are never copied to a consumer.
+  log('Creating a production-safe shell without demo data or mocked integrations', 'success');
 
-  blueprints.forEach(blueprint => {
-    const srcFolder = BLUEPRINT_MAP[blueprint]; // login-page, dashboard-page, etc.
-    const src = path.join(BLUEPRINTS_DIR, srcFolder);
-    const dest = path.join(pagesDir, blueprint); // login, dashboard, etc.
-    copyRecursive(src, dest);
-
-    // Rename component files to match folder name
-    renameComponentFiles(dest, srcFolder, blueprint);
-
-    log(`  - ${blueprint}`, 'success');
-  });
-
-  // Step 5: Update imports in blueprints - SKIPPED
-  // (Blueprints now use @shared/ui alias which is supported by tsconfig)
-
-
-  // Step 6: Update styles.css
+  // Step 4: Update styles.css
   log('Configuring global styles...', 'step');
   const stylesPath = path.join(projectPath, 'src', 'styles.css');
   const stylesContent = `/* Atomic UI - Global Styles */
@@ -270,7 +223,7 @@ body {
   fs.writeFileSync(stylesPath, stylesContent, 'utf8');
   log('Global styles configured', 'success');
 
-  // Step 7: Create tsconfig paths
+  // Step 5: Create tsconfig paths
   log('Configuring TypeScript paths...', 'step');
   const tsconfigPath = path.join(projectPath, 'tsconfig.json');
   let tsconfigContent = fs.readFileSync(tsconfigPath, 'utf8');
@@ -317,38 +270,17 @@ body {
   fs.writeFileSync(tsconfigPath, JSON.stringify(tsconfig, null, 2), 'utf8');
   log('TypeScript paths configured', 'success');
 
-  // Step 8: Create sample routes
-  log('Creating sample routes...', 'step');
+  // Step 6: Create an empty route table. Features come from validated requirements.
+  log('Creating route table...', 'step');
   const routesContent = `import { Routes } from '@angular/router';
 
-export const routes: Routes = [
-${blueprints.includes('login') ? `  {
-    path: 'login',
-    loadComponent: () => import('./pages/login/login.component')
-      .then(m => m.LoginComponent)
-  },` : ''}
-${blueprints.includes('dashboard') ? `  {
-    path: 'dashboard',
-    loadComponent: () => import('./pages/dashboard/dashboard.component')
-      .then(m => m.DashboardComponent)
-  },` : ''}
-${blueprints.includes('crud') ? `  {
-    path: 'crud',
-    loadComponent: () => import('./pages/crud/crud.component')
-      .then(m => m.CrudComponent)
-  },` : ''}
-  {
-    path: '',
-    redirectTo: '${blueprints.includes('login') ? 'login' : 'dashboard'}',
-    pathMatch: 'full'
-  }
-];
+export const routes: Routes = [];
 `;
   const routesPath = path.join(projectPath, 'src', 'app', 'app.routes.ts');
   fs.writeFileSync(routesPath, routesContent, 'utf8');
   log('Routes created', 'success');
 
-  // Step 9: Replace default app.html with router outlet
+  // Step 7: Replace default app.html with router outlet
   log('Replacing default app content...', 'step');
   const appHtmlPath = path.join(projectPath, 'src', 'app', 'app.html');
   const appHtmlContent = `<router-outlet></router-outlet>
@@ -356,10 +288,10 @@ ${blueprints.includes('crud') ? `  {
   fs.writeFileSync(appHtmlPath, appHtmlContent, 'utf8');
   log('App HTML configured', 'success');
 
-  // Step 10: Update app.config.ts with animations
+  // Step 8: Configure zoneless application providers
   log('Configuring app providers...', 'step');
   const appConfigPath = path.join(projectPath, 'src', 'app', 'app.config.ts');
-  const appConfigContent = `import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
+  const appConfigContent = `import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
@@ -369,7 +301,7 @@ import { routes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZonelessChangeDetection(),
     provideRouter(routes),
     provideHttpClient(withFetch()),
     importProvidersFrom(TranslateModule.forRoot())
@@ -379,24 +311,25 @@ export const appConfig: ApplicationConfig = {
   fs.writeFileSync(appConfigPath, appConfigContent, 'utf8');
   log('App config updated', 'success');
 
-  // Step 10.5: Update main.ts with zone.js
-  log('Configuring main.ts...', 'step');
-  const mainPath = path.join(projectPath, 'src', 'main.ts');
-  let mainContent = fs.readFileSync(mainPath, 'utf8');
-  if (!mainContent.includes("import 'zone.js'")) {
-    mainContent = "import 'zone.js';\n" + mainContent;
-    fs.writeFileSync(mainPath, mainContent, 'utf8');
-  }
-  log('Main.ts configured', 'success');
-
-  // Step 11: Install dependencies
+  // Step 9: Install dependencies
   if (!skipInstall) {
     log('Installing dependencies...', 'step');
     try {
-      execSync('npm install', { cwd: projectPath, stdio: 'inherit' });
-      execSync('npm install', { cwd: projectPath, stdio: 'inherit' });
-      execSync('npm install zone.js @fontsource/open-sans @fortawesome/fontawesome-free @ngx-translate/core @ngx-translate/http-loader @angular/animations',
-        { cwd: projectPath, stdio: 'inherit' });
+      runPackageCli('npm', ['install'], { cwd: projectPath, stdio: 'inherit' });
+      runPackageCli(
+        'npm',
+        [
+          'install',
+          '@angular/animations@^22.0.7',
+          '@fontsource/open-sans@^5.2.7',
+          '@fortawesome/fontawesome-free@^6.4.2',
+          '@ngx-translate/core@^17.0.0',
+          '@ngx-translate/http-loader@^17.0.0',
+          'chart.js@^4.5.1',
+          'ng2-charts@^10.0.0',
+        ],
+        { cwd: projectPath, stdio: 'inherit' },
+      );
       log('Dependencies installed', 'success');
     } catch (error) {
       log('Failed to install dependencies. Run npm install manually.', 'warning');
@@ -414,13 +347,10 @@ export const appConfig: ApplicationConfig = {
   
   Open http://localhost:4200 to see your app!
   
-  📚 Available pages:
-${blueprints.map(b => `     - /${b}`).join('\n')}
-  
   🔧 Next steps:
-     1. Configure API URL in components
-     2. Customize theme in src/styles/themes/_tokens-brand.css
-     3. Add your business logic
+     1. Describe the UI in a ui-requirement v1 JSON document
+     2. From Atomic, preview it with generate:ui -- --spec <file> --output ${projectPath} --dry-run
+     3. Generate only after reviewing the plan; then wire real backend contracts
   `);
 }
 

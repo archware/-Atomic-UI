@@ -194,7 +194,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
 
     /* === COLUMNS === */
     .footer--columns {
-      padding: var(--space-12) var(--space-6) var(--space-6);
+      padding: var(--space-8) var(--space-6) var(--space-6);
     }
 
     .footer__columns-content {

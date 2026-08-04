@@ -1,0 +1,44 @@
+{
+  "$schema": "../schemas/ux-rule.schema.json",
+  "schemaVersion": 1,
+  "id": "ux-action-hierarchy",
+  "title": "Jerarquía y semántica de acciones",
+  "intent": "Evitar competencia visual y conservar el significado de color, posición y agrupación.",
+  "priority": "must",
+  "appliesTo": {
+    "intents": ["crud", "form", "detail", "wizard", "dashboard", "transaction", "document", "settings"],
+    "components": ["button", "table-action", "action-group", "form-dialog"]
+  },
+  "requirements": [
+    {
+      "id": "one-primary-per-region",
+      "statement": "Permitir como máximo una acción primary por región de acciones.",
+      "enforcedBy": ["recipe", "generator", "visual"]
+    },
+    {
+      "id": "semantic-tones",
+      "statement": "Usar success, warning y danger únicamente cuando expresen consecuencia o estado real.",
+      "enforcedBy": ["catalog", "recipe", "review"]
+    },
+    {
+      "id": "visible-action-limit",
+      "statement": "Mostrar hasta tres acciones contextuales y mover las adicionales al desbordamiento accesible de ActionGroup.",
+      "enforcedBy": ["recipe", "generator", "unit", "a11y"]
+    },
+    {
+      "id": "color-needs-label",
+      "statement": "Acompañar el color con texto, etiqueta accesible, icono semántico y agrupación comprensible.",
+      "enforcedBy": ["generator", "a11y", "review"]
+    }
+  ],
+  "acceptance": [
+    "Una barra generada nunca contiene dos acciones primary.",
+    "La cuarta acción de fila se presenta en un menú navegable por teclado.",
+    "Las acciones peligrosas incluyen etiqueta explícita y confirmación cuando corresponda."
+  ],
+  "evidence": [
+    "docs/POLITICA_COLOR_ACCIONES.md",
+    "src/app/shared/ui/molecules/action-group/action-group.component.ts",
+    "src/app/shared/ui/atoms/table-action/table-action.ts"
+  ]
+}

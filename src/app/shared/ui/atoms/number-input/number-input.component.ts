@@ -44,7 +44,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
           [disabled]="disabled || value() <= min"
           (click)="decrement()"
         >
-          <i class="fa-solid fa-minus"></i>
+          <i class="fa-solid fa-minus" aria-hidden="true"></i>
         </button>
 
         <input
@@ -58,7 +58,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
           [value]="value()"
           (input)="onInput($event)"
           (blur)="onTouched()"
-          [attr.aria-label]="label || 'Número'"
+          [attr.aria-label]="label ? null : 'Número'"
+          [attr.aria-describedby]="describedBy"
+          [attr.aria-invalid]="error ? 'true' : null"
         />
 
         <button
@@ -68,14 +70,14 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
           [disabled]="disabled || value() >= max"
           (click)="increment()"
         >
-          <i class="fa-solid fa-plus"></i>
+          <i class="fa-solid fa-plus" aria-hidden="true"></i>
         </button>
       </div>
       @if (hint) {
-        <span class="number-input__hint">{{ hint }}</span>
+        <span class="number-input__hint" [id]="inputId + '-hint'">{{ hint }}</span>
       }
       @if (error) {
-        <span class="number-input__error" role="alert">{{ error }}</span>
+        <span class="number-input__error" [id]="inputId + '-error'" role="alert">{{ error }}</span>
       }
     </div>
   `,
@@ -104,8 +106,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       display: flex;
       align-items: center;
       justify-content: center;
-      width: var(--space-7);       /* 3var(--space-2) → var(--space-7): respeta zoom de accesibilidad */
-      flex-shrink: 0;       /* No se comprime aunque el campo crezca */
+      width: var(--space-7);
+      flex-shrink: 0;
       background: var(--surface-section);
       border: none;
       cursor: pointer;
@@ -115,7 +117,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
     .number-input__btn:hover:not(:disabled) {
       background: var(--surface-hover, var(--primary-color));
-      color: var(--primary-foreground, white);
+      color: var(--text-color-on-primary);
     }
     .number-input__btn:disabled {
       opacity: 0.4;
@@ -123,8 +125,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
 
     .number-input__field {
-      flex: 1;              /* Ocupa el espacio sobrante entre los botones */
-      min-width: var(--space-8);      /* Mínimo usable (4var(--space-2)) para poder escribir números */
+      flex: 1;
+      min-width: var(--space-8);
       border: none;
       border-left: 1px solid var(--border-color);
       border-right: 1px solid var(--border-color);
@@ -155,11 +157,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       display: block;
       margin-top: var(--space-1);
       font-size: var(--text-xs);
-      color: var(--color-error, #ef4444);
+      color: var(--danger-color);
     }
   `],
 })
 export class NumberInputComponent implements ControlValueAccessor {
+  private static nextId = 0;
+
   @Input() label = '';
   @Input() hint = '';
   @Input() error = '';
@@ -167,7 +171,7 @@ export class NumberInputComponent implements ControlValueAccessor {
   @Input() max = 9999;
   @Input() step = 1;
   @Input() disabled = false;
-  @Input() inputId = `number-input-${Math.random().toString(36).slice(2, 7)}`;
+  @Input() inputId = `number-input-${++NumberInputComponent.nextId}`;
 
   @Output() valueChange = new EventEmitter<number>();
 
@@ -175,6 +179,11 @@ export class NumberInputComponent implements ControlValueAccessor {
 
   private onChange: (value: number) => void = () => {};
   protected onTouched: () => void = () => {};
+
+  protected get describedBy(): string | null {
+    const ids = [this.hint ? `${this.inputId}-hint` : '', this.error ? `${this.inputId}-error` : ''].filter(Boolean);
+    return ids.length > 0 ? ids.join(' ') : null;
+  }
 
   writeValue(value: number): void {
     this.value.set(value ?? 0);
@@ -195,11 +204,13 @@ export class NumberInputComponent implements ControlValueAccessor {
   increment(): void {
     const next = Math.min(this.value() + this.step, this.max);
     this.setValue(next);
+    this.onTouched();
   }
 
   decrement(): void {
     const next = Math.max(this.value() - this.step, this.min);
     this.setValue(next);
+    this.onTouched();
   }
 
   onInput(event: Event): void {

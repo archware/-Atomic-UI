@@ -1,0 +1,121 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "kpi-card",
+  "layer": "molecule",
+  "selector": "app-kpi-card",
+  "export": "KpiCardComponent",
+  "source": "src/app/shared/ui/molecules/kpi-card/kpi-card.component.ts",
+  "relatedExports": ["KpiTrend", "KpiFormat", "KpiTone"],
+  "purpose": "Indicador ejecutivo que presenta un valor autoritativo con contexto, tono, comparación y serie opcionales.",
+  "variants": [
+    {
+      "name": "format",
+      "values": [
+        { "value": "number", "meaning": "Número localizado.", "default": true },
+        { "value": "currency", "meaning": "Moneda localizada con currency y precisión configurables." },
+        { "value": "percent", "meaning": "Porcentaje con sufijo y precisión configurables." },
+        { "value": "compact", "meaning": "Número abreviado mediante Intl.NumberFormat." },
+        { "value": "duration", "meaning": "Minutos convertidos a horas y minutos." }
+      ]
+    },
+    {
+      "name": "tone",
+      "values": [
+        { "value": "neutral", "meaning": "Énfasis neutro para métricas sin semántica de estado.", "default": true },
+        { "value": "brand", "meaning": "Énfasis de marca." },
+        { "value": "info", "meaning": "Énfasis informativo." },
+        { "value": "success", "meaning": "Énfasis positivo." },
+        { "value": "warning", "meaning": "Énfasis de cautela." },
+        { "value": "danger", "meaning": "Énfasis crítico." }
+      ]
+    },
+    {
+      "name": "trend",
+      "values": [
+        { "value": null, "meaning": "No muestra ni inventa una comparación.", "default": true },
+        { "value": "up", "meaning": "Comparación explícita ascendente." },
+        { "value": "down", "meaning": "Comparación explícita descendente." },
+        { "value": "neutral", "meaning": "Comparación explícita estable." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "title", "type": "string", "default": "Métrica", "meaning": "Etiqueta visible del indicador." },
+    { "name": "subtitle", "type": "string", "default": "", "meaning": "Contexto opcional bajo la etiqueta." },
+    { "name": "value", "type": "string | number", "default": 0, "meaning": "Valor bruto usado solo cuando displayValue está vacío." },
+    { "name": "displayValue", "type": "string", "default": "", "meaning": "Valor preformateado autoritativo que tiene precedencia sobre value." },
+    { "name": "format", "type": "KpiFormat", "default": "number", "meaning": "Formato aplicado a un value numérico." },
+    { "name": "currency", "type": "string", "default": "PEN", "meaning": "Código de moneda usado por el formato currency." },
+    { "name": "locale", "type": "string", "default": "es-PE", "meaning": "Locale utilizado para el formato numérico." },
+    { "name": "fractionDigits", "type": "number | null", "default": null, "meaning": "Precisión entre cero y seis; null conserva la predeterminada del formato." },
+    { "name": "tone", "type": "KpiTone", "default": "neutral", "meaning": "Énfasis semántico del icono y la serie." },
+    { "name": "trend", "type": "KpiTrend", "default": null, "meaning": "Dirección de comparación explícita; null omite la tendencia." },
+    { "name": "trendValue", "type": "string", "default": "", "meaning": "Etiqueta autoritativa de tendencia; si falta usa Sube, Baja o Estable." },
+    { "name": "iconClass", "type": "string", "default": "", "meaning": "Clases del icono decorativo opcional." },
+    { "name": "series", "type": "readonly number[]", "default": [], "meaning": "Serie finita para la línea auxiliar; requiere al menos dos puntos válidos." },
+    { "name": "comparisonLabel", "type": "string", "default": "", "meaning": "Contexto explícito de comparación, incluso sin tendencia." }
+  ],
+  "outputs": [],
+  "behavior": [
+    "displayValue no vacío tiene precedencia y evita reinterpretar cifras autoritativas.",
+    "fractionDigits se limita al intervalo de cero a seis.",
+    "La serie descarta NaN e infinitos y no dibuja un sparkline con menos de dos puntos finitos.",
+    "La etiqueta accesible combina título, valor mostrado y únicamente el contexto entregado."
+  ],
+  "states": [
+    { "name": "value-only", "meaning": "Presenta título y valor sin comparación inventada." },
+    { "name": "with-context", "meaning": "Añade subtítulo o etiqueta de comparación explícita." },
+    { "name": "with-trend", "meaning": "Presenta tendencia up, down o neutral con texto e icono." },
+    { "name": "with-series", "meaning": "Añade una línea decorativa cuando existen dos o más puntos finitos." }
+  ],
+  "a11y": [
+    "El article recibe un aria-label que resume título, valor y contexto explícito.",
+    "El icono y el sparkline son decorativos y se excluyen de tecnologías de asistencia.",
+    "La tendencia conserva texto visible y no depende únicamente del color o del icono."
+  ],
+  "responsive": [
+    "La tarjeta ocupa el ancho disponible y permite cortar palabras extensas.",
+    "A 40rem o menos reduce altura mínima y padding sin ocultar información."
+  ],
+  "tokens": [
+    "--border-color",
+    "--danger-color-dark",
+    "--danger-color-light",
+    "--danger-color-lighter",
+    "--danger-color-text",
+    "--info-color-lighter",
+    "--info-color-text",
+    "--kpi-accent",
+    "--kpi-accent-background",
+    "--primary-color",
+    "--primary-color-lighter",
+    "--radius-full",
+    "--radius-lg",
+    "--radius-md",
+    "--shadow-sm",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--success-color-dark",
+    "--success-color-light",
+    "--success-color-lighter",
+    "--success-color-text",
+    "--surface-background",
+    "--surface-section",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-secondary",
+    "--text-xs",
+    "--warning-color-lighter",
+    "--warning-color-text"
+  ],
+  "story": { "path": "src/stories/ui-kpi-card.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/molecules/kpi-card/kpi-card.component.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": ["La API mantiene neutral como tono y null como tendencia predeterminados para no inventar semántica de dominio."]
+  },
+  "canonicalFor": ["kpi", "executive-metric", "authoritative-metric"]
+}

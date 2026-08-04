@@ -1,0 +1,44 @@
+{
+  "$schema": "../schemas/ux-rule.schema.json",
+  "schemaVersion": 1,
+  "id": "ux-async-feedback",
+  "title": "Estados y feedback asíncrono",
+  "intent": "Representar toda operación remota sin estados ambiguos, duplicados o inventados.",
+  "priority": "must",
+  "appliesTo": {
+    "intents": ["crud", "form", "detail", "wizard", "dashboard", "transaction", "document", "authentication", "settings"],
+    "components": ["data-state", "data-table", "alert", "toast", "button", "form-dialog"]
+  },
+  "requirements": [
+    {
+      "id": "collection-states",
+      "statement": "Cubrir idle, loading, success con datos, success vacío y error recuperable en toda colección remota.",
+      "enforcedBy": ["recipe", "generator", "unit", "visual"]
+    },
+    {
+      "id": "mutation-states",
+      "statement": "Separar el estado de mutación del estado de consulta y bloquear el doble envío mientras esté loading.",
+      "enforcedBy": ["recipe", "generator", "unit"]
+    },
+    {
+      "id": "local-versus-global-feedback",
+      "statement": "Mostrar errores de validación junto al control y reservar Toast para el resultado global de una mutación remota.",
+      "enforcedBy": ["recipe", "generator", "review"]
+    },
+    {
+      "id": "retry-preserves-intent",
+      "statement": "Una acción de reintento conserva consulta, filtros y contexto visibles sin inventar datos sustitutos.",
+      "enforcedBy": ["generator", "unit"]
+    }
+  ],
+  "acceptance": [
+    "Las pruebas recorren carga, vacío, error, reintento y éxito.",
+    "El botón de confirmación comunica loading y no emite dos comandos.",
+    "Un error de campo no se duplica automáticamente como Toast."
+  ],
+  "evidence": [
+    "src/app/shared/ui/molecules/data-state/data-state.component.ts",
+    "src/app/shared/ui/organisms/data-table/data-table.ts",
+    "src/app/shared/ui/molecules/toast/toast.component.ts"
+  ]
+}

@@ -170,7 +170,7 @@ export class TabComponent {
         -webkit-overflow-scrolling: touch;
         scrollbar-width: thin;
         gap: var(--space-1);
-        padding-bottom: var(--space-0);
+        padding-bottom: 0;
       }
 
       .tabs-header::-webkit-scrollbar {
@@ -179,7 +179,7 @@ export class TabComponent {
 
       .tabs-header::-webkit-scrollbar-thumb {
         background: var(--border-color);
-        border-radius: var(--radius-xs);
+        border-radius: var(--radius-sm);
       }
 
       .tab-button {

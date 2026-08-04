@@ -36,6 +36,26 @@ describe('SidebarComponent', () => {
     expect(navigate).toHaveBeenCalledOnceWith(item);
   });
 
+  it('delega la navegacion extensa a un unico ScrollOverlay', async () => {
+    component.menuItems = Array.from({ length: 20 }, (_, index) => ({
+      id: `item-${index}`,
+      label: `Opcion ${index + 1}`,
+      icon: 'fa-solid fa-circle',
+    }));
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const overlay = fixture.nativeElement.querySelector(
+      'app-scroll-overlay.sidebar-nav-overlay',
+    ) as HTMLElement;
+    const nav = fixture.nativeElement.querySelector('[data-sidebar-scroll-surface]') as HTMLElement;
+
+    expect(overlay).not.toBeNull();
+    expect(nav.getAttribute('data-so-vertical')).toBe('true');
+    expect(nav.getAttribute('data-so-managed-scrollbar')).toBe('true');
+    expect(getComputedStyle(nav).getPropertyValue('scrollbar-width')).toBe('none');
+  });
+
   it('toggles a group and emits navigation only for the selected child', () => {
     const child: SidebarMenuItem = {
       id: 'interest',
@@ -99,5 +119,21 @@ describe('SidebarComponent', () => {
     expect(fixture.nativeElement.querySelector('app-avatar img')?.getAttribute('src')).toBe(
       '/avatar.png',
     );
+  });
+
+  it('moves focus between the actual menu buttons with the arrow keys', () => {
+    component.menuItems = [
+      { id: 'home', label: 'Inicio', icon: 'fa-solid fa-house', route: '/home' },
+      { id: 'users', label: 'Usuarios', icon: 'fa-solid fa-users', route: '/users' },
+    ];
+    fixture.detectChanges();
+
+    const links = fixture.nativeElement.querySelectorAll(
+      '.nav-link',
+    ) as NodeListOf<HTMLButtonElement>;
+    links[0].focus();
+    links[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+
+    expect(document.activeElement).toBe(links[1]);
   });
 });

@@ -1,0 +1,48 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "metrics-grid",
+  "layer": "organism",
+  "selector": "app-metrics-grid",
+  "export": "MetricsGridComponent",
+  "source": "src/app/shared/ui/organisms/metrics-grid/metrics-grid.component.ts",
+  "relatedExports": ["KpiMetric"],
+  "relatedSources": ["src/app/shared/ui/molecules/kpi-card/kpi-card.component.ts"],
+  "purpose": "Grilla responsive de indicadores que proyecta contratos KpiMetric en tarjetas KPI canónicas.",
+  "variants": [],
+  "inputs": [
+    { "name": "metrics", "type": "readonly KpiMetric[]", "default": [], "meaning": "Indicadores explícitos con identidad, valor y presentación opcional." },
+    { "name": "minCardWidth", "type": "string", "default": "13.75rem", "meaning": "Ancho mínimo CSS usado por las columnas auto-fit." },
+    { "name": "ariaLabel", "type": "string", "default": "Resumen de indicadores", "meaning": "Nombre accesible de la sección de indicadores." }
+  ],
+  "outputs": [],
+  "behavior": [
+    "Cada KpiMetric se traduce sin inferencias a una instancia de KpiCardComponent.",
+    "La identidad estable usa metric.id; si falta, conserva compatibilidad mediante la referencia del objeto.",
+    "No reserva columnas vacías porque la grilla usa auto-fit.",
+    "Los campos opcionales ausentes conservan los valores neutrales de KpiCard."
+  ],
+  "states": [
+    { "name": "empty", "meaning": "La sección permanece accesible sin tarjetas cuando metrics está vacío." },
+    { "name": "populated", "meaning": "Presenta una tarjeta por cada contrato KpiMetric." },
+    { "name": "single-column", "meaning": "En contenedores estrechos organiza todos los indicadores en una columna." }
+  ],
+  "a11y": [
+    "Usa section y exige al consumidor un ariaLabel que describa el grupo.",
+    "Cada indicador conserva la etiqueta accesible generada por KpiCardComponent.",
+    "El orden DOM coincide con el orden visual de las métricas."
+  ],
+  "responsive": [
+    "Usa auto-fit con minmax para ocupar solo las columnas necesarias.",
+    "A 36rem o menos fuerza una única columna sin scroll horizontal.",
+    "minCardWidth permite adaptar la densidad sin cambiar el contrato del indicador."
+  ],
+  "tokens": ["--min-col-width", "--space-3"],
+  "story": { "path": "src/stories/ui-metrics-grid.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/organisms/metrics-grid/metrics-grid.component.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": ["La prueba cubre columnas equilibradas, ancho mínimo, identidad estable y ausencia de tendencias implícitas."]
+  },
+  "canonicalFor": ["metrics-summary", "kpi-grid", "dashboard-metrics"]
+}

@@ -1,0 +1,117 @@
+{
+  "$schema": "../../catalog/schemas/ui-requirement.schema.json",
+  "schemaVersion": 1,
+  "id": "atomic.fixture.role.route.integrated",
+  "recipe": "route-form",
+  "feature": {
+    "key": "role-access",
+    "className": "RoleAccess",
+    "selector": "prest-role-access-page",
+    "title": "Roles",
+    "singular": "rol",
+    "plural": "roles",
+    "routePath": "roles"
+  },
+  "model": {
+    "name": "RoleAccess",
+    "id": {
+      "name": "id",
+      "type": "number"
+    },
+    "fields": [
+      {
+        "name": "name",
+        "type": "string",
+        "label": "Nombre",
+        "initialValue": "",
+        "required": true,
+        "maxLength": 80
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "label": "Descripción",
+        "initialValue": "",
+        "required": true,
+        "maxLength": 200
+      },
+      {
+        "name": "active",
+        "type": "boolean",
+        "label": "Estado",
+        "initialValue": true
+      }
+    ]
+  },
+  "table": {
+    "pageSize": 20,
+    "columns": [
+      {
+        "field": "name",
+        "header": "Rol",
+        "sortable": true
+      },
+      {
+        "field": "description",
+        "header": "Descripción"
+      },
+      {
+        "field": "active",
+        "header": "Estado",
+        "sortable": true
+      }
+    ]
+  },
+  "editor": {
+    "fields": ["name", "description"]
+  },
+  "variants": {
+    "density": "comfortable",
+    "formLayout": "two-columns",
+    "actionDisplay": "overflow"
+  },
+  "contract": {
+    "mode": "integrated",
+    "operations": {
+      "list": {
+        "method": "GET",
+        "path": "/roles",
+        "request": "query",
+        "response": "page",
+        "queryParameters": {
+          "page": "page",
+          "pageSize": "pageSize",
+          "search": "search",
+          "sortField": "sortField",
+          "sortDirection": "sortDirection"
+        }
+      },
+      "read": {
+        "method": "GET",
+        "path": "/roles/{id}",
+        "request": "id",
+        "response": "entity",
+        "id": {
+          "location": "path",
+          "name": "id"
+        }
+      },
+      "create": {
+        "method": "POST",
+        "path": "/roles",
+        "request": "draft",
+        "response": "entity"
+      },
+      "update": {
+        "method": "PATCH",
+        "path": "/roles/{id}",
+        "request": "id-draft",
+        "response": "entity",
+        "id": {
+          "location": "path",
+          "name": "id"
+        }
+      }
+    }
+  }
+}

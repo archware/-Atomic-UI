@@ -13,6 +13,14 @@ describe('CrudDialog', () => {
     expect(dialog.getAttribute('aria-labelledby')).toBe('editor-title');
     expect(dialog.getAttribute('aria-describedby')).toBe('editor-help');
     expect(dialog.classList).toContain('crud-dialog');
+    expect(getComputedStyle(dialog).overflow).toBe('hidden');
+
+    const viewport = dialog.querySelector('app-scroll-overlay') as HTMLElement;
+    const surface = dialog.querySelector('[data-crud-dialog-scroll-surface]') as HTMLElement;
+    expect(viewport.classList).toContain('crud-dialog__viewport');
+    expect(surface.getAttribute('data-so-managed-scrollbar')).toBe('true');
+    expect(getComputedStyle(surface).overflowY).toBe('auto');
+    expect(getComputedStyle(surface).getPropertyValue('scrollbar-width')).toBe('none');
   });
 
   it('prioriza el control Atomic marcado y restaura el foco al cerrar', async () => {
@@ -49,12 +57,50 @@ describe('CrudDialog', () => {
     fixture.detectChanges();
 
     const dialog = fixture.componentInstance.nativeElement;
+    const scrollSurface = dialog.querySelector('[data-crud-dialog-scroll-surface]') as HTMLElement;
     fixture.componentInstance.showModal();
-    dialog.scrollTop = 120;
+    scrollSurface.scrollTop = 120;
     fixture.componentInstance.close();
 
     fixture.componentInstance.showModal();
     expect(dialog.scrollTop).toBe(0);
+    expect(scrollSurface.scrollTop).toBe(0);
+    fixture.componentInstance.close();
+  });
+
+  it('delega el scroll a una sola superficie sin scrollbar nativo', async () => {
+    await TestBed.configureTestingModule({ imports: [CrudDialog] }).compileComponents();
+    const fixture = TestBed.createComponent(CrudDialog);
+    fixture.componentRef.setInput('labelledBy', 'editor-title');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const dialog = fixture.componentInstance.nativeElement;
+    const surface = dialog.querySelector('[data-crud-dialog-scroll-surface]') as HTMLElement;
+    const internalArea = dialog.querySelector('.so-scroll-area') as HTMLElement;
+
+    expect(dialog.querySelectorAll('[data-crud-dialog-scroll-surface]').length).toBe(1);
+    expect(internalArea.style.overflowY).toBe('hidden');
+    expect(surface.getAttribute('data-so-vertical')).toBe('true');
+    expect(surface.getAttribute('data-so-managed-scrollbar')).toBe('true');
+  });
+
+  it('enfoca el control nativo dentro del primer componente invÃ¡lido', async () => {
+    await TestBed.configureTestingModule({ imports: [CrudDialog] }).compileComponents();
+    const fixture = TestBed.createComponent(CrudDialog);
+    fixture.componentRef.setInput('labelledBy', 'editor-title');
+    fixture.detectChanges();
+
+    const host = document.createElement('prest-input');
+    host.classList.add('ng-invalid');
+    const input = document.createElement('input');
+    host.appendChild(input);
+    fixture.componentInstance.nativeElement.appendChild(host);
+
+    fixture.componentInstance.showModal();
+    fixture.componentInstance.focusInvalid();
+
+    expect(document.activeElement).toBe(input);
     fixture.componentInstance.close();
   });
 });

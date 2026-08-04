@@ -26,19 +26,24 @@ Librería de componentes Angular portables siguiendo **Atomic Design**.
 ## 🚀 Instalación Rápida
 
 ### Paso 1: Copiar la librería
+
 ```bash
 cp -r shared/ui /tu-proyecto/src/app/shared/
 ```
 
 ### Paso 2: Importar estilos
+
 En `styles.scss`:
+
 ```scss
 @import 'app/shared/ui/styles/tokens.css';
 @import 'app/shared/ui/styles/animations.css';
 ```
 
 ### Paso 3: Configurar path alias (opcional)
+
 En `tsconfig.json`:
+
 ```json
 {
   "compilerOptions": {
@@ -51,6 +56,7 @@ En `tsconfig.json`:
 ```
 
 ### Paso 4: Usar componentes
+
 ```typescript
 import { AvatarComponent, ChipComponent } from '@shared/ui';
 // O sin alias:
@@ -64,16 +70,19 @@ import { AvatarComponent } from './shared/ui/atoms/avatar/avatar.component';
 ## 🔄 PROYECTO EXISTENTE - Migración
 
 ### Escenario A: Sin componentes UI existentes (FÁCIL)
+
 Si tu proyecto no tiene componentes similares, sigue los pasos de instalación rápida.
 
 ### Escenario B: Con componentes UI que quieres reemplazar (MEDIO)
 
 #### 1. Copiar librería SIN sobrescribir
+
 ```bash
 cp -r shared/ui /tu-proyecto/src/app/shared/
 ```
 
 #### 2. Importar estilos (agregar, no reemplazar)
+
 ```scss
 // styles.scss
 /* Tus estilos existentes */
@@ -84,6 +93,7 @@ cp -r shared/ui /tu-proyecto/src/app/shared/
 ```
 
 #### 3. Migrar componente por componente
+
 ```typescript
 // ANTES (tu componente actual)
 import { MiBotonComponent } from './components/mi-boton';
@@ -93,17 +103,19 @@ import { ChipComponent } from '@shared/ui';
 ```
 
 #### 4. Búsqueda y reemplazo gradual
-| Buscar | Reemplazar por |
-|--------|----------------|
+
+| Buscar        | Reemplazar por |
+| ------------- | -------------- |
 | `<mi-avatar>` | `<app-avatar>` |
-| `<mi-badge>` | `<app-chip>` |
-| `<mi-tabs>` | `<app-tabs>` |
+| `<mi-badge>`  | `<app-chip>`   |
+| `<mi-tabs>`   | `<app-tabs>`   |
 
 ### Escenario C: Variables CSS conflictivas (DIFÍCIL)
 
 Si tu proyecto ya usa variables como `--primary-color`:
 
 #### Opción 1: Prefijo único (Recomendado)
+
 Los componentes usan tokens semánticos del sistema.
 
 ```css
@@ -115,6 +127,7 @@ Los componentes usan tokens semánticos del sistema.
 ```
 
 #### Opción 2: Mapear tus variables
+
 ```css
 :root {
   /* Mapear tus variables a las de la librería */
@@ -129,41 +142,43 @@ Los componentes usan tokens semánticos del sistema.
 
 ### 🟢 FÁCIL (Copiar y usar)
 
-| Componente | Por qué es fácil |
-|------------|------------------|
-| `AvatarComponent` | Sin dependencias, standalone |
-| `ChipComponent` | Sin dependencias, standalone |
-| `SkeletonComponent` | Sin dependencias, standalone |
-| `RatingComponent` | Sin dependencias, standalone |
-| `LoaderComponent` | Sin dependencias, standalone |
-| `PaginationComponent` | Sin dependencias externas |
+| Componente            | Por qué es fácil             |
+| --------------------- | ---------------------------- |
+| `AvatarComponent`     | Sin dependencias, standalone |
+| `ChipComponent`       | Sin dependencias, standalone |
+| `SkeletonComponent`   | Sin dependencias, standalone |
+| `RatingComponent`     | Sin dependencias, standalone |
+| `LoaderComponent`     | Sin dependencias, standalone |
+| `PaginationComponent` | Sin dependencias externas    |
 
 **Migración:** Solo copiar y usar directamente.
 
 ### 🟡 MEDIO (Requiere configuración)
 
-| Componente | Consideraciones |
-|------------|-----------------|
-| `DropdownComponent` | Verificar que no conflicte con ng-select existente |
-| `ToastComponent` | Puede conflictuar con ngx-toastr, SweetAlert, etc. |
-| `TabsComponent` | Si usas Angular Material Tabs, decidir cuál mantener |
-| `AccordionComponent` | Similar a MatExpansionPanel |
-| `StepperComponent` | Similar a MatStepper |
+| Componente           | Consideraciones                                      |
+| -------------------- | ---------------------------------------------------- |
+| `DropdownComponent`  | Verificar que no conflicte con ng-select existente   |
+| `ToastComponent`     | Puede conflictuar con ngx-toastr, SweetAlert, etc.   |
+| `TabsComponent`      | Si usas Angular Material Tabs, decidir cuál mantener |
+| `AccordionComponent` | Similar a MatExpansionPanel                          |
+| `StepperComponent`   | Similar a MatStepper                                 |
 
-**Migración:** 
+**Migración:**
+
 1. Decidir si reemplazar o coexistir
 2. Actualizar templates gradualmente
 3. Eliminar dependencia anterior cuando esté completo
 
 ### 🔴 DIFÍCIL (Requiere planificación)
 
-| Componente | Por qué es difícil |
-|------------|-------------------|
-| `ThemeService` | Si ya tienes sistema de temas, decidir cuál usar |
+| Componente               | Por qué es difícil                                   |
+| ------------------------ | ---------------------------------------------------- |
+| `ThemeService`           | Si ya tienes sistema de temas, decidir cuál usar     |
 | `ScrollOverlayComponent` | CSS complejo, puede conflictuar con otros scrollbars |
-| `ThemeSwitcherComponent` | Requiere ThemeService |
+| `ThemeSwitcherComponent` | Requiere ThemeService                                |
 
 **Migración:**
+
 1. Evaluar sistema de temas actual
 2. Crear plan de transición
 3. Migrar por módulos/features
@@ -173,16 +188,18 @@ Los componentes usan tokens semánticos del sistema.
 ## 🔧 Guía de Resolución de Conflictos
 
 ### Conflicto: Ya uso ng-select
+
 ```typescript
 // Mantener ambos temporalmente
 import { NgSelectModule } from '@ng-select/ng-select'; // Actual
-import { DropdownComponent } from '@shared/ui';         // Nuevo
+import { DropdownComponent } from '@shared/ui'; // Nuevo
 
 // Migrar pantalla por pantalla
 // Cuando todas usen DropdownComponent, eliminar ng-select
 ```
 
 ### Conflicto: Ya uso Angular Material
+
 ```typescript
 // Los componentes son standalone, pueden coexistir
 import { MatTabsModule } from '@angular/material/tabs';
@@ -194,11 +211,12 @@ import { TabsComponent } from '@shared/ui';
 ```
 
 ### Conflicto: Variables CSS duplicadas
+
 ```css
 /* Si tu proyecto usa --primary-color */
 :root {
   --primary-color: #ff0000; /* Tu variable */
-  
+
   /* Puedes reasignar si es necesario */
   --primary-color: #793576;
 }
@@ -286,10 +304,10 @@ CSS puro que transforma tablas en **tarjetas (cards)** en móvil (< 768px).
 
 **RTC = "Responsive Table Cards"**
 
-| Desktop | Móvil |
-|---------|-------|
-| Tabla tradicional (filas/columnas) | Cada fila → una tarjeta (card) |
-| Header visible | Header oculto, labels en cada celda |
+| Desktop                            | Móvil                               |
+| ---------------------------------- | ----------------------------------- |
+| Tabla tradicional (filas/columnas) | Cada fila → una tarjeta (card)      |
+| Header visible                     | Header oculto, labels en cada celda |
 
 ```
 Desktop:              Móvil:
@@ -301,11 +319,13 @@ Desktop:              Móvil:
 ```
 
 ### Importar
+
 ```scss
 @import 'app/shared/ui/styles/responsive-table.css';
 ```
 
 ### Uso
+
 ```html
 <table class="rtc-table">
   <thead class="rtc-header">
@@ -330,14 +350,15 @@ Desktop:              Móvil:
 ```
 
 ### Clases disponibles
-| Clase | Descripción |
-|-------|-------------|
-| `.rtc-table` | Contenedor tabla |
-| `.rtc-header` | Thead (oculto en móvil) |
-| `.rtc-body` | Tbody |
-| `.rtc-row` | Fila → Card en móvil |
-| `.rtc-actions` | Contenedor de botones |
-| `.rtc-mobile-only` | Solo visible en móvil |
+
+| Clase               | Descripción             |
+| ------------------- | ----------------------- |
+| `.rtc-table`        | Contenedor tabla        |
+| `.rtc-header`       | Thead (oculto en móvil) |
+| `.rtc-body`         | Tbody                   |
+| `.rtc-row`          | Fila → Card en móvil    |
+| `.rtc-actions`      | Contenedor de botones   |
+| `.rtc-mobile-only`  | Solo visible en móvil   |
 | `.rtc-desktop-only` | Solo visible en desktop |
 
 ---
@@ -347,6 +368,7 @@ Desktop:              Móvil:
 Componentes Angular que implementan una tabla con Atomic Design.
 
 ### Uso
+
 ```html
 <app-table [striped]="true">
   <app-table-head>
@@ -365,14 +387,16 @@ Componentes Angular que implementan una tabla con Atomic Design.
 ```
 
 ### Componentes
-| Componente | Selector | Descripción |
-|------------|----------|-------------|
-| `TableComponent` | `app-table` | Contenedor con zebra stripes y responsive |
-| `TableHeadComponent` | `app-table-head` | Header con sticky |
-| `TableRowComponent` | `tr[app-table-row]` | Fila con hover elevado |
-| `TableCellComponent` | `td[app-table-cell]` | Celda con estilos |
+
+| Componente           | Selector             | Descripción                               |
+| -------------------- | -------------------- | ----------------------------------------- |
+| `TableComponent`     | `app-table`          | Contenedor con zebra stripes y responsive |
+| `TableHeadComponent` | `app-table-head`     | Header con sticky                         |
+| `TableRowComponent`  | `tr[app-table-row]`  | Fila con hover elevado                    |
+| `TableCellComponent` | `td[app-table-cell]` | Celda con estilos                         |
 
 ### Features
+
 - ✅ Cards en móvil (< 768px)
 - ✅ Zebra stripes (`[striped]="true"`)
 - ✅ Sticky header
@@ -393,7 +417,7 @@ Estrategia de Angular para **optimizar rendimiento**.
 // (cada clic, evento, timeout...)
 
 // Con OnPush:
-changeDetection: ChangeDetectionStrategy.OnPush
+changeDetection: ChangeDetectionStrategy.OnPush;
 // Angular SOLO revisa cuando:
 // 1. Un @Input() cambia
 // 2. Se dispara un evento del componente
@@ -408,9 +432,9 @@ El header de la tabla se **"pega" arriba** cuando haces scroll.
 
 ```css
 .atomic-table-head th {
-  position: sticky;  /* Se pega */
-  top: 0;            /* Arriba del todo */
-  z-index: 10;       /* Por encima del contenido */
+  position: sticky; /* Se pega */
+  top: 0; /* Arriba del todo */
+  z-index: 10; /* Por encima del contenido */
 }
 ```
 
@@ -423,8 +447,8 @@ Efecto visual donde la fila se **"eleva"** al hacer hover.
 
 ```css
 .rtc-row:hover {
-  transform: translateY(-2px);  /* Se eleva 2px */
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);  /* Sombra */
+  transform: translateY(-2px); /* Se eleva 2px */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3); /* Sombra */
 }
 ```
 
@@ -432,17 +456,18 @@ Efecto visual donde la fila se **"eleva"** al hacer hover.
 
 ## 📊 RTC vs Atomic: ¿Cuál usar?
 
-| Aspecto | RTC (CSS) | Atomic (Componentes) |
-|---------|-----------|----------------------|
-| **Tipo** | Clases CSS | Componentes Angular |
-| **Integración** | Importar CSS | Importar componentes |
-| **Responsive** | ✅ Nativo | ✅ Nativo |
-| **Sticky Header** | ✅ | ✅ |
-| **Hover Elevado** | ✅ | ✅ |
-| **Con scroll-overlay** | ✅ Mejor | ⚠️ Compatible |
-| **Reusabilidad** | Requiere clases | Encapsulado |
+| Aspecto                | RTC (CSS)       | Atomic (Componentes) |
+| ---------------------- | --------------- | -------------------- |
+| **Tipo**               | Clases CSS      | Componentes Angular  |
+| **Integración**        | Importar CSS    | Importar componentes |
+| **Responsive**         | ✅ Nativo       | ✅ Nativo            |
+| **Sticky Header**      | ✅              | ✅                   |
+| **Hover Elevado**      | ✅              | ✅                   |
+| **Con scroll-overlay** | ✅ Mejor        | ⚠️ Compatible        |
+| **Reusabilidad**       | Requiere clases | Encapsulado          |
 
 **Recomendación:**
+
 - Usa **RTC** con `scroll-overlay` para tablas con mucho contenido
 - Usa **Atomic** para tablas simples o cuando necesites componentes
 
@@ -536,16 +561,27 @@ sus reglas; el organismo únicamente gobierna estructura, foco y responsive.
 
 El foco inicial prioriza `[data-dialog-initial-focus]` y
 `[data-control-focus]`. Al cerrar con botón o Escape, el foco vuelve al
-elemento que abrió el diálogo.
+elemento que abrió el diálogo. Los formularios altos no deben agregar
+`overflow`; `CrudDialog` delega el desplazamiento a una sola superficie
+administrada por `ScrollOverlay`, con encabezado y acciones sticky.
 
 ### ScrollOverlay
+
 ```html
 <app-scroll-overlay [maxBodyHeight]="400">
-  <table>...</table>
+  <table>
+    ...
+  </table>
 </app-scroll-overlay>
 ```
 
+Use `ScrollOverlay` para el shell, tablas, navegación extensa y diálogos altos.
+Las listas breves acotadas de combobox, dropdown y select conservan scroll
+nativo localizado; no deben envolverse en un segundo overlay. La matriz
+canónica está en `docs/SCROLL_OWNERSHIP_AUDIT.md`.
+
 ### Skeleton
+
 ```html
 <app-skeleton variant="card"></app-skeleton>
 <app-skeleton variant="text" width="80%"></app-skeleton>
@@ -562,7 +598,7 @@ elemento que abrió el diálogo.
 :root {
   /* COLORES PRIMARIOS */
   --primary-color-lighter: #efe7ef;
-  --primary-color: #793576;  /* Principal */
+  --primary-color: #793576; /* Principal */
   --primary-color-dark: #662863;
 
   /* COLORES SECUNDARIOS */
@@ -590,12 +626,13 @@ elemento que abrió el diálogo.
 ```
 
 ### Personalizar colores
+
 ```css
 :root {
   /* Sobrescribir colores de la librería */
   --primary-color: #tu-color-primario;
   --secondary-color: #tu-color-secundario;
-  
+
   /* O mapear desde tus variables existentes */
   --primary-color: var(--color-brand);
 }
@@ -603,42 +640,46 @@ elemento que abrió el diálogo.
 
 ---
 
-##  Paleta de Colores
+## Paleta de Colores
 
 ### Paleta Primary (Púrpura)
-| Tono | Hexadecimal |
-|------|-------------|
-| 50 | #efe7ef |
-| 100 | #d7c2d6 |
-| 200 | #bc9abb |
-| 300 | #a1729f |
-| 400 | #8d538b |
+
+| Tono    | Hexadecimal |
+| ------- | ----------- |
+| 50      | #efe7ef     |
+| 100     | #d7c2d6     |
+| 200     | #bc9abb     |
+| 300     | #a1729f     |
+| 400     | #8d538b     |
 | **500** | **#793576** |
-| 600 | #71306e |
-| 700 | #662863 |
-| 800 | #5c2259 |
-| 900 | #491646 |
+| 600     | #71306e     |
+| 700     | #662863     |
+| 800     | #5c2259     |
+| 900     | #491646     |
 
 ### Paleta Secondary (Ámbar/Dorado)
-| Tono | Hexadecimal |
-|------|-------------|
-| 50 | #fffbed |
-| 200 | #ffe6ad |
-| 300 | #ffd275 |
-| 400 | #ffc400 |
+
+| Tono    | Hexadecimal |
+| ------- | ----------- |
+| 50      | #fffbed     |
+| 200     | #ffe6ad     |
+| 300     | #ffd275     |
+| 400     | #ffc400     |
 | **500** | **#FFB800** |
-| 600 | #e09600 |
-| 700 | #b37000 |
+| 600     | #e09600     |
+| 700     | #b37000     |
 
 ### Colores de Estado
-| Color | Hexadecimal | Uso |
-|-------|-------------|-----|
-| Success | #10b981 | Éxito, confirmado |
-| Error | #dc2626 | Error, rechazado |
-| Warning | #f59e0b | Advertencia, pendiente |
-| Info | #0ea5e9 | Información |
+
+| Color   | Hexadecimal | Uso                    |
+| ------- | ----------- | ---------------------- |
+| Success | #10b981     | Éxito, confirmado      |
+| Error   | #dc2626     | Error, rechazado       |
+| Warning | #f59e0b     | Advertencia, pendiente |
+| Info    | #0ea5e9     | Información            |
 
 ### Herramienta recomendada
+
 Usa [UI Colors](https://uicolors.app) para generar escalas de color automáticamente.
 
 ---
@@ -648,16 +689,19 @@ Usa [UI Colors](https://uicolors.app) para generar escalas de color automáticam
 ### Activación
 
 #### Método 1: Clase CSS
+
 ```html
-<html class="dark">
+<html class="dark"></html>
 ```
 
 #### Método 2: Atributo data-theme
+
 ```html
-<html data-theme="dark">
+<html data-theme="dark"></html>
 ```
 
 #### Método 3: ThemeService
+
 ```typescript
 import { ThemeService } from '@shared/ui';
 
@@ -672,13 +716,16 @@ export class MyComponent {
 ```
 
 #### Método 4: Componente visual
+
 ```html
 <app-theme-switcher></app-theme-switcher>
 ```
 
 ### Variables en Dark Mode
+
 ```css
-html.dark, [data-theme="dark"] {
+html.dark,
+[data-theme='dark'] {
   --surface-background: #1a1a24;
   --surface-section: #1f2937;
   --surface-elevated: #374151;
@@ -696,16 +743,17 @@ html.dark, [data-theme="dark"] {
 
 ### Resumen de Optimizaciones Aplicadas
 
-| Componente | Mejoras aplicadas |
-|------------|------------------|
-| **LoaderComponent** | IDs únicos SVG, OnPush, tipos exportados |
+| Componente            | Mejoras aplicadas                               |
+| --------------------- | ----------------------------------------------- |
+| **LoaderComponent**   | IDs únicos SVG, OnPush, tipos exportados        |
 | **DropdownComponent** | ControlValueAccessor, OnChanges, aria-*, OnPush |
-| **AvatarComponent** | Computed signals, tokens semánticos, tipos |
-| **ChipComponent** | tabindex, role="button", tokens semánticos |
-| **ToastComponent** | aria-live, clear(), tokens semánticos |
-| **StepperComponent** | aria-current, reset(), tokens semánticos |
+| **AvatarComponent**   | Computed signals, tokens semánticos, tipos      |
+| **ChipComponent**     | tabindex, role="button", tokens semánticos      |
+| **ToastComponent**    | aria-live, clear(), tokens semánticos           |
+| **StepperComponent**  | aria-current, reset(), tokens semánticos        |
 
 ### Características técnicas
+
 - ✅ `ChangeDetectionStrategy.OnPush` en todos
 - ✅ Tipos exportados (`AvatarSize`, `ChipVariant`, etc.)
 - ✅ Uso de Tokens semánticos globales
@@ -717,21 +765,25 @@ html.dark, [data-theme="dark"] {
 ## ⚠️ Problemas Conocidos y Soluciones
 
 ### 1. `:host-context()` tiene soporte limitado
+
 **Problema:** `:host-context(html.dark)` no funciona en Safari < 15.4
 
 **Solución:** Las variables CSS se definen en tokens.css y cambian con `html.dark`, los componentes heredan automáticamente.
 
 ### 2. Toast position:fixed
+
 **Problema:** Toast usa `position: fixed` directamente
 
 **Solución:** Colocar `<app-toast>` como hijo directo de `<body>` o cerca del root del app.
 
 ### 3. Múltiples Loaders
+
 **Problema (RESUELTO):** Los IDs de SVG gradient se duplicaban
 
 **Solución:** Ahora cada Loader genera IDs únicos (`spinner-abc123`).
 
 ### 4. Dropdown en Reactive Forms
+
 **Problema (RESUELTO):** No funcionaba con `formControlName`
 
 **Solución:** Ahora implementa `ControlValueAccessor`.
@@ -764,17 +816,17 @@ Fase 5 (Semana 5): Eliminar dependencias antiguas
 
 ## 📋 Mapeo de Clases Tailwind → Variables CSS
 
-| Clase Tailwind | Variable CSS |
-|----------------|--------------|
-| `text-primary-700` | `var(--primary-color-dark)` |
-| `bg-primary-50` | `var(--primary-color-lighter)` |
-| `text-gray-900` | `var(--text-color)` |
-| `text-gray-500` | `var(--text-color-secondary)` |
-| `bg-white` | `var(--surface-background)` |
-| `bg-gray-50` | `var(--surface-section)` |
-| `border-gray-300` | `var(--border-color)` |
-| `text-red-600` | `var(--danger-color)` |
-| `text-green-600` | `var(--success-color)` |
+| Clase Tailwind     | Variable CSS                   |
+| ------------------ | ------------------------------ |
+| `text-primary-700` | `var(--primary-color-dark)`    |
+| `bg-primary-50`    | `var(--primary-color-lighter)` |
+| `text-gray-900`    | `var(--text-color)`            |
+| `text-gray-500`    | `var(--text-color-secondary)`  |
+| `bg-white`         | `var(--surface-background)`    |
+| `bg-gray-50`       | `var(--surface-section)`       |
+| `border-gray-300`  | `var(--border-color)`          |
+| `text-red-600`     | `var(--danger-color)`          |
+| `text-green-600`   | `var(--success-color)`         |
 
 ---
 
@@ -782,13 +834,13 @@ Fase 5 (Semana 5): Eliminar dependencias antiguas
 
 ### Nomenclatura y Ubicación
 
-| Tipo | Ubicación | Prefijo Selector | Ejemplo |
-|------|-----------|------------------|---------|
-| Atom | `atoms/[nombre]/` | `app-` | `app-button`, `app-chip` |
-| Molecule | `molecules/[nombre]/` | `app-` | `app-datepicker`, `app-toast` |
-| Organism | `organisms/[nombre]/` | `app-` | `app-sidebar`, `app-tabs` |
-| Surface | `surfaces/[nombre]/` | `app-` | `app-panel`, `app-card` |
-| Template | `templates/[nombre]/` | `app-` | `app-layout-shell` |
+| Tipo     | Ubicación             | Prefijo Selector | Ejemplo                       |
+| -------- | --------------------- | ---------------- | ----------------------------- |
+| Atom     | `atoms/[nombre]/`     | `app-`           | `app-button`, `app-chip`      |
+| Molecule | `molecules/[nombre]/` | `app-`           | `app-datepicker`, `app-toast` |
+| Organism | `organisms/[nombre]/` | `app-`           | `app-sidebar`, `app-tabs`     |
+| Surface  | `surfaces/[nombre]/`  | `app-`           | `app-panel`, `app-card`       |
+| Template | `templates/[nombre]/` | `app-`           | `app-layout-shell`            |
 
 ### Paso 1: Generar el componente
 
@@ -805,7 +857,7 @@ ng g c shared/ui/organisms/mi-componente --standalone --skip-tests
 
 ### Paso 2: Estructura base del componente
 
-```typescript
+````typescript
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -828,55 +880,55 @@ export type MiComponenteSize = 'sm' | 'md' | 'lg';
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="mi-componente"
-         [class]="variantClass()"
-         [class.mi-componente--disabled]="disabled">
+    <div class="mi-componente" [class]="variantClass()" [class.mi-componente--disabled]="disabled">
       <ng-content></ng-content>
     </div>
   `,
-  styles: [`
-    :host {
-      display: inline-block;
-    }
+  styles: [
+    `
+      :host {
+        display: inline-block;
+      }
 
-    .mi-componente {
-      /* Usar SIEMPRE tokens CSS del sistema */
-      background: var(--surface-background);
-      color: var(--text-color);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md, 0.5rem);
-      padding: var(--spacing-md, 1rem);
-      transition: all 200ms ease;
-    }
+      .mi-componente {
+        /* Usar SIEMPRE tokens CSS del sistema */
+        background: var(--surface-background);
+        color: var(--text-color);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md, 0.5rem);
+        padding: var(--spacing-md, 1rem);
+        transition: all 200ms ease;
+      }
 
-    /* Variantes */
-    .mi-componente--primary {
-      background: var(--primary-color);
-      color: var(--text-color-on-primary);
-    }
+      /* Variantes */
+      .mi-componente--primary {
+        background: var(--primary-color);
+        color: var(--text-color-on-primary);
+      }
 
-    .mi-componente--secondary {
-      background: var(--secondary-color);
-      color: var(--text-color-on-secondary);
-    }
+      .mi-componente--secondary {
+        background: var(--secondary-color);
+        color: var(--text-color-on-secondary);
+      }
 
-    /* Estados */
-    .mi-componente--disabled {
-      opacity: 0.6;
-      pointer-events: none;
-    }
-  `]
+      /* Estados */
+      .mi-componente--disabled {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+    `,
+  ],
 })
 export class MiComponenteComponent {
   /** Variante visual del componente */
   @Input() variant: MiComponenteVariant = 'primary';
-  
+
   /** Tamaño del componente */
   @Input() size: MiComponenteSize = 'md';
-  
+
   /** Estado deshabilitado */
   @Input() disabled = false;
-  
+
   /** Evento emitido al hacer clic */
   @Output() clicked = new EventEmitter<void>();
 
@@ -884,7 +936,7 @@ export class MiComponenteComponent {
     return `mi-componente--${this.variant} mi-componente--${this.size}`;
   }
 }
-```
+````
 
 ### Paso 3: Exportar en barrel file
 
@@ -898,14 +950,16 @@ export * from './atoms/mi-componente/mi-componente.component';
 ### Paso 4: Usar tokens CSS (OBLIGATORIO)
 
 **❌ INCORRECTO - Colores hardcodeados:**
+
 ```css
 .mi-componente {
-  background: #793576;  /* NO usar hex directo */
+  background: #793576; /* NO usar hex directo */
   color: #ffffff;
 }
 ```
 
 **✅ CORRECTO - Usar tokens del sistema:**
+
 ```css
 .mi-componente {
   background: var(--primary-color);
@@ -915,24 +969,24 @@ export * from './atoms/mi-componente/mi-componente.component';
 
 ### Tokens CSS Disponibles
 
-| Categoría | Token | Descripción |
-|-----------|-------|-------------|
-| **Colores** | `--primary-color` | Color primario de marca |
-| | `--secondary-color` | Color secundario |
-| | `--text-color` | Color de texto principal |
-| | `--text-color-secondary` | Texto secundario |
-| | `--text-color-on-primary` | Texto sobre color primario |
-| **Superficies** | `--surface-background` | Fondo de componentes |
-| | `--surface-section` | Fondo de secciones |
-| | `--surface-elevated` | Fondo elevado (cards) |
-| **Bordes** | `--border-color` | Borde estándar |
-| | `--border-color-light` | Borde suave |
-| **Estados** | `--success-color` | Color de éxito |
-| | `--danger-color` | Color de error |
-| | `--warning-color` | Color de advertencia |
-| **Efectos** | `--hover-background` | Background al hover |
-| | `--focus-ring` | Anillo de foco |
-| | `--shadow-md` | Sombra media |
+| Categoría       | Token                     | Descripción                |
+| --------------- | ------------------------- | -------------------------- |
+| **Colores**     | `--primary-color`         | Color primario de marca    |
+|                 | `--secondary-color`       | Color secundario           |
+|                 | `--text-color`            | Color de texto principal   |
+|                 | `--text-color-secondary`  | Texto secundario           |
+|                 | `--text-color-on-primary` | Texto sobre color primario |
+| **Superficies** | `--surface-background`    | Fondo de componentes       |
+|                 | `--surface-section`       | Fondo de secciones         |
+|                 | `--surface-elevated`      | Fondo elevado (cards)      |
+| **Bordes**      | `--border-color`          | Borde estándar             |
+|                 | `--border-color-light`    | Borde suave                |
+| **Estados**     | `--success-color`         | Color de éxito             |
+|                 | `--danger-color`          | Color de error             |
+|                 | `--warning-color`         | Color de advertencia       |
+| **Efectos**     | `--hover-background`      | Background al hover        |
+|                 | `--focus-ring`            | Anillo de foco             |
+|                 | `--shadow-md`             | Sombra media               |
 
 ### Checklist de Nuevo Componente
 
@@ -952,47 +1006,45 @@ export * from './atoms/mi-componente/mi-componente.component';
 ### Atoms
 
 #### `ButtonComponent`
+
 ```html
-<app-button variant="primary" size="md" [loading]="false">
-  Guardar
-</app-button>
+<app-button variant="primary" size="md" [loading]="false"> Guardar </app-button>
 ```
-| Input | Tipo | Default | Descripción |
-|-------|------|---------|-------------|
-| `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'danger'` | `'primary'` | Estilo visual |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Tamaño |
-| `loading` | `boolean` | `false` | Mostrar spinner |
-| `disabled` | `boolean` | `false` | Deshabilitar |
+
+| Input      | Tipo                                                           | Default     | Descripción     |
+| ---------- | -------------------------------------------------------------- | ----------- | --------------- |
+| `variant`  | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'danger'` | `'primary'` | Estilo visual   |
+| `size`     | `'sm' \| 'md' \| 'lg'`                                         | `'md'`      | Tamaño          |
+| `loading`  | `boolean`                                                      | `false`     | Mostrar spinner |
+| `disabled` | `boolean`                                                      | `false`     | Deshabilitar    |
 
 #### `ChipComponent`
+
 ```html
-<app-chip variant="success" [removable]="true" (removed)="onRemove()">
-  Activo
-</app-chip>
+<app-chip variant="success" [removable]="true" (removed)="onRemove()"> Activo </app-chip>
 ```
 
 #### `AvatarComponent`
+
 ```html
-<app-avatar name="Juan Pérez" size="lg" status="online" [src]="imageUrl">
-</app-avatar>
+<app-avatar name="Juan Pérez" size="lg" status="online" [src]="imageUrl"> </app-avatar>
 ```
 
 #### `FloatingInputComponent`
+
 ```html
-<app-floating-input 
-  label="Email" 
-  type="email"
-  [(ngModel)]="email"
-  [required]="true">
+<app-floating-input label="Email" type="email" [(ngModel)]="email" [required]="true">
 </app-floating-input>
 ```
 
 #### `FormErrorComponent`
+
 ```html
 <app-form-error [control]="form.get('email')"></app-form-error>
 ```
 
 #### `LanguageSwitcherComponent`
+
 ```html
 <app-language-switcher></app-language-switcher>
 ```
@@ -1000,56 +1052,56 @@ export * from './atoms/mi-componente/mi-componente.component';
 ### Molecules
 
 #### `Select2Component`
+
 ```html
-<app-select2 
-  [options]="options" 
-  label="País"
-  [searchable]="true"
-  [(ngModel)]="selected">
+<app-select2 [options]="options" label="País" [searchable]="true" [(ngModel)]="selected">
 </app-select2>
 ```
 
 #### `DatepickerComponent`
+
 ```html
-<app-datepicker 
-  label="Fecha de nacimiento"
-  [(ngModel)]="birthDate">
-</app-datepicker>
+<app-datepicker label="Fecha de nacimiento" [(ngModel)]="birthDate"> </app-datepicker>
 ```
 
 #### `PaginationComponent`
+
 ```html
-<app-pagination 
-  [total]="100" 
-  [pageSize]="10" 
+<app-pagination
+  [total]="100"
+  [pageSize]="10"
   [(currentPage)]="page"
-  (pageChange)="onPageChange($event)">
+  (pageChange)="onPageChange($event)"
+>
 </app-pagination>
 ```
 
 #### `TableActionsComponent`
+
 ```html
-<app-table-actions 
-  (view)="onView(item)" 
-  (edit)="onEdit(item)" 
-  (delete)="onDelete(item)">
+<app-table-actions (view)="onView(item)" (edit)="onEdit(item)" (delete)="onDelete(item)">
 </app-table-actions>
 ```
 
 ### Organisms
 
 #### `ScrollOverlayComponent`
+
 ```html
-<app-scroll-overlay 
+<app-scroll-overlay
   [maxBodyHeight]="450"
   [minColumnWidth]="40"
   [lockColumnTemplate]="true"
-  [columnTemplate]="'70px minmax(120px, 1fr) 100px'">
-  <table class="rtc-table">...</table>
+  [columnTemplate]="'70px minmax(120px, 1fr) 100px'"
+>
+  <table class="rtc-table">
+    ...
+  </table>
 </app-scroll-overlay>
 ```
 
 #### `TabsComponent`
+
 ```html
 <app-tabs>
   <app-tab label="General" icon="⚙️">Contenido 1</app-tab>
@@ -1058,17 +1110,17 @@ export * from './atoms/mi-componente/mi-componente.component';
 ```
 
 #### `AccordionComponent`
+
 ```html
 <app-accordion>
-  <app-accordion-item title="Pregunta 1" [expanded]="true">
-    Respuesta 1
-  </app-accordion-item>
+  <app-accordion-item title="Pregunta 1" [expanded]="true"> Respuesta 1 </app-accordion-item>
 </app-accordion>
 ```
 
 ### Services
 
 #### `ValidationService`
+
 ```typescript
 import { ValidationService } from '@shared/ui';
 
@@ -1089,6 +1141,7 @@ export class MyComponent {
 ```
 
 **Validadores disponibles:**
+
 - `ValidationService.dni` - DNI peruano (8 dígitos)
 - `ValidationService.ruc` - RUC peruano (11 dígitos)
 - `ValidationService.phone` - Teléfono (9 dígitos)

@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/ux-rule.schema.json",
+  "schemaVersion": 1,
+  "id": "ux-domain-truth",
+  "title": "Verdad de dominio sin invenciones visuales",
+  "intent": "Impedir que la interfaz convierta ausencia de datos o decisiones de negocio en afirmaciones falsas.",
+  "priority": "must",
+  "appliesTo": {
+    "intents": ["crud", "detail", "dashboard", "transaction", "document", "authentication", "settings"],
+    "components": ["status-badge", "kpi-card", "metrics-grid", "data-state", "data-table", "toast"]
+  },
+  "requirements": [
+    {
+      "id": "no-invented-state",
+      "statement": "No inferir estado, elegibilidad, tendencia, referencia, importe o permiso que el contrato autoritativo no entregue.",
+      "enforcedBy": ["generator", "review", "unit"]
+    },
+    {
+      "id": "unknown-is-explicit",
+      "statement": "Representar valores desconocidos como desconocidos o no disponibles, sin degradarlos a éxito, cero o activo.",
+      "enforcedBy": ["recipe", "generator", "unit"]
+    },
+    {
+      "id": "visual-is-presentation",
+      "statement": "Mantener cálculos, permisos, vigencias y reglas de negocio en el consumidor o backend; Atomic solo presenta el resultado.",
+      "enforcedBy": ["gate", "review"]
+    }
+  ],
+  "acceptance": [
+    "Un KPI sin comparación no muestra tendencia neutral inventada.",
+    "Un estado desconocido incluye texto explícito y no solo color.",
+    "Las recetas Atomic no contienen endpoints ni cálculos de dominio."
+  ],
+  "evidence": [
+    "governance/consumer/ATOMIC_GOVERNANCE.md",
+    "LESSONS_LEARNED.md",
+    "src/app/shared/ui/molecules/kpi-card/kpi-card.component.ts"
+  ]
+}

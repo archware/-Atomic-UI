@@ -1,0 +1,120 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "input",
+  "layer": "atom",
+  "selector": "prest-input",
+  "export": "Input",
+  "source": "src/app/shared/ui/atoms/form-input/input.ts",
+  "purpose": "Control de texto canónico para formularios reactivos, con etiqueta, ayuda, error y soporte CVA.",
+  "variants": [
+    {
+      "name": "type",
+      "values": [
+        { "value": "text", "meaning": "Texto general.", "default": true },
+        { "value": "password", "meaning": "Dato secreto; puede habilitar revelado." },
+        { "value": "email", "meaning": "Dirección de correo." },
+        { "value": "tel", "meaning": "Número telefónico." },
+        { "value": "date", "meaning": "Fecha mediante input nativo." },
+        { "value": "search", "meaning": "Consulta de búsqueda." },
+        { "value": "number", "meaning": "Valor numérico." }
+      ]
+    },
+    {
+      "name": "input-mode",
+      "values": [
+        { "value": "text", "meaning": "Teclado de texto.", "default": true },
+        { "value": "numeric", "meaning": "Teclado numérico entero." },
+        { "value": "email", "meaning": "Teclado para correo." },
+        { "value": "tel", "meaning": "Teclado telefónico." },
+        { "value": "search", "meaning": "Teclado de búsqueda." },
+        { "value": "decimal", "meaning": "Teclado numérico decimal." }
+      ]
+    },
+    {
+      "name": "password-reveal",
+      "appliesWhen": "type es password",
+      "values": [
+        { "value": false, "meaning": "Contraseña siempre oculta.", "default": true },
+        { "value": true, "meaning": "Muestra un control para revelar u ocultar." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "controlId", "type": "string | null", "default": null, "meaning": "Id explícito; si falta se genera uno estable por instancia." },
+    { "name": "type", "type": "InputType", "default": "text", "meaning": "Tipo de input nativo." },
+    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible asociada al control." },
+    { "name": "placeholder", "type": "string", "default": "", "meaning": "Ayuda breve dentro del campo." },
+    { "name": "autocomplete", "type": "string", "default": "off", "meaning": "Valor del atributo autocomplete." },
+    { "name": "inputMode", "type": "InputMode", "default": "text", "meaning": "Teclado virtual sugerido." },
+    { "name": "maxLength", "type": "number | null", "default": null, "meaning": "Longitud máxima nativa." },
+    { "name": "minLength", "type": "number | null", "default": null, "meaning": "Longitud mínima nativa." },
+    { "name": "min", "type": "string | number | null", "default": null, "meaning": "Mínimo para fecha o número." },
+    { "name": "max", "type": "string | number | null", "default": null, "meaning": "Máximo para fecha o número." },
+    { "name": "step", "type": "string | number | null", "default": null, "meaning": "Incremento para input numérico." },
+    { "name": "error", "type": "string | null", "default": null, "meaning": "Mensaje de error y origen de aria-invalid." },
+    { "name": "hint", "type": "string | null", "default": null, "meaning": "Ayuda relacionada por aria-describedby." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Deshabilita desde input; CVA también puede hacerlo." },
+    { "name": "readonly", "type": "boolean", "default": false, "meaning": "Permite lectura sin edición." },
+    { "name": "required", "type": "boolean", "default": false, "meaning": "Marca obligatoriedad nativa y accesible." },
+    { "name": "revealable", "type": "boolean", "default": false, "meaning": "Habilita alternancia visible para contraseña." }
+  ],
+  "outputs": [
+    { "name": "valueChange", "type": "string", "meaning": "Valor textual después de cada cambio; CVA recibe el mismo valor." }
+  ],
+  "behavior": [
+    "Implementa ControlValueAccessor y marca touched en blur.",
+    "writeValue acepta cualquier valor CVA y lo normaliza a string vacío o texto."
+  ],
+  "states": [
+    { "name": "normal", "meaning": "Editable sin error." },
+    { "name": "error", "meaning": "Presenta mensaje y aria-invalid." },
+    { "name": "disabled", "meaning": "Bloqueado por input o setDisabledState." },
+    { "name": "readonly", "meaning": "Enfocable y legible sin edición." },
+    { "name": "required", "meaning": "Obligatoriedad visible y aria-required." },
+    { "name": "password-revealed", "meaning": "La contraseña se presenta temporalmente como texto." }
+  ],
+  "a11y": [
+    "Asocia label e input mediante for e id generado o explícito.",
+    "Relaciona hint o error mediante aria-describedby y expone aria-required y aria-invalid.",
+    "El botón de revelado cambia su aria-label entre mostrar y ocultar contraseña."
+  ],
+  "responsive": [
+    "Ocupa el ancho del contenedor y no define quiebres de viewport propios."
+  ],
+  "tokens": [
+    "--control-height",
+    "--danger-color",
+    "--input-bg",
+    "--input-border",
+    "--input-border-focus",
+    "--input-border-hover",
+    "--input-disabled-bg",
+    "--input-disabled-text",
+    "--input-shadow",
+    "--input-shadow-focus",
+    "--input-shadow-hover",
+    "--input-text",
+    "--primary-color",
+    "--radius-md",
+    "--radius-sm",
+    "--space-1",
+    "--space-2",
+    "--space-4",
+    "--text-color",
+    "--text-color-muted",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-input.stories.ts",
+    "status": "legacy-only",
+    "notes": "La historia existente usa InputComponent de atoms/input, no este prest-input canónico."
+  },
+  "test": { "path": "src/app/shared/ui/atoms/form-input/input.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": ["Falta una historia Storybook que importe el componente canónico Input."]
+  },
+  "canonicalFor": ["form-control", "text-input", "numeric-input", "password-input"]
+}

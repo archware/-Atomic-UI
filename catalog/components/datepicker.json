@@ -1,0 +1,80 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "datepicker",
+  "layer": "molecule",
+  "selector": "app-datepicker",
+  "export": "DatepickerComponent",
+  "source": "src/app/shared/ui/molecules/datepicker/datepicker.component.ts",
+  "purpose": "Selección de una fecha mediante calendario emergente con navegación por día, mes y año.",
+  "variants": [
+    {
+      "name": "input-variant",
+      "values": [
+        { "value": "floating", "meaning": "Etiqueta flotante.", "default": true },
+        { "value": "underline", "meaning": "Control con línea inferior." },
+        { "value": "material", "meaning": "Tratamiento material del FloatingInput." },
+        { "value": "outline", "meaning": "Control delimitado." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta del FloatingInput interno." },
+    { "name": "variant", "type": "FloatingInputVariant", "default": "floating", "meaning": "Variante visual del disparador." },
+    { "name": "error", "type": "string", "default": "", "meaning": "Error presentado por el FloatingInput." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Bloquea apertura; CVA también puede establecerlo." }
+  ],
+  "outputs": [],
+  "behavior": [
+    "Implementa ControlValueAccessor: writeValue acepta Date, string o null y onChange entrega Date o null.",
+    "Presenta el valor como dd/MM/yyyy y cierra al seleccionar día o hacer clic fuera.",
+    "El flujo de selección es año, mes y día; prev/next cambia mes, año o bloque de 12 años según la vista."
+  ],
+  "states": [
+    { "name": "closed", "meaning": "Solo se presenta el disparador readonly." },
+    { "name": "open-day", "meaning": "Grilla de días del mes." },
+    { "name": "open-month", "meaning": "Grilla de doce meses." },
+    { "name": "open-year", "meaning": "Grilla de doce años alrededor del año visible." },
+    { "name": "selected", "meaning": "Una fecha está marcada y formateada." },
+    { "name": "disabled", "meaning": "No permite abrir ni navegar." }
+  ],
+  "a11y": [
+    "El disparador usa role=button, aria-haspopup=grid, aria-expanded y teclado Enter o Space.",
+    "La vista de días usa role=grid y gridcell con aria-selected y nombre fullDate.",
+    "Arrow mueve un día o una semana y Escape cierra y devuelve foco al disparador.",
+    "El componente actual no implementa navegación Arrow/Home/End en las vistas de mes y año."
+  ],
+  "responsive": [
+    "El host ocupa 100%, pero el popup tiene ancho fijo de 320px y no define ajuste móvil."
+  ],
+  "tokens": [
+    "--border-color",
+    "--hover-background",
+    "--hover-background-subtle",
+    "--primary-color",
+    "--radius-lg",
+    "--radius-md",
+    "--shadow-dropdown",
+    "--space-1",
+    "--space-2",
+    "--space-4",
+    "--space-6",
+    "--space-7",
+    "--surface-elevated",
+    "--text-color",
+    "--text-color-disabled",
+    "--text-color-muted",
+    "--text-color-on-primary",
+    "--text-color-secondary",
+    "--text-md",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": { "path": "src/stories/ui-datepicker.stories.ts", "status": "available" },
+  "test": { "path": null, "status": "missing" },
+  "stability": {
+    "status": "candidate",
+    "notes": ["No usa OnPush y carece de prueba unitaria.", "No expone min, max, required ni controlId y el popup fijo puede desbordar pantallas estrechas."]
+  },
+  "canonicalFor": ["date-input", "calendar-selection"]
+}

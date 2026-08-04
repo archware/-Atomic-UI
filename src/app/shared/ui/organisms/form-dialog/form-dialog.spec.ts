@@ -20,6 +20,10 @@ describe('FormDialog', () => {
     expect(description.textContent).toContain('Defina el rol');
     expect(dialog.getAttribute('aria-labelledby')).toBe(title.id);
     expect(dialog.getAttribute('aria-describedby')).toBe(description.id);
+    const header = fixture.nativeElement.querySelector('.form-dialog__header') as HTMLElement;
+    expect(getComputedStyle(header).position).toBe('sticky');
+    expect(getComputedStyle(header).top).toBe('0px');
+    expect(getComputedStyle(header).alignItems).toBe('center');
   });
 
   it('propaga Escape como cancelación controlada', async () => {
@@ -36,6 +40,43 @@ describe('FormDialog', () => {
 
     expect(cancel.defaultPrevented).toBe(true);
     expect(cancellations).toEqual([cancel]);
+  });
+
+  it('sincroniza el estado declarativo de apertura y cierre', async () => {
+    await TestBed.configureTestingModule({ imports: [FormDialog] }).compileComponents();
+    const fixture = TestBed.createComponent(FormDialog);
+    fixture.componentRef.setInput('title', 'Crear usuario');
+    fixture.detectChanges();
+
+    const dialog = fixture.nativeElement.querySelector('dialog') as HTMLDialogElement;
+    dialog.showModal = () => dialog.setAttribute('open', '');
+
+    fixture.componentRef.setInput('opened', true);
+    fixture.detectChanges();
+
+    expect(dialog.hasAttribute('open')).toBe(true);
+    dialog.removeAttribute('open');
+    dialog.dispatchEvent(new Event('close'));
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.opened()).toBe(false);
+  });
+
+  it('expone el estado ocupado y bloquea la cancelacion mientras guarda', async () => {
+    await TestBed.configureTestingModule({ imports: [FormDialog] }).compileComponents();
+    const fixture = TestBed.createComponent(FormDialog);
+    fixture.componentRef.setInput('title', 'Crear usuario');
+    fixture.componentRef.setInput('busy', true);
+    const cancellations: Event[] = [];
+    fixture.componentInstance.cancelled.subscribe((event) => cancellations.push(event));
+    fixture.detectChanges();
+
+    const article = fixture.nativeElement.querySelector('.form-dialog') as HTMLElement;
+    const dialog = fixture.nativeElement.querySelector('dialog') as HTMLDialogElement;
+    dialog.dispatchEvent(new Event('cancel', { cancelable: true }));
+
+    expect(article.getAttribute('aria-busy')).toBe('true');
+    expect(cancellations).toEqual([]);
   });
 });
 

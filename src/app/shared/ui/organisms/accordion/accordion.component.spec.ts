@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { AccordionComponent, AccordionItemComponent } from './accordion.component';
 
 @Component({
@@ -61,5 +62,23 @@ describe('AccordionComponent', () => {
     fixture.detectChanges();
 
     expect(document.activeElement).toBe(headers[1]);
+  });
+
+  it('moves focus to the header before hiding focused content', () => {
+    const action = host().querySelector<HTMLButtonElement>('.accordion-content button');
+    const header = host().querySelector<HTMLButtonElement>('.accordion-header');
+    const item = fixture.debugElement.query(By.directive(AccordionItemComponent))
+      .componentInstance as AccordionItemComponent;
+
+    action?.focus();
+    expect(document.activeElement).toBe(action);
+
+    item.setOpen(false, true);
+    fixture.detectChanges();
+
+    expect(document.activeElement).toBe(header);
+    expect(
+      host().querySelector<HTMLElement>('.accordion-content')?.getAttribute('aria-hidden'),
+    ).toBe('true');
   });
 });

@@ -1,0 +1,225 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "scroll-overlay",
+  "layer": "organism",
+  "selector": "app-scroll-overlay",
+  "export": "ScrollOverlayComponent",
+  "source": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts",
+  "relatedSources": [
+    "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.html",
+    "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css"
+  ],
+  "purpose": "Contenedor que sincroniza scroll horizontal y vertical con indicadores overlay y alineación opcional de tablas.",
+  "variants": [
+    {
+      "name": "lock-column-template",
+      "values": [
+        {
+          "value": false,
+          "meaning": "Permite medir y recalcular la plantilla de columnas.",
+          "default": true
+        },
+        { "value": true, "meaning": "Conserva columnTemplate sin sobrescribirla automáticamente." }
+      ]
+    },
+    {
+      "name": "sync-table-columns",
+      "values": [
+        {
+          "value": true,
+          "meaning": "Mide y alinea encabezado y cuerpo de la tabla.",
+          "default": true
+        },
+        { "value": false, "meaning": "Mantiene el algoritmo natural de columnas de la tabla." }
+      ]
+    },
+    {
+      "name": "skip-table-detection",
+      "values": [
+        {
+          "value": false,
+          "meaning": "Detecta la primera tabla directa y configura su sincronización.",
+          "default": true
+        },
+        { "value": true, "meaning": "Trata el contenido como layout genérico y omite la tabla." }
+      ]
+    },
+    {
+      "name": "disable-vertical",
+      "values": [
+        {
+          "value": false,
+          "meaning": "Habilita el overlay vertical cuando existe desbordamiento.",
+          "default": true
+        },
+        { "value": true, "meaning": "Desactiva el overlay vertical." }
+      ]
+    },
+    {
+      "name": "disable-horizontal",
+      "values": [
+        {
+          "value": false,
+          "meaning": "Habilita el overlay horizontal cuando existe desbordamiento.",
+          "default": true
+        },
+        { "value": true, "meaning": "Desactiva el overlay horizontal." }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "name": "verticalSelector",
+      "type": "string | null",
+      "default": "[data-scroll-overlay-vertical]",
+      "meaning": "Selector del elemento que controla el desplazamiento vertical."
+    },
+    {
+      "name": "horizontalSelector",
+      "type": "string | null",
+      "default": "[data-scroll-overlay-horizontal]",
+      "meaning": "Selector del elemento que controla el desplazamiento horizontal."
+    },
+    {
+      "name": "minThumbSize",
+      "type": "number",
+      "default": 28,
+      "meaning": "Tamaño mínimo en píxeles de cada thumb."
+    },
+    {
+      "name": "trackSize",
+      "type": "number",
+      "default": 7,
+      "meaning": "Grosor en píxeles de los tracks overlay."
+    },
+    {
+      "name": "autoHideDelay",
+      "type": "number",
+      "default": 800,
+      "meaning": "Demora en milisegundos antes de ocultar los indicadores."
+    },
+    {
+      "name": "lockColumnTemplate",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Impide reemplazar una plantilla de columnas entregada por el consumidor."
+    },
+    {
+      "name": "columnTemplate",
+      "type": "string | null",
+      "default": null,
+      "meaning": "Definición CSS grid-template-columns opcional."
+    },
+    {
+      "name": "syncTableColumns",
+      "type": "boolean",
+      "default": true,
+      "meaning": "Sincroniza anchos entre thead y tbody cuando detecta una tabla."
+    },
+    {
+      "name": "skipTableDetection",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Evita detectar tablas anidadas y usa el área interna como scroller."
+    },
+    {
+      "name": "minColumnWidth",
+      "type": "number",
+      "default": 140,
+      "meaning": "Ancho mínimo positivo en píxeles al medir columnas."
+    },
+    {
+      "name": "maxBodyHeight",
+      "type": "number | string | null | undefined",
+      "meaning": "Altura máxima; un número se interpreta como píxeles y un texto como tamaño CSS."
+    },
+    {
+      "name": "disableVertical",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Desactiva el overlay y la gestión vertical."
+    },
+    {
+      "name": "disableHorizontal",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Desactiva el overlay horizontal."
+    }
+  ],
+  "outputs": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "projected content",
+      "meaning": "Tabla o contenido desplazable contenido por el overlay."
+    }
+  ],
+  "behavior": [
+    "Ignora candidatos de scroll pertenecientes a un ScrollOverlay anidado.",
+    "Oculta el scrollbar nativo en cada scroller horizontal o vertical administrado, incluso durante la medición temporal de columnas.",
+    "ResizeObserver y MutationObserver agrupan la sincronización de geometría en un único animation frame.",
+    "Muestra los thumbs durante scroll, wheel, touch, hover o drag y los oculta después de autoHideDelay.",
+    "Al destruirse cancela timers, listeners, observers, animation frames y atributos temporales."
+  ],
+  "states": [
+    { "name": "no-overflow", "meaning": "Oculta ambos indicadores cuando el contenido cabe." },
+    { "name": "overflow-x", "meaning": "Presenta y sincroniza el indicador horizontal." },
+    { "name": "overflow-y", "meaning": "Presenta y sincroniza el indicador vertical." },
+    { "name": "scrolling", "meaning": "Mantiene visibles los indicadores durante interacción." },
+    {
+      "name": "table-sync",
+      "meaning": "Alinea encabezado y cuerpo usando una plantilla medida o bloqueada."
+    },
+    { "name": "axis-disabled", "meaning": "Una o ambas orientaciones se excluyen explícitamente." }
+  ],
+  "a11y": [
+    "Los tracks y thumbs son decorativos y se excluyen con aria-hidden.",
+    "El contenido proyectado conserva su semántica y debe proporcionar su propio nombre accesible.",
+    "La implementación actual no hace los thumbs operables por teclado ni añade tabindex al área de scroll."
+  ],
+  "responsive": [
+    "El host limita su ancho al contenedor y el área interna puede desplazarse en ambos ejes.",
+    "A 768px o menos elimina el borde y radio externos de las tablas detectadas.",
+    "No controla el reflujo semántico de tablas; solo su geometría y desplazamiento."
+  ],
+  "tokens": [
+    "--border-color",
+    "--radius-full",
+    "--so-body-height",
+    "--so-max-height",
+    "--so-min-column-width",
+    "--so-scroll-end-space",
+    "--so-thumb-blur",
+    "--so-thumb-color-active",
+    "--so-thumb-color-end",
+    "--so-thumb-color-hover",
+    "--so-thumb-color-start",
+    "--so-track-size",
+    "--space-1",
+    "--space-2",
+    "--space-8",
+    "--table-border-radius",
+    "--table-color-border"
+  ],
+  "story": { "path": "src/stories/ui-scroll-overlay.stories.ts", "status": "available" },
+  "test": {
+    "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "candidate",
+    "notes": [
+      "La implementación usa ViewEncapsulation.None y no declara ChangeDetectionStrategy.OnPush.",
+      "La prueba automatizada cubre coalescencia de geometría, aislamiento anidado y ocultamiento del scrollbar nativo, pero no drag, teclado ni todos los modos de tabla."
+    ]
+  },
+  "canonicalFor": [
+    "scroll-overlay",
+    "table-scroll-indicator",
+    "two-axis-scroll",
+    "layout-scroll-owner",
+    "dialog-scroll-owner",
+    "navigation-scroll-owner"
+  ]
+}

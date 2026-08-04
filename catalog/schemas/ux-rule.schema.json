@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atomic-ui.local/schemas/ux-rule.schema.json",
+  "title": "Atomic UI UX rule",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "title",
+    "intent",
+    "priority",
+    "appliesTo",
+    "requirements",
+    "acceptance"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^ux-[a-z0-9-]+$" },
+    "title": { "type": "string", "minLength": 3 },
+    "intent": { "type": "string", "minLength": 10 },
+    "priority": { "enum": ["must", "should", "may"] },
+    "appliesTo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intents"],
+      "properties": {
+        "intents": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string" }
+        },
+        "components": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "statement", "enforcedBy"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "statement": { "type": "string", "minLength": 10 },
+          "enforcedBy": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "enum": ["catalog", "recipe", "generator", "gate", "unit", "a11y", "visual", "review"] }
+          }
+        }
+      }
+    },
+    "acceptance": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 8 }
+    },
+    "evidence": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

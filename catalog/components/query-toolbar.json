@@ -1,0 +1,60 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "query-toolbar",
+  "layer": "organism",
+  "selector": "prest-query-toolbar",
+  "export": "QueryToolbar",
+  "source": "src/app/shared/ui/organisms/query-toolbar/query-toolbar.ts",
+  "purpose": "Barra canónica para filtros y acciones de consulta sin absorber permisos ni lógica del consumidor.",
+  "variants": [
+    {
+      "name": "density",
+      "values": [
+        { "value": "comfortable", "meaning": "Separación estándar.", "default": true },
+        { "value": "compact", "meaning": "Separación reducida para operación densa." }
+      ]
+    },
+    {
+      "name": "layout",
+      "values": [
+        { "value": "auto", "meaning": "Inline en ancho suficiente y stacked bajo 40rem.", "default": true },
+        { "value": "inline", "meaning": "Mantiene filtros y acciones en la misma fila con wrap interno." },
+        { "value": "stacked", "meaning": "Apila filtros y acciones en todos los anchos." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "density", "type": "QueryToolbarDensity", "default": "comfortable", "meaning": "Espaciado entre controles." },
+    { "name": "layout", "type": "QueryToolbarLayout", "default": "auto", "meaning": "Estrategia de distribución." },
+    { "name": "accessibleLabel", "type": "string", "default": "Filtros y acciones", "meaning": "Nombre accesible de la barra." }
+  ],
+  "outputs": [],
+  "slots": [
+    { "name": "[query-filters]", "type": "projected content", "meaning": "Controles de filtro del consumidor." },
+    { "name": "[query-actions]", "type": "projected content", "meaning": "Acciones de buscar, limpiar, exportar u otras permitidas." }
+  ],
+  "states": [
+    { "name": "filters-only", "meaning": "Oculta el contenedor de acciones vacío." },
+    { "name": "actions-only", "meaning": "Oculta el contenedor de filtros vacío." },
+    { "name": "combined", "meaning": "Distribuye filtros flexibles y acciones al final." }
+  ],
+  "a11y": [
+    "Usa section con role=group y accessibleLabel.",
+    "No altera las etiquetas, eventos ni estados de los controles proyectados."
+  ],
+  "responsive": [
+    "Los filtros usan auto-fit con columnas mínimas de min(100%, 14rem).",
+    "layout=auto se apila a 40rem o menos y alinea acciones al inicio.",
+    "layout=stacked se apila siempre; layout=inline no activa el quiebre automático."
+  ],
+  "tokens": [
+    "--space-2",
+    "--space-3",
+    "--space-4"
+  ],
+  "story": { "path": "src/stories/ui-query-toolbar.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/organisms/query-toolbar/query-toolbar.spec.ts", "status": "available" },
+  "stability": { "status": "stable", "notes": [] },
+  "canonicalFor": ["query-toolbar", "crud-filters", "list-actions"]
+}

@@ -1,0 +1,656 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atomic-ui.local/schemas/ui-requirement.schema.json",
+  "title": "Atomic UI declarative requirement",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "recipe",
+    "feature",
+    "model",
+    "table",
+    "contract"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9.-]{2,100}$"
+    },
+    "recipe": {
+      "enum": ["modal-catalog", "route-form", "master-detail"]
+    },
+    "feature": {
+      "$ref": "#/$defs/feature"
+    },
+    "model": {
+      "$ref": "#/$defs/model"
+    },
+    "table": {
+      "$ref": "#/$defs/table"
+    },
+    "editor": {
+      "$ref": "#/$defs/editor"
+    },
+    "detail": {
+      "$ref": "#/$defs/detail"
+    },
+    "variants": {
+      "$ref": "#/$defs/variants"
+    },
+    "actions": {
+      "$ref": "#/$defs/actions"
+    },
+    "contract": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/uiOnlyContract"
+        },
+        {
+          "$ref": "#/$defs/integratedContract"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "recipe": {
+            "enum": ["modal-catalog", "route-form"]
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "editor": {},
+          "detail": {}
+        },
+        "required": ["editor"],
+        "not": {
+          "type": "object",
+          "properties": {
+            "detail": {}
+          },
+          "required": ["detail"]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "recipe": {
+            "const": "master-detail"
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "detail": {},
+          "editor": {}
+        },
+        "required": ["detail"],
+        "not": {
+          "type": "object",
+          "properties": {
+            "editor": {}
+          },
+          "required": ["editor"]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "recipe": {
+            "const": "route-form"
+          }
+        }
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "feature": {
+            "type": "object",
+            "properties": {
+              "routePath": {}
+            },
+            "required": ["routePath"]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "feature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "className", "selector", "title", "singular", "plural"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+        },
+        "className": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Za-z0-9]*$"
+        },
+        "selector": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "singular": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "plural": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "routePath": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:[-/][a-z0-9]+)*$"
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "id", "fields"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Za-z0-9]*$"
+        },
+        "id": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "type"],
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/identifier"
+            },
+            "type": {
+              "enum": ["string", "number"]
+            }
+          }
+        },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        }
+      }
+    },
+    "field": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "label"],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/identifier"
+        },
+        "type": {
+          "enum": ["string", "number", "boolean"]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "nullable": {
+          "type": "boolean",
+          "default": false
+        },
+        "required": {
+          "type": "boolean",
+          "default": false
+        },
+        "minLength": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxLength": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "initialValue": {
+          "type": ["string", "number", "boolean", "null"]
+        },
+        "minimum": {
+          "type": "number"
+        },
+        "maximum": {
+          "type": "number"
+        },
+        "step": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "mustBeTrue": {
+          "type": "boolean"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "type": { "const": "string" } },
+            "required": ["type"]
+          },
+          "then": {
+            "properties": {
+              "initialValue": { "type": ["string", "null"] }
+            },
+            "not": {
+              "anyOf": [
+                { "required": ["minimum"] },
+                { "required": ["maximum"] },
+                { "required": ["step"] },
+                { "required": ["mustBeTrue"] }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "type": { "const": "number" } },
+            "required": ["type"]
+          },
+          "then": {
+            "required": ["initialValue", "minimum", "maximum", "step"],
+            "properties": {
+              "initialValue": { "type": ["number", "null"] }
+            },
+            "not": {
+              "anyOf": [
+                { "required": ["minLength"] },
+                { "required": ["maxLength"] },
+                { "required": ["mustBeTrue"] }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "type": { "const": "boolean" } },
+            "required": ["type"]
+          },
+          "then": {
+            "required": ["initialValue"],
+            "properties": {
+              "initialValue": { "type": ["boolean", "null"] }
+            },
+            "not": {
+              "anyOf": [
+                { "required": ["minLength"] },
+                { "required": ["maxLength"] },
+                { "required": ["minimum"] },
+                { "required": ["maximum"] },
+                { "required": ["step"] }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "initialValue": { "type": "null" } },
+            "required": ["initialValue"]
+          },
+          "then": {
+            "properties": { "nullable": { "const": true } },
+            "required": ["nullable"]
+          }
+        },
+        {
+          "not": {
+            "properties": {
+              "nullable": { "const": true },
+              "required": { "const": true }
+            },
+            "required": ["nullable", "required"]
+          }
+        }
+      ]
+    },
+    "table": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["columns"],
+      "properties": {
+        "columns": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["field", "header"],
+            "properties": {
+              "field": {
+                "$ref": "#/$defs/identifier"
+              },
+              "header": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "sortable": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          }
+        },
+        "pageSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 10
+        }
+      }
+    },
+    "editor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fields"],
+      "properties": {
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        }
+      }
+    },
+    "detail": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fields"],
+      "properties": {
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/identifier"
+          }
+        }
+      }
+    },
+    "variants": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "density": {
+          "enum": ["comfortable", "compact"]
+        },
+        "editorSize": {
+          "enum": ["sm", "md", "lg", "xl"]
+        },
+        "formLayout": {
+          "enum": ["single-column", "two-columns"]
+        },
+        "detailPlacement": {
+          "enum": ["aside", "below"]
+        },
+        "actionDisplay": {
+          "enum": ["inline", "overflow"]
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "$ref": "#/$defs/deleteAction"
+      }
+    },
+    "deleteAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "location", "label", "permissionKey", "confirmation"],
+      "properties": {
+        "operation": { "const": "delete" },
+        "location": { "const": "row" },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "permissionKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "confirmation": {
+          "$ref": "#/$defs/actionConfirmation"
+        }
+      }
+    },
+    "actionConfirmation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "message", "confirmLabel", "cancelLabel"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "message": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "confirmLabel": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "cancelLabel": { "type": "string", "minLength": 1, "maxLength": 80 }
+      }
+    },
+    "uiOnlyContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "capabilities"],
+      "properties": {
+        "mode": {
+          "const": "ui-only"
+        },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/operationName"
+          }
+        }
+      }
+    },
+    "integratedContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "operations"],
+      "properties": {
+        "mode": {
+          "const": "integrated"
+        },
+        "operations": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "properties": {
+            "list": {
+              "$ref": "#/$defs/listOperation"
+            },
+            "read": {
+              "$ref": "#/$defs/readOperation"
+            },
+            "create": {
+              "$ref": "#/$defs/createOperation"
+            },
+            "update": {
+              "$ref": "#/$defs/updateOperation"
+            },
+            "delete": {
+              "$ref": "#/$defs/idMutationOperation"
+            },
+            "activate": {
+              "$ref": "#/$defs/idMutationOperation"
+            },
+            "deactivate": {
+              "$ref": "#/$defs/idMutationOperation"
+            }
+          }
+        }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "path", "request", "response"],
+      "properties": {
+        "method": {
+          "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^/[^\\s]*$"
+        },
+        "request": {
+          "enum": ["query", "draft", "id", "id-draft"]
+        },
+        "response": {
+          "enum": ["page", "entity", "void"]
+        },
+        "id": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["location", "name"],
+          "properties": {
+            "location": {
+              "enum": ["path", "query", "body"]
+            },
+            "name": {
+              "type": "string",
+              "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+            }
+          }
+        },
+        "queryParameters": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["page", "pageSize", "search", "sortField", "sortDirection"],
+          "properties": {
+            "page": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pageSize": {
+              "type": "string",
+              "minLength": 1
+            },
+            "search": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sortField": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sortDirection": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "listOperation": {
+      "allOf": [
+        { "$ref": "#/$defs/operation" },
+        {
+          "properties": {
+            "request": { "const": "query" },
+            "response": { "const": "page" }
+          }
+        },
+        {
+          "if": {
+            "properties": { "method": { "const": "GET" } },
+            "required": ["method"]
+          },
+          "then": { "required": ["queryParameters"] },
+          "else": { "not": { "required": ["queryParameters"] } }
+        },
+        { "not": { "required": ["id"] } }
+      ]
+    },
+    "readOperation": {
+      "allOf": [
+        { "$ref": "#/$defs/operation" },
+        {
+          "properties": {
+            "request": { "const": "id" },
+            "response": { "const": "entity" }
+          },
+          "required": ["id"]
+        },
+        { "not": { "required": ["queryParameters"] } }
+      ]
+    },
+    "createOperation": {
+      "allOf": [
+        { "$ref": "#/$defs/operation" },
+        {
+          "properties": {
+            "request": { "const": "draft" },
+            "response": { "enum": ["entity", "void"] }
+          }
+        },
+        { "not": { "anyOf": [{ "required": ["id"] }, { "required": ["queryParameters"] }] } }
+      ]
+    },
+    "updateOperation": {
+      "allOf": [
+        { "$ref": "#/$defs/operation" },
+        {
+          "properties": {
+            "request": { "const": "id-draft" },
+            "response": { "enum": ["entity", "void"] }
+          },
+          "required": ["id"]
+        },
+        { "not": { "required": ["queryParameters"] } }
+      ]
+    },
+    "idMutationOperation": {
+      "allOf": [
+        { "$ref": "#/$defs/operation" },
+        {
+          "properties": {
+            "request": { "const": "id" },
+            "response": { "enum": ["entity", "void"] }
+          },
+          "required": ["id"]
+        },
+        { "not": { "required": ["queryParameters"] } }
+      ]
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$"
+    },
+    "operationName": {
+      "enum": ["list", "read", "create", "update", "delete", "activate", "deactivate"]
+    }
+  }
+}

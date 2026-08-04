@@ -1,0 +1,4 @@
+interface:
+  display_name: "Atomic UI Builder"
+  short_description: "Genera UI con variantes y UX Atomic"
+  default_prompt: "Use $atomic-ui-builder para construir una interfaz desde requerimientos aplicando variantes y reglas UX canónicas."

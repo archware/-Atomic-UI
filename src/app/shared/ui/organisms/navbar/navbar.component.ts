@@ -180,7 +180,7 @@ export interface NavBarBrand {
     }
     .navbar__logo { height: 28px; width: auto; }
     .navbar__brand-name {
-      font-size: var(--text-base);
+      font-size: var(--text-md);
       font-weight: var(--font-semibold, 600);
       color: var(--text-color);
       white-space: nowrap;

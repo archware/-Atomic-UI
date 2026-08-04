@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
-import { ButtonComponent, ButtonVariant } from './button.component';
+import { ButtonComponent, ButtonTone, ButtonVariant } from './button.component';
 
 describe('ButtonComponent', () => {
   let component: ButtonComponent;
@@ -33,6 +33,7 @@ describe('ButtonComponent', () => {
       'success',
       'warning',
       'danger',
+      'soft',
       'outline',
       'ghost',
     ];
@@ -44,6 +45,27 @@ describe('ButtonComponent', () => {
         const button = fixture.nativeElement.querySelector('button');
         expect(button.classList.contains(`btn-${variant}`)).toBeTrue();
       });
+    });
+  });
+
+  describe('semantic tones', () => {
+    const tones: ButtonTone[] = ['neutral', 'primary', 'success', 'warning', 'danger', 'info'];
+
+    tones.forEach((tone) => {
+      it(`should apply btn-tone-${tone} when tone is ${tone}`, () => {
+        setInput('variant', 'soft');
+        setInput('tone', tone);
+
+        const button = fixture.nativeElement.querySelector('button');
+        expect(button.classList.contains(`btn-tone-${tone}`)).toBeTrue();
+      });
+    });
+
+    it('should keep auxiliary actions neutral by default', () => {
+      setInput('variant', 'outline');
+
+      const button = fixture.nativeElement.querySelector('button');
+      expect(button.classList.contains('btn-tone-neutral')).toBeTrue();
     });
   });
 
@@ -67,6 +89,23 @@ describe('ButtonComponent', () => {
 
       const button = fixture.nativeElement.querySelector('button');
       expect(button.classList.contains('btn-md')).toBeFalse();
+    });
+  });
+
+  describe('dialog close contract', () => {
+    it('keeps the projected close control square and centered', () => {
+      fixture.nativeElement.setAttribute('dialog-close', '');
+      fixture.detectChanges();
+
+      const host = fixture.nativeElement as HTMLElement;
+      const button = host.querySelector('button') as HTMLButtonElement;
+      host.style.setProperty('--control-height', '44px');
+
+      expect(getComputedStyle(host).display).toBe('inline-flex');
+      expect(['44px', 'var(--control-height)']).toContain(getComputedStyle(host).width);
+      expect(['44px', 'var(--control-height)']).toContain(getComputedStyle(host).height);
+      expect(getComputedStyle(button).paddingLeft).toBe('0px');
+      expect(getComputedStyle(button).paddingRight).toBe('0px');
     });
   });
 

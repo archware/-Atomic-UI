@@ -320,6 +320,9 @@ export class AccordionItemComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (!value) {
+      this.focusHeaderWhenContentContainsFocus();
+    }
     this.isOpen.set(value);
     if (emit) {
       this.openChange.emit(value);
@@ -330,6 +333,15 @@ export class AccordionItemComponent implements OnInit, OnDestroy {
     this.elementRef.nativeElement
       .querySelector<HTMLButtonElement>('.accordion-header')
       ?.focus();
+  }
+
+  private focusHeaderWhenContentContainsFocus(): void {
+    const host = this.elementRef.nativeElement;
+    const content = host.querySelector<HTMLElement>('.accordion-content');
+    const activeElement = host.ownerDocument.activeElement;
+    if (content && activeElement && content.contains(activeElement)) {
+      this.focusHeader();
+    }
   }
 
   handleHeaderKeydown(event: KeyboardEvent): void {

@@ -1,0 +1,101 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "toast",
+  "layer": "molecule",
+  "selector": "app-toast",
+  "export": "ToastComponent",
+  "source": "src/app/shared/ui/molecules/toast/toast.component.ts",
+  "relatedExports": ["ToastService", "ToastConfig", "ToastItem", "ToastType"],
+  "relatedSources": ["src/app/shared/ui/services/toast.service.ts"],
+  "purpose": "Notificación global transitoria controlada por un servicio singleton y renderizada en top layer.",
+  "variants": [
+    {
+      "name": "type",
+      "values": [
+        { "value": "info", "meaning": "Información general.", "default": true },
+        { "value": "success", "meaning": "Operación completada." },
+        { "value": "warning", "meaning": "Advertencia no bloqueante." },
+        { "value": "error", "meaning": "Fallo que requiere atención." }
+      ]
+    },
+    {
+      "name": "dismissible",
+      "values": [
+        { "value": true, "meaning": "Presenta acción cerrar.", "default": true },
+        { "value": false, "meaning": "Solo se descarta por duración o clear." }
+      ]
+    },
+    {
+      "name": "duration",
+      "values": [
+        { "value": 4000, "meaning": "Duración predeterminada en milisegundos.", "default": true },
+        { "value": 0, "meaning": "Persistente hasta dismiss o clear." },
+        { "value": "custom-number", "meaning": "Cualquier duración numérica explícita en milisegundos." }
+      ]
+    }
+  ],
+  "inputs": [],
+  "outputs": [],
+  "methods": [
+    { "name": "ToastService.show", "type": "(config: ToastConfig) => void", "meaning": "Crea un toast; message es obligatorio y type, duration, dismissible son opcionales." },
+    { "name": "ToastService.info", "type": "(message: string, duration?: number) => void", "meaning": "Atajo info." },
+    { "name": "ToastService.success", "type": "(message: string, duration?: number) => void", "meaning": "Atajo success." },
+    { "name": "ToastService.warning", "type": "(message: string, duration?: number) => void", "meaning": "Atajo warning." },
+    { "name": "ToastService.error", "type": "(message: string, duration?: number) => void", "meaning": "Atajo error." },
+    { "name": "ToastService.dismiss", "type": "(id: number) => void", "meaning": "Inicia salida y elimina el item después de 300ms." },
+    { "name": "ToastService.clear", "type": "() => void", "meaning": "Elimina todos los toasts inmediatamente." }
+  ],
+  "behavior": [
+    "Debe existir una única instancia de app-toast en el nivel raíz de la aplicación.",
+    "ToastService es providedIn root; duration omitido usa 4000ms y dismissible omitido usa true.",
+    "El host usa popover=manual y se vuelve a abrir para colocar el toast más reciente en top layer."
+  ],
+  "states": [
+    { "name": "empty", "meaning": "Sin notificaciones y popover oculto." },
+    { "name": "visible", "meaning": "Uno o más toasts visibles." },
+    { "name": "exiting", "meaning": "Animación de 300ms antes de eliminar." },
+    { "name": "persistent", "meaning": "duration=0 evita descarte automático." }
+  ],
+  "a11y": [
+    "El host se nombra Notificaciones y cada toast usa role=alert.",
+    "error anuncia assertive y los demás tipos polite.",
+    "El botón opcional usa aria-label Cerrar.",
+    "Los iconos Font Awesome actuales no están marcados aria-hidden."
+  ],
+  "responsive": [
+    "En escritorio aparece arriba a la derecha con máximo 360px.",
+    "A 768px o menos aparece abajo y se extiende entre --space-4 a izquierda y derecha."
+  ],
+  "tokens": [
+    "--border-color",
+    "--danger-color-dark",
+    "--danger-color-light",
+    "--header-height",
+    "--icon-md",
+    "--info-color-dark",
+    "--info-color-light",
+    "--radius-md",
+    "--shadow-lg",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--success-color-dark",
+    "--success-color-light",
+    "--surface-elevated",
+    "--text-color",
+    "--text-color-secondary",
+    "--text-md",
+    "--text-sm",
+    "--text-xl",
+    "--warning-color-dark",
+    "--warning-color-light"
+  ],
+  "story": { "path": "src/stories/ui-toast.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/molecules/toast/toast.component.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": ["La API para consumidores es ToastService; app-toast solo se monta una vez en la raíz."]
+  },
+  "canonicalFor": ["global-feedback", "operation-result", "transient-notification"]
+}

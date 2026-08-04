@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "atomic.recipe.master-detail.v1",
+  "kind": "ui-recipe",
+  "variant": "master-detail",
+  "intent": "read-and-inspect",
+  "summary": "Listado paginado con selección y panel de detalle accesible.",
+  "whenToUse": "Consultas donde el usuario necesita inspeccionar un registro sin abandonar el listado.",
+  "componentStack": {
+    "header": ["page-header"],
+    "filters": ["query-toolbar", "input", "button"],
+    "surface": ["card"],
+    "table": ["data-table", "table-action", "action-group"],
+    "detail": ["data-state", "card"],
+    "feedback": ["alert"]
+  },
+  "requiredOperations": ["list", "read"],
+  "optionalOperations": [],
+  "supportedVariants": {
+    "density": ["comfortable", "compact"],
+    "detailPlacement": ["aside", "below"],
+    "actionDisplay": ["inline", "overflow"]
+  },
+  "defaults": {
+    "density": "compact",
+    "detailPlacement": "aside",
+    "actionDisplay": "inline"
+  },
+  "extensionSlots": ["toolbar-after", "detail-before", "detail-after"],
+  "outputLayers": ["models", "data-access", "facade", "page", "tests"],
+  "qualityGates": [
+    "angular-22",
+    "zoneless",
+    "on-push",
+    "typed-contract",
+    "no-overwrite",
+    "atomic-only-controls"
+  ]
+}

@@ -55,4 +55,17 @@ describe('Select', () => {
 
     expect(selected).toBe(7);
   });
+
+  it('identifica visualmente los campos obligatorios', async () => {
+    const fixture = TestBed.createComponent(Select);
+    fixture.componentRef.setInput('label', 'Tipo de vivienda');
+    fixture.componentRef.setInput('required', true);
+    await fixture.whenStable();
+
+    const marker = fixture.nativeElement.querySelector('.field__required') as HTMLElement;
+    const element = fixture.nativeElement.querySelector('select') as HTMLSelectElement;
+
+    expect(marker.textContent?.trim()).toBe('*');
+    expect(element.getAttribute('aria-required')).toBe('true');
+  });
 });

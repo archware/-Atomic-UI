@@ -135,13 +135,13 @@ export interface TimelineItem {
 
     /* Status variants */
     .timeline-completed .timeline-dot {
-      background: var(--color-success);
-      border-color: var(--color-success);
+      background: var(--success-color);
+      border-color: var(--success-color);
       color: white;
     }
 
     .timeline-completed .timeline-connector {
-      background: var(--color-success);
+      background: var(--success-color);
     }
 
     .timeline-active .timeline-dot {
@@ -151,8 +151,8 @@ export interface TimelineItem {
     }
 
     .timeline-error .timeline-dot {
-      background: var(--color-error);
-      border-color: var(--color-error);
+      background: var(--danger-color);
+      border-color: var(--danger-color);
       color: white;
     }
 
@@ -192,14 +192,14 @@ export interface TimelineItem {
     .timeline-title {
       font-size: var(--text-sm);
       font-weight: 600;
-      color: var(--text-color-primary);
+      color: var(--text-color);
     }
 
     .timeline-badge {
       font-size: var(--text-xs);
       padding: var(--space-1) var(--space-2);
       border-radius: var(--radius-full);
-      background: var(--primary-color-alpha);
+      background: var(--primary-color-lighter);
       color: var(--primary-color);
       font-weight: 500;
     }

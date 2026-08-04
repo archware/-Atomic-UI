@@ -1,0 +1,104 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "pagination",
+  "layer": "molecule",
+  "selector": "app-pagination",
+  "export": "PaginationComponent",
+  "source": "src/app/shared/ui/molecules/pagination/pagination.component.ts",
+  "relatedSources": ["src/app/shared/ui/molecules/select2/select2.component.ts"],
+  "purpose": "Navegación paginada con resumen de registros, tamaños fijos y cuatro tratamientos visuales.",
+  "variants": [
+    {
+      "name": "variant",
+      "values": [
+        { "value": "standard", "meaning": "Botones numerados con anterior y siguiente.", "default": true },
+        { "value": "minimal", "meaning": "Solo acciones textuales Anterior y Siguiente con resumen de página." },
+        { "value": "rounded", "meaning": "Botones numerados circulares y sin borde." },
+        { "value": "cards", "meaning": "Botones numerados compactos con tratamiento de tarjeta." }
+      ]
+    },
+    {
+      "name": "size",
+      "values": [
+        { "value": "sm", "meaning": "Controles compactos." },
+        { "value": "md", "meaning": "Controles estándar.", "default": true },
+        { "value": "lg", "meaning": "Controles de mayor tamaño." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "variant", "type": "'standard' | 'minimal' | 'rounded' | 'cards'", "default": "standard", "meaning": "Tratamiento visual y patrón de navegación." },
+    { "name": "size", "type": "'sm' | 'md' | 'lg'", "default": "md", "meaning": "Escala de los botones." },
+    { "name": "maxVisible", "type": "number", "default": 5, "meaning": "Cantidad máxima usada al calcular botones numéricos y elipsis." },
+    { "name": "total", "type": "number", "default": 0, "meaning": "Cantidad total de registros." },
+    { "name": "pageSize", "type": "number", "default": 10, "meaning": "Registros por página; el selector ofrece 10, 20, 50, 100 y 500." },
+    { "name": "page", "type": "number", "default": 1, "meaning": "Página actual controlada por el consumidor." }
+  ],
+  "outputs": [
+    { "name": "pageChange", "type": "number", "meaning": "Nueva página válida distinta de la actual." },
+    { "name": "pageSizeChange", "type": "number", "meaning": "Nuevo tamaño seleccionado; no reinicia page automáticamente." }
+  ],
+  "methods": [
+    { "name": "goToPage", "type": "(page: number) => void", "meaning": "Actualiza y emite únicamente páginas dentro del intervalo válido." },
+    { "name": "onPageSizeChange", "type": "(newSize: number | string) => void", "meaning": "Convierte el valor, actualiza pageSize y emite pageSizeChange." }
+  ],
+  "behavior": [
+    "totalPages redondea hacia arriba y nunca entrega menos de una página.",
+    "visiblePages conserva primera y última página y agrega elipsis cuando corresponde.",
+    "La variante minimal omite números y presenta la posición actual como texto.",
+    "Cambiar pageSize no restablece la página; esa decisión pertenece al consumidor."
+  ],
+  "states": [
+    { "name": "first-page", "meaning": "Deshabilita la acción anterior." },
+    { "name": "middle-page", "meaning": "Habilita ambas direcciones y marca la página activa." },
+    { "name": "last-page", "meaning": "Deshabilita la acción siguiente." },
+    { "name": "many-pages", "meaning": "Reduce la lista visible con una o dos elipsis." },
+    { "name": "single-page", "meaning": "Presenta una única página y bloquea ambas direcciones." }
+  ],
+  "a11y": [
+    "Usa nav con aria-label Paginación.",
+    "La página activa expone aria-current=page y cada número tiene un nombre accesible.",
+    "Anterior y siguiente son botones nativos con disabled; sus iconos son decorativos.",
+    "La etiqueta visible del tamaño no se conecta actualmente con un id del Select2 interno."
+  ],
+  "responsive": [
+    "A 639px o menos el host permite scroll horizontal y evita comprimir botones y elipsis.",
+    "La información superior admite wrap, pero la navegación numérica conserva su ancho de contenido."
+  ],
+  "tokens": [
+    "--border-color",
+    "--control-height-sm",
+    "--primary-50",
+    "--primary-700",
+    "--primary-color",
+    "--primary-rgb",
+    "--radius-full",
+    "--radius-md",
+    "--radius-sm",
+    "--shadow-sm",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--surface-background",
+    "--surface-hover",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-on-primary",
+    "--text-color-secondary",
+    "--text-md",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": { "path": "src/stories/ui-pagination.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/molecules/pagination/pagination.component.spec.ts", "status": "available" },
+  "stability": {
+    "status": "candidate",
+    "notes": [
+      "La implementación no declara ChangeDetectionStrategy.OnPush y conserva estilos inline en el template.",
+      "Las stories actuales ejercitan standard, pero no documentan minimal, rounded, cards ni tamaños."
+    ]
+  },
+  "canonicalFor": ["pagination", "record-pagination", "page-navigation"]
+}

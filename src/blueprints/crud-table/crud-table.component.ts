@@ -145,7 +145,7 @@ export class CrudTableComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  private readonly fb = inject(FormBuilder);
+  private readonly fb = inject(FormBuilder).nonNullable;
   private readonly router = inject(Router);
   private api = inject(ApiService);
 
@@ -340,7 +340,7 @@ export class CrudTableComponent implements OnInit {
       meta: { total: filtered.length, page, perPage, totalPages: Math.ceil(filtered.length / perPage) }
     };
     
-    this.listApi.execute(of(res).pipe(delay(600)) as any);
+    this.listApi.execute(of(res).pipe(delay(600)));
   }
 
   // ============================================
@@ -409,7 +409,7 @@ export class CrudTableComponent implements OnInit {
     if (this.allSelected()) {
       this.clearSelection();
     } else {
-      const allIds = new Set(this.items().map((item: any) => item.id));
+      const allIds = new Set<string | number>(this.items().map(item => item.id));
       this.selectedItems.set(allIds);
       this.allSelected.set(true);
     }
@@ -474,20 +474,24 @@ export class CrudTableComponent implements OnInit {
       return;
     }
 
-    const data: any = this.entityForm.value;
+    const data = this.entityForm.getRawValue();
 
     if (this.isEditMode()) {
       const item = this.currentItem();
       if (item) {
         const idx = FAKE_DB.findIndex(e => e.id === item.id);
-        if (idx !== -1) FAKE_DB[idx] = { ...FAKE_DB[idx], ...data } as Entity;
-        this.saveApi.execute(of(data).pipe(delay(800)) as any);
+        const updatedItem: Entity = { ...item, ...data };
+        if (idx !== -1) FAKE_DB[idx] = updatedItem;
+        this.saveApi.execute(of(updatedItem).pipe(delay(800)));
       }
     } else {
-      data.id = String(idCounter++);
-      data.createdAt = new Date().toISOString().split('T')[0];
-      FAKE_DB.unshift(data as Entity);
-      this.saveApi.execute(of(data).pipe(delay(800)) as any);
+      const createdItem: Entity = {
+        ...data,
+        id: String(idCounter++),
+        createdAt: new Date().toISOString().split('T')[0]
+      };
+      FAKE_DB.unshift(createdItem);
+      this.saveApi.execute(of(createdItem).pipe(delay(800)));
     }
 
     // Check for success
@@ -520,7 +524,7 @@ export class CrudTableComponent implements OnInit {
     if (item) {
       const idx = FAKE_DB.findIndex(e => e.id === item.id);
       if (idx !== -1) { FAKE_DB.splice(idx, 1); }
-      this.deleteApi.execute(of({ success: true }).pipe(delay(600)) as any);
+      this.deleteApi.execute(of({ success: true }).pipe(delay(600)));
       const checkDelete = setInterval(() => {
         if (this.deleteApi.success()) {
           clearInterval(checkDelete);

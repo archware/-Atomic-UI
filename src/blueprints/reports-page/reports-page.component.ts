@@ -4,9 +4,9 @@ import {
   LayoutShellComponent,
   TopbarComponent,
   SidebarComponent,
+  SidebarMenuItem,
   PanelComponent,
   RowComponent,
-  AvatarComponent,
   TextComponent,
   ButtonComponent,
   ThemeSwitcherComponent
@@ -21,7 +21,6 @@ import {
     SidebarComponent,
     PanelComponent,
     RowComponent,
-    AvatarComponent,
     TextComponent,
     ButtonComponent,
     ThemeSwitcherComponent
@@ -88,7 +87,7 @@ export class ReportsPageComponent {
 
   sidebarUser = computed(() => ({ name: 'Usuario', role: 'Admin', initials: 'US', photo: '' }));
 
-  onNavigate(item: any) {
+  onNavigate(item: SidebarMenuItem): void {
     if (item.route) this.router.navigate([item.route]);
   }
 }

@@ -1,0 +1,43 @@
+{
+  "$schema": "../schemas/ux-rule.schema.json",
+  "schemaVersion": 1,
+  "id": "ux-dialog-behavior",
+  "title": "Comportamiento de diálogos",
+  "intent": "Mantener foco, jerarquía, scroll y cierre predecibles en formularios y confirmaciones.",
+  "priority": "must",
+  "appliesTo": {
+    "intents": ["crud", "form", "wizard", "transaction", "document", "authentication", "settings"],
+    "components": ["crud-dialog", "form-dialog", "button", "alert"]
+  },
+  "requirements": [
+    {
+      "id": "declarative-open-state",
+      "statement": "Sincronizar apertura y cierre mediante el contrato público del diálogo, sin manipular su DOM desde una feature.",
+      "enforcedBy": ["catalog", "recipe", "generator", "gate"]
+    },
+    {
+      "id": "focus-cycle",
+      "statement": "Mover el foco al primer control útil, enfocar el primer inválido al enviar y devolver foco al disparador al cerrar.",
+      "enforcedBy": ["generator", "unit", "a11y"]
+    },
+    {
+      "id": "reset-scroll",
+      "statement": "Reiniciar la posición vertical al abrir o reutilizar el diálogo.",
+      "enforcedBy": ["unit", "visual"]
+    },
+    {
+      "id": "safe-cancel",
+      "statement": "Impedir cierre o cancelación destructiva mientras una mutación no cancelable está en progreso.",
+      "enforcedBy": ["recipe", "generator", "unit"]
+    }
+  ],
+  "acceptance": [
+    "Escape sigue el mismo contrato de cancelación que el botón secundario.",
+    "La navegación por teclado permanece dentro del diálogo modal.",
+    "Cerrar restaura el foco sin saltos de scroll."
+  ],
+  "evidence": [
+    "src/app/shared/ui/organisms/crud-dialog/crud-dialog.ts",
+    "src/app/shared/ui/organisms/form-dialog/form-dialog.ts"
+  ]
+}

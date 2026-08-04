@@ -7,12 +7,14 @@ el propio gate rechaza cualquier modificación local.
 ## Aplicación nueva
 
 ```bash
-npm run create:project mi-aplicacion -- --template=full
+npm run create:project -- mi-aplicacion --template=shell
 ```
 
-El generador copia el ADN, crea `AGENTS.md`, inventaría todos los componentes,
+El generador copia el ADN, crea `AGENTS.md`, genera un inventario de todos los componentes,
 instala la política, el gate y el workflow de CI, y agrega `check:atomic` al
-`package.json`. El proyecto no se considera creado si ese bootstrap falla.
+`package.json`. No copia blueprints demo ni datos simulados. La primera UI se
+incorpora después con un contrato validado y `generate:ui --dry-run`. El
+proyecto no se considera creado si ese bootstrap falla.
 
 ## Aplicación existente
 
@@ -34,8 +36,9 @@ copiarse desde Atomic.
 - Features y páginas no admiten primitivas visuales nativas, estilos inline,
   colores fijos ni selectores hacia el DOM interno de controles.
 - El workflow `Atomic governance` ejecuta la compuerta en push y pull request.
-- La CI de `-Atomic-UI` prueba el bootstrap y cuatro violaciones negativas, y
-  rechaza blueprints que incumplan la misma norma.
+- La CI de `-Atomic-UI` prueba el bootstrap y cuatro violaciones negativas,
+  rechaza blueprints productivos que incumplan la norma y mantiene los demos
+  históricos explícitamente aislados mediante su manifiesto.
 
 En GitHub se debe marcar el job `Atomic governance / atomic-governance` como
 status check requerido de la rama protegida. Esa configuración del repositorio

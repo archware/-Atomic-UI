@@ -16,7 +16,7 @@ try {
     [
       path.join(atomicRoot, 'tools', 'create-project.js'),
       projectName,
-      '--template=login+dashboard',
+      '--template=shell',
       `--output=${tempRoot}`,
       '--skip-install',
     ],
@@ -32,12 +32,22 @@ try {
     fs.readFileSync(path.join(projectRoot, 'docs', 'atomic-provenance.json'), 'utf8'),
   );
   const packageJson = JSON.parse(fs.readFileSync(path.join(projectRoot, 'package.json'), 'utf8'));
+  const appConfig = fs.readFileSync(path.join(projectRoot, 'src/app/app.config.ts'), 'utf8');
+  const routes = fs.readFileSync(path.join(projectRoot, 'src/app/app.routes.ts'), 'utf8');
   if (
     manifest.policyVersion !== '1.0.0' ||
     manifest.components.length === 0 ||
     packageJson.scripts?.['check:atomic'] !== 'node scripts/check-atomic-provenance.mjs'
   ) {
     throw new Error('El proyecto generado no contiene el contrato Atomic completo.');
+  }
+  if (
+    !appConfig.includes('provideZonelessChangeDetection()') ||
+    appConfig.includes('provideZoneChangeDetection') ||
+    routes.includes('./pages/') ||
+    fs.existsSync(path.join(projectRoot, 'src/app/pages'))
+  ) {
+    throw new Error('El shell generado no es zoneless o incluyó blueprints demo.');
   }
 
   console.log(

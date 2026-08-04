@@ -166,6 +166,7 @@
 
    --button-outline-border: var(--border-color-strong);
    --button-outline-text: var(--text-color-secondary);
+  --button-outline-bg: var(--surface-section);
    --button-outline-hover-bg: var(--hover-background-subtle);
 
    --button-ghost-text: var(--text-color-secondary);
@@ -439,6 +440,7 @@ html.dark {
 
    --button-outline-border: var(--border-color-strong);
    --button-outline-text: var(--text-color-secondary);
+  --button-outline-bg: var(--surface-section);
    --button-outline-hover-bg: var(--hover-background-subtle);
 
    --button-ghost-text: var(--text-color-secondary);
@@ -677,6 +679,7 @@ html.dark {
 
    --button-outline-border: var(--border-color-strong);
    --button-outline-text: var(--text-color-secondary);
+  --button-outline-bg: var(--surface-section);
    --button-outline-hover-bg: var(--hover-background-subtle);
 
    --button-ghost-text: var(--text-color-secondary);

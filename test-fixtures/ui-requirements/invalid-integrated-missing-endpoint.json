@@ -1,0 +1,66 @@
+{
+  "$schema": "../../catalog/schemas/ui-requirement.schema.json",
+  "schemaVersion": 1,
+  "id": "atomic.fixture.invalid.integrated",
+  "recipe": "modal-catalog",
+  "feature": {
+    "key": "invalid-record",
+    "className": "InvalidRecord",
+    "selector": "prest-invalid-record-page",
+    "title": "Registros inválidos",
+    "singular": "registro",
+    "plural": "registros"
+  },
+  "model": {
+    "name": "InvalidRecord",
+    "id": {
+      "name": "id",
+      "type": "number"
+    },
+    "fields": [
+      {
+        "name": "name",
+        "type": "string",
+        "label": "Nombre",
+        "required": true
+      }
+    ]
+  },
+  "table": {
+    "columns": [
+      {
+        "field": "name",
+        "header": "Nombre"
+      }
+    ]
+  },
+  "editor": {
+    "fields": ["name"]
+  },
+  "contract": {
+    "mode": "integrated",
+    "operations": {
+      "list": {
+        "method": "GET",
+        "request": "query",
+        "response": "page"
+      },
+      "create": {
+        "method": "POST",
+        "path": "/records",
+        "request": "draft",
+        "response": "entity"
+      },
+      "update": {
+        "method": "PATCH",
+        "path": "/records/{id}",
+        "request": "id-draft",
+        "response": "entity",
+        "id": {
+          "location": "path",
+          "name": "id"
+        }
+      }
+    }
+  }
+}

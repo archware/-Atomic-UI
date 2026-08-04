@@ -1,15 +1,15 @@
 /* CSS Grid Layout */
 .layout-shell {
   display: grid;
-  height: 100vh;   /* Fallback para navegadores sin soporte dvh */
-  height: 100dvh;  /* Dynamic viewport height: corrige iOS Safari (barra inferior del navegador) */
+  height: 100vh; /* Fallback para navegadores sin soporte dvh */
+  height: 100dvh; /* Dynamic viewport height: corrige iOS Safari (barra inferior del navegador) */
   /* Use CSS variable for sidebar width (default 260px) */
   --sidebar-width: 260px;
   grid-template-columns: var(--sidebar-width) 1fr;
   grid-template-rows: auto 1fr;
   grid-template-areas:
-    "sidebar header"
-    "sidebar content";
+    'sidebar header'
+    'sidebar content';
   background-color: var(--surface-section);
   color: var(--text-color);
 }
@@ -19,11 +19,15 @@
   grid-area: sidebar;
   background-color: var(--sidebar-bg);
   border-right: 1px solid var(--border-color);
-  overflow-y: auto;
+  overflow: hidden;
   z-index: 10;
   width: var(--sidebar-width);
   min-width: var(--sidebar-width);
-  transition: width 0.3s ease, min-width 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    width 0.3s ease,
+    min-width 0.3s ease,
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 /* Sidebar hidden state - desktop only */
@@ -94,8 +98,8 @@
     grid-template-columns: 1fr;
     grid-template-rows: 64px 1fr;
     grid-template-areas:
-      "header"
-      "content";
+      'header'
+      'content';
   }
 
   .layout-sidebar {

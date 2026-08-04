@@ -4,10 +4,10 @@
   [panelClass]="panelClass()"
   [labelledBy]="titleId()"
   [describedBy]="description() ? descriptionId() : null"
-  (cancelled)="cancelled.emit($event)"
-  (closed)="closed.emit()"
+  (cancelled)="handleCancelled($event)"
+  (closed)="handleClosed()"
 >
-  <article class="form-dialog">
+  <article class="form-dialog" [attr.aria-busy]="busy()">
     <header class="form-dialog__header">
       <div class="form-dialog__heading">
         @if (eyebrow()) {

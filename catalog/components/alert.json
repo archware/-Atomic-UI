@@ -1,0 +1,95 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "alert",
+  "layer": "molecule",
+  "selector": "app-alert",
+  "export": "AlertComponent",
+  "source": "src/app/shared/ui/molecules/alert/alert.component.ts",
+  "purpose": "Mensaje semántico inline que permanece dentro del flujo del documento.",
+  "variants": [
+    {
+      "name": "variant",
+      "values": [
+        { "value": "info", "meaning": "Información neutral.", "default": true },
+        { "value": "success", "meaning": "Resultado satisfactorio." },
+        { "value": "warning", "meaning": "Advertencia que requiere atención." },
+        { "value": "danger", "meaning": "Error o riesgo crítico." }
+      ]
+    },
+    {
+      "name": "size",
+      "values": [
+        { "value": "sm", "meaning": "Mensaje compacto." },
+        { "value": "md", "meaning": "Mensaje estándar.", "default": true },
+        { "value": "lg", "meaning": "Mensaje prominente." }
+      ]
+    },
+    {
+      "name": "flow-spacing",
+      "values": [
+        { "value": "default", "meaning": "Separación amplia posterior.", "default": true },
+        { "value": "compact", "meaning": "Separación posterior reducida." },
+        { "value": "none", "meaning": "Sin margen posterior; útil dentro de tablas o composiciones." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "variant", "type": "AlertVariant", "default": "info", "meaning": "Semántica y nivel de anuncio." },
+    { "name": "size", "type": "AlertSize", "default": "md", "meaning": "Escala del mensaje." },
+    { "name": "title", "type": "string", "default": "", "meaning": "Título opcional." },
+    { "name": "message", "type": "string", "default": "", "meaning": "Mensaje opcional además del contenido proyectado." },
+    { "name": "closable", "type": "boolean", "default": false, "meaning": "Permite descartar localmente el aviso." },
+    { "name": "flowSpacing", "type": "AlertFlowSpacing", "default": "default", "meaning": "Separación respecto del siguiente bloque." }
+  ],
+  "outputs": [
+    { "name": "closed", "type": "void", "meaning": "Se emite después de ocultar el aviso con el botón cerrar." }
+  ],
+  "slots": [
+    { "name": "default", "type": "projected content", "meaning": "Contenido adicional del cuerpo." }
+  ],
+  "states": [
+    { "name": "visible", "meaning": "Aviso renderizado con role alert." },
+    { "name": "dismissible", "meaning": "Presenta acción cerrar." },
+    { "name": "dismissed", "meaning": "El estado interno visible es false y deja de renderizar." }
+  ],
+  "a11y": [
+    "Usa role=alert; danger anuncia assertive y el resto polite.",
+    "El icono semántico está marcado aria-hidden.",
+    "El botón opcional usa aria-label Cerrar alerta y foco visible."
+  ],
+  "responsive": [
+    "No define quiebres propios; el contenido flex puede encogerse y el espaciado de flujo es configurable."
+  ],
+  "tokens": [
+    "--alert-danger-bg",
+    "--alert-danger-border",
+    "--alert-danger-text",
+    "--alert-flow-gap",
+    "--alert-flow-gap-compact",
+    "--alert-info-bg",
+    "--alert-info-border",
+    "--alert-info-text",
+    "--alert-success-bg",
+    "--alert-success-border",
+    "--alert-success-text",
+    "--alert-warning-bg",
+    "--alert-warning-border",
+    "--alert-warning-text",
+    "--radius-md",
+    "--radius-sm",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--space-10",
+    "--text-base",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": { "path": "src/stories/ui-alert.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/molecules/alert/alert.component.spec.ts", "status": "available" },
+  "stability": { "status": "stable", "notes": [] },
+  "canonicalFor": ["inline-feedback", "form-error-summary", "persistent-status"]
+}

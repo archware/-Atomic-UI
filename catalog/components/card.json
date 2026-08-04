@@ -1,0 +1,106 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "card",
+  "layer": "molecule",
+  "selector": "app-card",
+  "export": "CardComponent",
+  "source": "src/app/shared/ui/molecules/card/card.component.ts",
+  "purpose": "Agrupa contenido relacionado con encabezado, imagen, cuerpo y acciones opcionales.",
+  "variants": [
+    {
+      "name": "variant",
+      "values": [
+        { "value": "default", "meaning": "Superficie y sombra discretas.", "default": true },
+        { "value": "elevated", "meaning": "Superficie elevada con mayor profundidad al hover." },
+        { "value": "outlined", "meaning": "Fondo transparente sin sombra." },
+        { "value": "filled", "meaning": "Superficie de sección sin borde ni sombra." },
+        { "value": "interactive", "meaning": "Apariencia interactiva; requiere clickable para semántica y emisión." }
+      ]
+    },
+    {
+      "name": "size",
+      "values": [
+        { "value": "sm", "meaning": "Padding compacto." },
+        { "value": "md", "meaning": "Padding estándar.", "default": true },
+        { "value": "lg", "meaning": "Padding amplio." }
+      ]
+    },
+    {
+      "name": "layout",
+      "values": [
+        { "value": false, "meaning": "Contenido vertical.", "default": true },
+        { "value": true, "meaning": "Imagen lateral y contenido horizontal hasta 768px." }
+      ]
+    },
+    {
+      "name": "clickable",
+      "values": [
+        { "value": false, "meaning": "Article estático.", "default": true },
+        { "value": true, "meaning": "Article con rol button, teclado y cardClick." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "variant", "type": "CardVariant", "default": "default", "meaning": "Tratamiento de superficie." },
+    { "name": "size", "type": "CardSize", "default": "md", "meaning": "Densidad interna." },
+    { "name": "title", "type": "string", "default": "", "meaning": "Título opcional." },
+    { "name": "subtitle", "type": "string", "default": "", "meaning": "Descripción opcional." },
+    { "name": "icon", "type": "string", "default": "", "meaning": "Clases del icono de encabezado." },
+    { "name": "clickable", "type": "boolean", "default": false, "meaning": "Habilita semántica y evento de activación." },
+    { "name": "horizontal", "type": "boolean", "default": false, "meaning": "Coloca imagen y contenido lado a lado." }
+  ],
+  "outputs": [
+    { "name": "cardClick", "type": "void", "meaning": "Activación por clic, Enter o Space; solo emite si clickable." }
+  ],
+  "slots": [
+    { "name": "default", "type": "projected content", "meaning": "Cuerpo principal." },
+    { "name": "[slot=image]", "type": "projected content", "meaning": "Imagen superior o lateral." },
+    { "name": "[slot=actions]", "type": "projected content", "meaning": "Pie de acciones." }
+  ],
+  "states": [
+    { "name": "static", "meaning": "Article no interactivo." },
+    { "name": "clickable", "meaning": "Activable por puntero y teclado." },
+    { "name": "hover", "meaning": "Elevated e interactive aumentan profundidad." },
+    { "name": "focus", "meaning": "Interactive presenta foco visual." }
+  ],
+  "a11y": [
+    "Usa article por defecto.",
+    "clickable añade tabindex=0, role=button y activación con Enter o Space.",
+    "variant=interactive por sí solo no añade semántica; combinar con clickable cuando realmente sea accionable."
+  ],
+  "responsive": [
+    "A 768px o menos el layout horizontal vuelve a columna y la imagen ocupa todo el ancho.",
+    "Una container query a 280px o menos apila y estira las acciones del pie."
+  ],
+  "tokens": [
+    "--border-color",
+    "--primary-color",
+    "--primary-color-lighter",
+    "--radius-lg",
+    "--radius-md",
+    "--shadow-focus-primary",
+    "--shadow-lg",
+    "--shadow-md",
+    "--shadow-sm",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--space-10",
+    "--surface-background",
+    "--surface-elevated",
+    "--surface-section",
+    "--text-2xl",
+    "--text-color",
+    "--text-color-secondary",
+    "--text-lg",
+    "--text-md",
+    "--text-sm"
+  ],
+  "story": { "path": "src/stories/ui-card.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/molecules/card/card.component.spec.ts", "status": "available" },
+  "stability": { "status": "stable", "notes": [] },
+  "canonicalFor": ["content-card", "summary-card", "interactive-card"]
+}

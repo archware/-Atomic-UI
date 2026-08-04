@@ -1,5 +1,131 @@
 # Changelog
 
+## [5.2.1] - 2026-08-02
+
+### Mejorado
+
+- `PREST-20260802-188`: auditoría integral de propietarios de scroll. Los
+  diálogos CRUD altos y la navegación extensa usan un único `ScrollOverlay`;
+  el `dialog` y el contenedor del sidebar recortan en lugar de competir con el
+  viewport interno. Se documentaron los scrolls nativos localizados que deben
+  conservarse en selectores, menús, tabs y paginación táctil.
+- `PREST-20260802-185`: `FormDialog` mantiene visible su encabezado durante el
+  desplazamiento. El cierre canónico se presenta como una única X superior,
+  cuadrada y centrada respecto del encabezado; los pies quedan reservados para
+  acciones reales o `Cancelar` en formularios.
+
+### Corregido
+
+- `PREST-20260802-193`: `Accordion` devuelve el foco al encabezado antes de
+  colapsar un panel que contiene el control activo. De este modo `inert` y
+  `aria-hidden` nunca ocultan el foco durante cierres programáticos posteriores
+  a una operación exitosa.
+- `PREST-20260802-192`: `ScrollOverlay` captura la rueda desde cualquier punto
+  de su contenido y la dirige al viewport propietario. Los scrolls nativos o
+  anidados conservan prioridad mientras pueden avanzar; al llegar al límite,
+  el gesto continúa en el overlay exterior. Se mantiene el desplazamiento
+  horizontal con `Shift` y se cubre el comportamiento con pruebas focales.
+  Los gestos `Ctrl/Meta + rueda` permanecen bajo control del navegador para
+  conservar el zoom y el pinch-zoom accesibles.
+- `PREST-20260802-191`: `Input` y `Select` identifican visualmente los campos
+  obligatorios con un marcador accesible, y `CrudDialog.focusInvalid()` dirige
+  el foco al `input`, `select` o `textarea` nativo dentro del componente
+  inválido en vez de dejarlo en el host no interactivo.
+- `PREST-20260802-187`: `ScrollOverlay` mantiene un marcador estable para ocultar el scrollbar nativo
+  en ambos ejes. La medición de tablas ya no produce destellos ni cambios de
+  ancho del scrollbar del navegador.
+- Un overlay exterior ya no limpia los atributos temporales de overlays
+  anidados; cada instancia conserva sus propios scrollers y thumbs.
+
+### Verificación
+
+- Pruebas de contrato de propietario único en `CrudDialog`, `Sidebar`,
+  `LayoutShell`, `FormDialog`, `DataTable` y `ScrollOverlay`.
+- Prueba focal del encabezado fijo, suite Angular y propagación al frontend de
+  préstamos.
+- Pruebas focales de scroll horizontal/vertical administrado y aislamiento de
+  overlays anidados.
+
+## [5.2.0] - 2026-08-02
+
+### Añadido
+
+- `PREST-20260802-183`: catálogo ejecutable y versionado de componentes,
+  variantes, recetas y reglas UX. Los agentes pueden consultar contexto por
+  intención, componente o variante sin cargar la documentación completa.
+- Generador declarativo para `modal-catalog`, `route-form` y `master-detail`,
+  con contratos `ui-only` e `integrated`, validación estricta, `--dry-run`,
+  salida determinista, escritura transaccional y rechazo de sobrescritura. El
+  borrado exige acción, permiso y confirmación explícitos y deniega por defecto.
+- `PageHeader` y `QueryToolbar` convierten en ADN Atomic los patrones repetidos
+  de Front Atomic y publican variantes tipadas de densidad y disposición.
+- Skill local `atomic-ui-builder`, fixtures y suites de tooling para que una
+  solicitud UI siga el mismo flujo y las mismas compuertas.
+
+### Mejorado
+
+- `FormDialog` admite control declarativo con `[(opened)]`, estado `busy`, foco
+  seguro y compatibilidad con su API imperativa.
+- `ModalService` y `PopupService` conservan el identificador de la superficie
+  que originó cada acción; una confirmación ya no cierra otra instancia cuando
+  existen varias abiertas.
+- El bootstrap genera un shell Angular 22 zoneless y gobernado. Los blueprints
+  históricos quedan clasificados como demos y ya no se copian a consumidores.
+- La app de referencia deja de importar su shell desde el barrel completo: el
+  bundle inicial baja de 1,17 MB a 608,36 kB y Chart.js queda en carga diferida,
+  sin ampliar el presupuesto de calidad.
+- El gobierno valida catálogo, referencias, blueprints, tokens, generador y
+  bootstrap, además de las pruebas y el build de la aplicación.
+
+### Verificación
+
+- Catálogo estricto, suites de tooling, smoke del bootstrap, lint sin
+  advertencias, pruebas Angular, build de producción y build de Storybook.
+
+## [5.1.42] - 2026-08-01
+
+### Corregido
+
+- `PREST-20260801-182`: `Toggle` adopta la inyección funcional exigida por el
+  lint de Angular. `Select2` elimina el evento `click` redundante de una
+  superficie no interactiva y `Sidebar` concentra la navegación por teclado en
+  los botones de menú realmente enfocables.
+
+### Verificación
+
+- Lint sin errores ni advertencias de accesibilidad y prueba focal de navegación
+  con flechas sobre los controles del menú.
+
+## [5.1.41] - 2026-08-01
+
+### Mejorado
+
+- `PREST-20260801-181`: `KpiCard` refuerza el contenedor de iconos con un
+  borde semántico tenue y conserva el tono explícito del indicador. El color
+  informa contexto o estado; no convierte todos los KPI en acciones de marca.
+
+### Verificación
+
+- Pruebas focalizadas de `KpiCard` y `MetricsGrid` antes de propagar la
+  adaptación al frontend de préstamos.
+
+## [5.1.40] - 2026-08-01
+
+### Mejorado
+
+- `PREST-20260801-176`: `Button` incorpora la variante `soft` y tonos
+  semánticos para acciones contextuales dentro de tarjetas, sin volver a
+  saturar la interfaz con botones primarios.
+- `outline` recupera una superficie neutral sutil para distinguir una acción
+  disponible de un control deshabilitado sobre fondos oscuros.
+- Las utilidades `surface-tone` aportan contexto cromático de baja intensidad a
+  tarjetas de dominio y exponen un acento legible sin fijar colores en features.
+
+### Verificación
+
+- Contrato de variantes y tonos, gobierno Atomic, pruebas y build antes de la
+  propagación al frontend de préstamos.
+
 ## [5.1.39] - 2026-07-31
 
 ### Mejorado

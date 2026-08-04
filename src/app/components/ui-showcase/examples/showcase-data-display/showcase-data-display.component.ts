@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import type { ChartConfiguration } from 'chart.js';
 
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { TableComponent } from '../../../../shared/ui/atoms/table/table.component';
@@ -229,8 +230,8 @@ export class ShowcaseDataDisplayComponent {
   }
 
   // Showcase-only chart data. Production apps must bind SP/view contracts instead of copying these values.
-  chartOptions: any = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
-  donutOptions: any = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } }, cutout: '75%' };
+  chartOptions: ChartConfiguration['options'] = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
+  donutOptions: ChartConfiguration<'doughnut'>['options'] = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } }, cutout: '75%' };
 
   private chartColor(index: number, fallback: string): string {
     if (typeof document === 'undefined') return fallback;

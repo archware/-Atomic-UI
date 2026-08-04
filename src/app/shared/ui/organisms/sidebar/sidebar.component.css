@@ -31,10 +31,18 @@
 }
 
 /* Nav */
-.sidebar-nav {
+.sidebar-nav-overlay {
+  display: block;
   flex: 1;
   min-height: 0;
+}
+
+.sidebar-nav {
+  height: 100%;
+  min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
 }
 
 .nav-list {

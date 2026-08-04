@@ -6,6 +6,7 @@ import {
   output,
   viewChild,
 } from '@angular/core';
+import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
 
 const DEFAULT_FOCUS_SELECTOR = [
   '[data-dialog-initial-focus]:not([disabled])',
@@ -24,6 +25,7 @@ const DEFAULT_FOCUS_SELECTOR = [
  */
 @Component({
   selector: 'prest-crud-dialog',
+  imports: [ScrollOverlayComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './crud-dialog.html',
   styleUrl: './crud-dialog.scss',
@@ -37,6 +39,7 @@ export class CrudDialog {
   readonly closed = output<void>();
 
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('nativeDialog');
+  private readonly scrollSurface = viewChild.required<ElementRef<HTMLElement>>('scrollSurface');
   private returnFocusTarget: HTMLElement | null = null;
 
   get nativeElement(): HTMLDialogElement {
@@ -64,6 +67,7 @@ export class CrudDialog {
       }
     }
     element.scrollTop = 0;
+    this.scrollSurface().nativeElement.scrollTop = 0;
     element.querySelector<HTMLElement>(focusSelector)?.focus({ preventScroll: true });
   }
 
@@ -81,7 +85,11 @@ export class CrudDialog {
   }
 
   focusInvalid(): void {
-    this.nativeElement.querySelector<HTMLElement>('.ng-invalid')?.focus({ preventScroll: true });
+    this.nativeElement
+      .querySelector<HTMLElement>(
+        '.ng-invalid input:not([disabled]), .ng-invalid select:not([disabled]), .ng-invalid textarea:not([disabled]), input.ng-invalid:not([disabled]), select.ng-invalid:not([disabled]), textarea.ng-invalid:not([disabled])',
+      )
+      ?.focus({ preventScroll: true });
   }
 
   protected handleCancel(event: Event): void {

@@ -1,0 +1,62 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "page-header",
+  "layer": "organism",
+  "selector": "prest-page-header",
+  "export": "PageHeader",
+  "source": "src/app/shared/ui/organisms/page-header/page-header.ts",
+  "purpose": "Encabezado canónico de página con jerarquía h1, contexto y grupo de acciones proyectadas.",
+  "variants": [
+    {
+      "name": "density",
+      "values": [
+        { "value": "comfortable", "meaning": "Título fluido y separación estándar.", "default": true },
+        { "value": "compact", "meaning": "Título y separación reducidos para pantallas operativas." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "title", "type": "string", "required": true, "meaning": "h1 principal de la página." },
+    { "name": "subtitle", "type": "string | null", "default": null, "meaning": "Descripción opcional de hasta 68ch." },
+    { "name": "eyebrow", "type": "string | null", "default": null, "meaning": "Contexto breve anterior al título." },
+    { "name": "density", "type": "PageHeaderDensity", "default": "comfortable", "meaning": "Escala vertical del encabezado." },
+    { "name": "headingId", "type": "string", "default": "generated per instance", "meaning": "Id del h1 usado por aria-labelledby." },
+    { "name": "actionsLabel", "type": "string", "default": "Acciones de la página", "meaning": "Nombre accesible del grupo de acciones." }
+  ],
+  "outputs": [],
+  "slots": [
+    { "name": "[page-header-actions]", "type": "projected content", "meaning": "Botones o grupo de acciones de página." }
+  ],
+  "states": [
+    { "name": "title-only", "meaning": "Solo presenta el h1 obligatorio." },
+    { "name": "contextual", "meaning": "Incluye eyebrow o subtitle." },
+    { "name": "with-actions", "meaning": "Presenta un grupo de acciones etiquetado." }
+  ],
+  "a11y": [
+    "Usa header y un único h1 con id generado o explícito.",
+    "El header se relaciona con el h1 mediante aria-labelledby.",
+    "Las acciones proyectadas se agrupan con role=group y actionsLabel."
+  ],
+  "responsive": [
+    "El título comfortable usa clamp entre --text-2xl y --text-3xl.",
+    "A 40rem o menos apila contenido y acciones, alineándolas al inicio."
+  ],
+  "tokens": [
+    "--primary-color",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--text-2xl",
+    "--text-3xl",
+    "--text-color",
+    "--text-color-secondary",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": { "path": "src/stories/ui-page-header.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/organisms/page-header/page-header.spec.ts", "status": "available" },
+  "stability": { "status": "stable", "notes": [] },
+  "canonicalFor": ["page-header", "crud-page-header", "screen-title"]
+}

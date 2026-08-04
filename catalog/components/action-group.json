@@ -1,0 +1,144 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "action-group",
+  "layer": "molecule",
+  "selector": "app-action-group, prest-action-group",
+  "export": "ActionGroupComponent",
+  "source": "src/app/shared/ui/molecules/action-group/action-group.component.ts",
+  "purpose": "Agrupa acciones compactas y mueve el excedente a un menú portal con teclado y posicionamiento seguro.",
+  "variants": [
+    {
+      "name": "direction",
+      "values": [
+        { "value": "vertical", "meaning": "Menú con icono y etiqueta en columna.", "default": true },
+        { "value": "horizontal", "meaning": "Menú iconográfico en fila." }
+      ]
+    },
+    {
+      "name": "menu-position",
+      "values": [
+        { "value": "auto", "meaning": "Elige el espacio visible disponible.", "default": true },
+        { "value": "top", "meaning": "Prefiere abrir arriba." },
+        { "value": "bottom", "meaning": "Prefiere abrir abajo." },
+        { "value": "left", "meaning": "Prefiere abrir a la izquierda." },
+        { "value": "right", "meaning": "Prefiere abrir a la derecha." }
+      ]
+    },
+    {
+      "name": "compact",
+      "values": [
+        { "value": false, "meaning": "Muestra hasta maxVisible acciones en línea.", "default": true },
+        { "value": true, "meaning": "Coloca todas las acciones dentro del menú." }
+      ]
+    },
+    {
+      "name": "size",
+      "values": [
+        { "value": "sm", "meaning": "Botones de 1.75rem." },
+        { "value": "md", "meaning": "Botones de --space-7.", "default": true },
+        { "value": "lg", "meaning": "Botones de --space-11." }
+      ]
+    },
+    {
+      "name": "item-variant",
+      "values": [
+        { "value": "default", "meaning": "Tono neutral.", "default": true },
+        { "value": "primary", "meaning": "Énfasis principal." },
+        { "value": "secondary", "meaning": "Énfasis alterno." },
+        { "value": "danger", "meaning": "Acción destructiva." },
+        { "value": "warning", "meaning": "Acción de cautela." },
+        { "value": "success", "meaning": "Acción positiva." },
+        { "value": "info", "meaning": "Acción informativa." }
+      ]
+    },
+    {
+      "name": "item-action",
+      "values": [
+        { "value": "view", "meaning": "Reutiliza semántica de TableAction view." },
+        { "value": "edit", "meaning": "Reutiliza semántica de TableAction edit." },
+        { "value": "print", "meaning": "Reutiliza semántica de TableAction print." },
+        { "value": "reverse", "meaning": "Reutiliza semántica de TableAction reverse." },
+        { "value": "channels", "meaning": "Reutiliza semántica de TableAction channels." },
+        { "value": "reset-password", "meaning": "Reutiliza semántica de TableAction reset-password." },
+        { "value": "activate", "meaning": "Reutiliza semántica de TableAction activate." },
+        { "value": "deactivate", "meaning": "Reutiliza semántica de TableAction deactivate." },
+        { "value": "renew", "meaning": "Reutiliza semántica de TableAction renew." },
+        { "value": "select", "meaning": "Reutiliza semántica de TableAction select." },
+        { "value": "late-fee", "meaning": "Reutiliza semántica de TableAction late-fee." },
+        { "value": "delete", "meaning": "Reutiliza semántica de TableAction delete." },
+        { "value": "custom", "meaning": "Acción personalizada." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "actions", "type": "ActionItem[]", "default": [], "meaning": "Items con id y label obligatorios; icon, action, variant, disabled y loading opcionales." },
+    { "name": "maxVisible", "type": "number", "default": 3, "meaning": "Cantidad entera no negativa visible antes del overflow." },
+    { "name": "direction", "type": "'vertical' | 'horizontal'", "default": "vertical", "meaning": "Orientación y presencia de etiquetas en el menú." },
+    { "name": "menuPosition", "type": "'auto' | 'top' | 'bottom' | 'left' | 'right'", "default": "auto", "meaning": "Posición preferida del portal." },
+    { "name": "compact", "type": "boolean", "default": false, "meaning": "Mueve todas las acciones al menú." },
+    { "name": "size", "type": "'sm' | 'md' | 'lg'", "default": "md", "meaning": "Escala de botones e iconos." }
+  ],
+  "outputs": [
+    { "name": "actionClick", "type": "string", "meaning": "Id de la acción válida seleccionada." }
+  ],
+  "behavior": [
+    "Un ActionItem.action deriva icono y tono de TableAction; icon y variant explícitos prevalecen.",
+    "El menú se monta en document.body y se destruye al cerrar o desmontar el componente."
+  ],
+  "states": [
+    { "name": "empty", "meaning": "No renderiza botones si no hay acciones." },
+    { "name": "inline", "meaning": "Presenta las primeras maxVisible acciones." },
+    { "name": "overflow", "meaning": "Existe un disparador de acciones adicionales." },
+    { "name": "menu-open", "meaning": "Portal visible y aria-expanded true." },
+    { "name": "disabled-item", "meaning": "Item bloqueado." },
+    { "name": "loading-item", "meaning": "Spinner, aria-busy y item bloqueado." }
+  ],
+  "a11y": [
+    "Cada acción usa button nativo, aria-label y title derivados de label.",
+    "El disparador expone aria-expanded, aria-controls y aria-haspopup=menu.",
+    "El portal usa role=menu, role=menuitem y aria-orientation; Arrow, Home, End y Escape gestionan foco y cierre.",
+    "Al cerrar por teclado devuelve el foco al disparador; iconos y spinners son decorativos."
+  ],
+  "responsive": [
+    "El portal fixed se limita al viewport y recalcula posición en scroll y resize.",
+    "compact permite reducir el ancho ocupado sin depender de una media query."
+  ],
+  "tokens": [
+    "--action-btn-size",
+    "--border-color",
+    "--danger-color",
+    "--danger-color-lighter",
+    "--focus-ring",
+    "--info-color",
+    "--info-color-lighter",
+    "--primary-color",
+    "--primary-color-lighter",
+    "--radius-full",
+    "--radius-md",
+    "--radius-sm",
+    "--secondary-color",
+    "--secondary-color-lighter",
+    "--shadow-dropdown",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-7",
+    "--space-11",
+    "--success-color",
+    "--success-color-lighter",
+    "--surface-background",
+    "--surface-hover",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-secondary",
+    "--text-sm",
+    "--warning-color",
+    "--warning-color-lighter"
+  ],
+  "story": { "path": "src/stories/ui-action-group.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/molecules/action-group/action-group.component.spec.ts", "status": "available" },
+  "stability": { "status": "stable", "notes": [] },
+  "canonicalFor": ["action-overflow", "row-action-group", "compact-toolbar"]
+}

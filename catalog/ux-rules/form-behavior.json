@@ -1,0 +1,44 @@
+{
+  "$schema": "../schemas/ux-rule.schema.json",
+  "schemaVersion": 1,
+  "id": "ux-form-behavior",
+  "title": "Formularios claros y seguros",
+  "intent": "Reducir errores de captura con densidad, validación y foco consistentes.",
+  "priority": "must",
+  "appliesTo": {
+    "intents": ["crud", "form", "wizard", "transaction", "authentication", "settings"],
+    "components": ["input", "form-select", "choice-control", "datepicker", "file-input", "form-dialog", "button"]
+  },
+  "requirements": [
+    {
+      "id": "typed-reactive-form",
+      "statement": "Generar formularios reactivos tipados y no mezclar FormsModule con ReactiveFormsModule en la misma receta.",
+      "enforcedBy": ["generator", "gate", "unit"]
+    },
+    {
+      "id": "visible-validation",
+      "statement": "Mostrar una etiqueta persistente, obligatoriedad comprensible y error próximo al control después de interacción o envío.",
+      "enforcedBy": ["recipe", "generator", "a11y", "visual"]
+    },
+    {
+      "id": "density-by-context",
+      "statement": "Usar densidad compact en diálogos y formularios operativos densos; conservar comfortable para captura extensa en página.",
+      "enforcedBy": ["catalog", "recipe", "generator"]
+    },
+    {
+      "id": "server-authority",
+      "statement": "Usar validación cliente como ayuda temprana y conservar al backend como autoridad de reglas, unicidad y permisos.",
+      "enforcedBy": ["generator", "review"]
+    }
+  ],
+  "acceptance": [
+    "Todos los controles tienen nombre accesible y error relacionado.",
+    "Un formulario inválido enfoca el primer control inválido.",
+    "El código generado no contiene any ni aserciones no nulas sin guarda."
+  ],
+  "evidence": [
+    "src/app/shared/ui/atoms/form-input/input.ts",
+    "src/app/shared/ui/atoms/form-select/select.ts",
+    "src/app/shared/ui/organisms/form-dialog/form-dialog.ts"
+  ]
+}

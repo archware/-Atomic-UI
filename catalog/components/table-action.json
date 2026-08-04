@@ -1,0 +1,104 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "table-action",
+  "layer": "atom",
+  "selector": "prest-table-action",
+  "export": "TableAction",
+  "source": "src/app/shared/ui/atoms/table-action/table-action.ts",
+  "purpose": "Acción iconográfica compacta y accesible para una fila de tabla o lista operativa.",
+  "variants": [
+    {
+      "name": "action",
+      "values": [
+        { "value": "view", "meaning": "Inspeccionar; icono eye y tono info.", "default": true },
+        { "value": "edit", "meaning": "Editar; pen-to-square y tono primary." },
+        { "value": "print", "meaning": "Imprimir; print y tono primary." },
+        { "value": "reverse", "meaning": "Revertir; rotate-left y tono danger." },
+        { "value": "channels", "meaning": "Gestionar canales; mobile-screen-button y tono info." },
+        { "value": "reset-password", "meaning": "Restablecer clave; key y tono warning." },
+        { "value": "activate", "meaning": "Activar; circle-check y tono success." },
+        { "value": "deactivate", "meaning": "Desactivar; circle-xmark y tono danger." },
+        { "value": "renew", "meaning": "Renovar; clock-rotate-left y tono warning." },
+        { "value": "select", "meaning": "Seleccionar; hand-pointer y tono primary." },
+        { "value": "late-fee", "meaning": "Mora; file-invoice-dollar y tono warning." },
+        { "value": "delete", "meaning": "Eliminar; trash-can y tono danger." },
+        { "value": "custom", "meaning": "Acción no catalogada; ellipsis y tono neutral." }
+      ]
+    },
+    {
+      "name": "tone",
+      "values": [
+        { "value": "neutral", "meaning": "Acción sin estado." },
+        { "value": "primary", "meaning": "Acción principal." },
+        { "value": "info", "meaning": "Consulta o información." },
+        { "value": "success", "meaning": "Activación o resultado positivo." },
+        { "value": "warning", "meaning": "Cautela." },
+        { "value": "danger", "meaning": "Riesgo o destrucción." }
+      ]
+    },
+    {
+      "name": "size",
+      "values": [
+        { "value": "sm", "meaning": "Densidad máxima." },
+        { "value": "md", "meaning": "Tamaño estándar.", "default": true },
+        { "value": "lg", "meaning": "Área de interacción mayor." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "action", "type": "TableActionName", "default": "view", "meaning": "Define icono y tono semánticos por defecto." },
+    { "name": "label", "type": "string", "required": true, "meaning": "Nombre accesible y tooltip visible." },
+    { "name": "iconClass", "type": "string | null", "default": null, "meaning": "Sobrescribe el icono; acepta alias o clases Font Awesome." },
+    { "name": "icon", "type": "string | null", "default": null, "deprecated": true, "meaning": "Alias anterior de iconClass." },
+    { "name": "tone", "type": "TableActionTone | null", "default": null, "meaning": "Sobrescribe el tono semántico derivado de action." },
+    { "name": "size", "type": "TableActionSize", "default": "md", "meaning": "Escala del control." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Bloquea interacción." },
+    { "name": "loading", "type": "boolean", "default": false, "meaning": "Muestra spinner, aria-busy y bloquea interacción." },
+    { "name": "selected", "type": "boolean | null", "default": null, "meaning": "Expone estado de alternancia con aria-pressed; null omite el atributo." }
+  ],
+  "outputs": [
+    { "name": "triggered", "type": "MouseEvent", "meaning": "Clic válido; no emite durante disabled o loading." }
+  ],
+  "states": [
+    { "name": "ready", "meaning": "Icono visible e interactivo." },
+    { "name": "disabled", "meaning": "Botón nativo deshabilitado." },
+    { "name": "loading", "meaning": "Spinner visible, aria-busy y acción bloqueada." },
+    { "name": "selected", "meaning": "Control de alternancia presionado." },
+    { "name": "focus-visible", "meaning": "Presenta anillo de foco." }
+  ],
+  "a11y": [
+    "Usa button nativo con label obligatorio aplicado a aria-label y title.",
+    "El icono y el spinner son decorativos mediante aria-hidden.",
+    "Expone aria-busy para carga y aria-pressed solo cuando selected no es null."
+  ],
+  "responsive": [
+    "Es icon-only y compacto; no define media queries propias."
+  ],
+  "tokens": [
+    "--border-color",
+    "--danger-color",
+    "--info-color",
+    "--primary-color",
+    "--radius-full",
+    "--radius-md",
+    "--radius-sm",
+    "--shadow-focus",
+    "--success-color",
+    "--surface-section",
+    "--text-color-secondary",
+    "--text-xs",
+    "--warning-color"
+  ],
+  "story": {
+    "path": null,
+    "status": "missing",
+    "notes": "ui-table-actions.stories.ts cubre otro componente, TableActionsComponent."
+  },
+  "test": { "path": "src/app/shared/ui/atoms/table-action/table-action.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": ["El input icon se conserva solo por compatibilidad; generar siempre iconClass."]
+  },
+  "canonicalFor": ["row-action", "table-action", "compact-action"]
+}

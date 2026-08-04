@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atomic-ui.local/schemas/component.schema.json",
+  "title": "Atomic UI component contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "id",
+    "layer",
+    "selector",
+    "export",
+    "source",
+    "purpose",
+    "variants",
+    "inputs",
+    "outputs",
+    "states",
+    "a11y",
+    "responsive",
+    "tokens",
+    "story",
+    "test",
+    "stability",
+    "canonicalFor"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "layer": { "enum": ["atom", "molecule", "organism"] },
+    "selector": { "type": "string", "minLength": 2 },
+    "export": { "type": "string", "minLength": 2 },
+    "source": { "type": "string", "minLength": 3 },
+    "relatedExports": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 2 }
+    },
+    "relatedSources": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 3 }
+    },
+    "purpose": { "type": "string", "minLength": 12 },
+    "variants": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/variant" }
+    },
+    "inputs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/member" }
+    },
+    "outputs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/member" }
+    },
+    "methods": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/member" }
+    },
+    "slots": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/member" }
+    },
+    "behavior": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 5 }
+    },
+    "states": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/state" }
+    },
+    "a11y": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 5 }
+    },
+    "responsive": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 5 }
+    },
+    "tokens": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^--[a-z0-9-]+$" }
+    },
+    "story": { "$ref": "#/$defs/evidence" },
+    "test": { "$ref": "#/$defs/evidence" },
+    "stability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "notes"],
+      "properties": {
+        "status": { "enum": ["stable", "candidate", "legacy", "deprecated"] },
+        "notes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "canonicalFor": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9-]+$" }
+    }
+  },
+  "$defs": {
+    "variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "values"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "appliesWhen": { "type": "string" },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["value", "meaning"],
+            "properties": {
+              "value": {
+                "anyOf": [
+                  { "type": "string" },
+                  { "type": "number" },
+                  { "type": "boolean" },
+                  { "type": "null" }
+                ]
+              },
+              "meaning": { "type": "string", "minLength": 3 },
+              "default": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "member": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "meaning"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "type": { "type": "string", "minLength": 1 },
+        "required": { "type": "boolean" },
+        "default": {},
+        "deprecated": { "type": "boolean" },
+        "meaning": { "type": "string", "minLength": 3 }
+      }
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "meaning"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "meaning": { "type": "string", "minLength": 3 }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "status"],
+      "properties": {
+        "path": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "status": { "enum": ["available", "missing", "legacy-only"] },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

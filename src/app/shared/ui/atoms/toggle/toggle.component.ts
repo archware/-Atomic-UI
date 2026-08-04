@@ -3,7 +3,8 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
-  forwardRef
+  forwardRef,
+  inject
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -125,8 +126,7 @@ export class ToggleComponent implements ControlValueAccessor {
   checked = false;
   onChange: (value: boolean) => void = () => { /* noop */ };
   onTouched: () => void = () => { /* noop */ };
-
-  constructor(private readonly changeDetector: ChangeDetectorRef) {}
+  private readonly changeDetector = inject(ChangeDetectorRef);
 
   onToggleChange(event: Event): void {
     const target = event.target as HTMLInputElement;

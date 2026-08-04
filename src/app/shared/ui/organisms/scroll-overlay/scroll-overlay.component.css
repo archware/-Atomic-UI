@@ -29,9 +29,9 @@
 
 /* Colores para tema oscuro - blanco sutil */
 :host-context(.dark) .so-root,
-:host-context([data-theme="dark"]) .so-root,
+:host-context([data-theme='dark']) .so-root,
 html.dark .so-root,
-[data-theme="dark"] .so-root {
+[data-theme='dark'] .so-root {
   --so-thumb-color-start: rgba(255, 255, 255, 0.3);
   --so-thumb-color-end: rgba(255, 255, 255, 0.3);
   --so-thumb-color-hover: rgba(255, 255, 255, 0.45);
@@ -40,22 +40,24 @@ html.dark .so-root,
 
 .so-root.so-block {
   display: block;
-  height: 100%;  /* Enable scroll by giving explicit height */
+  height: 100%; /* Enable scroll by giving explicit height */
 }
 
 .so-scroll-area {
   width: 100%;
-  height: 100%;  /* Enable scroll by giving explicit height */
+  height: 100%; /* Enable scroll by giving explicit height */
   overflow: auto;
   position: relative;
   box-sizing: border-box;
-  
+
   /* HIDE NATIVE SCROLLBARS SO ONLY CUSTOM DIVS ARE SEEN */
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 .so-scroll-area::-webkit-scrollbar {
   display: none;
+  width: 0;
+  height: 0;
 }
 
 /* Agregamos padding al área scrolleable para dar respiro al final y asegurar que el último registro se vea por completo */
@@ -79,15 +81,14 @@ html.dark .so-root,
   overflow-y: auto;
 }
 
-.so-root [data-so-vertical] {
+.so-root [data-so-managed-scrollbar] {
   overscroll-behavior: contain;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  scrollbar-width: none;
-  scrollbar-width: none;
 }
 
-.so-root [data-so-vertical]::-webkit-scrollbar {
+.so-root [data-so-managed-scrollbar]::-webkit-scrollbar {
+  display: none;
   width: 0;
   height: 0;
 }
@@ -279,4 +280,3 @@ html.dark .so-root,
   height: var(--so-body-height, auto);
   min-height: var(--so-body-height, auto);
 }
-

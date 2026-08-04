@@ -151,7 +151,7 @@ export type ChipSize = 'sm' | 'md' | 'lg';
       justify-content: center;
       width: var(--space-4);
       height: var(--space-4);
-      margin-left: var(--space-0);
+      margin-left: 0;
       padding: 0;
       background: none;
       border: none;

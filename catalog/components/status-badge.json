@@ -1,0 +1,105 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "status-badge",
+  "layer": "atom",
+  "selector": "app-status-badge",
+  "export": "StatusBadgeComponent",
+  "source": "src/app/shared/ui/atoms/status-badge/status-badge.component.ts",
+  "relatedExports": ["StatusBadgeStatus", "StatusBadgeChannel", "StatusBadgeSize"],
+  "purpose": "Estado semántico compacto con etiqueta visible, punto de estado e identidad opcional de canal.",
+  "variants": [
+    {
+      "name": "status",
+      "values": [
+        { "value": "active", "meaning": "Estado activo con semántica positiva." },
+        { "value": "inactive", "meaning": "Estado inactivo con tratamiento neutral." },
+        { "value": "degraded", "meaning": "Servicio con incidencias y semántica de advertencia." },
+        { "value": "unconfigured", "meaning": "Servicio aún no configurado.", "default": true },
+        { "value": "info", "meaning": "Información neutral o estado en curso." },
+        { "value": "success", "meaning": "Resultado correcto." },
+        { "value": "warning", "meaning": "Resultado que requiere atención." },
+        { "value": "danger", "meaning": "Resultado crítico o de alto riesgo." }
+      ]
+    },
+    {
+      "name": "channel",
+      "values": [
+        { "value": null, "meaning": "Presenta solo el estado.", "default": true },
+        { "value": "web", "meaning": "Añade la identidad visual WEB." },
+        { "value": "telegram", "meaning": "Añade la identidad visual TELEGRAM." },
+        { "value": "sms", "meaning": "Añade la identidad visual SMS." }
+      ]
+    },
+    {
+      "name": "size",
+      "values": [
+        { "value": "sm", "meaning": "Insignia compacta para tablas y espacios densos." },
+        { "value": "md", "meaning": "Insignia de tamaño estándar.", "default": true }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "status", "type": "StatusBadgeStatus", "default": "unconfigured", "meaning": "Estado semántico y etiqueta predeterminada." },
+    { "name": "channel", "type": "StatusBadgeChannel | null", "default": null, "meaning": "Identidad opcional de WEB, TELEGRAM o SMS." },
+    { "name": "size", "type": "StatusBadgeSize", "default": "md", "meaning": "Escala visual de la insignia." },
+    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible que reemplaza el texto predeterminado del estado." },
+    { "name": "ariaLabel", "type": "string", "default": "", "meaning": "Nombre accesible explícito que reemplaza el nombre calculado." },
+    { "name": "announce", "type": "boolean", "default": false, "meaning": "Activa role=status y aria-live=polite para cambios dinámicos." }
+  ],
+  "outputs": [],
+  "behavior": [
+    "Si label está vacío, usa la etiqueta fija asociada con status.",
+    "Si existe channel, el nombre accesible calculado combina el canal y la etiqueta de estado.",
+    "El color siempre se acompaña de un punto y texto visibles."
+  ],
+  "states": [
+    { "name": "static", "meaning": "Presenta estado sin región viva, comportamiento predeterminado." },
+    { "name": "announcing", "meaning": "Anuncia actualizaciones con role status y aria-live polite." },
+    { "name": "channel-prefixed", "meaning": "Presenta icono, nombre de canal, separador y estado." }
+  ],
+  "a11y": [
+    "Expone siempre un aria-label calculado o explícito.",
+    "Los iconos, el separador y el punto son decorativos para tecnologías de asistencia.",
+    "Solo usa una región viva cuando announce se establece explícitamente en true.",
+    "El estado no depende únicamente del color porque mantiene una etiqueta visible."
+  ],
+  "responsive": [
+    "El host limita su ancho al contenedor y las etiquetas largas se truncan con elipsis.",
+    "No define quiebres de viewport propios; size sm permite usos más densos."
+  ],
+  "tokens": [
+    "--border-color",
+    "--danger-color-dark",
+    "--danger-color-light",
+    "--danger-color-lighter",
+    "--danger-color-text",
+    "--info-color-dark",
+    "--info-color-light",
+    "--info-color-lighter",
+    "--info-color-text",
+    "--radius-full",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--success-color-dark",
+    "--success-color-light",
+    "--success-color-lighter",
+    "--success-color-text",
+    "--surface-section",
+    "--text-2xs",
+    "--text-color-secondary",
+    "--text-xs",
+    "--warning-color-dark",
+    "--warning-color-light",
+    "--warning-color-lighter",
+    "--warning-color-text"
+  ],
+  "story": { "path": "src/stories/ui-status-badge.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/atoms/status-badge/status-badge.component.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": ["La prueba cubre los ocho estados, los tres canales, etiquetas explícitas y anuncio opcional."]
+  },
+  "canonicalFor": ["semantic-status", "channel-status", "status-badge"]
+}

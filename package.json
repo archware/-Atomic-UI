@@ -1,6 +1,6 @@
 {
   "name": "atomic-ui",
-  "version": "4.4.0",
+  "version": "5.2.1",
   "type": "module",
   "author": "COTAHA",
   "scripts": {
@@ -24,10 +24,17 @@
     "dev:full": "concurrently \"npm run storybook\" \"npm run watch\"",
     "docs": "npx compodoc -p tsconfig.json -s",
     "create:project": "node tools/create-project.js",
+    "catalog:query": "node tools/query-atomic-catalog.js",
+    "catalog:check": "node tools/check-atomic-catalog.js --strict-references",
+    "tokens:check": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit-tokens.ps1 -ComponentGlob src/app/shared/ui -Json",
+    "agent:context": "node tools/build-agent-context.js",
+    "generate:ui": "node tools/generate-ui.js",
+    "tooling:test": "node tools/test-atomic-catalog.js && node tools/test-atomic-blueprints.js && node tools/test-audit-tokens.js && node tools/test-ui-generator.js",
+    "quality:check": "npm run governance:check && npm run lint && npm test -- --watch=false && npm run build && npm run build-storybook",
     "governance:install": "node tools/install-consumer-governance.js",
     "governance:test": "node tools/test-consumer-governance.js",
     "governance:smoke": "node tools/test-project-generator.js",
-    "governance:check": "npm run governance:test && node tools/check-atomic-blueprints.js"
+    "governance:check": "npm run governance:test && npm run governance:smoke && node tools/check-atomic-blueprints.js && npm run catalog:check && npm run tokens:check && npm run tooling:test"
   },
   "prettier": {
     "printWidth": 100,
@@ -92,6 +99,7 @@
     "@types/express": "^5.0.1",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.17.19",
+    "ajv": "^8.20.0",
     "angular-cli-ghpages": "^3.1.0",
     "angular-eslint": "^22.1.0",
     "autoprefixer": "^10.4.21",

@@ -1,0 +1,44 @@
+{
+  "$schema": "../schemas/ux-rule.schema.json",
+  "schemaVersion": 1,
+  "id": "ux-component-variant-selection",
+  "title": "Selección explícita de variantes",
+  "intent": "Elegir cada variante por su significado UX y no por preferencia estética local.",
+  "priority": "must",
+  "appliesTo": {
+    "intents": ["crud", "form", "detail", "wizard", "dashboard", "transaction", "document", "authentication", "settings"],
+    "components": ["button", "input", "form-select", "choice-control", "table-action", "action-group", "data-state", "data-table", "crud-dialog", "form-dialog", "toast"]
+  },
+  "requirements": [
+    {
+      "id": "declared-variant-only",
+      "statement": "Usar únicamente variantes declaradas en el catálogo del componente y respetar su API pública.",
+      "enforcedBy": ["catalog", "generator", "gate"]
+    },
+    {
+      "id": "semantic-choice",
+      "statement": "Seleccionar variante, tono, tamaño y densidad a partir de intención, consecuencia y contexto de uso.",
+      "enforcedBy": ["recipe", "generator", "review"]
+    },
+    {
+      "id": "canonical-default",
+      "statement": "Aplicar la variante canónica de la receta cuando el requerimiento no necesite una excepción explícita.",
+      "enforcedBy": ["recipe", "generator"]
+    },
+    {
+      "id": "no-silent-combination",
+      "statement": "Rechazar combinaciones no declaradas de variante, tono, tamaño, densidad o estado en lugar de improvisar CSS local.",
+      "enforcedBy": ["catalog", "generator", "gate"]
+    }
+  ],
+  "acceptance": [
+    "El contexto del agente enumera variantes válidas y explica la variante recomendada.",
+    "Una especificación con una variante desconocida falla antes de generar archivos.",
+    "El código generado no crea clases visuales para emular otra variante."
+  ],
+  "evidence": [
+    "docs/POLITICA_COLOR_ACCIONES.md",
+    "src/app/shared/ui/atoms/button/button.component.ts",
+    "src/app/shared/ui/organisms/data-table/data-table.ts"
+  ]
+}

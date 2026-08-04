@@ -32,7 +32,11 @@
   box-shadow: var(--shadow-md);
 }
 
-.btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--shadow-lg); filter: brightness(1.1); }
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  filter: brightness(1.1);
+}
 
 .btn:focus {
   outline: none;
@@ -121,9 +125,63 @@
   border-color: var(--danger-color-hover);
 }
 
+/* Soft / tonal */
+.btn-tone-neutral {
+  --button-tone-bg: var(--surface-section);
+  --button-tone-bg-hover: var(--surface-hover);
+  --button-tone-border: var(--border-color-strong);
+  --button-tone-text: var(--text-color);
+}
+
+.btn-tone-primary {
+  --button-tone-bg: var(--primary-color-light);
+  --button-tone-bg-hover: var(--primary-color-light);
+  --button-tone-border: var(--primary-color);
+  --button-tone-text: var(--primary-color-text);
+}
+
+.btn-tone-success {
+  --button-tone-bg: var(--success-color-lighter);
+  --button-tone-bg-hover: var(--success-color-light);
+  --button-tone-border: var(--success-color);
+  --button-tone-text: var(--success-color-text);
+}
+
+.btn-tone-warning {
+  --button-tone-bg: var(--warning-color-lighter);
+  --button-tone-bg-hover: var(--warning-color-light);
+  --button-tone-border: var(--warning-color);
+  --button-tone-text: var(--warning-color-text);
+}
+
+.btn-tone-danger {
+  --button-tone-bg: var(--danger-color-lighter);
+  --button-tone-bg-hover: var(--danger-color-light);
+  --button-tone-border: var(--danger-color);
+  --button-tone-text: var(--danger-color-text);
+}
+
+.btn-tone-info {
+  --button-tone-bg: var(--info-color-lighter);
+  --button-tone-bg-hover: var(--info-color-light);
+  --button-tone-border: var(--info-color);
+  --button-tone-text: var(--info-color-text);
+}
+
+.btn-soft {
+  background-color: var(--button-tone-bg);
+  color: var(--button-tone-text);
+  border-color: var(--button-tone-border);
+}
+
+.btn-soft:hover:not(:disabled) {
+  background-color: var(--button-tone-bg-hover);
+  border-color: var(--button-tone-border);
+}
+
 /* Outline */
 .btn-outline {
-  background-color: transparent;
+  background-color: var(--button-outline-bg);
   color: var(--button-outline-text);
   border-color: var(--button-outline-border);
 }
@@ -131,6 +189,16 @@
 .btn-outline:hover:not(:disabled) {
   background-color: var(--button-outline-hover-bg);
   box-shadow: var(--shadow-md);
+}
+
+.btn-outline:not(.btn-tone-neutral) {
+  background-color: var(--button-tone-bg);
+  color: var(--button-tone-text);
+  border-color: var(--button-tone-border);
+}
+
+.btn-outline:not(.btn-tone-neutral):hover:not(:disabled) {
+  background-color: var(--button-tone-bg-hover);
 }
 
 /* Ghost */

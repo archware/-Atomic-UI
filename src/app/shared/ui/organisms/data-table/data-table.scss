@@ -38,7 +38,7 @@
 .data-table__caption {
   padding: var(--space-4);
   color: var(--text-color);
-  font-size: var(--text-base);
+  font-size: var(--text-md);
   font-weight: 700;
   text-align: start;
 }
@@ -144,7 +144,7 @@ tbody tr:last-child td {
 
 .data-table__sort-indicator {
   color: var(--primary-color);
-  font-size: var(--text-base);
+  font-size: var(--text-md);
   line-height: 1;
 }
 

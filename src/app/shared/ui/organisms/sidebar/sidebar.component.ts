@@ -9,6 +9,7 @@
 } from '@angular/core';
 import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import { AvatarComponent } from '../../atoms/avatar/avatar.component';
+import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
 
 export interface SidebarMenuItem {
   id?: string;
@@ -32,7 +33,7 @@ export interface SidebarUser {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [AvatarComponent, NgTemplateOutlet],
+  imports: [AvatarComponent, NgTemplateOutlet, ScrollOverlayComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })

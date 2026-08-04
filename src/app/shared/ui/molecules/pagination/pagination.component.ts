@@ -273,7 +273,7 @@ import { Select2Component } from '../select2/select2.component';
     .pagination-rounded .page-btn.active {
       background: var(--primary-color);
       color: var(--text-color-on-primary);
-      box-shadow: 0 var(--space-1) 4px rgba(var(--primary-rgb), 0.3);
+      box-shadow: var(--shadow-focus-primary);
     }
 
     /* Cards Variant */
@@ -288,8 +288,8 @@ import { Select2Component } from '../select2/select2.component';
     .pagination-cards .page-btn.active {
       border-color: var(--primary-color);
       box-shadow: 0 0 0 1px var(--primary-color);
-      background: var(--primary-50);
-      color: var(--primary-700);
+      background: var(--primary-color-lighter);
+      color: var(--primary-color-text);
     }
 
     /*

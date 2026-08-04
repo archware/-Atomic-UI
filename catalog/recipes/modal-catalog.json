@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "atomic.recipe.modal-catalog.v1",
+  "kind": "ui-recipe",
+  "variant": "modal-catalog",
+  "intent": "crud",
+  "summary": "Mantenimiento paginado con búsqueda y alta/edición en diálogo.",
+  "whenToUse": "Catálogos pequeños o medianos cuyo formulario cabe en un diálogo y cuya lista sigue visible.",
+  "componentStack": {
+    "header": ["page-header"],
+    "filters": ["query-toolbar", "input", "button"],
+    "surface": ["card"],
+    "table": ["data-table", "table-action", "action-group"],
+    "editor": ["form-dialog", "form-dialog-actions", "input", "number-input", "choice-control", "button"],
+    "feedback": ["alert"]
+  },
+  "requiredOperations": ["list", "create", "update"],
+  "optionalOperations": ["delete"],
+  "operationContracts": {
+    "delete": {
+      "requires": [
+        "actions[].location=row",
+        "actions[].label",
+        "actions[].permissionKey",
+        "actions[].confirmation.title",
+        "actions[].confirmation.message",
+        "actions[].confirmation.confirmLabel",
+        "actions[].confirmation.cancelLabel"
+      ],
+      "authorization": "deny-by-default"
+    }
+  },
+  "supportedVariants": {
+    "density": ["comfortable", "compact"],
+    "editorSize": ["sm", "md", "lg", "xl"],
+    "formLayout": ["single-column", "two-columns"],
+    "actionDisplay": ["inline", "overflow"]
+  },
+  "defaults": {
+    "density": "comfortable",
+    "editorSize": "md",
+    "formLayout": "two-columns",
+    "actionDisplay": "inline"
+  },
+  "extensionSlots": ["toolbar-after", "row-actions-after", "editor-after-fields"],
+  "outputLayers": ["models", "data-access", "facade", "page", "tests"],
+  "qualityGates": [
+    "angular-22",
+    "zoneless",
+    "on-push",
+    "typed-contract",
+    "no-overwrite",
+    "atomic-only-controls"
+  ]
+}

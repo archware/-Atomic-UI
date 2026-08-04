@@ -66,26 +66,39 @@ desactivar la compuerta. Véase [governance/README.md](./governance/README.md).
 
 ## 🚀 Inicio Rápido
 
-La forma más rápida de usar Atomic UI es generando un proyecto nuevo con nuestra herramienta CLI automatizada.
+La ruta productiva separa el bootstrap de la generación funcional. El shell no
+incluye mocks ni páginas demo; cada interfaz nace de requisitos validados.
 
-### 1. Generar Proyecto
+### 1. Validar Atomic y crear el shell
 
 ```bash
-# Desde la raíz de la librería
-npm run create:project mi-nuevo-proyecto
+npm run catalog:check
+npm run create:project -- mi-nuevo-proyecto
 ```
 
-La herramienta te guiará para:
+El bootstrap instala:
 
-- ✅ Elegir plantillas (Login, Dashboard, CRUD)
-- ✅ Configurar rutas y navegación
+- ✅ Componentes, temas y tokens canónicos
+- ✅ Angular zoneless y rutas vacías
+- ✅ Gobierno Atomic-first y manifiesto de procedencia
 - ✅ Instalar dependencias automáticamente
-- ✅ Configurar temas y estilos base
 
-### 2. Desarrollo
+### 2. Consultar la receta y previsualizar la generación
 
 ```bash
-cd projects/mi-nuevo-proyecto
+npm run agent:context -- --intent crud --variant modal-catalog
+npm run generate:ui -- --spec test-fixtures/ui-requirements/modal-catalog-ui-only.json --output ../projects/mi-nuevo-proyecto --dry-run
+```
+
+Revise el plan y, si es correcto, quite `--dry-run`. El modo `integrated`
+requiere endpoint, método y contratos explícitos; de lo contrario use
+`ui-only`. Un borrado requiere además acción de fila, permiso y textos de
+confirmación explícitos; el puerto generado deniega por defecto.
+
+### 3. Desarrollo
+
+```bash
+cd ../projects/mi-nuevo-proyecto
 npm start
 ```
 
@@ -93,10 +106,13 @@ npm start
 
 ## 📦 Integración Manual
 
-Si necesitas integrar Atomic UI en un proyecto ya existente, consulta los workflows en `.agent/workflows/`:
+Para integrar Atomic UI en un proyecto existente, consulte primero el catálogo
+compacto y el runtime de agentes:
 
-- `/integration` - Guía paso a paso de integración
-- `/development` - Desarrollo con hot-reload
+- `catalog/README.md` - contratos consultables y extensión de variantes
+- `docs/ATOMIC_UI_AGENT_RUNTIME.md` - recetas, límites y definición de terminado
+- `.agent/workflows/integration.md` - integración manual
+- `.agent/workflows/development.md` - desarrollo con hot-reload
 
 ---
 
@@ -106,11 +122,11 @@ Si necesitas integrar Atomic UI en un proyecto ya existente, consulta los workfl
 
 | Capa | Componentes | Descripción |
 | ------ | ----------- | ----------- |
-| **Atoms (27)** | Avatar, Badge, Breadcrumb, Button, Checkbox, Chip, Divider, FileInput, FloatingInput, FormError, FormRow, IconButton, Input, LanguageSwitcher, Loader, NumberInput, Progress, Radio, Rating, Row, Select, Skeleton, Spinner, Table, Text, Textarea, Toggle | Elementos básicos e indivisibles |
-| **Molecules (17)** | ActionGroup, Alert, AvatarGroup, Card, Combobox, DataState, Datepicker, Dropdown, Modal, Pagination, Popup, Select2, TableActions, TagInput, Timeline, Toast, UserMenu | Combinaciones de átomos con funcionalidad |
-| **Organisms (10)** | Accordion, Filters, Footer, NavBar, ScrollOverlay, Sidebar, Stepper, Tabs, ThemeSwitcher, Topbar | Secciones complejas de UI |
-| **Surfaces (1)** | Panel | Contenedores y superficies |
-| **Templates (2)** | AuthLayout, LayoutShell | Layouts de página completos |
+| **Atoms** | Button, Input, NumberInput, FormSelect, ChoiceControl, TableAction y controles base | Elementos básicos e indivisibles |
+| **Molecules** | ActionGroup, Alert, Card, DataState, Datepicker, Toast y composiciones pequeñas | Combinaciones de átomos con funcionalidad |
+| **Organisms** | PageHeader, QueryToolbar, DataTable, CrudDialog, FormDialog, Sidebar, Topbar y estructuras complejas | Secciones completas de UI |
+| **Surfaces** | Panel | Contenedores y superficies |
+| **Templates** | AuthLayout, LayoutShell | Layouts de página completos |
 
 ### Altura Estándar Global
 
@@ -274,4 +290,3 @@ Este proyecto está bajo la Licencia MIT.
 **Última Actualización:** Mayo 2026  
 **Angular Version:** 21+  
 **TypeScript:** 5.0+
-

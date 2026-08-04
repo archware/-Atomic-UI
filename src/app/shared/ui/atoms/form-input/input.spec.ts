@@ -32,8 +32,10 @@ describe('Input', () => {
     await fixture.whenStable();
 
     const label = fixture.nativeElement.querySelector('label') as HTMLLabelElement;
+    const requiredMarker = fixture.nativeElement.querySelector('.field__required') as HTMLElement;
     const element = fixture.nativeElement.querySelector('input') as HTMLInputElement;
     expect(label.htmlFor).toBe('start-date');
+    expect(requiredMarker.textContent?.trim()).toBe('*');
     expect(element.min).toBe('2026-07-22');
     expect(element.required).toBeTrue();
     expect(element.getAttribute('aria-describedby')).toBe('start-date-error');

@@ -6,5 +6,15 @@
   (cancel)="handleCancel($event)"
   (close)="handleClosed()"
 >
-  <ng-content />
+  <app-scroll-overlay
+    class="crud-dialog__viewport"
+    verticalSelector="[data-crud-dialog-scroll-surface]"
+    horizontalSelector="[data-crud-dialog-scroll-surface]"
+    [skipTableDetection]="true"
+    [disableHorizontal]="true"
+  >
+    <div #scrollSurface class="crud-dialog__surface" data-crud-dialog-scroll-surface>
+      <ng-content />
+    </div>
+  </app-scroll-overlay>
 </dialog>

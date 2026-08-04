@@ -85,7 +85,7 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
       font-size: var(--text-md);
       font-family: inherit;
       color: var(--text-color);
-      background: var(--surface-input);
+      background: var(--input-bg);
       border: var(--input-border-width, 1.5px) solid var(--input-border);
       border-radius: var(--radius-md);
       box-shadow: var(--input-shadow);
@@ -106,7 +106,7 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
     .textarea-input:disabled {
       opacity: 0.6;
       cursor: not-allowed;
-      background: var(--surface-disabled);
+      background: var(--input-disabled-bg);
     }
 
     /* Floating label */
@@ -129,7 +129,7 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
       top: var(--space-1);
       font-size: var(--text-xs);
       color: var(--primary-color);
-      background: var(--surface-input);
+      background: var(--input-bg);
       padding: 0 var(--space-1);
     }
 
@@ -163,7 +163,7 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
       top: calc(-1 * var(--space-2) - var(--space-1));
       font-size: var(--text-xs);
       color: var(--text-color-secondary);
-      background: var(--surface-input);
+      background: var(--input-bg);
       padding: 0 var(--space-1);
     }
 
@@ -177,7 +177,7 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
     }
 
     .has-error .textarea-input:focus {
-      box-shadow: var(--shadow-focus-danger);
+      box-shadow: 0 0 0 3px var(--danger-color-light);
     }
 
     .has-error .textarea-label {

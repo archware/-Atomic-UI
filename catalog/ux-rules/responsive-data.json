@@ -1,0 +1,44 @@
+{
+  "$schema": "../schemas/ux-rule.schema.json",
+  "schemaVersion": 1,
+  "id": "ux-responsive-data",
+  "title": "Datos responsive y scroll único",
+  "intent": "Mantener tablas y controles utilizables sin scroll accidental ni contenido oculto.",
+  "priority": "must",
+  "appliesTo": {
+    "intents": ["crud", "detail", "dashboard", "transaction", "document"],
+    "components": ["data-table", "scroll-overlay", "action-group", "pagination", "card"]
+  },
+  "requirements": [
+    {
+      "id": "viewport-matrix",
+      "statement": "Validar como mínimo las anchuras 320, 375, 768 y 1366 con datos representativos y textos largos.",
+      "enforcedBy": ["recipe", "visual"]
+    },
+    {
+      "id": "single-scroll-owner",
+      "statement": "Asignar el desplazamiento horizontal a un único viewport y evitar scrollbars anidados en tabla, página o shell.",
+      "enforcedBy": ["catalog", "gate", "visual"]
+    },
+    {
+      "id": "preserve-critical-data",
+      "statement": "Priorizar, envolver o adaptar columnas antes de ocultar información crítica o acciones necesarias.",
+      "enforcedBy": ["recipe", "visual", "review"]
+    },
+    {
+      "id": "action-reflow",
+      "statement": "Mantener acciones alcanzables por teclado y tacto mediante ActionGroup cuando el ancho disponible disminuya.",
+      "enforcedBy": ["recipe", "a11y", "visual"]
+    }
+  ],
+  "acceptance": [
+    "Ningún viewport genera scroll horizontal en el documento completo.",
+    "La tabla conserva un solo propietario de scroll.",
+    "Las acciones siguen disponibles a 320 píxeles sin solaparse."
+  ],
+  "evidence": [
+    "src/app/shared/ui/organisms/data-table/data-table.ts",
+    "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts",
+    "src/app/shared/ui/molecules/action-group/action-group.component.ts"
+  ]
+}

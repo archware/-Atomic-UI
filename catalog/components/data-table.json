@@ -1,0 +1,153 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "data-table",
+  "layer": "organism",
+  "selector": "prest-data-table",
+  "export": "DataTable<T>",
+  "source": "src/app/shared/ui/organisms/data-table/data-table.ts",
+  "purpose": "Tabla CRUD canónica con columnas tipadas, estados, ordenamiento, paginación y acciones proyectadas.",
+  "variants": [
+    {
+      "name": "density",
+      "values": [
+        { "value": "comfortable", "meaning": "Espaciado normal para lectura.", "default": true },
+        { "value": "compact", "meaning": "Filas densas para operación intensiva." }
+      ]
+    },
+    {
+      "name": "status",
+      "values": [
+        { "value": "idle", "meaning": "La consulta aún no se ejecutó." },
+        { "value": "loading", "meaning": "Carga en curso y aria-busy." },
+        { "value": "success", "meaning": "Filas disponibles; si están vacías cambia efectivamente a empty.", "default": true },
+        { "value": "empty", "meaning": "Consulta exitosa sin registros." },
+        { "value": "error", "meaning": "Fallo con acción de reintento." }
+      ]
+    },
+    {
+      "name": "column-alignment",
+      "values": [
+        { "value": "start", "meaning": "Texto y valores generales.", "default": true },
+        { "value": "center", "meaning": "Estados o valores breves centrados." },
+        { "value": "end", "meaning": "Números y acciones alineados al final." }
+      ]
+    },
+    {
+      "name": "sort-direction",
+      "values": [
+        { "value": null, "meaning": "Sin ordenamiento activo.", "default": true },
+        { "value": "asc", "meaning": "Ascendente." },
+        { "value": "desc", "meaning": "Descendente." }
+      ]
+    },
+    {
+      "name": "pagination-mode",
+      "values": [
+        { "value": "client", "meaning": "totalRecords=null; ordena y pagina rows localmente.", "default": true },
+        { "value": "server", "meaning": "totalRecords numérico; page, totals y navegación vienen del consumidor." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "columns", "type": "readonly DataTableColumn<T>[]", "required": true, "meaning": "Columnas tipadas con key/header y format, sort, badge, width o align opcionales." },
+    { "name": "rows", "type": "readonly T[]", "required": true, "meaning": "Registros ya autorizados y preparados por el consumidor." },
+    { "name": "caption", "type": "string", "required": true, "meaning": "Nombre accesible de la tabla." },
+    { "name": "captionVisible", "type": "boolean", "default": false, "meaning": "Hace visible el caption además de conservarlo para lectores de pantalla." },
+    { "name": "density", "type": "DataTableDensity", "default": "comfortable", "meaning": "Densidad de celdas." },
+    { "name": "status", "type": "DataTableStatus", "default": "success", "meaning": "Estado explícito de la consulta." },
+    { "name": "loadingMessage", "type": "string", "default": "Cargando información…", "meaning": "Texto de carga." },
+    { "name": "idleMessage", "type": "string", "default": "Aún no se ha cargado información.", "meaning": "Texto antes de consultar." },
+    { "name": "emptyMessage", "type": "string", "default": "No hay información para mostrar.", "meaning": "Texto sin resultados." },
+    { "name": "errorMessage", "type": "string", "default": "No fue posible cargar la información.", "meaning": "Texto de fallo." },
+    { "name": "retryLabel", "type": "string", "default": "Reintentar", "meaning": "Etiqueta de la acción de reintento." },
+    { "name": "actionsHeader", "type": "string", "default": "Acciones", "meaning": "Encabezado y data-label de acciones." },
+    { "name": "actionsWidth", "type": "string", "default": "12rem", "meaning": "Ancho CSS de la columna de acciones." },
+    { "name": "emptyValue", "type": "string", "default": "—", "meaning": "Representación de null, undefined o texto vacío." },
+    { "name": "trackBy", "type": "DataTableTrackBy<T>", "default": "trackByIdentity", "meaning": "Identidad estable de cada fila." },
+    { "name": "showRowNumber", "type": "boolean", "default": true, "meaning": "Muestra numeración absoluta de filas." },
+    { "name": "rowNumberHeader", "type": "string", "default": "N.º", "meaning": "Encabezado de numeración." },
+    { "name": "rowNumberWidth", "type": "string", "default": "4.5rem", "meaning": "Ancho CSS de numeración." },
+    { "name": "totalRecords", "type": "number | null", "default": null, "meaning": "null activa paginación cliente; un número activa contrato servidor." },
+    { "name": "page", "type": "number", "default": 1, "meaning": "Página solicitada en modo servidor." },
+    { "name": "pageSize", "type": "number", "default": 10, "meaning": "Tamaño de página." },
+    { "name": "totalPages", "type": "number", "default": 1, "meaning": "Total de páginas informado por servidor." },
+    { "name": "pageSizeOptions", "type": "readonly number[]", "default": [10, 20, 30, 40, 50], "meaning": "Tamaños seleccionables." },
+    { "name": "hasPreviousPage", "type": "boolean", "default": false, "meaning": "Habilitación anterior en modo servidor." },
+    { "name": "hasNextPage", "type": "boolean", "default": false, "meaning": "Habilitación siguiente en modo servidor." }
+  ],
+  "outputs": [
+    { "name": "sortChange", "type": "DataTableSortChange<T>", "meaning": "Key y dirección después del ciclo asc, desc, null." },
+    { "name": "retry", "type": "void", "meaning": "Solicitud de repetir una consulta fallida." },
+    { "name": "pageChange", "type": "number", "meaning": "Nueva página válida solicitada." },
+    { "name": "pageSizeChange", "type": "number", "meaning": "Nuevo tamaño; el consumidor debe volver a la primera página cuando corresponda." }
+  ],
+  "slots": [
+    { "name": "#actions", "type": "TemplateRef<DataTableActionContext<T>>", "meaning": "Acciones de fila; contexto $implicit, row e index absoluto." }
+  ],
+  "behavior": [
+    "El orden local es estable y usa Intl.Collator es-PE con numeric y sensibilidad base.",
+    "DataTableColumn puede derivar value, format, sortValue, compare y badgeStatus sin lógica de dominio interna.",
+    "Keys stateLabel, state y status se presentan como StatusBadge aunque isBadge no se indique."
+  ],
+  "states": [
+    { "name": "idle", "meaning": "Mensaje previo a la primera carga." },
+    { "name": "loading", "meaning": "Fila de estado con spinner." },
+    { "name": "success", "meaning": "Filas, ordenamiento y paginación." },
+    { "name": "empty", "meaning": "Fila sin resultados." },
+    { "name": "error", "meaning": "Alert danger y reintento." },
+    { "name": "sorted", "meaning": "Una columna mantiene dirección asc o desc." }
+  ],
+  "a11y": [
+    "caption es obligatorio y puede ocultarse solo visualmente.",
+    "El viewport es una región enfocable con aria-label; la tabla expone aria-busy en loading.",
+    "Encabezados ordenables usan botones, aria-sort y etiquetas que anuncian la siguiente dirección.",
+    "Estados usan role=status y live polite; paginación tiene botones con aria-label e iconos decorativos."
+  ],
+  "responsive": [
+    "A 48rem o menos oculta thead y convierte cada fila en tarjeta con data-label por celda.",
+    "A 48rem o menos apila el error y estira Reintentar; toolbar y paginación ocupan el ancho.",
+    "A 36rem o menos la paginación se organiza en columna.",
+    "prefers-reduced-motion elimina transición de filas y ralentiza el spinner."
+  ],
+  "tokens": [
+    "--border-color",
+    "--border-color-strong",
+    "--brand-primary-50",
+    "--data-table-actions-width",
+    "--data-table-column-width",
+    "--form-row-gap",
+    "--hover-background",
+    "--primary-color",
+    "--primary-color-lighter",
+    "--radius-full",
+    "--radius-lg",
+    "--radius-md",
+    "--radius-sm",
+    "--shadow-sm",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--space-8",
+    "--surface-background",
+    "--surface-section",
+    "--table-header-bg",
+    "--table-header-border-color",
+    "--table-header-border-style",
+    "--table-header-border-width",
+    "--table-header-color",
+    "--table-header-shadow",
+    "--text-2xs",
+    "--text-base",
+    "--text-color",
+    "--text-color-secondary",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": { "path": null, "status": "missing" },
+  "test": { "path": "src/app/shared/ui/organisms/data-table/data-table.spec.ts", "status": "available" },
+  "stability": { "status": "stable", "notes": [] },
+  "canonicalFor": ["crud-list", "data-grid", "paginated-table", "responsive-data"]
+}

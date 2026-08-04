@@ -1,0 +1,38 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "form-dialog-actions",
+  "layer": "organism",
+  "selector": "prest-form-dialog-actions",
+  "export": "FormDialogActions",
+  "source": "src/app/shared/ui/organisms/form-dialog/form-dialog.ts",
+  "relatedSources": ["src/app/shared/ui/organisms/form-dialog/form-dialog-actions.scss"],
+  "purpose": "Pie sticky y responsive para acciones principales y secundarias de un formulario modal.",
+  "variants": [],
+  "inputs": [],
+  "outputs": [],
+  "slots": [
+    { "name": "default", "type": "projected content", "meaning": "Botones Atomic del formulario." }
+  ],
+  "states": [
+    { "name": "sticky", "meaning": "Permanece al fondo del área desplazable con fondo modal." }
+  ],
+  "a11y": [
+    "No altera la semántica de los botones proyectados; cada acción conserva su nombre, tipo y estado nativos."
+  ],
+  "responsive": [
+    "Agrupa acciones al final y permite wrap.",
+    "A 36rem o menos estira el eje transversal y reduce el gap."
+  ],
+  "tokens": [
+    "--form-row-gap",
+    "--modal-bg",
+    "--modal-border",
+    "--space-3",
+    "--space-5"
+  ],
+  "story": { "path": null, "status": "missing" },
+  "test": { "path": "src/app/shared/ui/organisms/form-dialog/form-dialog.spec.ts", "status": "available" },
+  "stability": { "status": "stable", "notes": [] },
+  "canonicalFor": ["form-dialog-actions", "modal-action-footer"]
+}

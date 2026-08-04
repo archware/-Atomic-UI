@@ -15,7 +15,6 @@ import {
   TextComponent,
   ButtonComponent,
   FloatingInputComponent,
-  FormRowComponent,
   DividerComponent,
   AlertComponent,
   ChipComponent,
@@ -77,7 +76,6 @@ const CHANGE_PASSWORD_ENDPOINT = '/Authentication/ChangePassword';
     TextComponent,
     ButtonComponent,
     FloatingInputComponent,
-    FormRowComponent,
     DividerComponent,
     AlertComponent,
     ChipComponent,
@@ -155,7 +153,7 @@ export class ProfilePageComponent implements OnInit {
   protected saveProfile(): void {
     if (this.infoForm.invalid) { this.infoForm.markAllAsTouched(); return; }
     this.saveSuccess.set(false);
-    this.saveApi.execute(of({ success: true }).pipe(delay(1500)) as any);
+    this.saveApi.execute(of({ message: 'Perfil guardado' }).pipe(delay(1500)));
     // Mostrar éxito
     setTimeout(() => { if (this.saveApi.success()) this.saveSuccess.set(true); }, 300);
   }

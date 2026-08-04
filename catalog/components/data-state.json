@@ -1,0 +1,89 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "data-state",
+  "layer": "molecule",
+  "selector": "app-data-state",
+  "export": "DataStateComponent",
+  "source": "src/app/shared/ui/molecules/data-state/data-state.component.ts",
+  "purpose": "Resuelve de forma excluyente carga, error, vacío o contenido para una consulta asíncrona.",
+  "variants": [
+    {
+      "name": "loader-variant",
+      "values": [
+        { "value": "spinner", "meaning": "Indicador circular.", "default": true },
+        { "value": "dots", "meaning": "Secuencia de puntos." },
+        { "value": "pulse", "meaning": "Pulso visual." },
+        { "value": "bars", "meaning": "Barras animadas." }
+      ]
+    },
+    {
+      "name": "loader-size",
+      "values": [
+        { "value": "sm", "meaning": "Carga compacta." },
+        { "value": "md", "meaning": "Carga estándar.", "default": true },
+        { "value": "lg", "meaning": "Carga prominente." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "loading", "type": "boolean", "default": false, "meaning": "Activa el estado de carga con máxima precedencia." },
+    { "name": "error", "type": "ApiError | null", "default": null, "meaning": "Activa error cuando no hay carga." },
+    { "name": "isEmpty", "type": "boolean", "default": false, "meaning": "Activa vacío cuando no hay carga ni error." },
+    { "name": "loadingText", "type": "string", "default": "", "meaning": "Texto junto al loader por defecto." },
+    { "name": "loaderVariant", "type": "'spinner' | 'dots' | 'pulse' | 'bars'", "default": "spinner", "meaning": "Representación del loader." },
+    { "name": "loaderSize", "type": "'sm' | 'md' | 'lg'", "default": "md", "meaning": "Escala del loader." },
+    { "name": "errorTitle", "type": "string", "default": "Error al cargar", "meaning": "Título de error por defecto." },
+    { "name": "emptyText", "type": "string", "default": "No hay datos disponibles", "meaning": "Texto vacío por defecto." },
+    { "name": "showRetryButton", "type": "boolean", "default": true, "meaning": "Muestra la acción de reintento por defecto." },
+    { "name": "onRetry", "type": "{ emit: () => void }", "meaning": "Objeto callback invocado por el botón Reintentar." }
+  ],
+  "outputs": [],
+  "slots": [
+    { "name": "#content", "type": "TemplateRef<unknown>", "meaning": "Contenido cuando no hay carga, error ni vacío." },
+    { "name": "#loadingTemplate", "type": "TemplateRef<unknown>", "meaning": "Carga personalizada." },
+    { "name": "#errorTemplate", "type": "TemplateRef<unknown>", "meaning": "Error personalizado con ApiError implícito." },
+    { "name": "#emptyTemplate", "type": "TemplateRef<unknown>", "meaning": "Vacío personalizado." }
+  ],
+  "behavior": [
+    "La precedencia fija es loading, error, isEmpty y finalmente content."
+  ],
+  "states": [
+    { "name": "loading", "meaning": "Loader o plantilla personalizada." },
+    { "name": "error", "meaning": "ApiError, mensaje y reintento opcional." },
+    { "name": "empty", "meaning": "Estado sin registros." },
+    { "name": "content", "meaning": "Plantilla de éxito proyectada." }
+  ],
+  "a11y": [
+    "El botón de reintento es nativo.",
+    "El componente actual no expone role=status, aria-live ni aria-hidden en los iconos por defecto; una plantilla personalizada debe aportar esa semántica cuando sea necesaria."
+  ],
+  "responsive": [
+    "Centra el contenido, usa ancho disponible y limita el error a 400px; no define media queries."
+  ],
+  "tokens": [
+    "--danger-color",
+    "--gray-0",
+    "--primary-color",
+    "--primary-color-lighter",
+    "--radius-md",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-8",
+    "--text-3xl",
+    "--text-4xl",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-secondary",
+    "--text-lg",
+    "--text-sm"
+  ],
+  "story": { "path": "src/stories/ui-data-state.stories.ts", "status": "available" },
+  "test": { "path": null, "status": "missing" },
+  "stability": {
+    "status": "candidate",
+    "notes": ["Está acoplado a ApiError y onRetry es un input con emit, no un output Angular.", "Carece de prueba unitaria y semántica live por defecto."]
+  },
+  "canonicalFor": ["async-state", "data-fetch-state", "loading-error-empty"]
+}

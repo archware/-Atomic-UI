@@ -62,7 +62,7 @@
 .table-action:focus-visible {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
-  box-shadow: var(--shadow-focus);
+  box-shadow: var(--shadow-focus-primary);
 }
 
 .table-action--primary { color: var(--primary-color); }

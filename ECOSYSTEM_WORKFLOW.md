@@ -1,9 +1,9 @@
 # Arquitectura y Flujo de Trabajo del Ecosistema
 
-> **Fecha:** Julio 2026
+> **Fecha:** Agosto 2026
 > **Contexto:** Este documento define la arquitectura de trabajo sincronizado entre nuestros tres proyectos principales y establece las reglas de propagación para mantener la consistencia del ecosistema.
 
-## 🏗️ Los 3 Pilares del Ecosistema
+## 🏗️ Pilares del Ecosistema
 
 El entorno de trabajo se compone de una fuente visual y sus consumidores:
 
@@ -32,6 +32,15 @@ el manifiesto base, el gate y CI. `npm run create:project` los instala en toda
 aplicación nueva y `npm run governance:install` gobierna consumidores existentes.
 La CI de Atomic prueba un bootstrap válido y debe bloquear primitivas nativas,
 componentes desconocidos, divergencias exactas y adaptaciones sin justificación.
+
+### UI desde requisitos
+
+Una solicitud de CRUD o de cualquier otra interfaz empieza con un contrato
+`ui-requirement` y una consulta compacta a `catalog/`. El agente selecciona una
+receta y únicamente variantes declaradas; después ejecuta `generate:ui` con
+`--dry-run`. El modo integrado se rechaza si faltan endpoint, método o contrato.
+Los blueprints de `src/blueprints` son demos históricos del showcase y no se
+propagan ni se copian a aplicaciones productivas.
 
 ### 1. Desarrollo UI (El Origen)
 - Todo nuevo componente, ajuste de CSS, o corrección visual (ej. mejoras en hover, contrastes, bordes) se diseña y codifica **primero** en `-Atomic-UI`.
@@ -62,7 +71,9 @@ El ecosistema sigue un enfoque **DB-First**, lo que dicta cómo se construye una
 2. **Capa Backend (Go / Rust)**:
    - Los conectores (`tiberius` en Tauri, `mssqldb` en Wails) exponen endpoints asíncronos limpios.
    - Las estructuras (`struct`) en Go/Rust reflejan **exactamente** las columnas en `snake_case`.
-   - Se implementan fallbacks a Mock Data en caso de no existir el archivo `.env`. (Nota: las credenciales oficiales se inyectan en el `.env` en la ruta del `.exe`).
+   - La ausencia de configuración produce un error explícito. Los mocks solo
+     pueden existir en fixtures, pruebas o demos aisladas y nunca como fallback
+     silencioso de una aplicación productiva.
 3. **Capa Frontend (Angular)**:
    - Las interfaces en TypeScript mapean el JSON entrante (`snake_case`).
    - Los datos macro se inyectan en `<app-chart>` y los datos tabulares operativos en `<app-table>`.
@@ -79,9 +90,13 @@ El ecosistema sigue un enfoque **DB-First**, lo que dicta cómo se construye una
 
 ## Resumen del Ciclo de Vida de una Mejora UI
 
-1. Identificar necesidad visual en Wails/Tauri.
-2. Codificar la solución en `-Atomic-UI` (`.ts`, `.css`).
-3. Auditar tokens (`scripts/audit-tokens.ps1`).
-4. Propagar a Wails y Tauri (`scripts/propagate-tokens.ps1` o scripts similares).
-5. Build de verificación en ambos ecosistemas.
-6. Actualizar `CHANGELOG.md` en Atomic-UI.
+1. Convertir la necesidad funcional en un contrato `ui-requirement` sin
+   inventar dominio ni integración.
+2. Consultar `agent:context` y comprobar si existen receta, componentes y
+   variantes suficientes.
+3. Si falta ADN visual, implementarlo primero en `-Atomic-UI`, catalogarlo y
+   auditar tokens.
+4. Revisar el `dry-run`, generar la composición y conectar los contratos reales
+   que pertenecen al consumidor.
+5. Ejecutar gobierno, tooling, lint, pruebas y build.
+6. Propagar con procedencia trazable y actualizar `CHANGELOG.md`.

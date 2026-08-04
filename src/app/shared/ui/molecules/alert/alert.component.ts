@@ -89,7 +89,7 @@ export type AlertFlowSpacing = 'default' | 'compact' | 'none';
     /* Sizes */
     .alert--sm { padding: var(--space-2) var(--space-3); font-size: var(--text-xs); }
     .alert--md { padding: var(--space-3) var(--space-4); }
-    .alert--lg { padding: var(--space-4) var(--space-5); font-size: var(--text-base); }
+    .alert--lg { padding: var(--space-4) var(--space-5); font-size: var(--text-md); }
 
     /* Flow spacing keeps feedback separate from the next content section. */
     .alert--flow-default { margin-block-end: var(--alert-flow-gap, 2.25rem); }

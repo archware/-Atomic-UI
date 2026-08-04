@@ -1,5 +1,5 @@
 ﻿import { Routes } from '@angular/router';
-import { guestGuard } from '@shared/ui';
+import { guestGuard } from './shared/ui/guards/auth.guard';
 
 /**
  * Rutas principales de la aplicación con lazy loading y auth guards.

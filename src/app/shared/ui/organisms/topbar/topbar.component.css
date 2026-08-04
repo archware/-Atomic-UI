@@ -86,8 +86,8 @@
 /* Notification Badge */
 .notification-badge {
   position: absolute;
-  top: var(--space-0);
-  right: var(--space-0);
+  top: 0;
+  right: 0;
   min-width: var(--space-4);
   height: var(--space-4);
   padding: 0 var(--space-1);

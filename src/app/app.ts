@@ -2,12 +2,10 @@ import { Component, ChangeDetectionStrategy, inject, PLATFORM_ID } from '@angula
 import { RouterOutlet } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
-import { ThemeService } from '@shared/ui';
-import {
-  ToastComponent,
-  PopupContainerComponent,
-  ModalContainerComponent,
-} from '@shared/ui';
+import { ModalContainerComponent } from './shared/ui/molecules/modal/modal-container.component';
+import { PopupContainerComponent } from './shared/ui/molecules/popup/popup-container.component';
+import { ToastComponent } from './shared/ui/molecules/toast/toast.component';
+import { ThemeService } from './shared/ui/services/theme.service';
 
 @Component({
   selector: 'app-root',

@@ -1,0 +1,67 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "choice-control",
+  "layer": "atom",
+  "selector": "prest-choice-control",
+  "export": "ChoiceControl",
+  "source": "src/app/shared/ui/atoms/choice-control/choice-control.ts",
+  "purpose": "Elección booleana o exclusiva con checkbox o radio nativo y presentación Atomic.",
+  "variants": [
+    {
+      "name": "type",
+      "values": [
+        { "value": "checkbox", "meaning": "Activa o desactiva una opción independiente.", "default": true },
+        { "value": "radio", "meaning": "Elige una opción dentro de un grupo con el mismo name." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "controlId", "type": "string | null", "default": null, "meaning": "Id explícito; si falta se genera uno estable por instancia." },
+    { "name": "type", "type": "ChoiceControlType", "default": "checkbox", "meaning": "Semántica checkbox o radio." },
+    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible." },
+    { "name": "ariaLabel", "type": "string | null", "default": null, "meaning": "Nombre accesible explícito; usa label como respaldo." },
+    { "name": "name", "type": "string | null", "default": null, "meaning": "Nombre del grupo, imprescindible para radios relacionados." },
+    { "name": "value", "type": "string", "default": "", "meaning": "Valor nativo del control." },
+    { "name": "checked", "type": "boolean", "default": false, "meaning": "Estado controlado de selección." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Bloquea la interacción nativa." }
+  ],
+  "outputs": [
+    { "name": "changed", "type": "boolean", "meaning": "Nuevo valor checked emitido por change." }
+  ],
+  "states": [
+    { "name": "unchecked", "meaning": "Opción no elegida." },
+    { "name": "checked", "meaning": "Opción elegida." },
+    { "name": "disabled", "meaning": "No permite modificación." },
+    { "name": "focus-visible", "meaning": "El input nativo activa el anillo del indicador." }
+  ],
+  "a11y": [
+    "Mantiene input checkbox o radio nativo dentro de un label asociado.",
+    "Usa ariaLabel cuando se proporciona y label como respaldo.",
+    "El indicador visual está marcado aria-hidden."
+  ],
+  "responsive": [
+    "Fluye con su etiqueta y no define quiebres de viewport propios."
+  ],
+  "tokens": [
+    "--input-bg",
+    "--input-border",
+    "--input-border-focus",
+    "--input-disabled-text",
+    "--input-shadow",
+    "--input-shadow-focus",
+    "--primary-color",
+    "--radius-full",
+    "--radius-sm",
+    "--space-2",
+    "--text-color",
+    "--text-color-on-primary"
+  ],
+  "story": { "path": null, "status": "missing" },
+  "test": { "path": "src/app/shared/ui/atoms/choice-control/choice-control.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": ["No implementa ControlValueAccessor; el consumidor controla checked y escucha changed."]
+  },
+  "canonicalFor": ["boolean-choice", "exclusive-choice", "checkbox", "radio"]
+}

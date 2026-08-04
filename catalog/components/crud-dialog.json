@@ -1,0 +1,126 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "crud-dialog",
+  "layer": "organism",
+  "selector": "prest-crud-dialog",
+  "export": "CrudDialog",
+  "source": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.ts",
+  "relatedSources": [
+    "src/app/shared/ui/organisms/crud-dialog/crud-dialog.html",
+    "src/app/shared/ui/organisms/crud-dialog/crud-dialog.scss",
+    "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts"
+  ],
+  "purpose": "Modal nativo base para altas y ediciones CRUD, con foco inicial, restauración de foco y un único viewport overlay.",
+  "variants": [
+    {
+      "name": "size",
+      "values": [
+        { "value": "sm", "meaning": "Formulario breve." },
+        { "value": "md", "meaning": "Formulario estándar.", "default": true },
+        { "value": "lg", "meaning": "Formulario amplio." },
+        { "value": "xl", "meaning": "Flujo de máxima anchura permitida." }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "name": "panelClass",
+      "type": "string",
+      "default": "",
+      "meaning": "Clases adicionales sobre el dialog nativo."
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg' | 'xl'",
+      "default": "md",
+      "meaning": "Ancho máximo tokenizado."
+    },
+    {
+      "name": "labelledBy",
+      "type": "string",
+      "required": true,
+      "meaning": "Id del título que nombra el modal."
+    },
+    {
+      "name": "describedBy",
+      "type": "string | null",
+      "default": null,
+      "meaning": "Id de una descripción opcional."
+    }
+  ],
+  "outputs": [
+    {
+      "name": "cancelled",
+      "type": "Event",
+      "meaning": "Intento nativo de cancelar; preventDefault ya fue aplicado y el consumidor decide cerrar."
+    },
+    { "name": "closed", "type": "void", "meaning": "Cierre efectivo del dialog." }
+  ],
+  "methods": [
+    {
+      "name": "showModal",
+      "type": "(focusSelector?: string) => void",
+      "meaning": "Abre, desplaza al inicio y enfoca el primer control elegible."
+    },
+    {
+      "name": "close",
+      "type": "(returnValue?: string) => void",
+      "meaning": "Cierra si está abierto y conserva returnValue nativo."
+    },
+    {
+      "name": "focusInvalid",
+      "type": "() => void",
+      "meaning": "Enfoca el primer descendiente .ng-invalid."
+    }
+  ],
+  "slots": [
+    { "name": "default", "type": "projected content", "meaning": "Contenido completo del modal." }
+  ],
+  "behavior": [
+    "showModal guarda el elemento activo externo y closed restaura su foco si continúa conectado.",
+    "El selector de foco prioriza data-dialog-initial-focus, data-control-focus y controles nativos habilitados.",
+    "El dialog recorta su superficie; data-crud-dialog-scroll-surface es el único propietario vertical y ScrollOverlay oculta su scrollbar nativo.",
+    "showModal reinicia tanto el dialog como la superficie desplazable antes de enfocar."
+  ],
+  "states": [
+    { "name": "closed", "meaning": "El dialog no está en top layer." },
+    { "name": "open", "meaning": "Modal nativo abierto." },
+    { "name": "cancel-requested", "meaning": "Escape emitió cancelled pero aún no cerró." }
+  ],
+  "a11y": [
+    "Usa dialog y showModal nativos con aria-labelledby obligatorio y aria-describedby opcional.",
+    "Gestiona foco inicial, foco inválido y restauración del foco previo.",
+    "Escape emite cancelled sin cerrar automáticamente; el consumidor debe confirmar o invocar close."
+  ],
+  "responsive": [
+    "El ancho es min(100% menos --space-6, máximo por size) y la altura máxima está tokenizada.",
+    "A 36rem o menos reduce el margen a --space-4 y limita a 100dvh menos --space-4.",
+    "Encabezados y acciones sticky permanecen visibles dentro del único viewport del diálogo."
+  ],
+  "tokens": [
+    "--crud-dialog-current-max-width",
+    "--crud-dialog-max-height",
+    "--crud-dialog-max-width-lg",
+    "--crud-dialog-max-width-md",
+    "--crud-dialog-max-width-sm",
+    "--crud-dialog-max-width-xl",
+    "--crud-dialog-padding",
+    "--modal-bg",
+    "--modal-border",
+    "--modal-overlay",
+    "--modal-shadow",
+    "--radius-lg",
+    "--space-1",
+    "--space-4",
+    "--space-6",
+    "--text-color"
+  ],
+  "story": { "path": null, "status": "missing" },
+  "test": {
+    "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.spec.ts",
+    "status": "available"
+  },
+  "stability": { "status": "stable", "notes": [] },
+  "canonicalFor": ["crud-modal-base", "modal-shell", "native-dialog"]
+}

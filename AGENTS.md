@@ -20,3 +20,21 @@ trabajar, leer `governance/consumer/ATOMIC_GOVERNANCE.md`,
 
 La lógica de negocio, permisos, DTO, endpoints y estado específico no pertenece
 al ADN visual y debe permanecer en cada aplicación consumidora.
+
+## Ejecución eficiente de solicitudes UI
+
+- Para crear o evolucionar un CRUD, formulario, listado, detalle, dashboard o
+  flujo transaccional, usar la skill local
+  `.agents/skills/atomic-ui-builder/SKILL.md`.
+- Consultar primero `npm run agent:context -- --intent <intencion>`; no cargar
+  el inventario ni las guías completas si el contexto compacto resuelve la
+  decisión.
+- Seleccionar únicamente componentes y variantes declarados en `catalog/`.
+  Una variante faltante se implementa y valida aquí antes de ser consumida.
+- Generar primero con
+  `npm run generate:ui -- --spec <archivo> --output <consumidor> --dry-run` y
+  revisar el plan antes de escribir.
+- El modo integrado exige endpoint, método y contrato explícitos. Si faltan, la
+  salida debe ser `ui-only` y no puede simular una integración real.
+- La arquitectura, los límites y la definición de terminado están en
+  `docs/ATOMIC_UI_AGENT_RUNTIME.md`.

@@ -2,7 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   input,
+  model,
   output,
   viewChild,
 } from '@angular/core';
@@ -20,8 +22,9 @@ const FORM_FOCUS_SELECTOR = [
 
 /**
  * Diálogo de formulario con encabezado, descripción y cuerpo canónicos.
- * El consumidor conserva el formulario y las reglas de negocio, y proyecta
- * únicamente un botón Atomic con `dialog-close` para cerrar.
+ * El consumidor conserva el formulario y las reglas de negocio. Puede enlazar
+ * `[(opened)]` para control declarativo, usar la API imperativa compatible y
+ * proyectar un botón Atomic con `dialog-close` para cerrar.
  */
 @Component({
   selector: 'prest-form-dialog',
@@ -33,37 +36,71 @@ const FORM_FOCUS_SELECTOR = [
 export class FormDialog {
   private static nextId = 0;
   private readonly generatedId = `prest-form-dialog-${++FormDialog.nextId}`;
-  private readonly dialog = viewChild.required<CrudDialog>('dialog');
+  private readonly dialog = viewChild<CrudDialog>('dialog');
 
   readonly eyebrow = input<string | null>(null);
   readonly title = input.required<string>();
   readonly description = input<string | null>(null);
   readonly size = input<'sm' | 'md' | 'lg' | 'xl'>('md');
   readonly panelClass = input('');
+  readonly opened = model(false);
+  readonly busy = input(false);
   readonly cancelled = output<Event>();
   readonly closed = output<void>();
 
   protected readonly titleId = computed(() => `${this.generatedId}-title`);
   protected readonly descriptionId = computed(() => `${this.generatedId}-description`);
 
+  constructor() {
+    effect(() => {
+      const dialog = this.dialog();
+      if (!dialog) {
+        return;
+      }
+
+      if (this.opened() && !dialog.open) {
+        dialog.showModal(FORM_FOCUS_SELECTOR);
+      } else if (!this.opened() && dialog.open) {
+        dialog.close();
+      }
+    });
+  }
+
   get nativeElement(): HTMLDialogElement {
-    return this.dialog().nativeElement;
+    const dialog = this.dialog();
+    if (!dialog) {
+      throw new Error('FormDialog is not available before the view is initialized.');
+    }
+    return dialog.nativeElement;
   }
 
   get open(): boolean {
-    return this.dialog().open;
+    return this.dialog()?.open ?? false;
   }
 
   showModal(): void {
-    this.dialog().showModal(FORM_FOCUS_SELECTOR);
+    this.opened.set(true);
+    this.dialog()?.showModal(FORM_FOCUS_SELECTOR);
   }
 
   close(returnValue?: string): void {
-    this.dialog().close(returnValue);
+    this.opened.set(false);
+    this.dialog()?.close(returnValue);
   }
 
   focusInvalid(): void {
-    this.dialog().focusInvalid();
+    this.dialog()?.focusInvalid();
+  }
+
+  protected handleCancelled(event: Event): void {
+    if (!this.busy()) {
+      this.cancelled.emit(event);
+    }
+  }
+
+  protected handleClosed(): void {
+    this.opened.set(false);
+    this.closed.emit();
   }
 }
 

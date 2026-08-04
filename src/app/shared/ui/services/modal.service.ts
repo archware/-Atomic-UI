@@ -87,8 +87,8 @@ export class ModalService {
     onConfirm: () => void;
     onCancel?: () => void;
   }): number {
-    const id = ++this.modalId;
-    return this.open({
+    let id = 0;
+    id = this.open({
       title: options.title,
       message: options.message,
       size: 'sm',
@@ -106,14 +106,15 @@ export class ModalService {
         }
       ]
     });
+    return id;
   }
 
   /**
    * Modal de alerta simple con un solo botón.
    */
   alert(title: string, message: string, buttonLabel = 'Aceptar'): number {
-    const id = ++this.modalId;
-    return this.open({
+    let id = 0;
+    id = this.open({
       title,
       message,
       size: 'sm',
@@ -121,6 +122,7 @@ export class ModalService {
         { label: buttonLabel, variant: 'primary', action: () => this.close(id) }
       ]
     });
+    return id;
   }
 
   /**

@@ -81,46 +81,54 @@ export class PopupService {
 
   /** Popup informativo simple */
   info(title: string, message: string): number {
-    return this.show({
+    let id = 0;
+    id = this.show({
       title,
       message,
       type: 'info',
       icon: 'fa-solid fa-circle-info',
-      buttons: [{ label: 'Aceptar', variant: 'primary', action: () => this.close(this.popupId) }]
+      buttons: [{ label: 'Aceptar', variant: 'primary', action: () => this.close(id) }]
     });
+    return id;
   }
 
   /** Popup de éxito */
   success(title: string, message: string): number {
-    return this.show({
+    let id = 0;
+    id = this.show({
       title,
       message,
       type: 'success',
       icon: 'fa-solid fa-circle-check',
-      buttons: [{ label: 'Aceptar', variant: 'primary', action: () => this.close(this.popupId) }]
+      buttons: [{ label: 'Aceptar', variant: 'primary', action: () => this.close(id) }]
     });
+    return id;
   }
 
   /** Popup de advertencia */
   warning(title: string, message: string): number {
-    return this.show({
+    let id = 0;
+    id = this.show({
       title,
       message,
       type: 'warning',
       icon: 'fa-solid fa-triangle-exclamation',
-      buttons: [{ label: 'Entendido', variant: 'primary', action: () => this.close(this.popupId) }]
+      buttons: [{ label: 'Entendido', variant: 'primary', action: () => this.close(id) }]
     });
+    return id;
   }
 
   /** Popup de error */
   error(title: string, message: string): number {
-    return this.show({
+    let id = 0;
+    id = this.show({
       title,
       message,
       type: 'error',
       icon: 'fa-solid fa-circle-xmark',
-      buttons: [{ label: 'Cerrar', variant: 'danger', action: () => this.close(this.popupId) }]
+      buttons: [{ label: 'Cerrar', variant: 'danger', action: () => this.close(id) }]
     });
+    return id;
   }
 
   /** Popup de confirmación con acciones */
@@ -132,8 +140,8 @@ export class PopupService {
     onConfirm: () => void;
     onCancel?: () => void;
   }): number {
-    const id = ++this.popupId;
-    return this.show({
+    let id = 0;
+    id = this.show({
       title: options.title,
       message: options.message,
       type: 'confirm',
@@ -152,6 +160,7 @@ export class PopupService {
         }
       ]
     });
+    return id;
   }
 
   /**

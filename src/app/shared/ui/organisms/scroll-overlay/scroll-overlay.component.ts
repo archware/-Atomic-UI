@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+} from '@angular/core';
 
 type ListenerUnsubscriber = () => void;
 
@@ -9,8 +18,8 @@ type ListenerUnsubscriber = () => void;
   styleUrl: './scroll-overlay.component.css',
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'so-root'
-  }
+    class: 'so-root',
+  },
 })
 export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   /**
@@ -108,7 +117,8 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   @Input()
   set maxBodyHeight(value: number | string | null | undefined) {
     const parsed = typeof value === 'string' ? value.trim() : value;
-    this._maxBodyHeight = parsed === '' || parsed === null || parsed === undefined ? undefined : parsed;
+    this._maxBodyHeight =
+      parsed === '' || parsed === null || parsed === undefined ? undefined : parsed;
     this.applyMaxHeight();
     if (this.hostEl) {
       this.syncGeometry();
@@ -241,6 +251,10 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       this.horizontalScroller.removeAttribute('data-so-horizontal');
       this.horizontalScroller.removeAttribute('data-so-horizontal-temp');
     }
+    this.removeManagedScrollbarMarker(this.verticalScroller);
+    if (this.horizontalScroller !== this.verticalScroller) {
+      this.removeManagedScrollbarMarker(this.horizontalScroller);
+    }
   }
 
   private applyMinColumnWidth(): void {
@@ -284,11 +298,20 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
   private resolveScrollElements(_isInitial = false): void {
     const host = this.elementRef.nativeElement;
+    const belongsToCurrentOverlay = (element: Element): boolean =>
+      element.closest('.so-root') === host;
+
     host.querySelectorAll('[data-so-horizontal-temp]').forEach((el) => {
+      if (!belongsToCurrentOverlay(el)) {
+        return;
+      }
       el.removeAttribute('data-so-horizontal');
       el.removeAttribute('data-so-horizontal-temp');
     });
     host.querySelectorAll('[data-so-vertical-temp]').forEach((el) => {
+      if (!belongsToCurrentOverlay(el)) {
+        return;
+      }
       el.removeAttribute('data-so-vertical');
       el.removeAttribute('data-so-vertical-temp');
       const element = el as HTMLElement;
@@ -300,6 +323,12 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       element.style.removeProperty('overflow-y');
       element.style.removeProperty('overflow-x');
       element.style.removeProperty('box-sizing');
+    });
+    host.querySelectorAll('[data-so-managed-scrollbar-temp]').forEach((el) => {
+      if (belongsToCurrentOverlay(el)) {
+        el.removeAttribute('data-so-managed-scrollbar');
+        el.removeAttribute('data-so-managed-scrollbar-temp');
+      }
     });
 
     // Helper: Check if element is inside a nested scroll-overlay (not this one)
@@ -319,7 +348,10 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       if (!selector) {
         return null;
       }
-      const parts = selector.split(',').map((part) => part.trim()).filter(Boolean);
+      const parts = selector
+        .split(',')
+        .map((part) => part.trim())
+        .filter(Boolean);
       for (const part of parts) {
         const candidates = Array.from(host.querySelectorAll(part)) as HTMLElement[];
         const directMatch = candidates.find((el) => !isInsideNestedScrollOverlay(el));
@@ -341,6 +373,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     } else {
       this.horizontalScroller.removeAttribute('data-so-horizontal-temp');
     }
+    this.markManagedScrollbar(this.horizontalScroller);
 
     const vertical = searchDirect(this.verticalSelector);
     // If vertical is explicitly set via selector, use it. Otherwise, always use scrollArea.
@@ -353,6 +386,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       } else {
         this.verticalScroller.removeAttribute('data-so-vertical-temp');
       }
+      this.markManagedScrollbar(this.verticalScroller);
       this.applyVerticalScrollerDefaults();
     }
 
@@ -398,7 +432,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       target: EventTarget,
       type: string,
       listener: EventListenerOrEventListenerObject,
-      options?: AddEventListenerOptions
+      options?: AddEventListenerOptions,
     ) => {
       target.addEventListener(type, listener, options);
       this.listeners.push(() => target.removeEventListener(type, listener, options));
@@ -419,6 +453,9 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
     addListener(host, 'mouseenter', handlePointer);
     addListener(host, 'mouseleave', () => this.hideBar());
+    addListener(host, 'wheel', (event) => this.handleWheel(event as WheelEvent), {
+      passive: false,
+    });
 
     if (!this.disableVertical && vertical) {
       addListener(vertical, 'scroll', handleScroll, { passive: true });
@@ -480,6 +517,144 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       this.mutationObserver = new MutationObserver(() => this.scheduleGeometrySync());
       this.mutationObserver.observe(this.verticalScroller, { childList: true, subtree: true });
     }
+  }
+
+  /**
+   * Routes wheel gestures from the whole content surface to the overlay owner.
+   * Native nested scrollers keep priority while they can consume the gesture;
+   * once they reach an edge, the gesture can continue through the parent overlay.
+   */
+  private handleWheel(event: WheelEvent): void {
+    if (event.defaultPrevented || event.ctrlKey || event.metaKey) {
+      return;
+    }
+
+    const target = event.target instanceof Element ? event.target : null;
+    if (!target || !this.hostEl.contains(target)) {
+      return;
+    }
+
+    const shiftToHorizontal = event.shiftKey && Math.abs(event.deltaX) < 0.01;
+    const verticalDelta = shiftToHorizontal
+      ? 0
+      : this.normalizeWheelDelta(
+          event.deltaY,
+          event.deltaMode,
+          this.verticalScroller?.clientHeight ?? 0,
+        );
+    const horizontalDelta = this.normalizeWheelDelta(
+      shiftToHorizontal ? event.deltaY : event.deltaX,
+      event.deltaMode,
+      this.horizontalScroller?.clientWidth ?? 0,
+    );
+
+    if (this.descendantCanConsumeWheel(target, horizontalDelta, verticalDelta)) {
+      this.showBar();
+      return;
+    }
+
+    let consumed = false;
+    if (!this.disableVertical && this.verticalScroller && Math.abs(verticalDelta) > 0.01) {
+      consumed = this.scrollElementBy(this.verticalScroller, 'vertical', verticalDelta) || consumed;
+    }
+    if (!this.disableHorizontal && this.horizontalScroller && Math.abs(horizontalDelta) > 0.01) {
+      consumed =
+        this.scrollElementBy(this.horizontalScroller, 'horizontal', horizontalDelta) || consumed;
+    }
+
+    if (!consumed) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    this.updateThumbs();
+    this.showBar();
+  }
+
+  private descendantCanConsumeWheel(
+    target: Element,
+    horizontalDelta: number,
+    verticalDelta: number,
+  ): boolean {
+    let candidate: HTMLElement | null =
+      target instanceof HTMLElement ? target : target.parentElement;
+
+    while (candidate && candidate !== this.hostEl) {
+      const isOwnedScroller =
+        candidate === this.verticalScroller || candidate === this.horizontalScroller;
+      if (!isOwnedScroller) {
+        if (
+          (Math.abs(verticalDelta) > 0.01 &&
+            this.canElementConsumeWheel(candidate, 'vertical', verticalDelta)) ||
+          (Math.abs(horizontalDelta) > 0.01 &&
+            this.canElementConsumeWheel(candidate, 'horizontal', horizontalDelta))
+        ) {
+          return true;
+        }
+      }
+      candidate = candidate.parentElement;
+    }
+
+    return false;
+  }
+
+  private canElementConsumeWheel(
+    element: HTMLElement,
+    axis: 'horizontal' | 'vertical',
+    delta: number,
+  ): boolean {
+    const current = axis === 'vertical' ? element.scrollTop : element.scrollLeft;
+    const maximum =
+      axis === 'vertical'
+        ? element.scrollHeight - element.clientHeight
+        : element.scrollWidth - element.clientWidth;
+    if (maximum <= 1) {
+      return false;
+    }
+
+    const styles = getComputedStyle(element);
+    const overflow = axis === 'vertical' ? styles.overflowY : styles.overflowX;
+    if (!/(auto|scroll|overlay)/.test(overflow)) {
+      return false;
+    }
+
+    return maximum > 1 && (delta < 0 ? current > 0 : current < maximum);
+  }
+
+  private scrollElementBy(
+    element: HTMLElement,
+    axis: 'horizontal' | 'vertical',
+    delta: number,
+  ): boolean {
+    const current = axis === 'vertical' ? element.scrollTop : element.scrollLeft;
+    const maximum = Math.max(
+      0,
+      axis === 'vertical'
+        ? element.scrollHeight - element.clientHeight
+        : element.scrollWidth - element.clientWidth,
+    );
+    const next = Math.min(maximum, Math.max(0, current + delta));
+    if (Math.abs(next - current) < 0.01) {
+      return false;
+    }
+
+    if (axis === 'vertical') {
+      element.scrollTop = next;
+    } else {
+      element.scrollLeft = next;
+    }
+    return true;
+  }
+
+  private normalizeWheelDelta(delta: number, deltaMode: number, pageSize: number): number {
+    if (deltaMode === 1) {
+      return delta * 16;
+    }
+    if (deltaMode === 2) {
+      return delta * Math.max(pageSize, 1);
+    }
+    return delta;
   }
 
   private scheduleGeometrySync(): void {
@@ -645,13 +820,13 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     if (this.verticalScroller && !this.disableVertical) {
       const verticalRect = this.getSafeRect(this.verticalScroller);
       const barY = this.barYRef.nativeElement;
-      
+
       let headerOffset = 0;
       // Only apply header offset if the vertical scroller is the entire scroll area (meaning it includes the header)
       if (this.tableHead && this.verticalScroller === this.scrollAreaRef?.nativeElement) {
         headerOffset = this.tableHead.offsetHeight;
       }
-      
+
       const barTop = verticalRect.top - hostRect.top + headerOffset;
       barY.style.top = `${barTop}px`;
 
@@ -670,7 +845,8 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       const leftPosition = horizontalRect.left - hostRect.left;
       barX.style.left = `${leftPosition}px`;
       const horizontalBarVisualTop =
-        horizontalBarTop ?? horizontalRect.top - hostRect.top + horizontalRect.height - this.trackSize;
+        horizontalBarTop ??
+        horizontalRect.top - hostRect.top + horizontalRect.height - this.trackSize;
       barX.style.top = `${horizontalBarVisualTop}px`;
 
       // Calcular ancho disponible desde la posición left hasta el borde derecho del host
@@ -750,6 +926,29 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       style.overflowX = 'hidden';
       style.boxSizing = 'border-box';
     }
+  }
+
+  /**
+   * Keeps native scrollbars hidden while the custom overlay owns the scroller.
+   * This marker remains stable even when table measurement temporarily removes
+   * the axis attribute, avoiding a native scrollbar flash and layout shift.
+   */
+  private markManagedScrollbar(element: HTMLElement | undefined): void {
+    if (!element || element.hasAttribute('data-so-managed-scrollbar')) {
+      return;
+    }
+
+    element.setAttribute('data-so-managed-scrollbar', 'true');
+    element.setAttribute('data-so-managed-scrollbar-temp', 'true');
+  }
+
+  private removeManagedScrollbarMarker(element: HTMLElement | undefined): void {
+    if (!element?.hasAttribute('data-so-managed-scrollbar-temp')) {
+      return;
+    }
+
+    element.removeAttribute('data-so-managed-scrollbar');
+    element.removeAttribute('data-so-managed-scrollbar-temp');
   }
 
   private normalizeCssSize(value: number | string | undefined): string | null {
@@ -844,7 +1043,9 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     }
 
     const host = this.hostEl;
-    const scrollableCandidates = Array.from(host.querySelectorAll('[data-so-vertical]')) as HTMLElement[];
+    const scrollableCandidates = Array.from(host.querySelectorAll('[data-so-vertical]')).filter(
+      (element) => element.closest('.so-root') === host,
+    ) as HTMLElement[];
     const duplicates = scrollableCandidates.filter((el) => el !== this.verticalScroller);
     duplicates.forEach((el) => {
       if (el.hasAttribute('data-so-vertical-temp')) {
@@ -862,7 +1063,13 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   private syncColumnTemplate(): void {
-    if (!this.syncTableColumns || this._lockColumnTemplate || !this.headerRow || !this.verticalScroller || this.verticalScroller.tagName !== 'TBODY') {
+    if (
+      !this.syncTableColumns ||
+      this._lockColumnTemplate ||
+      !this.headerRow ||
+      !this.verticalScroller ||
+      this.verticalScroller.tagName !== 'TBODY'
+    ) {
       if (!this._lockColumnTemplate) {
         this.hostEl.style.removeProperty('--so-column-template');
         this._lastColumnTemplate = '';
@@ -882,18 +1089,18 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     this.hostEl.removeAttribute('data-so-sync-columns');
     this.hostEl.removeAttribute('data-so-table');
     this.verticalScroller.removeAttribute('data-so-vertical');
-    
+
     // 2. We MUST force the table to size to its content, not the container
     const table = this.hostEl.querySelector('table') as HTMLElement;
     const oldTableWidth = table.style.width;
     table.style.width = 'max-content';
-    
+
     // 3. Force browser layout recalculation
     void this.hostEl.offsetHeight;
 
     // 4. Measure the natural widths determined by the browser's native table algorithm
     // (Native table ensures thead and tbody align, so measuring thead is enough)
-    const widths = headerCells.map(cell => {
+    const widths = headerCells.map((cell) => {
       const rect = this.getSafeRect(cell);
       return Math.max(this._minColumnWidth, Math.ceil(rect.width));
     });
@@ -906,7 +1113,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
     // 6. Lock the exact pixel widths so thead and tbody align perfectly
     const template = widths.map((width) => `${width}px`).join(' ');
-    
+
     // 7. Only apply if changed to prevent ResizeObserver infinite loops
     if (this._lastColumnTemplate !== template) {
       this._lastColumnTemplate = template;
@@ -934,12 +1141,17 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       y: 0,
       toJSON() {
         return '';
-      }
+      },
     } as DOMRect;
   }
 
   private startDragY(event: PointerEvent): void {
-    if (event.button === 1 || event.button === 2 || !this.verticalScroller || this.disableVertical) {
+    if (
+      event.button === 1 ||
+      event.button === 2 ||
+      !this.verticalScroller ||
+      this.disableVertical
+    ) {
       return;
     }
 
@@ -957,7 +1169,10 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    const maxScrollTop = Math.max(1, this.verticalScroller.scrollHeight - this.verticalScroller.clientHeight);
+    const maxScrollTop = Math.max(
+      1,
+      this.verticalScroller.scrollHeight - this.verticalScroller.clientHeight,
+    );
     const maxThumbOffset = Math.max(1, this.verticalScroller.clientHeight - this.verticalThumbSize);
     const delta = event.clientY - this.dragStartClientY;
     const scrollDelta = (delta * maxScrollTop) / maxThumbOffset;
@@ -972,7 +1187,10 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     }
 
     this.draggingY = false;
-    if (this.dragPointerIdY !== undefined && this.thumbYRef.nativeElement.hasPointerCapture?.(this.dragPointerIdY)) {
+    if (
+      this.dragPointerIdY !== undefined &&
+      this.thumbYRef.nativeElement.hasPointerCapture?.(this.dragPointerIdY)
+    ) {
       this.thumbYRef.nativeElement.releasePointerCapture(this.dragPointerIdY);
     }
     this.dragPointerIdY = undefined;
@@ -980,7 +1198,12 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   private startDragX(event: PointerEvent): void {
-    if (event.button === 1 || event.button === 2 || !this.horizontalScroller || this.disableHorizontal) {
+    if (
+      event.button === 1 ||
+      event.button === 2 ||
+      !this.horizontalScroller ||
+      this.disableHorizontal
+    ) {
       return;
     }
 
@@ -998,8 +1221,14 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    const maxScrollLeft = Math.max(1, this.horizontalScroller.scrollWidth - this.horizontalScroller.clientWidth);
-    const maxThumbOffset = Math.max(1, this.horizontalScroller.clientWidth - this.horizontalThumbSize);
+    const maxScrollLeft = Math.max(
+      1,
+      this.horizontalScroller.scrollWidth - this.horizontalScroller.clientWidth,
+    );
+    const maxThumbOffset = Math.max(
+      1,
+      this.horizontalScroller.clientWidth - this.horizontalThumbSize,
+    );
     const delta = event.clientX - this.dragStartClientX;
     const scrollDelta = (delta * maxScrollLeft) / maxThumbOffset;
     this.horizontalScroller.scrollLeft = this.dragStartScrollLeft + scrollDelta;
@@ -1013,11 +1242,13 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     }
 
     this.draggingX = false;
-    if (this.dragPointerIdX !== undefined && this.thumbXRef.nativeElement.hasPointerCapture?.(this.dragPointerIdX)) {
+    if (
+      this.dragPointerIdX !== undefined &&
+      this.thumbXRef.nativeElement.hasPointerCapture?.(this.dragPointerIdX)
+    ) {
       this.thumbXRef.nativeElement.releasePointerCapture(this.dragPointerIdX);
     }
     this.dragPointerIdX = undefined;
     this.showBar();
   }
 }
-

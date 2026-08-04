@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "atomic.recipe.route-form.v1",
+  "kind": "ui-recipe",
+  "variant": "route-form",
+  "intent": "crud",
+  "summary": "Listado y formulario de alta/edición en rutas independientes.",
+  "whenToUse": "Entidades con formularios extensos, secciones múltiples o edición que necesita URL propia.",
+  "componentStack": {
+    "header": ["page-header"],
+    "filters": ["query-toolbar", "input", "button"],
+    "surface": ["card"],
+    "table": ["data-table", "table-action", "action-group"],
+    "editor": ["input", "number-input", "choice-control", "button"],
+    "feedback": ["alert", "data-state"]
+  },
+  "requiredOperations": ["list", "read", "create", "update"],
+  "optionalOperations": [],
+  "supportedVariants": {
+    "density": ["comfortable", "compact"],
+    "formLayout": ["single-column", "two-columns"],
+    "actionDisplay": ["inline", "overflow"]
+  },
+  "defaults": {
+    "density": "comfortable",
+    "formLayout": "two-columns",
+    "actionDisplay": "inline"
+  },
+  "extensionSlots": ["list-toolbar-after", "form-before-fields", "form-after-fields"],
+  "outputLayers": ["models", "data-access", "facade", "list-page", "form-page", "routes", "tests"],
+  "qualityGates": [
+    "angular-22",
+    "zoneless",
+    "on-push",
+    "typed-contract",
+    "no-overwrite",
+    "atomic-only-controls"
+  ]
+}

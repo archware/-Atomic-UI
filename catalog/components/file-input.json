@@ -1,0 +1,95 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "file-input",
+  "layer": "atom",
+  "selector": "app-file-input",
+  "export": "FileInputComponent",
+  "source": "src/app/shared/ui/atoms/file-input/file-input.component.ts",
+  "relatedExports": ["FileInputFile", "FileInputDensity"],
+  "purpose": "Control CVA para seleccionar o arrastrar archivos, validar formato y tamaño y presentar la selección.",
+  "variants": [
+    {
+      "name": "density",
+      "values": [
+        { "value": "comfortable", "meaning": "Zona de carga vertical con mayor superficie.", "default": true },
+        { "value": "compact", "meaning": "Zona de carga horizontal para formularios modales." }
+      ]
+    },
+    {
+      "name": "multiple",
+      "values": [
+        { "value": false, "meaning": "Cada selección reemplaza el archivo anterior.", "default": true },
+        { "value": true, "meaning": "Acumula varios archivos válidos en la selección." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible asociada al input nativo." },
+    { "name": "hint", "type": "string", "default": "", "meaning": "Ayuda visible y descripción accesible del control." },
+    { "name": "accept", "type": "string", "default": "", "meaning": "Reglas MIME, comodines o extensiones separadas por coma." },
+    { "name": "multiple", "type": "boolean", "default": false, "meaning": "Permite acumular más de un archivo." },
+    { "name": "maxSizeMB", "type": "number | undefined", "meaning": "Tamaño máximo en MB aplicado a cada archivo cuando se configura." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Bloquea selección, drag and drop y eliminación; CVA también puede establecerlo." },
+    { "name": "error", "type": "string", "default": "", "meaning": "Error externo con precedencia sobre el error de validación interno." },
+    { "name": "density", "type": "FileInputDensity", "default": "comfortable", "meaning": "Densidad visual de la zona de carga." }
+  ],
+  "outputs": [
+    { "name": "filesChange", "type": "FileInputFile[]", "meaning": "Selección completa emitida después de aceptar o eliminar archivos." }
+  ],
+  "behavior": [
+    "Implementa ControlValueAccessor y entrega FileInputFile[] al formulario.",
+    "Valida primero el tamaño y después accept; un lote inválido no reemplaza la selección existente.",
+    "Genera previews únicamente para imágenes y únicamente en el navegador.",
+    "En modo multiple acumula archivos; en modo simple reemplaza la selección."
+  ],
+  "states": [
+    { "name": "empty", "meaning": "No hay archivos seleccionados." },
+    { "name": "drag-over", "meaning": "Resalta la zona mientras se arrastra un archivo válido o inválido." },
+    { "name": "selected", "meaning": "Presenta lista con nombre, tamaño, preview opcional y eliminación." },
+    { "name": "invalid", "meaning": "Presenta el error externo o el primer error de tamaño o formato con role alert." },
+    { "name": "disabled", "meaning": "La zona deja de ser tabulable y se bloquean selección y eliminación." }
+  ],
+  "a11y": [
+    "Asocia label e input mediante un id único por instancia.",
+    "La zona de carga tiene role button, soporte Enter y Space y aria-disabled.",
+    "Hint y error se relacionan mediante aria-describedby; el error usa role alert.",
+    "La lista se nombra Archivos seleccionados y cada eliminación incluye el nombre del archivo."
+  ],
+  "responsive": [
+    "Los nombres extensos se truncan con elipsis dentro de la lista.",
+    "La densidad compacta organiza icono y texto en fila para diálogos; no define quiebres de viewport propios."
+  ],
+  "tokens": [
+    "--border-color",
+    "--control-height",
+    "--danger-color",
+    "--input-border-focus",
+    "--radius-md",
+    "--radius-sm",
+    "--space-1",
+    "--space-10",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--space-6",
+    "--surface-background",
+    "--surface-hover",
+    "--surface-section",
+    "--table-transition-duration",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-secondary",
+    "--text-lg",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": { "path": "src/stories/ui-file-input.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/atoms/file-input/file-input.component.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": ["La prueba cubre aceptación PDF, rechazo por tipo y tamaño, disabled y densidad compacta."]
+  },
+  "canonicalFor": ["file-input", "document-upload", "attachment-field"]
+}

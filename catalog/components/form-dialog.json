@@ -1,0 +1,179 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "form-dialog",
+  "layer": "organism",
+  "selector": "prest-form-dialog",
+  "export": "FormDialog",
+  "source": "src/app/shared/ui/organisms/form-dialog/form-dialog.ts",
+  "purpose": "Diálogo CRUD canónico con encabezado, descripción, cuerpo, cierre proyectado y control declarativo de apertura.",
+  "variants": [
+    {
+      "name": "size",
+      "values": [
+        { "value": "sm", "meaning": "Formulario breve." },
+        { "value": "md", "meaning": "Formulario estándar.", "default": true },
+        { "value": "lg", "meaning": "Formulario amplio." },
+        { "value": "xl", "meaning": "Formulario de máxima anchura permitida." }
+      ]
+    },
+    {
+      "name": "open-control",
+      "values": [
+        { "value": false, "meaning": "Dialog cerrado.", "default": true },
+        { "value": true, "meaning": "Dialog abierto mediante model opened." }
+      ]
+    },
+    {
+      "name": "busy",
+      "values": [
+        { "value": false, "meaning": "Permite emitir cancelled.", "default": true },
+        { "value": true, "meaning": "Expone aria-busy y suprime cancelled por Escape." }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "name": "eyebrow",
+      "type": "string | null",
+      "default": null,
+      "meaning": "Contexto breve sobre el título."
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "meaning": "Título visible y nombre accesible del modal."
+    },
+    {
+      "name": "description",
+      "type": "string | null",
+      "default": null,
+      "meaning": "Descripción visible y aria-describedby."
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg' | 'xl'",
+      "default": "md",
+      "meaning": "Ancho máximo delegado a CrudDialog."
+    },
+    {
+      "name": "panelClass",
+      "type": "string",
+      "default": "",
+      "meaning": "Clases adicionales sobre el dialog nativo."
+    },
+    {
+      "name": "opened",
+      "type": "boolean (model)",
+      "default": false,
+      "meaning": "Control bidireccional declarativo de apertura."
+    },
+    {
+      "name": "busy",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Marca el artículo aria-busy y bloquea la emisión de cancelled."
+    }
+  ],
+  "outputs": [
+    {
+      "name": "openedChange",
+      "type": "boolean",
+      "meaning": "Salida implícita del model opened; vuelve a false al cierre efectivo."
+    },
+    {
+      "name": "cancelled",
+      "type": "Event",
+      "meaning": "Intento de cancelar cuando busy es false; el consumidor decide cerrar."
+    },
+    {
+      "name": "closed",
+      "type": "void",
+      "meaning": "Cierre efectivo después de sincronizar opened=false."
+    }
+  ],
+  "methods": [
+    {
+      "name": "showModal",
+      "type": "() => void",
+      "meaning": "Establece opened=true, abre y enfoca el primer control del cuerpo."
+    },
+    {
+      "name": "close",
+      "type": "(returnValue?: string) => void",
+      "meaning": "Establece opened=false y cierra con returnValue opcional."
+    },
+    {
+      "name": "focusInvalid",
+      "type": "() => void",
+      "meaning": "Enfoca el primer descendiente .ng-invalid."
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "type": "projected content",
+      "meaning": "Formulario y FormDialogActions del consumidor."
+    },
+    {
+      "name": "[dialog-close]",
+      "type": "projected content",
+      "meaning": "Botón Atomic de cierre en el encabezado."
+    }
+  ],
+  "behavior": [
+    "Un effect sincroniza opened con el estado nativo de CrudDialog sin eliminar showModal ni close.",
+    "El foco inicial prioriza controles del cuerpo y luego el botón proyectado dialog-close.",
+    "busy no deshabilita automáticamente campos, botones proyectados ni close programático.",
+    "CrudDialog concentra el desplazamiento en un ScrollOverlay; el encabezado y FormDialogActions permanecen sticky sin crear scrollers adicionales."
+  ],
+  "states": [
+    { "name": "closed", "meaning": "opened=false y dialog cerrado." },
+    { "name": "open", "meaning": "opened=true y dialog en top layer." },
+    { "name": "busy", "meaning": "aria-busy=true y Escape no propaga cancelled." },
+    {
+      "name": "cancel-requested",
+      "meaning": "Escape emitió cancelled; el consumidor confirma o cierra."
+    }
+  ],
+  "a11y": [
+    "Genera ids únicos para aria-labelledby y aria-describedby mediante título y descripción.",
+    "Delega diálogo nativo, foco inicial, foco inválido y restauración del foco a CrudDialog.",
+    "busy se anuncia en el article con aria-busy; el consumidor debe deshabilitar las acciones que no deban ejecutarse."
+  ],
+  "responsive": [
+    "El encabezado usa título flexible y cierre independiente.",
+    "A 36rem o menos reduce padding y gap; el tamaño exterior lo resuelve CrudDialog."
+  ],
+  "tokens": [
+    "--crud-dialog-max-width-md",
+    "--form-row-gap",
+    "--modal-border",
+    "--modal-header-bg",
+    "--primary-color",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--space-6",
+    "--text-color",
+    "--text-color-secondary",
+    "--text-sm",
+    "--text-xl",
+    "--text-xs"
+  ],
+  "story": { "path": "src/stories/ui-form-dialog.stories.ts", "status": "available" },
+  "test": {
+    "path": "src/app/shared/ui/organisms/form-dialog/form-dialog.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "opened es el contrato declarativo preferido; showModal y close se conservan para integración imperativa."
+    ]
+  },
+  "canonicalFor": ["crud-form-dialog", "create-dialog", "edit-dialog"]
+}

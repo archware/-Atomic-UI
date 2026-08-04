@@ -14,7 +14,12 @@
 export { AvatarComponent } from './atoms/avatar/avatar.component';
 export type { AvatarSize, AvatarStatus } from './atoms/avatar/avatar.component';
 
-export { ButtonComponent, normalizeFontAwesomeIconClass } from './atoms/button/button.component';
+export {
+  ButtonComponent,
+  normalizeFontAwesomeIconClass,
+  type ButtonTone,
+  type ButtonVariant,
+} from './atoms/button/button.component';
 
 export { CheckboxComponent } from './atoms/checkbox/checkbox.component';
 
@@ -231,6 +236,15 @@ export type {
 export { CrudDialog } from './organisms/crud-dialog/crud-dialog';
 
 export { FormDialog, FormDialogActions } from './organisms/form-dialog/form-dialog';
+
+export { PageHeader } from './organisms/page-header/page-header';
+export type { PageHeaderDensity } from './organisms/page-header/page-header';
+
+export { QueryToolbar } from './organisms/query-toolbar/query-toolbar';
+export type {
+  QueryToolbarDensity,
+  QueryToolbarLayout,
+} from './organisms/query-toolbar/query-toolbar';
 
 export { DataTable } from './organisms/data-table/data-table';
 export type {

@@ -128,8 +128,8 @@ export interface ComboboxOption {
       padding: var(--space-2) var(--space-8) var(--space-2) var(--space-3);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-md);
-      background: var(--input-background);
-      color: var(--text-color-primary);
+      background: var(--input-bg);
+      color: var(--text-color);
       font-size: var(--text-sm);
       line-height: 1.5;
       outline: none;
@@ -142,7 +142,7 @@ export interface ComboboxOption {
     }
 
     .combobox-input:disabled {
-      background: var(--surface-disabled);
+      background: var(--input-disabled-bg);
       cursor: not-allowed;
       opacity: 0.6;
     }
@@ -162,7 +162,7 @@ export interface ComboboxOption {
     }
 
     .combobox-clear { pointer-events: all; }
-    .combobox-clear:hover { color: var(--text-color-primary); }
+    .combobox-clear:hover { color: var(--text-color); }
 
     .combobox-dropdown {
       position: absolute;
@@ -188,7 +188,7 @@ export interface ComboboxOption {
       padding: var(--space-2) var(--space-3);
       cursor: pointer;
       font-size: var(--text-sm);
-      color: var(--text-color-primary);
+      color: var(--text-color);
       transition: background 100ms ease;
     }
 
@@ -219,7 +219,7 @@ export interface ComboboxOption {
     .combobox-error {
       display: block;
       font-size: var(--text-xs);
-      color: var(--color-error);
+      color: var(--danger-color);
       margin-top: var(--space-1);
     }
   `]

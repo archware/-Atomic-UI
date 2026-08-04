@@ -4,6 +4,27 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-08-02] - Una colección visual no basta: variantes y UX deben ser ejecutables
+
+**Evidencia:** Front Atomic repetía correctamente encabezados, barras de
+consulta, estados, tablas y editores, pero un agente todavía debía leer muchos
+archivos para reconstruir el patrón. A la vez, los blueprints históricos
+mezclaban demos y mocks con artefactos que podían copiarse a un consumidor.
+
+**Decisión:** Atomic publica contratos JSON versionados para componentes y sus
+variantes, reglas UX transversales y tres recetas iniciales. `agent:context`
+entrega solo la fracción necesaria y `generate:ui` crea una base determinista
+desde un requisito explícito. `ui-only` no contiene HTTP; `integrated` exige
+endpoint, método y contrato. Los demos permanecen en el showcase, identificados
+como `legacy-demo`, y el bootstrap productivo nunca los copia.
+
+**Prevención:** toda variante nueva debe existir primero en código, prueba,
+story y catálogo. Todo agente revisa `--dry-run`; el gate bloquea referencias
+ausentes, sobrescritura, integración inferida, tokens sin resolver y blueprints
+productivos fuera del ADN.
+
+---
+
 ## [2026-07-23] - Prohibición de Bypass Atomic UI: Scrollbars de SO en Tema Oscuro y Grillas Rígidas
 
 **Evidencia:** En aplicaciones consumidoras (`prestamo_front_atomic`), se detectaron fallas visuales graves:

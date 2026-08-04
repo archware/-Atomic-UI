@@ -1,5 +1,10 @@
 # Guía de Atomic Design - Atomic UI
 
+> Para solicitudes de UI o CRUD dirigidas a agentes, comenzar por el contexto
+> compacto y el flujo de `docs/ATOMIC_UI_AGENT_RUNTIME.md`. Esta guía completa
+> se usa al crear o modificar el ADN de Atomic, no como contexto predeterminado
+> de cada pantalla.
+
 ## Jerarquía de Componentes
 
 ```mermaid

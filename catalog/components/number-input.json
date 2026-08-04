@@ -1,0 +1,73 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "number-input",
+  "layer": "atom",
+  "selector": "app-number-input",
+  "export": "NumberInputComponent",
+  "source": "src/app/shared/ui/atoms/number-input/number-input.component.ts",
+  "purpose": "Entrada numérica con escritura directa, botones de incremento y decremento, límites y soporte CVA.",
+  "variants": [],
+  "inputs": [
+    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible y nombre accesible del campo." },
+    { "name": "hint", "type": "string", "default": "", "meaning": "Ayuda visible bajo el control." },
+    { "name": "error", "type": "string", "default": "", "meaning": "Error visible anunciado con role=alert." },
+    { "name": "min", "type": "number", "default": 0, "meaning": "Límite inferior y condición que deshabilita Decrementar." },
+    { "name": "max", "type": "number", "default": 9999, "meaning": "Límite superior y condición que deshabilita Incrementar." },
+    { "name": "step", "type": "number", "default": 1, "meaning": "Incremento aplicado por ambos botones y por el input nativo." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Bloquea campo y botones; CVA también puede establecerlo." },
+    { "name": "inputId", "type": "string", "default": "generated per instance", "meaning": "Id del input asociado con la etiqueta." }
+  ],
+  "outputs": [
+    { "name": "valueChange", "type": "number", "meaning": "Valor limitado emitido después de escritura válida o uso de los botones." }
+  ],
+  "behavior": [
+    "Implementa ControlValueAccessor; writeValue convierte null o undefined en cero.",
+    "increment y decrement limitan el resultado con max y min antes de notificar CVA y valueChange.",
+    "La escritura directa ignora texto no numérico y limita un número válido al intervalo min/max."
+  ],
+  "states": [
+    { "name": "normal", "meaning": "Permite escritura y ambos ajustes cuando está dentro de límites." },
+    { "name": "minimum", "meaning": "Deshabilita Decrementar cuando value es menor o igual que min." },
+    { "name": "maximum", "meaning": "Deshabilita Incrementar cuando value es mayor o igual que max." },
+    { "name": "disabled", "meaning": "Input y botones no admiten interacción." },
+    { "name": "error", "meaning": "Presenta el texto de error con role=alert." }
+  ],
+  "a11y": [
+    "Asocia label e input mediante for e inputId; sin label usa aria-label Número.",
+    "Los botones nativos se nombran Decrementar e Incrementar y reflejan disabled en los límites.",
+    "El input conserva type=number, min, max, step y blur marca touched.",
+    "Hint y error se relacionan mediante aria-describedby; el error activa aria-invalid y los iconos son decorativos."
+  ],
+  "responsive": [
+    "El control flex ocupa 100% del contenedor y el campo central crece con un mínimo de --space-8.",
+    "No define quiebres de viewport propios."
+  ],
+  "tokens": [
+    "--border-color",
+    "--danger-color",
+    "--font-medium",
+    "--primary-color",
+    "--radius-md",
+    "--space-1",
+    "--space-2",
+    "--space-7",
+    "--space-8",
+    "--surface-background",
+    "--surface-hover",
+    "--surface-section",
+    "--text-color",
+    "--text-color-on-primary",
+    "--text-color-muted",
+    "--text-color-secondary",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": { "path": "src/stories/ui-number-input.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/atoms/number-input/number-input.component.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": ["Está exportado por el barrel y es el control numérico usado por el generador."]
+  },
+  "canonicalFor": ["number-input", "bounded-number", "quantity-stepper"]
+}

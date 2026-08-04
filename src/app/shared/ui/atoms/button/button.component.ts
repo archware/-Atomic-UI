@@ -5,7 +5,18 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
  * @remarks Each variant applies different colors from the design system.
  */
 export type ButtonVariant =
-  'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'outline' | 'ghost' | 'link';
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'soft'
+  | 'outline'
+  | 'ghost'
+  | 'link';
+
+/** Semantic tone used by subtle and outlined actions. */
+export type ButtonTone = 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
 
 /** Button size options */
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -80,6 +91,21 @@ export type IconPosition = 'left' | 'right' | 'none';
         display: contents;
       }
 
+      /* Canonical FormDialog close: square, centered and icon-only. */
+      :host([dialog-close]) {
+        display: inline-flex;
+        width: var(--control-height);
+        height: var(--control-height);
+      }
+
+      :host([dialog-close]) .btn {
+        width: 100%;
+        min-width: 100%;
+        height: 100%;
+        min-height: 100%;
+        padding: 0;
+      }
+
       .btn-icon-wrapper {
         display: inline-flex;
         align-items: center;
@@ -124,6 +150,13 @@ export class ButtonComponent {
    * @default 'primary'
    */
   @Input() variant: ButtonVariant = 'primary';
+
+  /**
+   * Semantic emphasis for subtle and outlined actions.
+   * It does not replace the variant or communicate meaning without a label.
+   * @default 'neutral'
+   */
+  @Input() tone: ButtonTone = 'neutral';
 
   /**
    * Size of the button.
@@ -176,7 +209,7 @@ export class ButtonComponent {
 
   /** @internal */
   get buttonClasses(): string {
-    const classes = ['btn', `btn-${this.variant}`];
+    const classes = ['btn', `btn-${this.variant}`, `btn-tone-${this.tone}`];
 
     if (this.size !== 'md') {
       classes.push(`btn-${this.size}`);

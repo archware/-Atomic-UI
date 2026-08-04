@@ -164,8 +164,10 @@ export type KpiTone = 'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'da
         align-items: center;
         justify-content: center;
         flex: 0 0 auto;
+        border: 1px solid color-mix(in srgb, var(--kpi-accent) 28%, transparent);
         border-radius: var(--radius-md);
         background: var(--kpi-accent-background);
+        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--surface-background) 42%, transparent);
         color: var(--kpi-accent);
       }
 
