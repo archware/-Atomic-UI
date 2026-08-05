@@ -368,10 +368,11 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     }
 
     /* === STATES === */
+    /* Ver form-input: el token declara el contraste, la opacidad lo rompía. */
     .disabled .floating-input {
       background: var(--input-disabled-bg);
+      color: var(--input-disabled-text);
       cursor: not-allowed;
-      opacity: 0.6;
     }
 
     .has-error .floating-input {

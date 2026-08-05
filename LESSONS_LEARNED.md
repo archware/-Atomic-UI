@@ -2,7 +2,7 @@
 title: "Lecciones aprendidas de Atomic UI"
 document_type: "registro técnico"
 status: "en revisión"
-last_updated: "2026-08-03"
+last_updated: "2026-08-05"
 owners:
   - "Hospital Regional de Ayacucho"
 ---
@@ -10,6 +10,71 @@ owners:
 # Lecciones aprendidas de Atomic UI
 
 Este documento centraliza el conocimiento adquirido tras solucionar problemas complejos de arquitectura, diseño e integración en el ecosistema de Atomic-UI, sirviendo como guía maestra para que agentes y desarrolladores entiendan el "por qué" de ciertas decisiones técnicas críticas y puedan portar este comportamiento a otros ecosistemas (Wails, Tauri, Web, etc).
+
+---
+
+## [2026-08-05] - Un token declara un contraste; cualquier `opacity` posterior lo deshace
+
+**Evidencia:** ocho componentes definían su estado deshabilitado con
+`--input-disabled-bg` / `--input-disabled-text` y a continuación aplicaban
+`opacity: 0.5`–`0.7`. La atenuación afecta a texto y fondo a la vez contra la
+página, así que el contraste real dejaba de ser el declarado: con los tokens ya
+corregidos, `opacity: 0.7` daba 4,09:1 donde el token prometía 6,99:1. En
+`form-select` la flecha recibía la atenuación dos veces y quedaba más apagada
+que el texto al que acompaña.
+
+**Decisión:** un solo canal. El estado deshabilitado se comunica con el token y
+el `cursor`; ninguna capa posterior modula lo que el token declara. WCAG 1.4.3
+exime a los controles inactivos del 4,5:1, así que el listón es propio: no era
+un incumplimiento formal, era legibilidad.
+
+**Prevención:** `scripts/check-theme-contrast.mjs` en `governance:check`. Su
+diseño importa más que su existencia: **replica la cascada de `:root`** en lugar
+de leer el bloque del tema, porque un bloque que no redeclara un token hereda el
+del bloque claro y esa herencia era el mecanismo del fallo. Comprueba además que
+el fondo de un control deshabilitado no destaque contra la página —una prueba de
+contraste ingenua daba verde sobre el bug, porque el texto contrastaba bien
+contra el fondo equivocado— y rechaza `var()` colgante sin respaldo.
+
+---
+
+## [2026-08-05] - Un trinquete no puede vivir más abajo que el defecto que vigila
+
+**Evidencia:** el defecto de contraste nació aquí, en los tokens del ADN, y se
+publicó a los consumidores. La comprobación que lo detecta se escribió primero
+en `prestamo_front_atomic`. `governance:check` encadena nueve verificaciones y
+ninguna podía ver el fallo que este repositorio originó. Al portar el script,
+encontró en su **primera ejecución** `--surface-card` y `--surface-input` usados
+en siete sitios del escaparate sin estar definidos en ningún tema.
+
+**Decisión:** el trinquete se instala río arriba en el mismo cambio que corrige
+el defecto, no solo en el consumidor que lo sufrió.
+
+**Prevención:** al corregir un defecto de ADN, la pregunta obligatoria es «¿este
+repositorio puede volver a publicarlo?». Si la respuesta es sí, la corrección no
+está completa aunque el consumidor ya se vea bien.
+
+---
+
+## [2026-08-05] - La propagación no es unidireccional por decreto
+
+**Evidencia:** `data-table` de este repositorio traía el arreglo de `[pageSize]`,
+pero su `.ts` **no compila** en el consumidor —importa rutas `*.component` que
+allí no existen— y su plantilla habría **retrocedido** los átomos: el consumidor
+ya expone `[fill]`, `[horizontal]`, `[vertical]` y `[focusable]` en
+`scroll-overlay`, mientras aquí seguimos en `[skipTableDetection]`. Lo mismo con
+el estado deshabilitado de `file-input`, `datepicker` y `combobox`, corregidos
+antes abajo que arriba.
+
+**Decisión:** en esos puntos la propagación fue **hacia arriba**. El consumidor
+recibió un backport quirúrgico de las dos líneas que arreglan el defecto, no una
+copia del componente.
+
+**Prevención:** «el ADN es la fuente de verdad» es cierto por archivo, no por
+repositorio. Antes de propagar hay que comparar en las dos direcciones; hacerlo a
+ciegas introduce regresiones con aspecto de alineación. Complemento pendiente:
+que `check:atomic` falle cuando el `atomicRef` del consumidor no sea el HEAD del
+ADN, para que la deriva sea un error de build y no un hallazgo arqueológico.
 
 ---
 

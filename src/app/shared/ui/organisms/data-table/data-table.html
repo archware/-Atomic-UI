@@ -15,7 +15,7 @@
         <label class="data-table__page-size">
           <span>POR PÁGINA:</span>
           <select [value]="effectivePageSize()" (change)="onPageSizeChange($event)">
-            @for (size of pageSizeOptions(); track size) {
+            @for (size of effectivePageSizeOptions(); track size) {
               <option [value]="size" [selected]="size === effectivePageSize()">{{ size }}</option>
             }
           </select>

@@ -179,8 +179,11 @@ export type FileInputDensity = 'comfortable' | 'compact';
       .invalid .drop-zone {
         border-color: var(--danger-color);
       }
+      /* Ver form-input/input.scss: el estado se comunica por token, no con
+         una opacidad que falsea el contraste declarado. */
       .disabled .drop-zone {
-        opacity: 0.5;
+        background: var(--input-disabled-bg);
+        color: var(--input-disabled-text);
         pointer-events: none;
         cursor: not-allowed;
       }

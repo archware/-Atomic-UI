@@ -66,10 +66,11 @@
   box-shadow: var(--input-shadow-focus);
 }
 
+/* Ver form-input/input.scss: el token ya declara un contraste verificado por
+   tema y la opacidad lo bajaba a la mitad. */
 .choice--disabled {
   color: var(--input-disabled-text);
   cursor: not-allowed;
-  opacity: 0.7;
 }
 
 .choice__label {

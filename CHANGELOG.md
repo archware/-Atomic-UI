@@ -1,9 +1,9 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.3.0"
+version: "5.3.1"
 status: "vigente"
-updated: "2026-08-03"
+updated: "2026-08-05"
 owner: "Hospital Regional de Ayacucho"
 ---
 
@@ -14,6 +14,61 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.3.1] - 2026-08-05
+
+### Corregido
+
+- **Contraste de los controles deshabilitados.** El bloque
+  `[data-theme="dark"]` de `_tokens-components.css` no declaraba
+  `--input-disabled-bg` ni `--input-disabled-text`. Como el bloque claro está
+  anclado a `:root`, sus valores se filtraban a cualquier tema que no los
+  redeclarase: un campo `#F3F4F6` sobre una página `#1e1e1e`, con el texto a
+  **2,05:1**. `brand-dark` estaba a 1,68:1 y el propio tema claro a 2,31:1,
+  ilegible incluso en su contexto de origen. Los tres quedan en 6,99:1, 4,99:1
+  y 6,87:1.
+
+- **La opacidad dejaba de falsear el contraste declarado.** Ocho componentes
+  —`form-input`, `form-select` (dos veces, la flecha se atenuaba por partida
+  doble), `choice-control`, `input`, `textarea`, `combobox`, `floating-input`,
+  `file-input` y `datepicker`— definían su estado deshabilitado por token y
+  después lo modulaban con `opacity`. Con los tokens ya corregidos, `opacity:
+  0.7` dejaba el resultado en 4,09:1. El estado se comunica ahora con el token
+  y el `cursor`, que es lo que el contraste calculado puede garantizar.
+  WCAG 1.4.3 exime a los controles inactivos del 4,5:1: esto no era un
+  incumplimiento formal, era legibilidad.
+
+- **`data-table` mostraba un tamaño de página distinto del que aplicaba.** El
+  desplegable solo ofrecía `pageSizeOptions`, así que un `[pageSize]` fuera de
+  esa lista paginaba correctamente pero exhibía otro número: el paginador
+  contradecía a su propia tabla. El tamaño vigente se incorpora a las opciones.
+
+- **Tokens inexistentes en el escaparate.** `--surface-card` y `--surface-input`
+  se usaban en siete sitios de `ui-showcase` sin estar definidos en ningún tema,
+  dejando la declaración inválida. Se sustituyen por `--surface-elevated`,
+  `--input-bg` y `--text-color-on-primary` según el uso real.
+
+### Añadido
+
+- `npm run check:contrast` (`scripts/check-theme-contrast.mjs`), enganchado a
+  `governance:check`. Resuelve la cadena de tokens por tema y calcula el
+  contraste real. Replica deliberadamente la cascada de `:root` en vez de leer
+  el bloque del tema, porque esa herencia es el mecanismo del defecto que
+  vigila; comprueba además que el fondo de un campo deshabilitado no destaque
+  contra la página, y rechaza cualquier `var()` colgante sin respaldo. Detectó
+  los tokens inexistentes del escaparate en su primera ejecución.
+
+- **El manifiesto de distribución vuelve a medir integridad.**
+  `check-package-distribution` hasheaba el búfer crudo del disco, así que medía
+  el fin de línea del sistema de archivos: una regeneración en una estación con
+  CRLF cambiaba 57 de 151 entradas, y solo 8 correspondían a archivos realmente
+  modificados. En 31 el delta de bytes era exactamente el número de líneas. Un
+  control cuyo ruido supera a su señal es peor que ninguno, porque se aprende a
+  ignorarlo. Ahora se normaliza a LF antes de hashear —los binarios se detectan y
+  se dejan intactos—, de modo que la huella es idéntica en cualquier plataforma.
+  Este cambio **re-basa el manifiesto una sola vez**: 145 entradas cambian de
+  huella sin que su contenido haya cambiado. A partir de aquí es estable.
+
 
 ## [5.3.0] - 2026-08-03
 

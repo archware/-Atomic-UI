@@ -41,9 +41,28 @@ function distributionFiles(contract) {
   return [...new Set(files)].sort((left, right) => left.localeCompare(right, 'en'));
 }
 
+/**
+ * Huella del CONTENIDO, no de los bytes en disco.
+ *
+ * Hasheando el buffer crudo, el manifiesto medía el fin de línea del sistema de
+ * archivos: una regeneración en una estación con CRLF cambiaba 57 de 151
+ * entradas, de las que solo 8 correspondían a archivos realmente modificados.
+ * En 31 el delta de bytes era exactamente el número de líneas, la firma
+ * inequívoca de CRLF↔LF. Un control cuyo ruido supera a su señal no es un
+ * control débil: es uno que la gente aprende a ignorar, y entonces es peor que
+ * ninguno. Se normaliza a LF antes de hashear para que el manifiesto vuelva a
+ * medir integridad y no el sistema operativo de quien lo regeneró.
+ */
+function contentBytes(absolutePath) {
+  const raw = fs.readFileSync(absolutePath);
+  return raw.includes(0x00)
+    ? raw // binario: se hashea tal cual, normalizar lo corrompería
+    : Buffer.from(raw.toString('utf8').replaceAll('\r\n', '\n'), 'utf8');
+}
+
 function expectedManifest(contract, packageJson) {
   const files = distributionFiles(contract).map((local) => {
-    const content = fs.readFileSync(path.join(root, local));
+    const content = contentBytes(path.join(root, local));
     return { path: local, bytes: content.byteLength, sha256: sha256(content) };
   });
   const sourceTreeSha256 = sha256(

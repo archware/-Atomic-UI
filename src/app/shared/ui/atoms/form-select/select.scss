@@ -61,10 +61,11 @@
   box-shadow: var(--input-shadow-focus);
 }
 
+/* Ver la nota de form-input/input.scss: la opacidad falseaba el contraste que
+   declaran los tokens y lo dejaba ilegible incluso con estos ya corregidos. */
 .field__select:disabled {
   background-color: var(--input-disabled-bg);
   color: var(--input-disabled-text);
-  opacity: 0.7;
   cursor: not-allowed;
 }
 
@@ -91,9 +92,11 @@
   stroke-linejoin: round;
 }
 
+/* La flecha recibía la atenuación por partida doble: la del propio `<select>`
+   deshabilitado y otra vez aquí, así que se apagaba más que el texto al que
+   acompaña. Basta con el token. */
 .field__select:disabled + .field__arrow {
   color: var(--input-disabled-text);
-  opacity: 0.7;
 }
 
 .field__message {

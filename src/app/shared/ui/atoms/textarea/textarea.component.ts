@@ -103,10 +103,11 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
       box-shadow: var(--input-shadow-focus);
     }
 
+    /* Ver form-input: el token declara el contraste, la opacidad lo rompía. */
     .textarea-input:disabled {
-      opacity: 0.6;
       cursor: not-allowed;
       background: var(--input-disabled-bg);
+      color: var(--input-disabled-text);
     }
 
     /* Floating label */

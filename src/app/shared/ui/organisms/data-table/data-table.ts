@@ -132,6 +132,19 @@ export class DataTable<T extends object = Record<string, unknown>> {
       ? this.clientPageSize()
       : Math.max(this.pageSize(), 1),
   );
+  /**
+   * El desplegable solo ofrecía `pageSizeOptions`, así que un `[pageSize]` fuera
+   * de esa lista —25 sobre las opciones por omisión— paginaba correctamente
+   * pero mostraba otro número: el paginador contradecía a su propia tabla. El
+   * tamaño vigente se incorpora a las opciones para que siempre sea mostrable.
+   */
+  protected readonly effectivePageSizeOptions = computed<readonly number[]>(() => {
+    const options = this.pageSizeOptions();
+    const current = this.effectivePageSize();
+    return options.includes(current)
+      ? options
+      : [...options, current].sort((first, second) => first - second);
+  });
   protected readonly effectiveTotalRecords = computed(
     () => this.totalRecords() ?? this.rows().length,
   );

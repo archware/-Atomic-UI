@@ -104,10 +104,12 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
       box-shadow: var(--input-shadow-focus);
     }
 
+    /* El aspecto de deshabilitado lo dan los tokens, cuyo contraste está
+       verificado por tema; la opacidad lo atenuaba por debajo de lo legible. */
     .form-input:disabled {
       background-color: var(--input-disabled-bg);
+      color: var(--input-disabled-text);
       cursor: not-allowed;
-      opacity: 0.7;
     }
 
     .has-error .form-input {

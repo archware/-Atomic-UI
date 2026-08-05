@@ -152,7 +152,10 @@
    --form-row-gap: 2.25rem;
    /* 36px - espaciado vertical entre secciones de formulario */
    --input-disabled-bg: var(--gray-100);
-   --input-disabled-text: var(--gray-400);
+   /* LIGHT: gray-400 sobre gray-100 daba 2.31:1, ilegible incluso en su propio
+      tema. gray-600 sobre gray-100 da 6.87:1. (WCAG 1.4.3 exime a los controles
+      inactivos; 4.5:1 se sostiene aquí como listón propio de legibilidad.) */
+   --input-disabled-text: var(--gray-600);
 
    /* === BOTONES === */
    --button-primary-bg: var(--primary-color);
@@ -427,6 +430,13 @@ html.dark {
    --input-shadow-focus: 0 0 0 3px rgba(10, 132, 255, 0.35);
    /* DARK: glow azul al enfocar inputs/selects */
    --form-row-gap: 2.25rem;
+   /* DARK: este bloque no declaraba los tokens de deshabilitado, así que
+      heredaba los del bloque claro —anclado a `:root`— y pintaba el campo con
+      gray-100 (#F3F4F6, casi blanco) sobre una página #1e1e1e: un bloque pálido
+      con texto a 2.05:1. Se hunde en lugar de iluminarse, como el resto del
+      tema. gray-400 sobre surface-sunken da 6.99:1. */
+   --input-disabled-bg: var(--surface-sunken);
+   --input-disabled-text: var(--gray-400);
 
    /* === BOTONES === */
    --button-primary-bg: var(--brand-primary-500);
@@ -665,7 +675,9 @@ html.dark {
    /* BRAND-DARK: glow azul al enfocar inputs/selects */
    --form-row-gap: 2.25rem;
    --input-disabled-bg: var(--surface-sunken);
-   --input-disabled-text: var(--gray-600);
+   /* BRAND-DARK: gray-600 sobre surface-sunken (#29324d) daba 1.68:1, el peor
+      de los cuatro temas. gray-400 lo lleva a 4.99:1. */
+   --input-disabled-text: var(--gray-400);
 
    /* === BOTONES === */
    --button-primary-bg: var(--brand-primary-500);

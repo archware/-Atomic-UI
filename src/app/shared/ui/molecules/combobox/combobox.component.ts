@@ -141,10 +141,11 @@ export interface ComboboxOption {
       box-shadow: var(--input-shadow-focus);
     }
 
+    /* Ver form-input: el token declara el contraste, la opacidad lo rompía. */
     .combobox-input:disabled {
       background: var(--input-disabled-bg);
+      color: var(--input-disabled-text);
       cursor: not-allowed;
-      opacity: 0.6;
     }
 
     .combobox-icon, .combobox-clear {
@@ -195,7 +196,9 @@ export interface ComboboxOption {
     .combobox-option:hover,
     .combobox-option-highlighted { background: var(--surface-hover); }
     .combobox-option-selected { color: var(--primary-color); font-weight: 500; }
-    .combobox-option-disabled { opacity: 0.5; cursor: not-allowed; }
+    /* Ver form-input/input.scss: el token define el contraste, la opacidad
+       lo falseaba. */
+    .combobox-option-disabled { color: var(--text-color-disabled); cursor: not-allowed; }
 
     .combobox-check { color: var(--primary-color); font-size: var(--text-xs); }
 
