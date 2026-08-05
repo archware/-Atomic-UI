@@ -49,12 +49,14 @@
     </header>
   }
 
+  <!-- El role/tabindex viajaban en el host, que tiene overflow:hidden, mientras
+       el elemento que scrollea era otro: las flechas no movian nada. Ahora los
+       recibe el viewport real a traves de las entradas del componente. -->
   <app-scroll-overlay
     class="data-table__viewport"
-    [skipTableDetection]="true"
-    role="region"
-    tabindex="0"
-    [attr.aria-label]="regionLabel()"
+    [focusable]="true"
+    viewportRole="region"
+    [ariaLabel]="regionLabel()"
   >
     <table class="data-table" [attr.aria-busy]="effectiveStatus() === 'loading'">
       <caption class="data-table__caption" [class.data-table__caption--hidden]="!captionVisible()">

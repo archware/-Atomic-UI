@@ -19,8 +19,8 @@ describe('LayoutShellComponent', () => {
 
     expect(getComputedStyle(sidebar).overflow).toBe('hidden');
     expect(contentOverlay).not.toBeNull();
-    expect(
-      contentOverlay.querySelector('.so-scroll-area')?.getAttribute('data-so-managed-scrollbar'),
-    ).toBe('true');
+    const viewport = contentOverlay.querySelector('.scroll-overlay__viewport') as HTMLElement;
+    expect(viewport).not.toBeNull();
+    expect(fixture.nativeElement.querySelectorAll('.scroll-overlay__viewport').length).toBe(1);
   });
 });

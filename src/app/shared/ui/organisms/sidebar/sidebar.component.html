@@ -8,10 +8,8 @@
 
   <app-scroll-overlay
     class="sidebar-nav-overlay"
-    verticalSelector="[data-sidebar-scroll-surface]"
-    horizontalSelector="[data-sidebar-scroll-surface]"
-    [skipTableDetection]="true"
-    [disableHorizontal]="true"
+    [horizontal]="false"
+    [fill]="true"
   >
     <nav
       class="sidebar-nav"

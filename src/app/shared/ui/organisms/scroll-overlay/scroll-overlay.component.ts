@@ -1,565 +1,157 @@
+/**
+ * ScrollOverlay unificado (5.5.0). Sustituye la implementacion previa del ADN.
+ *
+ * No eran dos versiones del mismo componente: la anterior era un scroller MAS un
+ * motor de maquetacion de tablas. Buscaba con querySelectorAll un scroller ajeno
+ * dentro del contenido proyectado, le escribia atributos, forzaba display:block
+ * en thead/tbody y display:grid en tr, y bloqueaba anchos de columna en pixeles.
+ * De sus 13 entradas, ~8 eran de layout de tabla infiltradas en el organismo
+ * equivocado; 5 no tenian ningun call site y sus selectores por omision no
+ * casaban con ningun elemento de los dos repositorios.
+ *
+ * Defectos que decidieron el descarte:
+ * - El elemento con role/tabindex era `.so-root`, que tiene overflow:hidden; el
+ *   que scrollea es otro. El teclado no movia nada.
+ * - El arrastre del pulgar se calculaba sobre `clientHeight` mientras el dibujo
+ *   usaba una altura recortada por la barra horizontal: el pulgar se despegaba
+ *   del cursor con dos ejes activos.
+ * - El modo grid destruia la semantica ARIA de tabla sin restaurar los roles.
+ * - `skipTableDetection` se usaba en 6 de 8 sitios y SIEMPRE con `true`: sus
+ *   propios consumidores apagaban su funcion distintiva.
+ *
+ * Esta version posee un viewport propio por viewChild, de modo que la clase de
+ * fallo que obligaba a aislar overlays anidados es estructuralmente imposible.
+ */
 import {
-  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   ElementRef,
-  Input,
-  OnDestroy,
-  ViewChild,
-  ViewEncapsulation,
+  afterNextRender,
   inject,
+  input,
+  signal,
+  viewChild,
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
-type ListenerUnsubscriber = () => void;
+type ScrollAxis = 'horizontal' | 'vertical';
+
+interface DragState {
+  readonly axis: ScrollAxis;
+  readonly origin: number;
+  readonly scrollOrigin: number;
+}
 
 @Component({
-  selector: 'app-scroll-overlay',
-  standalone: true,
+  selector: 'app-scroll-overlay, prest-scroll-overlay',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './scroll-overlay.component.html',
-  styleUrl: './scroll-overlay.component.css',
-  encapsulation: ViewEncapsulation.None,
+  styleUrl: './scroll-overlay.component.scss',
   host: {
-    class: 'so-root',
+    '[class.scroll-overlay-host--fill]': 'fill()',
+    '[style.--scroll-overlay-viewport-max-height]': 'maxHeight()',
   },
 })
-export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
+export class ScrollOverlayComponent {
+  private readonly document = inject(DOCUMENT);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly viewportRef = viewChild.required<ElementRef<HTMLDivElement>>('viewport');
+  private readonly horizontalTrackRef = viewChild<ElementRef<HTMLDivElement>>('horizontalTrack');
+  private readonly verticalTrackRef = viewChild<ElementRef<HTMLDivElement>>('verticalTrack');
+
+  readonly horizontal = input(true);
+  readonly vertical = input(true);
+  readonly fill = input(false);
+  readonly focusable = input(false);
+  readonly ariaLabel = input<string | null>(null);
+  readonly viewportRole = input<string | null>(null);
+  readonly autoHide = input(true);
   /**
-   * CSS selector used to locate the element that controls the vertical scroll.
-   * Defaults to the first <tbody> found within the component's content.
+   * Altura maxima del viewport. Admite numero -interpretado en pixeles, que es
+   * como lo expresaba el `maxBodyHeight` anterior- o cualquier longitud CSS.
+   * Es lo unico que sobrevive de la implementacion previa del ADN.
    */
-  @Input() verticalSelector: string | null = '[data-scroll-overlay-vertical]';
+  readonly maxHeight = input<string | null, string | number | null>(null, {
+    transform: (value: string | number | null) =>
+      value === null || value === '' ? null : typeof value === 'number' ? `${value}px` : value,
+  });
 
-  /**
-   * CSS selector used to locate the element that controls horizontal scroll.
-   * Defaults to the internal scroll area wrapper.
-   */
-  @Input() horizontalSelector: string | null = '[data-scroll-overlay-horizontal]';
+  protected readonly hasHorizontalOverflow = signal(false);
+  protected readonly hasVerticalOverflow = signal(false);
+  protected readonly controlsVisible = signal(false);
+  protected readonly horizontalThumbSize = signal('0px');
+  protected readonly horizontalThumbOffset = signal('0px');
+  protected readonly verticalThumbSize = signal('0px');
+  protected readonly verticalThumbOffset = signal('0px');
 
-  /** Minimum size (in px) for the scrollbar thumbs. */
-  @Input() minThumbSize = 28;
+  private resizeObserver: ResizeObserver | null = null;
+  private mutationObserver: MutationObserver | null = null;
+  private metricsFrameId: number | null = null;
+  private hideTimer: number | null = null;
+  private dragState: DragState | null = null;
+  private removePointerListeners: (() => void) | null = null;
 
-  /** Thickness (in px) of the overlay tracks. */
-  @Input() trackSize = 7;
-
-  /** Delay (in ms) before auto-hiding the scrollbars after interaction. */
-  @Input() autoHideDelay = 800;
-
-  /** When true, the component will not override a custom --so-column-template value. */
-  private _lockColumnTemplate = false;
-  private _columnTemplate: string | null = null;
-  private _lastColumnTemplate = '';
-
-  /**
-   * When true, the component will keep any user-provided column template intact and will not
-   * attempt to measure and override column widths automatically.
-   */
-  @Input()
-  set lockColumnTemplate(value: boolean) {
-    const coerced = !!value;
-    this._lockColumnTemplate = coerced;
-    if (this.hostEl) {
-      this.hostEl.classList.toggle('so-lock-template', coerced);
-      if (coerced && this._columnTemplate) {
-        this.applyColumnTemplate();
-      } else if (!coerced && !this._columnTemplate) {
-        this.hostEl.style.removeProperty('--so-column-template');
-      }
-      this.syncGeometry();
-    }
-  }
-  get lockColumnTemplate(): boolean {
-    return this._lockColumnTemplate;
+  get viewportElement(): HTMLDivElement {
+    return this.viewportRef().nativeElement;
   }
 
-  /** Custom grid template columns definition applied when locking the template. */
-  @Input()
-  set columnTemplate(value: string | null | undefined) {
-    const normalized = typeof value === 'string' ? value.trim() : '';
-    const template = normalized ? normalized : null;
-    if (this._columnTemplate === template) {
-      return;
-    }
-    this._columnTemplate = template;
-    if (this.hostEl) {
-      this.applyColumnTemplate();
-      this.syncGeometry();
-    }
+  constructor() {
+    afterNextRender(() => this.initialize());
+    this.destroyRef.onDestroy(() => this.dispose());
   }
-  get columnTemplate(): string | null {
-    return this._columnTemplate;
+
+  protected onScroll(): void {
+    this.scheduleMetricsUpdate();
+    this.revealControls();
   }
 
   /**
-   * When true the component will measure table columns (thead/tbody) to keep header and body aligned.
+   * Routes the wheel from any point of the projected content to this viewport.
+   * A nested native scroller keeps ownership while it can move; at its edge the
+   * gesture is allowed to continue through the surrounding overlay.
    */
-  @Input() syncTableColumns = true;
-
-  /**
-   * When true, skip auto-detection of tbody and use the internal scroll area directly.
-   * Useful for layout containers that should NOT control nested table scrolls.
-   */
-  @Input() skipTableDetection = false;
-
-  /** Minimum width (in px) applied when syncing table columns. */
-  @Input()
-  set minColumnWidth(value: number) {
-    const parsed = Number(value);
-    this._minColumnWidth = Number.isFinite(parsed) && parsed > 0 ? parsed : 140;
-    this.applyMinColumnWidth();
-    if (this.hostEl) {
-      this.syncGeometry();
-    }
-  }
-  get minColumnWidth(): number {
-    return this._minColumnWidth;
-  }
-
-  /** Provide a max height for the vertical scroller (number in px or any CSS size). */
-  @Input()
-  set maxBodyHeight(value: number | string | null | undefined) {
-    const parsed = typeof value === 'string' ? value.trim() : value;
-    this._maxBodyHeight =
-      parsed === '' || parsed === null || parsed === undefined ? undefined : parsed;
-    this.applyMaxHeight();
-    if (this.hostEl) {
-      this.syncGeometry();
-    }
-  }
-  get maxBodyHeight(): number | string | null | undefined {
-    return this._maxBodyHeight;
-  }
-
-  /** Disable the custom vertical overlay. */
-  @Input()
-  set disableVertical(value: boolean) {
-    this._disableVertical = value;
-    if (this.hostEl) {
-      this.hostEl.classList.toggle('so-no-vertical', !!value);
-      if (value) {
-        this.hostEl.classList.remove('so-has-overflow-y');
-      }
-      this.updateThumbs();
-      this.updateScrollAreaOverflow();
-    }
-  }
-  get disableVertical(): boolean {
-    return this._disableVertical;
-  }
-
-  /** Disable the custom horizontal overlay. */
-  @Input()
-  set disableHorizontal(value: boolean) {
-    this._disableHorizontal = value;
-    if (this.hostEl) {
-      this.hostEl.classList.toggle('so-no-horizontal', !!value);
-      if (value) {
-        this.hostEl.classList.remove('so-has-overflow-x');
-      }
-      this.updateThumbs();
-    }
-  }
-  get disableHorizontal(): boolean {
-    return this._disableHorizontal;
-  }
-
-  @ViewChild('scrollArea', { static: true }) private scrollAreaRef!: ElementRef<HTMLElement>;
-  @ViewChild('barY', { static: true }) private barYRef!: ElementRef<HTMLElement>;
-  @ViewChild('barX', { static: true }) private barXRef!: ElementRef<HTMLElement>;
-  @ViewChild('thumbY', { static: true }) private thumbYRef!: ElementRef<HTMLElement>;
-  @ViewChild('thumbX', { static: true }) private thumbXRef!: ElementRef<HTMLElement>;
-
-  private readonly listeners: ListenerUnsubscriber[] = [];
-  private readonly isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
-  private readonly horizontalBarGap = 3;
-  private readonly verticalBarGap = 10;
-
-  private hostEl!: HTMLElement;
-  private verticalScroller?: HTMLElement;
-  private horizontalScroller?: HTMLElement;
-  private tableHead?: HTMLElement | null;
-  private headerRow?: HTMLElement | null;
-  private hideTimer?: ReturnType<typeof setTimeout>;
-  private verticalThumbSize = this.minThumbSize;
-  private horizontalThumbSize = this.minThumbSize;
-  private verticalBarHeight = 0;
-  private resizeObserver?: ResizeObserver;
-  private mutationObserver?: MutationObserver;
-  private geometryFrameId?: number;
-
-  private draggingY = false;
-  private draggingX = false;
-  private dragStartClientY = 0;
-  private dragStartClientX = 0;
-  private dragStartScrollTop = 0;
-  private dragStartScrollLeft = 0;
-  private dragPointerIdY?: number;
-  private dragPointerIdX?: number;
-
-  private _maxBodyHeight: number | string | undefined;
-  private _minColumnWidth = 140;
-  private _disableVertical = false;
-  private _disableHorizontal = false;
-
-  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
-
-  ngAfterViewInit(): void {
-    if (!this.isBrowser) {
-      return;
-    }
-
-    this.hostEl = this.elementRef.nativeElement;
-    this.hostEl.style.setProperty('--so-track-size', `${this.trackSize}px`);
-    this.hostEl.classList.toggle('so-lock-template', this._lockColumnTemplate);
-    this.applyMinColumnWidth();
-    this.applyColumnTemplate();
-    this.resolveScrollElements(true);
-    this.applyMaxHeight();
-    if (!this.horizontalScroller) {
-      this.horizontalScroller = this.scrollAreaRef.nativeElement;
-    }
-
-    if (this.disableVertical) {
-      this.hostEl.classList.add('so-no-vertical');
-    }
-    if (this.disableHorizontal) {
-      this.hostEl.classList.add('so-no-horizontal');
-    }
-
-    this.attachListeners();
-    this.syncGeometry();
-    this.showBar();
-  }
-
-  ngOnDestroy(): void {
-    this.clearHideTimer();
-    this.listeners.forEach((unsubscribe) => unsubscribe());
-    this.listeners.length = 0;
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-    }
-    if (this.mutationObserver) {
-      this.mutationObserver.disconnect();
-    }
-    if (this.geometryFrameId !== undefined) {
-      cancelAnimationFrame(this.geometryFrameId);
-      this.geometryFrameId = undefined;
-    }
-    if (this.verticalScroller?.hasAttribute('data-so-vertical-temp')) {
-      this.verticalScroller.removeAttribute('data-so-vertical');
-      this.verticalScroller.removeAttribute('data-so-vertical-temp');
-    }
-    if (this.horizontalScroller?.hasAttribute('data-so-horizontal-temp')) {
-      this.horizontalScroller.removeAttribute('data-so-horizontal');
-      this.horizontalScroller.removeAttribute('data-so-horizontal-temp');
-    }
-    this.removeManagedScrollbarMarker(this.verticalScroller);
-    if (this.horizontalScroller !== this.verticalScroller) {
-      this.removeManagedScrollbarMarker(this.horizontalScroller);
-    }
-  }
-
-  private applyMinColumnWidth(): void {
-    if (!this.hostEl) {
-      return;
-    }
-    this.hostEl.style.setProperty('--so-min-column-width', `${this._minColumnWidth}px`);
-  }
-
-  private applyColumnTemplate(): void {
-    if (!this.hostEl) {
-      return;
-    }
-
-    if (this._columnTemplate) {
-      this.hostEl.style.setProperty('--so-column-template', this._columnTemplate);
-    } else if (!this._lockColumnTemplate) {
-      this.hostEl.style.removeProperty('--so-column-template');
-    }
-  }
-
-  private applyMaxHeight(): void {
-    if (!this.hostEl) {
-      return;
-    }
-
-    const value = this.normalizeCssSize(this._maxBodyHeight);
-    if (!value) {
-      this.hostEl.removeAttribute('data-so-max-height');
-      this.hostEl.style.removeProperty('--so-max-height');
-      this.hostEl.style.removeProperty('--so-body-height');
-      this.updateVerticalMaxHeight(null);
-      return;
-    }
-
-    this.hostEl.setAttribute('data-so-max-height', 'true');
-    this.hostEl.style.setProperty('--so-max-height', value);
-    this.hostEl.style.setProperty('--so-body-height', value);
-    this.updateVerticalMaxHeight(value);
-  }
-
-  private resolveScrollElements(_isInitial = false): void {
-    const host = this.elementRef.nativeElement;
-    const belongsToCurrentOverlay = (element: Element): boolean =>
-      element.closest('.so-root') === host;
-
-    host.querySelectorAll('[data-so-horizontal-temp]').forEach((el) => {
-      if (!belongsToCurrentOverlay(el)) {
-        return;
-      }
-      el.removeAttribute('data-so-horizontal');
-      el.removeAttribute('data-so-horizontal-temp');
-    });
-    host.querySelectorAll('[data-so-vertical-temp]').forEach((el) => {
-      if (!belongsToCurrentOverlay(el)) {
-        return;
-      }
-      el.removeAttribute('data-so-vertical');
-      el.removeAttribute('data-so-vertical-temp');
-      const element = el as HTMLElement;
-      element.style.removeProperty('--so-body-height');
-      element.style.removeProperty('max-height');
-      element.style.removeProperty('height');
-      element.style.removeProperty('min-height');
-      element.style.removeProperty('display');
-      element.style.removeProperty('overflow-y');
-      element.style.removeProperty('overflow-x');
-      element.style.removeProperty('box-sizing');
-    });
-    host.querySelectorAll('[data-so-managed-scrollbar-temp]').forEach((el) => {
-      if (belongsToCurrentOverlay(el)) {
-        el.removeAttribute('data-so-managed-scrollbar');
-        el.removeAttribute('data-so-managed-scrollbar-temp');
-      }
-    });
-
-    // Helper: Check if element is inside a nested scroll-overlay (not this one)
-    const isInsideNestedScrollOverlay = (el: Element): boolean => {
-      let parent = el.parentElement;
-      while (parent && parent !== host) {
-        if (parent.classList.contains('so-root')) {
-          return true; // Element is inside a nested scroll-overlay
-        }
-        parent = parent.parentElement;
-      }
-      return false;
-    };
-
-    // Helper: Find first element matching selector that is NOT inside a nested scroll-overlay
-    const searchDirect = (selector: string | null | undefined): HTMLElement | null => {
-      if (!selector) {
-        return null;
-      }
-      const parts = selector
-        .split(',')
-        .map((part) => part.trim())
-        .filter(Boolean);
-      for (const part of parts) {
-        const candidates = Array.from(host.querySelectorAll(part)) as HTMLElement[];
-        const directMatch = candidates.find((el) => !isInsideNestedScrollOverlay(el));
-        if (directMatch) {
-          return directMatch;
-        }
-      }
-      return null;
-    };
-
-    const scrollArea = this.scrollAreaRef.nativeElement;
-    scrollArea.setAttribute('data-so-horizontal', 'true');
-
-    const resolvedHorizontal = searchDirect(this.horizontalSelector);
-    this.horizontalScroller = resolvedHorizontal ?? scrollArea;
-    if (this.horizontalScroller !== scrollArea) {
-      this.horizontalScroller.setAttribute('data-so-horizontal', 'true');
-      this.horizontalScroller.setAttribute('data-so-horizontal-temp', 'true');
-    } else {
-      this.horizontalScroller.removeAttribute('data-so-horizontal-temp');
-    }
-    this.markManagedScrollbar(this.horizontalScroller);
-
-    const vertical = searchDirect(this.verticalSelector);
-    // If vertical is explicitly set via selector, use it. Otherwise, always use scrollArea.
-    // We intentionally DO NOT default to tbody anymore, to avoid browser bugs with table height limits.
-    this.verticalScroller = vertical ?? scrollArea;
-    if (this.verticalScroller) {
-      if (!this.verticalScroller.hasAttribute('data-so-vertical')) {
-        this.verticalScroller.setAttribute('data-so-vertical', 'true');
-        this.verticalScroller.setAttribute('data-so-vertical-temp', 'true');
-      } else {
-        this.verticalScroller.removeAttribute('data-so-vertical-temp');
-      }
-      this.markManagedScrollbar(this.verticalScroller);
-      this.applyVerticalScrollerDefaults();
-    }
-
-    // Find table that is a DIRECT descendant (not inside nested scroll-overlay)
-    // Skip table detection if explicitly disabled
-    if (!this.skipTableDetection) {
-      const allTables = Array.from(host.querySelectorAll('table')) as HTMLElement[];
-      const directTable = allTables.find((t) => !isInsideNestedScrollOverlay(t));
-      this.tableHead = directTable?.querySelector('thead') as HTMLElement | null;
-      this.headerRow = this.tableHead?.querySelector('tr') as HTMLElement | null;
-    } else {
-      this.tableHead = null;
-      this.headerRow = null;
-    }
-
-    if (this.tableHead) {
-      host.setAttribute('data-so-table', 'true');
-      if (this.syncTableColumns) {
-        host.setAttribute('data-so-sync-columns', 'true');
-      } else {
-        host.removeAttribute('data-so-sync-columns');
-      }
-    } else {
-      host.removeAttribute('data-so-table');
-      host.removeAttribute('data-so-sync-columns');
-    }
-
-    this.updateScrollAreaOverflow();
-    const value = this.normalizeCssSize(this._maxBodyHeight);
-    this.updateVerticalMaxHeight(value);
-
-    this.ensureSingleScrollbar();
-  }
-
-  private attachListeners(): void {
-    const host = this.hostEl;
-    const _barY = this.barYRef.nativeElement;
-    const _barX = this.barXRef.nativeElement;
-    const thumbY = this.thumbYRef.nativeElement;
-    const thumbX = this.thumbXRef.nativeElement;
-
-    const addListener = (
-      target: EventTarget,
-      type: string,
-      listener: EventListenerOrEventListenerObject,
-      options?: AddEventListenerOptions,
-    ) => {
-      target.addEventListener(type, listener, options);
-      this.listeners.push(() => target.removeEventListener(type, listener, options));
-    };
-
-    const vertical = this.verticalScroller;
-    const horizontal = this.horizontalScroller;
-
-    const handleScroll = () => {
-      this.updateThumbs();
-      this.showBar();
-    };
-
-    const handlePointer = () => {
-      this.updateThumbs();
-      this.showBar();
-    };
-
-    addListener(host, 'mouseenter', handlePointer);
-    addListener(host, 'mouseleave', () => this.hideBar());
-    addListener(host, 'wheel', (event) => this.handleWheel(event as WheelEvent), {
-      passive: false,
-    });
-
-    if (!this.disableVertical && vertical) {
-      addListener(vertical, 'scroll', handleScroll, { passive: true });
-      addListener(vertical, 'wheel', handlePointer, { passive: true });
-      addListener(vertical, 'mouseenter', handlePointer);
-      addListener(vertical, 'mouseleave', () => this.hideBar());
-      addListener(vertical, 'touchstart', handlePointer, { passive: true });
-      addListener(vertical, 'touchmove', handlePointer, { passive: true });
-    }
-
-    if (!this.disableHorizontal && horizontal) {
-      addListener(horizontal, 'scroll', handleScroll, { passive: true });
-      addListener(horizontal, 'wheel', handlePointer, { passive: true });
-      addListener(horizontal, 'mouseenter', handlePointer);
-      addListener(horizontal, 'mouseleave', () => this.hideBar());
-      addListener(horizontal, 'touchstart', handlePointer, { passive: true });
-      addListener(horizontal, 'touchmove', handlePointer, { passive: true });
-    }
-
-    if (!this.disableVertical) {
-      addListener(thumbY, 'pointerdown', (event) => this.startDragY(event as PointerEvent));
-      addListener(thumbY, 'pointermove', (event) => this.moveDragY(event as PointerEvent));
-      addListener(thumbY, 'pointerup', (event) => this.endDragY(event as PointerEvent));
-      addListener(thumbY, 'pointercancel', (event) => this.endDragY(event as PointerEvent));
-    }
-
-    if (!this.disableHorizontal) {
-      addListener(thumbX, 'pointerdown', (event) => this.startDragX(event as PointerEvent));
-      addListener(thumbX, 'pointermove', (event) => this.moveDragX(event as PointerEvent));
-      addListener(thumbX, 'pointerup', (event) => this.endDragX(event as PointerEvent));
-      addListener(thumbX, 'pointercancel', (event) => this.endDragX(event as PointerEvent));
-    }
-
-    const supportsResize = typeof ResizeObserver !== 'undefined';
-    const supportsMutation = typeof MutationObserver !== 'undefined';
-
-    if (supportsResize) {
-      this.resizeObserver = new ResizeObserver(() => this.scheduleGeometrySync());
-
-      // Observe the host element for container size changes
-      this.resizeObserver.observe(this.hostEl);
-
-      if (vertical) {
-        this.resizeObserver.observe(vertical);
-      }
-      if (horizontal && horizontal !== vertical) {
-        this.resizeObserver.observe(horizontal);
-      }
-      const table = this.tableHead?.closest('table');
-      if (table) {
-        this.resizeObserver.observe(table);
-      }
-      if (this.headerRow) {
-        this.resizeObserver.observe(this.headerRow);
-      }
-    }
-
-    if (supportsMutation && this.verticalScroller) {
-      this.mutationObserver = new MutationObserver(() => this.scheduleGeometrySync());
-      this.mutationObserver.observe(this.verticalScroller, { childList: true, subtree: true });
-    }
-  }
-
-  /**
-   * Routes wheel gestures from the whole content surface to the overlay owner.
-   * Native nested scrollers keep priority while they can consume the gesture;
-   * once they reach an edge, the gesture can continue through the parent overlay.
-   */
-  private handleWheel(event: WheelEvent): void {
+  protected onWheel(event: WheelEvent): void {
     if (event.defaultPrevented || event.ctrlKey || event.metaKey) {
       return;
     }
 
+    const boundary = event.currentTarget instanceof HTMLElement ? event.currentTarget : null;
     const target = event.target instanceof Element ? event.target : null;
-    if (!target || !this.hostEl.contains(target)) {
+    if (!boundary || !target) {
       return;
     }
 
+    const viewport = this.viewportRef().nativeElement;
     const shiftToHorizontal = event.shiftKey && Math.abs(event.deltaX) < 0.01;
     const verticalDelta = shiftToHorizontal
       ? 0
-      : this.normalizeWheelDelta(
-          event.deltaY,
-          event.deltaMode,
-          this.verticalScroller?.clientHeight ?? 0,
-        );
+      : this.normalizeWheelDelta(event.deltaY, event.deltaMode, viewport.clientHeight);
     const horizontalDelta = this.normalizeWheelDelta(
       shiftToHorizontal ? event.deltaY : event.deltaX,
       event.deltaMode,
-      this.horizontalScroller?.clientWidth ?? 0,
+      viewport.clientWidth,
     );
 
-    if (this.descendantCanConsumeWheel(target, horizontalDelta, verticalDelta)) {
-      this.showBar();
+    if (
+      this.descendantCanConsumeWheel(
+        target,
+        boundary,
+        viewport,
+        horizontalDelta,
+        verticalDelta,
+      )
+    ) {
+      this.revealControls();
       return;
     }
 
     let consumed = false;
-    if (!this.disableVertical && this.verticalScroller && Math.abs(verticalDelta) > 0.01) {
-      consumed = this.scrollElementBy(this.verticalScroller, 'vertical', verticalDelta) || consumed;
+    if (this.vertical() && Math.abs(verticalDelta) > 0.01) {
+      consumed = this.scrollElementBy(viewport, 'vertical', verticalDelta) || consumed;
     }
-    if (!this.disableHorizontal && this.horizontalScroller && Math.abs(horizontalDelta) > 0.01) {
-      consumed =
-        this.scrollElementBy(this.horizontalScroller, 'horizontal', horizontalDelta) || consumed;
+    if (this.horizontal() && Math.abs(horizontalDelta) > 0.01) {
+      consumed = this.scrollElementBy(viewport, 'horizontal', horizontalDelta) || consumed;
     }
 
     if (!consumed) {
@@ -568,22 +160,116 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
     event.preventDefault();
     event.stopPropagation();
-    this.updateThumbs();
-    this.showBar();
+    this.scheduleMetricsUpdate();
+    this.revealControls();
+  }
+
+  scrollToStart(): void {
+    const viewport = this.viewportElement;
+    viewport.scrollTop = 0;
+    viewport.scrollLeft = 0;
+    this.scheduleMetricsUpdate();
+  }
+
+  protected onTrackPointerDown(event: PointerEvent, axis: ScrollAxis): void {
+    if (event.button !== 0 || event.target !== event.currentTarget) {
+      return;
+    }
+
+    const viewport = this.viewportRef().nativeElement;
+    const track = (axis === 'horizontal' ? this.horizontalTrackRef() : this.verticalTrackRef())
+      ?.nativeElement;
+    if (!track) {
+      return;
+    }
+
+    const bounds = track.getBoundingClientRect();
+    const pointer =
+      axis === 'horizontal' ? event.clientX - bounds.left : event.clientY - bounds.top;
+    const visibleSize = axis === 'horizontal' ? viewport.clientWidth : viewport.clientHeight;
+    const current = axis === 'horizontal' ? viewport.scrollLeft : viewport.scrollTop;
+    const thumbOffset = Number.parseFloat(
+      axis === 'horizontal' ? this.horizontalThumbOffset() : this.verticalThumbOffset(),
+    );
+    const thumbSize = Number.parseFloat(
+      axis === 'horizontal' ? this.horizontalThumbSize() : this.verticalThumbSize(),
+    );
+    const next = pointer < thumbOffset ? current - visibleSize * 0.8 : current + visibleSize * 0.8;
+
+    if (axis === 'horizontal') {
+      viewport.scrollTo({ left: next, behavior: 'smooth' });
+    } else {
+      viewport.scrollTo({ top: next, behavior: 'smooth' });
+    }
+    this.revealControls();
+  }
+
+  protected startDrag(event: PointerEvent, axis: ScrollAxis): void {
+    if (event.button !== 0) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+
+    const viewport = this.viewportRef().nativeElement;
+    this.dragState = {
+      axis,
+      origin: axis === 'horizontal' ? event.clientX : event.clientY,
+      scrollOrigin: axis === 'horizontal' ? viewport.scrollLeft : viewport.scrollTop,
+    };
+
+    const pointerMove = (moveEvent: PointerEvent): void => this.drag(moveEvent);
+    const pointerUp = (): void => this.stopDrag();
+    this.document.addEventListener('pointermove', pointerMove);
+    this.document.addEventListener('pointerup', pointerUp, { once: true });
+    this.removePointerListeners = () => {
+      this.document.removeEventListener('pointermove', pointerMove);
+      this.document.removeEventListener('pointerup', pointerUp);
+    };
+    this.revealControls();
+  }
+
+  private initialize(): void {
+    const viewport = this.viewportRef().nativeElement;
+    this.updateMetrics();
+
+    if (typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(() => this.scheduleMetricsUpdate());
+      this.resizeObserver.observe(viewport);
+      for (const child of Array.from(viewport.children)) {
+        this.resizeObserver.observe(child);
+      }
+    }
+
+    if (typeof MutationObserver !== 'undefined') {
+      this.mutationObserver = new MutationObserver(() => {
+        if (this.resizeObserver) {
+          for (const child of Array.from(viewport.children)) {
+            this.resizeObserver.observe(child);
+          }
+        }
+        this.scheduleMetricsUpdate();
+      });
+      this.mutationObserver.observe(viewport, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+      });
+    }
   }
 
   private descendantCanConsumeWheel(
     target: Element,
+    boundary: HTMLElement,
+    viewport: HTMLElement,
     horizontalDelta: number,
     verticalDelta: number,
   ): boolean {
     let candidate: HTMLElement | null =
       target instanceof HTMLElement ? target : target.parentElement;
 
-    while (candidate && candidate !== this.hostEl) {
-      const isOwnedScroller =
-        candidate === this.verticalScroller || candidate === this.horizontalScroller;
-      if (!isOwnedScroller) {
+    while (candidate && candidate !== boundary) {
+      if (candidate !== viewport) {
         if (
           (Math.abs(verticalDelta) > 0.01 &&
             this.canElementConsumeWheel(candidate, 'vertical', verticalDelta)) ||
@@ -601,7 +287,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
   private canElementConsumeWheel(
     element: HTMLElement,
-    axis: 'horizontal' | 'vertical',
+    axis: ScrollAxis,
     delta: number,
   ): boolean {
     const current = axis === 'vertical' ? element.scrollTop : element.scrollLeft;
@@ -622,11 +308,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     return maximum > 1 && (delta < 0 ? current > 0 : current < maximum);
   }
 
-  private scrollElementBy(
-    element: HTMLElement,
-    axis: 'horizontal' | 'vertical',
-    delta: number,
-  ): boolean {
+  private scrollElementBy(element: HTMLElement, axis: ScrollAxis, delta: number): boolean {
     const current = axis === 'vertical' ? element.scrollTop : element.scrollLeft;
     const maximum = Math.max(
       0,
@@ -657,598 +339,119 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     return delta;
   }
 
-  private scheduleGeometrySync(): void {
-    if (this.geometryFrameId !== undefined) {
+  private scheduleMetricsUpdate(): void {
+    const window = this.document.defaultView;
+    if (!window || typeof window.requestAnimationFrame !== 'function') {
+      this.updateMetrics();
+      return;
+    }
+    if (this.metricsFrameId !== null) {
       return;
     }
 
-    this.geometryFrameId = requestAnimationFrame(() => {
-      this.geometryFrameId = undefined;
-      this.syncGeometry();
+    this.metricsFrameId = window.requestAnimationFrame(() => {
+      this.metricsFrameId = null;
+      this.updateMetrics();
     });
   }
 
-  private showBar(): void {
-    if (this.disableVertical && this.disableHorizontal) {
+  private updateMetrics(): void {
+    const viewport = this.viewportRef().nativeElement;
+    const horizontalOverflow = this.horizontal() && viewport.scrollWidth > viewport.clientWidth + 1;
+    const verticalOverflow = this.vertical() && viewport.scrollHeight > viewport.clientHeight + 1;
+
+    this.hasHorizontalOverflow.set(horizontalOverflow);
+    this.hasVerticalOverflow.set(verticalOverflow);
+
+    if (horizontalOverflow) {
+      const thumbSize = Math.max(32, viewport.clientWidth ** 2 / viewport.scrollWidth);
+      const availableTravel = Math.max(viewport.clientWidth - thumbSize, 0);
+      const maximumScroll = Math.max(viewport.scrollWidth - viewport.clientWidth, 1);
+      this.horizontalThumbSize.set(`${thumbSize}px`);
+      this.horizontalThumbOffset.set(
+        `${(viewport.scrollLeft / maximumScroll) * availableTravel}px`,
+      );
+    }
+
+    if (verticalOverflow) {
+      const thumbSize = Math.max(32, viewport.clientHeight ** 2 / viewport.scrollHeight);
+      const availableTravel = Math.max(viewport.clientHeight - thumbSize, 0);
+      const maximumScroll = Math.max(viewport.scrollHeight - viewport.clientHeight, 1);
+      this.verticalThumbSize.set(`${thumbSize}px`);
+      this.verticalThumbOffset.set(`${(viewport.scrollTop / maximumScroll) * availableTravel}px`);
+    }
+  }
+
+  private drag(event: PointerEvent): void {
+    const state = this.dragState;
+    if (!state) {
       return;
     }
 
-    this.hostEl.classList.add('so-scrolling');
-    this.clearHideTimer();
-    this.hideTimer = setTimeout(() => {
-      this.hostEl.classList.remove('so-scrolling');
-      this.hideTimer = undefined;
-    }, this.autoHideDelay);
-  }
-
-  private hideBar(): void {
-    this.hostEl.classList.remove('so-scrolling');
-    this.clearHideTimer();
-  }
-
-  private clearHideTimer(): void {
-    if (this.hideTimer) {
-      clearTimeout(this.hideTimer);
-      this.hideTimer = undefined;
-    }
-  }
-
-  private updateVerticalThumb(): void {
-    const vertical = this.verticalScroller;
-    const bar = this.barYRef.nativeElement;
-    const thumb = this.thumbYRef.nativeElement;
-
-    if (!vertical || this.disableVertical) {
-      this.hostEl.classList.remove('so-has-overflow-y');
-      bar.style.opacity = '0';
-      bar.style.pointerEvents = 'none';
+    const viewport = this.viewportRef().nativeElement;
+    const track = (
+      state.axis === 'horizontal' ? this.horizontalTrackRef() : this.verticalTrackRef()
+    )?.nativeElement;
+    if (!track) {
       return;
     }
 
-    const { scrollTop, scrollHeight, clientHeight } = vertical;
-    const hasOverflow = scrollHeight > clientHeight + 1;
-
-    if (!hasOverflow) {
-      this.hostEl.classList.remove('so-has-overflow-y');
-      this.verticalThumbSize = clientHeight;
-      thumb.style.height = `${clientHeight}px`;
-      thumb.style.transform = 'translateY(0)';
-      bar.style.opacity = '0';
-      bar.style.pointerEvents = 'none';
-      return;
-    }
-
-    this.hostEl.classList.add('so-has-overflow-y');
-    bar.style.opacity = '';
-    bar.style.pointerEvents = 'auto';
-
-    // Use verticalBarHeight instead of clientHeight for the thumb track length
-    const trackHeight = this.verticalBarHeight > 0 ? this.verticalBarHeight : clientHeight;
-    const thumbHeight = Math.max(this.minThumbSize, (trackHeight * clientHeight) / scrollHeight);
-    this.verticalThumbSize = thumbHeight;
-    thumb.style.height = `${thumbHeight}px`;
-
-    const maxThumbOffset = Math.max(1, trackHeight - thumbHeight);
-    const maxScrollTop = Math.max(1, scrollHeight - clientHeight);
-    const offset = (scrollTop / maxScrollTop) * maxThumbOffset;
-    thumb.style.transform = `translateY(${offset}px)`;
-  }
-
-  private updateHorizontalThumb(): void {
-    const horizontal = this.horizontalScroller;
-    const bar = this.barXRef.nativeElement;
-    const thumb = this.thumbXRef.nativeElement;
-
-    if (!horizontal || this.disableHorizontal) {
-      this.hostEl.classList.remove('so-has-overflow-x');
-      bar.style.opacity = '0';
-      bar.style.pointerEvents = 'none';
-      return;
-    }
-
-    const { scrollLeft, scrollWidth, clientWidth } = horizontal;
-    const hasOverflow = scrollWidth > clientWidth + 1;
-
-    if (!hasOverflow) {
-      this.hostEl.classList.remove('so-has-overflow-x');
-      this.horizontalThumbSize = clientWidth;
-      thumb.style.width = `${clientWidth}px`;
-      thumb.style.transform = 'translateX(0)';
-      bar.style.opacity = '0';
-      bar.style.pointerEvents = 'none';
-      return;
-    }
-
-    this.hostEl.classList.add('so-has-overflow-x');
-    bar.style.opacity = '';
-    bar.style.pointerEvents = 'auto';
-
-    const thumbWidth = Math.max(this.minThumbSize, (clientWidth * clientWidth) / scrollWidth);
-    this.horizontalThumbSize = thumbWidth;
-    thumb.style.width = `${thumbWidth}px`;
-
-    // Calcular el ancho efectivo de la barra cuando la vertical también está activa
-    const hasVerticalOverflow = this.hasVerticalScrollOverflow();
-    let effectiveBarWidth = clientWidth;
-    if (hasVerticalOverflow && !this.disableVertical) {
-      effectiveBarWidth = Math.max(0, clientWidth - this.trackSize - this.horizontalBarGap);
-    }
-
-    // Usar el ancho efectivo para calcular el offset del thumb
-    const maxThumbOffset = Math.max(1, effectiveBarWidth - thumbWidth);
-    const maxScrollLeft = Math.max(1, scrollWidth - clientWidth);
-    const offset = (scrollLeft / maxScrollLeft) * maxThumbOffset;
-    thumb.style.transform = `translateX(${offset}px)`;
-  }
-
-  private updateThumbs(): void {
-    this.updateVerticalThumb();
-    this.updateHorizontalThumb();
-  }
-
-  private syncGeometry(): void {
-    this.syncColumnTemplate();
-    this.updateScrollAreaDimensions();
-
-    // Crucial for grid alignment: prevent CSS Grid from squashing fixed tracks
-    // by allowing the table to expand naturally to the grid's max-content width.
-    if (this.hostEl.hasAttribute('data-so-table')) {
-      const table = this.hostEl.querySelector('table') as HTMLElement;
-      if (table) {
-        table.style.width = 'max-content';
-        table.style.minWidth = '100%';
-        const thead = table.querySelector('thead') as HTMLElement;
-        const tbody = table.querySelector('tbody') as HTMLElement;
-        if (thead) thead.style.width = '100%';
-        if (tbody) tbody.style.width = '100%';
-      }
-    }
-
-    const hostRect = this.getSafeRect(this.hostEl);
-
-    // Primero detectar overflow real ANTES de ajustar posiciones
-    const hasVerticalOverflow = this.hasVerticalScrollOverflow();
-    const hasHorizontalOverflow = this.hasHorizontalScrollOverflow();
-
-    let horizontalRect: DOMRect | null = null;
-    let horizontalBarTop: number | null = null;
-    if (this.horizontalScroller && !this.disableHorizontal) {
-      horizontalRect = this.getSafeRect(this.horizontalScroller);
-      horizontalBarTop = horizontalRect.top - hostRect.top + horizontalRect.height - this.trackSize;
-    }
-
-    if (this.verticalScroller && !this.disableVertical) {
-      const verticalRect = this.getSafeRect(this.verticalScroller);
-      const barY = this.barYRef.nativeElement;
-
-      let headerOffset = 0;
-      // Only apply header offset if the vertical scroller is the entire scroll area (meaning it includes the header)
-      if (this.tableHead && this.verticalScroller === this.scrollAreaRef?.nativeElement) {
-        headerOffset = this.tableHead.offsetHeight;
-      }
-
-      const barTop = verticalRect.top - hostRect.top + headerOffset;
-      barY.style.top = `${barTop}px`;
-
-      // Ajustar altura si hay overflow horizontal para evitar colisión
-      let barHeight = verticalRect.height - headerOffset;
-      if (hasHorizontalOverflow && horizontalBarTop !== null) {
-        barHeight = Math.max(0, horizontalBarTop - barTop - this.verticalBarGap);
-      }
-      this.verticalBarHeight = barHeight;
-      barY.style.height = `${barHeight}px`;
-    }
-
-    if (horizontalRect && !this.disableHorizontal) {
-      const barX = this.barXRef.nativeElement;
-
-      const leftPosition = horizontalRect.left - hostRect.left;
-      barX.style.left = `${leftPosition}px`;
-      const horizontalBarVisualTop =
-        horizontalBarTop ??
-        horizontalRect.top - hostRect.top + horizontalRect.height - this.trackSize;
-      barX.style.top = `${horizontalBarVisualTop}px`;
-
-      // Calcular ancho disponible desde la posición left hasta el borde derecho del host
-      let barWidth = hostRect.width - leftPosition;
-
-      if (hasVerticalOverflow && !this.disableVertical) {
-        const horizontalInset = this.trackSize + this.horizontalBarGap;
-        barWidth = Math.max(0, barWidth - horizontalInset);
-      }
-      barX.style.width = `${barWidth}px`;
-    }
-
-    this.updateThumbs();
-  }
-
-  private hasVerticalScrollOverflow(): boolean {
-    if (!this.verticalScroller || this.disableVertical) {
-      return false;
-    }
-    const { scrollHeight, clientHeight } = this.verticalScroller;
-    return scrollHeight > clientHeight + 1;
-  }
-
-  private hasHorizontalScrollOverflow(): boolean {
-    if (!this.horizontalScroller || this.disableHorizontal) {
-      return false;
-    }
-    const { scrollWidth, clientWidth } = this.horizontalScroller;
-    return scrollWidth > clientWidth + 1;
-  }
-
-  private updateVerticalMaxHeight(value: string | null): void {
-    if (!this.verticalScroller) {
-      return;
-    }
-
-    if (!value) {
-      this.verticalScroller.style.removeProperty('--so-body-height');
-      this.verticalScroller.style.removeProperty('max-height');
-      this.verticalScroller.style.removeProperty('height');
-      this.verticalScroller.style.removeProperty('min-height');
-      return;
-    }
-
-    this.verticalScroller.style.setProperty('--so-body-height', value);
-    this.verticalScroller.style.maxHeight = value;
-    this.verticalScroller.style.height = value;
-    this.verticalScroller.style.minHeight = value;
-  }
-
-  private updateScrollAreaOverflow(): void {
-    const scrollArea = this.scrollAreaRef?.nativeElement;
-    if (!scrollArea) {
-      return;
-    }
-
-    const shouldAllowVerticalScroll =
-      this.disableVertical || !this.verticalScroller || this.verticalScroller === scrollArea;
-    scrollArea.style.overflowY = shouldAllowVerticalScroll ? 'auto' : 'hidden';
-  }
-
-  private applyVerticalScrollerDefaults(): void {
-    if (!this.verticalScroller) {
-      return;
-    }
-
-    if (this.verticalScroller === this.scrollAreaRef.nativeElement) {
-      this.verticalScroller.style.overflowY = 'auto';
-      return;
-    }
-
-    const nodeName = this.verticalScroller.nodeName;
-    const style = this.verticalScroller.style;
-    if (nodeName === 'TBODY') {
-      style.display = 'block';
-      style.overflowY = 'auto';
-      style.overflowX = 'hidden';
-      style.boxSizing = 'border-box';
-    }
-  }
-
-  /**
-   * Keeps native scrollbars hidden while the custom overlay owns the scroller.
-   * This marker remains stable even when table measurement temporarily removes
-   * the axis attribute, avoiding a native scrollbar flash and layout shift.
-   */
-  private markManagedScrollbar(element: HTMLElement | undefined): void {
-    if (!element || element.hasAttribute('data-so-managed-scrollbar')) {
-      return;
-    }
-
-    element.setAttribute('data-so-managed-scrollbar', 'true');
-    element.setAttribute('data-so-managed-scrollbar-temp', 'true');
-  }
-
-  private removeManagedScrollbarMarker(element: HTMLElement | undefined): void {
-    if (!element?.hasAttribute('data-so-managed-scrollbar-temp')) {
-      return;
-    }
-
-    element.removeAttribute('data-so-managed-scrollbar');
-    element.removeAttribute('data-so-managed-scrollbar-temp');
-  }
-
-  private normalizeCssSize(value: number | string | undefined): string | null {
-    if (value === undefined) {
-      return null;
-    }
-
-    if (typeof value === 'number' && Number.isFinite(value)) {
-      return `${value}px`;
-    }
-
-    const stringValue = String(value).trim();
-    if (!stringValue) {
-      return null;
-    }
-
-    const numericPattern = /^-?\d+(?:\.\d+)?$/;
-    if (numericPattern.test(stringValue)) {
-      return `${stringValue}px`;
-    }
-
-    return stringValue;
-  }
-
-  private updateScrollAreaDimensions(): void {
-    const scrollArea = this.scrollAreaRef?.nativeElement;
-    if (!scrollArea) {
-      return;
-    }
-
-    // Ensure scroll area can expand horizontally but respects container width
-    if (this.horizontalScroller === scrollArea) {
-      const hostRect = this.getSafeRect(this.hostEl);
-      if (hostRect.width > 0) {
-        scrollArea.style.maxWidth = '100%';
-        scrollArea.style.width = '100%';
-      }
-    }
-
-    // For table mode, ensure proper width calculation
-    if (this.hostEl.hasAttribute('data-so-table')) {
-      this.updateTableDimensions();
-    }
-  }
-
-  private updateTableDimensions(): void {
-    const table = this.hostEl.querySelector('table') as HTMLElement;
-    if (!table) {
-      return;
-    }
-
-    // When lockColumnTemplate is true the user has provided an explicit pixel-based
-    // template. Avoid setting width: max-content on the table because that would
-    // cause fr-unit tracks (if present) to expand to cell max-content sizes and
-    // shift column positions whenever translated text changes length.
-    if (this._lockColumnTemplate) {
-      table.style.minWidth = '100%';
-      const hasFrUnits = this._columnTemplate ? this._columnTemplate.includes('fr') : false;
-      table.style.width = hasFrUnits ? 'auto' : 'max-content';
-
-      const thead = table.querySelector('thead') as HTMLElement;
-      const tbody = table.querySelector('tbody') as HTMLElement;
-      if (thead && tbody) {
-        thead.style.width = '100%';
-        tbody.style.width = '100%';
-      }
-      return;
-    }
-
-    // Auto-sync mode: let the table size itself by content so fr tracks expand.
-    table.style.width = 'max-content';
-    table.style.minWidth = '100%';
-
-    // Ensure thead and tbody match the table width
-    const thead = table.querySelector('thead') as HTMLElement;
-    const tbody = table.querySelector('tbody') as HTMLElement;
-
-    if (thead && tbody) {
-      thead.style.width = '100%';
-      tbody.style.width = '100%';
-
-      // Re-measure column widths after the layout settles
-      requestAnimationFrame(() => {
-        this.syncColumnTemplate();
-      });
-    }
-  }
-
-  private ensureSingleScrollbar(): void {
-    if (!this.verticalScroller || this.disableVertical) {
-      return;
-    }
-
-    const host = this.hostEl;
-    const scrollableCandidates = Array.from(host.querySelectorAll('[data-so-vertical]')).filter(
-      (element) => element.closest('.so-root') === host,
-    ) as HTMLElement[];
-    const duplicates = scrollableCandidates.filter((el) => el !== this.verticalScroller);
-    duplicates.forEach((el) => {
-      if (el.hasAttribute('data-so-vertical-temp')) {
-        el.removeAttribute('data-so-vertical');
-        el.removeAttribute('data-so-vertical-temp');
-      }
-      el.style.removeProperty('--so-body-height');
-      el.style.removeProperty('max-height');
-      el.style.removeProperty('height');
-      el.style.removeProperty('min-height');
-      el.style.removeProperty('overflow-y');
-      el.style.removeProperty('overflow-x');
-      el.style.removeProperty('box-sizing');
-    });
-  }
-
-  private syncColumnTemplate(): void {
-    if (
-      !this.syncTableColumns ||
-      this._lockColumnTemplate ||
-      !this.headerRow ||
-      !this.verticalScroller ||
-      this.verticalScroller.tagName !== 'TBODY'
-    ) {
-      if (!this._lockColumnTemplate) {
-        this.hostEl.style.removeProperty('--so-column-template');
-        this._lastColumnTemplate = '';
-      }
-      return;
-    }
-
-    const headerCells = Array.from(this.headerRow.children) as HTMLElement[];
-    if (!headerCells.length) return;
-
-    // 1. Revert to native HTML table layout to let the browser perfectly
-    // calculate max-content widths for all cells based on actual content
-    const hadSync = this.hostEl.hasAttribute('data-so-sync-columns');
-    const hadTable = this.hostEl.hasAttribute('data-so-table');
-    const hadVertical = this.verticalScroller.hasAttribute('data-so-vertical');
-
-    this.hostEl.removeAttribute('data-so-sync-columns');
-    this.hostEl.removeAttribute('data-so-table');
-    this.verticalScroller.removeAttribute('data-so-vertical');
-
-    // 2. We MUST force the table to size to its content, not the container
-    const table = this.hostEl.querySelector('table') as HTMLElement;
-    const oldTableWidth = table.style.width;
-    table.style.width = 'max-content';
-
-    // 3. Force browser layout recalculation
-    void this.hostEl.offsetHeight;
-
-    // 4. Measure the natural widths determined by the browser's native table algorithm
-    // (Native table ensures thead and tbody align, so measuring thead is enough)
-    const widths = headerCells.map((cell) => {
-      const rect = this.getSafeRect(cell);
-      return Math.max(this._minColumnWidth, Math.ceil(rect.width));
-    });
-
-    // 5. Restore grid layout attributes and properties
-    if (hadSync) this.hostEl.setAttribute('data-so-sync-columns', 'true');
-    if (hadTable) this.hostEl.setAttribute('data-so-table', 'true');
-    if (hadVertical) this.verticalScroller.setAttribute('data-so-vertical', 'true');
-    table.style.width = oldTableWidth;
-
-    // 6. Lock the exact pixel widths so thead and tbody align perfectly
-    const template = widths.map((width) => `${width}px`).join(' ');
-
-    // 7. Only apply if changed to prevent ResizeObserver infinite loops
-    if (this._lastColumnTemplate !== template) {
-      this._lastColumnTemplate = template;
-      this.hostEl.style.setProperty('--so-column-template', template);
-    }
-  }
-
-  private getSafeRect(element: Element | null): DOMRect {
-    if (element && typeof (element as HTMLElement).getBoundingClientRect === 'function') {
-      return (element as HTMLElement).getBoundingClientRect();
-    }
-
-    const fallback = element as HTMLElement | null;
-    const width = fallback?.offsetWidth ?? 0;
-    const height = fallback?.offsetHeight ?? 0;
-
-    return {
-      top: 0,
-      left: 0,
-      bottom: height,
-      right: width,
-      width,
-      height,
-      x: 0,
-      y: 0,
-      toJSON() {
-        return '';
-      },
-    } as DOMRect;
-  }
-
-  private startDragY(event: PointerEvent): void {
-    if (
-      event.button === 1 ||
-      event.button === 2 ||
-      !this.verticalScroller ||
-      this.disableVertical
-    ) {
-      return;
-    }
-
-    this.draggingY = true;
-    this.dragPointerIdY = event.pointerId;
-    this.dragStartClientY = event.clientY;
-    this.dragStartScrollTop = this.verticalScroller.scrollTop;
-    this.thumbYRef.nativeElement.setPointerCapture(event.pointerId);
-    this.showBar();
-    event.preventDefault();
-  }
-
-  private moveDragY(event: PointerEvent): void {
-    if (!this.draggingY || !this.verticalScroller || this.disableVertical) {
-      return;
-    }
-
-    const maxScrollTop = Math.max(
-      1,
-      this.verticalScroller.scrollHeight - this.verticalScroller.clientHeight,
+    const pointer = state.axis === 'horizontal' ? event.clientX : event.clientY;
+    const trackSize = state.axis === 'horizontal' ? track.clientWidth : track.clientHeight;
+    const thumbSize = Number.parseFloat(
+      state.axis === 'horizontal' ? this.horizontalThumbSize() : this.verticalThumbSize(),
     );
-    const maxThumbOffset = Math.max(1, this.verticalScroller.clientHeight - this.verticalThumbSize);
-    const delta = event.clientY - this.dragStartClientY;
-    const scrollDelta = (delta * maxScrollTop) / maxThumbOffset;
-    this.verticalScroller.scrollTop = this.dragStartScrollTop + scrollDelta;
-    this.showBar();
-    event.preventDefault();
+    const maximumScroll =
+      state.axis === 'horizontal'
+        ? viewport.scrollWidth - viewport.clientWidth
+        : viewport.scrollHeight - viewport.clientHeight;
+    const ratio = maximumScroll / Math.max(trackSize - thumbSize, 1);
+    const next = state.scrollOrigin + (pointer - state.origin) * ratio;
+
+    if (state.axis === 'horizontal') {
+      viewport.scrollLeft = next;
+    } else {
+      viewport.scrollTop = next;
+    }
+    this.scheduleMetricsUpdate();
   }
 
-  private endDragY(_event: PointerEvent): void {
-    if (!this.draggingY) {
-      return;
-    }
-
-    this.draggingY = false;
-    if (
-      this.dragPointerIdY !== undefined &&
-      this.thumbYRef.nativeElement.hasPointerCapture?.(this.dragPointerIdY)
-    ) {
-      this.thumbYRef.nativeElement.releasePointerCapture(this.dragPointerIdY);
-    }
-    this.dragPointerIdY = undefined;
-    this.showBar();
+  private stopDrag(): void {
+    this.dragState = null;
+    this.removePointerListeners?.();
+    this.removePointerListeners = null;
+    this.revealControls();
   }
 
-  private startDragX(event: PointerEvent): void {
-    if (
-      event.button === 1 ||
-      event.button === 2 ||
-      !this.horizontalScroller ||
-      this.disableHorizontal
-    ) {
+  private revealControls(): void {
+    this.controlsVisible.set(true);
+    if (!this.autoHide()) {
       return;
     }
-
-    this.draggingX = true;
-    this.dragPointerIdX = event.pointerId;
-    this.dragStartClientX = event.clientX;
-    this.dragStartScrollLeft = this.horizontalScroller.scrollLeft;
-    this.thumbXRef.nativeElement.setPointerCapture(event.pointerId);
-    this.showBar();
-    event.preventDefault();
+    const window = this.document.defaultView;
+    if (!window) {
+      return;
+    }
+    if (this.hideTimer !== null) {
+      window.clearTimeout(this.hideTimer);
+    }
+    this.hideTimer = window.setTimeout(() => {
+      this.controlsVisible.set(false);
+      this.hideTimer = null;
+    }, 900);
   }
 
-  private moveDragX(event: PointerEvent): void {
-    if (!this.draggingX || !this.horizontalScroller || this.disableHorizontal) {
-      return;
+  private dispose(): void {
+    this.resizeObserver?.disconnect();
+    this.mutationObserver?.disconnect();
+    this.removePointerListeners?.();
+    const window = this.document.defaultView;
+    if (window && this.metricsFrameId !== null) {
+      window.cancelAnimationFrame(this.metricsFrameId);
+      this.metricsFrameId = null;
     }
-
-    const maxScrollLeft = Math.max(
-      1,
-      this.horizontalScroller.scrollWidth - this.horizontalScroller.clientWidth,
-    );
-    const maxThumbOffset = Math.max(
-      1,
-      this.horizontalScroller.clientWidth - this.horizontalThumbSize,
-    );
-    const delta = event.clientX - this.dragStartClientX;
-    const scrollDelta = (delta * maxScrollLeft) / maxThumbOffset;
-    this.horizontalScroller.scrollLeft = this.dragStartScrollLeft + scrollDelta;
-    this.showBar();
-    event.preventDefault();
-  }
-
-  private endDragX(_event: PointerEvent): void {
-    if (!this.draggingX) {
-      return;
+    if (window && this.hideTimer !== null) {
+      window.clearTimeout(this.hideTimer);
     }
-
-    this.draggingX = false;
-    if (
-      this.dragPointerIdX !== undefined &&
-      this.thumbXRef.nativeElement.hasPointerCapture?.(this.dragPointerIdX)
-    ) {
-      this.thumbXRef.nativeElement.releasePointerCapture(this.dragPointerIdX);
-    }
-    this.dragPointerIdX = undefined;
-    this.showBar();
   }
 }

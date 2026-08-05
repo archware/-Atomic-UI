@@ -25,9 +25,11 @@
     <!-- Table Panel -->
     <app-panel [title]="'table.title' | translate" icon="📋" variant="default" padding="md" [showHeader]="false"
       class="table-panel">
-      <app-scroll-overlay class="so-block w-full max-w-full" [minColumnWidth]="40" [maxBodyHeight]="450"
-        [lockColumnTemplate]="true"
-        [columnTemplate]="'70px minmax(150px, 1fr) minmax(220px, 1.5fr) 100px 130px 175px 90px 110px 160px'">
+      <!-- La plantilla de columnas dejo de ser del scroll-overlay: la aplica quien
+           posee el <table>. Aqui la tabla es propia del escaparate, asi que la
+           declara con una custom property. -->
+      <app-scroll-overlay class="w-full max-w-full" [maxHeight]="450"
+        [style.--rtc-table-columns]="'70px minmax(150px, 1fr) minmax(220px, 1.5fr) 100px 130px 175px 90px 110px 160px'">
         <table class="rtc-table">
           <thead class="rtc-header">
             <tr>

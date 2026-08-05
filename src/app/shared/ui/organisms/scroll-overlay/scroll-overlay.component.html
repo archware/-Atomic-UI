@@ -1,9 +1,52 @@
-<div class="so-scroll-area" #scrollArea>
-  <ng-content></ng-content>
-</div>
-<div class="so-scrollbar so-scrollbar-y" #barY aria-hidden="true">
-  <div class="so-thumb so-thumb-y" #thumbY></div>
-</div>
-<div class="so-scrollbar so-scrollbar-x" #barX aria-hidden="true">
-  <div class="so-thumb so-thumb-x" #thumbX></div>
+<div
+  class="scroll-overlay"
+  [class.scroll-overlay--fill]="fill()"
+  [class.scroll-overlay--auto-hide]="autoHide()"
+  [class.scroll-overlay--controls-visible]="controlsVisible()"
+  (wheel)="onWheel($event)"
+>
+  <div
+    #viewport
+    class="scroll-overlay__viewport"
+    [class.scroll-overlay__viewport--horizontal]="horizontal()"
+    [class.scroll-overlay__viewport--vertical]="vertical()"
+    [attr.role]="viewportRole()"
+    [attr.aria-label]="ariaLabel()"
+    [attr.tabindex]="focusable() ? 0 : null"
+    (scroll)="onScroll()"
+  >
+    <ng-content />
+  </div>
+
+  @if (hasHorizontalOverflow()) {
+    <div
+      #horizontalTrack
+      class="scroll-overlay__track scroll-overlay__track--horizontal"
+      aria-hidden="true"
+      (pointerdown)="onTrackPointerDown($event, 'horizontal')"
+    >
+      <span
+        class="scroll-overlay__thumb scroll-overlay__thumb--horizontal"
+        [style.width]="horizontalThumbSize()"
+        [style.transform]="'translateX(' + horizontalThumbOffset() + ')'"
+        (pointerdown)="startDrag($event, 'horizontal')"
+      ></span>
+    </div>
+  }
+
+  @if (hasVerticalOverflow()) {
+    <div
+      #verticalTrack
+      class="scroll-overlay__track scroll-overlay__track--vertical"
+      aria-hidden="true"
+      (pointerdown)="onTrackPointerDown($event, 'vertical')"
+    >
+      <span
+        class="scroll-overlay__thumb scroll-overlay__thumb--vertical"
+        [style.height]="verticalThumbSize()"
+        [style.transform]="'translateY(' + verticalThumbOffset() + ')'"
+        (pointerdown)="startDrag($event, 'vertical')"
+      ></span>
+    </div>
+  }
 </div>

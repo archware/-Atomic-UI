@@ -15,12 +15,15 @@ describe('CrudDialog', () => {
     expect(dialog.classList).toContain('crud-dialog');
     expect(getComputedStyle(dialog).overflow).toBe('hidden');
 
-    const viewport = dialog.querySelector('app-scroll-overlay') as HTMLElement;
-    const surface = dialog.querySelector('[data-crud-dialog-scroll-surface]') as HTMLElement;
-    expect(viewport.classList).toContain('crud-dialog__viewport');
-    expect(surface.getAttribute('data-so-managed-scrollbar')).toBe('true');
-    expect(getComputedStyle(surface).overflowY).toBe('auto');
-    expect(getComputedStyle(surface).getPropertyValue('scrollbar-width')).toBe('none');
+    // El overlay ya no escribe marcadores sobre el contenido proyectado:
+    // posee su propio viewport. La garantia que importa -un unico dueno del
+    // scroll, y que sea el del overlay- se comprueba sobre ese viewport.
+    const overlay = dialog.querySelector('app-scroll-overlay') as HTMLElement;
+    const viewport = overlay.querySelector('.scroll-overlay__viewport') as HTMLElement;
+    expect(overlay.classList).toContain('crud-dialog__viewport');
+    expect(dialog.querySelectorAll('.scroll-overlay__viewport').length).toBe(1);
+    expect(getComputedStyle(viewport).overflowY).toBe('auto');
+    expect(getComputedStyle(viewport).getPropertyValue('scrollbar-width')).toBe('none');
   });
 
   it('prioriza el control Atomic marcado y restaura el foco al cerrar', async () => {
@@ -101,13 +104,14 @@ describe('CrudDialog', () => {
     await fixture.whenStable();
 
     const dialog = fixture.componentInstance.nativeElement;
-    const surface = dialog.querySelector('[data-crud-dialog-scroll-surface]') as HTMLElement;
-    const internalArea = dialog.querySelector('.so-scroll-area') as HTMLElement;
+    // El overlay ya no escribe marcadores sobre el contenido proyectado:
+    // posee su propio viewport. La garantia que importa -un unico dueno del
+    // scroll, y que sea el del overlay- se comprueba sobre ese viewport.
+    const viewport = dialog.querySelector('.scroll-overlay__viewport') as HTMLElement;
 
     expect(dialog.querySelectorAll('[data-crud-dialog-scroll-surface]').length).toBe(1);
-    expect(internalArea.style.overflowY).toBe('hidden');
-    expect(surface.getAttribute('data-so-vertical')).toBe('true');
-    expect(surface.getAttribute('data-so-managed-scrollbar')).toBe('true');
+    expect(dialog.querySelectorAll('.scroll-overlay__viewport').length).toBe(1);
+    expect(getComputedStyle(viewport).overflowY).toBe('auto');
   });
 
   it('enfoca el control nativo dentro del primer componente invÃ¡lido', async () => {

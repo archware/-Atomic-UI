@@ -1,7 +1,7 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.4.0"
+version: "5.5.0"
 status: "vigente"
 updated: "2026-08-05"
 owner: "Hospital Regional de Ayacucho"
@@ -14,6 +14,49 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.5.0] - 2026-08-05
+
+### Cambiado — RUPTURA de API interna
+
+- **`scroll-overlay` se unifica y sobrevive la implementación del consumidor.**
+  No eran dos versiones del mismo componente: la anterior era un scroller **más
+  un motor de maquetación de tablas**. Buscaba con `querySelectorAll` un
+  scroller ajeno dentro del contenido proyectado, le escribía atributos, forzaba
+  `display:block` en `thead`/`tbody` y `display:grid` en `tr`, y bloqueaba
+  anchos de columna en píxeles. De sus 13 entradas, ~8 eran de layout de tabla
+  infiltradas en el organismo equivocado.
+
+  Defectos que decidieron el descarte, todos verificados en código:
+  - `role`/`tabindex` viajaban en el host, que tiene `overflow:hidden`, mientras
+    el elemento que scrollea era otro: **el teclado no movía nada**.
+  - El arrastre del pulgar se calculaba sobre `clientHeight` mientras el dibujo
+    usaba una altura recortada por la barra horizontal: con dos ejes activos, el
+    pulgar se despegaba del cursor.
+  - El modo grid destruía la semántica ARIA de tabla sin restaurar los roles.
+  - 5 de las 13 entradas tenían **cero call sites**, sus selectores por omisión
+    no casaban con ningún elemento, y `skipTableDetection` se usaba en 6 de 8
+    sitios **siempre con `true`**: sus propios consumidores apagaban su función
+    distintiva.
+
+  API nueva: `horizontal`, `vertical`, `fill`, `focusable`, `viewportRole`,
+  `ariaLabel`, `autoHide` y `maxHeight`. De la anterior sobrevive una sola cosa:
+  `maxHeight` acepta número, como hacía `maxBodyHeight`.
+
+- **`app-table` recupera su propia maquetación de columnas.** Delegaba
+  `columnTemplate`, `lockColumnTemplate`, `minColumnWidth` y `verticalSelector`
+  en el scroll-overlay. Ahora la resuelve el único componente que posee el
+  `<table>`, y **declara los roles ARIA de forma explícita**: la rejilla ya no
+  cuesta la semántica, que era el defecto real del enfoque anterior.
+
+- **Selector dual `'app-scroll-overlay, prest-scroll-overlay'`.**
+
+### Corregido
+
+- Cinco pruebas fijaban los marcadores internos de la implementación anterior
+  (`data-so-vertical`, `data-so-managed-scrollbar`, `.so-scroll-area`) en vez de
+  la garantía que importa. Se reescriben para afirmar que hay **un solo dueño
+  del scroll y que es el viewport del overlay**, que es lo que no debe cambiar.
 
 ## [5.4.0] - 2026-08-05
 

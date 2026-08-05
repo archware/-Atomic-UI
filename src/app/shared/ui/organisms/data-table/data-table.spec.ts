@@ -106,7 +106,7 @@ describe('DataTable', () => {
     const overlay = fixture.nativeElement.querySelector(
       '.data-table__viewport',
     ) as HTMLElement;
-    const viewport = overlay.querySelector('.so-scroll-area') as HTMLElement;
+    const viewport = overlay.querySelector('.scroll-overlay__viewport') as HTMLElement;
     const overlayStyle = getComputedStyle(overlay);
     const viewportStyle = getComputedStyle(viewport);
 

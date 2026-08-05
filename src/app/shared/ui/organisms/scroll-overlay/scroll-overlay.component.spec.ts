@@ -1,38 +1,8 @@
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ScrollOverlayComponent } from './scroll-overlay.component';
 
-@Component({
-  standalone: true,
-  imports: [ScrollOverlayComponent],
-  template: `
-    <app-scroll-overlay
-      class="outer-overlay"
-      horizontalSelector=".outer-horizontal"
-      verticalSelector=".outer-vertical"
-    >
-      <div class="outer-horizontal">
-        <div class="outer-vertical">
-          <app-scroll-overlay class="inner-overlay">
-            <div>Contenido interno</div>
-          </app-scroll-overlay>
-        </div>
-      </div>
-    </app-scroll-overlay>
-  `,
-})
-class NestedScrollOverlayHostComponent {}
-
 describe('ScrollOverlayComponent', () => {
-  const originalResizeObserver = globalThis.ResizeObserver;
-  const originalMutationObserver = globalThis.MutationObserver;
-  const originalRequestAnimationFrame = globalThis.requestAnimationFrame;
-  const originalCancelAnimationFrame = globalThis.cancelAnimationFrame;
-
-  let resizeCallback: ResizeObserverCallback;
-  let mutationCallback: MutationCallback;
-  let pendingFrame: FrameRequestCallback | undefined;
-
   const setScrollMetrics = (
     element: HTMLElement,
     metrics: Partial<Pick<HTMLElement, 'clientHeight' | 'clientWidth' | 'scrollHeight' | 'scrollWidth'>>,
@@ -53,98 +23,49 @@ describe('ScrollOverlayComponent', () => {
   };
 
   beforeEach(async () => {
-    globalThis.ResizeObserver = class {
-      constructor(callback: ResizeObserverCallback) {
-        resizeCallback = callback;
-      }
-      observe(): void {}
-      unobserve(): void {}
-      disconnect(): void {}
-    };
-    globalThis.MutationObserver = class {
-      constructor(callback: MutationCallback) {
-        mutationCallback = callback;
-      }
-      observe(): void {}
-      disconnect(): void {}
-      takeRecords(): MutationRecord[] {
-        return [];
-      }
-    };
-    globalThis.requestAnimationFrame = jasmine
-      .createSpy('requestAnimationFrame')
-      .and.callFake((callback: FrameRequestCallback) => {
-        pendingFrame = callback;
-        return 17;
-      });
-    globalThis.cancelAnimationFrame = jasmine.createSpy('cancelAnimationFrame');
-
     await TestBed.configureTestingModule({
-      imports: [ScrollOverlayComponent, NestedScrollOverlayHostComponent],
+      imports: [ScrollOverlayComponent],
       providers: [provideZonelessChangeDetection()],
     }).compileComponents();
   });
 
-  afterEach(() => {
-    globalThis.ResizeObserver = originalResizeObserver;
-    globalThis.MutationObserver = originalMutationObserver;
-    globalThis.requestAnimationFrame = originalRequestAnimationFrame;
-    globalThis.cancelAnimationFrame = originalCancelAnimationFrame;
-  });
-
-  it('coalesces resize and row mutations into one geometry pass per frame', async () => {
+  it('keeps the projected viewport keyboard accessible when requested', async () => {
     const fixture = TestBed.createComponent(ScrollOverlayComponent);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    const component = fixture.componentInstance as unknown as {
-      syncGeometry: () => void;
-    };
-    const geometrySpy = spyOn(component, 'syncGeometry').and.callThrough();
-    const frameCountBeforeObservers = (
-      globalThis.requestAnimationFrame as jasmine.Spy
-    ).calls.count();
-
-    resizeCallback([], {} as ResizeObserver);
-    mutationCallback([], {} as MutationObserver);
-    mutationCallback([], {} as MutationObserver);
-
-    expect(globalThis.requestAnimationFrame).toHaveBeenCalledTimes(frameCountBeforeObservers + 1);
-    pendingFrame?.(16);
-    expect(geometrySpy).toHaveBeenCalledTimes(1);
-  });
-
-  it('hides native scrollbars on every custom scroller managed by the overlay', async () => {
-    const fixture = TestBed.createComponent(NestedScrollOverlayHostComponent);
-    fixture.detectChanges();
+    fixture.componentRef.setInput('focusable', true);
+    fixture.componentRef.setInput('viewportRole', 'region');
+    fixture.componentRef.setInput('ariaLabel', 'Resultados de prueba');
     await fixture.whenStable();
 
-    const horizontal = fixture.nativeElement.querySelector('.outer-horizontal') as HTMLElement;
-    const vertical = fixture.nativeElement.querySelector('.outer-vertical') as HTMLElement;
-
-    expect(horizontal.getAttribute('data-so-managed-scrollbar')).toBe('true');
-    expect(vertical.getAttribute('data-so-managed-scrollbar')).toBe('true');
-    expect(getComputedStyle(horizontal).getPropertyValue('scrollbar-width')).toBe('none');
-    expect(getComputedStyle(vertical).getPropertyValue('scrollbar-width')).toBe('none');
+    const viewport = fixture.nativeElement.querySelector(
+      '.scroll-overlay__viewport',
+    ) as HTMLElement;
+    expect(viewport.tabIndex).toBe(0);
+    expect(viewport.getAttribute('role')).toBe('region');
+    expect(viewport.getAttribute('aria-label')).toBe('Resultados de prueba');
+    expect(getComputedStyle(viewport).scrollbarWidth).toBe('none');
   });
 
-  it('does not remove managed-axis markers from a nested overlay', async () => {
-    const fixture = TestBed.createComponent(NestedScrollOverlayHostComponent);
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    const innerRoot = fixture.nativeElement.querySelector('.inner-overlay') as HTMLElement;
-    const innerScrollArea = innerRoot.querySelector('.so-scroll-area') as HTMLElement;
-
-    expect(innerScrollArea.getAttribute('data-so-horizontal')).toBe('true');
-    expect(innerScrollArea.getAttribute('data-so-vertical')).toBe('true');
-    expect(innerScrollArea.getAttribute('data-so-managed-scrollbar')).toBe('true');
-  });
-
-  it('routes wheel gestures from projected content to the managed viewport', async () => {
+  it('constrains a modal viewport and resets both scroll axes through its public API', async () => {
     const fixture = TestBed.createComponent(ScrollOverlayComponent);
-    fixture.detectChanges();
+    fixture.componentRef.setInput('maxHeight', '32rem');
     await fixture.whenStable();
-    const viewport = fixture.nativeElement.querySelector('.so-scroll-area') as HTMLElement;
+
+    const host = fixture.nativeElement as HTMLElement;
+    const viewport = fixture.componentInstance.viewportElement;
+    viewport.scrollTop = 80;
+    viewport.scrollLeft = 25;
+
+    fixture.componentInstance.scrollToStart();
+
+    expect(host.style.getPropertyValue('--scroll-overlay-viewport-max-height')).toBe('32rem');
+    expect(viewport.scrollTop).toBe(0);
+    expect(viewport.scrollLeft).toBe(0);
+  });
+
+  it('scrolls the owned viewport when the wheel is used over its content', async () => {
+    const fixture = TestBed.createComponent(ScrollOverlayComponent);
+    await fixture.whenStable();
+    const viewport = fixture.componentInstance.viewportElement;
     setScrollMetrics(viewport, { clientHeight: 200, scrollHeight: 800 });
 
     const wheel = new WheelEvent('wheel', {
@@ -160,9 +81,8 @@ describe('ScrollOverlayComponent', () => {
 
   it('leaves Ctrl and Meta wheel gestures to browser zoom and pinch handling', async () => {
     const fixture = TestBed.createComponent(ScrollOverlayComponent);
-    fixture.detectChanges();
     await fixture.whenStable();
-    const viewport = fixture.nativeElement.querySelector('.so-scroll-area') as HTMLElement;
+    const viewport = fixture.componentInstance.viewportElement;
     setScrollMetrics(viewport, { clientHeight: 200, scrollHeight: 800 });
 
     for (const modifier of [{ ctrlKey: true }, { metaKey: true }]) {
@@ -182,9 +102,8 @@ describe('ScrollOverlayComponent', () => {
 
   it('uses Shift plus wheel for horizontal movement', async () => {
     const fixture = TestBed.createComponent(ScrollOverlayComponent);
-    fixture.detectChanges();
     await fixture.whenStable();
-    const viewport = fixture.nativeElement.querySelector('.so-scroll-area') as HTMLElement;
+    const viewport = fixture.componentInstance.viewportElement;
     setScrollMetrics(viewport, { clientWidth: 200, scrollWidth: 800 });
 
     const wheel = new WheelEvent('wheel', {
@@ -201,9 +120,8 @@ describe('ScrollOverlayComponent', () => {
 
   it('routes a negative wheel delta toward the beginning of the viewport', async () => {
     const fixture = TestBed.createComponent(ScrollOverlayComponent);
-    fixture.detectChanges();
     await fixture.whenStable();
-    const viewport = fixture.nativeElement.querySelector('.so-scroll-area') as HTMLElement;
+    const viewport = fixture.componentInstance.viewportElement;
     setScrollMetrics(viewport, { clientHeight: 200, scrollHeight: 800 });
     viewport.scrollTop = 180;
 
@@ -218,11 +136,10 @@ describe('ScrollOverlayComponent', () => {
     expect(wheel.defaultPrevented).toBe(true);
   });
 
-  it('keeps nested native scroll ownership and chains at its edge', async () => {
+  it('preserves a nested native scroller and chains the wheel at its boundary', async () => {
     const fixture = TestBed.createComponent(ScrollOverlayComponent);
-    fixture.detectChanges();
     await fixture.whenStable();
-    const viewport = fixture.nativeElement.querySelector('.so-scroll-area') as HTMLElement;
+    const viewport = fixture.componentInstance.viewportElement;
     const nested = document.createElement('div');
     nested.style.overflowY = 'auto';
     viewport.append(nested);
@@ -249,5 +166,30 @@ describe('ScrollOverlayComponent', () => {
 
     expect(boundaryWheel.defaultPrevented).toBe(true);
     expect(viewport.scrollTop).toBe(80);
+  });
+
+  it('coalesces repeated geometry requests into one layout read per frame', async () => {
+    const fixture = TestBed.createComponent(ScrollOverlayComponent);
+    await fixture.whenStable();
+    const component = fixture.componentInstance as unknown as {
+      scheduleMetricsUpdate: () => void;
+      updateMetrics: () => void;
+    };
+    const updateSpy = spyOn(component, 'updateMetrics').and.callThrough();
+    let pendingFrame: FrameRequestCallback | undefined;
+    const frameSpy = spyOn(window, 'requestAnimationFrame').and.callFake(
+      (callback: FrameRequestCallback) => {
+        pendingFrame = callback;
+        return 21;
+      },
+    );
+
+    component.scheduleMetricsUpdate();
+    component.scheduleMetricsUpdate();
+    component.scheduleMetricsUpdate();
+
+    expect(frameSpy).toHaveBeenCalledTimes(1);
+    pendingFrame?.(16);
+    expect(updateSpy).toHaveBeenCalledTimes(1);
   });
 });

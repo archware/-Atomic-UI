@@ -11,140 +11,55 @@
     "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css"
   ],
   "purpose": "Contenedor que sincroniza scroll horizontal y vertical con indicadores overlay y alineación opcional de tablas.",
-  "variants": [
-    {
-      "name": "lock-column-template",
-      "values": [
-        {
-          "value": false,
-          "meaning": "Permite medir y recalcular la plantilla de columnas.",
-          "default": true
-        },
-        { "value": true, "meaning": "Conserva columnTemplate sin sobrescribirla automáticamente." }
-      ]
-    },
-    {
-      "name": "sync-table-columns",
-      "values": [
-        {
-          "value": true,
-          "meaning": "Mide y alinea encabezado y cuerpo de la tabla.",
-          "default": true
-        },
-        { "value": false, "meaning": "Mantiene el algoritmo natural de columnas de la tabla." }
-      ]
-    },
-    {
-      "name": "skip-table-detection",
-      "values": [
-        {
-          "value": false,
-          "meaning": "Detecta la primera tabla directa y configura su sincronización.",
-          "default": true
-        },
-        { "value": true, "meaning": "Trata el contenido como layout genérico y omite la tabla." }
-      ]
-    },
-    {
-      "name": "disable-vertical",
-      "values": [
-        {
-          "value": false,
-          "meaning": "Habilita el overlay vertical cuando existe desbordamiento.",
-          "default": true
-        },
-        { "value": true, "meaning": "Desactiva el overlay vertical." }
-      ]
-    },
-    {
-      "name": "disable-horizontal",
-      "values": [
-        {
-          "value": false,
-          "meaning": "Habilita el overlay horizontal cuando existe desbordamiento.",
-          "default": true
-        },
-        { "value": true, "meaning": "Desactiva el overlay horizontal." }
-      ]
-    }
-  ],
+  "variants": [],
   "inputs": [
     {
-      "name": "verticalSelector",
-      "type": "string | null",
-      "default": "[data-scroll-overlay-vertical]",
-      "meaning": "Selector del elemento que controla el desplazamiento vertical."
-    },
-    {
-      "name": "horizontalSelector",
-      "type": "string | null",
-      "default": "[data-scroll-overlay-horizontal]",
-      "meaning": "Selector del elemento que controla el desplazamiento horizontal."
-    },
-    {
-      "name": "minThumbSize",
-      "type": "number",
-      "default": 28,
-      "meaning": "Tamaño mínimo en píxeles de cada thumb."
-    },
-    {
-      "name": "trackSize",
-      "type": "number",
-      "default": 7,
-      "meaning": "Grosor en píxeles de los tracks overlay."
-    },
-    {
-      "name": "autoHideDelay",
-      "type": "number",
-      "default": 800,
-      "meaning": "Demora en milisegundos antes de ocultar los indicadores."
-    },
-    {
-      "name": "lockColumnTemplate",
-      "type": "boolean",
-      "default": false,
-      "meaning": "Impide reemplazar una plantilla de columnas entregada por el consumidor."
-    },
-    {
-      "name": "columnTemplate",
-      "type": "string | null",
-      "default": null,
-      "meaning": "Definición CSS grid-template-columns opcional."
-    },
-    {
-      "name": "syncTableColumns",
+      "name": "horizontal",
       "type": "boolean",
       "default": true,
-      "meaning": "Sincroniza anchos entre thead y tbody cuando detecta una tabla."
+      "meaning": "Habilita el eje horizontal del viewport."
     },
     {
-      "name": "skipTableDetection",
+      "name": "vertical",
+      "type": "boolean",
+      "default": true,
+      "meaning": "Habilita el eje vertical del viewport."
+    },
+    {
+      "name": "fill",
       "type": "boolean",
       "default": false,
-      "meaning": "Evita detectar tablas anidadas y usa el área interna como scroller."
+      "meaning": "El overlay ocupa la altura disponible de su contenedor."
     },
     {
-      "name": "minColumnWidth",
-      "type": "number",
-      "default": 140,
-      "meaning": "Ancho mínimo positivo en píxeles al medir columnas."
-    },
-    {
-      "name": "maxBodyHeight",
-      "type": "number | string | null | undefined",
-      "meaning": "Altura máxima; un número se interpreta como píxeles y un texto como tamaño CSS."
-    },
-    {
-      "name": "disableVertical",
+      "name": "focusable",
       "type": "boolean",
       "default": false,
-      "meaning": "Desactiva el overlay y la gestión vertical."
+      "meaning": "Hace enfocable el viewport para que el teclado pueda desplazarlo."
     },
     {
-      "name": "disableHorizontal",
+      "name": "viewportRole",
+      "type": "string | null",
+      "default": null,
+      "meaning": "Rol ARIA aplicado al elemento que realmente scrollea."
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string | null",
+      "default": null,
+      "meaning": "Nombre accesible del viewport."
+    },
+    {
+      "name": "autoHide",
       "type": "boolean",
-      "default": false,
-      "meaning": "Desactiva el overlay horizontal."
+      "default": true,
+      "meaning": "Oculta las barras cuando no hay interaccion."
+    },
+    {
+      "name": "maxHeight",
+      "type": "string | number | null",
+      "default": null,
+      "meaning": "Altura maxima del viewport; un numero se interpreta en pixeles."
     }
   ],
   "outputs": [],
@@ -163,15 +78,30 @@
     "Al destruirse cancela timers, listeners, observers, animation frames y atributos temporales."
   ],
   "states": [
-    { "name": "no-overflow", "meaning": "Oculta ambos indicadores cuando el contenido cabe." },
-    { "name": "overflow-x", "meaning": "Presenta y sincroniza el indicador horizontal." },
-    { "name": "overflow-y", "meaning": "Presenta y sincroniza el indicador vertical." },
-    { "name": "scrolling", "meaning": "Mantiene visibles los indicadores durante interacción." },
+    {
+      "name": "no-overflow",
+      "meaning": "Oculta ambos indicadores cuando el contenido cabe."
+    },
+    {
+      "name": "overflow-x",
+      "meaning": "Presenta y sincroniza el indicador horizontal."
+    },
+    {
+      "name": "overflow-y",
+      "meaning": "Presenta y sincroniza el indicador vertical."
+    },
+    {
+      "name": "scrolling",
+      "meaning": "Mantiene visibles los indicadores durante interacción."
+    },
     {
       "name": "table-sync",
       "meaning": "Alinea encabezado y cuerpo usando una plantilla medida o bloqueada."
     },
-    { "name": "axis-disabled", "meaning": "Una o ambas orientaciones se excluyen explícitamente." }
+    {
+      "name": "axis-disabled",
+      "meaning": "Una o ambas orientaciones se excluyen explícitamente."
+    }
   ],
   "a11y": [
     "Los tracks y thumbs son decorativos y se excluyen con aria-hidden.",
@@ -202,7 +132,10 @@
     "--table-border-radius",
     "--table-color-border"
   ],
-  "story": { "path": "src/stories/ui-scroll-overlay.stories.ts", "status": "available" },
+  "story": {
+    "path": "src/stories/ui-scroll-overlay.stories.ts",
+    "status": "available"
+  },
   "test": {
     "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.spec.ts",
     "status": "available"

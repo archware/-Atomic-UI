@@ -48,12 +48,15 @@ describe('SidebarComponent', () => {
     const overlay = fixture.nativeElement.querySelector(
       'app-scroll-overlay.sidebar-nav-overlay',
     ) as HTMLElement;
-    const nav = fixture.nativeElement.querySelector('[data-sidebar-scroll-surface]') as HTMLElement;
+    // El overlay ya no escribe marcadores sobre el contenido proyectado:
+    // posee su propio viewport. La garantia que importa -un unico dueno del
+    // scroll, y que sea el del overlay- se comprueba sobre ese viewport.
+    const viewport = overlay?.querySelector('.scroll-overlay__viewport') as HTMLElement;
 
     expect(overlay).not.toBeNull();
-    expect(nav.getAttribute('data-so-vertical')).toBe('true');
-    expect(nav.getAttribute('data-so-managed-scrollbar')).toBe('true');
-    expect(getComputedStyle(nav).getPropertyValue('scrollbar-width')).toBe('none');
+    expect(fixture.nativeElement.querySelectorAll('.scroll-overlay__viewport').length).toBe(1);
+    expect(getComputedStyle(viewport).overflowY).toBe('auto');
+    expect(getComputedStyle(viewport).getPropertyValue('scrollbar-width')).toBe('none');
   });
 
   it('toggles a group and emits navigation only for the selected child', () => {

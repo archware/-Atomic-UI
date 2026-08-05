@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.4.0",
+  "packageVersion": "5.5.0",
   "distributionStatus": "blocked-scaffold",
   "algorithm": "sha256",
-  "sourceTreeSha256": "55366673dceb3a7b10c8bf82edcc99df72057cc2193921d48d3fdf451b7fc6f9",
+  "sourceTreeSha256": "eb24bc5ea2b250d09a9bc91e0c42efbe36dbf863f8514715cf39cb7d4cfa5d02",
   "fileCount": 152,
   "files": [
     {
@@ -209,8 +209,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/table/table.component.ts",
-      "bytes": 7185,
-      "sha256": "3043d37fe7fe2cb33c217a232666d90ea2468c9ebd88a61713c2db1397867465"
+      "bytes": 7201,
+      "sha256": "2a1959f1ccf683ab2c4883a546b2d02148f15371095e36e0973b2ec3b127e209"
     },
     {
       "path": "src/app/shared/ui/atoms/text/text.component.ts",
@@ -399,8 +399,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.html",
-      "bytes": 627,
-      "sha256": "aecbfcee6e34839b26713ef370c935ff52a589d1f347e8b6618d04d9f3a25cc4"
+      "bytes": 640,
+      "sha256": "22ae0b45c18f2f27b23a2ad42c5157e55194d1fadaeb0d9ea78683fd4baba6e8"
     },
     {
       "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.scss",
@@ -419,8 +419,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.html",
-      "bytes": 7813,
-      "sha256": "28df3f4f3038059bbc985d792661061f6395cf0f9825b6eb78d90ea0ecf602c3"
+      "bytes": 8026,
+      "sha256": "9f50e4f99a15b405b4af5bbe57dc4adb77c91d8d61c499c9311725785c1594d5"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.scss",
@@ -548,19 +548,19 @@
       "sha256": "550a765869dba3d7484f04d3d3db3c79966865acf82814adf192dda06412bff4"
     },
     {
-      "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css",
-      "bytes": 7137,
-      "sha256": "2f847e2a5f986c2b0016a1c8e8c1237a5603c344a4f645611ad39f83a870e9e6"
+      "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.html",
+      "bytes": 1600,
+      "sha256": "f957fb3de6d2928eed49c0b56cf3f947b626ea4565824692a4de29b92b95b586"
     },
     {
-      "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.html",
-      "bytes": 324,
-      "sha256": "33f24c2569c937882e39c32de3084a96f238f3c6bd80815fe39d43c028076dc7"
+      "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.scss",
+      "bytes": 2368,
+      "sha256": "5a8ece49d9fccd15a2644906be020b021e0b4b4d1f24c6e1a256afbe966a7911"
     },
     {
       "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts",
-      "bytes": 42552,
-      "sha256": "cd9e5c210148bded3f2bbab58b3a209f4e3c40771a28d99a1bc38c915a19dc86"
+      "bytes": 15536,
+      "sha256": "2f9ce81176c6aa6695c9ea48fd06f6327687eca9c6cb87e3193e60951746220f"
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.css",
@@ -569,8 +569,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.html",
-      "bytes": 3369,
-      "sha256": "5744b43564029b8641cd60534f8a00db35823d62b2bf52a7ec52eeaee95ba953"
+      "bytes": 3241,
+      "sha256": "81a897f3e47960f3b079fa3ca367c4cd0281f59021a1500c08ce9b4aa78dab76"
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.ts",
@@ -704,8 +704,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/auth-layout/auth-layout.component.html",
-      "bytes": 1412,
-      "sha256": "e9a0986a00bb35d91a665ccb58291d1b093d5eeb382c529c03931d4195af560b"
+      "bytes": 1384,
+      "sha256": "9ff62514d0eea5ea5ac10d5f3851c808add606c4b5560c01a0f4ec9b1ddc48ce"
     },
     {
       "path": "src/app/shared/ui/templates/auth-layout/auth-layout.component.ts",
@@ -719,8 +719,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.html",
-      "bytes": 1254,
-      "sha256": "f9f403c26f667421721ed909b5407cd30363d744c42d53abcc20f5a35cf7bb34"
+      "bytes": 1217,
+      "sha256": "b059a4c4fb95d661824f5ba4ee60210904b64fa583d5554ad0da5bc15b121ecb"
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.ts",

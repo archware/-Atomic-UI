@@ -6,12 +6,12 @@
   (cancel)="handleCancel($event)"
   (close)="handleClosed()"
 >
+  <!-- Los selectores delegaban el scroll al div envoltorio inmediato, que es
+       exactamente lo que ya es el viewport propio del componente. -->
   <app-scroll-overlay
     class="crud-dialog__viewport"
-    verticalSelector="[data-crud-dialog-scroll-surface]"
-    horizontalSelector="[data-crud-dialog-scroll-surface]"
-    [skipTableDetection]="true"
-    [disableHorizontal]="true"
+    [horizontal]="false"
+    [fill]="true"
   >
     <div #scrollSurface class="crud-dialog__surface" data-crud-dialog-scroll-surface>
       <ng-content />

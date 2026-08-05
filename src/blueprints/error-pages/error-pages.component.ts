@@ -85,7 +85,7 @@ const ERROR_DEFAULTS: Record<ErrorCode, Omit<ErrorPageConfig, 'primaryAction' | 
     RowComponent
 ],
   template: `
-    <app-scroll-overlay class="so-block h-screen w-full" [skipTableDetection]="true">
+    <app-scroll-overlay class="h-screen w-full">
     <div class="error-page">
       <div class="error-container">
 

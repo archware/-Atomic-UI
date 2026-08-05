@@ -9,14 +9,12 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-scroll-overlay
-      class="atomic-table-container so-block"
+      class="atomic-table-container"
       [class.atomic-table-striped]="striped"
-      [maxBodyHeight]="maxHeight"
-      [minColumnWidth]="40"
-      [columnTemplate]="columnTemplate"
-      [lockColumnTemplate]="!!columnTemplate"
-      [verticalSelector]="maxHeight ? null : 'tbody'">
-      <table class="atomic-table">
+      [class.atomic-table--columns]="!!columnTemplate"
+      [maxHeight]="maxHeight ?? null"
+      [style.--atomic-table-columns]="columnTemplate || null">
+      <table class="atomic-table" role="table">
         <ng-content></ng-content>
       </table>
     </app-scroll-overlay>
@@ -52,15 +50,36 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
       display: table-row-group;
     }
 
+    /* Maquetacion por columnas fijas. Antes la aplicaba el scroll-overlay
+       escribiendo sobre el contenido proyectado, y al pasar thead/tbody/tr a
+       display:block|grid destruia la semantica de tabla sin restaurar ningun
+       role: un lector de pantalla dejaba de anunciar filas y celdas. Ahora vive
+       en el componente que posee el <table>, y los roles se declaran de forma
+       explicita para que la rejilla no cueste la semantica. */
+    .atomic-table--columns .atomic-table,
+    .atomic-table--columns .atomic-table thead,
+    .atomic-table--columns .atomic-table tbody {
+      display: block;
+    }
+
+    .atomic-table--columns .atomic-table tr {
+      display: grid;
+      grid-template-columns: var(--atomic-table-columns);
+      align-items: center;
+    }
+
+    .atomic-table--columns .atomic-table th,
+    .atomic-table--columns .atomic-table td {
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      overflow-wrap: anywhere;
+    }
+
     .atomic-table th, .atomic-table td {
       padding: var(--table-cell-padding, var(--space-3) var(--space-4));
       vertical-align: middle;
       border-bottom: 1px solid var(--table-color-border-light, rgba(0,0,0,0.05));
-    }
-
-    .so-root[data-so-table][data-so-sync-columns] .atomic-table tbody td[app-table-cell]:has(> app-chip:only-child) {
-      display: flex;
-      align-items: center;
     }
 
     .atomic-table tbody tr {
@@ -117,32 +136,21 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
        Usamos selectores de alta especificidad para anular ScrollOverlay
        ============================================ */
     @media screen and (max-width: 768px) {
-      .so-root[data-so-table].atomic-table-container,
       .atomic-table-container {
         border: none;
         border-radius: 0;
         overflow: auto;
         max-height: none;
       }
-
-      .so-root[data-so-table] .atomic-table,
       .atomic-table,
-      .so-root[data-so-table] .atomic-table > app-table-head,
       .atomic-table > app-table-head,
-      .so-root[data-so-table] .atomic-table tbody,
       .atomic-table tbody {
         display: block;
       }
-
-      .so-root[data-so-table][data-so-sync-columns] .atomic-table thead,
-      .so-root[data-so-table] .atomic-table thead,
       .atomic-table thead,
       .atomic-table .atomic-thead {
         display: none;
       }
-
-      .so-root[data-so-table][data-so-sync-columns] .atomic-table tbody tr,
-      .so-root[data-so-table] .atomic-table tbody tr,
       .atomic-table tbody tr {
         display: flex;
         flex-direction: column;
@@ -154,27 +162,18 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
         margin-bottom: var(--table-card-gap);
         box-shadow: var(--table-card-shadow);
       }
-
-      .so-root[data-so-table][data-so-sync-columns] .atomic-table tbody tr:hover,
-      .so-root[data-so-table] .atomic-table tbody tr:hover,
       .atomic-table tbody tr:hover {
         transform: none;
         box-shadow: var(--table-card-shadow);
       }
-
-      .so-root[data-so-table] .atomic-table tbody td,
       .atomic-table tbody td {
         display: flex;
         padding: var(--space-2) 0;
         border-bottom: 1px solid var(--table-color-border-light);
       }
-
-      .so-root[data-so-table] .atomic-table tbody td:last-child,
       .atomic-table tbody td:last-child {
         border-bottom: none;
       }
-
-      .so-root[data-so-table] .atomic-table tbody td[data-label]::before,
       .atomic-table tbody td[data-label]::before {
         content: attr(data-label);
         display: block;
@@ -183,8 +182,6 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
         flex: 0 0 120px;
         margin-right: var(--space-3);
       }
-
-      .so-root[data-so-table] .atomic-table tbody td.actions-cell,
       .atomic-table tbody td.actions-cell {
         justify-content: flex-end;
         padding-top: var(--space-3);
@@ -196,6 +193,8 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
 })
 export class TableComponent {
   @Input() striped = false;
+  /** Altura maxima del cuerpo en pixeles. */
   @Input() maxHeight?: number;
+  /** Plantilla de columnas CSS grid, p. ej. `'70px minmax(150px, 1fr) 100px'`. */
   @Input() columnTemplate?: string;
 }

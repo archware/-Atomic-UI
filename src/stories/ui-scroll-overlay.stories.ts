@@ -19,12 +19,12 @@ type Story = StoryObj<ScrollOverlayComponent>;
 
 export const Default: Story = {
   args: {
-    maxBodyHeight: 300,
+    maxHeight: 300,
   },
   render: (args) => ({
     props: args,
     template: `
-      <app-scroll-overlay [maxBodyHeight]="maxBodyHeight">
+      <app-scroll-overlay [maxHeight]="maxHeight">
         <table style="width: 100%; border-collapse: collapse;">
           <thead>
             <tr style="background: var(--surface-section);">
@@ -50,17 +50,13 @@ export const Default: Story = {
 
 export const WithColumnTemplate: Story = {
   args: {
-    maxBodyHeight: 300,
-    lockColumnTemplate: true,
-    columnTemplate: '70px minmax(150px, 1fr) minmax(200px, 2fr) 100px',
+    maxHeight: 300,
   },
   render: (args) => ({
     props: args,
     template: `
       <app-scroll-overlay 
-        [maxBodyHeight]="maxBodyHeight"
-        [lockColumnTemplate]="lockColumnTemplate"
-        [columnTemplate]="columnTemplate">
+        [maxHeight]="maxHeight">
         <table class="rtc-table">
           <thead class="rtc-header">
             <tr>
@@ -86,12 +82,12 @@ export const WithColumnTemplate: Story = {
 
 export const SmallHeight: Story = {
   args: {
-    maxBodyHeight: 150,
+    maxHeight: 150,
   },
   render: (args) => ({
     props: args,
     template: `
-      <app-scroll-overlay [maxBodyHeight]="maxBodyHeight">
+      <app-scroll-overlay [maxHeight]="maxHeight">
         <div style="padding: 1rem;">
           <p *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]" style="margin-bottom: 1rem;">
             Párrafo {{i}}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -104,12 +100,12 @@ export const SmallHeight: Story = {
 
 export const NoScroll: Story = {
   args: {
-    maxBodyHeight: 500,
+    maxHeight: 500,
   },
   render: (args) => ({
     props: args,
     template: `
-      <app-scroll-overlay [maxBodyHeight]="maxBodyHeight">
+      <app-scroll-overlay [maxHeight]="maxHeight">
         <div style="padding: 1rem;">
           <p>Este contenido no necesita scroll.</p>
           <p>Es más pequeño que el contenedor.</p>
