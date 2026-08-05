@@ -10,11 +10,9 @@
     <!-- Éxito -->
     @if (registered()) {
       <app-alert
-        variant="success"
+        kind="success"
         title="¡Registro exitoso!"
-        message="Tu cuenta fue creada. Ya puedes iniciar sesión."
-        [closable]="false"
-      ></app-alert>
+        [closable]="false">Tu cuenta fue creada. Ya puedes iniciar sesión.</app-alert>
       <app-button variant="primary" class="full-width" (click)="goToLogin()">
         Ir al inicio de sesión
       </app-button>
@@ -23,11 +21,9 @@
       <!-- Error global de API -->
       @if (registerApi.hasError()) {
         <app-alert
-          variant="danger"
+          kind="danger"
           [title]="'Error al registrar'"
-          [message]="registerApi.error()?.message || 'Intente nuevamente'"
-          [closable]="false"
-        ></app-alert>
+          [closable]="false">{{ registerApi.error()?.message || 'Intente nuevamente' }}</app-alert>
       }
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>

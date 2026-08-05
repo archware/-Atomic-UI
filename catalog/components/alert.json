@@ -9,49 +9,99 @@
   "purpose": "Mensaje semántico inline que permanece dentro del flujo del documento.",
   "variants": [
     {
-      "name": "variant",
+      "name": "kind",
       "values": [
-        { "value": "info", "meaning": "Información neutral.", "default": true },
-        { "value": "success", "meaning": "Resultado satisfactorio." },
-        { "value": "warning", "meaning": "Advertencia que requiere atención." },
-        { "value": "danger", "meaning": "Error o riesgo crítico." }
+        {
+          "value": "info",
+          "meaning": "Información neutral.",
+          "default": true
+        },
+        {
+          "value": "success",
+          "meaning": "Resultado satisfactorio."
+        },
+        {
+          "value": "warning",
+          "meaning": "Advertencia que requiere atención."
+        },
+        {
+          "value": "danger",
+          "meaning": "Error o riesgo crítico."
+        }
       ]
     },
     {
-      "name": "size",
+      "name": "spacing",
       "values": [
-        { "value": "sm", "meaning": "Mensaje compacto." },
-        { "value": "md", "meaning": "Mensaje estándar.", "default": true },
-        { "value": "lg", "meaning": "Mensaje prominente." }
-      ]
-    },
-    {
-      "name": "flow-spacing",
-      "values": [
-        { "value": "default", "meaning": "Separación amplia posterior.", "default": true },
-        { "value": "compact", "meaning": "Separación posterior reducida." },
-        { "value": "none", "meaning": "Sin margen posterior; útil dentro de tablas o composiciones." }
+        {
+          "value": "default",
+          "meaning": "Separación amplia posterior.",
+          "default": true
+        },
+        {
+          "value": "compact",
+          "meaning": "Separación posterior reducida."
+        },
+        {
+          "value": "none",
+          "meaning": "Sin margen posterior; útil dentro de tablas o composiciones."
+        }
       ]
     }
   ],
   "inputs": [
-    { "name": "variant", "type": "AlertVariant", "default": "info", "meaning": "Semántica y nivel de anuncio." },
-    { "name": "size", "type": "AlertSize", "default": "md", "meaning": "Escala del mensaje." },
-    { "name": "title", "type": "string", "default": "", "meaning": "Título opcional." },
-    { "name": "message", "type": "string", "default": "", "meaning": "Mensaje opcional además del contenido proyectado." },
-    { "name": "closable", "type": "boolean", "default": false, "meaning": "Permite descartar localmente el aviso." },
-    { "name": "flowSpacing", "type": "AlertFlowSpacing", "default": "default", "meaning": "Separación respecto del siguiente bloque." }
+    {
+      "name": "kind",
+      "type": "AlertVariant",
+      "default": "info",
+      "meaning": "Semántica y nivel de anuncio."
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "default": "",
+      "meaning": "Título opcional."
+    },
+    {
+      "name": "closable",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Permite descartar localmente el aviso."
+    },
+    {
+      "name": "spacing",
+      "type": "AlertFlowSpacing",
+      "default": "default",
+      "meaning": "Separación respecto del siguiente bloque."
+    }
   ],
   "outputs": [
-    { "name": "closed", "type": "void", "meaning": "Se emite después de ocultar el aviso con el botón cerrar." }
+    {
+      "name": "closed",
+      "type": "void",
+      "meaning": "Se emite después de ocultar el aviso con el botón cerrar."
+    }
   ],
   "slots": [
-    { "name": "default", "type": "projected content", "meaning": "Contenido adicional del cuerpo." }
+    {
+      "name": "default",
+      "type": "projected content",
+      "meaning": "Contenido adicional del cuerpo."
+    }
   ],
   "states": [
-    { "name": "visible", "meaning": "Aviso renderizado con role alert." },
-    { "name": "dismissible", "meaning": "Presenta acción cerrar." },
-    { "name": "dismissed", "meaning": "El estado interno visible es false y deja de renderizar." }
+    {
+      "name": "visible",
+      "meaning": "Aviso renderizado con role alert."
+    },
+    {
+      "name": "dismissible",
+      "meaning": "Presenta acción cerrar."
+    },
+    {
+      "name": "dismissed",
+      "meaning": "El estado interno visible es false y deja de renderizar."
+    }
   ],
   "a11y": [
     "Usa role=alert; danger anuncia assertive y el resto polite.",
@@ -88,8 +138,21 @@
     "--text-sm",
     "--text-xs"
   ],
-  "story": { "path": "src/stories/ui-alert.stories.ts", "status": "available" },
-  "test": { "path": "src/app/shared/ui/molecules/alert/alert.component.spec.ts", "status": "available" },
-  "stability": { "status": "stable", "notes": [] },
-  "canonicalFor": ["inline-feedback", "form-error-summary", "persistent-status"]
+  "story": {
+    "path": "src/stories/ui-alert.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/molecules/alert/alert.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": []
+  },
+  "canonicalFor": [
+    "inline-feedback",
+    "form-error-summary",
+    "persistent-status"
+  ]
 }

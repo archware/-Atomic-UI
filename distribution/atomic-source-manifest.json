@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.3.1",
+  "packageVersion": "5.4.0",
   "distributionStatus": "blocked-scaffold",
   "algorithm": "sha256",
-  "sourceTreeSha256": "d8092315555fed15e8101449b8dbd9edfa8703eea35c079ff9c4173668a0776c",
-  "fileCount": 151,
+  "sourceTreeSha256": "55366673dceb3a7b10c8bf82edcc99df72057cc2193921d48d3fdf451b7fc6f9",
+  "fileCount": 152,
   "files": [
     {
       "path": "src/app/shared/ui/atoms/avatar/avatar.component.ts",
@@ -254,8 +254,8 @@
     },
     {
       "path": "src/app/shared/ui/index.ts",
-      "bytes": 13083,
-      "sha256": "a073096f22ef4620c2b82a1056b3fb3c752709f65fedcc53e1b8ff04e422995d"
+      "bytes": 13081,
+      "sha256": "daf21d13180b19da8d5fcf4c72158d47a20efcc23ea35747c335a26606d60a06"
     },
     {
       "path": "src/app/shared/ui/interceptors/auth.interceptor.ts",
@@ -274,8 +274,13 @@
     },
     {
       "path": "src/app/shared/ui/molecules/alert/alert.component.ts",
-      "bytes": 5449,
-      "sha256": "580b70b8a8750420545430b17ed741715424e102aaaff500bd9d255a237b601d"
+      "bytes": 3215,
+      "sha256": "5beb796f90014def7a114b0fb66d7dcf48148b6302535a31a114aec7cdb3d5f9"
+    },
+    {
+      "path": "src/app/shared/ui/molecules/alert/alert.scss",
+      "bytes": 1647,
+      "sha256": "f36adc96ef378ae955054fb2e17ed3bb5198db6f05b5a3304172438a2d992c5a"
     },
     {
       "path": "src/app/shared/ui/molecules/avatar-group/avatar-group.component.ts",
@@ -414,8 +419,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.html",
-      "bytes": 7820,
-      "sha256": "014660e441e907b8292794124756840a45640b4e990ff280b22159c555abef49"
+      "bytes": 7813,
+      "sha256": "28df3f4f3038059bbc985d792661061f6395cf0f9825b6eb78d90ea0ecf602c3"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.scss",
@@ -424,8 +429,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.ts",
-      "bytes": 14296,
-      "sha256": "3c473e2140b65dc246e94f4e2d7d538f1c997bea13176a8ebc9fa20aa175793a"
+      "bytes": 14278,
+      "sha256": "c9cb2c49ae9616414338c872e34b3a13dc61a8b5e18e7c4b122f418c4ee560a9"
     },
     {
       "path": "src/app/shared/ui/organisms/denomination-counter/denomination-counter.ts",

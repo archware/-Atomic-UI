@@ -11,7 +11,7 @@ import {
   PanelComponent,
   TextComponent,
   FormRowComponent,
-  AlertComponent,
+  Alert,
   DividerComponent,
 } from '@shared/ui';
 
@@ -56,7 +56,7 @@ const RESET_ENDPOINT  = '/Authentication/ResetPassword';
     PanelComponent,
     TextComponent,
     FormRowComponent,
-    AlertComponent,
+    Alert,
     DividerComponent
 ],
   templateUrl: './forgot-password-page.component.html',

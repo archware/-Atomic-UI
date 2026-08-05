@@ -19,7 +19,7 @@ Página de perfil de usuario completa con:
 - Resumen de cuenta en columna lateral (avatar, nombre, rol, email)
 - Formulario de datos personales (nombre, apellido, teléfono)
 - Formulario de cambio de contraseña
-- Manejo de estados loading / success / error con AlertComponent
+- Manejo de estados loading / success / error con Alert
 - Layout responsivo (2 columnas en desktop, 1 en móvil)
 
 ### Uso

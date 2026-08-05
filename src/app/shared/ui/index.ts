@@ -164,8 +164,8 @@ export type { ModalConfig, ModalItem, ModalButton, ModalSize } from './services/
 
 export { UserMenuComponent } from './molecules/user-menu/user-menu.component';
 
-export { AlertComponent } from './molecules/alert/alert.component';
-export type { AlertVariant, AlertSize, AlertFlowSpacing } from './molecules/alert/alert.component';
+export { Alert, Alert as AlertComponent } from './molecules/alert/alert.component';
+export type { AlertKind, AlertSpacing } from './molecules/alert/alert.component';
 
 export { TagInputComponent } from './molecules/tag-input/tag-input.component';
 export type { TagInputOption } from './molecules/tag-input/tag-input.component';

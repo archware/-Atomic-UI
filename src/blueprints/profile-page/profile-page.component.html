@@ -66,10 +66,10 @@
         <div class="panel-description"><app-text variant="body-sm" color="muted">Actualiza tus datos básicos y cómo te verán otros usuarios en el sistema.</app-text></div>
 
         @if (saveSuccess()) {
-          <app-alert variant="success" message="Perfil actualizado correctamente." [closable]="true"></app-alert>
+          <app-alert kind="success" [closable]="true">Perfil actualizado correctamente.</app-alert>
         }
         @if (saveApi.hasError()) {
-          <app-alert variant="danger" [message]="saveApi.error()?.message ?? 'Error al guardar'" [closable]="false"></app-alert>
+          <app-alert kind="danger" [closable]="false">{{ saveApi.error()?.message ?? 'Error al guardar' }}</app-alert>
         }
 
         <form [formGroup]="infoForm" (ngSubmit)="saveProfile()" novalidate>
@@ -116,10 +116,10 @@
         <div class="panel-description"><app-text variant="body-sm" color="muted">Asegúrate de usar una contraseña larga y difícil de adivinar.</app-text></div>
 
         @if (passSuccess()) {
-          <app-alert variant="success" message="Contraseña actualizada correctamente." [closable]="true"></app-alert>
+          <app-alert kind="success" [closable]="true">Contraseña actualizada correctamente.</app-alert>
         }
         @if (passwordApi.hasError()) {
-          <app-alert variant="danger" [message]="passwordApi.error()?.message ?? 'Error al cambiar contraseña'" [closable]="false"></app-alert>
+          <app-alert kind="danger" [closable]="false">{{ passwordApi.error()?.message ?? 'Error al cambiar contraseña' }}</app-alert>
         }
 
         <form [formGroup]="passForm" (ngSubmit)="changePassword()" novalidate>

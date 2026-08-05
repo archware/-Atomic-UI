@@ -16,7 +16,7 @@ import {
   ButtonComponent,
   FloatingInputComponent,
   DividerComponent,
-  AlertComponent,
+  Alert,
   ChipComponent,
   SkeletonComponent,
   ThemeSwitcherComponent,
@@ -77,7 +77,7 @@ const CHANGE_PASSWORD_ENDPOINT = '/Authentication/ChangePassword';
     ButtonComponent,
     FloatingInputComponent,
     DividerComponent,
-    AlertComponent,
+    Alert,
     ChipComponent,
     SkeletonComponent,
     ThemeSwitcherComponent

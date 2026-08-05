@@ -1,7 +1,7 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.3.1"
+version: "5.4.0"
 status: "vigente"
 updated: "2026-08-05"
 owner: "Hospital Regional de Ayacucho"
@@ -14,6 +14,43 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.4.0] - 2026-08-05
+
+### Cambiado — RUPTURA de API interna
+
+- **`alert` unifica su API con la del consumidor.** `variant` pasa a `kind` y
+  `flowSpacing` a `spacing`; el conjunto de valores es idéntico en ambos, así
+  que es renombrado puro. Se **retiran** `size` y `message`: `size` no tenía
+  ningún uso legítimo —solo aparecía en una historia que además usaba
+  `kind="primary"`, un valor que nunca estuvo en el tipo— y `message` duplicaba
+  la proyección de contenido, que pasa a ser el único canal del cuerpo.
+
+  Es ruptura de API, pero **no de API publicada**: `"private": true`,
+  `distributionStatus: "blocked-scaffold"`, el export principal en
+  `"status": "blocked"` y `alert` no figura en `public-exports.json`. Por eso
+  es MINOR y no MAJOR: no hay consumidor externo al que romper. El único
+  consumidor real ya usaba estos nombres.
+
+- **La implementación que sobrevive es la del consumidor**, por mérito técnico
+  y no por decisión de estilo:
+  - `role` condicional (`alert` solo para `danger`, `status` para el resto). La
+    anterior fijaba `role="alert"` —que implica `aria-live` assertive— y luego
+    lo sobrescribía con `polite`: una combinación contradictoria.
+  - Signals en vez de campos planos. Con `provideZonelessChangeDetection`, el
+    `dismiss()` anterior escribía un campo que no agendaba detección de
+    cambios: la alerta emitía el evento pero **no llegaba a desaparecer**.
+  - `Record<AlertKind, string>` exhaustivo para los iconos: añadir un kind sin
+    icono ahora falla en compilación, donde el `@switch` anterior simplemente
+    no pintaba nada.
+  - Clases por `computed` tipado en vez de concatenación de cadenas, que era la
+    causa raíz de que `variant="primary"` degradara en silencio.
+  - Los 12 tokens `--alert-*` desaparecen: ningún tema los sobrescribía en
+    ninguno de los dos repos, eran una capa de indirección muerta.
+
+- **Selector dual `'app-alert, prest-alert'`**, siguiendo la convención que el
+  ADN ya aplica a 15 componentes. Ninguna etiqueta cambia en ningún repositorio:
+  la migración es exclusivamente de nombres de entrada, y solo en el ADN.
 
 ## [5.3.1] - 2026-08-05
 

@@ -131,7 +131,7 @@
           @case ('error') {
             <tr class="data-table__state-row">
               <td [attr.colspan]="columnSpan()">
-                <app-alert variant="danger" flowSpacing="none">
+                <app-alert kind="danger" spacing="none">
                   <div class="data-table__state data-table__state--inline">
                     <span>{{ errorMessage() }}</span>
                     <button class="data-table__retry" type="button" (click)="retry.emit()">

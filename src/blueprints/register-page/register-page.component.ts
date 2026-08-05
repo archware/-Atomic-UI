@@ -13,7 +13,7 @@ import {
   TextComponent,
   RowComponent,
   FormRowComponent,
-  AlertComponent,
+  Alert,
   CheckboxComponent,
   DividerComponent,
 } from '@shared/ui';
@@ -33,7 +33,7 @@ interface RegisterResponse {
  * Flujo completo de registro:
  * - Nombre, apellido, email, contraseña con confirmación
  * - Aceptar términos y condiciones
- * - Manejo de errores inline con AlertComponent
+ * - Manejo de errores inline con Alert
  * - Validaciones reactivas
  *
  * @usage
@@ -57,7 +57,7 @@ const REGISTER_ENDPOINT = '/Authentication/Register';
     TextComponent,
     RowComponent,
     FormRowComponent,
-    AlertComponent,
+    Alert,
     CheckboxComponent,
     DividerComponent
 ],
