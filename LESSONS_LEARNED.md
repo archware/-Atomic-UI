@@ -13,6 +13,78 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-08-05] - Una API rica que sus consumidores desactivan no es rica: esta en el sitio equivocado
+
+**Evidencia:** `scroll-overlay` tenia 13 entradas. Cinco —`trackSize`,
+`minThumbSize`, `autoHideDelay`, `syncTableColumns`, `disableVertical`— no
+tenian **ningun** call site en los dos repositorios, y sus selectores por
+omision (`[data-scroll-overlay-vertical]`) no casaban con ningun elemento. Pero
+el dato decisivo fue otro: `skipTableDetection` se usaba en **6 de 8 sitios y
+siempre con `true`**. Seis de cada ocho consumidores empezaban apagando su
+funcion distintiva.
+
+La explicacion es que no eran 13 capacidades de scroll: eran ~5 de scroll y ~8
+de maquetacion de tablas infiltradas en el organismo equivocado. El componente
+buscaba con `querySelectorAll` un scroller ajeno dentro del contenido
+proyectado, le escribia atributos y le forzaba `display:grid`. Toda la cola de
+parches de su historial —«ampliar cierre inferior de tabla», «no restringir
+max-height cuando tbody maneja el scroll»— eran sintomas de su propio hack, no
+conocimiento acumulado sobre scroll.
+
+**Decision:** sobrevive la implementacion mas pequena, que posee su propio
+viewport. La maquetacion de columnas vuelve a `app-table`, el unico componente
+que posee el `<table>`, y alli se declaran los roles ARIA de forma explicita: la
+rejilla dejo de costar la semantica, que era el defecto real.
+
+**Prevencion:** una entrada sin call sites es superficie muerta, y una entrada
+que los consumidores fijan siempre al mismo valor para apagar algo es una señal
+de que ese algo no pertenece al componente. Antes de conservar una API por
+«completa», contar quien la usa y con que valor.
+
+---
+
+## [2026-08-05] - Una prueba que fija el mecanismo impide cambiar el mecanismo
+
+**Evidencia:** al unificar `scroll-overlay` fallaron cinco pruebas, y ninguna por
+un cambio de comportamiento: todas afirmaban los **marcadores internos** de la
+implementacion anterior —`data-so-vertical`, `data-so-managed-scrollbar`,
+`.so-scroll-area`—, atributos que el componente escribia sobre el contenido
+proyectado. La garantia real —un unico dueño del scroll— seguia cumpliendose.
+
+Es el tercer caso del mismo patron en este ciclo. Los otros dos: una asercion
+congelada sobre un rotulo sin tildes, que ponia la suite en rojo al corregir la
+ortografia, y un test llamado `Performance_percentages_are_zero_when_their_
+denominators_are_zero` que consagraba mostrar «0 % de riesgo» con 25 soles
+expuestos.
+
+**Decision:** las cinco se reescriben sobre la garantia —existe un solo
+`.scroll-overlay__viewport` y es el que scrollea—, no sobre como se consigue.
+
+**Prevencion:** al escribir una asercion, preguntarse que pasa el dia que ese
+valor deba cambiar. Si la respuesta es «la prueba se pone roja y habra que
+editarla», la prueba esta fijando un sintoma. Una prueba que hay que tocar en
+cada refactorizacion legitima no protege: estorba, y acaba borrandose.
+
+---
+
+## [2026-08-05] - Un ancla que nadie verifica no es un ancla
+
+**Evidencia:** `docs/atomic-provenance.json` declaraba `atomicRef` desde el
+principio, y el gate solo comprobaba que **no estuviera vacio**. El consumidor
+llego a estar dos versiones por detras del ADN sin que nada lo dijera; la deriva
+se descubrio por arqueologia, comparando commits a mano, no por build.
+
+**Decision:** el gate compara `atomicRef` contra el HEAD real del ADN y falla
+nombrando ambos. Si el ADN no es un repositorio git o `git` no esta disponible
+no falla, porque en ese entorno el ancla no es verificable y convertirlo en rojo
+apagaria el gate entero por un motivo ajeno al consumidor.
+
+**Prevencion:** todo campo declarativo de un manifiesto necesita alguien que lo
+contraste con la realidad. Un campo obligatorio pero no verificado documenta una
+intencion, no un hecho, y con el tiempo diverge en silencio.
+
+---
+
 ## [2026-08-05] - Un token declara un contraste; cualquier `opacity` posterior lo deshace
 
 **Evidencia:** ocho componentes definían su estado deshabilitado con

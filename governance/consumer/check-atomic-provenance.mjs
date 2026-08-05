@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -121,6 +122,37 @@ if (existsSync(atomicRoot)) {
     if (manifest.atomicSourceTreeSha256 !== atomicSourceManifest.sourceTreeSha256) {
       failures.push('La huella de fuentes Atomic no coincide con la referencia disponible.');
     }
+    verifyAtomicRefIsHead(atomicRoot, manifest, failures);
+  }
+}
+
+/**
+ * `atomicRef` se declaraba pero nadie comprobaba que fuera cierto: el consumidor
+ * podia quedarse arbitrariamente atras y el gate seguia verde, de modo que la
+ * deriva se descubria por arqueologia en vez de por build. Se comprueba contra
+ * el HEAD real del ADN.
+ *
+ * Si el ADN no es un repositorio git o `git` no esta disponible, no se falla: en
+ * esos entornos el ancla no es verificable y convertirlo en error rojo apagaria
+ * el gate entero por un motivo ajeno al consumidor.
+ */
+function verifyAtomicRefIsHead(atomicRoot, manifest, failures) {
+  if (!existsSync(join(atomicRoot, '.git'))) return;
+  let head;
+  try {
+    head = execFileSync('git', ['-C', atomicRoot, 'rev-parse', 'HEAD'], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+  } catch {
+    return;
+  }
+  if (!/^[0-9a-f]{40}$/i.test(head)) return;
+  if (manifest.atomicRef !== head) {
+    failures.push(
+      `atomicRef no apunta al HEAD del ADN: se declaro ${(manifest.atomicRef || '(vacio)').slice(0, 12)} ` +
+        `y la fuente disponible esta en ${head.slice(0, 12)}. Propague y actualice el manifiesto.`,
+    );
   }
 }
 
