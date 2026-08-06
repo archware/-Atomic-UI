@@ -1,7 +1,7 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.4.1"
+version: "5.4.2"
 status: "vigente"
 updated: "2026-08-06"
 owner: "Hospital Regional de Ayacucho"
@@ -14,6 +14,13 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.4.2] - 2026-08-06
+
+### Arreglado
+
+- **`text.component.ts`:** corregida la declaración inválida `color: var(--white, var(--gray-0)fff)` (residuo `fff` de una sustitución mecánica que hacía descartar la declaración) → `var(--white, var(--gray-0))`.
+- **`tools/check-invalid-css-values.js`:** nuevo patrón que detecta residuos alfanuméricos pegados tras `var(...)` (p. ej. `var(--gray-0)fff`), cerrando la tercera variante de la familia de sustituciones mecánicas (junto a `NNvar(` y `-var(`).
 
 ## [5.4.1] - 2026-08-06
 

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.4.1",
+  "packageVersion": "5.4.2",
   "distributionStatus": "blocked-scaffold",
   "algorithm": "sha256",
-  "sourceTreeSha256": "4cbafcf52c046741670b42eaf4c3992c29928e5157a7d0b7e5ca88d4a65f714b",
+  "sourceTreeSha256": "d807a210c5ea56ac2aae5414442d052fdc2afb58ab013a039e8b6bb707b5c0fd",
   "fileCount": 151,
   "files": [
     {
@@ -214,8 +214,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/text/text.component.ts",
-      "bytes": 4422,
-      "sha256": "c93e0c8311fee3770c32c01754e352f7138c5d2f1dd1274e9b61b7d44c27e91f"
+      "bytes": 4419,
+      "sha256": "2ffa10d859249132a4bfec17ee40782cbb444e727c442ea8b8d89128113b5e95"
     },
     {
       "path": "src/app/shared/ui/atoms/textarea/textarea.component.ts",

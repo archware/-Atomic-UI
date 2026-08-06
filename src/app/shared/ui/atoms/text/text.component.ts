@@ -74,7 +74,7 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify';
     .color-success { color: var(--success-color); }
     .color-warning { color: var(--warning-color); }
     .color-danger { color: var(--danger-color); }
-    .color-white { color: var(--white, var(--gray-0)fff); }
+    .color-white { color: var(--white, var(--gray-0)); }
 
     /* 
      * Dark mode se maneja automáticamente via tokens semánticos.

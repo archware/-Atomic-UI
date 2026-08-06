@@ -7,6 +7,7 @@ const atomicRoot = path.resolve(__dirname, '..');
 const sourceRoot = path.join(atomicRoot, 'src');
 const invalidNumericToken = /\d+(?:\.\d+)?var\s*\(/g;
 const invalidNegatedToken = /(?<![\w-])-var\s*\(/g;
+const invalidTrailingResidue = /var\([^()]*(?:\([^()]*\)[^()]*)?\)[0-9a-f]{3,8}\b/gi;
 const failures = [];
 
 function filesBelow(root) {
@@ -25,7 +26,7 @@ function withoutComments(source) {
 
 for (const file of filesBelow(sourceRoot)) {
   const source = withoutComments(fs.readFileSync(file, 'utf8'));
-  for (const pattern of [invalidNumericToken, invalidNegatedToken]) {
+  for (const pattern of [invalidNumericToken, invalidNegatedToken, invalidTrailingResidue]) {
     for (const match of source.matchAll(pattern)) {
       const line = source.slice(0, match.index).split(/\r?\n/).length;
       failures.push(
