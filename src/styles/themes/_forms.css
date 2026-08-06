@@ -202,3 +202,23 @@ html.dark .form-select {
 .form-row>* {
   flex: 1 0 0%;
 }
+/* ─────────────────────────────────────────────────────────────────────────────
+   FORM STACKS (24px STANDARD SEPARATION)
+   ─────────────────────────────────────────────────────────────────────────────
+   Estándar institucional HRA: 24px (1.5rem) de separación vertical entre
+   campos de formulario, incluidos los modales de configuración de BD.
+   ───────────────────────────────────────────────────────────────────────────── */
+.atomic-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5); /* 24px de separación vertical */
+  margin-bottom: var(--space-5);
+}
+
+/* Checkboxes y toggles dentro de un form-stack: separación adicional superior */
+.atomic-form-stack .form-check-group {
+  margin-top: var(--space-3); /* 12px extra antes de la zona de checks */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4); /* 16px entre cada checkbox */
+}

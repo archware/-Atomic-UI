@@ -69,7 +69,14 @@ export class ThemeService {
   private getInitialTheme(): Theme {
     if (typeof window === 'undefined') return 'light';
 
-    const stored = localStorage.getItem(this.THEME_STORAGE_KEY) as Theme | null;
+    let stored = localStorage.getItem(this.THEME_STORAGE_KEY) as Theme | null;
+    
+    // Migración automática: forzar el azul corporativo ('brand-dark') a dark neutral ('dark')
+    if (stored === 'brand-dark') {
+      stored = 'dark';
+      localStorage.setItem(this.THEME_STORAGE_KEY, 'dark');
+    }
+
     if (stored && ['light', 'dark', 'brand-dark', 'system'].includes(stored)) {
       return stored;
     }
@@ -144,16 +151,9 @@ export class ThemeService {
       const { x, y } = this.transitionOrigin();
       htmlElement.style.setProperty('--vt-x', `${x}px`);
       htmlElement.style.setProperty('--vt-y', `${y}px`);
-      const transition = (document as Document & {
-        startViewTransition: (cb: () => void) => {
-          ready: Promise<unknown>;
-          updateCallbackDone: Promise<unknown>;
-          finished: Promise<unknown>;
-        };
+      (document as Document & {
+        startViewTransition: (cb: () => void) => void;
       }).startViewTransition(doApply);
-      void transition.ready.catch(() => undefined);
-      void transition.updateCallbackDone.catch(() => undefined);
-      void transition.finished.catch(() => undefined);
       return;
     }
 
@@ -195,8 +195,7 @@ export class ThemeService {
 
   /**
    * Alterna entre claro y oscuro neutral.
-   * `brand-dark` se conserva como una elección explícita y no se activa desde
-   * el control binario etiquetado como tema oscuro.
+   * `brand-dark` queda disponible únicamente como una selección explícita.
    */
   toggleTheme(): void {
     if (this.isDarkMode()) {

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.3.0",
+  "packageVersion": "5.4.0-beta.1",
   "distributionStatus": "blocked-scaffold",
   "algorithm": "sha256",
-  "sourceTreeSha256": "9e50ba997303dbf1cd5c11b505cad2bc18e383b0dc2326d92bd3d4442ccc423d",
+  "sourceTreeSha256": "443cf0e0dab15d7c2913187d86cdf94afb58d2ed6d98a7eb68c34807bfa15fe0",
   "fileCount": 151,
   "files": [
     {
@@ -109,8 +109,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/icon-button/icon-button.component.ts",
-      "bytes": 3403,
-      "sha256": "26c0538908303e2e89077b90a545088938e8da6f9b5e4daff5eba976675d8a28"
+      "bytes": 3953,
+      "sha256": "ecd394e851f16ddbf75a33a63b3dfad3aa313ff2d85d114df6baf81cb8c76518"
     },
     {
       "path": "src/app/shared/ui/atoms/input/input.component.ts",
@@ -449,8 +449,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/footer/footer.component.ts",
-      "bytes": 10880,
-      "sha256": "aa780834f3b8b88e86d8dfde132581d961d28ccf9420112335e512fa20beb965"
+      "bytes": 10824,
+      "sha256": "f40365ab139733c0b992d64b9bf4931b52f7d40a6fb0911fc4eaf54f5799ecbd"
     },
     {
       "path": "src/app/shared/ui/organisms/form-dialog/form-dialog-actions.scss",
@@ -584,8 +584,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/theme-switcher/theme-switcher.component.ts",
-      "bytes": 2514,
-      "sha256": "3761ca558691ef5816fc6e5533f34fc15a8f7559b0394223b72f4f8c85d3ecf5"
+      "bytes": 2509,
+      "sha256": "59b21c6f72f4c76f20a85859a918da1f8e29e1afcda3111ff0e592dec47fdf1f"
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.css",
@@ -634,8 +634,8 @@
     },
     {
       "path": "src/app/shared/ui/services/theme.service.ts",
-      "bytes": 7214,
-      "sha256": "5bdf66be5894121eb0d4c87a4505c2e4e18a0b4ed297e012d5f5ffe289bf78fc"
+      "bytes": 7064,
+      "sha256": "99662ae9543f0e51bffc28efba9bfc6b456aaaeac1803c9049f479bc1cddf45b"
     },
     {
       "path": "src/app/shared/ui/services/toast.service.ts",
@@ -724,13 +724,13 @@
     },
     {
       "path": "src/styles/themes/_buttons.css",
-      "bytes": 9136,
-      "sha256": "82842c93ffce7347431acdbe753aa762640ebd4ebe2f47f93ef40115af50684f"
+      "bytes": 9355,
+      "sha256": "a63d5e1ea35b201056ceda97c99e2fac3a60f1f8b8841904584b0c3ac22359a9"
     },
     {
       "path": "src/styles/themes/_forms.css",
-      "bytes": 8141,
-      "sha256": "d79e9d22f21e25e7c27aa483862dbdf01f383d5eb954d08608ff9de2ef8d81c8"
+      "bytes": 9514,
+      "sha256": "c735d48944fabb4cffc4233fdfff90a9abef58eb9a428c14fe5ffb551d93082a"
     },
     {
       "path": "src/styles/themes/_tokens-brand.css",
@@ -749,8 +749,8 @@
     },
     {
       "path": "src/styles/themes/_tokens-semantic.css",
-      "bytes": 17054,
-      "sha256": "165f987169b26ef661da473c167d3a0fc251dce48194d42c8d93dae5e36bd651"
+      "bytes": 17166,
+      "sha256": "b1253141cc0f33bb78e2c0c961c8aebd1204341f82175cf12ba331adce3b2d1f"
     },
     {
       "path": "src/styles/themes/_utilities.css",
@@ -759,8 +759,8 @@
     },
     {
       "path": "src/styles/themes/index.css",
-      "bytes": 11142,
-      "sha256": "e9f04685a06e08f91b28c9dd5f3c1d53bf7d53d5226c19b0e793c4ab5bbb9958"
+      "bytes": 11177,
+      "sha256": "19b264c48e0831472a7b850c18314635248076055649c965f7e1f5c707dbe68f"
     }
   ]
 }

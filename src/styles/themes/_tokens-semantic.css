@@ -194,9 +194,9 @@
    Tokens comunes para todos los temas oscuros
    ───────────────────────────────────────────────────────────────────────────── */
 [data-theme="dark"],
-[data-theme="brand-dark"],
 .theme-dark,
-html.dark {
+html.dark:not([data-theme="brand-dark"]),
+.dark:not([data-theme="brand-dark"]) {
    color-scheme: dark;
 
    /* === TEXTO (Compartido) === */
@@ -355,7 +355,8 @@ html.dark {
    ───────────────────────────────────────────────────────────────────────────── */
 [data-theme="dark"],
 .theme-dark,
-html.dark {
+html.dark:not([data-theme="brand-dark"]),
+.dark:not([data-theme="brand-dark"]) {
    /* === SUPERFICIES (Neutral) === */
    --surface-ground: #121212;
    --surface-background: #1e1e1e;

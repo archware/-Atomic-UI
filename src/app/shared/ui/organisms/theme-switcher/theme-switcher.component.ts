@@ -74,7 +74,7 @@ export class ThemeSwitcherComponent {
     if (this.themeService.isDarkMode()) {
       this.themeService.setLightTheme();
     } else {
-      this.themeService.setBrandDarkTheme();
+      this.themeService.setDarkTheme();
     }
   }
 }

@@ -106,10 +106,13 @@ html.theme-transitioning [class*="topbar"] {
 }
 
 /* Aplicar colores base al body */
-body,
+html,
+body {
+  background-color: var(--surface-ground) !important;
+  color: var(--text-color) !important;
+}
+
 html {
-  background-color: var(--surface-ground);
-  color: var(--text-color);
   /* Breakpoints del sistema de diseño:
      Mobile:  < 640px
      Tablet:  640px – 1024px

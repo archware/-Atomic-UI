@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VersionComponent } from '../../atoms/version/version.component';
+import { AppVersionService } from '../../services/app-version.service';
 
 export interface SocialLink {
   platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin' | 'github' | 'youtube';
@@ -123,10 +124,10 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
     <ng-template #versionTemplate>
       @if (showVersion) {
         <app-version
-          [version]="version"
-          [environment]="environment"
+          [version]="versionService?.versionInfo()?.version || version"
+          [environment]="versionService?.versionInfo()?.environment || environment"
           [showBuildDate]="showBuildDate"
-          [buildDate]="buildDate"
+          [buildDate]="versionService?.versionInfo()?.buildDate || buildDate"
           variant="badge">
         </app-version>
       }
@@ -318,9 +319,11 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
   `]
 })
 export class FooterComponent {
+  public readonly versionService = inject(AppVersionService, { optional: true });
+
   @Input() variant: FooterVariant = 'inline';
-  @Input() companyName = 'Company';
-  @Input() year = new Date().getFullYear();
+  @Input() companyName = 'Hospital Regional Ayacucho';
+  @Input() year = 2026;
   @Input() copyrightText = 'Todos los derechos reservados.';
   @Input() copyrightSeparator = ' - ';
   @Input() description = '';

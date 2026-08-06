@@ -108,6 +108,24 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
       width: 20px;
       height: 20px;
     }
+
+    /* Standardized Icon Animations */
+    ::ng-deep i.icon,
+    ::ng-deep i.configuration-icon,
+    ::ng-deep i.fa-solid,
+    ::ng-deep i.fa-regular,
+    ::ng-deep i.fa-brands {
+      transition: color 200ms ease, transform 200ms ease;
+    }
+
+    .icon-btn:hover ::ng-deep i.icon,
+    .icon-btn:hover ::ng-deep i.configuration-icon,
+    .icon-btn:hover ::ng-deep i.fa-solid,
+    .icon-btn:hover ::ng-deep i.fa-regular,
+    .icon-btn:hover ::ng-deep i.fa-brands {
+      transform: rotate(45deg) scale(1.15);
+      color: var(--primary-color);
+    }
   `]
 })
 export class IconButtonComponent {

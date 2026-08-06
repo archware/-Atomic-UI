@@ -293,3 +293,7 @@
 .btn-group .btn:not(:last-child) {
   border-right-width: 0;
 }
+
+/* Animacion para iconos dentro de botones normales */
+.btn i, .btn svg { transition: transform 0.3s ease-in-out; }
+.btn:hover:not(:disabled) i, .btn:hover:not(:disabled) svg { transform: scale(1.1) rotate(180deg); }

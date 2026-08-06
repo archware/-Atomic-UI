@@ -1,9 +1,9 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.3.0"
+version: "5.4.0-beta.1"
 status: "vigente"
-updated: "2026-08-03"
+updated: "2026-08-06"
 owner: "Hospital Regional de Ayacucho"
 ---
 
@@ -14,6 +14,12 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.4.0-beta.1] - 2026-08-05
+
+### Agregado
+
+- Añadida la clase utilitaria estructural .atomic-form-stack a _forms.css para estandarizar la separación vertical de 24px (gap: 24px / var(--space-5)) en modales de configuración y formularios. Esta mejora garantiza uniformidad visual en todo el ecosistema (Python, Wails, Tauri).
 
 ## [5.3.0] - 2026-08-03
 

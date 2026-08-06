@@ -13,6 +13,14 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-08-05] - Estandarización de Separación Vertical en Formularios (Modales)
+
+**Evidencia:** Las integraciones de los modales de configuración de base de datos en Python, Wails y Tauri tenían inconsistencias visuales: algunos usaban inputs crudos y otros app-floating-input, además de márgenes arbitrarios sin orden estandarizado.
+
+**Decisión:** Se instauró la clase .atomic-form-stack (gap: var(--space-5) / 24px) en _forms.css como la única directiva para agrupar entradas de configuración. Cualquier mejora visual o espacial en Tauri/Wails siempre debe retornar y oficializarse en Atomic-UI, asegurando que todos los modales heredados y futuros (Servidor, BD, Usuario, Contraseña) tengan idéntico espaciado y jerarquía en todo el ecosistema.
+
+---
+
 ## [2026-08-02] - Una colección visual no basta: variantes y UX deben ser ejecutables
 
 **Evidencia:** Front Atomic repetía correctamente encabezados, barras de
