@@ -88,4 +88,63 @@ describe('TableComponent', () => {
     // la API anterior, donde se expresaba como `maxBodyHeight`.
     expect(overlay.style.getPropertyValue('--scroll-overlay-viewport-max-height')).toBe('320px');
   });
+
+  // --- Layout real -----------------------------------------------------------
+  // Las pruebas de arriba comprueban que la propiedad LLEGA. Estas comprueban
+  // que PRODUCE el ancho declarado, que es lo que un usuario ve. Karma corre en
+  // un Chrome real, asi que getBoundingClientRect mide layout de verdad.
+
+  async function measured(columnTemplate: string, hostWidth = 600) {
+    const fixture = await createHost(columnTemplate);
+    const host = fixture.nativeElement as HTMLElement;
+    // La rejilla necesita un ancho definido para resolver `1fr`.
+    host.style.width = `${hostWidth}px`;
+    host.style.display = 'block';
+    await fixture.whenStable();
+    const cells = (selector: string) =>
+      Array.from(host.querySelectorAll<HTMLElement>(selector)).map(
+        (cell) => cell.getBoundingClientRect().width,
+      );
+    return { fixture, host, headers: cells('thead th'), body: cells('tbody td') };
+  }
+
+  it('aplica el ancho fijo declarado para una columna', async () => {
+    const { headers, body } = await measured('70px minmax(150px, 1fr)');
+
+    // Si la plantilla no se aplicara, la tabla repartiria por contenido y el
+    // ancho de la primera columna no seria 70.
+    expect(Math.round(headers[0])).toBe(70);
+    expect(Math.round(body[0])).toBe(70);
+  });
+
+  it('alinea cada celda con su cabecera, que es la razon de existir de la rejilla', async () => {
+    const { headers, body } = await measured('70px minmax(150px, 1fr)');
+
+    expect(headers.length).toBe(body.length);
+    headers.forEach((width, index) => {
+      expect(Math.round(width)).toBe(Math.round(body[index]));
+    });
+  });
+
+  it('la columna flexible absorbe el espacio restante', async () => {
+    const hostWidth = 600;
+    const { headers } = await measured('70px minmax(150px, 1fr)', hostWidth);
+
+    // No se fija un valor exacto porque el contenedor tiene bordes y relleno
+    // propios: se comprueba la relacion, que es lo que la plantilla declara.
+    expect(headers[1]).toBeGreaterThan(headers[0] * 3);
+    expect(Math.round(headers[0] + headers[1])).toBeLessThanOrEqual(hostWidth);
+  });
+
+  it('sin plantilla, los anchos los decide el contenido y no son los declarados', async () => {
+    const fixture = await createHost();
+    const host = fixture.nativeElement as HTMLElement;
+    host.style.width = '600px';
+    await fixture.whenStable();
+
+    const first = host.querySelector('thead th') as HTMLElement;
+    // Es el contraste que da valor a las tres pruebas anteriores: sin plantilla
+    // NO hay 70px en ninguna parte, luego cuando los hay es porque se aplico.
+    expect(Math.round(first.getBoundingClientRect().width)).not.toBe(70);
+  });
 });
