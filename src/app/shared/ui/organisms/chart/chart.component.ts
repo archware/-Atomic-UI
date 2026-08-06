@@ -81,6 +81,12 @@ export class ChartComponent implements OnInit, OnDestroy {
     Chart.defaults.elements.arc.borderWidth = 3;
     Chart.defaults.elements.arc.borderColor = style.getPropertyValue('--surface-color').trim() || '#18181b';
     Chart.defaults.elements.arc.hoverOffset = 8;
+
+    // El canvas no resuelve variables CSS: el token debe leerse ya computado.
+    // Se fija aquí para que se reevalúe junto al resto del tema al cambiarlo.
+    if (Chart.defaults.plugins.datalabels) {
+      Chart.defaults.plugins.datalabels.color = style.getPropertyValue('--gray-0').trim() || '#ffffff';
+    }
   }
 
   private refreshChartSize(): void {
@@ -146,8 +152,9 @@ export class ChartComponent implements OnInit, OnDestroy {
         };
         Chart.register(shadowPlugin);
 
+        // El color de los datalabels se resuelve en applyChartTheme (el canvas
+        // no interpreta variables CSS); aquí solo va lo independiente del tema.
         if (Chart.defaults.plugins.datalabels) {
-          Chart.defaults.plugins.datalabels.color = 'var(--gray-0)';
           Chart.defaults.plugins.datalabels.font = { weight: 'bold', size: 14 };
           Chart.defaults.plugins.datalabels.formatter = function(value: unknown, context: DataLabelsContext) {
             if (typeof value === 'number') {

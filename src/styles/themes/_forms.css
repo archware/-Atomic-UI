@@ -84,6 +84,18 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
+   CONTROLES NATIVOS DE CONTRASEÑA (Edge / WebView2)
+   ─────────────────────────────────────────────────────────────────────────────
+   Suprime el "ojo" (::-ms-reveal) y la "x" (::-ms-clear) nativos de Edge:
+   son controles custodiados por el design system — el toggle de visibilidad
+   lo provee floating-input y el nativo aparecería duplicado en WebView2.
+   ───────────────────────────────────────────────────────────────────────────── */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
    SELECT EXTRAS
    ───────────────────────────────────────────────────────────────────────────── */
 .form-select {

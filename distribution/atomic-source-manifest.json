@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.4.0",
+  "packageVersion": "5.4.1",
   "distributionStatus": "blocked-scaffold",
   "algorithm": "sha256",
-  "sourceTreeSha256": "9401e467c55cdfed9286f82997d507965de58af1640651e3759901422a877034",
+  "sourceTreeSha256": "4cbafcf52c046741670b42eaf4c3992c29928e5157a7d0b7e5ca88d4a65f714b",
   "fileCount": 151,
   "files": [
     {
@@ -389,8 +389,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/chart/chart.component.ts",
-      "bytes": 7923,
-      "sha256": "ab96da01418244f6840f66ac43d11f89cd89e5c829effee09c11b3b6b5ad75fe"
+      "bytes": 8339,
+      "sha256": "de2dff4df78677cf1cf0ad3fc0bce2523d1257d62fe5d473a9a6b9b985e3b912"
     },
     {
       "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.html",
@@ -729,8 +729,8 @@
     },
     {
       "path": "src/styles/themes/_forms.css",
-      "bytes": 9514,
-      "sha256": "c735d48944fabb4cffc4233fdfff90a9abef58eb9a428c14fe5ffb551d93082a"
+      "bytes": 10575,
+      "sha256": "8c925314d15534d26702d967bc1523cfb70bab6a82387fce19a714d6f742031c"
     },
     {
       "path": "src/styles/themes/_tokens-brand.css",

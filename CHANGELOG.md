@@ -1,7 +1,7 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.4.0"
+version: "5.4.1"
 status: "vigente"
 updated: "2026-08-06"
 owner: "Hospital Regional de Ayacucho"
@@ -14,6 +14,13 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.4.1] - 2026-08-06
+
+### Arreglado
+
+- **Supresión global de `::-ms-reveal`/`::-ms-clear`:** en WebView2 (Edge) el "ojo" nativo de los inputs de contraseña reaparecía junto al toggle propio de `floating-input` (regresión detectada al retirarse el guard `validate-webview-password-controls.js` de los consumidores). `_forms.css` oculta ahora ambos pseudo-elementos de forma global: el control de visibilidad es custodiado y lo provee `floating-input`.
+- **Datalabels de Chart.js con color irresoluble:** el canvas no interpreta variables CSS, por lo que `Chart.defaults.plugins.datalabels.color = 'var(--gray-0)'` caía al color por defecto. El token `--gray-0` se resuelve ahora con `getComputedStyle` dentro de `applyChartTheme`, de modo que se reevalúa junto al resto del tema al cambiar entre claro y oscuro.
 
 ## [5.4.0] - 2026-08-06
 
