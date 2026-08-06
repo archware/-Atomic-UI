@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.4.0-beta.1",
+  "packageVersion": "5.4.0",
   "distributionStatus": "blocked-scaffold",
   "algorithm": "sha256",
-  "sourceTreeSha256": "443cf0e0dab15d7c2913187d86cdf94afb58d2ed6d98a7eb68c34807bfa15fe0",
+  "sourceTreeSha256": "9401e467c55cdfed9286f82997d507965de58af1640651e3759901422a877034",
   "fileCount": 151,
   "files": [
     {
@@ -14,8 +14,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/badge/badge.component.ts",
-      "bytes": 5019,
-      "sha256": "5b32e9154486337ef479d24c94887f4ddb86b1c8c8b3d7722e8e514bb40c0424"
+      "bytes": 5099,
+      "sha256": "760d54df1734262b8916bf18872ecc25bd793f071c310ecf75414b51dc5d3f67"
     },
     {
       "path": "src/app/shared/ui/atoms/breadcrumb/breadcrumb.component.ts",
@@ -64,8 +64,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/floating-input/floating-input.component.ts",
-      "bytes": 14888,
-      "sha256": "19c7403442bb325eea833b1ebeab85f37c6c512cef0cb705a370fb7111241817"
+      "bytes": 14908,
+      "sha256": "0254e87b4868eb2454df95ddd5e98125f7e115f7cdceb618fbc3740f7b5ac517"
     },
     {
       "path": "src/app/shared/ui/atoms/form-error/form-error.component.ts",
@@ -119,8 +119,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/language-switcher/language-switcher.component.ts",
-      "bytes": 5520,
-      "sha256": "6214c99f2fdb4e43a80c5c279bcf807b75d60ddafc04f2eb787a3330b3994a32"
+      "bytes": 5530,
+      "sha256": "b4ff9108f9eb8a3b97e822d6418f5f68988c08175abb2560eb0713d2cee03fcb"
     },
     {
       "path": "src/app/shared/ui/atoms/loader/loader.component.ts",
@@ -209,8 +209,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/table/table.component.ts",
-      "bytes": 7185,
-      "sha256": "3043d37fe7fe2cb33c217a232666d90ea2468c9ebd88a61713c2db1397867465"
+      "bytes": 7195,
+      "sha256": "4547ad240578f24cbee96821eb04acab18e98efcbfbfc030f994a9a66fe4d7c0"
     },
     {
       "path": "src/app/shared/ui/atoms/text/text.component.ts",
@@ -279,13 +279,13 @@
     },
     {
       "path": "src/app/shared/ui/molecules/avatar-group/avatar-group.component.ts",
-      "bytes": 4095,
-      "sha256": "7f465975f0e193cd236f83cb0d2175a0c8d781bd6ed3a920efdbc0c28aadee4e"
+      "bytes": 4067,
+      "sha256": "197dff8937964fd286e8f8cf336799d61196c72073ce377726554d64666343d2"
     },
     {
       "path": "src/app/shared/ui/molecules/card/card.component.ts",
-      "bytes": 7976,
-      "sha256": "18011e9164507cd343034ce33a7535c0f451b094982369ae979a6bf7353c6764"
+      "bytes": 7996,
+      "sha256": "a47e7e814937a0d5bea30bf3c2af9e9fb633670357b40497aceca73af1fb25ff"
     },
     {
       "path": "src/app/shared/ui/molecules/combobox/combobox.component.ts",
@@ -314,8 +314,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/dropdown/dropdown.component.ts",
-      "bytes": 7516,
-      "sha256": "443928cedaf44db0b49ecdd416e609dddcff246d222512f6e2e03e82643c070c"
+      "bytes": 7526,
+      "sha256": "da53dd58a79a7af16a02740078ae82a0eebc6b9570c2894dc217a31f490be59c"
     },
     {
       "path": "src/app/shared/ui/molecules/kpi-card/kpi-card.component.ts",
@@ -344,8 +344,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/select2/select2.component.ts",
-      "bytes": 20899,
-      "sha256": "10f4c8733ab696f9ad105c298f980d6b4c73a1e401b5942a691841b0c7c1cb7e"
+      "bytes": 20909,
+      "sha256": "d4b1a98258d60547be6627fb9eb48b174807899a7dc2a331e80341795913c02c"
     },
     {
       "path": "src/app/shared/ui/molecules/table-actions/table-actions.component.css",
@@ -379,8 +379,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/user-menu/user-menu.component.ts",
-      "bytes": 6968,
-      "sha256": "bbb6d77050d2a798964e22e5e30f02f16a9cdceb610e7e34527ee3b9d7ca4cf4"
+      "bytes": 6978,
+      "sha256": "9a301da5b586ac3d5cc90512cbd6a492241ac4112fe04c259c9c2e0dfcb39d6c"
     },
     {
       "path": "src/app/shared/ui/organisms/accordion/accordion.component.ts",
@@ -574,8 +574,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/stepper/stepper.component.ts",
-      "bytes": 8233,
-      "sha256": "df6eabc66e689052d951a6642613bdbffaaaa5fddef3a5b74f7955e02a0739da"
+      "bytes": 8243,
+      "sha256": "d52faa42122d373a09962af83a09ed71385b0bb27addef61a792d1095dd82828"
     },
     {
       "path": "src/app/shared/ui/organisms/tabs/tabs.component.ts",
@@ -674,13 +674,13 @@
     },
     {
       "path": "src/app/shared/ui/styles/tokens/table-tokens.css",
-      "bytes": 5417,
-      "sha256": "04be3ca4894a6b2ca57aebf4d33276c100307c5eea7bc100da75de79f3948eb7"
+      "bytes": 5430,
+      "sha256": "373554eaf43760b2c96e1fcf3d87debad62b299776a50620f4a5444e6159d2df"
     },
     {
       "path": "src/app/shared/ui/surfaces/panel/panel.component.css",
-      "bytes": 5425,
-      "sha256": "34a007e4513a3f66eac78756152b158e8b5722d1e518fc4a57961b44ddb9ad2d"
+      "bytes": 5435,
+      "sha256": "e5568cd546c994e103370af5fc1993e7bb7e97ac8c99489d1b9b95f1c487ce2c"
     },
     {
       "path": "src/app/shared/ui/surfaces/panel/panel.component.html",

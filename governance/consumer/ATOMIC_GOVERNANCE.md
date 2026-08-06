@@ -2,7 +2,7 @@
 
 > Marcador normativo: `ATOMIC_GOVERNANCE_REQUIRED`
 >
-> Versión de política: `1.0.0`
+> Versión de política: `1.1.0`
 
 Este documento es un contrato, no una recomendación. `-Atomic-UI` es la única
 fuente de verdad para átomos, moléculas, organismos, superficies, plantillas,
@@ -26,6 +26,11 @@ tokens y patrones visuales reutilizables de todas las aplicaciones consumidoras.
 8. `npm run check:atomic` es obligatorio antes de pruebas y build, y en CI.
 9. Queda prohibido el uso de píxeles hardcodeados (`px`) en reglas CSS de consumidores (`width: 220px`, `padding: 20px`); se deben utilizar obligatoriamente Design Tokens (`var(--space-*)`, `var(--radius-*)`).
 10. El layer base de Tokens debe estilizar los scrollbars globales (`::-webkit-scrollbar`) para evitar que el navegador renderice la barra gris nativa en temas oscuros, y los organismos de tablas no pueden imponer scrollbars anidados compitiendo contra el layout global.
+11. (Política 1.1.0) Las plantillas y estilos embebidos en archivos `.ts` de
+    features quedan sujetos al mismo escaneo que `.html`/`.css`: sin primitivas
+    visuales nativas, sin `style=` inline en el marcado, sin colores fijos y
+    sin negaciones inválidas de tokens (`-var(...)`; la forma correcta es
+    `calc(-1 * var(...))`). Los archivos `*.spec.ts` quedan exentos.
 
 ## Lo que sí pertenece al consumidor
 

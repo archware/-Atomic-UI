@@ -275,7 +275,7 @@ function main() {
 
   const manifest = {
     schemaVersion: 1,
-    policyVersion: '1.0.0',
+    policyVersion: '1.1.0',
     changeId,
     atomicRepository: normalize(path.relative(consumerRoot, atomicRoot)),
     atomicRemote: 'archware/-Atomic-UI',

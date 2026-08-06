@@ -82,7 +82,7 @@ try {
 
   const manifest = {
     schemaVersion: 1,
-    policyVersion: '1.0.0',
+    policyVersion: '1.1.0',
     changeId: 'GOVERNANCE-TEST',
     atomicRepository: '../atomic',
     atomicRemote: 'archware/-Atomic-UI',

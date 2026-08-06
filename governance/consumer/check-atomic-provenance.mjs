@@ -3,13 +3,15 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const POLICY_VERSION = '1.0.0';
+const POLICY_VERSION = '1.1.0';
 const REQUIRED_MARKER = 'ATOMIC_GOVERNANCE_REQUIRED';
 const NATIVE_VISUAL_TAGS = /<(?:button|dialog|input|select|table|textarea)\b/i;
 const NATIVE_VISUAL_SELECTORS =
   /(?<![-\w])(?:button|dialog|input|select|table|textarea)(?=\s*(?:\[|:|\.|#|\{|,|>|\+|~))/im;
 const FIXED_COLOR = /(?<!&)#[0-9a-f]{3,8}\b/i;
 const INVALID_NUMERIC_TOKEN = /\d+(?:\.\d+)?var\s*\(/i;
+const INVALID_NEGATED_TOKEN = /(?<![\w-])-var\s*\(/i;
+const INLINE_STYLE_IN_MARKUP = /<[a-z][^<>]*\sstyle\s*=/is;
 const REQUIRED_GOVERNANCE_ARTIFACTS = [
   {
     local: 'docs/ATOMIC_GOVERNANCE.md',
@@ -267,28 +269,40 @@ for (const uiRoot of manifest.uiRoots || []) {
     if (INVALID_NUMERIC_TOKEN.test(executableSource)) {
       failures.push(`Valor CSS dañado por sustitución mecánica: ${local}`);
     }
+    if (INVALID_NEGATED_TOKEN.test(executableSource)) {
+      failures.push(`Negación inválida de token (use calc(-1 * var(...))): ${local}`);
+    }
   }
 }
 
 for (const featureRoot of manifest.featureRoots || []) {
   const absoluteFeatureRoot = join(consumerRoot, featureRoot);
   if (!existsSync(absoluteFeatureRoot)) continue;
-  for (const file of filesBelow(absoluteFeatureRoot, ['.html', '.scss', '.css'])) {
+  for (const file of filesBelow(absoluteFeatureRoot, ['.html', '.scss', '.css', '.ts'])) {
     const source = readFileSync(file, 'utf8');
     const executableSource = source.replace(/\/\*[\s\S]*?\*\//g, '');
     const local = normalize(relative(consumerRoot, file));
-    if (file.endsWith('.html') && NATIVE_VISUAL_TAGS.test(source)) {
+    if (local.endsWith('.spec.ts')) continue;
+    const isHtml = file.endsWith('.html');
+    const isTs = file.endsWith('.ts');
+    if ((isHtml || isTs) && NATIVE_VISUAL_TAGS.test(source)) {
       failures.push(`Primitiva visual nativa fuera del ADN: ${local}`);
     }
-    if (!file.endsWith('.html') && NATIVE_VISUAL_SELECTORS.test(source)) {
+    if (!isHtml && !isTs && NATIVE_VISUAL_SELECTORS.test(source)) {
       failures.push(`Selector visual nativo desde feature: ${local}`);
     }
-    if (file.endsWith('.html') && /\sstyle\s*=/i.test(source)) {
+    if (isHtml && /\sstyle\s*=/i.test(source)) {
       failures.push(`Estilo inline prohibido: ${local}`);
+    }
+    if (isTs && INLINE_STYLE_IN_MARKUP.test(source)) {
+      failures.push(`Estilo inline prohibido en plantilla TS: ${local}`);
     }
     if (FIXED_COLOR.test(executableSource)) failures.push(`Color fijo fuera de tokens: ${local}`);
     if (INVALID_NUMERIC_TOKEN.test(executableSource)) {
       failures.push(`Valor CSS dañado por sustitución mecánica: ${local}`);
+    }
+    if (INVALID_NEGATED_TOKEN.test(executableSource)) {
+      failures.push(`Negación inválida de token (use calc(-1 * var(...))): ${local}`);
     }
   }
 }

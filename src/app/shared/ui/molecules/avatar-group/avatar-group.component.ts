@@ -57,21 +57,21 @@ export interface AvatarGroupItem {
 
     .avatar-group-item {
       /* margin-inline-start: propiedad lógica — funciona correctamente en LTR y RTL */
-      margin-inline-start: -var(--space-2); /* -var(--space-2) */
+      margin-inline-start: calc(-1 * var(--space-2));
       position: relative;
       border-radius: 50%;
       border: var(--space-1) solid var(--surface-background, var(--gray-0));
       transition: transform 150ms ease, z-index 0ms;
     }
 
-    .avatar-group-sm .avatar-group-item { margin-inline-start: -var(--space-2); } /* -var(--space-2) */
+    .avatar-group-sm .avatar-group-item { margin-inline-start: calc(-1 * var(--space-2)); }
     .avatar-group-lg .avatar-group-item { margin-inline-start: -0.625rem; } /* -10px */
-    .avatar-group-xl .avatar-group-item { margin-inline-start: -var(--space-3); }  /* -1var(--space-1) */
+    .avatar-group-xl .avatar-group-item { margin-inline-start: calc(-1 * var(--space-3)); }
 
     .avatar-group-item:first-child { margin-left: 0; }
 
     .avatar-group-item:hover {
-      transform: translateY(-var(--space-1));
+      transform: translateY(calc(-1 * var(--space-1)));
       z-index: 99 !important;
     }
 

@@ -238,7 +238,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     .variant-underline.focused .floating-label,
     .variant-underline.has-value .floating-label {
-      top: -var(--space-1);
+      top: calc(-1 * var(--space-1));
       font-size: var(--space-3);
     }
 
@@ -271,7 +271,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     .variant-material.focused .floating-label,
     .variant-material.has-value .floating-label {
-      top: -var(--space-1);
+      top: calc(-1 * var(--space-1));
       font-size: var(--space-3);
       color: var(--primary-color);
       font-weight: 600;

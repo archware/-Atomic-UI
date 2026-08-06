@@ -117,7 +117,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
 
     .card--elevated:hover {
       box-shadow: var(--shadow-lg);
-      transform: translateY(-var(--space-1));
+      transform: translateY(calc(-1 * var(--space-1)));
     }
 
     .card--outlined {
@@ -138,7 +138,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
 
     .card--interactive:hover {
       box-shadow: var(--shadow-md);
-      transform: translateY(-var(--space-1));
+      transform: translateY(calc(-1 * var(--space-1)));
       border-color: var(--primary-color);
     }
 

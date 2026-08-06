@@ -73,7 +73,7 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
     .atomic-table tbody tr:hover {
       background-color: var(--table-row-hover, rgba(0,0,0,0.02));
       box-shadow: var(--table-row-hover-shadow, 0 var(--space-1) var(--space-3) rgba(0,0,0,0.08));
-      transform: var(--table-row-hover-transform, translateY(-var(--space-1)));
+      transform: var(--table-row-hover-transform, translateY(calc(-1 * var(--space-1))));
       z-index: 1;
       position: relative;
     }

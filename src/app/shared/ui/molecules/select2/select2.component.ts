@@ -308,7 +308,7 @@ export interface Select2Option {
     }
 
     @keyframes dropdownSlide {
-      from { opacity: 0; transform: translateY(-var(--space-2)); }
+      from { opacity: 0; transform: translateY(calc(-1 * var(--space-2))); }
       to { opacity: 1; transform: translateY(0); }
     }
 

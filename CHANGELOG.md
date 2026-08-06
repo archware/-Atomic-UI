@@ -1,7 +1,7 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.4.0-beta.1"
+version: "5.4.0"
 status: "vigente"
 updated: "2026-08-06"
 owner: "Hospital Regional de Ayacucho"
@@ -15,11 +15,24 @@ archivo. El formato se basa en
 
 ## [Sin publicar]
 
-## [5.4.0-beta.1] - 2026-08-05
+## [5.4.0] - 2026-08-06
+
+La linea `5.4.0-beta.1` (2026-08-05) se consolida como `5.4.0` estable: los
+cambios no eran experimentales y esta version es el ADN oficial de los
+consumidores Python, Wails, Tauri y el tablero de resultados.
 
 ### Agregado
 
 - Añadida la clase utilitaria estructural .atomic-form-stack a _forms.css para estandarizar la separación vertical de 24px (gap: 24px / var(--space-5)) en modales de configuración y formularios. Esta mejora garantiza uniformidad visual en todo el ecosistema (Python, Wails, Tauri).
+
+### Arreglado
+
+- **Erradicacion de la familia `-var(...)`:** corregidas 20 declaraciones CSS invalidas (el parser descartaba la declaracion completa) en `badge` (posicionamiento de las 4 esquinas), `floating-input` (label flotante), `avatar-group` (solapamiento de avatares), `table`/`table-tokens` (hover-lift de filas), `card`, `panel`, `stepper`, `user-menu` y los keyframes de `select2`, `dropdown` y `language-switcher`. La forma canonica de negar un token es `calc(-1 * var(--token))`.
+- `tools/check-invalid-css-values.js` detecta ahora tambien el patron `-var(` (antes solo `NNvar(`), cerrando el hueco que dejo pasar la familia anterior.
+
+### Gobernanza
+
+- **Politica Atomic-first 1.1.0:** el gate de consumidores (`governance/consumer/check-atomic-provenance.mjs`) escanea ahora tambien los archivos `.ts` de las raices de features — primitivas visuales nativas en plantillas embebidas, `style=` inline en el marcado, colores fijos y negaciones invalidas de tokens (`*.spec.ts` exentos). Los consumidores deben copiar el gate actualizado y declarar `policyVersion: "1.1.0"`.
 
 ## [5.3.0] - 2026-08-03
 

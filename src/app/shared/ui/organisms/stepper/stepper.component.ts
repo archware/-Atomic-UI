@@ -192,7 +192,7 @@ export interface Step {
       font-size: var(--text-xs);
       color: var(--text-color-muted);
       font-style: italic;
-      margin-top: -var(--space-1);
+      margin-top: calc(-1 * var(--space-1));
     }
 
     /* CONNECTOR LINES */

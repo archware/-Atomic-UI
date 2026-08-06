@@ -81,10 +81,10 @@ export type BadgePosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-
       z-index: 1;
       border: var(--space-1) solid var(--surface-background, white);
     }
-    .badge--top-right  { top: -var(--space-1); right: -var(--space-1); transform: translate(25%, -25%); }
-    .badge--top-left   { top: -var(--space-1); left: -var(--space-1);  transform: translate(-25%, -25%); }
-    .badge--bottom-right { bottom: -var(--space-1); right: -var(--space-1); transform: translate(25%, 25%); }
-    .badge--bottom-left  { bottom: -var(--space-1); left: -var(--space-1);  transform: translate(-25%, 25%); }
+    .badge--top-right  { top: calc(-1 * var(--space-1)); right: calc(-1 * var(--space-1)); transform: translate(25%, -25%); }
+    .badge--top-left   { top: calc(-1 * var(--space-1)); left: calc(-1 * var(--space-1));  transform: translate(-25%, -25%); }
+    .badge--bottom-right { bottom: calc(-1 * var(--space-1)); right: calc(-1 * var(--space-1)); transform: translate(25%, 25%); }
+    .badge--bottom-left  { bottom: calc(-1 * var(--space-1)); left: calc(-1 * var(--space-1));  transform: translate(-25%, 25%); }
 
     /* Variants */
     .badge--default   { background: var(--surface-section); color: var(--text-color-secondary); }

@@ -35,7 +35,7 @@ try {
   const appConfig = fs.readFileSync(path.join(projectRoot, 'src/app/app.config.ts'), 'utf8');
   const routes = fs.readFileSync(path.join(projectRoot, 'src/app/app.routes.ts'), 'utf8');
   if (
-    manifest.policyVersion !== '1.0.0' ||
+    manifest.policyVersion !== '1.1.0' ||
     manifest.components.length === 0 ||
     packageJson.scripts?.['check:atomic'] !== 'node scripts/check-atomic-provenance.mjs'
   ) {

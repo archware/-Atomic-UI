@@ -98,7 +98,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
       box-shadow: var(--shadow-dropdown);
       opacity: 0;
       visibility: hidden;
-      transform: translateY(-var(--space-2));
+      transform: translateY(calc(-1 * var(--space-2)));
       transition: all 200ms ease;
       z-index: 1000;
       overflow: hidden;
