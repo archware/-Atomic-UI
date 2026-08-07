@@ -2,7 +2,7 @@
 
 > Marcador normativo: `ATOMIC_GOVERNANCE_REQUIRED`
 >
-> Versión de política: `1.1.0`
+> Versión de política: `1.2.0`
 
 Este documento es un contrato, no una recomendación. `-Atomic-UI` es la única
 fuente de verdad para átomos, moléculas, organismos, superficies, plantillas,
@@ -31,6 +31,16 @@ tokens y patrones visuales reutilizables de todas las aplicaciones consumidoras.
     visuales nativas, sin `style=` inline en el marcado, sin colores fijos y
     sin negaciones inválidas de tokens (`-var(...)`; la forma correcta es
     `calc(-1 * var(...))`). Los archivos `*.spec.ts` quedan exentos.
+12. (Política 1.2.0) Los servicios de presentación compartidos quedan gobernados.
+    El manifiesto debe declarar `governedServices` con `theme.service.ts`,
+    `app-version.service.ts`, `modal.service.ts`, `popup.service.ts` y
+    `toast.service.ts` (rutas `<uiRoot>/services/` en el consumidor y
+    `src/app/shared/ui/services/` en Atomic), cada uno exactamente una vez y en
+    una de dos modalidades: `exact` exige hash idéntico entre copia local y
+    fuente Atomic; `adapted` exige un snapshot (`localSha256`/`atomicSha256`)
+    que debe coincidir con ambos archivos reales — toda deriva local o cambio
+    de la fuente Atomic invalida el snapshot y bloquea el gate. Servicios
+    adicionales declarados se verifican con las mismas reglas.
 
 ## Lo que sí pertenece al consumidor
 

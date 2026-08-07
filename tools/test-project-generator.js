@@ -35,11 +35,28 @@ try {
   const appConfig = fs.readFileSync(path.join(projectRoot, 'src/app/app.config.ts'), 'utf8');
   const routes = fs.readFileSync(path.join(projectRoot, 'src/app/app.routes.ts'), 'utf8');
   if (
-    manifest.policyVersion !== '1.1.0' ||
+    manifest.policyVersion !== '1.2.0' ||
     manifest.components.length === 0 ||
     packageJson.scripts?.['check:atomic'] !== 'node scripts/check-atomic-provenance.mjs'
   ) {
     throw new Error('El proyecto generado no contiene el contrato Atomic completo.');
+  }
+  const requiredGovernedServices = [
+    'theme.service.ts',
+    'app-version.service.ts',
+    'modal.service.ts',
+    'popup.service.ts',
+    'toast.service.ts',
+  ];
+  const governedServices = manifest.governedServices || [];
+  if (
+    requiredGovernedServices.some(
+      (file) =>
+        !governedServices.some((service) => service.file === file && service.mode === 'exact') ||
+        !fs.existsSync(path.join(projectRoot, 'src/app/shared/ui/services', file)),
+    )
+  ) {
+    throw new Error('El proyecto generado no declara los servicios de presentación gobernados.');
   }
   if (
     !appConfig.includes('provideZonelessChangeDetection()') ||

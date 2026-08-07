@@ -3,7 +3,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const POLICY_VERSION = '1.1.0';
+const POLICY_VERSION = '1.2.0';
 const REQUIRED_MARKER = 'ATOMIC_GOVERNANCE_REQUIRED';
 const NATIVE_VISUAL_TAGS = /<(?:button|dialog|input|select|table|textarea)\b/i;
 const NATIVE_VISUAL_SELECTORS =
@@ -12,6 +12,14 @@ const FIXED_COLOR = /(?<!&)#[0-9a-f]{3,8}\b/i;
 const INVALID_NUMERIC_TOKEN = /\d+(?:\.\d+)?var\s*\(/i;
 const INVALID_NEGATED_TOKEN = /(?<![\w-])-var\s*\(/i;
 const INLINE_STYLE_IN_MARKUP = /<[a-z][^<>]*\sstyle\s*=/is;
+const REQUIRED_GOVERNED_SERVICES = [
+  'theme.service.ts',
+  'app-version.service.ts',
+  'modal.service.ts',
+  'popup.service.ts',
+  'toast.service.ts',
+];
+const ATOMIC_SERVICES_ROOT = 'src/app/shared/ui/services';
 const REQUIRED_GOVERNANCE_ARTIFACTS = [
   {
     local: 'docs/ATOMIC_GOVERNANCE.md',
@@ -169,6 +177,61 @@ for (const artifact of REQUIRED_GOVERNANCE_ARTIFACTS) {
   if (!requireFile(atomicPath, `Fuente de gobierno Atomic ausente: ${artifact.atomic}`)) continue;
   if (digest(localPath) !== digest(atomicPath)) {
     failures.push(`Artefacto de gobierno modificado fuera de Atomic: ${artifact.local}`);
+  }
+}
+
+const governedServices = Array.isArray(manifest.governedServices) ? manifest.governedServices : [];
+if (!Array.isArray(manifest.governedServices)) {
+  failures.push('governedServices debe declarar los servicios de presentación gobernados.');
+}
+const primaryUiRoot =
+  Array.isArray(manifest.uiRoots) && manifest.uiRoots.length > 0 ? manifest.uiRoots[0] : null;
+const declaredServices = new Map();
+for (const service of governedServices) {
+  const file = (service.file || '').trim();
+  if (!file) {
+    failures.push('Todo servicio gobernado debe declarar file.');
+    continue;
+  }
+  if (declaredServices.has(file)) {
+    failures.push(`Servicio gobernado duplicado en manifiesto: ${file}`);
+    continue;
+  }
+  declaredServices.set(file, service);
+}
+for (const requiredService of REQUIRED_GOVERNED_SERVICES) {
+  if (!declaredServices.has(requiredService)) {
+    failures.push(`Servicio gobernado no declarado: ${requiredService}`);
+  }
+}
+if (primaryUiRoot) {
+  for (const [file, service] of declaredServices) {
+    const localRelative = `${normalize(primaryUiRoot)}/services/${file}`;
+    const localPath = join(consumerRoot, primaryUiRoot, 'services', file);
+    const atomicPath = join(atomicRoot, ATOMIC_SERVICES_ROOT, file);
+    if (!['exact', 'adapted'].includes(service.mode)) {
+      failures.push(`Modo inválido para servicio ${file}: use exact o adapted.`);
+      continue;
+    }
+    const localExists = requireFile(localPath, `Servicio gobernado ausente en el consumidor: ${localRelative}`);
+    const atomicExists = requireFile(atomicPath, `Fuente Atomic del servicio ausente: ${ATOMIC_SERVICES_ROOT}/${file}`);
+    if (!localExists || !atomicExists) continue;
+    if (service.mode === 'exact') {
+      if (digest(localPath) !== digest(atomicPath)) {
+        failures.push(`Propagación exacta divergente en servicio: ${localRelative}`);
+      }
+      continue;
+    }
+    if (!service.localSha256?.trim() || !service.atomicSha256?.trim()) {
+      failures.push(`Servicio adaptado sin snapshot verificable: ${file}`);
+      continue;
+    }
+    if (digest(localPath) !== service.localSha256) {
+      failures.push(`Adaptación de servicio modificada sin nueva decisión: ${localRelative}`);
+    }
+    if (digest(atomicPath) !== service.atomicSha256) {
+      failures.push(`Fuente Atomic del servicio cambió respecto al snapshot: ${ATOMIC_SERVICES_ROOT}/${file}`);
+    }
   }
 }
 
@@ -331,5 +394,5 @@ if (failures.length > 0) {
 
 console.log(
   `Ley Atomic verificada: política ${POLICY_VERSION}, ${components.length} componentes ` +
-    'con procedencia y cero violaciones detectadas por el gate.',
+    `y ${governedServices.length} servicios con procedencia y cero violaciones detectadas por el gate.`,
 );

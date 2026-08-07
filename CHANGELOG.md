@@ -15,6 +15,35 @@ archivo. El formato se basa en
 
 ## [Sin publicar]
 
+## [Gobernanza 1.2.0] - 2026-08-06
+
+Cambio normativo sin cambio de paquete: `governance/` y `tools/` no forman parte
+del manifiesto de fuentes, por lo que la identidad `5.5.0`
+(`atomicSourceTreeSha256`) permanece intacta; solo la política de gobernanza de
+consumidores sube de `1.1.0` a `1.2.0`.
+
+### Agregado
+
+- **Servicios de presentación gobernados (invariante 12):** el gate
+  `governance/consumer/check-atomic-provenance.mjs` exige ahora que el
+  manifiesto declare `governedServices` con `theme.service.ts`,
+  `app-version.service.ts`, `modal.service.ts`, `popup.service.ts` y
+  `toast.service.ts` (cada uno exactamente una vez), en modo `exact` (hash
+  idéntico consumidor↔Atomic) o `adapted` (snapshot `localSha256`/`atomicSha256`
+  que debe coincidir con ambos archivos reales). Motivación: `theme.service.ts`
+  desactualizado rompió el modo oscuro del dashboard y `modal.service.ts`/
+  `popup.service.ts` conservaban un linaje viejo con bug sin que ningún gate lo
+  detectara.
+- **Instalador y generador conformes:** `tools/install-consumer-governance.js`
+  audita los cinco servicios, copia desde Atomic los ausentes, bloquea
+  divergencias sin registro de decisión (mismo flujo `exit 2` que los
+  componentes) y emite `governedServices` en el manifiesto; los proyectos de
+  `tools/create-project.js` nacen con los cinco servicios en modo `exact`.
+- **Pruebas:** `tools/test-consumer-governance.js` cubre servicio no declarado,
+  copia `exact` alterada, `adapted` con snapshot válido y cambio de la fuente
+  Atomic bajo `adapted`; `tools/test-project-generator.js` verifica que el
+  proyecto generado declare los servicios gobernados con política `1.2.0`.
+
 ## [5.5.0] - 2026-08-06
 
 ### Agregado

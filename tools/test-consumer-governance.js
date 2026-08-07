@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const { createHash } = require('node:crypto');
 const { execFileSync, spawnSync } = require('node:child_process');
 const fs = require('node:fs');
 const os = require('node:os');
@@ -15,6 +16,18 @@ function write(target, content) {
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.writeFileSync(target, content, 'utf8');
 }
+
+function digest(file) {
+  return createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+}
+
+const governedServiceFiles = [
+  'theme.service.ts',
+  'app-version.service.ts',
+  'modal.service.ts',
+  'popup.service.ts',
+  'toast.service.ts',
+];
 
 function copy(relativePath) {
   const source = path.join(atomicRoot, relativePath);
@@ -79,10 +92,15 @@ try {
   write(path.join(consumerRoot, 'src/app/ui/atoms/example/example.ts'), 'export const example = true;\n');
   write(path.join(consumerRoot, 'src/app/features/home/home.html'), '<prest-example />\n');
   write(path.join(consumerRoot, 'src/styles/themes/_tokens-components.css'), ':root { --example: 1; }\n');
+  for (const serviceFile of governedServiceFiles) {
+    const serviceContent = `export const service = '${serviceFile}';\n`;
+    write(path.join(sourceRoot, 'src/app/shared/ui/services', serviceFile), serviceContent);
+    write(path.join(consumerRoot, 'src/app/ui/services', serviceFile), serviceContent);
+  }
 
   const manifest = {
     schemaVersion: 1,
-    policyVersion: '1.1.0',
+    policyVersion: '1.2.0',
     changeId: 'GOVERNANCE-TEST',
     atomicRepository: '../atomic',
     atomicRemote: 'archware/-Atomic-UI',
@@ -100,6 +118,7 @@ try {
         files: ['example.ts'],
       },
     ],
+    governedServices: governedServiceFiles.map((file) => ({ file, mode: 'exact' })),
     governanceArtifacts: [
       {
         local: 'docs/ATOMIC_GOVERNANCE.md',
@@ -147,6 +166,42 @@ try {
   runGate(false, 'Propagación exacta divergente');
 
   write(path.join(consumerRoot, 'src/app/ui/atoms/example/example.ts'), 'export const example = true;\n');
+
+  const declaredGovernedServices = manifest.governedServices;
+  manifest.governedServices = declaredGovernedServices.filter(
+    (service) => service.file !== 'theme.service.ts',
+  );
+  write(manifestPath, JSON.stringify(manifest, null, 2));
+  runGate(false, 'Servicio gobernado no declarado: theme.service.ts');
+  manifest.governedServices = declaredGovernedServices;
+  write(manifestPath, JSON.stringify(manifest, null, 2));
+
+  const popupConsumerPath = path.join(consumerRoot, 'src/app/ui/services/popup.service.ts');
+  const popupAtomicPath = path.join(sourceRoot, 'src/app/shared/ui/services/popup.service.ts');
+  const popupCanonical = "export const service = 'popup.service.ts';\n";
+  write(popupConsumerPath, 'export const service = false;\n');
+  runGate(false, 'Propagación exacta divergente en servicio: src/app/ui/services/popup.service.ts');
+
+  const popupEntry = manifest.governedServices.find(
+    (service) => service.file === 'popup.service.ts',
+  );
+  popupEntry.mode = 'adapted';
+  popupEntry.localSha256 = digest(popupConsumerPath);
+  popupEntry.atomicSha256 = digest(popupAtomicPath);
+  write(manifestPath, JSON.stringify(manifest, null, 2));
+  runGate(true, 'Ley Atomic verificada');
+
+  write(popupAtomicPath, "export const service = 'popup.service.ts nueva versión';\n");
+  runGate(false, 'Fuente Atomic del servicio cambió respecto al snapshot');
+
+  write(popupAtomicPath, popupCanonical);
+  write(popupConsumerPath, popupCanonical);
+  popupEntry.mode = 'exact';
+  delete popupEntry.localSha256;
+  delete popupEntry.atomicSha256;
+  write(manifestPath, JSON.stringify(manifest, null, 2));
+  runGate(true, 'Ley Atomic verificada');
+
   manifest.components[0].mode = 'adapted';
   delete manifest.components[0].files;
   write(manifestPath, JSON.stringify(manifest, null, 2));
@@ -177,6 +232,15 @@ try {
   );
   if (installedManifest.components.length !== 1) {
     throw new Error('El instalador no inventarió el componente Atomic copiado.');
+  }
+  if (
+    (installedManifest.governedServices || []).length !== governedServiceFiles.length ||
+    installedManifest.governedServices.some((service) => service.mode !== 'exact') ||
+    governedServiceFiles.some(
+      (file) => !fs.existsSync(path.join(installedConsumer, 'src/app/shared/ui/services', file)),
+    )
+  ) {
+    throw new Error('El instalador no dejó los servicios de presentación gobernados en modo exact.');
   }
   if (!fs.existsSync(path.join(installedConsumer, '.node-version'))) {
     throw new Error('El instalador no fijó el runtime requerido por CI.');
@@ -316,7 +380,8 @@ try {
   }
 
   console.log(
-    'Contrato Atomic probado: bootstrap válido, cuatro violaciones y una adaptación no documentada bloqueadas.',
+    'Contrato Atomic probado: bootstrap válido, siete violaciones y una adaptación no documentada ' +
+      'bloqueadas; servicios gobernados verificados en exact y adapted.',
   );
 } finally {
   fs.rmSync(tempRoot, { recursive: true, force: true });

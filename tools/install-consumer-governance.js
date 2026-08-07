@@ -8,6 +8,14 @@ const path = require('node:path');
 const atomicRoot = path.resolve(__dirname, '..');
 const kitRoot = path.join(atomicRoot, 'governance', 'consumer');
 const layers = ['atoms', 'molecules', 'organisms', 'surfaces', 'templates'];
+const requiredGovernedServices = [
+  'theme.service.ts',
+  'app-version.service.ts',
+  'modal.service.ts',
+  'popup.service.ts',
+  'toast.service.ts',
+];
+const atomicServicesRoot = 'src/app/shared/ui/services';
 
 const normalize = (value) => value.replaceAll('\\', '/');
 
@@ -85,6 +93,30 @@ function auditComponents(consumerRoot, uiRoot) {
     }
   }
   return components;
+}
+
+function auditServices(consumerRoot, uiRoot) {
+  const services = [];
+  for (const file of requiredGovernedServices) {
+    const localFile = path.join(consumerRoot, uiRoot, 'services', file);
+    const atomicFile = path.join(atomicRoot, atomicServicesRoot, file);
+    if (!fs.existsSync(atomicFile)) {
+      throw new Error(`No existe fuente Atomic para el servicio gobernado: ${atomicServicesRoot}/${file}`);
+    }
+    if (!fs.existsSync(localFile)) {
+      services.push({ file, classification: 'missing-in-consumer' });
+    } else if (digest(localFile) !== digest(atomicFile)) {
+      services.push({
+        file,
+        classification: 'adaptation-required',
+        localSha256: digest(localFile),
+        atomicSha256: digest(atomicFile),
+      });
+    } else {
+      services.push({ file, classification: 'exact' });
+    }
+  }
+  return services;
 }
 
 function atomicRef() {
@@ -171,8 +203,10 @@ function main() {
   }
 
   let auditedComponents;
+  let auditedServices;
   try {
     auditedComponents = auditComponents(consumerRoot, uiRoot);
+    auditedServices = auditServices(consumerRoot, uiRoot);
   } catch (error) {
     console.error(error.message);
     process.exit(1);
@@ -183,9 +217,13 @@ function main() {
   const adaptations = auditedComponents.filter(
     (component) => component.classification === 'adaptation-required',
   );
+  const serviceAdaptations = auditedServices.filter(
+    (service) => service.classification === 'adaptation-required',
+  );
+  const pendingAdaptations = adaptations.length + serviceAdaptations.length;
   const auditReport = {
     schemaVersion: 1,
-    status: adaptations.length === 0 ? 'exact' : 'adaptation-records-required',
+    status: pendingAdaptations === 0 ? 'exact' : 'adaptation-records-required',
     atomicRef: atomicRef(),
     ...identity,
     consumerRoot: normalize(consumerRoot),
@@ -193,18 +231,23 @@ function main() {
     uiRoot,
     exactCount: exactComponents.length,
     adaptationRequiredCount: adaptations.length,
+    serviceAdaptationRequiredCount: serviceAdaptations.length,
     components: auditedComponents.map((component) => ({
       local: component.local,
       atomic: component.atomic,
       classification: component.classification,
       differences: component.differences,
     })),
+    governedServices: auditedServices.map((service) => ({
+      file: service.file,
+      classification: service.classification,
+    })),
   };
   if (auditOnly) {
     console.log(JSON.stringify(auditReport, null, 2));
     return;
   }
-  if (adaptations.length > 0 && adaptationDecision) {
+  if (pendingAdaptations > 0 && adaptationDecision) {
     const decisionPath = path.resolve(consumerRoot, adaptationDecision);
     const decisionInsideConsumer =
       decisionPath === consumerRoot || decisionPath.startsWith(`${consumerRoot}${path.sep}`);
@@ -213,7 +256,7 @@ function main() {
       process.exit(2);
     }
   }
-  if (adaptations.length > 0 && !adaptationDecision) {
+  if (pendingAdaptations > 0 && !adaptationDecision) {
     console.error(JSON.stringify(auditReport, null, 2));
     console.error(
       'Instalación detenida antes de modificar el consumidor. Cada divergencia requiere una justificación y un decisionRecord concretos; el instalador no los genera automáticamente.',
@@ -237,6 +280,14 @@ function main() {
     if (!fs.existsSync(path.join(consumerRoot, versionFile))) {
       copy(path.join(atomicRoot, versionFile), path.join(consumerRoot, versionFile));
     }
+  }
+  for (const service of auditedServices) {
+    if (service.classification !== 'missing-in-consumer') continue;
+    copy(
+      path.join(atomicRoot, atomicServicesRoot, service.file),
+      path.join(consumerRoot, uiRoot, 'services', service.file),
+    );
+    service.classification = 'exact';
   }
   appendAgentPolicy(consumerRoot);
 
@@ -273,9 +324,20 @@ function main() {
       : `node ${gateRelative} --consumer-root=${consumerRelative}`;
   const packagePrefix = packageRoot === '.' ? '' : `${packageRoot}/`;
 
+  const governedServices = auditedServices.map((service) =>
+    service.classification === 'exact'
+      ? { file: service.file, mode: 'exact' }
+      : {
+          file: service.file,
+          mode: 'adapted',
+          localSha256: service.localSha256,
+          atomicSha256: service.atomicSha256,
+        },
+  );
+
   const manifest = {
     schemaVersion: 1,
-    policyVersion: '1.1.0',
+    policyVersion: '1.2.0',
     changeId,
     atomicRepository: normalize(path.relative(consumerRoot, atomicRoot)),
     atomicRemote: 'archware/-Atomic-UI',
@@ -290,6 +352,7 @@ function main() {
     ],
     layers,
     components,
+    governedServices,
     governanceArtifacts: [
       {
         local: 'docs/ATOMIC_GOVERNANCE.md',
@@ -325,8 +388,9 @@ function main() {
   fs.writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`, 'utf8');
 
   console.log(
-    `Gobierno Atomic instalado: ${exactComponents.length} componentes exactos y ` +
-      `${adaptations.length} adaptados, política, gate y CI obligatorios.`,
+    `Gobierno Atomic instalado: ${exactComponents.length} componentes exactos, ` +
+      `${adaptations.length} adaptados y ${governedServices.length} servicios gobernados; ` +
+      'política, gate y CI obligatorios.',
   );
 }
 
