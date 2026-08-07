@@ -97,10 +97,13 @@ try {
     write(path.join(sourceRoot, 'src/app/shared/ui/services', serviceFile), serviceContent);
     write(path.join(consumerRoot, 'src/app/ui/services', serviceFile), serviceContent);
   }
+  const shellComponentPath = path.join(consumerRoot, 'src/app/app.component.ts');
+  const shellCanonical = "export const shellTemplate = '<prest-shell />';\n";
+  write(shellComponentPath, shellCanonical);
 
   const manifest = {
     schemaVersion: 1,
-    policyVersion: '1.2.0',
+    policyVersion: '1.2.1',
     changeId: 'GOVERNANCE-TEST',
     atomicRepository: '../atomic',
     atomicRemote: 'archware/-Atomic-UI',
@@ -108,6 +111,7 @@ try {
     atomicVersion: atomicPackage.version,
     atomicSourceTreeSha256: atomicSourceManifest.sourceTreeSha256,
     uiRoots: ['src/app/ui'],
+    shellRoot: 'src/app',
     featureRoots: ['src/app/features'],
     layers: ['atoms', 'molecules', 'organisms', 'surfaces', 'templates'],
     components: [
@@ -199,6 +203,27 @@ try {
   popupEntry.mode = 'exact';
   delete popupEntry.localSha256;
   delete popupEntry.atomicSha256;
+  write(manifestPath, JSON.stringify(manifest, null, 2));
+  runGate(true, 'Ley Atomic verificada');
+
+  write(
+    shellComponentPath,
+    'export const shellTemplate = \'<div style="background: var(--surface-base)">x</div>\';\n',
+  );
+  runGate(false, 'Estilo inline prohibido en plantilla TS: src/app/app.component.ts');
+
+  write(
+    shellComponentPath,
+    "export const shellBackground = 'var(--surface-base, #f8fafc)';\n",
+  );
+  runGate(false, 'Color fijo fuera de tokens: src/app/app.component.ts');
+
+  write(shellComponentPath, shellCanonical);
+  const declaredShellRoot = manifest.shellRoot;
+  delete manifest.shellRoot;
+  write(manifestPath, JSON.stringify(manifest, null, 2));
+  runGate(false, 'shellRoot es obligatorio');
+  manifest.shellRoot = declaredShellRoot;
   write(manifestPath, JSON.stringify(manifest, null, 2));
   runGate(true, 'Ley Atomic verificada');
 
@@ -380,8 +405,8 @@ try {
   }
 
   console.log(
-    'Contrato Atomic probado: bootstrap válido, siete violaciones y una adaptación no documentada ' +
-      'bloqueadas; servicios gobernados verificados en exact y adapted.',
+    'Contrato Atomic probado: bootstrap válido, diez violaciones y una adaptación no documentada ' +
+      'bloqueadas; servicios gobernados (exact/adapted) y shell gobernado verificados.',
   );
 } finally {
   fs.rmSync(tempRoot, { recursive: true, force: true });

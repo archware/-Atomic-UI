@@ -2,7 +2,7 @@
 
 > Marcador normativo: `ATOMIC_GOVERNANCE_REQUIRED`
 >
-> Versión de política: `1.2.0`
+> Versión de política: `1.2.1`
 
 Este documento es un contrato, no una recomendación. `-Atomic-UI` es la única
 fuente de verdad para átomos, moléculas, organismos, superficies, plantillas,
@@ -41,6 +41,15 @@ tokens y patrones visuales reutilizables de todas las aplicaciones consumidoras.
     que debe coincidir con ambos archivos reales — toda deriva local o cambio
     de la fuente Atomic invalida el snapshot y bloquea el gate. Servicios
     adicionales declarados se verifican con las mismas reglas.
+13. (Política 1.2.1) El shell de la aplicación es superficie gobernada. El
+    manifiesto debe declarar `shellRoot` (p. ej. `src/app`) y el gate escanea
+    los archivos directos de ese directorio (`.ts`/`.html`/`.css`/`.scss`;
+    `*.spec.ts` exentos; no recursivo) con las mismas reglas que las features:
+    sin primitivas visuales nativas, sin `style=` inline (incluidas plantillas
+    embebidas en `.ts`), sin colores fijos y sin fragmentos `NNvar(` ni
+    `-var(`. Motivo: un estilo inline con token fantasma
+    `var(--surface-base, #f8fafc)` en el shell del tablero rompió el modo
+    oscuro porque `app.component.ts` no pertenecía a ningún `featureRoot`.
 
 ## Lo que sí pertenece al consumidor
 

@@ -3,7 +3,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const POLICY_VERSION = '1.2.0';
+const POLICY_VERSION = '1.2.1';
 const REQUIRED_MARKER = 'ATOMIC_GOVERNANCE_REQUIRED';
 const NATIVE_VISUAL_TAGS = /<(?:button|dialog|input|select|table|textarea)\b/i;
 const NATIVE_VISUAL_SELECTORS =
@@ -338,34 +338,57 @@ for (const uiRoot of manifest.uiRoots || []) {
   }
 }
 
+function checkGovernedSurfaceFile(file) {
+  const source = readFileSync(file, 'utf8');
+  const executableSource = source.replace(/\/\*[\s\S]*?\*\//g, '');
+  const local = normalize(relative(consumerRoot, file));
+  if (local.endsWith('.spec.ts')) return;
+  const isHtml = file.endsWith('.html');
+  const isTs = file.endsWith('.ts');
+  if ((isHtml || isTs) && NATIVE_VISUAL_TAGS.test(source)) {
+    failures.push(`Primitiva visual nativa fuera del ADN: ${local}`);
+  }
+  if (!isHtml && !isTs && NATIVE_VISUAL_SELECTORS.test(source)) {
+    failures.push(`Selector visual nativo desde feature: ${local}`);
+  }
+  if (isHtml && /\sstyle\s*=/i.test(source)) {
+    failures.push(`Estilo inline prohibido: ${local}`);
+  }
+  if (isTs && INLINE_STYLE_IN_MARKUP.test(source)) {
+    failures.push(`Estilo inline prohibido en plantilla TS: ${local}`);
+  }
+  if (FIXED_COLOR.test(executableSource)) failures.push(`Color fijo fuera de tokens: ${local}`);
+  if (INVALID_NUMERIC_TOKEN.test(executableSource)) {
+    failures.push(`Valor CSS dañado por sustitución mecánica: ${local}`);
+  }
+  if (INVALID_NEGATED_TOKEN.test(executableSource)) {
+    failures.push(`Negación inválida de token (use calc(-1 * var(...))): ${local}`);
+  }
+}
+
 for (const featureRoot of manifest.featureRoots || []) {
   const absoluteFeatureRoot = join(consumerRoot, featureRoot);
   if (!existsSync(absoluteFeatureRoot)) continue;
   for (const file of filesBelow(absoluteFeatureRoot, ['.html', '.scss', '.css', '.ts'])) {
-    const source = readFileSync(file, 'utf8');
-    const executableSource = source.replace(/\/\*[\s\S]*?\*\//g, '');
-    const local = normalize(relative(consumerRoot, file));
-    if (local.endsWith('.spec.ts')) continue;
-    const isHtml = file.endsWith('.html');
-    const isTs = file.endsWith('.ts');
-    if ((isHtml || isTs) && NATIVE_VISUAL_TAGS.test(source)) {
-      failures.push(`Primitiva visual nativa fuera del ADN: ${local}`);
-    }
-    if (!isHtml && !isTs && NATIVE_VISUAL_SELECTORS.test(source)) {
-      failures.push(`Selector visual nativo desde feature: ${local}`);
-    }
-    if (isHtml && /\sstyle\s*=/i.test(source)) {
-      failures.push(`Estilo inline prohibido: ${local}`);
-    }
-    if (isTs && INLINE_STYLE_IN_MARKUP.test(source)) {
-      failures.push(`Estilo inline prohibido en plantilla TS: ${local}`);
-    }
-    if (FIXED_COLOR.test(executableSource)) failures.push(`Color fijo fuera de tokens: ${local}`);
-    if (INVALID_NUMERIC_TOKEN.test(executableSource)) {
-      failures.push(`Valor CSS dañado por sustitución mecánica: ${local}`);
-    }
-    if (INVALID_NEGATED_TOKEN.test(executableSource)) {
-      failures.push(`Negación inválida de token (use calc(-1 * var(...))): ${local}`);
+    checkGovernedSurfaceFile(file);
+  }
+}
+
+const shellRoot =
+  typeof manifest.shellRoot === 'string' ? normalize(manifest.shellRoot).trim() : '';
+if (!shellRoot) {
+  failures.push(
+    'shellRoot es obligatorio: el shell de la aplicación es superficie gobernada (política 1.2.1).',
+  );
+} else {
+  const absoluteShellRoot = join(consumerRoot, shellRoot);
+  if (requireFile(absoluteShellRoot, `Raíz del shell ausente: ${shellRoot}`)) {
+    for (const entry of readdirSync(absoluteShellRoot, { withFileTypes: true })) {
+      if (entry.isDirectory()) continue;
+      if (!['.html', '.scss', '.css', '.ts'].some((extension) => entry.name.endsWith(extension))) {
+        continue;
+      }
+      checkGovernedSurfaceFile(join(absoluteShellRoot, entry.name));
     }
   }
 }

@@ -183,6 +183,10 @@ function main() {
   const consumerRoot = path.resolve(consumerArg);
   const packageRoot = normalize(option('package-root', '.'));
   const uiRoot = normalize(option('ui-root', 'src/app/shared/ui'));
+  const shellRoot =
+    (uiRoot.endsWith('/shared/ui')
+      ? uiRoot.slice(0, -'/shared/ui'.length)
+      : normalize(path.dirname(uiRoot))) || '.';
   const packagePath = path.join(consumerRoot, packageRoot, 'package.json');
   const absoluteUiRoot = path.join(consumerRoot, uiRoot);
   const auditOnly = process.argv.includes('--audit-only');
@@ -229,6 +233,7 @@ function main() {
     consumerRoot: normalize(consumerRoot),
     packageRoot,
     uiRoot,
+    shellRoot,
     exactCount: exactComponents.length,
     adaptationRequiredCount: adaptations.length,
     serviceAdaptationRequiredCount: serviceAdaptations.length,
@@ -337,7 +342,7 @@ function main() {
 
   const manifest = {
     schemaVersion: 1,
-    policyVersion: '1.2.0',
+    policyVersion: '1.2.1',
     changeId,
     atomicRepository: normalize(path.relative(consumerRoot, atomicRoot)),
     atomicRemote: 'archware/-Atomic-UI',
@@ -345,6 +350,7 @@ function main() {
     ...identity,
     packageRoot,
     uiRoots: [uiRoot],
+    shellRoot,
     featureRoots: [
       `${packagePrefix}src/app/features`,
       `${packagePrefix}src/app/pages`,

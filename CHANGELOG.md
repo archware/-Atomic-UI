@@ -3,7 +3,7 @@ title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
 version: "5.5.0"
 status: "vigente"
-updated: "2026-08-06"
+updated: "2026-08-07"
 owner: "Hospital Regional de Ayacucho"
 ---
 
@@ -14,6 +14,32 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [Gobernanza 1.2.1] - 2026-08-07
+
+Cambio normativo sin cambio de paquete (mismo criterio que 1.2.0): la identidad
+`5.5.0` (`atomicSourceTreeSha256`) permanece intacta.
+
+### Agregado
+
+- **El shell es superficie gobernada (invariante 13):** el manifiesto del
+  consumidor debe declarar `shellRoot` (p. ej. `"src/app"`); el gate escanea
+  los archivos directos de ese directorio (`.ts`/`.html`/`.css`/`.scss`, no
+  recursivo, `*.spec.ts` exentos) con las mismas reglas de features: sin
+  primitivas visuales nativas, sin `style=` inline (también en plantillas TS),
+  sin colores fijos y sin fragmentos `NNvar(`/`-var(`. La ausencia de
+  `shellRoot` bloquea el gate. Motivación: `app.component.ts` del tablero no
+  pertenecía a ningún `featureRoot` y un estilo inline con token fantasma
+  `var(--surface-base, #f8fafc)` (más un `app.component.css` residual con hex
+  fijos) rompió el modo oscuro sin detección.
+- **Instalador conforme:** `tools/install-consumer-governance.js` deriva
+  `shellRoot` del `uiRoot` (`X/shared/ui` → `X`; en otros casos, el directorio
+  padre) y lo escribe en el manifiesto; los proyectos de
+  `tools/create-project.js` nacen con `shellRoot: "src/app"` y shell limpio.
+- **Pruebas:** casos nuevos en `tools/test-consumer-governance.js` (`style=`
+  inline en plantilla TS del shell, color fijo en el shell y manifiesto sin
+  `shellRoot` → fallan; shell limpio → pasa) y aserciones de política `1.2.1`
+  con `shellRoot` en `tools/test-project-generator.js`.
 
 ## [Gobernanza 1.2.0] - 2026-08-06
 
