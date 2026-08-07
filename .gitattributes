@@ -1,0 +1,14 @@
+# Reproducibilidad de la identidad Atomic: el manifiesto de fuentes
+# (distribution/atomic-source-manifest.json) hashea los bytes del working
+# tree. Todo checkout debe producir exactamente los mismos bytes en
+# cualquier maquina; la convencion del ecosistema HRA (Windows) es CRLF.
+* text=auto eol=crlf
+
+# Binarios: sin conversion de finales de linea.
+*.png -text
+*.avif -text
+*.ico -text
+*.woff -text
+*.woff2 -text
+*.ttf -text
+*.eot -text
