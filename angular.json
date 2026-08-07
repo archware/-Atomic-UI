@@ -164,6 +164,29 @@
           }
         }
       }
+    },
+    "atomic-ui": {
+      "projectType": "library",
+      "root": "projects/atomic-ui",
+      "sourceRoot": "projects/atomic-ui/src",
+      "prefix": "ui",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "projects/atomic-ui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/atomic-ui/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/atomic-ui/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
     }
   }
 }

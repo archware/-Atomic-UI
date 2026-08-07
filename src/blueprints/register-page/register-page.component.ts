@@ -6,8 +6,6 @@ import {
   AuthLayoutComponent,
   FloatingInputComponent,
   ButtonComponent,
-  ApiService,
-  useApi,
   FormErrorComponent,
   PanelComponent,
   TextComponent,
@@ -17,6 +15,8 @@ import {
   CheckboxComponent,
   DividerComponent,
 } from '@shared/ui';
+import { ApiService } from '@shared/ui/services/api.service';
+import { useApi } from '@shared/ui/services/use-api.service';
 
 /**
  * Respuesta del endpoint de registro

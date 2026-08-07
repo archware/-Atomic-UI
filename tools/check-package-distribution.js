@@ -69,32 +69,80 @@ function validateContract(contract, publicExports, packageJson) {
   if (contract.schemaVersion !== 1) fail('package-contract.json debe usar schemaVersion 1.');
   if (contract.targetPackage !== '@hra/atomic-ui') fail('El paquete objetivo debe ser @hra/atomic-ui.');
   if (contract.versionSource !== 'package.json') fail('La versión debe provenir de package.json.');
-  if (contract.status !== 'blocked-scaffold' || contract.runtimeInstallable !== false) {
-    fail('El scaffold debe permanecer bloqueado y no instalable hasta compilar una biblioteca real.');
+  if (contract.status !== 'library-buildable' || contract.runtimeInstallable !== false) {
+    fail('El contrato debe declarar library-buildable y no instalable hasta publicar en un registro.');
   }
-  if (!packageJson.private) fail('La aplicación raíz debe permanecer privada durante la transición.');
+  if (!packageJson.private) fail('La aplicación raíz debe permanecer privada.');
 
-  const blockerCodes = new Set(contract.requiredBlockers.map((blocker) => blocker.code));
-  const requiredCodes = [
+  const resolvedCodes = new Set((contract.resolvedBlockers || []).map((blocker) => blocker.code));
+  const legacyCodes = [
     'ANGULAR_PROJECT_IS_APPLICATION',
     'NG_PACKAGR_NOT_DECLARED',
     'PUBLIC_API_CONTAINS_APPLICATION_CONCERNS',
   ];
-  for (const code of requiredCodes) {
-    if (!blockerCodes.has(code)) fail(`Falta el bloqueo verificable ${code}.`);
+  for (const code of legacyCodes) {
+    if (!resolvedCodes.has(code)) fail(`Falta la resolución documentada del bloqueo ${code}.`);
+  }
+  const blockerCodes = new Set(contract.requiredBlockers.map((blocker) => blocker.code));
+  for (const code of legacyCodes) {
+    if (blockerCodes.has(code)) fail(`El bloqueo ${code} está resuelto y no debe seguir listado como vigente.`);
+  }
+  for (const code of ['PACKAGE_NOT_PUBLISHED_TO_REGISTRY', 'RELEASE_PROVENANCE_UNSIGNED']) {
+    if (!blockerCodes.has(code)) fail(`Falta el bloqueo vigente ${code}.`);
   }
 
   const angular = readJson(path.join(root, 'angular.json'));
   const projects = Object.values(angular.projects || {});
   if (!projects.some((project) => project.projectType === 'application')) {
-    fail('El bloqueo ANGULAR_PROJECT_IS_APPLICATION ya no refleja el estado real.');
+    fail('La aplicación de demostración debe seguir declarada en angular.json.');
+  }
+  const library = contract.library || {};
+  const libraryProject = (angular.projects || {})[library.workspaceProject];
+  if (!libraryProject || libraryProject.projectType !== 'library') {
+    fail(`angular.json no declara el proyecto library ${library.workspaceProject}.`);
+  }
+  if (libraryProject.architect?.build?.builder !== '@angular/build:ng-packagr') {
+    fail('El proyecto library debe compilar con el builder @angular/build:ng-packagr.');
   }
 
   const ngPackagrDeclared = Boolean(
     packageJson.dependencies?.['ng-packagr'] || packageJson.devDependencies?.['ng-packagr'],
   );
-  if (ngPackagrDeclared || fs.existsSync(path.join(root, 'node_modules', 'ng-packagr'))) {
-    fail('ng-packagr ya está disponible; el contrato bloqueado debe migrarse a una biblioteca real.');
+  if (!ngPackagrDeclared) {
+    fail('ng-packagr debe estar declarado en package.json para sostener el estado library-buildable.');
+  }
+
+  const ngPackagePath = path.join(root, library.projectRoot || '', 'ng-package.json');
+  if (!fs.existsSync(ngPackagePath)) fail(`No existe ${library.projectRoot}/ng-package.json.`);
+  const ngPackage = readJson(ngPackagePath);
+  const declaredEntry = path
+    .resolve(path.dirname(ngPackagePath), ngPackage.lib?.entryFile || '')
+    .replaceAll('\\', '/');
+  const contractEntry = path.resolve(root, library.entryFile || '').replaceAll('\\', '/');
+  if (declaredEntry !== contractEntry) {
+    fail('El entryFile de ng-package.json no coincide con el declarado en el contrato.');
+  }
+  if (!fs.existsSync(contractEntry)) fail(`No existe el entryFile de la biblioteca: ${library.entryFile}`);
+
+  const libPackagePath = path.join(root, library.projectRoot || '', 'package.json');
+  if (!fs.existsSync(libPackagePath)) fail(`No existe ${library.projectRoot}/package.json.`);
+  const libPackage = readJson(libPackagePath);
+  if (libPackage.name !== contract.targetPackage) {
+    fail('El package.json de la biblioteca no declara el paquete objetivo.');
+  }
+  if (libPackage.version !== packageJson.version) {
+    fail(
+      `La versión de la biblioteca (${libPackage.version}) no coincide con package.json raíz (${packageJson.version}).`,
+    );
+  }
+  if (libPackage.sideEffects !== false) fail('La biblioteca debe declarar "sideEffects": false.');
+  if (!libPackage.peerDependencies?.['@angular/core']) {
+    fail('La biblioteca debe declarar @angular/core como peerDependency.');
+  }
+  for (const dependency of Object.keys(libPackage.dependencies || {})) {
+    if (dependency !== 'tslib') {
+      fail(`La biblioteca solo admite tslib como dependencia runtime; se encontró ${dependency}.`);
+    }
   }
 
   if (publicExports.schemaVersion !== 1 || publicExports.targetPackage !== contract.targetPackage) {
@@ -114,9 +162,9 @@ function validateContract(contract, publicExports, packageJson) {
     if (!fs.existsSync(path.join(root, excluded.source))) {
       fail(`No existe la responsabilidad excluida: ${excluded.source}`);
     }
-    if (!barrel.includes(excluded.symbol)) {
+    if (new RegExp(`\\b${excluded.symbol}\\b`).test(barrel)) {
       fail(
-        `${excluded.symbol} ya no aparece en el barrel; debe actualizarse el estado del contrato y no conservar un bloqueo obsoleto.`,
+        `${excluded.symbol} es una preocupación de aplicación y no puede aparecer en el barrel visual (API pública de la biblioteca).`,
       );
     }
   }
@@ -166,7 +214,7 @@ function npmPackDryRun(contract, expectedManifest, packageJson) {
     version: packageJson.version,
     private: true,
     type: 'module',
-    description: 'Contrato transicional no ejecutable para la futura biblioteca Atomic UI.',
+    description: 'Contrato y procedencia de la biblioteca Atomic UI; artefacto no ejecutable.',
     files: Object.keys(copied),
     exports: {
       './contract': './package-contract.json',
@@ -235,9 +283,11 @@ function main() {
   }
   const dryRun = npmPackDryRun(contract, expected, packageJson);
   console.log(
-    `Contrato transicional verificado: ${expected.fileCount} fuentes con SHA-256 y dry-run privado de ${dryRun.fileCount} archivos (${dryRun.unpackedSize} bytes).`,
+    `Contrato ${contract.status} verificado: ${expected.fileCount} fuentes con SHA-256 y dry-run privado de ${dryRun.fileCount} archivos (${dryRun.unpackedSize} bytes).`,
   );
-  console.log('La biblioteca Angular compilada continúa bloqueada; este resultado no autoriza publicación.');
+  console.log(
+    'La biblioteca compila con "npx ng build atomic-ui" (tokens: "npm run lib:build"); la publicación en registro continúa bloqueada y este resultado no la autoriza.',
+  );
 }
 
 try {

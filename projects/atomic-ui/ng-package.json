@@ -1,0 +1,7 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/atomic-ui",
+  "lib": {
+    "entryFile": "../../src/app/shared/ui/index.ts"
+  }
+}

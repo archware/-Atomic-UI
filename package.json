@@ -1,6 +1,6 @@
 {
   "name": "atomic-ui",
-  "version": "5.4.2",
+  "version": "5.5.0",
   "type": "module",
   "author": "COTAHA",
   "scripts": {
@@ -20,6 +20,7 @@
     "deploy": "npx angular-cli-ghpages --dir=dist/gh-pages",
     "deploy:app": "ng build --configuration production --base-href /-Atomic-UI/ && npx angular-cli-ghpages --dir=dist/angular-scrollable-table/browser",
     "deploy:storybook": "npm run build-storybook && npx angular-cli-ghpages --dir=storybook-static",
+    "lib:build": "ng build atomic-ui && node tools/copy-lib-tokens.cjs",
     "lib:link": "npm link",
     "lib:unlink": "npm unlink atomic-ui",
     "dev:components": "ng run angular-scrollable-table:storybook",
@@ -119,6 +120,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "ng-packagr": "^22.1.1",
     "postcss": "^8.5.6",
     "storybook": "^10.5.3",
     "tailwindcss": "^3.4.17",

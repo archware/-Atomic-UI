@@ -20,10 +20,10 @@ import {
   TabComponent,
   ToggleComponent,
   SelectComponent,
-  ApiService,
-  useApi,
   ThemeSwitcherComponent,
 } from '@shared/ui';
+import { ApiService } from '@shared/ui/services/api.service';
+import { useApi } from '@shared/ui/services/use-api.service';
 
 /**
  * SettingsPageComponent — Página de configuración de cuenta/perfil

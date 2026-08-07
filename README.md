@@ -3,7 +3,7 @@ title: "Atomic UI: sistema de componentes y temas"
 subtitle: "Fuente visual canónica para aplicaciones de escritorio HRA"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-06"
-version: "5.4.2"
+version: "5.5.0"
 ---
 
 # Atomic UI: sistema de componentes y temas
@@ -22,11 +22,13 @@ gate protegido por hashes y CI obligatoria. Si falta un objeto visual, se crea y
 valida primero en este repositorio; el consumidor no puede inventarlo ni
 desactivar la compuerta. Véase [governance/README.md](./governance/README.md).
 
-La distribución npm permanece en estado transicional y bloqueado. El contrato,
-el manifiesto SHA-256 y el empaquetado seco reproducible se describen en
-[distribution/README.md](./distribution/README.md). Un resultado verde valida
-la procedencia del scaffold, pero no representa todavía una biblioteca Angular
-compilada o publicable.
+La biblioteca `@hra/atomic-ui` compila localmente desde 5.5.0
+(`npx ng build atomic-ui` → `dist/atomic-ui`, formato Angular Package Format;
+`npm run lib:build` añade los tokens de tema). El contrato, el manifiesto
+SHA-256 y el empaquetado seco reproducible se describen en
+[distribution/README.md](./distribution/README.md). La publicación en un
+registro npm permanece bloqueada hasta contar con registro privado y
+procedencia firmada; un resultado verde del gate no la autoriza.
 
 ---
 
@@ -302,7 +304,7 @@ Este proyecto está bajo la Licencia MIT.
 
 ---
 
-**Versión:** 5.4.2
+**Versión:** 5.5.0
 **Última actualización:** 6 de agosto de 2026
 **Angular:** 22
 **TypeScript:** 6.0

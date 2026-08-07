@@ -1,0 +1,20 @@
+/* Configuración TypeScript para compilar la biblioteca @hra/atomic-ui con ng-packagr.
+   El entryFile es el barrel visual canónico src/app/shared/ui/index.ts (ver ng-package.json):
+   ng-packagr fija rootDir en el directorio del entryFile, por lo que la API pública
+   empaquetada es exactamente la superficie visual del barrel, sin mover fuentes. */
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/lib",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "types": []
+  },
+  "include": [
+    "../../src/app/shared/ui/**/*.ts"
+  ],
+  "exclude": [
+    "../../src/app/shared/ui/**/*.spec.ts"
+  ]
+}

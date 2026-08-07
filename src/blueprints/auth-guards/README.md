@@ -17,7 +17,7 @@ Este blueprint proporciona un sistema completo de autenticación para proyectos 
 
 ```typescript
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from '@shared/ui';
+import { authInterceptor } from '@shared/ui/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
 ### 2. Proteger rutas en `app.routes.ts`
 
 ```typescript
-import { authGuard, guestGuard } from '@shared/ui';
+import { authGuard, guestGuard } from '@shared/ui/guards/auth.guard';
 
 export const routes: Routes = [
   { 
@@ -48,7 +48,7 @@ export const routes: Routes = [
 ### 3. Usar AuthService en componentes
 
 ```typescript
-import { AuthService, LoginRequest } from '@shared/ui';
+import { AuthService, LoginRequest } from '@shared/ui/services/auth.service';
 
 @Component({...})
 export class LoginComponent {

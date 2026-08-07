@@ -20,10 +20,10 @@ import {
   ChipComponent,
   SkeletonComponent,
   ThemeSwitcherComponent,
-  AuthService,
-  ApiService,
-  useApi,
 } from '@shared/ui';
+import { AuthService } from '@shared/ui/services/auth.service';
+import { ApiService } from '@shared/ui/services/api.service';
+import { useApi } from '@shared/ui/services/use-api.service';
 
 /** Perfil del usuario
  * @customize Ajusta según tu API */

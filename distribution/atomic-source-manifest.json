@@ -1,12 +1,32 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.4.2",
-  "distributionStatus": "blocked-scaffold",
+  "packageVersion": "5.5.0",
+  "distributionStatus": "library-buildable",
   "algorithm": "sha256",
-  "sourceTreeSha256": "d807a210c5ea56ac2aae5414442d052fdc2afb58ab013a039e8b6bb707b5c0fd",
-  "fileCount": 151,
+  "sourceTreeSha256": "b72fd5f80e6d4f441cbb74afce4deeb5f0e8209f9a33482d8698ca5795c3086f",
+  "fileCount": 156,
   "files": [
+    {
+      "path": "projects/atomic-ui/ng-package.json",
+      "bytes": 181,
+      "sha256": "36e7ba3fd4ec61f4852078a377986cfb9d4c990cec4250522d04d8e82d513d2f"
+    },
+    {
+      "path": "projects/atomic-ui/package.json",
+      "bytes": 887,
+      "sha256": "c1f137ecd8b7db37ccdb4a8f3abf2880d48fb6e5763daf4cc612f2b4323f8518"
+    },
+    {
+      "path": "projects/atomic-ui/tsconfig.lib.json",
+      "bytes": 694,
+      "sha256": "cd8de9c51233833481b40884b9afda84584c9af79c4f493b1bb0b3bdcfac4f33"
+    },
+    {
+      "path": "projects/atomic-ui/tsconfig.lib.prod.json",
+      "bytes": 269,
+      "sha256": "3a8f19d37bc1ec872ad0a1bcfdca9677ae849813463cdebedff66e35da312c58"
+    },
     {
       "path": "src/app/shared/ui/atoms/avatar/avatar.component.ts",
       "bytes": 6110,
@@ -254,8 +274,8 @@
     },
     {
       "path": "src/app/shared/ui/index.ts",
-      "bytes": 13401,
-      "sha256": "c72046bda0e0dc613b00fbf789ac98ab9a19a70252e11440961a88ce18459d7c"
+      "bytes": 13837,
+      "sha256": "0e0f527ce3e73ae9d4ca722a1cdfc545e188a976082672869f6fd5c5c9f6e7df"
     },
     {
       "path": "src/app/shared/ui/interceptors/auth.interceptor.ts",
@@ -761,6 +781,11 @@
       "path": "src/styles/themes/index.css",
       "bytes": 11177,
       "sha256": "19b264c48e0831472a7b850c18314635248076055649c965f7e1f5c707dbe68f"
+    },
+    {
+      "path": "src/styles/themes/tokens.css",
+      "bytes": 324,
+      "sha256": "ab32bd1a0e70673857f2261e56c79caceb46be6b0ecf08c712be47c7ce9cc092"
     }
   ]
 }

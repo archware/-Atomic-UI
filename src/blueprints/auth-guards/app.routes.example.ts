@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard, guestGuard } from '@shared/ui';
+import { authGuard, guestGuard } from '@shared/ui/guards/auth.guard';
 
 /**
  * Ejemplo de app.routes.ts con guards de autenticación.

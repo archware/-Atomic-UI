@@ -6,14 +6,14 @@ import {
   AuthLayoutComponent,
   FloatingInputComponent,
   ButtonComponent,
-  ApiService,
-  useApi,
   PanelComponent,
   TextComponent,
   FormRowComponent,
   AlertComponent,
   DividerComponent,
 } from '@shared/ui';
+import { ApiService } from '@shared/ui/services/api.service';
+import { useApi } from '@shared/ui/services/use-api.service';
 
 /** Paso actual del flujo de recuperación */
 type Step = 'request' | 'sent' | 'reset' | 'done';

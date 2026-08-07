@@ -1,7 +1,7 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.4.2"
+version: "5.5.0"
 status: "vigente"
 updated: "2026-08-06"
 owner: "Hospital Regional de Ayacucho"
@@ -14,6 +14,19 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.5.0] - 2026-08-06
+
+### Agregado
+
+- **Biblioteca `@hra/atomic-ui` compilable:** nuevo proyecto Angular de tipo `library` (`projects/atomic-ui`, builder `@angular/build:ng-packagr`, ng-packagr ^22 declarado como devDependency). El `entryFile` es el barrel visual canónico `src/app/shared/ui/index.ts`, de modo que la API pública empaquetada coincide exactamente con la superficie visual sin mover fuentes (ng-packagr fija `rootDir` en el directorio del entryFile, lo que descarta un `public-api.ts` intermedio en `projects/`). `npx ng build atomic-ui` produce Angular Package Format (fesm2022 + declaraciones, `compilationMode: partial`) en `dist/atomic-ui`.
+- **Tokens de tema distribuidos:** `src/styles/themes/tokens.css` como punto de entrada distribuible y `npm run lib:build` (build + `tools/copy-lib-tokens.cjs`) que copia `src/styles/themes/*.css` a `dist/atomic-ui/tokens/`, expuestos como `@hra/atomic-ui/tokens`. La copia es externa porque ng-packagr 22 prohíbe `assets` fuera de `projects/atomic-ui`.
+- **`projects/atomic-ui/package.json`:** paquete `@hra/atomic-ui` 5.5.0 con `"sideEffects": false`, dependencias Angular/rxjs/ngx-translate/chart.js/ng2-charts como `peerDependencies` y `tslib` como única dependencia runtime.
+
+### Cambiado
+
+- **Barrel visual puro:** `src/app/shared/ui/index.ts` ya no exporta preocupaciones de aplicación — `ApiService`, `useApi`/`UseApiService`, `AuthService`, `TokenService`, `authGuard`/`guestGuard`/`passwordChangeGuard`, `authInterceptor`, `cacheInterceptor`/`invalidateCache`, `PermissionDirective` ni `GlobalErrorHandlerService` (con sus tipos). Esas plantillas siguen en el repositorio y se importan por ruta directa (`@shared/ui/services/auth.service`, `@shared/ui/guards/auth.guard`, etc.); los blueprints (`login`, `register`, `forgot-password`, `profile`, `settings`, `dashboard`, `crud-table`, `auth-guards`) y su documentación quedaron redirigidos. La línea divisoria está documentada en el propio barrel.
+- **Contrato de distribución honesto:** `distribution/package-contract.json` pasa de `blocked-scaffold` a `library-buildable`; los bloqueadores `ANGULAR_PROJECT_IS_APPLICATION`, `NG_PACKAGR_NOT_DECLARED` y `PUBLIC_API_CONTAINS_APPLICATION_CONCERNS` constan como resueltos y permanecen vigentes `PACKAGE_NOT_PUBLISHED_TO_REGISTRY` y `RELEASE_PROVENANCE_UNSIGNED`. `tools/check-package-distribution.js` verifica ahora el estado real: proyecto library con ng-packagr declarado, entryFile y versión de la biblioteca sincronizados, ausencia de símbolos de aplicación en el barrel y el inventario SHA-256 ampliado a `projects/atomic-ui`.
 
 ## [5.4.2] - 2026-08-06
 

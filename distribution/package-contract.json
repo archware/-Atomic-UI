@@ -2,8 +2,18 @@
   "schemaVersion": 1,
   "targetPackage": "@hra/atomic-ui",
   "versionSource": "package.json",
-  "status": "blocked-scaffold",
+  "status": "library-buildable",
   "runtimeInstallable": false,
+  "library": {
+    "workspaceProject": "atomic-ui",
+    "projectRoot": "projects/atomic-ui",
+    "entryFile": "src/app/shared/ui/index.ts",
+    "buildCommand": "npx ng build atomic-ui",
+    "buildWithTokensCommand": "npm run lib:build",
+    "output": "dist/atomic-ui",
+    "format": "Angular Package Format (fesm2022 + types, compilationMode partial)",
+    "tokensOutput": "dist/atomic-ui/tokens/tokens.css"
+  },
   "sourceInventory": {
     "algorithm": "sha256",
     "roots": [
@@ -15,6 +25,11 @@
       {
         "path": "src/styles/themes",
         "extensions": [".css"],
+        "excludeSuffixes": []
+      },
+      {
+        "path": "projects/atomic-ui",
+        "extensions": [".ts", ".json"],
         "excludeSuffixes": []
       }
     ]
@@ -31,24 +46,37 @@
       "public-exports.json"
     ]
   },
-  "requiredBlockers": [
+  "resolvedBlockers": [
     {
       "code": "ANGULAR_PROJECT_IS_APPLICATION",
-      "resolution": "Crear un proyecto Angular de tipo library sin mover ni eliminar la aplicación de demostración existente."
+      "resolvedIn": "5.5.0",
+      "evidence": "angular.json declara el proyecto library atomic-ui (builder @angular/build:ng-packagr) junto a la aplicación de demostración, sin mover fuentes."
     },
     {
       "code": "NG_PACKAGR_NOT_DECLARED",
-      "resolution": "Declarar una versión compatible de ng-packagr y fijarla en el lockfile mediante un cambio de dependencias revisado."
+      "resolvedIn": "5.5.0",
+      "evidence": "ng-packagr ^22 declarado como devDependency y fijado en package-lock.json."
     },
     {
       "code": "PUBLIC_API_CONTAINS_APPLICATION_CONCERNS",
-      "resolution": "Definir un public-api visual separado y extraer autenticación, transporte HTTP, caché y permisos hacia los consumidores."
+      "resolvedIn": "5.5.0",
+      "evidence": "El barrel src/app/shared/ui/index.ts (entryFile de la biblioteca) exporta únicamente superficie visual; autenticación, transporte HTTP, caché, permisos y manejo global de errores se importan por ruta directa y no se empaquetan como API pública."
+    }
+  ],
+  "requiredBlockers": [
+    {
+      "code": "PACKAGE_NOT_PUBLISHED_TO_REGISTRY",
+      "resolution": "Publicar dist/atomic-ui en el registro npm privado del ecosistema (o distribuir un tarball versionado) con versión exacta; hasta entonces los consumidores no instalan el paquete en runtime."
+    },
+    {
+      "code": "RELEASE_PROVENANCE_UNSIGNED",
+      "resolution": "Firmar la liberación y anclar el manifiesto SHA-256 a una referencia Git inmutable antes de autorizar el consumo del artefacto compilado."
     }
   ],
   "releaseRequirements": [
-    "El proyecto library compila mediante ng-packagr.",
-    "El paquete expone JavaScript, declaraciones TypeScript y estilos; no expone fuentes TypeScript como artefacto ejecutable.",
-    "Las dependencias Angular se declaran como peerDependencies compatibles.",
+    "El proyecto library compila mediante ng-packagr (cumplido: npx ng build atomic-ui).",
+    "El paquete expone JavaScript, declaraciones TypeScript y estilos; no expone fuentes TypeScript como artefacto ejecutable (cumplido: fesm2022 + types + tokens/).",
+    "Las dependencias Angular se declaran como peerDependencies compatibles (cumplido en projects/atomic-ui/package.json).",
     "npm pack --dry-run contiene únicamente la lista autorizada de artefactos compilados y metadatos.",
     "El manifiesto SHA-256 coincide con el contenido liberado y con una referencia Git inmutable.",
     "Los consumidores instalan una versión exacta y conservan procedencia verificable."

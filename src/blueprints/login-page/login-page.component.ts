@@ -9,8 +9,6 @@ import {
   FloatingInputComponent,
   ButtonComponent,
   CheckboxComponent,
-  ApiService,
-  useApi,
   FormErrorComponent,
   PanelComponent,
   TextComponent,
@@ -19,6 +17,8 @@ import {
   DividerComponent,
   FooterComponent
 } from '@shared/ui';
+import { ApiService } from '@shared/ui/services/api.service';
+import { useApi } from '@shared/ui/services/use-api.service';
 
 /**
  * Response from login API endpoint

@@ -39,7 +39,7 @@ interface RegisterResponse {
 
 ```typescript
 // app.routes.ts
-import { guestGuard } from '@shared/ui';
+import { guestGuard } from '@shared/ui/guards/auth.guard';
 
 export const routes: Routes = [
   {

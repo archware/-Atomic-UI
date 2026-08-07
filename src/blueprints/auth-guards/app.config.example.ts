@@ -1,7 +1,7 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from '@shared/ui';
+import { authInterceptor } from '@shared/ui/interceptors/auth.interceptor';
 
 /**
  * Ejemplo de app.config.ts con authInterceptor registrado.

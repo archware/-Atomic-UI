@@ -5,9 +5,11 @@ import {
   LayoutShellComponent, TopbarComponent, SidebarComponent, SidebarMenuItem, SidebarUser,
   PanelComponent, RowComponent, AvatarComponent, TextComponent,
   ButtonComponent, SkeletonComponent, MetricsGridComponent, ThemeSwitcherComponent,
-  ChartComponent, ApiService, useApi, KpiMetric,
+  ChartComponent, KpiMetric,
   TableComponent, TableHeadComponent, TableRowComponent, TableCellComponent, ChipComponent
 } from '@shared/ui';
+import { ApiService } from '@shared/ui/services/api.service';
+import { useApi } from '@shared/ui/services/use-api.service';
 
 interface User { id: string; name: string; email: string; role?: string; avatar?: string; }
 interface DashboardStats { totalUsers: number; activeProjects: number; pendingTasks: number; revenue: number; }

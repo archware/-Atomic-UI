@@ -1,11 +1,36 @@
 /**
- * UI Component Library - Barrel Exports
+ * UI Component Library - Barrel Exports (superficie EXCLUSIVAMENTE visual)
  *
  * Importar componentes desde aquí:
  * import { AvatarComponent, ChipComponent } from '@shared/ui';
  *
  * Configurar path alias en tsconfig.json:
  * "paths": { "@shared/ui": ["src/app/shared/ui"] }
+ *
+ * ============================================================
+ * LÍNEA DIVISORIA DE LA API PÚBLICA
+ * ============================================================
+ * Este barrel es la API pública de la biblioteca `@hra/atomic-ui`
+ * (empaquetada desde `projects/atomic-ui`). SOLO puede exportar:
+ *   - Componentes de presentación (atoms/molecules/organisms/surfaces/templates)
+ *   - Directivas de presentación (p. ej. TooltipDirective)
+ *   - Tipos/interfaces de presentación asociados a esos componentes
+ *   - Servicios de presentación sin transporte ni estado de negocio:
+ *     theme, toast, modal, popup y utilidades de formulario visuales
+ *     (ValidationService, FormBuilderHelper: mensajes/validadores de UI)
+ *
+ * NUNCA exportar desde aquí preocupaciones de aplicación; viven en el
+ * repositorio como plantillas y se importan por ruta directa:
+ *   - Transporte HTTP y estado de API:
+ *     `@shared/ui/services/api.service`, `@shared/ui/services/use-api.service`
+ *   - Autenticación y tokens:
+ *     `@shared/ui/services/auth.service`, `@shared/ui/services/token.service`
+ *   - Guards de navegación: `@shared/ui/guards/auth.guard`
+ *   - Interceptores HTTP: `@shared/ui/interceptors/auth.interceptor`,
+ *     `@shared/ui/interceptors/cache.interceptor`
+ *   - Permisos/RBAC: `@shared/ui/directives/permission.directive`
+ *   - Manejo global de errores: `@shared/ui/services/error-handler.service`
+ * El gate `npm run package:check` verifica esta frontera.
  */
 
 // ============================================
@@ -272,47 +297,18 @@ export { LayoutShellComponent } from './templates/layout-shell/layout-shell.comp
 export { AuthLayoutComponent } from './templates/auth-layout/auth-layout.component';
 
 // ============================================
-// SERVICES
+// SERVICES DE PRESENTACIÓN
 // ============================================
 export { ThemeService } from './services/theme.service';
-
-export { GlobalErrorHandlerService } from './services/error-handler.service';
-
-export { cacheInterceptor, invalidateCache } from './interceptors/cache.interceptor';
-
-export { PermissionDirective } from './directives/permission.directive';
 
 export { FormBuilderHelper } from './helpers/form-builder.helper';
 
 export { ValidationService, DEFAULT_VALIDATION_MESSAGES } from './services/validation.service';
 export type { ValidationMessage } from './services/validation.service';
 
-export { ApiService } from './services/api.service';
-export type { ApiRequestOptions, ApiResponse, ApiError } from './services/api.service';
-
-export { useApi, UseApiService } from './services/use-api.service';
-export type { ApiState, UseApiResult } from './services/use-api.service';
-
 // ============================================
-// DATA MANAGEMENT
+// DATA MANAGEMENT (presentación de estados)
 // ============================================
 export { DataStateComponent } from './molecules/data-state/data-state.component';
 
-// ============================================
-// AUTHENTICATION - Services, Guards, Interceptors
-// ============================================
-export { TokenService } from './services/token.service';
-export type { TokenConfig, JwtPayload } from './services/token.service';
-
-export { AuthService } from './services/auth.service';
-export type {
-  UserProfile,
-  LoginRequest,
-  LoginResponse,
-  RefreshTokenRequest,
-} from './services/auth.service';
-
-export { authGuard, guestGuard, passwordChangeGuard } from './guards/auth.guard';
-
-export { authInterceptor } from './interceptors/auth.interceptor';
 export * from './organisms/chart/chart.component';

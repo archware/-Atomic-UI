@@ -1,8 +1,8 @@
 ---
 title: "Contrato de distribución de Atomic UI"
-subtitle: "Procedencia, exportaciones y gate de empaquetado transicional"
+subtitle: "Procedencia, exportaciones y gate de empaquetado de la biblioteca"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
-date: "2026-08-03"
+date: "2026-08-06"
 ---
 
 # Contrato de distribución de Atomic UI
@@ -10,14 +10,16 @@ date: "2026-08-03"
 ## Propósito
 
 La carpeta `distribution` define el paso verificable entre la copia gobernada de
-fuentes y una futura biblioteca Angular `@hra/atomic-ui`. La implementación no
-traslada ni elimina componentes existentes y tampoco presenta el scaffold como
-una biblioteca compilada.
+fuentes y la biblioteca Angular `@hra/atomic-ui`. Desde 5.5.0 la biblioteca
+compila localmente (`npx ng build atomic-ui`, proyecto `projects/atomic-ui`
+con entryFile en el barrel visual); la implementación no traslada ni elimina
+componentes existentes y la publicación en registro sigue bloqueada.
 
 ## Artefactos controlados
 
-- `package-contract.json` declara el nombre objetivo, el estado bloqueado, las
-  fuentes inventariadas y los criterios obligatorios de liberación.
+- `package-contract.json` declara el nombre objetivo, el estado
+  `library-buildable`, los bloqueadores resueltos y vigentes, las fuentes
+  inventariadas y los criterios obligatorios de liberación.
 - `public-exports.json` delimita las capas visuales y registra las
   responsabilidades de aplicación que deben excluirse del paquete público.
 - `atomic-source-manifest.json` registra tamaño y SHA-256 de cada fuente
@@ -43,9 +45,11 @@ archivo `.tgz` ni acceder a un registro de paquetes.
 ## Estado de publicación
 
 La publicación permanece prohibida hasta que se cumplan todos los requisitos de
-`releaseRequirements`. El contrato transicional reserva el nombre esperado y
-prueba la mecánica de inclusión, pero omite deliberadamente la exportación raíz
-`.` y conserva `private: true`.
+`releaseRequirements` (bloqueadores vigentes: `PACKAGE_NOT_PUBLISHED_TO_REGISTRY`
+y `RELEASE_PROVENANCE_UNSIGNED`). La biblioteca compila en Angular Package
+Format hacia `dist/atomic-ui` (`npm run lib:build` añade los tokens de tema),
+pero el artefacto del dry-run sigue siendo contrato + procedencia, conserva
+`private: true` y no es instalable en runtime.
 
 ## Procedencia de consumidores
 

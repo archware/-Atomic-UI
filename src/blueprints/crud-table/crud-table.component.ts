@@ -26,10 +26,10 @@ import { SidebarMenuItem,
 
   ModalComponent,
   FloatingInputComponent,
-  LoaderComponent,
-  ApiService,
-  useApi
+  LoaderComponent
 } from '@shared/ui';
+import { ApiService } from '@shared/ui/services/api.service';
+import { useApi } from '@shared/ui/services/use-api.service';
 
 import { of, delay } from 'rxjs';
 

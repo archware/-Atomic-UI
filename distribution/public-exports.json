@@ -1,17 +1,19 @@
 {
   "schemaVersion": 1,
   "targetPackage": "@hra/atomic-ui",
-  "status": "planned",
+  "status": "library-buildable",
   "rootBarrel": "src/app/shared/ui/index.ts",
   "visualLayers": ["atoms", "molecules", "organisms", "surfaces", "templates"],
   "plannedPackageExports": {
     ".": {
-      "status": "blocked",
-      "purpose": "Componentes visuales standalone y tipos públicos compilados"
+      "status": "buildable",
+      "source": "src/app/shared/ui/index.ts",
+      "purpose": "Componentes visuales standalone y tipos públicos compilados (fesm2022 + types)"
     },
-    "./styles": {
-      "status": "source-ready",
-      "source": "src/styles/themes/index.css"
+    "./tokens": {
+      "status": "buildable",
+      "source": "src/styles/themes/tokens.css",
+      "purpose": "Tokens de tema CSS copiados a dist/atomic-ui/tokens por npm run lib:build"
     },
     "./provenance": {
       "status": "available",
@@ -41,6 +43,11 @@
       "reason": "El estado de llamadas API pertenece a la capa de aplicación."
     },
     {
+      "symbol": "useApi",
+      "source": "src/app/shared/ui/services/use-api.service.ts",
+      "reason": "El estado de llamadas API pertenece a la capa de aplicación."
+    },
+    {
       "symbol": "TokenService",
       "source": "src/app/shared/ui/services/token.service.ts",
       "reason": "La gestión de tokens es una responsabilidad de seguridad del consumidor."
@@ -56,6 +63,16 @@
       "reason": "Las reglas de navegación y autorización pertenecen al consumidor."
     },
     {
+      "symbol": "guestGuard",
+      "source": "src/app/shared/ui/guards/auth.guard.ts",
+      "reason": "Las reglas de navegación y autorización pertenecen al consumidor."
+    },
+    {
+      "symbol": "passwordChangeGuard",
+      "source": "src/app/shared/ui/guards/auth.guard.ts",
+      "reason": "Las reglas de navegación y autorización pertenecen al consumidor."
+    },
+    {
       "symbol": "authInterceptor",
       "source": "src/app/shared/ui/interceptors/auth.interceptor.ts",
       "reason": "La política de autenticación HTTP pertenece al consumidor."
@@ -66,9 +83,19 @@
       "reason": "La estrategia de caché depende de los contratos API de cada aplicación."
     },
     {
+      "symbol": "invalidateCache",
+      "source": "src/app/shared/ui/interceptors/cache.interceptor.ts",
+      "reason": "La estrategia de caché depende de los contratos API de cada aplicación."
+    },
+    {
       "symbol": "PermissionDirective",
       "source": "src/app/shared/ui/directives/permission.directive.ts",
       "reason": "Los permisos y roles son reglas de negocio del consumidor."
+    },
+    {
+      "symbol": "GlobalErrorHandlerService",
+      "source": "src/app/shared/ui/services/error-handler.service.ts",
+      "reason": "La captura global de errores y su redirección son política de la aplicación."
     }
   ]
 }
