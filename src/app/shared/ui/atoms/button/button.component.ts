@@ -32,6 +32,9 @@ export type IconPosition = 'left' | 'right' | 'none';
   standalone: true,
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.atomic-button--full-width]': 'fullWidth'
+  },
   template: `
     <button
       [type]="type"
@@ -40,16 +43,16 @@ export type IconPosition = 'left' | 'right' | 'none';
       (click)="onButtonClick($event)"
     >
       <!-- Custom Icon Link (Left) -->
-      <span class="btn-icon-wrapper btn-icon-wrapper--left">
+      <span class="btn-icon-wrapper btn-icon-wrapper--left" aria-hidden="true">
         <ng-content select="[icon-left]"></ng-content>
       </span>
 
       <!-- Configurable Icon (Left) -->
       @if (iconPosition === 'left') {
         @if (icon) {
-          <span class="btn-icon-wrapper btn-icon-wrapper--left btn-icon--emoji">{{ icon }}</span>
+          <span class="btn-icon-wrapper btn-icon-wrapper--left btn-icon--emoji" aria-hidden="true">{{ icon }}</span>
         } @else if (resolvedIconClass) {
-          <span class="btn-icon-wrapper btn-icon-wrapper--left"
+          <span class="btn-icon-wrapper btn-icon-wrapper--left" aria-hidden="true"
             ><i [class]="resolvedIconClass"></i
           ></span>
         }
@@ -61,16 +64,16 @@ export type IconPosition = 'left' | 'right' | 'none';
       <!-- Configurable Icon (Right) -->
       @if (iconPosition === 'right') {
         @if (icon) {
-          <span class="btn-icon-wrapper btn-icon-wrapper--right btn-icon--emoji">{{ icon }}</span>
+          <span class="btn-icon-wrapper btn-icon-wrapper--right btn-icon--emoji" aria-hidden="true">{{ icon }}</span>
         } @else if (resolvedIconClass) {
-          <span class="btn-icon-wrapper btn-icon-wrapper--right"
+          <span class="btn-icon-wrapper btn-icon-wrapper--right" aria-hidden="true"
             ><i [class]="resolvedIconClass"></i
           ></span>
         }
       }
 
       <!-- Custom Icon Link (Right) -->
-      <span class="btn-icon-wrapper btn-icon-wrapper--right">
+      <span class="btn-icon-wrapper btn-icon-wrapper--right" aria-hidden="true">
         <ng-content select="[icon-right]"></ng-content>
       </span>
     </button>
@@ -89,6 +92,11 @@ export type IconPosition = 'left' | 'right' | 'none';
       /* Allow button to control its own dimensions when in grid */
       :host(.auto-size) {
         display: contents;
+      }
+
+      :host(.atomic-button--full-width),
+      :host(.atomic-button--full-width) .btn {
+        width: 100%;
       }
 
       /* Canonical FormDialog close: square, centered and icon-only. */
@@ -193,6 +201,9 @@ export class ButtonComponent {
    * @default false
    */
   @Input() disabled = false;
+
+  /** Expands both the host and the native button to the available width. */
+  @Input() fullWidth = false;
 
   /**
    * Emits when the button is clicked.

@@ -6,6 +6,7 @@ import { AppVersionService } from '../../services/app-version.service';
 export interface SocialLink {
   platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin' | 'github' | 'youtube';
   url: string;
+  label?: string;
 }
 
 export interface LegalLink {
@@ -28,10 +29,13 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
   imports: [CommonModule, VersionComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <footer class="atomic-footer" [class]="'atomic-footer--' + variant">
+    <footer
+      class="atomic-footer"
+      [class]="'atomic-footer--' + variant"
+      [attr.aria-label]="accessibleLabel">
       @if (variant === 'simple') {
         <div class="atomic-footer__container atomic-footer__container--bottom">
-          <span class="atomic-footer__copyright">{{ copyrightLine }}</span>
+          <ng-container *ngTemplateOutlet="copyrightTemplate"></ng-container>
           <ng-container *ngTemplateOutlet="versionTemplate"></ng-container>
         </div>
       }
@@ -45,7 +49,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
             </div>
           }
           <div class="atomic-footer__bottom-row">
-            <span class="atomic-footer__copyright">{{ copyrightLine }}</span>
+            <ng-container *ngTemplateOutlet="copyrightTemplate"></ng-container>
             <ng-container *ngTemplateOutlet="versionTemplate"></ng-container>
           </div>
         </div>
@@ -77,7 +81,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
           </div>
 
           <div class="atomic-footer__bottom-row">
-            <span class="atomic-footer__copyright">{{ copyrightLine }}</span>
+            <ng-container *ngTemplateOutlet="copyrightTemplate"></ng-container>
             <ng-container *ngTemplateOutlet="versionTemplate"></ng-container>
           </div>
         </div>
@@ -90,17 +94,17 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
           class="atomic-footer__social"
           [class.atomic-footer__social--vertical]="vertical"
           [attr.aria-label]="socialTitle">
-          @for (link of socialLinks; track link.platform) {
+          @for (link of socialLinks; track link.url) {
             <a
               class="atomic-footer__social-link"
               [class.atomic-footer__social-link--with-text]="vertical"
               [href]="link.url"
               target="_blank"
               rel="noopener noreferrer"
-              [attr.aria-label]="link.platform">
+              [attr.aria-label]="getSocialLabel(link)">
               <i [class]="getSocialIcon(link.platform)" aria-hidden="true"></i>
               @if (vertical) {
-                <span>{{ link.platform | titlecase }}</span>
+                <span>{{ getSocialLabel(link) }}</span>
               }
             </a>
           }
@@ -119,6 +123,16 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
           }
         </nav>
       }
+    </ng-template>
+
+    <ng-template #copyrightTemplate>
+      <span class="atomic-footer__copyright">
+        <span>{{ copyrightLine }}</span>
+        @if (supportText) {
+          <span class="atomic-footer__separator" aria-hidden="true">{{ supportSeparator }}</span>
+          <span>{{ supportText }}</span>
+        }
+      </span>
     </ng-template>
 
     <ng-template #versionTemplate>
@@ -178,6 +192,10 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
     }
 
     .atomic-footer__copyright {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-2);
       color: var(--text-color-secondary);
       font-size: var(--text-xs);
       font-weight: 500;
@@ -311,9 +329,21 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
 
       .atomic-footer__social,
       .atomic-footer__legal,
-      .atomic-footer__social--vertical {
+      .atomic-footer__social--vertical,
+      .atomic-footer__copyright {
         justify-content: center;
         align-items: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .atomic-footer__social-link,
+      .atomic-footer__legal-link {
+        transition: none;
+      }
+
+      .atomic-footer__social-link:hover {
+        transform: none;
       }
     }
   `]
@@ -322,10 +352,13 @@ export class FooterComponent {
   public readonly versionService = inject(AppVersionService, { optional: true });
 
   @Input() variant: FooterVariant = 'inline';
+  @Input() accessibleLabel = 'Pie de página';
   @Input() companyName = 'Hospital Regional Ayacucho';
-  @Input() year = 2026;
-  @Input() copyrightText = 'Todos los derechos reservados. | Soporte: Sistemas de Información';
+  @Input() year = new Date().getFullYear();
+  @Input() copyrightText = 'Todos los derechos reservados.';
   @Input() copyrightSeparator = ' - ';
+  @Input() supportText = 'Soporte: Sistemas de Información';
+  @Input() supportSeparator = '|';
   @Input() description = '';
   @Input() legalTitle = 'Enlaces legales';
   @Input() socialTitle = 'Redes sociales';
@@ -351,5 +384,18 @@ export class FooterComponent {
       youtube: 'fa-brands fa-youtube'
     };
     return icons[platform];
+  }
+
+  getSocialLabel(link: SocialLink): string {
+    if (link.label) return link.label;
+    const labels: Record<SocialLink['platform'], string> = {
+      facebook: 'Facebook',
+      twitter: 'X',
+      instagram: 'Instagram',
+      linkedin: 'LinkedIn',
+      github: 'GitHub',
+      youtube: 'YouTube'
+    };
+    return labels[link.platform];
   }
 }

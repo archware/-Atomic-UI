@@ -33,9 +33,9 @@ export type CardSize = 'sm' | 'md' | 'lg';
       [class.card--horizontal]="horizontal"
       [attr.tabindex]="clickable ? 0 : null"
       [attr.role]="clickable ? 'button' : null"
-      (click)="onClick()"
-      (keydown.enter)="onClick()"
-      (keydown.space)="onClick(); $event.preventDefault()"
+      (click)="onClick($event)"
+      (keydown.enter)="onClick($event)"
+      (keydown.space)="onClick($event); $event.preventDefault()"
     >
       <!-- Image Slot -->
       <div class="card__image">
@@ -148,7 +148,8 @@ export type CardSize = 'sm' | 'md' | 'lg';
       border-color: var(--primary-color);
     }
 
-    .card--interactive:focus {
+    .card--interactive:focus-visible,
+    .card--clickable:focus-visible {
       outline: none;
       box-shadow: var(--shadow-focus-primary);
     }
@@ -316,9 +317,20 @@ export class CardComponent {
   /** Click event for interactive cards */
   @Output() cardClick = new EventEmitter<void>();
 
-  onClick(): void {
-    if (this.clickable) {
-      this.cardClick.emit();
+  onClick(event?: Event): void {
+    if (!this.clickable) return;
+
+    // Los controles proyectados conservan su propia interacción. El contenido
+    // neutro sigue formando parte de la superficie clicable de la tarjeta.
+    const target = event?.target;
+    const currentTarget = event?.currentTarget;
+    if (target instanceof Element && currentTarget instanceof Element) {
+      const nestedControl = target.closest(
+        'a, button, input, select, textarea, summary, [contenteditable="true"], [role="button"], [role="link"], [tabindex]'
+      );
+      if (nestedControl && nestedControl !== currentTarget) return;
     }
+
+    this.cardClick.emit();
   }
 }

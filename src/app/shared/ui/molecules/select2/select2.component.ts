@@ -39,15 +39,17 @@ export interface Select2Option {
         (click)="$event.stopPropagation(); toggleDropdown()"
         (keydown)="handleKeydown($event)"
         [attr.aria-labelledby]="label ? selectId() : null"
+        [attr.aria-label]="label ? null : ariaLabel || placeholder"
         [attr.aria-controls]="listboxId()"
-        [attr.aria-activedescendant]="highlightedIndex() >= 0 ? optionId(highlightedIndex()) : null"
-        tabindex="0"
+        [attr.aria-activedescendant]="isOpen() && highlightedIndex() >= 0 ? optionId(highlightedIndex()) : null"
+        [attr.aria-disabled]="disabled ? 'true' : 'false'"
+        [attr.tabindex]="disabled ? -1 : 0"
         role="combobox"
         [attr.aria-expanded]="isOpen()"
+        aria-haspopup="listbox"
       >
         @if (label) {
-          <!-- eslint-disable-next-line @angular-eslint/template/label-has-associated-control -->
-          <label class="floating-label" [id]="selectId()">{{ label }}</label>
+          <span class="floating-label" [id]="selectId()">{{ label }}</span>
         }
         <!-- Single value display -->
         @if (!multiple) {
@@ -69,7 +71,12 @@ export interface Select2Option {
             @for (opt of selectedOptions(); track opt.value) {
               <span class="select2-tag">
                 {{ opt.label }}
-                <button type="button" class="tag-remove" (click)="removeTag(opt, $event)">×</button>
+                <button
+                  type="button"
+                  class="tag-remove"
+                  [disabled]="disabled"
+                  [attr.aria-label]="removeTagLabel(opt)"
+                  (click)="removeTag(opt, $event)">×</button>
               </span>
             }
             @if (selectedOptions().length === 0 && !label) {
@@ -79,7 +86,7 @@ export interface Select2Option {
         }
 
         <span class="select2-arrow">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
             <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </span>
@@ -95,16 +102,22 @@ export interface Select2Option {
                 class="search-input"
                 placeholder="Buscar..."
                 [ngModel]="searchTerm()"
-                (ngModelChange)="searchTerm.set($event)"
+                (ngModelChange)="onSearchTermChange($event)"
                 (click)="$event.stopPropagation()"
                 (keydown)="handleKeydown($event)"
+                [attr.aria-label]="searchLabel"
+                autocomplete="off"
               />
-              <span class="search-icon">🔍</span>
+              <span class="search-icon" aria-hidden="true">🔍</span>
             </div>
           }
 
           <!-- Options list -->
-          <div class="select2-options" role="listbox" [id]="listboxId()">
+          <div
+            class="select2-options"
+            role="listbox"
+            [id]="listboxId()"
+            [attr.aria-multiselectable]="multiple ? 'true' : null">
             @for (option of filteredOptions(); track option.value; let i = $index) {
               <div
                 [id]="optionId(i)"
@@ -117,17 +130,18 @@ export interface Select2Option {
                 tabindex="-1"
                 role="option"
                 [attr.aria-selected]="isSelected(option)"
+                [attr.aria-disabled]="option.disabled ? 'true' : null"
               >
                 @if (option.icon) {
-                  <span class="option-icon">{{ option.icon }}</span>
+                  <span class="option-icon" aria-hidden="true">{{ option.icon }}</span>
                 }
                 <span class="option-label">{{ option.label }}</span>
                 @if (isSelected(option)) {
-                  <span class="check-icon">✓</span>
+                  <span class="check-icon" aria-hidden="true">✓</span>
                 }
               </div>
             } @empty {
-              <div class="select2-no-results">No hay resultados</div>
+              <div class="select2-no-results" role="status">No hay resultados</div>
             }
           </div>
         </div>
@@ -153,6 +167,11 @@ export interface Select2Option {
     .select2-wrapper.disabled {
       opacity: 0.6;
       pointer-events: none;
+    }
+
+    .select2-wrapper.disabled .select2-trigger,
+    .tag-remove:disabled {
+      cursor: not-allowed;
     }
 
     .select2-wrapper.has-label {
@@ -222,6 +241,12 @@ export interface Select2Option {
     }
 
     .select2-wrapper.focused .select2-trigger {
+      border-color: var(--input-border-focus);
+      box-shadow: var(--input-shadow-focus);
+    }
+
+    .select2-trigger:focus-visible {
+      outline: none;
       border-color: var(--input-border-focus);
       box-shadow: var(--input-shadow-focus);
     }
@@ -434,15 +459,29 @@ export interface Select2Option {
 export class Select2Component implements ControlValueAccessor {
   @Input()
   set options(value: Select2Option[]) {
-    this._options = value || [];
+    this._options = [...(value || [])];
     this.reconcilePendingValue();
+    this.ensureEnabledHighlight();
   }
   get options(): Select2Option[] {
     return this._options;
   }
   @Input() label = '';
+  @Input() ariaLabel = '';
   @Input() placeholder = 'Seleccionar...';
-  @Input() disabled = false;
+  @Input() searchLabel = 'Buscar opciones';
+  @Input()
+  set disabled(value: boolean) {
+    this.disabledState.set(value);
+    if (value) {
+      this.isOpen.set(false);
+      this.searchTerm.set('');
+      this.highlightedIndex.set(-1);
+    }
+  }
+  get disabled(): boolean {
+    return this.disabledState();
+  }
   @Input() searchable = true;
   @Input() multiple = false;
   @Input() width = ''; // Optional: e.g., '200px', '50%', 'auto'
@@ -454,6 +493,7 @@ export class Select2Component implements ControlValueAccessor {
   selectedOptions = signal<Select2Option[]>([]);
   highlightedIndex = signal(-1);
   private _options: Select2Option[] = [];
+  private readonly disabledState = signal(false);
   private pendingValue: unknown = null;
 
   // Generate unique ID for accessibility (aria-labelledby)
@@ -488,13 +528,7 @@ export class Select2Component implements ControlValueAccessor {
     if (!this.disabled) {
       this.isOpen.update(v => !v);
       if (this.isOpen()) {
-        const options = this.filteredOptions();
-        let selectedIdx = 0;
-        if (!this.multiple && this.selectedOption()) {
-           selectedIdx = options.findIndex(o => o.value === this.selectedOption()!.value);
-           if (selectedIdx === -1) selectedIdx = 0;
-        }
-        this.highlightedIndex.set(selectedIdx);
+        this.ensureEnabledHighlight();
         
         // Focus search input if searchable
         if (this.searchable) {
@@ -520,7 +554,7 @@ export class Select2Component implements ControlValueAccessor {
     if (this.disabled) return;
 
     const options = this.filteredOptions();
-    const maxIndex = options.length - 1;
+    const isSearchInput = (event.target as HTMLElement | null)?.classList.contains('search-input');
 
     switch (event.key) {
       case 'ArrowDown':
@@ -528,18 +562,22 @@ export class Select2Component implements ControlValueAccessor {
         if (!this.isOpen()) {
           this.toggleDropdown();
         } else {
-          this.highlightedIndex.update(i => (i < maxIndex ? i + 1 : i));
+          this.highlightedIndex.set(this.nextEnabledIndex(options, this.highlightedIndex(), 1));
           this.scrollToHighlighted();
         }
         break;
       case 'ArrowUp':
         event.preventDefault();
-        this.highlightedIndex.update(i => (i > 0 ? i - 1 : 0));
-        this.scrollToHighlighted();
+        if (!this.isOpen()) {
+          this.toggleDropdown();
+        } else {
+          this.highlightedIndex.set(this.nextEnabledIndex(options, this.highlightedIndex(), -1));
+          this.scrollToHighlighted();
+        }
         break;
       case 'Enter':
       case ' ':
-        if (event.key === ' ' && this.searchTerm() !== '') return; // Allow space in search
+        if (event.key === ' ' && isSearchInput) return;
         event.preventDefault();
         if (!this.isOpen()) {
           this.toggleDropdown();
@@ -578,6 +616,7 @@ export class Select2Component implements ControlValueAccessor {
   }
 
   selectOption(option: Select2Option): void {
+    if (this.disabled || option.disabled) return;
     if (this.multiple) {
       const current = this.selectedOptions();
       if (this.isSelected(option)) {
@@ -603,6 +642,7 @@ export class Select2Component implements ControlValueAccessor {
 
   removeTag(option: Select2Option, event: Event): void {
     event.stopPropagation();
+    if (this.disabled) return;
     const current = this.selectedOptions();
     this.selectedOptions.set(current.filter(o => o.value !== option.value));
     const values = this.selectedOptions().map(o => o.value);
@@ -643,6 +683,15 @@ export class Select2Component implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+  }
+
+  onSearchTermChange(value: string): void {
+    this.searchTerm.set(value);
+    this.highlightedIndex.set(this.nextEnabledIndex(this.filteredOptions(), -1, 1));
+  }
+
+  removeTagLabel(option: Select2Option): string {
+    return `Quitar ${option.label}`;
   }
 
   /** Limpia selecciones actuales */
@@ -686,5 +735,29 @@ export class Select2Component implements ControlValueAccessor {
     } else {
       this.applyIncomingValue(this.selectedOption()?.value);
     }
+  }
+
+  private ensureEnabledHighlight(): void {
+    if (!this.isOpen()) return;
+    const options = this.filteredOptions();
+    const current = this.highlightedIndex();
+    if (current >= 0 && options[current] && !options[current].disabled) return;
+
+    const selectedValue = !this.multiple ? this.selectedOption()?.value : undefined;
+    const selected = options.findIndex(option => option.value === selectedValue && !option.disabled);
+    this.highlightedIndex.set(selected >= 0 ? selected : this.nextEnabledIndex(options, -1, 1));
+  }
+
+  private nextEnabledIndex(
+    options: readonly Select2Option[],
+    current: number,
+    direction: 1 | -1
+  ): number {
+    let index = current;
+    if (index < 0) index = direction === 1 ? -1 : options.length;
+    for (index += direction; index >= 0 && index < options.length; index += direction) {
+      if (!options[index].disabled) return index;
+    }
+    return current >= 0 && options[current] && !options[current].disabled ? current : -1;
   }
 }

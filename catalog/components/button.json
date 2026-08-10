@@ -58,6 +58,13 @@
         { "value": "submit", "meaning": "Envía el formulario contenedor." },
         { "value": "reset", "meaning": "Restablece el formulario contenedor." }
       ]
+    },
+    {
+      "name": "width",
+      "values": [
+        { "value": "intrinsic", "meaning": "El control conserva el ancho de su etiqueta.", "default": true },
+        { "value": "full", "meaning": "El host y el botón nativo ocupan todo el ancho disponible." }
+      ]
     }
   ],
   "inputs": [
@@ -68,7 +75,8 @@
     { "name": "icon", "type": "string", "default": "", "meaning": "Emoji o texto iconográfico." },
     { "name": "iconClass", "type": "string", "default": "", "meaning": "Alias o clases Font Awesome normalizadas." },
     { "name": "iconPosition", "type": "IconPosition", "default": "left", "meaning": "Posición del icono configurado." },
-    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Bloquea interacción y emisión." }
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Bloquea interacción y emisión." },
+    { "name": "fullWidth", "type": "boolean", "default": false, "meaning": "Expande el host y el botón nativo al ancho disponible." }
   ],
   "outputs": [
     { "name": "buttonClick", "type": "MouseEvent", "meaning": "Clic válido; no emite si disabled y detiene propagación." }
@@ -86,10 +94,12 @@
   "a11y": [
     "Usa button nativo y disabled nativo.",
     "La etiqueta proyectada debe proporcionar el nombre accesible.",
-    "Los iconos configurados no reciben aria-hidden automáticamente; el consumidor debe evitar botones sin texto accesible."
+    "Los iconos configurados y proyectados son decorativos y se excluyen del nombre accesible mediante aria-hidden.",
+    "El contenido textual proyectado debe proporcionar el nombre accesible."
   ],
   "responsive": [
-    "No define media queries; el host es block y admite las clases de host inline y auto-size."
+    "No define media queries; fullWidth permite que el control ocupe el ancho disponible sin estilizar su estructura interna desde el consumidor.",
+    "El host admite también las clases estructurales inline y auto-size."
   ],
   "tokens": [
     "--button-primary-bg",

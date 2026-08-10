@@ -59,50 +59,59 @@ export interface ComboboxOption {
           autocomplete="off"
           role="combobox"
           [attr.aria-expanded]="isOpen()"
-          [attr.aria-autocomplete]="'list'"
+          aria-autocomplete="list"
           [attr.aria-controls]="listboxId"
+          [attr.aria-activedescendant]="activeOptionId()"
+          [attr.aria-label]="label ? null : ariaLabel || placeholder"
+          [attr.aria-invalid]="error ? 'true' : 'false'"
+          [attr.aria-errormessage]="error ? errorId : null"
           aria-haspopup="listbox"
         />
         @if (inputValue() && !disabled && clearable) {
-          <button type="button" class="combobox-clear" (click)="clear()" aria-label="Limpiar">
-            <i class="fa-solid fa-xmark"></i>
+          <button
+            type="button"
+            class="combobox-clear"
+            (mousedown)="$event.preventDefault()"
+            (click)="clear()"
+            [attr.aria-label]="'Limpiar ' + (label || placeholder)">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
           </button>
         } @else {
-          <span class="combobox-icon"><i class="fa-solid fa-chevron-down"></i></span>
+          <span class="combobox-icon" aria-hidden="true"><i class="fa-solid fa-chevron-down"></i></span>
         }
       </div>
 
-      @if (isOpen() && filteredOptions().length > 0) {
+      @if (isOpen()) {
         <ul class="combobox-dropdown" role="listbox" [id]="listboxId">
           @for (option of filteredOptions(); track option.value; let i = $index) {
             <li
+              [id]="optionId(i)"
               class="combobox-option"
               [class.combobox-option-highlighted]="i === highlightedIndex()"
               [class.combobox-option-selected]="option.value === value"
               [class.combobox-option-disabled]="option.disabled"
               role="option"
               [attr.aria-selected]="option.value === value"
-              (mousedown)="selectOption(option)"
-              (mouseenter)="highlightedIndex.set(i)"
+              [attr.aria-disabled]="option.disabled ? 'true' : null"
+              (mousedown)="onOptionPointerDown(option, $event)"
+              (mouseenter)="highlightOption(option, i)"
             >
               <span class="combobox-option-label">{{ option.label }}</span>
               @if (option.value === value) {
                 <i class="fa-solid fa-check combobox-check" aria-hidden="true"></i>
               }
             </li>
+          } @empty {
+            <li class="combobox-empty" role="presentation">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              <span role="status">Sin resultados para "{{ inputValue() }}"</span>
+            </li>
           }
         </ul>
       }
 
-      @if (isOpen() && filteredOptions().length === 0) {
-        <div class="combobox-empty">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <span>Sin resultados para "{{ inputValue() }}"</span>
-        </div>
-      }
-
       @if (error) {
-        <span class="combobox-error">{{ error }}</span>
+        <span class="combobox-error" [id]="errorId" role="alert">{{ error }}</span>
       }
     </div>
   `,
@@ -207,14 +216,6 @@ export interface ComboboxOption {
       padding: var(--space-3);
       color: var(--text-color-muted);
       font-size: var(--text-sm);
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0; right: 0;
-      background: var(--surface-background);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-lg);
-      z-index: 1000;
     }
 
     .combobox-error {
@@ -229,11 +230,28 @@ export class ComboboxComponent implements ControlValueAccessor {
   private readonly platformId = inject(PLATFORM_ID);
   readonly inputId = 'combobox-input-' + Math.random().toString(36).slice(2, 8);
   readonly listboxId = 'combobox-list-' + Math.random().toString(36).slice(2, 8);
+  readonly errorId = 'combobox-error-' + Math.random().toString(36).slice(2, 8);
 
-  @Input() options: ComboboxOption[] = [];
+  @Input()
+  set options(value: ComboboxOption[]) {
+    this._options = [...(value || [])];
+    this.optionsState.set(this._options);
+    this.reconcileSelection();
+  }
+  get options(): ComboboxOption[] {
+    return this._options;
+  }
   @Input() label = '';
+  @Input() ariaLabel = '';
   @Input() placeholder = 'Buscar...';
-  @Input() disabled = false;
+  @Input()
+  set disabled(value: boolean) {
+    this.disabledState.set(value);
+    if (value) this.closeOptions();
+  }
+  get disabled(): boolean {
+    return this.disabledState();
+  }
   @Input() clearable = true;
   @Input() error = '';
 
@@ -246,13 +264,20 @@ export class ComboboxComponent implements ControlValueAccessor {
   inputValue = signal('');
   isOpen = signal(false);
   highlightedIndex = signal(-1);
+  private _options: ComboboxOption[] = [];
+  private readonly disabledState = signal(false);
+  private readonly optionsState = signal<readonly ComboboxOption[]>([]);
 
   filteredOptions = computed(() => {
     const query = this.inputValue().toLowerCase().trim();
-    if (!query) return this.options.filter(o => !o.disabled);
-    return this.options.filter(o =>
-      !o.disabled && o.label.toLowerCase().includes(query)
-    );
+    const options = this.optionsState();
+    if (!query) return options;
+    return options.filter(o => o.label.toLowerCase().includes(query));
+  });
+
+  activeOptionId = computed(() => {
+    const index = this.highlightedIndex();
+    return this.isOpen() && index >= 0 ? this.optionId(index) : null;
   });
 
   private onChange: (v: string | number | null) => void = () => {};
@@ -260,8 +285,7 @@ export class ComboboxComponent implements ControlValueAccessor {
 
   writeValue(val: string | number | null): void {
     this.value = val;
-    const opt = this.options.find(o => o.value === val);
-    this.inputValue.set(opt ? opt.label : '');
+    this.reconcileSelection();
   }
 
   registerOnChange(fn: (v: string | number | null) => void): void { this.onChange = fn; }
@@ -275,13 +299,18 @@ export class ComboboxComponent implements ControlValueAccessor {
     this.highlightedIndex.set(-1);
     this.inputChange.emit(val);
 
-    if (!val) {
+    const selected = this.optionsState().find(option => option.value === this.value);
+    if (this.value !== null && (!selected || selected.label !== val)) {
       this.value = null;
       this.onChange(null);
     }
   }
 
-  onFocus(): void { this.isOpen.set(true); }
+  onFocus(): void {
+    if (this.disabled) return;
+    this.isOpen.set(true);
+    this.ensureEnabledHighlight();
+  }
 
   onBlur(): void {
     this.onTouched();
@@ -289,16 +318,18 @@ export class ComboboxComponent implements ControlValueAccessor {
   }
 
   onKeydown(event: KeyboardEvent): void {
+    if (this.disabled) return;
     const opts = this.filteredOptions();
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault();
-        this.highlightedIndex.set(Math.min(this.highlightedIndex() + 1, opts.length - 1));
         this.isOpen.set(true);
+        this.highlightedIndex.set(this.nextEnabledIndex(opts, this.highlightedIndex(), 1));
         break;
       case 'ArrowUp':
         event.preventDefault();
-        this.highlightedIndex.set(Math.max(this.highlightedIndex() - 1, 0));
+        this.isOpen.set(true);
+        this.highlightedIndex.set(this.nextEnabledIndex(opts, this.highlightedIndex(), -1));
         break;
       case 'Enter':
         event.preventDefault();
@@ -313,22 +344,72 @@ export class ComboboxComponent implements ControlValueAccessor {
   }
 
   selectOption(option: ComboboxOption): void {
-    if (option.disabled) return;
+    if (this.disabled || option.disabled) return;
     this.value = option.value;
     this.inputValue.set(option.label);
-    this.isOpen.set(false);
-    this.highlightedIndex.set(-1);
+    this.closeOptions();
     this.onChange(option.value);
+    this.onTouched();
     this.optionSelected.emit(option);
   }
 
   clear(): void {
+    if (this.disabled) return;
     this.value = null;
     this.inputValue.set('');
-    this.isOpen.set(false);
+    this.closeOptions();
     this.onChange(null);
+    this.onTouched();
+    this.inputChange.emit('');
     if (isPlatformBrowser(this.platformId)) {
       this.inputRef?.nativeElement.focus();
     }
+  }
+
+  optionId(index: number): string {
+    return `${this.listboxId}-option-${index}`;
+  }
+
+  onOptionPointerDown(option: ComboboxOption, event: MouseEvent): void {
+    event.preventDefault();
+    this.selectOption(option);
+  }
+
+  highlightOption(option: ComboboxOption, index: number): void {
+    if (!option.disabled) this.highlightedIndex.set(index);
+  }
+
+  private reconcileSelection(): void {
+    if (this.value === null) return;
+    const option = this.optionsState().find(candidate => candidate.value === this.value);
+    this.inputValue.set(option?.label || '');
+    this.ensureEnabledHighlight();
+  }
+
+  private ensureEnabledHighlight(): void {
+    if (!this.isOpen()) return;
+    const options = this.filteredOptions();
+    const current = this.highlightedIndex();
+    if (current >= 0 && options[current] && !options[current].disabled) return;
+    const selected = options.findIndex(option => option.value === this.value && !option.disabled);
+    this.highlightedIndex.set(selected >= 0 ? selected : this.nextEnabledIndex(options, -1, 1));
+  }
+
+  private nextEnabledIndex(
+    options: readonly ComboboxOption[],
+    current: number,
+    direction: 1 | -1
+  ): number {
+    let index = current;
+    if (index < 0) index = direction === 1 ? -1 : options.length;
+    for (index += direction; index >= 0 && index < options.length; index += direction) {
+      if (!options[index].disabled) return index;
+    }
+    return current >= 0 && options[current] && !options[current].disabled ? current : -1;
+  }
+
+  private closeOptions(): void {
+    this.isOpen.set(false);
+    this.highlightedIndex.set(-1);
   }
 }

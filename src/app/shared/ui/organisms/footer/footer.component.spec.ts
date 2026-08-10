@@ -20,6 +20,8 @@ describe('FooterComponent', () => {
     expect(element.textContent).toContain(
       '© 2026 Hospital Regional Ayacucho - Todos los derechos reservados.'
     );
+    expect(element.textContent).toContain('Soporte: Sistemas de Información');
+    expect(element.querySelector('footer')?.getAttribute('aria-label')).toBe('Pie de página');
     expect(element.querySelector('app-version')).not.toBeNull();
     expect(element.querySelector('.atomic-version__date')).toBeNull();
   });
@@ -62,5 +64,20 @@ describe('FooterComponent', () => {
       '.atomic-version__env'
     );
     expect(environment?.textContent?.trim()).toBe('PRODUCTION');
+  });
+
+  it('uses a human-readable social label and allows an explicit override', () => {
+    const fixture = TestBed.createComponent(FooterComponent);
+    fixture.componentRef.setInput('socialLinks', [
+      { platform: 'twitter', url: 'https://x.com/example' },
+      { platform: 'github', url: 'https://github.com/example', label: 'Código institucional' }
+    ]);
+    fixture.detectChanges();
+
+    const links = (fixture.nativeElement as HTMLElement).querySelectorAll(
+      '.atomic-footer__social-link'
+    );
+    expect(links[0].getAttribute('aria-label')).toBe('X');
+    expect(links[1].getAttribute('aria-label')).toBe('Código institucional');
   });
 });

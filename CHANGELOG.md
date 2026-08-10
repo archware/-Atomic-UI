@@ -1,7 +1,7 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.5.1"
+version: "5.5.2"
 status: "vigente"
 updated: "2026-08-10"
 owner: "Hospital Regional de Ayacucho"
@@ -14,6 +14,48 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.5.2] - 2026-08-10
+
+### Mejorado
+
+- Se amplió el contrato accesible de `combobox` y `select2`: ambos exponen un
+  nombre cuando no existe etiqueta visible, anuncian opciones deshabilitadas,
+  omiten esas opciones durante la navegación por teclado y rehidratan las
+  etiquetas seleccionadas cuando cambia un catálogo asíncrono. `select2`
+  identifica además cada acción de retiro en selecciones múltiples.
+- Las tarjetas clicables muestran foco para todas sus variantes y ya no activan
+  su evento cuando la interacción pertenece a un control proyectado. La tarjeta
+  enfocada conserva la elevación de capa requerida por listas desplegables.
+- El pie separa la información de soporte de la declaración legal, incorpora
+  etiquetas legibles para redes sociales, respeta movimiento reducido y usa el
+  año corriente como valor predeterminado.
+- `ButtonComponent` incorpora `fullWidth`, un contrato tipado que expande tanto
+  el host como el botón nativo. El blueprint de acceso lo utiliza en sus
+  acciones primarias y declara propósitos de autocompletado. Los iconos
+  decorativos quedan fuera del nombre accesible para que los lectores de
+  pantalla anuncien solamente la etiqueta de la acción.
+- El diálogo mantiene el overlay como superficie pasiva, mueve el foco inicial
+  al contenido, encierra el recorrido con Tab, restaura el disparador al
+  cerrarse y reserva separación inferior segura en pantallas reducidas.
+- Los errores remotos entregados a `FormErrorComponent` se presentan aunque no
+  exista un control de formulario asociado. El blueprint de acceso evita
+  efectos creados fuera del contexto de inyección y recupera sus estados de
+  confirmación visibles.
+
+### Verificación
+
+- Se añadieron pruebas de foco, apilamiento, ancho adaptable, estados
+  deshabilitados, ARIA, selección asíncrona, retiro de etiquetas, pie y
+  recuperación del foco del diálogo. Storybook incorpora escenarios de capa,
+  pantalla reducida, modo oscuro y controles de ancho completo.
+- Las historias modificadas declaran identificadores HTML válidos y estables,
+  de modo que Storybook puede renderizarlas aunque su título visual conserve la
+  numeración de la jerarquía Atomic Design.
+- La versión de fuente y biblioteca avanza a `5.5.2`. El manifiesto registra
+  156 fuentes y la huella de árbol
+  `59d53f85b43a27817d094062a0568c58ba6fc8e8baf6ecd3c7e85900420536f0`;
+  las 325 pruebas unitarias completan sin fallos.
 
 ## [5.5.1] - 2026-08-10
 

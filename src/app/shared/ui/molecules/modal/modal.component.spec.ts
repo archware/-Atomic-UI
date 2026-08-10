@@ -1,5 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalComponent } from './modal.component';
 
 describe('ModalComponent', () => {
@@ -138,6 +138,52 @@ describe('ModalComponent', () => {
     it('should have aria-label on the close button', () => {
       const closeBtn: HTMLButtonElement = fixture.nativeElement.querySelector('.modal-close');
       expect(closeBtn.getAttribute('aria-label')).toBeTruthy();
+    });
+
+    it('keeps the backdrop passive and labels the dialog from its visible title', () => {
+      const overlay = fixture.nativeElement.querySelector('.modal-overlay') as HTMLElement;
+      const modal = fixture.nativeElement.querySelector('.modal') as HTMLElement;
+      const title = fixture.nativeElement.querySelector('.modal-title') as HTMLElement;
+
+      expect(overlay.getAttribute('role')).toBeNull();
+      expect(overlay.getAttribute('tabindex')).toBeNull();
+      expect(modal.getAttribute('aria-labelledby')).toBe(title.id);
+    });
+
+    it('moves initial focus into the dialog', async () => {
+      await Promise.resolve();
+
+      const close = fixture.nativeElement.querySelector('.modal-close') as HTMLButtonElement;
+      expect(document.activeElement).toBe(close);
+    });
+
+    it('cycles focus inside the dialog on Tab', async () => {
+      await Promise.resolve();
+      const close = fixture.nativeElement.querySelector('.modal-close') as HTMLButtonElement;
+      const event = new KeyboardEvent('keydown', {
+        key: 'Tab',
+        bubbles: true,
+        cancelable: true,
+      });
+
+      close.dispatchEvent(event);
+
+      expect(event.defaultPrevented).toBeTrue();
+      expect(document.activeElement).toBe(close);
+    });
+
+    it('restores focus when the dialog is destroyed', async () => {
+      const trigger = document.createElement('button');
+      document.body.appendChild(trigger);
+      trigger.focus();
+      const localFixture = TestBed.createComponent(ModalComponent);
+      localFixture.detectChanges();
+      await Promise.resolve();
+
+      localFixture.destroy();
+
+      expect(document.activeElement).toBe(trigger);
+      trigger.remove();
     });
   });
 });

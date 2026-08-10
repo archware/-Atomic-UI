@@ -3,6 +3,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
 
 const meta: Meta<ButtonComponent> = {
+  id: 'atoms-button',
   title: '1. Atoms/Button',
   component: ButtonComponent,
   tags: ['autodocs'],
@@ -25,6 +26,10 @@ const meta: Meta<ButtonComponent> = {
     disabled: {
       control: 'boolean',
       description: 'Whether the button is disabled',
+    },
+    fullWidth: {
+      control: 'boolean',
+      description: 'Expande el host y el botón al ancho disponible',
     },
     type: {
       control: 'select',
@@ -172,6 +177,23 @@ export const AllVariants: Story = {
         <app-button variant="danger">Danger</app-button>
         <app-button variant="outline">Outline</app-button>
         <app-button variant="ghost">Ghost</app-button>
+      </div>
+    `,
+  }),
+};
+
+export const FullWidth: Story = {
+  args: {
+    variant: 'primary',
+    fullWidth: true,
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+      <div style="width:min(100%, 24rem);">
+        <app-button [variant]="variant" [fullWidth]="fullWidth">
+          Continuar
+        </app-button>
       </div>
     `,
   }),

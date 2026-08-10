@@ -1,9 +1,9 @@
-import { Component, inject, signal, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import {
   AuthLayoutComponent,
   FloatingInputComponent,
@@ -71,6 +71,7 @@ interface ForgotPasswordResponse {
 @Component({
   selector: 'app-login-page',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
     AuthLayoutComponent,
@@ -207,33 +208,25 @@ export class LoginPageComponent {
 
     const { email, rememberMe } = this.loginForm.value;
 
-    // MOCK LOGIN FOR DEMO PURPOSE (Enable real API by uncommenting line below)
-    this.loginApi.execute(
-      new Observable(observer => {
+    // Solicitud aislada de demostración. El consumidor reemplaza esta variable
+    // por this.api.post<LoginResponse>('/auth/login', { email, password }).
+    const request = new Observable<LoginResponse>(observer => {
         setTimeout(() => {
           observer.next({
             token: 'mock-jwt-token-123456',
             user: {
               id: '1',
-              name: 'Demo User',
+              name: 'Usuario de demostración',
               email: email || 'demo@example.com'
             }
           });
           observer.complete();
         }, 1500);
-      })
-      // this.api.post<LoginResponse>('/auth/login', { email, password })
-    );
-
-    // Handle successful login using effect() for automatic cleanup
-    effect(() => {
-      if (this.loginApi.success()) {
-        const response = this.loginApi.data();
-        if (response) {
-          this.handleLoginSuccess(response, rememberMe ?? false);
-        }
-      }
     });
+
+    this.loginApi.execute(
+      request.pipe(tap(response => this.handleLoginSuccess(response, rememberMe ?? false)))
+    );
   }
 
   onRegister(): void {
@@ -265,18 +258,12 @@ export class LoginPageComponent {
     const { email } = this.forgotForm.value;
 
     this.forgotApi.execute(
-      this.api.post<ForgotPasswordResponse>('/auth/forgot-password', { email })
+      this.api.post<ForgotPasswordResponse>('/auth/forgot-password', { email }).pipe(
+        tap(response => this.forgotSuccessMessage.set(
+          response.message || 'Se ha enviado un correo con instrucciones'
+        ))
+      )
     );
-
-    // Handle success using effect() for automatic cleanup
-    effect(() => {
-      if (this.forgotApi.success()) {
-        const response = this.forgotApi.data();
-        if (response) {
-          this.forgotSuccessMessage.set(response.message || 'Se ha enviado un correo con instrucciones');
-        }
-      }
-    });
   }
 
   // ============================================

@@ -33,4 +33,59 @@ describe('CardComponent', () => {
     expect(getComputedStyle(card).position).toBe('relative');
     expect(getComputedStyle(card).zIndex).toBe('50');
   });
+
+  it('provides a visible keyboard focus treatment for every clickable variant', () => {
+    fixture.componentRef.setInput('clickable', true);
+    fixture.componentRef.setInput('variant', 'default');
+    fixture.detectChanges();
+
+    const card = (fixture.nativeElement as HTMLElement).querySelector('.card') as HTMLElement;
+    card.focus();
+
+    expect(card.tabIndex).toBe(0);
+    expect(getComputedStyle(card).boxShadow).not.toBe('none');
+  });
+
+  it('does not activate the card when a projected control handles the interaction', () => {
+    fixture.componentRef.setInput('clickable', true);
+    fixture.detectChanges();
+    const emitted = jasmine.createSpy('cardClick');
+    fixture.componentInstance.cardClick.subscribe(emitted);
+
+    const card = (fixture.nativeElement as HTMLElement).querySelector('.card') as HTMLElement;
+    const nestedButton = document.createElement('button');
+    card.querySelector('.card__body')?.appendChild(nestedButton);
+
+    nestedButton.click();
+    nestedButton.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+
+    expect(emitted).not.toHaveBeenCalled();
+  });
+
+  it('keeps neutral projected content inside the clickable surface', () => {
+    fixture.componentRef.setInput('clickable', true);
+    fixture.detectChanges();
+    const emitted = jasmine.createSpy('cardClick');
+    fixture.componentInstance.cardClick.subscribe(emitted);
+
+    const card = (fixture.nativeElement as HTMLElement).querySelector('.card') as HTMLElement;
+    const projectedText = document.createElement('span');
+    card.querySelector('.card__body')?.appendChild(projectedText);
+
+    projectedText.click();
+
+    expect(emitted).toHaveBeenCalledTimes(1);
+  });
+
+  it('activates the clickable card from its own keyboard target', () => {
+    fixture.componentRef.setInput('clickable', true);
+    fixture.detectChanges();
+    const emitted = jasmine.createSpy('cardClick');
+    fixture.componentInstance.cardClick.subscribe(emitted);
+    const card = (fixture.nativeElement as HTMLElement).querySelector('.card') as HTMLElement;
+
+    card.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+
+    expect(emitted).toHaveBeenCalledTimes(1);
+  });
 });

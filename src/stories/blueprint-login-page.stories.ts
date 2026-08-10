@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginPageComponent } from '../blueprints/login-page/login-page.component';
 
 const meta: Meta<LoginPageComponent> = {
+  id: 'blueprints-login-page',
   title: '5. Blueprints/Login Page',
   component: LoginPageComponent,
   tags: ['autodocs'],
@@ -24,7 +25,7 @@ const meta: Meta<LoginPageComponent> = {
     docs: {
       description: {
         component: `
-## Login Page Blueprint
+## Blueprint de acceso
 
 Página de autenticación completa con:
 - **Login**: Formulario con email/password
@@ -67,6 +68,20 @@ export const DarkMode: Story = {
   render: () => ({
     template: `
       <div style="height: 100vh;" class="dark-theme" data-theme="dark">
+        <app-login-page></app-login-page>
+      </div>
+    `,
+  }),
+};
+
+export const Mobile: Story = {
+  name: 'Acceso en pantalla reducida',
+  parameters: {
+    viewport: { defaultViewport: 'mobile1' },
+  },
+  render: () => ({
+    template: `
+      <div style="height: 100dvh;">
         <app-login-page></app-login-page>
       </div>
     `,

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { FooterComponent, SocialLink, LegalLink } from '../app/shared/ui/organisms/footer/footer.component';
 
 const meta: Meta<FooterComponent> = {
+  id: 'organisms-footer',
   title: '3. Organisms/Footer',
   component: FooterComponent,
   tags: ['autodocs'],
@@ -46,16 +47,16 @@ const legalLinks: LegalLink[] = [
 export const Simple: Story = {
   args: {
     variant: 'simple',
-    companyName: 'Atomic UI',
-    year: 2025,
+    companyName: 'Hospital Regional Ayacucho',
+    year: 2026,
   },
 };
 
 export const Inline: Story = {
   args: {
     variant: 'inline',
-    companyName: 'Atomic UI',
-    year: 2025,
+    companyName: 'Hospital Regional Ayacucho',
+    year: 2026,
     socialLinks: socialLinks,
     legalLinks: legalLinks,
   },
@@ -64,9 +65,9 @@ export const Inline: Story = {
 export const Columns: Story = {
   args: {
     variant: 'columns',
-    companyName: 'Atomic UI',
-    year: 2025,
-    description: 'A modern UI component library based on Atomic Design for Angular.',
+    companyName: 'Hospital Regional Ayacucho',
+    year: 2026,
+    description: 'Servicios digitales institucionales para la atención hospitalaria.',
     socialLinks: socialLinks,
     legalLinks: legalLinks,
   },

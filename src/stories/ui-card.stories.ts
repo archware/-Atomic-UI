@@ -1,14 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
+import { FormsModule } from '@angular/forms';
 import { CardComponent } from '../app/shared/ui/molecules/card/card.component';
+import { ComboboxComponent } from '../app/shared/ui/molecules/combobox/combobox.component';
+import { Select2Component } from '../app/shared/ui/molecules/select2/select2.component';
 
 const meta: Meta<CardComponent> = {
+  id: 'molecules-card',
   title: '2. Molecules/Card',
   component: CardComponent,
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      imports: [CardComponent],
+      imports: [CardComponent, ComboboxComponent, FormsModule, Select2Component],
     }),
   ],
   argTypes: {
@@ -103,6 +107,29 @@ export const AllVariants: Story = {
         </app-card>
         <app-card title="Interactive" variant="interactive" size="sm" [clickable]="true" style="width:180px;">
           <p style="margin:0; font-size:0.875rem;">Contenido</p>
+        </app-card>
+      </div>
+    `,
+  }),
+};
+
+export const FocusAndLayering: Story = {
+  name: 'Foco y superposición entre tarjetas',
+  render: () => ({
+    props: {
+      options: [
+        { value: 'aya', label: 'Ayacucho' },
+        { value: 'hua', label: 'Huamanga' },
+        { value: 'blocked', label: 'No disponible', disabled: true },
+      ],
+    },
+    template: `
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(16rem,1fr)); gap:var(--space-4); padding:var(--space-6);">
+        <app-card title="Búsqueda" variant="elevated">
+          <app-combobox label="Provincia" [options]="options"></app-combobox>
+        </app-card>
+        <app-card title="Selección" variant="elevated">
+          <app-select2 label="Distrito" [options]="options"></app-select2>
         </app-card>
       </div>
     `,

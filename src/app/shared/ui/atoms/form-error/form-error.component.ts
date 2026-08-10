@@ -68,6 +68,7 @@ export class FormErrorComponent {
   @Input() showOnTouched = true;
 
   get showError(): boolean {
+    if (this.customMessage) return true;
     if (!this.control) return false;
 
     if (this.showOnTouched) {

@@ -1,5 +1,23 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+  ViewChild
+} from '@angular/core';
 
+const MODAL_FOCUSABLE_SELECTOR = [
+  'button:not([disabled])',
+  '[href]',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])'
+].join(',');
 
 @Component({
   selector: 'app-modal',
@@ -8,28 +26,25 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="modal-overlay"
-      (click)="onBackdropClick()"
-      (keydown.escape)="onEscape()"
-      (keydown.enter)="onBackdropClick()"
-      (keydown.space)="onBackdropClick(); $event.preventDefault()"
-      tabindex="0"
-      role="button"
-      aria-label="Cerrar modal"
+      (pointerdown)="onBackdropClick($event)"
     >
-      <div class="modal"
-        (click)="$event.stopPropagation()"
-        (keydown.enter)="$event.stopPropagation()"
-        (keydown.space)="$event.stopPropagation()"
+      <div #dialogRef class="modal"
+        (pointerdown)="$event.stopPropagation()"
+        (keydown)="onOverlayKeydown($event)"
         role="dialog"
         aria-modal="true"
+        tabindex="-1"
+        [attr.aria-labelledby]="titleId"
         [class.modal-sm]="size === 'sm'"
         [class.modal-md]="size === 'md'"
         [class.modal-lg]="size === 'lg'"
       >
         <!-- Header -->
         <div class="modal-header">
-          <h3 class="modal-title">{{ title }}</h3>
-          <button class="modal-close" (click)="closed.emit()" type="button" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+          <h3 class="modal-title" [id]="titleId">{{ title }}</h3>
+          <button class="modal-close" (click)="closed.emit()" type="button" aria-label="Cerrar">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
         </div>
 
         <!-- Body -->
@@ -76,6 +91,8 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
         flex-direction: column;
         margin: auto;
         position: relative;
+        max-height: calc(100dvh - var(--space-8));
+        overflow: hidden;
       }
 
     /* Sizes */
@@ -95,6 +112,15 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
           border-radius: var(--radius-lg) var(--radius-lg) 0 0;
           margin: 0;
           margin-top: auto;
+          max-height: calc(100dvh - var(--space-4));
+        }
+
+        .modal-body {
+          padding-bottom: max(var(--space-5), env(safe-area-inset-bottom));
+        }
+
+        .modal-footer {
+          padding-bottom: max(var(--space-5), env(safe-area-inset-bottom));
         }
 
       .modal-sm,
@@ -146,7 +172,7 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
 
       .modal-body {
         padding: var(--space-5);
-        overflow: visible;
+        overflow-y: auto;
       }
 
     .modal-footer {
@@ -157,6 +183,18 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
       border-top: 1px solid var(--border-color);
     }
 
+    .modal-close:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .modal-overlay,
+      .modal {
+        animation: none;
+      }
+    }
+
     /*
      * Dark mode se maneja automáticamente via tokens semánticos.
      * --surface-background, --overlay-backdrop, --surface-hover
@@ -164,7 +202,15 @@ import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from 
      */
   `]
 })
-export class ModalComponent {
+export class ModalComponent implements AfterViewInit, OnDestroy {
+  private static instanceCounter = 0;
+  readonly titleId = `atomic-modal-title-${++ModalComponent.instanceCounter}`;
+
+  @ViewChild('dialogRef', { read: ElementRef })
+  private dialogRef?: ElementRef<HTMLElement>;
+
+  private previouslyFocused: HTMLElement | null = null;
+
   @Input() title = '';
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() closeOnBackdrop = true;
@@ -172,15 +218,73 @@ export class ModalComponent {
 
   @Output() closed = new EventEmitter<void>();
 
-  onBackdropClick() {
+  ngAfterViewInit(): void {
+    if (typeof document === 'undefined') return;
+    const activeElement = document.activeElement;
+    this.previouslyFocused = activeElement instanceof HTMLElement ? activeElement : null;
+    queueMicrotask(() => this.focusInitialControl());
+  }
+
+  ngOnDestroy(): void {
+    if (this.previouslyFocused?.isConnected) {
+      this.previouslyFocused.focus({ preventScroll: true });
+    }
+  }
+
+  onBackdropClick(event?: Event): void {
+    if (event && event.target !== event.currentTarget) return;
     if (this.closeOnBackdrop) {
       this.closed.emit();
     }
   }
 
-  onEscape() {
+  onEscape(): void {
     if (this.closeOnBackdrop) {
       this.closed.emit();
+    }
+  }
+
+  onOverlayKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      event.stopPropagation();
+      this.onEscape();
+      return;
+    }
+    if (event.key === 'Tab') this.trapFocus(event);
+  }
+
+  private focusInitialControl(): void {
+    const dialog = this.dialogRef?.nativeElement;
+    if (!dialog) return;
+    const preferredRoot = dialog.querySelector<HTMLElement>('[data-modal-initial-focus]');
+    const preferred = preferredRoot?.matches(MODAL_FOCUSABLE_SELECTOR)
+      ? preferredRoot
+      : preferredRoot?.querySelector<HTMLElement>(MODAL_FOCUSABLE_SELECTOR);
+    const target = preferred ?? dialog.querySelector<HTMLElement>(MODAL_FOCUSABLE_SELECTOR) ?? dialog;
+    target.focus({ preventScroll: true });
+  }
+
+  private trapFocus(event: KeyboardEvent): void {
+    const dialog = this.dialogRef?.nativeElement;
+    if (!dialog) return;
+    const controls = Array.from(dialog.querySelectorAll<HTMLElement>(MODAL_FOCUSABLE_SELECTOR))
+      .filter(control => !control.hasAttribute('hidden') && control.getAttribute('aria-hidden') !== 'true');
+
+    if (controls.length === 0) {
+      event.preventDefault();
+      dialog.focus({ preventScroll: true });
+      return;
+    }
+
+    const first = controls[0];
+    const last = controls[controls.length - 1];
+    const active = typeof document !== 'undefined' ? document.activeElement : null;
+    if (event.shiftKey && (active === first || !dialog.contains(active))) {
+      event.preventDefault();
+      last.focus({ preventScroll: true });
+    } else if (!event.shiftKey && (active === last || !dialog.contains(active))) {
+      event.preventDefault();
+      first.focus({ preventScroll: true });
     }
   }
 }

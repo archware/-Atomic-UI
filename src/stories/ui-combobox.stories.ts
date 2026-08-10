@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ComboboxComponent } from '../app/shared/ui/molecules/combobox/combobox.component';
 
 const meta: Meta<ComboboxComponent> = {
+  id: 'molecules-combobox',
   title: '2. Molecules/Combobox',
   component: ComboboxComponent,
   decorators: [
@@ -88,5 +89,25 @@ export const NoClear: Story = {
     placeholder: 'Buscar...',
     options: FRUITS,
     clearable: false,
+  },
+};
+
+export const WithDisabledOption: Story = {
+  args: {
+    label: 'Sede de atención',
+    placeholder: 'Buscar sede...',
+    options: [
+      { value: 'central', label: 'Sede central' },
+      { value: 'maintenance', label: 'Sede en mantenimiento', disabled: true },
+      { value: 'emergency', label: 'Emergencia' },
+    ],
+  },
+};
+
+export const AccessibleWithoutVisibleLabel: Story = {
+  args: {
+    ariaLabel: 'Buscar distrito',
+    placeholder: 'Distrito...',
+    options: FRUITS,
   },
 };

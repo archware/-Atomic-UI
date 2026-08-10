@@ -109,6 +109,27 @@ describe('ButtonComponent', () => {
     });
   });
 
+  describe('width contract', () => {
+    it('stretches the host and native control when fullWidth is enabled', () => {
+      const host = fixture.nativeElement as HTMLElement;
+      host.style.width = '326px';
+      setInput('fullWidth', true);
+      const button = host.querySelector('button') as HTMLButtonElement;
+
+      expect(host.classList).toContain('atomic-button--full-width');
+      expect(getComputedStyle(button).width).toBe('326px');
+    });
+
+    it('keeps the native control intrinsic by default', () => {
+      const host = fixture.nativeElement as HTMLElement;
+      host.style.width = '326px';
+      const button = host.querySelector('button') as HTMLButtonElement;
+
+      expect(host.classList).not.toContain('atomic-button--full-width');
+      expect(getComputedStyle(button).width).not.toBe('326px');
+    });
+  });
+
   describe('disabled state', () => {
     it('should set disabled attribute when disabled is true', () => {
       setInput('disabled', true);
@@ -162,6 +183,7 @@ describe('ButtonComponent', () => {
         expect(icon?.classList.contains('fa-save')).toBeTrue();
         expect(new Set(icon?.className.split(/\s+/))).toEqual(new Set(expected.split(/\s+/)));
         expect(icon?.className).not.toContain('fa-fa-');
+        expect(icon?.closest('.btn-icon-wrapper')?.getAttribute('aria-hidden')).toBe('true');
       });
     });
   });
@@ -173,6 +195,7 @@ describe('ButtonComponent', () => {
 
       const iconSpan = fixture.nativeElement.querySelector('.btn-icon--emoji');
       expect(iconSpan?.textContent?.trim()).toBe('🔍');
+      expect(iconSpan?.getAttribute('aria-hidden')).toBe('true');
     });
   });
 });

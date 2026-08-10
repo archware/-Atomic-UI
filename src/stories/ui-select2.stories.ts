@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Select2Component } from '../app/shared/ui/molecules/select2/select2.component';
 
 const meta: Meta<Select2Component> = {
+  id: 'molecules-select2',
   title: '2. Molecules/Select2',
   component: Select2Component,
   decorators: [
@@ -51,13 +52,22 @@ export const WithoutLabel: Story = {
 };
 
 export const Multiple: Story = {
-  args: {
-    options: countryOptions,
-    label: 'Países',
-    placeholder: 'Seleccionar países...',
-    multiple: true,
-    searchable: true,
-  },
+  render: () => ({
+    props: {
+      options: countryOptions,
+      selectedCountries: ['pe', 'co'],
+    },
+    template: `
+      <app-select2
+        label="Países"
+        placeholder="Seleccionar países..."
+        [options]="options"
+        [multiple]="true"
+        [searchable]="true"
+        [(ngModel)]="selectedCountries">
+      </app-select2>
+    `,
+  }),
 };
 
 export const NotSearchable: Story = {
@@ -69,11 +79,20 @@ export const NotSearchable: Story = {
 };
 
 export const Disabled: Story = {
-  args: {
-    options: countryOptions,
-    label: 'País',
-    disabled: true,
-  },
+  render: () => ({
+    props: {
+      options: countryOptions,
+      selectedCountry: 'pe',
+    },
+    template: `
+      <app-select2
+        label="País"
+        [options]="options"
+        [disabled]="true"
+        [(ngModel)]="selectedCountry">
+      </app-select2>
+    `,
+  }),
 };
 
 export const WithDisabledOption: Story = {
@@ -90,5 +109,13 @@ export const CustomWidth: Story = {
     label: 'País',
     width: '300px',
     searchable: true,
+  },
+};
+
+export const AccessibleWithoutVisibleLabel: Story = {
+  args: {
+    options: statusOptions,
+    ariaLabel: 'Estado de la solicitud',
+    placeholder: 'Seleccionar estado...',
   },
 };

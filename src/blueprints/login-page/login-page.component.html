@@ -9,16 +9,16 @@
   <!-- Decorative Banner slot (Split Screen Left) -->
   <div slot="banner">
     <div class="banner-icon-wrap">
-      <span class="banner-icon">🔐</span>
+      <span class="banner-icon" aria-hidden="true">🔐</span>
     </div>
-    <h1 class="banner-title">Bienvenido a <br>Tu Empresa</h1>
-    <p class="banner-copy">Accede al sistema premium diseñado con la mejor experiencia de usuario y arquitectura atómica.</p>
+    <h1 class="banner-title">Hospital Regional de Ayacucho</h1>
+    <p class="banner-copy">Acceso institucional a los servicios digitales del hospital.</p>
   </div>
 
   <!-- Header slot with logo for the Right Side Form -->
   <div slot="header">
     <div class="auth-logo auth-logo--header">
-      <span class="logo-icon logo-icon--header">🔐</span>
+      <span class="logo-icon logo-icon--header" aria-hidden="true">🔐</span>
     </div>
   </div>
 
@@ -38,11 +38,11 @@
 
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <app-form-row columns="1fr">
-          <app-floating-input label="Correo electrónico" type="email" formControlName="email"
+          <app-floating-input label="Correo electrónico" type="email" autocomplete="username" formControlName="email"
             iconClass="fa-solid fa-envelope" [error]="getFieldError('login', 'email')">
           </app-floating-input>
 
-          <app-floating-input label="Contraseña" type="password" formControlName="password" iconClass="fa-solid fa-lock"
+          <app-floating-input label="Contraseña" type="password" autocomplete="current-password" formControlName="password" iconClass="fa-solid fa-lock"
             [error]="getFieldError('login', 'password')">
           </app-floating-input>
         </app-form-row>
@@ -61,9 +61,9 @@
         }
 
         <app-row justify="center" class="w-full mt-4">
-          <app-button type="submit" variant="primary" [disabled]="loginApi.loading()">
+          <app-button type="submit" variant="primary" [fullWidth]="true" [disabled]="loginApi.loading()">
             @if (loginApi.loading()) {
-            <i class="fa-solid fa-spinner fa-spin"></i>
+            <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
             Ingresando...
             } @else {
             Iniciar Sesión
@@ -94,19 +94,19 @@
 
       <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
         <app-form-row columns="1fr">
-          <app-floating-input label="Nombre completo" type="text" formControlName="name" iconClass="fa-solid fa-user"
+          <app-floating-input label="Nombre completo" type="text" autocomplete="name" formControlName="name" iconClass="fa-solid fa-user"
             [error]="getFieldError('register', 'name')">
           </app-floating-input>
 
-          <app-floating-input label="Correo electrónico" type="email" formControlName="email"
+          <app-floating-input label="Correo electrónico" type="email" autocomplete="email" formControlName="email"
             iconClass="fa-solid fa-envelope" [error]="getFieldError('register', 'email')">
           </app-floating-input>
 
-          <app-floating-input label="Contraseña" type="password" formControlName="password" iconClass="fa-solid fa-lock"
+          <app-floating-input label="Contraseña" type="password" autocomplete="new-password" formControlName="password" iconClass="fa-solid fa-lock"
             [error]="getFieldError('register', 'password')">
           </app-floating-input>
 
-          <app-floating-input label="Confirmar contraseña" type="password" formControlName="confirmPassword"
+          <app-floating-input label="Confirmar contraseña" type="password" autocomplete="new-password" formControlName="confirmPassword"
             iconClass="fa-solid fa-lock" [error]="getFieldError('register', 'confirmPassword')">
           </app-floating-input>
         </app-form-row>
@@ -124,16 +124,16 @@
 
         <!-- Success message -->
         @if (registerApi.success()) {
-        <div class="success-message mb-4">
-          <i class="fa-solid fa-circle-check"></i>
+        <div class="success-message mb-4" role="status" aria-live="polite">
+          <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
           {{ registerApi.data()?.message || 'Cuenta creada exitosamente' }}
         </div>
         }
 
         <app-row justify="center" class="w-full mt-4">
-          <app-button type="submit" variant="primary" [disabled]="registerApi.loading()">
+          <app-button type="submit" variant="primary" [fullWidth]="true" [disabled]="registerApi.loading()">
             @if (registerApi.loading()) {
-            <i class="fa-solid fa-spinner fa-spin"></i>
+            <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
             Registrando...
             } @else {
             Crear Cuenta
@@ -165,7 +165,7 @@
       @if (!forgotSuccessMessage()) {
       <form [formGroup]="forgotForm" (ngSubmit)="onForgotPassword()">
         <app-form-row columns="1fr">
-          <app-floating-input label="Correo electrónico" type="email" formControlName="email"
+          <app-floating-input label="Correo electrónico" type="email" autocomplete="email" formControlName="email"
             iconClass="fa-solid fa-envelope" [error]="getFieldError('forgot', 'email')">
           </app-floating-input>
         </app-form-row>
@@ -176,9 +176,9 @@
         }
 
         <app-row justify="center" class="w-full mt-4">
-          <app-button type="submit" variant="primary" [disabled]="forgotApi.loading()">
+          <app-button type="submit" variant="primary" [fullWidth]="true" [disabled]="forgotApi.loading()">
             @if (forgotApi.loading()) {
-            <i class="fa-solid fa-spinner fa-spin"></i>
+            <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>
             Enviando...
             } @else {
             Enviar Instrucciones
@@ -188,9 +188,9 @@
       </form>
       } @else {
       <!-- Success state -->
-      <div class="success-state">
+      <div class="success-state" role="status" aria-live="polite">
         <div class="success-icon">
-          <i class="fa-solid fa-envelope-circle-check"></i>
+          <i class="fa-solid fa-envelope-circle-check" aria-hidden="true"></i>
         </div>
         <p class="success-text">{{ forgotSuccessMessage() }}</p>
         <app-button variant="outline" (buttonClick)="showLogin()">

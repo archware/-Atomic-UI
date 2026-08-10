@@ -62,11 +62,12 @@
     { "name": "static", "meaning": "Article no interactivo." },
     { "name": "clickable", "meaning": "Activable por puntero y teclado." },
     { "name": "hover", "meaning": "Elevated e interactive aumentan profundidad." },
-    { "name": "focus", "meaning": "Interactive presenta foco visual." }
+    { "name": "focus", "meaning": "Toda tarjeta clickable presenta foco visual, sin importar su variante." }
   ],
   "a11y": [
     "Usa article por defecto.",
     "clickable añade tabindex=0, role=button y activación con Enter o Space.",
+    "Los controles proyectados conservan su interacción; el contenido neutro continúa activando la superficie clickable.",
     "variant=interactive por sí solo no añade semántica; combinar con clickable cuando realmente sea accionable."
   ],
   "responsive": [
