@@ -13,6 +13,12 @@ Este documento centraliza el conocimiento adquirido tras solucionar problemas co
 
 ---
 
+## [2026-08-07] - Stacking Contexts y Container Queries en Tarjetas
+
+**Evidencia:** El componente `app-select2` (Combobox) presentaba problemas de superposición (overlapping) siendo ocultado por la `<app-card>` adyacente inferior. El uso de `z-index: 1000` en el dropdown del combobox resultaba inefectivo porque el padre (`app-card`) contenía la propiedad `container-type: inline-size;`.
+
+**Decisión:** Se validó que `container-type` crea inherentemente un contexto de apilamiento (stacking context) estricto. La forma correcta de manejar menús flotantes que deben desbordar tarjetas en un sistema UI es elevar dinámicamente el `z-index` de toda la tarjeta que posee el foco interactivo. Se implementó `.card:focus-within { z-index: 50; position: relative; }` en `card.component.ts`. Esta solución arquitectónica CSS resuelve solapamientos en todo el grid sin necesidad de CDK Overlays globales.
+
 ## [2026-08-05] - Estandarización de Separación Vertical en Formularios (Modales)
 
 **Evidencia:** Las integraciones de los modales de configuración de base de datos en Python, Wails y Tauri tenían inconsistencias visuales: algunos usaban inputs crudos y otros app-floating-input, además de márgenes arbitrarios sin orden estandarizado.

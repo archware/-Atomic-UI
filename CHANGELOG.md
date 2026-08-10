@@ -1,9 +1,9 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.5.0"
+version: "5.5.1"
 status: "vigente"
-updated: "2026-08-07"
+updated: "2026-08-10"
 owner: "Hospital Regional de Ayacucho"
 ---
 
@@ -14,6 +14,42 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.5.1] - 2026-08-10
+
+### Seguridad
+
+- Se alinearon Angular y sus herramientas dentro de la versión mayor 22 y se
+  fijaron versiones corregidas de PostCSS, Less, `@modelcontextprotocol/sdk` y
+  `@hono/node-server`. La auditoría de npm pasó de diez alertas altas a cero
+  vulnerabilidades.
+- Las acciones externas de los workflows se fijaron por SHA de commit para
+  impedir que una etiqueta mutable cambie el código ejecutado por CI. Los jobs
+  de validación conservan permisos de solo lectura y únicamente el despliegue
+  manual recibe escritura sobre el contenido del repositorio.
+- La publicación automática de Storybook en GitHub Pages se sustituyó por una
+  autorización manual explícita mediante `workflow_dispatch`.
+
+### Corregido
+
+- Se resolvió la superposición de `app-select2` y `app-combobox` entre tarjetas.
+  `container-type: inline-size` crea contextos de apilamiento independientes;
+  por ello, la tarjeta con foco se eleva mediante `:focus-within` y cada control
+  abierto eleva su contenedor dentro de esa tarjeta.
+- El pie prioriza el entorno entregado por `AppVersionService` sobre el valor
+  visual de respaldo. De este modo, una aplicación productiva no puede quedar
+  rotulada como `BETA` por un valor predeterminado del componente.
+- El blueprint de acceso utiliza la identidad institucional predeterminada del
+  pie en lugar de sobrescribirla con texto de ejemplo.
+
+### Procedencia y verificación
+
+- La versión de fuente y biblioteca avanza a `5.5.1`. El manifiesto registra
+  156 fuentes y la huella de árbol
+  `14311483c1f5eb4c159facae5565d7c98b94f5b5978fe145c0640ed3a43a3f4d`.
+- Las 303 pruebas unitarias cubren también el apilamiento de tarjeta, `select2`,
+  `combobox` y la precedencia del entorno del pie. El gobierno integral, lint,
+  la aplicación, la biblioteca Angular y Storybook completaron sus compuertas.
 
 ## [Gobernanza 1.2.1] - 2026-08-07
 

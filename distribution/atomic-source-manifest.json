@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.5.0",
+  "packageVersion": "5.5.1",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
-  "sourceTreeSha256": "b72fd5f80e6d4f441cbb74afce4deeb5f0e8209f9a33482d8698ca5795c3086f",
+  "sourceTreeSha256": "14311483c1f5eb4c159facae5565d7c98b94f5b5978fe145c0640ed3a43a3f4d",
   "fileCount": 156,
   "files": [
     {
@@ -14,8 +14,8 @@
     },
     {
       "path": "projects/atomic-ui/package.json",
-      "bytes": 887,
-      "sha256": "c1f137ecd8b7db37ccdb4a8f3abf2880d48fb6e5763daf4cc612f2b4323f8518"
+      "bytes": 886,
+      "sha256": "bb7046c1cc1141ba6ab9d8bf98aaa72cbfa8b020f7537f5f3ce69bf768b2f4b7"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -304,13 +304,13 @@
     },
     {
       "path": "src/app/shared/ui/molecules/card/card.component.ts",
-      "bytes": 7996,
-      "sha256": "a47e7e814937a0d5bea30bf3c2af9e9fb633670357b40497aceca73af1fb25ff"
+      "bytes": 8072,
+      "sha256": "dcf8413f7a3ff3615c82bcf7cfce7d15fcfab1dc745743f6d47d950e16788ece"
     },
     {
       "path": "src/app/shared/ui/molecules/combobox/combobox.component.ts",
-      "bytes": 10217,
-      "sha256": "0052c41bd03cc06526898adc52e6ae04fbea30e74f592ded9be07682f2b993e6"
+      "bytes": 10265,
+      "sha256": "9629e032460281a026531d11cdc0937405a55055c1a942813d3887b3e493592a"
     },
     {
       "path": "src/app/shared/ui/molecules/data-state/data-state.component.ts",
@@ -364,8 +364,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/select2/select2.component.ts",
-      "bytes": 20909,
-      "sha256": "d4b1a98258d60547be6627fb9eb48b174807899a7dc2a331e80341795913c02c"
+      "bytes": 20969,
+      "sha256": "b36af5c10edc6e0540be90b8befcb5177f0e33762f578beb7e417d03c98dd86d"
     },
     {
       "path": "src/app/shared/ui/molecules/table-actions/table-actions.component.css",
@@ -469,8 +469,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/footer/footer.component.ts",
-      "bytes": 10824,
-      "sha256": "f40365ab139733c0b992d64b9bf4931b52f7d40a6fb0911fc4eaf54f5799ecbd"
+      "bytes": 10858,
+      "sha256": "4a0ed51376533a9d0ebd7dd9e6ba594d17e417f9e3b6523cb443fb56f91cc460"
     },
     {
       "path": "src/app/shared/ui/organisms/form-dialog/form-dialog-actions.scss",

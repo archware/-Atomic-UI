@@ -91,6 +91,12 @@ export type CardSize = 'sm' | 'md' | 'lg';
     container-type: inline-size;
     container-name: card;
   }
+
+  .card:focus-within {
+    z-index: 50;
+    position: relative;
+  }
+
   :host {
     display: block;
   }

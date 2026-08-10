@@ -97,7 +97,7 @@ Tras la propagación de cambios en el frontend o modificaciones en el backend:
 
 - Se compilan únicamente los ejecutables para agilizar el desarrollo y se evita la generación de instaladores MSI/NSIS.
 - **Wails**: `wails build` (o compilación angular vía `ng build` para dev frontend).
-- **Tauri**: `npm run tauri build -- --bundles none`.
+- **Tauri**: `npm run tauri build -- --no-bundle`.
 
 ---
 

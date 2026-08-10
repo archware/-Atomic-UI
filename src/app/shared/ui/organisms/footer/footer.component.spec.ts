@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { AppVersionService } from '../../services/app-version.service';
 import { FooterComponent } from './footer.component';
 
 describe('FooterComponent', () => {
@@ -47,5 +48,19 @@ describe('FooterComponent', () => {
     fixture.detectChanges();
 
     expect((fixture.nativeElement as HTMLElement).querySelector('app-version')).toBeNull();
+  });
+
+  it('prioritizes the runtime environment provided by AppVersionService', () => {
+    const versionService = TestBed.inject(AppVersionService);
+    versionService.setVersionInfo({ environment: 'PRODUCTION' });
+
+    const fixture = TestBed.createComponent(FooterComponent);
+    fixture.componentRef.setInput('environment', 'BETA');
+    fixture.detectChanges();
+
+    const environment = (fixture.nativeElement as HTMLElement).querySelector(
+      '.atomic-version__env'
+    );
+    expect(environment?.textContent?.trim()).toBe('PRODUCTION');
   });
 });

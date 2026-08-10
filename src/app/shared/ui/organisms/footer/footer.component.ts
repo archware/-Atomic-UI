@@ -324,14 +324,14 @@ export class FooterComponent {
   @Input() variant: FooterVariant = 'inline';
   @Input() companyName = 'Hospital Regional Ayacucho';
   @Input() year = 2026;
-  @Input() copyrightText = 'Todos los derechos reservados.';
+  @Input() copyrightText = 'Todos los derechos reservados. | Soporte: Sistemas de Información';
   @Input() copyrightSeparator = ' - ';
   @Input() description = '';
   @Input() legalTitle = 'Enlaces legales';
   @Input() socialTitle = 'Redes sociales';
   @Input() showVersion = true;
   @Input() showBuildDate = false;
-  @Input() version = 'v1.0.0';
+  @Input() version = 'Beta';
   @Input() environment = 'BETA';
   @Input() buildDate = '';
   @Input() socialLinks: SocialLink[] = [];

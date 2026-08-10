@@ -20,4 +20,17 @@ describe('CardComponent', () => {
     expect(getComputedStyle(host.querySelector('.card') as HTMLElement).minWidth).toBe('0px');
     expect(getComputedStyle(host.querySelector('.card__body') as HTMLElement).minWidth).toBe('0px');
   });
+
+  it('elevates the card while a projected interactive control has focus', () => {
+    const card = (fixture.nativeElement as HTMLElement).querySelector('.card') as HTMLElement;
+    const body = card.querySelector('.card__body') as HTMLElement;
+    const control = document.createElement('button');
+    body.appendChild(control);
+
+    control.focus();
+
+    expect(document.activeElement).toBe(control);
+    expect(getComputedStyle(card).position).toBe('relative');
+    expect(getComputedStyle(card).zIndex).toBe('50');
+  });
 });

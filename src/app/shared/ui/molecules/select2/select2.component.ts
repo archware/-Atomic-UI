@@ -146,6 +146,10 @@ export interface Select2Option {
       min-width: var(--select2-min-width, 15rem);
     }
 
+    .select2-wrapper.open {
+      z-index: 1000;
+    }
+
     .select2-wrapper.disabled {
       opacity: 0.6;
       pointer-events: none;

@@ -108,6 +108,7 @@ export interface ComboboxOption {
   `,
   styles: [`
     .combobox { position: relative; width: 100%; }
+    .combobox.combobox-open { z-index: 1000; }
 
     .combobox-label {
       display: block;
