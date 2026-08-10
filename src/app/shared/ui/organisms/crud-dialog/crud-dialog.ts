@@ -1,7 +1,11 @@
 import {
+  afterNextRender,
+  AfterRenderRef,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  inject,
+  Injector,
   input,
   output,
   viewChild,
@@ -27,6 +31,13 @@ const INVALID_FOCUS_SELECTORS = [
   '[aria-invalid="true"]:not([disabled]):not([hidden]):not([tabindex="-1"]):not([aria-hidden="true"]):not([aria-disabled="true"])',
 ] as const;
 
+const ERROR_FOCUS_SELECTORS = [
+  '[data-dialog-error]:not([hidden]):not([aria-hidden="true"])',
+  '[data-modal-error]:not([hidden]):not([aria-hidden="true"])',
+  '[role="alert"]:not([hidden]):not([aria-hidden="true"])',
+  ...INVALID_FOCUS_SELECTORS,
+] as const;
+
 /**
  * Organismo modal canónico para altas y ediciones CRUD.
  * Conserva el foco, la semántica nativa de dialog y permite proyectar formularios completos.
@@ -48,7 +59,9 @@ export class CrudDialog {
 
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('nativeDialog');
   private readonly scrollSurface = viewChild.required<ElementRef<HTMLElement>>('scrollSurface');
+  private readonly injector = inject(Injector);
   private returnFocusTarget: HTMLElement | null = null;
+  private pendingErrorFocus?: AfterRenderRef;
 
   get nativeElement(): HTMLDialogElement {
     return this.dialog().nativeElement;
@@ -94,6 +107,28 @@ export class CrudDialog {
 
   focusInvalid(): void {
     this.focusFirst(this.nativeElement, INVALID_FOCUS_SELECTORS);
+  }
+
+  /**
+   * Focuses visible operation feedback or falls back to the first invalid control.
+   * When projected feedback is still pending, it retries once after Angular renders.
+   */
+  focusError(): boolean {
+    const focused = this.focusFirst(this.nativeElement, ERROR_FOCUS_SELECTORS);
+    if (focused) {
+      this.pendingErrorFocus?.destroy();
+      this.pendingErrorFocus = undefined;
+      return true;
+    }
+
+    this.pendingErrorFocus?.destroy();
+    this.pendingErrorFocus = afterNextRender({
+      write: () => {
+        this.pendingErrorFocus = undefined;
+        this.focusFirst(this.nativeElement, ERROR_FOCUS_SELECTORS);
+      },
+    }, { injector: this.injector });
+    return false;
   }
 
   private focusFirst(root: ParentNode, selectors: string | readonly string[]): boolean {

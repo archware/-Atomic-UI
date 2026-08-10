@@ -144,6 +144,35 @@ describe('ButtonComponent', () => {
     });
   });
 
+  describe('loading state', () => {
+    it('announces progress, disables the native control and renders a decorative spinner', () => {
+      setInput('loading', true);
+
+      const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+      const spinner = button.querySelector('.btn-spinner') as HTMLElement;
+
+      expect(button.disabled).toBeTrue();
+      expect(button.getAttribute('aria-busy')).toBe('true');
+      expect(spinner).not.toBeNull();
+      expect(spinner.getAttribute('aria-hidden')).toBe('true');
+    });
+
+    it('prevents a second activation after the consumer marks the first one as loading', () => {
+      let emissions = 0;
+      component.buttonClick.subscribe(() => {
+        emissions += 1;
+        setInput('loading', true);
+      });
+
+      const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+      button.click();
+      button.click();
+
+      expect(emissions).toBe(1);
+      expect(button.disabled).toBeTrue();
+    });
+  });
+
   describe('click event', () => {
     it('should emit buttonClick event when clicked', () => {
       spyOn(component.buttonClick, 'emit');

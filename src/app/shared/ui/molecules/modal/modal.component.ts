@@ -1,13 +1,17 @@
 import {
+  afterNextRender,
+  AfterRenderRef,
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
+  inject,
+  Injector,
   Input,
   OnDestroy,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 
 const MODAL_FOCUSABLE_SELECTOR = [
@@ -17,6 +21,13 @@ const MODAL_FOCUSABLE_SELECTOR = [
   'select:not([disabled])',
   'textarea:not([disabled])',
   '[tabindex]:not([tabindex="-1"])'
+].join(',');
+
+const MODAL_ERROR_SELECTOR = [
+  '[data-modal-error]',
+  '[data-dialog-error]',
+  '[role="alert"]',
+  '[aria-invalid="true"]'
 ].join(',');
 
 @Component({
@@ -35,6 +46,7 @@ const MODAL_FOCUSABLE_SELECTOR = [
         aria-modal="true"
         tabindex="-1"
         [attr.aria-labelledby]="titleId"
+        [attr.aria-busy]="busy ? 'true' : null"
         [class.modal-sm]="size === 'sm'"
         [class.modal-md]="size === 'md'"
         [class.modal-lg]="size === 'lg'"
@@ -42,7 +54,13 @@ const MODAL_FOCUSABLE_SELECTOR = [
         <!-- Header -->
         <div class="modal-header">
           <h3 class="modal-title" [id]="titleId">{{ title }}</h3>
-          <button class="modal-close" (click)="closed.emit()" type="button" aria-label="Cerrar">
+          <button
+            class="modal-close"
+            (click)="requestClose()"
+            type="button"
+            aria-label="Cerrar"
+            [disabled]="busy"
+          >
             <i class="fa-solid fa-xmark" aria-hidden="true"></i>
           </button>
         </div>
@@ -183,6 +201,11 @@ const MODAL_FOCUSABLE_SELECTOR = [
       border-top: 1px solid var(--border-color);
     }
 
+    .modal-close:disabled {
+      color: var(--text-color-muted);
+      cursor: not-allowed;
+    }
+
     .modal-close:focus-visible {
       outline: none;
       box-shadow: var(--focus-ring);
@@ -209,12 +232,15 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
   @ViewChild('dialogRef', { read: ElementRef })
   private dialogRef?: ElementRef<HTMLElement>;
 
+  private readonly injector = inject(Injector);
   private previouslyFocused: HTMLElement | null = null;
+  private pendingErrorFocus?: AfterRenderRef;
 
   @Input() title = '';
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() closeOnBackdrop = true;
   @Input() hasFooter = true;
+  @Input() busy = false;
 
   @Output() closed = new EventEmitter<void>();
 
@@ -226,6 +252,8 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.pendingErrorFocus?.destroy();
+    this.pendingErrorFocus = undefined;
     if (this.previouslyFocused?.isConnected) {
       this.previouslyFocused.focus({ preventScroll: true });
     }
@@ -233,15 +261,60 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
 
   onBackdropClick(event?: Event): void {
     if (event && event.target !== event.currentTarget) return;
-    if (this.closeOnBackdrop) {
-      this.closed.emit();
+    if (!this.busy && this.closeOnBackdrop) {
+      this.requestClose();
     }
   }
 
   onEscape(): void {
-    if (this.closeOnBackdrop) {
+    if (!this.busy && this.closeOnBackdrop) {
       this.closed.emit();
     }
+  }
+
+  /** Requests closure only when the dialog is not processing an action. */
+  requestClose(): void {
+    if (!this.busy) {
+      this.closed.emit();
+    }
+  }
+
+  /**
+   * Focuses the first projected operation error after an asynchronous failure.
+   * If Angular has not rendered the feedback yet, the component retries once
+   * after the pending render so callers do not need timing workarounds.
+   */
+  focusError(): boolean {
+    const focused = this.tryFocusError();
+    if (focused) {
+      this.pendingErrorFocus?.destroy();
+      this.pendingErrorFocus = undefined;
+      return true;
+    }
+
+    this.pendingErrorFocus?.destroy();
+    this.pendingErrorFocus = afterNextRender({
+      write: () => {
+        this.pendingErrorFocus = undefined;
+        this.tryFocusError();
+      },
+    }, { injector: this.injector });
+    return false;
+  }
+
+  private tryFocusError(): boolean {
+    const dialog = this.dialogRef?.nativeElement;
+    const errorRoot = dialog?.querySelector<HTMLElement>(MODAL_ERROR_SELECTOR);
+    if (!errorRoot) return false;
+
+    const target = errorRoot.matches(MODAL_FOCUSABLE_SELECTOR)
+      ? errorRoot
+      : errorRoot.querySelector<HTMLElement>(MODAL_FOCUSABLE_SELECTOR) ?? errorRoot;
+    if (!target.hasAttribute('tabindex') && !target.matches(MODAL_FOCUSABLE_SELECTOR)) {
+      target.tabIndex = -1;
+    }
+    target.focus({ preventScroll: true });
+    return true;
   }
 
   onOverlayKeydown(event: KeyboardEvent): void {

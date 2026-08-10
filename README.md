@@ -3,7 +3,7 @@ title: "Atomic UI: sistema de componentes y temas"
 subtitle: "Fuente visual canónica para aplicaciones de escritorio HRA"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-10"
-version: "5.5.2"
+version: "5.5.3"
 ---
 
 # Atomic UI: sistema de componentes y temas
@@ -279,6 +279,26 @@ ng e2e                    # E2E tests
 
 ---
 
+## Contrato de acciones asíncronas
+
+- La acción principal utiliza `<app-button [loading]="pending">`; el estado
+  deshabilita el botón nativo, anuncia `aria-busy` y evita un segundo comando.
+- El diálogo enlaza `[busy]="pending"`, por lo que X, Escape y backdrop no
+  cierran una operación pendiente. Las acciones secundarias enlazan
+  `[disabled]="pending"`.
+- Una comprobación no persistente conserva el diálogo abierto y comunica el
+  resultado mediante `role="status"`. Una operación de guardado cierra solo tras
+  éxito y publica un único Toast después de retirar el overlay.
+- Un fallo conserva el diálogo, publica un bloque
+  `role="alert" data-modal-error tabindex="-1"` y llama `focusError()` justo
+  después de actualizar el estado. La primitiva enfoca de inmediato o reintenta
+  una vez tras el render; el consumidor no debe envolverla en `queueMicrotask`.
+  El cierre efectivo restaura el foco al disparador.
+- `PopupService` se reserva para decisiones o avisos interruptivos; no se usa
+  como confirmación transaccional detrás de otro overlay.
+
+---
+
 ## ♿ Accesibilidad
 
 ### Contrastes WCAG 2.1 Validados
@@ -304,7 +324,7 @@ Este proyecto está bajo la Licencia MIT.
 
 ---
 
-**Versión:** 5.5.2
+**Versión:** 5.5.3
 **Última actualización:** 10 de agosto de 2026
 **Angular:** 22
 **TypeScript:** 6.0

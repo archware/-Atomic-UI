@@ -7,9 +7,14 @@
   "priority": "must",
   "appliesTo": {
     "intents": ["crud", "form", "detail", "wizard", "dashboard", "transaction", "document", "authentication", "settings"],
-    "components": ["data-state", "data-table", "alert", "toast", "button", "form-dialog"]
+    "components": ["data-state", "data-table", "alert", "toast", "button", "modal", "form-dialog"]
   },
   "requirements": [
+    {
+      "id": "dialog-mutation-lifecycle",
+      "statement": "Mantener el diálogo abierto y enfocar su alerta ante fallo; cerrarlo solo tras éxito y crear el Toast de confirmación después de retirar el overlay.",
+      "enforcedBy": ["catalog", "recipe", "unit", "a11y", "review"]
+    },
     {
       "id": "collection-states",
       "statement": "Cubrir idle, loading, success con datos, success vacío y error recuperable en toda colección remota.",
@@ -32,11 +37,14 @@
     }
   ],
   "acceptance": [
+    "Un fallo asíncrono conserva el diálogo y enfoca role=alert; un éxito restaura foco antes de mostrar el Toast global.",
     "Las pruebas recorren carga, vacío, error, reintento y éxito.",
     "El botón de confirmación comunica loading y no emite dos comandos.",
     "Un error de campo no se duplica automáticamente como Toast."
   ],
   "evidence": [
+    "src/app/shared/ui/atoms/button/button.component.ts",
+    "src/app/shared/ui/molecules/modal/modal.component.ts",
     "src/app/shared/ui/molecules/data-state/data-state.component.ts",
     "src/app/shared/ui/organisms/data-table/data-table.ts",
     "src/app/shared/ui/molecules/toast/toast.component.ts"

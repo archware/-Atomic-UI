@@ -27,6 +27,10 @@ const meta: Meta<ButtonComponent> = {
       control: 'boolean',
       description: 'Whether the button is disabled',
     },
+    loading: {
+      control: 'boolean',
+      description: 'Expone progreso, deshabilita el control y evita activaciones repetidas',
+    },
     fullWidth: {
       control: 'boolean',
       description: 'Expande el host y el botón al ancho disponible',
@@ -47,10 +51,11 @@ export const Primary: Story = {
     variant: 'primary',
     size: 'md',
     disabled: false,
+    loading: false,
   },
   render: (args) => ({
     props: args,
-    template: `<app-button [variant]="variant" [size]="size" [disabled]="disabled">Primary Button</app-button>`,
+    template: `<app-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading">Primary Button</app-button>`,
   }),
 };
 
@@ -179,6 +184,18 @@ export const AllVariants: Story = {
         <app-button variant="ghost">Ghost</app-button>
       </div>
     `,
+  }),
+};
+
+export const Loading: Story = {
+  args: {
+    variant: 'primary',
+    size: 'md',
+    loading: true,
+  },
+  render: (args) => ({
+    props: args,
+    template: `<app-button [variant]="variant" [size]="size" [loading]="loading">Guardar cambios</app-button>`,
   }),
 };
 

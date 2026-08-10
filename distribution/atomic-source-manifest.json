@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.5.2",
+  "packageVersion": "5.5.3",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
-  "sourceTreeSha256": "59d53f85b43a27817d094062a0568c58ba6fc8e8baf6ecd3c7e85900420536f0",
+  "sourceTreeSha256": "e1752a598e78aed4033b33683ce2ce970ce021eb0c64a693360d1995480ca4cf",
   "fileCount": 156,
   "files": [
     {
@@ -15,7 +15,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 886,
-      "sha256": "9be5cea44b7c045b2d3db10871950e5560c4d76696e4c41d154048d3744f71db"
+      "sha256": "6214e7cf116b4f9c2879cda9d90b961cf49541bb7b6fe2046cc2b02bf5a1ff2d"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -44,8 +44,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/button/button.component.ts",
-      "bytes": 6601,
-      "sha256": "9e34d2ec11e772422cc481a344d7466a94def336376504c6f40c103c9fe7f3e0"
+      "bytes": 7438,
+      "sha256": "164af8a96895f6c00aea10a250347173b85cba1f4e75ec3aa3bfcbbc28f11f70"
     },
     {
       "path": "src/app/shared/ui/atoms/checkbox/checkbox.component.ts",
@@ -349,8 +349,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/modal/modal.component.ts",
-      "bytes": 8062,
-      "sha256": "84ad61e54cca9de5efa4b38a37d5022d2855dcc7b7ba6e05d0909af63cff6aab"
+      "bytes": 10129,
+      "sha256": "7972f9cbff50de82a0897e03da5d5fa33bfb8bb9965a7ee0036df0f884718943"
     },
     {
       "path": "src/app/shared/ui/molecules/pagination/pagination.component.ts",
@@ -394,8 +394,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/toast/toast.component.ts",
-      "bytes": 5576,
-      "sha256": "af5fdaf4438d3acf2e902ca12fccb70cd61d4f8425ff8aae8fda7664e4abb125"
+      "bytes": 5612,
+      "sha256": "e1be857126d5ef12377856eeb1f6ea9cd01a445aff459948f0677916966d1a35"
     },
     {
       "path": "src/app/shared/ui/molecules/user-menu/user-menu.component.ts",
@@ -424,8 +424,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.ts",
-      "bytes": 4770,
-      "sha256": "c4316ed73e3afdb9e9e3b5420d685168bb27165d5bd9f7ef1b6d59fddc6e6473"
+      "bytes": 5876,
+      "sha256": "6761f30a60aef09a53f6ff2f1cd285902aee7abf9d26927579c136c339ecd9c7"
     },
     {
       "path": "src/app/shared/ui/organisms/data-pager/data-pager.component.ts",
@@ -489,8 +489,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/form-dialog/form-dialog.ts",
-      "bytes": 4031,
-      "sha256": "476f2e51b015a3d7e57dd99b7ac63e2048b21f9258ef523d65921d61e63f80a3"
+      "bytes": 4270,
+      "sha256": "f3a65ca8332491a84311c26c8f08dc0072ab86b06070c107465df0a85936beca"
     },
     {
       "path": "src/app/shared/ui/organisms/metrics-grid/metrics-grid.component.ts",

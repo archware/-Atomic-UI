@@ -1,7 +1,7 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.5.2"
+version: "5.5.3"
 status: "vigente"
 updated: "2026-08-10"
 owner: "Hospital Regional de Ayacucho"
@@ -14,6 +14,44 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.5.3] - 2026-08-10
+
+### Mejorado
+
+- `ButtonComponent` incorpora el estado `loading`: aplica `disabled` nativo,
+  expone `aria-busy`, conserva la etiqueta accesible, presenta el spinner
+  Atomic como decorativo y suprime activaciones repetidas mientras la operación
+  permanece pendiente.
+- `ModalComponent` incorpora `busy`, bloquea el botón X, Escape y backdrop
+  durante una acción asíncrona, y expone `focusError()` para enfocar feedback
+  proyectado mediante `data-modal-error`, `data-dialog-error`, `role=alert` o
+  `aria-invalid`. El método intenta de inmediato y, si Angular todavía no
+  renderizó el mensaje, reintenta una vez después del render. `CrudDialog` y
+  `FormDialog` publican el mismo contrato de foco.
+- El contrato transaccional distingue las comprobaciones no persistentes de
+  las operaciones de guardado: una prueba puede conservar el diálogo abierto y
+  mostrar un estado inline; guardar o conectar cierra solo tras éxito y crea un
+  único Toast global después de retirar el overlay; un fallo mantiene el
+  diálogo abierto y mueve el foco a su alerta.
+- Los iconos del Toast se excluyen del nombre accesible. `PopupService` conserva
+  su función interruptiva y no sustituye el feedback global poscierre.
+
+### Verificación
+
+- Las pruebas reproducen el doble envío, el cierre durante una operación
+  pendiente y la pérdida de foco del error. Las nuevas expectativas comprueban
+  `disabled`, `aria-busy`, spinner decorativo, bloqueo de cierre, foco de alerta
+  y permanencia del Toast en top layer. Una prueba host crea la alerta después
+  de invocar `focusError()` y verifica el foco post-render.
+- Storybook incorpora `Acción asíncrona segura`, con recorridos controlados de
+  éxito y error sin integrar reglas de dominio ni transporte.
+- La suite completa finaliza con 332 pruebas correctas. El QA interactivo
+  valida escritorio y 390 × 844: bloqueo durante carga, foco post-render,
+  restauración de foco y un único Toast visible después del cierre.
+- El manifiesto registra 156 fuentes y la huella SHA-256 del árbol
+  `e1752a598e78aed4033b33683ce2ce970ce021eb0c64a693360d1995480ca4cf`.
+- Identificador de cambio: `ATOMIC-20260810-553-ASYNC-ACTIONS`.
 
 ## [5.5.2] - 2026-08-10
 

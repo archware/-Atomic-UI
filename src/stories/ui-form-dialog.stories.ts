@@ -56,7 +56,7 @@ export const Declarative: Story = {
           <app-button variant="outline" [disabled]="busy" (buttonClick)="opened = false">
             Cancelar
           </app-button>
-          <app-button [disabled]="busy">Guardar</app-button>
+          <app-button [loading]="busy">Guardar</app-button>
         </prest-form-dialog-actions>
       </prest-form-dialog>
     `,

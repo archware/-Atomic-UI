@@ -1,8 +1,121 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
+import { ChangeDetectionStrategy, Component, inject, signal, viewChild } from '@angular/core';
 import { ModalComponent } from '../app/shared/ui/molecules/modal/modal.component';
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
 import { FloatingInputComponent } from '../app/shared/ui/atoms/floating-input/floating-input.component';
+import { ToastComponent } from '../app/shared/ui/molecules/toast/toast.component';
+import { ToastService } from '../app/shared/ui/services/toast.service';
+
+@Component({
+  selector: 'app-story-modal-async-action',
+  standalone: true,
+  imports: [ButtonComponent, ModalComponent, ToastComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <div class="async-story">
+      <div class="async-story__launchers">
+        <app-button variant="primary" (buttonClick)="open('success')">
+          Probar éxito
+        </app-button>
+        <app-button variant="outline" tone="danger" (buttonClick)="open('error')">
+          Probar error
+        </app-button>
+      </div>
+
+      @if (opened()) {
+        <app-modal
+          #dialog
+          title="Guardar configuración"
+          size="sm"
+          [busy]="busy()"
+          (closed)="close()"
+        >
+          <p>La demostración resuelve una operación asíncrona sin lógica de dominio.</p>
+          @if (error()) {
+            <p class="async-story__error" role="alert" data-modal-error tabindex="-1">
+              {{ error() }}
+            </p>
+          }
+          <div slot="footer" class="async-story__actions">
+            <app-button variant="outline" [disabled]="busy()" (buttonClick)="close()">
+              Cancelar
+            </app-button>
+            <app-button [loading]="busy()" (buttonClick)="submit()">
+              Guardar
+            </app-button>
+          </div>
+        </app-modal>
+      }
+
+      <app-toast />
+    </div>
+  `,
+  styles: [`
+    .async-story,
+    .async-story__launchers,
+    .async-story__actions {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .async-story {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .async-story__actions {
+      justify-content: flex-end;
+    }
+
+    .async-story__error {
+      margin: var(--space-4) 0 0;
+      color: var(--danger-color);
+      font-size: var(--text-sm);
+    }
+  `],
+})
+class ModalAsyncActionStory {
+  protected readonly opened = signal(false);
+  protected readonly busy = signal(false);
+  protected readonly error = signal('');
+  private readonly mode = signal<'success' | 'error'>('success');
+  private readonly dialog = viewChild(ModalComponent);
+  private readonly toast = inject(ToastService);
+
+  protected open(mode: 'success' | 'error'): void {
+    this.toast.clear();
+    this.mode.set(mode);
+    this.error.set('');
+    this.busy.set(false);
+    this.opened.set(true);
+  }
+
+  protected close(): void {
+    if (!this.busy()) {
+      this.opened.set(false);
+    }
+  }
+
+  protected async submit(): Promise<void> {
+    if (this.busy()) return;
+
+    this.busy.set(true);
+    this.error.set('');
+    await new Promise<void>((resolve) => setTimeout(resolve, 600));
+
+    if (this.mode() === 'error') {
+      this.error.set('No fue posible guardar. Revise la información e intente nuevamente.');
+      this.busy.set(false);
+      this.dialog()?.focusError();
+      return;
+    }
+
+    this.busy.set(false);
+    this.opened.set(false);
+    setTimeout(() => this.toast.success('Configuración guardada.', 0));
+  }
+}
 
 const meta: Meta<ModalComponent> = {
   id: 'molecules-modal',
@@ -11,7 +124,7 @@ const meta: Meta<ModalComponent> = {
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      imports: [ButtonComponent, FloatingInputComponent],
+      imports: [ButtonComponent, FloatingInputComponent, ModalAsyncActionStory],
     }),
   ],
 };
@@ -94,5 +207,12 @@ export const MobileBottomSheet: Story = {
         </div>
       </app-modal>
     `,
+  }),
+};
+
+export const AsyncActionLifecycle: Story = {
+  name: 'Acción asíncrona segura',
+  render: () => ({
+    template: `<app-story-modal-async-action />`,
   }),
 };

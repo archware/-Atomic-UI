@@ -7,9 +7,14 @@
   "priority": "must",
   "appliesTo": {
     "intents": ["crud", "form", "wizard", "transaction", "document", "authentication", "settings"],
-    "components": ["crud-dialog", "form-dialog", "button", "alert"]
+    "components": ["crud-dialog", "form-dialog", "modal", "button", "alert", "toast"]
   },
   "requirements": [
+    {
+      "id": "async-result-focus",
+      "statement": "Conservar el diálogo y enfocar el feedback local tras fallo; cerrar, restaurar foco y anunciar el éxito fuera del overlay tras una resolución correcta.",
+      "enforcedBy": ["catalog", "recipe", "unit", "a11y", "review"]
+    },
     {
       "id": "declarative-open-state",
       "statement": "Sincronizar apertura y cierre mediante el contrato público del diálogo, sin manipular su DOM desde una feature.",
@@ -32,11 +37,14 @@
     }
   ],
   "acceptance": [
+    "busy bloquea X, Escape y backdrop; loading bloquea envíos repetidos de la acción principal.",
     "Escape sigue el mismo contrato de cancelación que el botón secundario.",
     "La navegación por teclado permanece dentro del diálogo modal.",
     "Cerrar restaura el foco sin saltos de scroll."
   ],
   "evidence": [
+    "src/app/shared/ui/molecules/modal/modal.component.ts",
+    "src/app/shared/ui/atoms/button/button.component.ts",
     "src/app/shared/ui/organisms/crud-dialog/crud-dialog.ts",
     "src/app/shared/ui/organisms/form-dialog/form-dialog.ts"
   ]

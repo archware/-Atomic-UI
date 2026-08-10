@@ -3,7 +3,7 @@ title: "Biblioteca de componentes Atomic UI"
 subtitle: "Contrato visual portable para aplicaciones Angular"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-03"
-version: "5.1.38"
+version: "5.5.3"
 ---
 
 # Biblioteca de componentes Atomic UI
@@ -550,18 +550,22 @@ sus reglas; el organismo únicamente gobierna estructura, foco y responsive.
 ```html
 <app-form-dialog
   #editor
+  [busy]="saving()"
   eyebrow="Seguridad"
   title="Editar acceso"
   description="Defina el rol y su vigencia."
   (cancelled)="editor.close()"
 >
-  <app-button dialog-close aria-label="Cerrar">Cerrar</app-button>
+  <app-button dialog-close aria-label="Cerrar" [disabled]="saving()">Cerrar</app-button>
 
   <form>
     <!-- Controles Atomic y reglas del consumidor -->
+    @if (saveError()) {
+      <p role="alert" data-dialog-error tabindex="-1">{{ saveError() }}</p>
+    }
     <app-form-dialog-actions>
-      <app-button type="submit">Guardar</app-button>
-      <app-button variant="outline" (buttonClick)="editor.close()">Cancelar</app-button>
+      <app-button type="submit" [loading]="saving()">Guardar</app-button>
+      <app-button variant="outline" [disabled]="saving()" (buttonClick)="editor.close()">Cancelar</app-button>
     </app-form-dialog-actions>
   </form>
 </app-form-dialog>
@@ -572,6 +576,15 @@ El foco inicial prioriza `[data-dialog-initial-focus]` y
 elemento que abrió el diálogo. Los formularios altos no deben agregar
 `overflow`; `CrudDialog` delega el desplazamiento a una sola superficie
 administrada por `ScrollOverlay`, con encabezado y acciones sticky.
+
+Durante una operación asíncrona, `busy` bloquea la cancelación y el botón
+principal usa `loading` para impedir doble envío. Un fallo conserva el diálogo,
+actualiza la alerta y llama directamente `editor.focusError()`: la primitiva
+enfoca de inmediato o reintenta una vez después del render, sin
+`queueMicrotask` en el consumidor. Un éxito persistente cierra primero el
+diálogo y crea un único Toast global después de retirar el overlay; una
+comprobación no persistente puede mantener el diálogo abierto y mostrar
+`role="status"`.
 
 ### ScrollOverlay
 
@@ -778,11 +791,15 @@ html.dark,
 
 **Solución:** Las variables CSS se definen en tokens.css y cambian con `html.dark`, los componentes heredan automáticamente.
 
-### 2. Toast position:fixed
+### 2. Toast y top layer
 
-**Problema:** Toast usa `position: fixed` directamente
+**Problema resuelto:** un aviso basado solo en `position: fixed` y `z-index`
+puede quedar detrás de un diálogo nativo.
 
-**Solución:** Colocar `<app-toast>` como hijo directo de `<body>` o cerca del root del app.
+**Solución:** montar un único `<app-toast>` cerca de la raíz. Toast usa
+`popover="manual"` para entrar en la top layer; la aplicación crea la
+confirmación persistente solo después de cerrar el diálogo. Popup se reserva
+para mensajes interruptivos que requieren una acción explícita.
 
 ### 3. Múltiples Loaders
 
@@ -1168,7 +1185,7 @@ export class MyComponent {
 ---
 
 📅 **Última actualización**: agosto de 2026
-🏷️ **Versión**: 5.1.38
+🏷️ **Versión**: 5.5.3
 ⚡ **Angular**: 22
 🌐 **i18n**: ngx-translate  
 📚 **Storybook**: Disponible

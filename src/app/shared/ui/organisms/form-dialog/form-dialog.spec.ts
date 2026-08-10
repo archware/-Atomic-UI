@@ -78,6 +78,24 @@ describe('FormDialog', () => {
     expect(article.getAttribute('aria-busy')).toBe('true');
     expect(cancellations).toEqual([]);
   });
+
+  it('delega el foco a la alerta de operación después de un fallo', async () => {
+    await TestBed.configureTestingModule({ imports: [FormDialog] }).compileComponents();
+    const fixture = TestBed.createComponent(FormDialog);
+    fixture.componentRef.setInput('title', 'Crear usuario');
+    fixture.detectChanges();
+
+    const error = document.createElement('div');
+    error.setAttribute('role', 'alert');
+    error.setAttribute('data-dialog-error', '');
+    error.tabIndex = -1;
+    fixture.componentInstance.nativeElement.appendChild(error);
+
+    fixture.componentInstance.showModal();
+    expect(fixture.componentInstance.focusError()).toBe(true);
+    expect(document.activeElement).toBe(error);
+    fixture.componentInstance.close();
+  });
 });
 
 describe('FormDialogActions', () => {

@@ -19,6 +19,7 @@ describe('ToastComponent', () => {
 
     expect(fixture.nativeElement.getAttribute('popover')).toBe('manual');
     expect(fixture.nativeElement.matches(':popover-open')).toBe(true);
+    expect(fixture.nativeElement.querySelector('.toast-icon')?.getAttribute('aria-hidden')).toBe('true');
 
     dialog.close();
     dialog.remove();

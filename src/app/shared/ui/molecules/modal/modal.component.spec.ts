@@ -1,6 +1,35 @@
-import { provideZonelessChangeDetection } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalComponent } from './modal.component';
+
+@Component({
+  selector: 'app-modal-async-error-host',
+  standalone: true,
+  imports: [ModalComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <app-modal #dialog title="Guardar configuración">
+      @if (error()) {
+        <p role="alert" data-modal-error tabindex="-1">{{ error() }}</p>
+      }
+    </app-modal>
+  `,
+})
+class ModalAsyncErrorHost {
+  readonly error = signal('');
+  readonly dialog = viewChild.required(ModalComponent);
+
+  resolveFailure(): boolean {
+    this.error.set('No fue posible guardar.');
+    return this.dialog().focusError();
+  }
+}
 
 describe('ModalComponent', () => {
   let component: ModalComponent;
@@ -13,7 +42,7 @@ describe('ModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModalComponent],
+      imports: [ModalComponent, ModalAsyncErrorHost],
       providers: [provideZonelessChangeDetection()],
     }).compileComponents();
 
@@ -106,6 +135,22 @@ describe('ModalComponent', () => {
 
       expect(emitted).toBeFalse();
     });
+
+    it('blocks close controls, Escape and backdrop while an async action is busy', () => {
+      let emissions = 0;
+      component.closed.subscribe(() => { emissions += 1; });
+      setInput('busy', true);
+
+      const modal = fixture.nativeElement.querySelector('.modal') as HTMLElement;
+      const closeBtn = fixture.nativeElement.querySelector('.modal-close') as HTMLButtonElement;
+      closeBtn.click();
+      component.onEscape();
+      component.onBackdropClick();
+
+      expect(modal.getAttribute('aria-busy')).toBe('true');
+      expect(closeBtn.disabled).toBeTrue();
+      expect(emissions).toBe(0);
+    });
   });
 
   // ── Footer ────────────────────────────────────────────────────────────────
@@ -184,6 +229,32 @@ describe('ModalComponent', () => {
 
       expect(document.activeElement).toBe(trigger);
       trigger.remove();
+    });
+
+    it('focuses the projected operation error after an async failure', () => {
+      const body = fixture.nativeElement.querySelector('.modal-body') as HTMLElement;
+      const error = document.createElement('div');
+      error.setAttribute('role', 'alert');
+      error.setAttribute('data-modal-error', '');
+      error.tabIndex = -1;
+      body.appendChild(error);
+
+      expect(component.focusError()).toBeTrue();
+      expect(document.activeElement).toBe(error);
+    });
+
+    it('retries focus after render when async feedback is still pending', async () => {
+      const hostFixture = TestBed.createComponent(ModalAsyncErrorHost);
+      hostFixture.detectChanges();
+      await hostFixture.whenStable();
+
+      expect(hostFixture.componentInstance.resolveFailure()).toBeFalse();
+      await hostFixture.whenStable();
+
+      const error = hostFixture.nativeElement.querySelector('[data-modal-error]') as HTMLElement;
+      expect(error).not.toBeNull();
+      expect(document.activeElement).toBe(error);
+      hostFixture.destroy();
     });
   });
 });

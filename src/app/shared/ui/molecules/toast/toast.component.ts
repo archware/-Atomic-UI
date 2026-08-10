@@ -51,7 +51,7 @@ export interface ToastConfig {
         role="alert"
         [attr.aria-live]="toast.type === 'error' ? 'assertive' : 'polite'"
       >
-        <span class="toast-icon">
+        <span class="toast-icon" aria-hidden="true">
           @switch (toast.type) {
             @case ('success') { <i class="fa-solid fa-circle-check"></i> }
             @case ('error') { <i class="fa-solid fa-circle-xmark"></i> }
@@ -61,7 +61,7 @@ export interface ToastConfig {
         </span>
         <span class="toast-message">{{ toast.message }}</span>
         @if (toast.dismissible) {
-          <button type="button" class="toast-close" (click)="toastService.dismiss(toast.id)" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+          <button type="button" class="toast-close" (click)="toastService.dismiss(toast.id)" aria-label="Cerrar"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         }
       </div>
     }

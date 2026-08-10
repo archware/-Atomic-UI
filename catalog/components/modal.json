@@ -1,0 +1,99 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "modal",
+  "layer": "molecule",
+  "selector": "app-modal",
+  "export": "ModalComponent",
+  "source": "src/app/shared/ui/molecules/modal/modal.component.ts",
+  "purpose": "Diálogo modal proyectable con foco confinado, restauración de foco y protección de acciones asíncronas.",
+  "variants": [
+    {
+      "name": "size",
+      "values": [
+        { "value": "sm", "meaning": "Confirmación o captura breve." },
+        { "value": "md", "meaning": "Contenido modal estándar.", "default": true },
+        { "value": "lg", "meaning": "Contenido amplio." }
+      ]
+    },
+    {
+      "name": "busy",
+      "values": [
+        { "value": false, "meaning": "Permite solicitar cierre.", "default": true },
+        { "value": true, "meaning": "Expone aria-busy y bloquea X, Escape y backdrop." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "title", "type": "string", "default": "", "meaning": "Título visible que nombra el diálogo." },
+    { "name": "size", "type": "'sm' | 'md' | 'lg'", "default": "md", "meaning": "Anchura máxima del panel." },
+    { "name": "closeOnBackdrop", "type": "boolean", "default": true, "meaning": "Permite solicitar cierre desde backdrop o Escape cuando busy es false." },
+    { "name": "hasFooter", "type": "boolean", "default": true, "meaning": "Renderiza el slot footer." },
+    { "name": "busy", "type": "boolean", "default": false, "meaning": "Anuncia progreso y bloquea todos los mecanismos de cierre iniciados por la persona usuaria." }
+  ],
+  "outputs": [
+    { "name": "closed", "type": "void", "meaning": "Solicitud de cierre emitida únicamente cuando busy es false." }
+  ],
+  "methods": [
+    { "name": "requestClose", "type": "() => void", "meaning": "Emite closed si el diálogo no está ocupado." },
+    { "name": "focusError", "type": "() => boolean", "meaning": "Enfoca data-modal-error, data-dialog-error, role=alert o aria-invalid. Retorna si el foco fue inmediato y, si el destino aún no existe, reintenta una vez después del render." }
+  ],
+  "slots": [
+    { "name": "default", "type": "projected content", "meaning": "Contenido y feedback local del diálogo." },
+    { "name": "[slot=footer]", "type": "projected content", "meaning": "Acciones Atomic principales y secundarias." }
+  ],
+  "behavior": [
+    "El foco inicial prioriza data-modal-initial-focus y luego el primer control disponible.",
+    "Tab y Shift+Tab permanecen confinados dentro del panel.",
+    "busy bloquea X, Escape y backdrop; la acción principal enlaza Button loading para impedir doble envío.",
+    "Un fallo mantiene el modal abierto, actualiza la alerta proyectada y llama focusError directamente; la primitiva resuelve el foco post-render.",
+    "Un éxito actualiza el estado de apertura y emite el Toast global después de retirar el overlay.",
+    "La destrucción restaura el foco al elemento que abrió el modal."
+  ],
+  "states": [
+    { "name": "open", "meaning": "Panel visible con foco confinado." },
+    { "name": "busy", "meaning": "Operación pendiente y cierre bloqueado." },
+    { "name": "error", "meaning": "Modal abierto con feedback local enfocado." },
+    { "name": "closed", "meaning": "Overlay retirado y foco restaurado al disparador." }
+  ],
+  "a11y": [
+    "El panel usa role=dialog, aria-modal y aria-labelledby con identificador único.",
+    "busy se anuncia mediante aria-busy y aplica disabled nativo al botón X.",
+    "focusError admite tabindex=-1 para enfocar una alerta sin añadirla al orden de tabulación.",
+    "Los iconos del cierre permanecen decorativos mediante aria-hidden."
+  ],
+  "responsive": [
+    "En escritorio el panel se centra y limita su altura con scroll interno.",
+    "En móvil se ancla al borde inferior, ocupa todo el ancho y respeta el área segura."
+  ],
+  "tokens": [
+    "--border-color",
+    "--control-height-sm",
+    "--focus-ring",
+    "--overlay-backdrop",
+    "--radius-lg",
+    "--radius-md",
+    "--shadow-xl",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--space-6",
+    "--space-8",
+    "--surface-background",
+    "--surface-hover",
+    "--text-2xl",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-secondary",
+    "--text-lg"
+  ],
+  "story": { "path": "src/stories/ui-modal.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/molecules/modal/modal.component.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "El consumidor conserva la promesa, el mensaje de dominio y el estado que decide el cierre."
+    ]
+  },
+  "canonicalFor": ["modal", "confirmation-dialog", "async-dialog"]
+}

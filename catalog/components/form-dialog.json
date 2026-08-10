@@ -95,6 +95,11 @@
   ],
   "methods": [
     {
+      "name": "focusError",
+      "type": "() => boolean",
+      "meaning": "Enfoca el primer bloque data-dialog-error, data-modal-error o role=alert y retorna si encontró destino."
+    },
+    {
       "name": "showModal",
       "type": "() => void",
       "meaning": "Establece opened=true, abre y enfoca el primer control del cuerpo."
@@ -123,6 +128,9 @@
     }
   ],
   "behavior": [
+    "busy no deshabilita automáticamente los botones proyectados; la acción principal enlaza app-button loading y las acciones de cancelación enlazan disabled.",
+    "Tras un fallo asíncrono el consumidor mantiene opened=true, publica role=alert o data-dialog-error y llama focusError directamente; CrudDialog reintenta una vez después del render cuando es necesario.",
+    "Tras un éxito el consumidor cierra el diálogo y publica la confirmación global después del cierre efectivo.",
     "Un effect sincroniza opened con el estado nativo de CrudDialog sin eliminar showModal ni close.",
     "El foco inicial prioriza controles del cuerpo y luego el botón proyectado dialog-close.",
     "busy no deshabilita automáticamente campos, botones proyectados ni close programático.",
@@ -138,6 +146,7 @@
     }
   ],
   "a11y": [
+    "focusError acepta alertas con tabindex=-1 para mover el foco programáticamente sin incorporarlas al orden de tabulación.",
     "Genera ids únicos para aria-labelledby y aria-describedby mediante título y descripción.",
     "Delega diálogo nativo, foco inicial, foco inválido y restauración del foco a CrudDialog.",
     "busy se anuncia en el article con aria-busy; el consumidor debe deshabilitar las acciones que no deban ejecutarse."

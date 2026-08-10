@@ -6,7 +6,10 @@
   "selector": "app-button",
   "export": "ButtonComponent",
   "source": "src/app/shared/ui/atoms/button/button.component.ts",
-  "relatedSources": ["src/styles/themes/_buttons.css"],
+  "relatedSources": [
+    "src/styles/themes/_buttons.css",
+    "src/app/shared/ui/atoms/spinner/spinner.component.ts"
+  ],
   "purpose": "Acción nativa principal o secundaria con jerarquía, tono, tamaño e iconografía consistentes.",
   "variants": [
     {
@@ -65,9 +68,17 @@
         { "value": "intrinsic", "meaning": "El control conserva el ancho de su etiqueta.", "default": true },
         { "value": "full", "meaning": "El host y el botón nativo ocupan todo el ancho disponible." }
       ]
+    },
+    {
+      "name": "loading",
+      "values": [
+        { "value": false, "meaning": "La acción permanece disponible.", "default": true },
+        { "value": true, "meaning": "Muestra progreso, deshabilita el botón y bloquea activaciones repetidas." }
+      ]
     }
   ],
   "inputs": [
+    { "name": "loading", "type": "boolean", "default": false, "meaning": "Marca aria-busy, muestra un Spinner decorativo y aplica disabled nativo mientras la acción está pendiente." },
     { "name": "type", "type": "'button' | 'submit' | 'reset'", "default": "button", "meaning": "Tipo del botón HTML." },
     { "name": "variant", "type": "ButtonVariant", "default": "primary", "meaning": "Jerarquía visual." },
     { "name": "tone", "type": "ButtonTone", "default": "neutral", "meaning": "Tono semántico de variantes sutiles." },
@@ -79,7 +90,7 @@
     { "name": "fullWidth", "type": "boolean", "default": false, "meaning": "Expande el host y el botón nativo al ancho disponible." }
   ],
   "outputs": [
-    { "name": "buttonClick", "type": "MouseEvent", "meaning": "Clic válido; no emite si disabled y detiene propagación." }
+    { "name": "buttonClick", "type": "MouseEvent", "meaning": "Clic válido; no emite si disabled o loading y detiene propagación." }
   ],
   "slots": [
     { "name": "default", "type": "projected content", "meaning": "Etiqueta accesible del botón." },
@@ -87,11 +98,13 @@
     { "name": "[icon-right]", "type": "projected content", "meaning": "Icono personalizado posterior." }
   ],
   "states": [
+    { "name": "loading", "meaning": "Usa disabled nativo, aria-busy y spinner sin emitir comandos adicionales." },
     { "name": "enabled", "meaning": "Interactivo y emite buttonClick." },
     { "name": "disabled", "meaning": "Usa disabled nativo y no emite." },
     { "name": "focus-visible", "meaning": "El tema global aplica el anillo de foco." }
   ],
   "a11y": [
+    "loading conserva la etiqueta textual, expone aria-busy y oculta el spinner decorativo del árbol accesible.",
     "Usa button nativo y disabled nativo.",
     "La etiqueta proyectada debe proporcionar el nombre accesible.",
     "Los iconos configurados y proyectados son decorativos y se excluyen del nombre accesible mediante aria-hidden.",
@@ -102,6 +115,8 @@
     "El host admite también las clases estructurales inline y auto-size."
   ],
   "tokens": [
+    "--border-width-medium",
+    "--radius-full",
     "--button-primary-bg",
     "--button-primary-bg-hover",
     "--button-primary-bg-active",

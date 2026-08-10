@@ -110,7 +110,7 @@ describe('CrudDialog', () => {
     expect(surface.getAttribute('data-so-managed-scrollbar')).toBe('true');
   });
 
-  it('enfoca el control nativo dentro del primer componente invÃ¡lido', async () => {
+  it('enfoca el control nativo dentro del primer componente inválido', async () => {
     await TestBed.configureTestingModule({ imports: [CrudDialog] }).compileComponents();
     const fixture = TestBed.createComponent(CrudDialog);
     fixture.componentRef.setInput('labelledBy', 'editor-title');
@@ -126,6 +126,24 @@ describe('CrudDialog', () => {
     fixture.componentInstance.focusInvalid();
 
     expect(document.activeElement).toBe(input);
+    fixture.componentInstance.close();
+  });
+
+  it('enfoca la alerta de operación proyectada después de un fallo asíncrono', async () => {
+    await TestBed.configureTestingModule({ imports: [CrudDialog] }).compileComponents();
+    const fixture = TestBed.createComponent(CrudDialog);
+    fixture.componentRef.setInput('labelledBy', 'editor-title');
+    fixture.detectChanges();
+
+    const error = document.createElement('div');
+    error.setAttribute('role', 'alert');
+    error.setAttribute('data-dialog-error', '');
+    error.tabIndex = -1;
+    fixture.componentInstance.nativeElement.appendChild(error);
+
+    fixture.componentInstance.showModal();
+    expect(fixture.componentInstance.focusError()).toBe(true);
+    expect(document.activeElement).toBe(error);
     fixture.componentInstance.close();
   });
 });

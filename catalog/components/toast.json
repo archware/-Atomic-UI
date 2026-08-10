@@ -47,6 +47,7 @@
     { "name": "ToastService.clear", "type": "() => void", "meaning": "Elimina todos los toasts inmediatamente." }
   ],
   "behavior": [
+    "Una confirmación de formulario modal se crea después de cerrar el diálogo; Popup no sustituye este feedback global poscierre.",
     "Debe existir una única instancia de app-toast en el nivel raíz de la aplicación.",
     "ToastService es providedIn root; duration omitido usa 4000ms y dismissible omitido usa true.",
     "El host usa popover=manual y se vuelve a abrir para colocar el toast más reciente en top layer."
@@ -61,7 +62,7 @@
     "El host se nombra Notificaciones y cada toast usa role=alert.",
     "error anuncia assertive y los demás tipos polite.",
     "El botón opcional usa aria-label Cerrar.",
-    "Los iconos Font Awesome actuales no están marcados aria-hidden."
+    "Los iconos de estado y cierre son decorativos y permanecen excluidos del nombre accesible mediante aria-hidden."
   ],
   "responsive": [
     "En escritorio aparece arriba a la derecha con máximo 360px.",

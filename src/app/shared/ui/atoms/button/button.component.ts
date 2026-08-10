@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 /**
  * Available button color variants.
@@ -30,7 +31,7 @@ export type IconPosition = 'left' | 'right' | 'none';
 @Component({
   selector: 'app-button',
   standalone: true,
-  imports: [],
+  imports: [SpinnerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.atomic-button--full-width]': 'fullWidth'
@@ -38,10 +39,20 @@ export type IconPosition = 'left' | 'right' | 'none';
   template: `
     <button
       [type]="type"
-      [disabled]="disabled"
+      [disabled]="isDisabled"
+      [attr.aria-busy]="loading ? 'true' : null"
       [class]="buttonClasses"
       (click)="onButtonClick($event)"
     >
+      @if (loading) {
+        <app-spinner
+          class="btn-spinner"
+          size="sm"
+          variant="current"
+          aria-hidden="true"
+        />
+      }
+
       <!-- Custom Icon Link (Left) -->
       <span class="btn-icon-wrapper btn-icon-wrapper--left" aria-hidden="true">
         <ng-content select="[icon-left]"></ng-content>
@@ -119,6 +130,11 @@ export type IconPosition = 'left' | 'right' | 'none';
         align-items: center;
         justify-content: center;
         font-size: var(--icon-sm); /* 1var(--space-2) */
+      }
+
+      .btn-spinner {
+        display: inline-flex;
+        flex: 0 0 auto;
       }
 
       /* Hide empty slot containers */
@@ -202,6 +218,14 @@ export class ButtonComponent {
    */
   @Input() disabled = false;
 
+  /**
+   * Indicates that the action is pending.
+   * Loading disables the native control, exposes aria-busy and suppresses
+   * repeated buttonClick emissions while preserving the projected label.
+   * @default false
+   */
+  @Input() loading = false;
+
   /** Expands both the host and the native button to the available width. */
   @Input() fullWidth = false;
 
@@ -211,9 +235,14 @@ export class ButtonComponent {
    */
   @Output() buttonClick = new EventEmitter<MouseEvent>();
 
+  /** Native interaction is unavailable while disabled or loading. */
+  get isDisabled(): boolean {
+    return this.disabled || this.loading;
+  }
+
   onButtonClick(event: MouseEvent): void {
     event.stopPropagation();
-    if (!this.disabled) {
+    if (!this.isDisabled) {
       this.buttonClick.emit(event);
     }
   }
@@ -224,6 +253,10 @@ export class ButtonComponent {
 
     if (this.size !== 'md') {
       classes.push(`btn-${this.size}`);
+    }
+
+    if (this.loading) {
+      classes.push('btn-loading');
     }
 
     return classes.join(' ');

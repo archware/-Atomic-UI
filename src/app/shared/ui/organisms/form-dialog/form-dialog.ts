@@ -92,6 +92,14 @@ export class FormDialog {
     this.dialog()?.focusInvalid();
   }
 
+  /**
+   * Focuses projected operation feedback after an asynchronous failure.
+   * CrudDialog retries after render when the feedback is not available yet.
+   */
+  focusError(): boolean {
+    return this.dialog()?.focusError() ?? false;
+  }
+
   protected handleCancelled(event: Event): void {
     if (!this.busy()) {
       this.cancelled.emit(event);
