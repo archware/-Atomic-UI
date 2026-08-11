@@ -1,11 +1,16 @@
 import {
+  ChangeDetectorRef,
   ChangeDetectionStrategy,
   Component,
+  inject,
   provideZonelessChangeDetection,
   signal,
   viewChild,
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ButtonComponent } from '../../atoms/button/button.component';
+import { ToastService } from '../../services/toast.service';
+import { ToastComponent } from '../toast/toast.component';
 import { ModalComponent } from './modal.component';
 
 @Component({
@@ -31,6 +36,67 @@ class ModalAsyncErrorHost {
   }
 }
 
+@Component({
+  selector: 'app-modal-async-lifecycle-host',
+  standalone: true,
+  imports: [ButtonComponent, ModalComponent, ToastComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <app-button data-launch-success (buttonClick)="open('success')">Probar éxito</app-button>
+    <app-button data-launch-error (buttonClick)="open('error')">Probar error</app-button>
+    @if (opened()) {
+      <app-modal #dialog title="Guardar configuración" [busy]="busy()" (closed)="close()">
+        @if (error()) {
+          <p role="alert" data-modal-error tabindex="-1">{{ error() }}</p>
+        }
+        <div slot="footer">
+          <app-button data-submit [loading]="busy()" (buttonClick)="start()">Guardar</app-button>
+        </div>
+      </app-modal>
+    }
+    <app-toast />
+  `,
+})
+class ModalAsyncLifecycleHost {
+  readonly opened = signal(false);
+  readonly busy = signal(false);
+  readonly error = signal('');
+  readonly mode = signal<'success' | 'error'>('success');
+  readonly dialog = viewChild(ModalComponent);
+  private readonly changeDetector = inject(ChangeDetectorRef);
+  private readonly toast = inject(ToastService);
+
+  open(mode: 'success' | 'error'): void {
+    this.toast.clear();
+    this.mode.set(mode);
+    this.error.set('');
+    this.busy.set(false);
+    this.opened.set(true);
+  }
+
+  close(): void {
+    if (!this.busy()) this.opened.set(false);
+  }
+
+  start(): void {
+    if (!this.busy()) this.busy.set(true);
+  }
+
+  finish(): void {
+    if (this.mode() === 'error') {
+      this.error.set('No fue posible guardar.');
+      this.busy.set(false);
+      this.dialog()?.focusError();
+      return;
+    }
+
+    this.busy.set(false);
+    this.opened.set(false);
+    this.changeDetector.detectChanges();
+    this.toast.success('Configuración guardada.', 0);
+  }
+}
+
 describe('ModalComponent', () => {
   let component: ModalComponent;
   let fixture: ComponentFixture<ModalComponent>;
@@ -42,7 +108,7 @@ describe('ModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModalComponent, ModalAsyncErrorHost],
+      imports: [ModalComponent, ModalAsyncErrorHost, ModalAsyncLifecycleHost],
       providers: [provideZonelessChangeDetection()],
     }).compileComponents();
 
@@ -253,6 +319,56 @@ describe('ModalComponent', () => {
 
       const error = hostFixture.nativeElement.querySelector('[data-modal-error]') as HTMLElement;
       expect(error).not.toBeNull();
+      expect(document.activeElement).toBe(error);
+      hostFixture.destroy();
+    });
+
+    it('automates busy, Escape, close-before-toast and error-focus lifecycle', async () => {
+      const hostFixture = TestBed.createComponent(ModalAsyncLifecycleHost);
+      hostFixture.detectChanges();
+      await hostFixture.whenStable();
+
+      const successLauncher = hostFixture.nativeElement.querySelector(
+        '[data-launch-success] button',
+      ) as HTMLButtonElement;
+      successLauncher.focus();
+      successLauncher.click();
+      await hostFixture.whenStable();
+
+      let dialog = hostFixture.nativeElement.querySelector('[role="dialog"]') as HTMLElement;
+      let submit = hostFixture.nativeElement.querySelector('[data-submit] button') as HTMLButtonElement;
+      submit.click();
+      await hostFixture.whenStable();
+
+      expect(dialog.getAttribute('aria-busy')).toBe('true');
+      expect(submit.disabled).toBeTrue();
+      dialog.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      expect(hostFixture.componentInstance.opened()).toBeTrue();
+
+      hostFixture.componentInstance.finish();
+      await hostFixture.whenStable();
+
+      expect(hostFixture.nativeElement.querySelector('[role="dialog"]')).toBeNull();
+      const toast = hostFixture.nativeElement.querySelector('app-toast [role="alert"]') as HTMLElement;
+      expect(toast.textContent).toContain('Configuración guardada.');
+      expect(document.activeElement).toBe(successLauncher);
+
+      const errorLauncher = hostFixture.nativeElement.querySelector(
+        '[data-launch-error] button',
+      ) as HTMLButtonElement;
+      errorLauncher.focus();
+      errorLauncher.click();
+      await hostFixture.whenStable();
+      submit = hostFixture.nativeElement.querySelector('[data-submit] button') as HTMLButtonElement;
+      submit.click();
+      await hostFixture.whenStable();
+      hostFixture.componentInstance.finish();
+      await hostFixture.whenStable();
+
+      dialog = hostFixture.nativeElement.querySelector('[role="dialog"]') as HTMLElement;
+      const error = dialog.querySelector('[data-modal-error]') as HTMLElement;
+      expect(dialog).not.toBeNull();
+      expect(error.textContent).toContain('No fue posible guardar.');
       expect(document.activeElement).toBe(error);
       hostFixture.destroy();
     });

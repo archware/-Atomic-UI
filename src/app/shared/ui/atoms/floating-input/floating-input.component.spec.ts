@@ -119,22 +119,72 @@ describe('FloatingInputComponent', () => {
   });
 
   describe('password toggle', () => {
-    it('should show password toggle button for password type', () => {
+    it('scopes suppression of duplicate WebView2 password controls to the component input', () => {
       setInput('type', 'password');
 
-      const toggleBtn = fixture.nativeElement.querySelector('.input-icon-btn');
-      expect(toggleBtn).toBeTruthy();
+      const componentStyles = Array.from(document.head.querySelectorAll('style'))
+        .map(style => style.textContent ?? '')
+        .join('\n');
+      expect(componentStyles).toMatch(/\.floating-input[^{,]*::-ms-reveal/);
+      expect(componentStyles).toMatch(/\.floating-input[^{,]*::-ms-clear/);
     });
 
-    it('should toggle password visibility', () => {
+    it('renders a native keyboard-focusable button associated with the password input', () => {
       setInput('type', 'password');
 
-      expect(component.actualType()).toBe('password');
+      const input = fixture.nativeElement.querySelector('.floating-input') as HTMLInputElement;
+      const toggleBtn = fixture.nativeElement.querySelector('.input-icon-btn') as HTMLButtonElement;
 
-      component.togglePassword();
+      expect(toggleBtn.tagName).toBe('BUTTON');
+      expect(toggleBtn.type).toBe('button');
+      expect(toggleBtn.tabIndex).toBe(0);
+      expect(toggleBtn.getAttribute('aria-controls')).toBe(input.id);
+
+      toggleBtn.focus();
+      expect(document.activeElement).toBe(toggleBtn);
+    });
+
+    it('exposes a dynamic accessible name and pressed state without naming the glyph', () => {
+      setInput('type', 'password');
+
+      const input = fixture.nativeElement.querySelector('.floating-input') as HTMLInputElement;
+      const toggleBtn = fixture.nativeElement.querySelector('.input-icon-btn') as HTMLButtonElement;
+      const icon = toggleBtn.querySelector('i') as HTMLElement;
+
+      expect(input.type).toBe('password');
+      expect(toggleBtn.getAttribute('aria-label')).toBe('Mostrar contraseña');
+      expect(toggleBtn.getAttribute('aria-pressed')).toBe('false');
+      expect(icon.getAttribute('aria-hidden')).toBe('true');
+      expect(toggleBtn.textContent?.trim()).toBe('');
+
+      toggleBtn.click();
       fixture.detectChanges();
 
-      expect(component.actualType()).toBe('text');
+      expect(input.type).toBe('text');
+      expect(toggleBtn.getAttribute('aria-label')).toBe('Ocultar contraseña');
+      expect(toggleBtn.getAttribute('aria-pressed')).toBe('true');
+      expect(icon.classList.contains('fa-eye-slash')).toBeTrue();
+    });
+
+    it('keeps focus on the native toggle after changing password visibility', () => {
+      setInput('type', 'password');
+
+      const toggleBtn = fixture.nativeElement.querySelector('.input-icon-btn') as HTMLButtonElement;
+      toggleBtn.focus();
+      toggleBtn.click();
+      fixture.detectChanges();
+
+      expect(document.activeElement).toBe(toggleBtn);
+    });
+
+    it('disables the password toggle together with the input', () => {
+      setInput('type', 'password');
+      setInput('disabled', true);
+
+      const toggleBtn = fixture.nativeElement.querySelector('.input-icon-btn') as HTMLButtonElement;
+      expect(toggleBtn.disabled).toBeTrue();
+      toggleBtn.focus();
+      expect(document.activeElement).not.toBe(toggleBtn);
     });
   });
 

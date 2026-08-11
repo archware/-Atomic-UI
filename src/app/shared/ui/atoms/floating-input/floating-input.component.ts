@@ -47,8 +47,21 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
       <!-- Icon button (password toggle or custom icon) -->
       @if (type === 'password') {
-        <button type="button" class="input-icon-btn" (click)="onPasswordToggleClick($event)" tabindex="-1">
-          <i class="fa-solid" [class.fa-eye]="!showPassword()" [class.fa-eye-slash]="showPassword()"></i>
+        <button
+          type="button"
+          class="input-icon-btn"
+          [disabled]="disabled"
+          [attr.aria-label]="passwordToggleAccessibleLabel()"
+          [attr.aria-pressed]="showPassword()"
+          [attr.aria-controls]="inputId()"
+          (click)="onPasswordToggleClick($event)"
+        >
+          <i
+            class="fa-solid"
+            [class.fa-eye]="!showPassword()"
+            [class.fa-eye-slash]="showPassword()"
+            aria-hidden="true"
+          ></i>
         </button>
       } @else if (iconClass || clearable) {
         <button
@@ -136,6 +149,12 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     .floating-input::placeholder {
       color: transparent;
+    }
+
+    /* WebView2: el revelado pertenece al control Atomic y no al navegador. */
+    .floating-input::-ms-reveal,
+    .floating-input::-ms-clear {
+      display: none;
     }
 
     /* === FLOATING LABEL === */
@@ -357,6 +376,21 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       color: var(--primary-color);
     }
 
+    .input-icon-btn:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-focus-primary);
+    }
+
+    .input-icon-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .input-icon-btn:disabled:hover {
+      background: transparent;
+      color: var(--text-color-secondary);
+    }
+
     .input-icon-btn--static {
       width: 1.75rem;
       height: 1.75rem;
@@ -433,6 +467,10 @@ export class FloatingInputComponent implements ControlValueAccessor {
 
   togglePassword(): void {
     this.showPassword.update(v => !v);
+  }
+
+  passwordToggleAccessibleLabel(): string {
+    return this.showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña';
   }
 
   onPasswordToggleClick(event: Event): void {

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
+import { expect, userEvent, waitFor, within } from 'storybook/test';
 import { ChangeDetectionStrategy, Component, inject, signal, viewChild } from '@angular/core';
 import { ModalComponent } from '../app/shared/ui/molecules/modal/modal.component';
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
@@ -215,4 +216,43 @@ export const AsyncActionLifecycle: Story = {
   render: () => ({
     template: `<app-story-modal-async-action />`,
   }),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('El estado busy bloquea Escape y el envío repetido', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Probar éxito' }));
+      const dialog = await canvas.findByRole('dialog');
+      const submit = within(dialog).getByRole('button', { name: 'Guardar' });
+      await userEvent.click(submit);
+
+      await waitFor(() => {
+        expect(dialog).toHaveAttribute('aria-busy', 'true');
+        expect(submit).toBeDisabled();
+      });
+      dialog.focus();
+      await userEvent.keyboard('{Escape}');
+      expect(canvas.getByRole('dialog')).toBe(dialog);
+    });
+
+    await step('El éxito retira el diálogo antes de presentar un único Toast', async () => {
+      await waitFor(() => expect(canvas.queryByRole('dialog')).not.toBeInTheDocument(), {
+        timeout: 1500,
+      });
+      const toast = await canvas.findByRole('alert');
+      expect(toast).toHaveTextContent('Configuración guardada.');
+      expect(canvas.getAllByRole('alert')).toHaveLength(1);
+      expect(canvas.getByRole('button', { name: 'Probar éxito' })).toHaveFocus();
+    });
+
+    await step('El error conserva el diálogo y mueve el foco a la alerta', async () => {
+      await userEvent.click(canvas.getByRole('button', { name: 'Probar error' }));
+      const dialog = await canvas.findByRole('dialog');
+      await userEvent.click(within(dialog).getByRole('button', { name: 'Guardar' }));
+
+      const error = await within(dialog).findByRole('alert', undefined, { timeout: 1500 });
+      expect(error).toHaveTextContent('No fue posible guardar.');
+      expect(canvas.getByRole('dialog')).toBe(dialog);
+      await waitFor(() => expect(error).toHaveFocus());
+    });
+  },
 };

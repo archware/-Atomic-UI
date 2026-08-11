@@ -3,7 +3,7 @@ title: "Atomic UI: sistema de componentes y temas"
 subtitle: "Fuente visual canónica para aplicaciones de escritorio HRA"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-10"
-version: "5.5.3"
+version: "5.5.4"
 ---
 
 # Atomic UI: sistema de componentes y temas
@@ -313,6 +313,7 @@ ng e2e                    # E2E tests
 
 - ✅ ARIA labels en todos los controles interactivos
 - ✅ Focus visible en navegación por teclado
+- ✅ Revelado de contraseña con nombre dinámico, estado expuesto y glifo decorativo
 - ✅ Anuncios de cambios de tema para lectores de pantalla
 - ✅ Color no es único indicador (iconos + texto)
 
@@ -324,7 +325,7 @@ Este proyecto está bajo la Licencia MIT.
 
 ---
 
-**Versión:** 5.5.3
+**Versión:** 5.5.4
 **Última actualización:** 10 de agosto de 2026
 **Angular:** 22
 **TypeScript:** 6.0

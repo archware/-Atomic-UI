@@ -1,7 +1,7 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.5.3"
+version: "5.5.4"
 status: "vigente"
 updated: "2026-08-10"
 owner: "Hospital Regional de Ayacucho"
@@ -14,6 +14,43 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.5.4] - 2026-08-10
+
+### Mejorado
+
+- `FloatingInputComponent` sustituye el toggle de contraseña excluido del
+  recorrido de teclado por un `button` nativo enfocable. La acción conserva la
+  API existente, cambia su nombre entre `Mostrar contraseña` y
+  `Ocultar contraseña`, expone el estado mediante `aria-pressed`, referencia el
+  input mediante `aria-controls`, se deshabilita junto con el campo y excluye
+  el glifo Font Awesome del nombre accesible mediante `aria-hidden`.
+- El toggle presenta el anillo de foco definido por
+  `--shadow-focus-primary` y conserva el foco después de alternar entre
+  `password` y `text`. La fuente suprime de forma scoped `::-ms-reveal` y
+  `::-ms-clear` para impedir un segundo control nativo en WebView2 aunque la
+  hoja global de formularios no esté disponible.
+- El catálogo incorpora el contrato estable `floating-input`, incluidas sus
+  variantes, entradas compatibles, estados accesibles, tokens y evidencias.
+
+### Verificación
+
+- Las pruebas unitarias verifican control nativo, orden de tabulación,
+  asociación con el input, nombre dinámico, `aria-pressed`, glifo decorativo,
+  conservación del foco, deshabilitación conjunta y supresión scoped de los
+  controles heredados de WebView2.
+- Storybook incorpora una prueba de interacción del toggle con Tab, Enter y
+  Espacio, además de escenarios visuales en tema claro, tema oscuro y viewport
+  móvil.
+- La historia `Acción asíncrona segura` automatiza `busy`, bloqueo de Escape,
+  cierre antes del Toast en éxito y permanencia con foco de alerta en error.
+  Una prueba Angular independiente valida el mismo ciclo sin transporte ni
+  reglas de dominio.
+- La suite completa finaliza con 336 pruebas correctas; la aplicación, la
+  biblioteca Angular y Storybook compilan sin errores.
+- El manifiesto registra 156 fuentes y la huella SHA-256 del árbol
+  `e1241929d3fa93c097566ff897d86c95c4edf4350a76de208622a76bacbe328c`.
+- Identificador de cambio: `ATOMIC-20260810-554-FLOATING-PASSWORD-A11Y`.
 
 ## [5.5.3] - 2026-08-10
 

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.5.3",
+  "packageVersion": "5.5.4",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
-  "sourceTreeSha256": "e1752a598e78aed4033b33683ce2ce970ce021eb0c64a693360d1995480ca4cf",
+  "sourceTreeSha256": "e1241929d3fa93c097566ff897d86c95c4edf4350a76de208622a76bacbe328c",
   "fileCount": 156,
   "files": [
     {
@@ -15,7 +15,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 886,
-      "sha256": "6214e7cf116b4f9c2879cda9d90b961cf49541bb7b6fe2046cc2b02bf5a1ff2d"
+      "sha256": "b4ab598c5f91a562ad5f7d9bd6959cda7fba687643638e37c28c3cb437b5b8e9"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -84,8 +84,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/floating-input/floating-input.component.ts",
-      "bytes": 14908,
-      "sha256": "0254e87b4868eb2454df95ddd5e98125f7e115f7cdceb618fbc3740f7b5ac517"
+      "bytes": 15795,
+      "sha256": "ceed4f6524e06410fc369ed3d4aeef9bbbf552c3683a1233f3d2dbbd0c445512"
     },
     {
       "path": "src/app/shared/ui/atoms/form-error/form-error.component.ts",

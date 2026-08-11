@@ -3,7 +3,7 @@ title: "Biblioteca de componentes Atomic UI"
 subtitle: "Contrato visual portable para aplicaciones Angular"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-03"
-version: "5.5.3"
+version: "5.5.4"
 ---
 
 # Biblioteca de componentes Atomic UI
@@ -11,7 +11,7 @@ version: "5.5.3"
 Librería de componentes Angular portables siguiendo **Atomic Design**.
 
 **Última actualización**: agosto de 2026
-**Versión**: 5.1.38
+**Versión**: 5.5.4
 **Angular**: 22
 
 ---
@@ -1070,6 +1070,14 @@ export * from './atoms/mi-componente/mi-componente.component';
 </app-floating-input>
 ```
 
+Cuando `type="password"`, el componente incorpora un botón nativo dentro del
+recorrido de teclado. La acción alterna su nombre entre `Mostrar contraseña` y
+`Ocultar contraseña`, expone el estado mediante `aria-pressed`, referencia el
+input mediante `aria-controls` y excluye el glifo del nombre accesible. El foco
+permanece en la acción después del cambio de visibilidad. En WebView2 se
+suprimen `::-ms-reveal` y `::-ms-clear` dentro del propio componente para evitar
+controles duplicados aunque la hoja global de formularios no esté disponible.
+
 #### `FormErrorComponent`
 
 ```html
@@ -1185,7 +1193,7 @@ export class MyComponent {
 ---
 
 📅 **Última actualización**: agosto de 2026
-🏷️ **Versión**: 5.5.3
+🏷️ **Versión**: 5.5.4
 ⚡ **Angular**: 22
 🌐 **i18n**: ngx-translate  
 📚 **Storybook**: Disponible
