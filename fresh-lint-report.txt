@@ -1,48 +1,48 @@
 ﻿
 Linting "angular-scrollable-table"...
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\app\shared\ui\atoms\file-input\file-input.component.ts
+<REPOSITORY_ROOT>\src\app\shared\ui\atoms\file-input\file-input.component.ts
   41:9  error  A label component must be associated with a form element  @angular-eslint/template/label-has-associated-control
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\app\shared\ui\atoms\progress\progress.component.ts
+<REPOSITORY_ROOT>\src\app\shared\ui\atoms\progress\progress.component.ts
   6:3  error  'signal' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\app\shared\ui\atoms\tooltip\tooltip.directive.ts
+<REPOSITORY_ROOT>\src\app\shared\ui\atoms\tooltip\tooltip.directive.ts
   2:21  error  'signal' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\app\shared\ui\directives\permission.directive.ts
+<REPOSITORY_ROOT>\src\app\shared\ui\directives\permission.directive.ts
   51:10  error  Input bindings should not be aliased (https://angular.dev/guide/components/inputs#choosing-input-names)  @angular-eslint/no-input-rename
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\app\shared\ui\helpers\form-builder.helper.ts
+<REPOSITORY_ROOT>\src\app\shared\ui\helpers\form-builder.helper.ts
   39:40  error  Unnecessary escape character: \-  no-useless-escape
   39:56  error  Unnecessary escape character: \-  no-useless-escape
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\app\shared\ui\molecules\combobox\combobox.component.ts
+<REPOSITORY_ROOT>\src\app\shared\ui\molecules\combobox\combobox.component.ts
   44:9   error  A label component must be associated with a form element                              @angular-eslint/template/label-has-associated-control
   59:11  error  The input with role="combobox" does not have required ARIA properties: aria-controls  @angular-eslint/template/role-has-required-aria
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\app\shared\ui\molecules\tag-input\tag-input.component.ts
+<REPOSITORY_ROOT>\src\app\shared\ui\molecules\tag-input\tag-input.component.ts
   48:9  error  A label component must be associated with a form element  @angular-eslint/template/label-has-associated-control
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\blueprints\register-page\register-page.component.ts
+<REPOSITORY_ROOT>\src\blueprints\register-page\register-page.component.ts
   5:10  error  'Observable' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\blueprints\settings-page\settings-page.component.ts
+<REPOSITORY_ROOT>\src\blueprints\settings-page\settings-page.component.ts
   2:10  error  'isPlatformBrowser' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\stories\blueprint-forgot-password-page.stories.ts
+<REPOSITORY_ROOT>\src\stories\blueprint-forgot-password-page.stories.ts
   61:18  error  'canvasElement' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\stories\ui-layout-shell.stories.ts
+<REPOSITORY_ROOT>\src\stories\ui-layout-shell.stories.ts
   2:10  error  'signal' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\stories\ui-number-input.stories.ts
+<REPOSITORY_ROOT>\src\stories\ui-number-input.stories.ts
   25:6  error  'story' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\stories\ui-popup.stories.ts
+<REPOSITORY_ROOT>\src\stories\ui-popup.stories.ts
   10:13  error  The selector should start with one of these prefixes: "app" (https://angular.dev/style-guide#choosing-component-selectors)  @angular-eslint/component-selector
 
-C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\stories\ui-tooltip.stories.ts
+<REPOSITORY_ROOT>\src\stories\ui-tooltip.stories.ts
    7:13  error  The selector should start with one of these prefixes: "app" (https://angular.dev/style-guide#choosing-component-selectors)  @angular-eslint/component-selector
   62:13  error  The selector should start with one of these prefixes: "app" (https://angular.dev/style-guide#choosing-component-selectors)  @angular-eslint/component-selector
 
@@ -50,7 +50,7 @@ C:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\stories\ui-tooltip.stori
 
 node.exe : [1m[31mLint errors found in the listed files.
 En línea: 1 Carácter: 129
-+ ... Atomic-UI"; & "C:\Program Files\nodejs\node.exe" .\node_modules\@angu ...
++ ... Atomic-UI"; & "<NODE_INSTALLATION>\node.exe" .\node_modules\@angu ...
 +                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: ([1m[31mLint e...e listed files. 
    :String) [], RemoteException

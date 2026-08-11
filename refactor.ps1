@@ -1,4 +1,4 @@
-$path = 'c:\Users\havel.contreras\Documents\Repos\-Atomic-UI\src\app\shared\ui'
+$path = Join-Path -Path $PSScriptRoot -ChildPath 'src\app\shared\ui'
 $files = Get-ChildItem -Path $path -Recurse -Include *.ts, *.css, *.html
 
 foreach ($file in $files) {
