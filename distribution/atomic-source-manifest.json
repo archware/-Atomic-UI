@@ -4,7 +4,7 @@
   "packageVersion": "5.5.0",
   "distributionStatus": "blocked-scaffold",
   "algorithm": "sha256",
-  "sourceTreeSha256": "eb24bc5ea2b250d09a9bc91e0c42efbe36dbf863f8514715cf39cb7d4cfa5d02",
+  "sourceTreeSha256": "fb10a52330599b98da9a03aaf96359399f06abf905d708555336afbef58c36ac",
   "fileCount": 152,
   "files": [
     {
@@ -59,8 +59,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/file-input/file-input.component.ts",
-      "bytes": 14010,
-      "sha256": "2aba367879968352ee8d723d9469f4759422c21192f683283416a5eafbd72162"
+      "bytes": 14971,
+      "sha256": "34931a845f96dc62c60db7c58ae4d209350d99e60c29ad61f14a5c580a6b1254"
     },
     {
       "path": "src/app/shared/ui/atoms/floating-input/floating-input.component.ts",
@@ -279,8 +279,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/alert/alert.scss",
-      "bytes": 1647,
-      "sha256": "f36adc96ef378ae955054fb2e17ed3bb5198db6f05b5a3304172438a2d992c5a"
+      "bytes": 2359,
+      "sha256": "bd90e92b7a5df8d45c1bfb34fa2ec7baf761a98be25ba402b33189161a7ab8d2"
     },
     {
       "path": "src/app/shared/ui/molecules/avatar-group/avatar-group.component.ts",
@@ -744,8 +744,8 @@
     },
     {
       "path": "src/styles/themes/_tokens-components.css",
-      "bytes": 36041,
-      "sha256": "23f6da984374ff460f0a3c338c5c0b05005e1927e14b90bc32386efce9c44a8c"
+      "bytes": 36007,
+      "sha256": "baebb27434b20c442a87ea2e6955674d013050d0e7beb13e4936db975eee7932"
     },
     {
       "path": "src/styles/themes/_tokens-primitives.css",

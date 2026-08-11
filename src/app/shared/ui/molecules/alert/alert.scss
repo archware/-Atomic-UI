@@ -78,22 +78,38 @@
   outline-offset: 2px;
 }
 
+/*
+El texto usa la rampa `--alert-*-text`, no el color base del tono.
+
+`--warning-color` y compania son colores de RELLENO: sirven para un icono o un
+borde, no para leerse encima de su propio fondo claro. Usados como color de
+texto incumplian el minimo de 4,5:1 de WCAG 1.4.3 en los tres temas:
+
+  tono      claro          dark           brand-dark
+  info      3,69 -> 9,52   3,74 -> 7,57   2,95 -> 5,97
+  success   2,12 -> 4,79   6,32 (ya ok)   4,97 (ya ok)
+  warning   2,13 -> 4,76   6,20 (ya ok)   4,97 (ya ok)
+  danger    3,24 -> 7,60   4,06 -> 7,29   3,27 -> 5,88
+
+Los tokens `--alert-*-text` ya existian en _tokens-components.css y no los
+consumia ni un solo fichero del ecosistema.
+*/
 .alert--info {
   background: var(--info-color-lighter);
-  color: var(--info-color);
+  color: var(--alert-info-text);
 }
 
 .alert--success {
   background: var(--success-color-lighter);
-  color: var(--success-color);
+  color: var(--alert-success-text);
 }
 
 .alert--warning {
   background: var(--warning-color-lighter);
-  color: var(--warning-color);
+  color: var(--alert-warning-text);
 }
 
 .alert--danger {
   background: var(--danger-color-lighter);
-  color: var(--danger-color);
+  color: var(--alert-danger-text);
 }

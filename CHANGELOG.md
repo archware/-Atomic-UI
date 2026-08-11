@@ -15,6 +15,53 @@ archivo. El formato se basa en
 
 ## [Sin publicar]
 
+### Corregido — accesibilidad
+
+- **El texto de las alertas incumplía el contraste mínimo en los tres temas.**
+  `alert.scss` usaba el color BASE del tono (`--info-color`, `--warning-color`…)
+  como color de texto. Esos tokens son colores de relleno: sirven para un icono o
+  un borde, no para leerse encima de su propio fondo. Medido contra WCAG 1.4.3,
+  que exige 4,5:1:
+
+  | tono | claro | dark | brand-dark |
+  | --- | --- | --- | --- |
+  | info | 3,69 → **9,52** | 3,74 → **7,57** | 2,95 → **5,97** |
+  | success | 2,12 → **4,79** | 6,32 ya cumplía | 4,97 ya cumplía |
+  | warning | 2,13 → **4,76** | 6,20 ya cumplía | 4,97 ya cumplía |
+  | danger | 3,24 → **7,60** | 4,06 → **7,29** | 3,27 → **5,88** |
+
+  Los tokens `--alert-*-text` ya existían en `_tokens-components.css` y **no los
+  consumía ni un solo fichero del ecosistema**. Ahora la hoja los usa.
+
+  En los dos temas oscuros esos tokens valían lo mismo que el color base, y sobre
+  el fondo translúcido de la alerta —un 10 % del tono compuesto con la
+  superficie— se quedaban cortos. La alerta sube ahí su propia rampa a
+  `--blue-300` y `--red-300`, sin tocar `--info-color-text`, que otros
+  componentes usan sobre fondos distintos.
+
+  Sin cambios de API. Un consumidor que no redefina los tokens hereda el arreglo.
+
+### Corregido — integridad de datos
+
+- **`file-input` conservaba la selección anterior al rechazar un archivo.**
+  `processFiles` ponía el mensaje de error y salía sin tocar `files`: el
+  componente seguía mostrando el fichero anterior, el formulario no recibía
+  cambio alguno y el botón de guardar del consumidor seguía habilitado.
+
+  La secuencia que lo destapó, en un archivado documental: se adjunta
+  `contrato-v1.pdf`, se cae en la cuenta de que no era ése, se arrastra
+  `contrato-firmado.pdf` de 20 MB, se ve el error del segundo — y se archiva el
+  primero, de forma inmutable, como revisión firmada. Lo que se envía no es lo
+  que la pantalla señala con el error.
+
+  Rechazar vacía el campo y lo notifica por las dos vías: `onChange` para el
+  formulario y `filesChange` para el evento.
+
+  Las dos pruebas de rechazo que ya existían partían de vacío, así que pasaban
+  con el defecto y sin él; una de ellas se titulaba «sin reemplazar la selección»
+  sin llegar a haber selección. Se corrige el título y se añade la prueba del
+  caso real, verificada por mutación.
+
 ## [5.5.0] - 2026-08-05
 
 ### Cambiado — RUPTURA de API interna

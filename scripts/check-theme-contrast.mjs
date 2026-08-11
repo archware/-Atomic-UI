@@ -40,6 +40,15 @@ const CONTRAST_PAIRS = [
   { what: 'texto principal sobre el fondo de pagina', fg: '--text-color', bg: '--surface-background' },
   { what: 'texto principal sobre una seccion', fg: '--text-color', bg: '--surface-section' },
   { what: 'texto de un campo activo', fg: '--input-text', bg: '--input-bg' },
+
+  // Las alertas se anaden tras encontrarlas incumpliendo las cuatro en tema
+  // claro —warning 2,13:1 y danger 3,24:1— mientras esta comprobacion salia en
+  // verde: auditaba cuatro pares y ninguno las cubria. Una compuerta que no mira
+  // donde falla la interfaz da una garantia falsa, que es peor que no tenerla.
+  { what: 'texto de una alerta informativa', fg: '--alert-info-text', bg: '--info-color-lighter' },
+  { what: 'texto de una alerta de exito', fg: '--alert-success-text', bg: '--success-color-lighter' },
+  { what: 'texto de una alerta de aviso', fg: '--alert-warning-text', bg: '--warning-color-lighter' },
+  { what: 'texto de una alerta de peligro', fg: '--alert-danger-text', bg: '--danger-color-lighter' },
 ];
 
 const failures = [];
@@ -92,14 +101,41 @@ function tokensForTheme(theme) {
   return values;
 }
 
-function resolveToken(values, name, seen = new Set()) {
+/**
+ * Compone un color translucido sobre su fondo y devuelve el hex resultante.
+ *
+ * Los fondos de alerta de los temas oscuros son `rgba(r, g, b, .1)`: lo que el
+ * ojo ve no es ese color sino su mezcla con la superficie de debajo. Sin
+ * componer, el par no se podia evaluar y la comprobacion se saltaba justo los
+ * temas donde no habia forma de mirarlo.
+ */
+function flatten(rgba, backdropHex) {
+  const parts = /^rgba?\(([^)]+)\)$/i.exec(rgba.trim());
+  if (!parts) return null;
+  const [r, g, b, a = '1'] = parts[1].split(/[,/]/).map((piece) => piece.trim());
+  const alpha = Number(a);
+  if ([r, g, b].some((piece) => piece === '' || Number.isNaN(Number(piece))) || Number.isNaN(alpha)) {
+    return null;
+  }
+  const backdrop = backdropHex.replace('#', '');
+  const mix = [0, 2, 4].map((offset, index) => {
+    const under = parseInt(backdrop.slice(offset, offset + 2), 16);
+    const over = Number([r, g, b][index]);
+    return Math.round(over * alpha + under * (1 - alpha));
+  });
+  return `#${mix.map((value) => value.toString(16).padStart(2, '0')).join('')}`;
+}
+
+function resolveToken(values, name, seen = new Set(), backdrop = null) {
   if (seen.has(name)) return null;
   seen.add(name);
   const raw = values.get(name);
   if (!raw) return null;
   const alias = /^var\((--[\w-]+)\)$/.exec(raw.trim());
-  if (alias) return resolveToken(values, alias[1], seen);
-  return /^#[0-9a-f]{6}$/i.test(raw.trim()) ? raw.trim() : null;
+  if (alias) return resolveToken(values, alias[1], seen, backdrop);
+  if (/^#[0-9a-f]{6}$/i.test(raw.trim())) return raw.trim();
+  if (backdrop && /^rgba?\(/i.test(raw.trim())) return flatten(raw.trim(), backdrop);
+  return null;
 }
 
 function channel(value) {
@@ -141,8 +177,11 @@ for (const theme of REACHABLE_THEMES) {
     }
   }
   for (const pair of CONTRAST_PAIRS) {
-    const fg = resolveToken(values, pair.fg);
-    const bg = resolveToken(values, pair.bg);
+    // Un fondo translucido se compone sobre la superficie de seccion, que es
+    // donde estas piezas se pintan de verdad.
+    const backdrop = resolveToken(values, '--surface-section') ?? pageBg;
+    const fg = resolveToken(values, pair.fg, new Set(), backdrop);
+    const bg = resolveToken(values, pair.bg, new Set(), backdrop);
     if (!fg || !bg) {
       failures.push(
         `[${theme}] ${pair.what}: no se pudo resolver a color (${pair.fg}=${fg ?? 'sin valor'}, ` +
