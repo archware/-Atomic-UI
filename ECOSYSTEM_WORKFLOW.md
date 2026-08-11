@@ -2,14 +2,14 @@
 title: "Arquitectura y flujo de trabajo del ecosistema Atomic"
 subtitle: "Gobierno, distribución y propagación verificable"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
-date: "2026-08-03"
+date: "2026-08-10"
 ---
 
 # Arquitectura y flujo de trabajo del ecosistema
 
 > **Fecha original:** julio de 2026
 >
-> **Última actualización:** 3 de agosto de 2026
+> **Última actualización:** 10 de agosto de 2026
 >
 > **Contexto:** El documento define la arquitectura de trabajo sincronizado
 > entre los tres proyectos base principales, la fuente Atomic y un consumidor
@@ -90,6 +90,14 @@ contrato. No confirma que exista una biblioteca Angular compilada ni autoriza
 publicación. La exportación raíz se habilitará solamente después de separar del
 barrel la autenticación, el transporte HTTP, el caché y los permisos propios de
 cada consumidor.
+
+La identidad de fuentes utiliza desde 5.5.6 la canonización
+`git-clean-eol-v1`. Git determina cuándo una ruta es textual; en ese caso la
+huella se calcula con LF aunque un checkout de Windows materialice CRLF. Los
+binarios se verifican con sus bytes exactos. El gate rechaza cualquier
+transformación `clean` que no pueda explicarse exclusivamente por CRLF a LF,
+de modo que la portabilidad de finales de línea no elimina la detección de
+cambios semánticos ni autoriza filtros de contenido implícitos.
 
 ### 4. Compilación ligera de desarrollo
 

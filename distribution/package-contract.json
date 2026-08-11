@@ -16,6 +16,12 @@
   },
   "sourceInventory": {
     "algorithm": "sha256",
+    "contentCanonicalization": {
+      "scheme": "git-clean-eol-v1",
+      "textLineEnding": "lf",
+      "binary": "identity",
+      "unsupportedCleanTransform": "reject"
+    },
     "roots": [
       {
         "path": "src/app/shared/ui",

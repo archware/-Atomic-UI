@@ -2,7 +2,7 @@
 title: "Estado del paquete Atomic UI"
 subtitle: "Biblioteca Angular compilable con API pública exclusivamente visual"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
-date: "2026-08-06"
+date: "2026-08-10"
 ---
 
 # Estado del paquete Atomic UI
@@ -24,6 +24,15 @@ exactamente la superficie visual del ADN, sin mover fuentes ni duplicarlas.
   permisos ni manejo global de errores; esas plantillas de aplicación se
   importan por ruta directa (`@shared/ui/services/auth.service`, etc.) y el
   gate `npm run package:check` verifica su ausencia en la API pública.
+
+Desde 5.5.6, la huella de fuentes no depende de si el checkout materializa LF o
+CRLF. El gate obtiene de Git la representación `clean` aplicable a cada ruta,
+normaliza exclusivamente CRLF a LF cuando esa conversión coincide exactamente
+con la identidad calculada por Git y conserva sin cambios los archivos
+binarios. Una transformación `clean` adicional se rechaza para impedir que un
+filtro o una codificación oculte diferencias semánticas. El contrato registra
+esta regla como `git-clean-eol-v1` y `npm run package:check` ejecuta su prueba de
+regresión antes de validar el manifiesto y el artefacto privado.
 
 Los bloqueadores históricos `ANGULAR_PROJECT_IS_APPLICATION`,
 `NG_PACKAGR_NOT_DECLARED` y `PUBLIC_API_CONTAINS_APPLICATION_CONCERNS`

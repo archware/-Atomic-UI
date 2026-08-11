@@ -1,6 +1,6 @@
 {
   "name": "atomic-ui",
-  "version": "5.5.5",
+  "version": "5.5.6",
   "type": "module",
   "author": "COTAHA",
   "scripts": {
@@ -39,9 +39,10 @@
     "governance:smoke": "node tools/test-project-generator.js",
     "check:selectors": "node tools/check-selector-prefixes.cjs",
     "check:css-values": "node tools/check-invalid-css-values.js",
+    "package:test": "node tools/test-package-distribution.js",
     "package:manifest": "node tools/check-package-distribution.js manifest",
     "package:dry-run": "node tools/check-package-distribution.js dry-run",
-    "package:check": "node tools/check-package-distribution.js check",
+    "package:check": "npm run package:test && node tools/check-package-distribution.js check",
     "governance:check": "npm run governance:test && npm run governance:smoke && node tools/check-atomic-blueprints.js && npm run catalog:check && npm run tokens:check && npm run tooling:test && npm run check:selectors && npm run check:css-values && npm run package:check"
   },
   "prettier": {

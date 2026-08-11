@@ -1,7 +1,7 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.5.5"
+version: "5.5.6"
 status: "vigente"
 updated: "2026-08-10"
 owner: "Hospital Regional de Ayacucho"
@@ -14,6 +14,35 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.5.6] - 2026-08-10
+
+### Corregido
+
+- El manifiesto de fuentes calcula la identidad SHA-256 sobre una
+  representación canónica independiente del final de línea materializado por
+  cada checkout. Los archivos que Git trata como texto se representan con LF,
+  mientras que los binarios conservan sus bytes exactos.
+- El gate compara la transformación canónica con la representación `clean`
+  calculada por Git. Cualquier filtro o codificación que altere contenido más
+  allá de CRLF a LF se rechaza, por lo que no se relaja la detección de cambios
+  semánticos.
+- El contrato de distribución declara el esquema `git-clean-eol-v1` y el
+  manifiesto registra dicha política junto con la huella del árbol.
+
+### Verificación
+
+- Una prueba automatizada comprueba que LF y CRLF producen la misma identidad,
+  que un cambio de contenido modifica la huella y que una diferencia binaria
+  permanece observable.
+- La verificación independiente se ejecuta en el árbol de trabajo y en un
+  checkout limpio con CRLF. Ambos entornos deben producir 157 fuentes y la
+  misma huella SHA-256
+  `faaf94f6d3d7faf5066c96001fcc8846b9e44ccdd776fe6b4d248fde297d5641`.
+- La funcionalidad del menú contextual publicada en 5.5.5 permanece intacta;
+  5.5.6 modifica exclusivamente la identidad reproducible, su contrato, sus
+  pruebas y los metadatos de versión.
+- Identificador de cambio: `ATOMIC-20260810-MANIFEST-EOL`.
 
 ## [5.5.5] - 2026-08-10
 

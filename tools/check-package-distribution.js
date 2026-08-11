@@ -13,6 +13,11 @@ const manifestPath = path.join(distributionRoot, 'atomic-source-manifest.json');
 const normalize = (value) => value.replaceAll('\\', '/');
 const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
 const sha256 = (content) => createHash('sha256').update(content).digest('hex');
+const gitBlobOid = (content) =>
+  createHash('sha1')
+    .update(`blob ${content.byteLength}\0`)
+    .update(content)
+    .digest('hex');
 
 function fail(message) {
   throw new Error(message);
@@ -24,6 +29,66 @@ function filesBelow(directory) {
     const current = path.join(directory, entry.name);
     return entry.isDirectory() ? filesBelow(current) : [current];
   });
+}
+
+function normalizeCrlfToLf(content) {
+  if (!content.includes(13)) return content;
+
+  const normalized = Buffer.allocUnsafe(content.byteLength);
+  let readOffset = 0;
+  let writeOffset = 0;
+  while (readOffset < content.byteLength) {
+    if (
+      content[readOffset] === 13 &&
+      readOffset + 1 < content.byteLength &&
+      content[readOffset + 1] === 10
+    ) {
+      normalized[writeOffset] = 10;
+      writeOffset += 1;
+      readOffset += 2;
+      continue;
+    }
+    normalized[writeOffset] = content[readOffset];
+    writeOffset += 1;
+    readOffset += 1;
+  }
+  return normalized.subarray(0, writeOffset);
+}
+
+/**
+ * Devuelve los bytes canónicos de una fuente sin depender del EOL materializado
+ * por el checkout. Git decide si `text=auto` trata el archivo como texto. Los
+ * binarios conservan sus bytes exactos y un filtro clean distinto de la
+ * normalización CRLF -> LF se rechaza para no ocultar cambios semánticos.
+ */
+function canonicalSourceBytes(repositoryRoot, local) {
+  const absolute = path.join(repositoryRoot, local);
+  const physical = fs.readFileSync(absolute);
+  const rawOid = gitBlobOid(physical);
+  const gitResult = spawnSync(
+    'git',
+    ['hash-object', `--path=${normalize(local)}`, '--', absolute],
+    { cwd: repositoryRoot, encoding: 'utf8' },
+  );
+  if (gitResult.error || gitResult.status !== 0) {
+    fail(
+      `No se pudo obtener la representación clean de Git para ${local}: ${
+        gitResult.error?.message || gitResult.stderr || gitResult.stdout
+      }`,
+    );
+  }
+
+  const cleanOid = gitResult.stdout.trim();
+  if (cleanOid === rawOid) return physical;
+
+  const canonical = normalizeCrlfToLf(physical);
+  if (gitBlobOid(canonical) !== cleanOid) {
+    fail(
+      `${local} usa una transformación clean de Git no admitida por git-clean-eol-v1. ` +
+        'El manifiesto solo canoniza EOL de texto y nunca acepta filtros que alteren contenido.',
+    );
+  }
+  return canonical;
 }
 
 function distributionFiles(contract) {
@@ -43,7 +108,7 @@ function distributionFiles(contract) {
 
 function expectedManifest(contract, packageJson) {
   const files = distributionFiles(contract).map((local) => {
-    const content = fs.readFileSync(path.join(root, local));
+    const content = canonicalSourceBytes(root, local);
     return { path: local, bytes: content.byteLength, sha256: sha256(content) };
   });
   const sourceTreeSha256 = sha256(
@@ -55,6 +120,7 @@ function expectedManifest(contract, packageJson) {
     packageVersion: packageJson.version,
     distributionStatus: contract.status,
     algorithm: contract.sourceInventory.algorithm,
+    contentCanonicalization: contract.sourceInventory.contentCanonicalization,
     sourceTreeSha256,
     fileCount: files.length,
     files,
@@ -65,6 +131,12 @@ function stableJson(value) {
   return `${JSON.stringify(value, null, 2)}\n`;
 }
 
+function stableJsonForWorkingTree(file, value) {
+  const current = fs.existsSync(file) ? fs.readFileSync(file) : Buffer.alloc(0);
+  const lineEnding = current.includes(Buffer.from('\r\n')) ? '\r\n' : '\n';
+  return stableJson(value).replaceAll('\n', lineEnding);
+}
+
 function validateContract(contract, publicExports, packageJson) {
   if (contract.schemaVersion !== 1) fail('package-contract.json debe usar schemaVersion 1.');
   if (contract.targetPackage !== '@hra/atomic-ui') fail('El paquete objetivo debe ser @hra/atomic-ui.');
@@ -73,6 +145,21 @@ function validateContract(contract, publicExports, packageJson) {
     fail('El contrato debe declarar library-buildable y no instalable hasta publicar en un registro.');
   }
   if (!packageJson.private) fail('La aplicación raíz debe permanecer privada.');
+
+  const expectedCanonicalization = {
+    scheme: 'git-clean-eol-v1',
+    textLineEnding: 'lf',
+    binary: 'identity',
+    unsupportedCleanTransform: 'reject',
+  };
+  if (
+    stableJson(contract.sourceInventory?.contentCanonicalization) !==
+    stableJson(expectedCanonicalization)
+  ) {
+    fail(
+      'sourceInventory.contentCanonicalization debe declarar git-clean-eol-v1, LF para texto, identidad para binarios y rechazo de otros filtros clean.',
+    );
+  }
 
   const resolvedCodes = new Set((contract.resolvedBlockers || []).map((blocker) => blocker.code));
   const legacyCodes = [
@@ -183,7 +270,7 @@ function validateManifest(expected) {
   if (!fs.existsSync(manifestPath)) {
     fail('Falta atomic-source-manifest.json. Ejecute npm run package:manifest.');
   }
-  const actual = fs.readFileSync(manifestPath, 'utf8');
+  const actual = normalizeCrlfToLf(fs.readFileSync(manifestPath)).toString('utf8');
   const wanted = stableJson(expected);
   if (actual !== wanted) {
     fail(
@@ -270,7 +357,7 @@ function main() {
   const expected = expectedManifest(contract, packageJson);
 
   if (action === 'manifest') {
-    fs.writeFileSync(manifestPath, stableJson(expected), 'utf8');
+    fs.writeFileSync(manifestPath, stableJsonForWorkingTree(manifestPath, expected), 'utf8');
     console.log(
       `Manifiesto Atomic actualizado: ${expected.fileCount} archivos, SHA-256 ${expected.sourceTreeSha256}.`,
     );
@@ -290,9 +377,13 @@ function main() {
   );
 }
 
-try {
-  main();
-} catch (error) {
-  console.error(`Gate de distribución rechazado: ${error.message}`);
-  process.exit(1);
+if (require.main === module) {
+  try {
+    main();
+  } catch (error) {
+    console.error(`Gate de distribución rechazado: ${error.message}`);
+    process.exit(1);
+  }
 }
+
+module.exports = { canonicalSourceBytes, normalizeCrlfToLf };

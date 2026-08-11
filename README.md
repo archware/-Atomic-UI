@@ -3,7 +3,7 @@ title: "Atomic UI: sistema de componentes y temas"
 subtitle: "Fuente visual canónica para aplicaciones de escritorio HRA"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-10"
-version: "5.5.5"
+version: "5.5.6"
 ---
 
 # Atomic UI: sistema de componentes y temas
@@ -325,7 +325,7 @@ Este proyecto está bajo la Licencia MIT.
 
 ---
 
-**Versión:** 5.5.5
+**Versión:** 5.5.6
 **Última actualización:** 10 de agosto de 2026
 **Angular:** 22
 **TypeScript:** 6.0
