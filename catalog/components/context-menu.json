@@ -1,0 +1,130 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "context-menu",
+  "layer": "molecule",
+  "selector": "app-context-menu",
+  "export": "ContextMenuComponent",
+  "relatedExports": ["ContextMenuAction", "ContextMenuActionError", "ContextMenuFailureReason"],
+  "source": "src/app/shared/ui/molecules/context-menu/context-menu.component.ts",
+  "purpose": "Proporciona un menú contextual accesible de edición de texto para controles compatibles cuando el host desactiva el menú nativo del navegador.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Suprime la apertura y presentación del menú visual; los resguardos DOM de data-clipboard-policy=paste-only permanecen activos en el Document."
+    },
+    {
+      "name": "disabledActions",
+      "type": "readonly ContextMenuAction[]",
+      "default": [],
+      "meaning": "Bloquea acciones concretas por reglas de presentación del consumidor."
+    }
+  ],
+  "outputs": [
+    {
+      "name": "actionSelected",
+      "type": "ContextMenuAction",
+      "meaning": "Informa la acción completada sin exponer el contenido editado ni el texto del portapapeles."
+    },
+    {
+      "name": "actionError",
+      "type": "ContextMenuActionError",
+      "meaning": "Informa la acción fallida y una razón tipada sin incluir excepciones ni contenido del portapapeles."
+    }
+  ],
+  "behavior": [
+    "La aplicación monta una sola instancia vacía como hermana del shell; el componente observa los eventos del documento sin envolver ni proyectar el contenido de la aplicación.",
+    "Un registro cooperativo elige una única instancia propietaria por Document; los duplicados accidentales permanecen inertes y la propiedad se reasigna de forma determinista cuando la propietaria se destruye.",
+    "El host global intercepta contextmenu únicamente sobre inputs de texto compatibles, textarea y regiones contenteditable con data-context-menu-policy=text-edit; fuera de esos controles se conserva el comportamiento nativo.",
+    "Los controles con role=combobox, aria-controls o aria-haspopup conservan su popup propio salvo opt-in explícito; data-context-menu-policy=native fuerza el opt-out.",
+    "Las acciones disponibles son Cortar, Copiar, Pegar y Seleccionar todo, con habilitación derivada de selección, readonly, disabled y políticas de portapapeles.",
+    "El atributo data-clipboard-policy=paste-only bloquea las interacciones DOM de copiar, cortar, deleteByCut y dragstart gestionadas por el componente; Pegar y Seleccionar todo permanecen disponibles.",
+    "La entrada disabled suprime el menú visual y sus acciones, pero no desactiva los resguardos paste-only registrados sobre el Document.",
+    "La política paste-only es un resguardo de interacción, no una solución DLP: no impide la extracción mediante scripts con acceso al DOM, XSS, extensiones del navegador ni un host comprometido.",
+    "Las operaciones utilizan exclusivamente las APIs de edición y portapapeles del navegador; la molécula no integra IPC ni transmite contenido al backend.",
+    "Los fallos se normalizan como clipboard-unavailable, clipboard-denied, target-changed u operation-failed sin exponer excepciones del navegador.",
+    "El menú se cierra al perder el contexto, con Escape o tras ejecutar una acción, y conserva o restaura la selección cuando corresponde."
+  ],
+  "states": [
+    {
+      "name": "closed",
+      "meaning": "La instancia global permanece montada, pero la superficie del menú no está renderizada."
+    },
+    {
+      "name": "open",
+      "meaning": "El menú contextual se presenta junto al puntero o al control activado por teclado."
+    },
+    {
+      "name": "action-disabled",
+      "meaning": "Una acción queda deshabilitada por falta de selección, readonly, disabled o configuración explícita."
+    },
+    {
+      "name": "paste-only",
+      "meaning": "El control bloquea copiar, cortar, deleteByCut y dragstart dentro de los eventos DOM gestionados, y conserva las acciones de pegado y selección."
+    },
+    {
+      "name": "clipboard-error",
+      "meaning": "La API del navegador rechaza una operación y se emite un error sin datos sensibles."
+    },
+    {
+      "name": "duplicate-inert",
+      "meaning": "Una instancia adicional no registra interacción mientras otra instancia conserva la propiedad del Document."
+    }
+  ],
+  "a11y": [
+    "El menú expone role=menu, orientación vertical y un nombre accesible; cada acción utiliza button nativo con role=menuitem.",
+    "Shift+F10 y la tecla de menú contextual abren las acciones desde el control enfocado.",
+    "Las flechas, Home y End recorren únicamente acciones habilitadas; Escape cierra el menú y mantiene el foco en el control.",
+    "Los atajos se describen mediante aria-keyshortcuts y los iconos se excluyen del nombre accesible.",
+    "El estado deshabilitado se comunica mediante disabled nativo y aria-disabled.",
+    "Una región role=status con aria-live=polite anuncia apertura, resultado o fallo mediante mensajes genéricos sin revelar el texto editado."
+  ],
+  "responsive": [
+    "La posición fixed se limita al viewport después de medir el menú y se recalcula al cambiar el tamaño de la ventana.",
+    "El ancho y la altura máximos dependen del viewport, y el contenido excedente conserva desplazamiento dentro de la superficie contextual."
+  ],
+  "tokens": [
+    "--border-width-thin",
+    "--control-height-sm",
+    "--dropdown-bg",
+    "--dropdown-border",
+    "--dropdown-item-hover",
+    "--dropdown-shadow",
+    "--focus-ring",
+    "--input-disabled-text",
+    "--radius-md",
+    "--radius-sm",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--space-10",
+    "--text-color",
+    "--text-color-muted",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-context-menu.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/molecules/context-menu/context-menu.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "La disponibilidad efectiva del portapapeles depende del contexto seguro y de los permisos concedidos por el host del navegador."
+    ]
+  },
+  "canonicalFor": [
+    "editable-context-menu",
+    "webview-text-context-menu",
+    "paste-only-secret-control"
+  ]
+}

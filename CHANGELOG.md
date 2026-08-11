@@ -1,7 +1,7 @@
 ---
 title: "Registro de cambios de Atomic UI"
 document_type: "changelog"
-version: "5.5.4"
+version: "5.5.5"
 status: "vigente"
 updated: "2026-08-10"
 owner: "Hospital Regional de Ayacucho"
@@ -14,6 +14,55 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.5.5] - 2026-08-10
+
+### Añadido
+
+- `ContextMenuComponent` incorpora un menú contextual accesible de edición de
+  texto con las acciones Cortar, Copiar, Pegar y Seleccionar todo para inputs,
+  áreas de texto y regiones `contenteditable` que declaran el opt-in
+  `data-context-menu-policy="text-edit"` en navegadores embebidos que desactivan
+  el menú nativo.
+- La aplicación monta una única instancia vacía como hermana del shell. La
+  molécula observa el documento sin exigir envolturas, proyección de contenido
+  ni cambios en la jerarquía visual del consumidor.
+- Los controles que ya administran un popup mediante `role="combobox"`,
+  `aria-controls` o `aria-haspopup` conservan su menú propio por defecto. La
+  política `data-context-menu-policy="native"` permite excluir cualquier otro
+  control sin modificar su contrato ARIA.
+- Un registro cooperativo limita el procesamiento de eventos a una instancia
+  propietaria por `Document`. Las instancias adicionales conservan
+  suscripciones inertes y la propiedad se reasigna de forma determinista al
+  destruir la propietaria.
+- El componente admite apertura mediante clic secundario, `Shift+F10` y la
+  tecla de menú contextual. La navegación utiliza flechas, `Home`, `End` y
+  `Escape`, omite acciones deshabilitadas, conserva la selección y limita la
+  superficie al viewport.
+- El barrel público, el catálogo y Storybook registran la molécula, sus estados,
+  contratos observables, tokens, comportamiento responsive y escenarios para
+  campos editables, contraseña protegida y sustitución desactivada.
+
+### Seguridad
+
+- Los inputs de contraseña canónicos exponen
+  `data-clipboard-policy="paste-only"` a partir de su tipo lógico. La política
+  permanece activa cuando el valor se revela como texto y bloquea las
+  interacciones DOM de Copiar, Cortar, `deleteByCut` y `dragstart` gestionadas
+  por el componente, mientras conserva Pegar y Seleccionar todo.
+- La entrada `[disabled]` suprime el menú visual sin desactivar los resguardos
+  `paste-only` registrados sobre el `Document`.
+- La política `paste-only` se documenta como resguardo de interacción y no como
+  solución DLP. No impide la extracción mediante scripts con acceso al DOM,
+  XSS, extensiones del navegador ni un host comprometido.
+- Las operaciones permanecen dentro de las APIs del navegador. No se incorpora
+  IPC de portapapeles, persistencia del contenido ni transferencia de datos al
+  backend; las salidas públicas informan únicamente la acción o un error
+  normalizado mediante una razón tipada, sin propagar excepciones del navegador.
+
+### Verificación
+
+- Identificador de cambio: `ATOMIC-20260810-CONTEXT-MENU`.
 
 ## [5.5.4] - 2026-08-10
 

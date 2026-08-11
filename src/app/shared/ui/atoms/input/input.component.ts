@@ -34,6 +34,7 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
           [placeholder]="placeholder"
           [disabled]="disabled"
           [value]="value"
+          [attr.data-clipboard-policy]="type === 'password' ? 'paste-only' : null"
           (input)="onInput($event)"
           (blur)="onTouched()"
         />

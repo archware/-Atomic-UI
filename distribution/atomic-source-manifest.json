@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.5.4",
+  "packageVersion": "5.5.5",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
-  "sourceTreeSha256": "e1241929d3fa93c097566ff897d86c95c4edf4350a76de208622a76bacbe328c",
-  "fileCount": 156,
+  "sourceTreeSha256": "81a202c0a85ab6ed84c49d5a285a4409142c5e1ac565c43d7905525302edc29b",
+  "fileCount": 157,
   "files": [
     {
       "path": "projects/atomic-ui/ng-package.json",
@@ -15,7 +15,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 886,
-      "sha256": "b4ab598c5f91a562ad5f7d9bd6959cda7fba687643638e37c28c3cb437b5b8e9"
+      "sha256": "f65c94e76ee4ee728aadb908573462dab8f72a1f0f224ac3b9ea13638b489de6"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -84,8 +84,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/floating-input/floating-input.component.ts",
-      "bytes": 15795,
-      "sha256": "ceed4f6524e06410fc369ed3d4aeef9bbbf552c3683a1233f3d2dbbd0c445512"
+      "bytes": 15873,
+      "sha256": "f36de836737995aa08627f3ad75cd106f86e36bca1e104065a7d556834198586"
     },
     {
       "path": "src/app/shared/ui/atoms/form-error/form-error.component.ts",
@@ -94,8 +94,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/form-input/input.html",
-      "bytes": 1647,
-      "sha256": "281670339d760db27cab56c2f56726093475ffd0e1064e41f3be8fa371c6233e"
+      "bytes": 1725,
+      "sha256": "5ffcdbe31c4dfa9917d07cfd2abba36e217201cec00da5365bf1125b2189b3ff"
     },
     {
       "path": "src/app/shared/ui/atoms/form-input/input.scss",
@@ -134,8 +134,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/input/input.component.ts",
-      "bytes": 4321,
-      "sha256": "50b92a3243bd4d1cbd5fd114809fb48ad20ed6bd23a8973424f8731738b2ca7f"
+      "bytes": 4400,
+      "sha256": "6b70846ee5d2b03710d87835c8a1e400918930b89faad5b975bf3bd6502ef1fa"
     },
     {
       "path": "src/app/shared/ui/atoms/language-switcher/language-switcher.component.ts",
@@ -274,8 +274,8 @@
     },
     {
       "path": "src/app/shared/ui/index.ts",
-      "bytes": 13837,
-      "sha256": "0e0f527ce3e73ae9d4ca722a1cdfc545e188a976082672869f6fd5c5c9f6e7df"
+      "bytes": 14069,
+      "sha256": "e50ec3541ddbd55db861d5fc1d24df37b38cfded9dbaf650c0a593a436f9b14d"
     },
     {
       "path": "src/app/shared/ui/interceptors/auth.interceptor.ts",
@@ -311,6 +311,11 @@
       "path": "src/app/shared/ui/molecules/combobox/combobox.component.ts",
       "bytes": 13076,
       "sha256": "3c44f8d68d3b1333a312b709961b07d791a91e8a005e542fd35b8c2844b02fc3"
+    },
+    {
+      "path": "src/app/shared/ui/molecules/context-menu/context-menu.component.ts",
+      "bytes": 43286,
+      "sha256": "1a0ea91bb1bdf994bcf3423b282f2c39db88643cda922bd80258b16c56320289"
     },
     {
       "path": "src/app/shared/ui/molecules/data-state/data-state.component.ts",

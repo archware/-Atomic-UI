@@ -40,4 +40,22 @@ describe('Input', () => {
     expect(element.required).toBeTrue();
     expect(element.getAttribute('aria-describedby')).toBe('start-date-error');
   });
+
+  it('preserves the paste-only policy after revealing a password', async () => {
+    const fixture = TestBed.createComponent(Input);
+    fixture.componentRef.setInput('type', 'password');
+    fixture.componentRef.setInput('revealable', true);
+    await fixture.whenStable();
+
+    const element = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+    const reveal = fixture.nativeElement.querySelector('.field__reveal') as HTMLButtonElement;
+    expect(element.type).toBe('password');
+    expect(element.dataset['clipboardPolicy']).toBe('paste-only');
+
+    reveal.click();
+    await fixture.whenStable();
+
+    expect(element.type).toBe('text');
+    expect(element.dataset['clipboardPolicy']).toBe('paste-only');
+  });
 });

@@ -165,6 +165,13 @@ export { TableActionsComponent } from './molecules/table-actions/table-actions.c
 export { ActionGroupComponent } from './molecules/action-group/action-group.component';
 export type { ActionItem } from './molecules/action-group/action-group.component';
 
+export { ContextMenuComponent } from './molecules/context-menu/context-menu.component';
+export type {
+  ContextMenuAction,
+  ContextMenuActionError,
+  ContextMenuFailureReason,
+} from './molecules/context-menu/context-menu.component';
+
 export { ToastComponent } from './molecules/toast/toast.component';
 export type { ToastConfig, ToastType } from './molecules/toast/toast.component';
 export { ToastService } from './services/toast.service';

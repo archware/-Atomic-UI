@@ -36,6 +36,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
         [disabled]="disabled"
         [readonly]="readonly"
         [value]="value"
+        [attr.data-clipboard-policy]="type === 'password' ? 'paste-only' : null"
         [attr.autocomplete]="autocomplete || (type === 'password' ? 'current-password' : 'off')"
         (input)="onInput($event)"
         (focus)="onFocus()"

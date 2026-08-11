@@ -13,6 +13,7 @@
       class="field__input"
       [type]="effectiveType()"
       [value]="value()"
+      [attr.data-clipboard-policy]="type() === 'password' ? 'paste-only' : null"
       [placeholder]="placeholder()"
       [autocomplete]="autocomplete()"
       [inputMode]="inputMode()"

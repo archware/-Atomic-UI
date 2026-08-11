@@ -3,7 +3,7 @@ title: "Biblioteca de componentes Atomic UI"
 subtitle: "Contrato visual portable para aplicaciones Angular"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-03"
-version: "5.5.4"
+version: "5.5.5"
 ---
 
 # Biblioteca de componentes Atomic UI
@@ -11,7 +11,7 @@ version: "5.5.4"
 Librería de componentes Angular portables siguiendo **Atomic Design**.
 
 **Última actualización**: agosto de 2026
-**Versión**: 5.5.4
+**Versión**: 5.5.5
 **Angular**: 22
 
 ---
@@ -1124,6 +1124,77 @@ controles duplicados aunque la hoja global de formularios no esté disponible.
 </app-table-actions>
 ```
 
+#### `ContextMenuComponent`
+
+`ContextMenuComponent` proporciona un menú contextual de edición de texto con
+las acciones Cortar, Copiar, Pegar y Seleccionar todo en hosts WebView que
+desactivan el menú contextual nativo. El
+componente se monta una sola vez como hermano del shell y observa el documento
+sin envolver ni proyectar el contenido de la aplicación. La sustitución solo se
+activa sobre inputs de texto compatibles, áreas de texto y regiones
+`contenteditable` que declaran `data-context-menu-policy="text-edit"`; el resto
+de la superficie conserva el comportamiento nativo del host. Los controles con
+`role="combobox"`, `aria-controls` o `aria-haspopup` permanecen excluidos para
+no sobrescribir la semántica de sus popups, salvo opt-in explícito. La política
+`data-context-menu-policy="native"` fuerza el opt-out de cualquier control. El
+montaje único constituye el uso recomendado. Un registro
+cooperativo determina una sola instancia procesadora por `Document`; las
+instancias accidentales adicionales mantienen sus suscripciones inertes y la
+propiedad se reasigna de forma determinista cuando la instancia propietaria se
+destruye.
+
+```html
+<main>
+  <app-floating-input label="Usuario" type="text"></app-floating-input>
+  <app-floating-input
+    label="Contraseña"
+    type="password"
+    autocomplete="current-password"
+  ></app-floating-input>
+  <app-textarea label="Observaciones"></app-textarea>
+  <p contenteditable="true" data-context-menu-policy="text-edit">
+    Contenido editable administrado por el menú de texto.
+  </p>
+</main>
+<app-context-menu />
+```
+
+El clic secundario, `Shift+F10` y la tecla de menú contextual abren la
+superficie. Las flechas, `Home` y `End` recorren las acciones habilitadas;
+`Escape` cierra el menú y mantiene el foco en el control. Los estados `readonly`,
+`disabled`, selección vacía y `disabledActions` determinan qué acciones se
+encuentran disponibles. Una región `role="status"` con `aria-live="polite"`
+anuncia apertura, resultado o fallo mediante mensajes genéricos que no incluyen
+el texto editado.
+
+La entrada `[disabled]` de `ContextMenuComponent` suprime la apertura y la
+presentación del menú visual, pero conserva activos los resguardos
+`paste-only` registrados sobre el `Document`. Esta separación evita que la
+desactivación visual se convierta en una forma de eludir la política de
+interacción aplicada a campos de contraseña.
+
+Los controles con `data-clipboard-policy="paste-only"` bloquean, dentro de los
+eventos DOM gestionados por el componente, Copiar, Cortar, `deleteByCut` y
+`dragstart`, incluso si un control de contraseña cambia temporalmente su
+representación nativa a `text`. Pegar y Seleccionar todo permanecen
+disponibles. `FloatingInputComponent`, `Input` e `InputComponent` aplican esta
+política cuando su tipo lógico es `password`.
+
+La política `paste-only` constituye un resguardo de interacción y no una
+solución de prevención de pérdida de datos (DLP). No impide que scripts con
+acceso al DOM, una vulnerabilidad XSS, extensiones del navegador o un host
+comprometido extraigan el valor. La política tampoco sustituye el aislamiento
+del host, una política CSP, el control de extensiones ni las demás medidas de
+integridad de la aplicación.
+
+La molécula utiliza las APIs de edición y portapapeles del navegador. No crea
+un canal IPC ni envía el texto al backend. `actionSelected` informa únicamente
+la acción completada y `actionError` comunica una razón tipada:
+`clipboard-unavailable`, `clipboard-denied`, `target-changed` u
+`operation-failed`. Ninguna salida incluye excepciones del navegador ni el
+contenido del portapapeles. El permiso efectivo depende del contexto seguro y
+de la configuración del navegador embebido.
+
 ### Organisms
 
 #### `ScrollOverlayComponent`
@@ -1193,7 +1264,7 @@ export class MyComponent {
 ---
 
 📅 **Última actualización**: agosto de 2026
-🏷️ **Versión**: 5.5.4
+🏷️ **Versión**: 5.5.5
 ⚡ **Angular**: 22
 🌐 **i18n**: ngx-translate  
 📚 **Storybook**: Disponible

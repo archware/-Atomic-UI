@@ -152,6 +152,7 @@ describe('FloatingInputComponent', () => {
       const icon = toggleBtn.querySelector('i') as HTMLElement;
 
       expect(input.type).toBe('password');
+      expect(input.dataset['clipboardPolicy']).toBe('paste-only');
       expect(toggleBtn.getAttribute('aria-label')).toBe('Mostrar contraseña');
       expect(toggleBtn.getAttribute('aria-pressed')).toBe('false');
       expect(icon.getAttribute('aria-hidden')).toBe('true');
@@ -161,6 +162,7 @@ describe('FloatingInputComponent', () => {
       fixture.detectChanges();
 
       expect(input.type).toBe('text');
+      expect(input.dataset['clipboardPolicy']).toBe('paste-only');
       expect(toggleBtn.getAttribute('aria-label')).toBe('Ocultar contraseña');
       expect(toggleBtn.getAttribute('aria-pressed')).toBe('true');
       expect(icon.classList.contains('fa-eye-slash')).toBeTrue();
