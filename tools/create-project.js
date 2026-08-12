@@ -20,11 +20,13 @@ const { execFileSync } = require('child_process');
 // CONFIGURATION
 // ============================================
 
-const STYLES_DIR = path.join(__dirname, '..', 'src', 'styles');
-const UI_DIR = path.join(__dirname, '..', 'src', 'app', 'shared', 'ui');
+const CODE_ROOT = path.resolve(__dirname, '..');
+const ATOMIC_SOURCE_ROOT = path.resolve(process.env.ATOMIC_UI_ROOT || CODE_ROOT);
+const STYLES_DIR = path.join(ATOMIC_SOURCE_ROOT, 'src', 'styles');
+const UI_DIR = path.join(ATOMIC_SOURCE_ROOT, 'src', 'app', 'shared', 'ui');
 const GOVERNANCE_INSTALLER = path.join(__dirname, 'install-consumer-governance.js');
 const NODE_INSTALL_ROOT = path.dirname(process.execPath);
-const ATOMIC_NODE_MODULES = path.join(__dirname, '..', 'node_modules');
+const ATOMIC_NODE_MODULES = path.join(CODE_ROOT, 'node_modules');
 const LOCAL_ANGULAR_CLI_PACKAGE = path.join(ATOMIC_NODE_MODULES, '@angular', 'cli');
 
 const TEMPLATES = {
@@ -194,6 +196,17 @@ Examples:
     log(`Failed to create Angular project: ${error.message}`, 'error');
     process.exit(1);
   }
+
+  // Step 1.5: Establish the Git-clean identity required by governance.
+  log('Initializing Git identity for canonical provenance...', 'step');
+  if (!fs.existsSync(path.join(projectPath, '.git'))) {
+    execFileSync('git', ['init', '--quiet'], { cwd: projectPath, stdio: 'inherit' });
+  }
+  const attributesPath = path.join(projectPath, '.gitattributes');
+  if (!fs.existsSync(attributesPath)) {
+    fs.copyFileSync(path.join(ATOMIC_SOURCE_ROOT, '.gitattributes'), attributesPath);
+  }
+  log('Git-clean identity configured', 'success');
 
   // Step 2: Copy UI components
   log('Copying UI components...', 'step');

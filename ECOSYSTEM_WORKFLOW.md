@@ -2,14 +2,14 @@
 title: "Arquitectura y flujo de trabajo del ecosistema Atomic"
 subtitle: "Gobierno, distribución y propagación verificable"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
-date: "2026-08-10"
+date: "2026-08-12"
 ---
 
 # Arquitectura y flujo de trabajo del ecosistema
 
 > **Fecha original:** julio de 2026
 >
-> **Última actualización:** 10 de agosto de 2026
+> **Última actualización:** 12 de agosto de 2026
 >
 > **Contexto:** El documento define la arquitectura de trabajo sincronizado
 > entre los tres proyectos base principales, la fuente Atomic y un consumidor
@@ -92,12 +92,21 @@ barrel la autenticación, el transporte HTTP, el caché y los permisos propios d
 cada consumidor.
 
 La identidad de fuentes utiliza desde 5.5.6 la canonización
-`git-clean-eol-v1`. Git determina cuándo una ruta es textual; en ese caso la
-huella se calcula con LF aunque un checkout de Windows materialice CRLF. Los
-binarios se verifican con sus bytes exactos. El gate rechaza cualquier
-transformación `clean` que no pueda explicarse exclusivamente por CRLF a LF,
-de modo que la portabilidad de finales de línea no elimina la detección de
-cambios semánticos ni autoriza filtros de contenido implícitos.
+`git-clean-eol-v1`; desde 5.5.8 el contrato se aplica de forma cerrada en la
+fuente y en cada consumidor. La regla versionada `* text=auto eol=crlf`
+determina texto canónico y las reglas `-text` determinan binarios exactos. Los
+atributos globales y de sistema se neutralizan, `.git/info/attributes` no puede
+alterar la identidad y los filtros, `ident`, codificaciones de árbol de trabajo
+y enlaces Git modo `120000` se rechazan.
+
+El instalador fija el OID completo de 40 o 64 caracteres según el formato del
+repositorio, comprueba el remoto canónico, recalcula el manifiesto y valida que
+toda fuente propagada exista como archivo regular en ese commit. La instalación
+prevalida todos los destinos y revierte el conjunto si una escritura falla. La
+CI ejecuta primero el gate del checkout Atomic fijado y después las herramientas
+del consumidor. Un ruleset externo debe exigir el workflow de la rama protegida:
+un archivo de workflow modificado por la misma solicitud no puede demostrar por
+sí solo que no fue degradado.
 
 ### 4. Compilación ligera de desarrollo
 

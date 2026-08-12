@@ -1,12 +1,23 @@
 #!/usr/bin/env node
 
-const { createHash } = require('node:crypto');
 const { execFileSync } = require('node:child_process');
+const { randomUUID } = require('node:crypto');
 const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
+const {
+  CONTENT_CANONICALIZATION,
+  canonicalFileObjectId,
+  canonicalFileSha256,
+  expectedObjectIdLength,
+  repositoryIdentity,
+} = require('../governance/consumer/git-clean-eol.cjs');
+const { confinedPath, relativePath } = require('../governance/consumer/safe-paths.cjs');
+const { verifySourceManifest } = require('../governance/consumer/source-manifest.cjs');
 
-const atomicRoot = path.resolve(__dirname, '..');
-const kitRoot = path.join(atomicRoot, 'governance', 'consumer');
+const atomicRoot = fs.realpathSync.native(
+  path.resolve(process.env.ATOMIC_UI_ROOT || path.resolve(__dirname, '..')),
+);
 const layers = ['atoms', 'molecules', 'organisms', 'surfaces', 'templates'];
 const requiredGovernedServices = [
   'theme.service.ts',
@@ -16,43 +27,302 @@ const requiredGovernedServices = [
   'toast.service.ts',
 ];
 const atomicServicesRoot = 'src/app/shared/ui/services';
+const governanceCopies = [
+  ['governance/consumer/ATOMIC_GOVERNANCE.md', 'docs/ATOMIC_GOVERNANCE.md'],
+  ['governance/consumer/check-atomic-provenance.mjs', 'scripts/check-atomic-provenance.mjs'],
+  ['governance/consumer/git-clean-eol.cjs', 'scripts/git-clean-eol.cjs'],
+  ['governance/consumer/safe-paths.cjs', 'scripts/safe-paths.cjs'],
+  ['governance/consumer/read-atomic-contract.cjs', 'scripts/read-atomic-contract.cjs'],
+  ['governance/consumer/source-manifest.cjs', 'scripts/source-manifest.cjs'],
+  ['governance/consumer/atomic-governance.yml', '.github/workflows/atomic-governance.yml'],
+];
 
 const normalize = (value) => value.replaceAll('\\', '/');
+const CANONICAL_ATTRIBUTES_RULE = '* text=auto eol=crlf';
 
 function option(name, fallback) {
   const prefix = `--${name}=`;
   return process.argv.slice(2).find((argument) => argument.startsWith(prefix))?.slice(prefix.length) ?? fallback;
 }
 
-function copy(source, destination) {
-  fs.mkdirSync(path.dirname(destination), { recursive: true });
-  fs.copyFileSync(source, destination);
+function attributePlan(consumerRoot) {
+  const relative = '.gitattributes';
+  const absolute = confinedPath(consumerRoot, relative, relative).absolute;
+  const exists = fs.existsSync(absolute);
+  const original = exists ? fs.readFileSync(absolute) : null;
+  const current = original?.toString('utf8') || '';
+  const firstRule = current
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .find((line) => line && !line.startsWith('#'));
+  const content = firstRule === CANONICAL_ATTRIBUTES_RULE
+    ? current
+    : `${CANONICAL_ATTRIBUTES_RULE}\n${current}`;
+  return { absolute, content: Buffer.from(content || `${CANONICAL_ATTRIBUTES_RULE}\n`), original };
+}
+
+function withPlannedAttributeSource(callback) {
+  const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'atomic-planned-attributes-'));
+  const plannedAttributesFile = path.join(temporaryRoot, 'attributes');
+  fs.writeFileSync(plannedAttributesFile, `${CANONICAL_ATTRIBUTES_RULE}\n`, 'utf8');
+  try {
+    return callback(plannedAttributesFile);
+  } finally {
+    fs.rmSync(temporaryRoot, { recursive: true, force: true });
+  }
+}
+
+function applyFileTransaction(consumerRoot, plannedFiles) {
+  const transactionId = randomUUID();
+  const plans = [...plannedFiles.entries()].map(([relative, content], index) => {
+    const absolute = confinedPath(consumerRoot, relative, `destino ${relative}`).absolute;
+    const stat = fs.existsSync(absolute) ? fs.lstatSync(absolute) : null;
+    if (stat && (!stat.isFile() || stat.isSymbolicLink())) {
+      throw new Error(`El destino debe ser un archivo regular: ${relative}.`);
+    }
+    const directory = path.dirname(absolute);
+    const base = path.basename(absolute);
+    const staged = path.join(directory, `.${base}.atomic-${transactionId}-${index}.tmp`);
+    const backup = path.join(directory, `.${base}.atomic-${transactionId}-${index}.bak`);
+    confinedPath(
+      consumerRoot,
+      normalize(path.relative(consumerRoot, staged)),
+      `temporal ${relative}`,
+    );
+    confinedPath(
+      consumerRoot,
+      normalize(path.relative(consumerRoot, backup)),
+      `respaldo ${relative}`,
+    );
+    return {
+      absolute,
+      backup,
+      content: Buffer.isBuffer(content) ? content : Buffer.from(content, 'utf8'),
+      existed: Boolean(stat),
+      relative,
+      staged,
+    };
+  });
+  const createdDirectories = [];
+  const applied = [];
+  try {
+    for (const plan of plans) {
+      let directory = path.dirname(plan.absolute);
+      const pendingDirectories = [];
+      while (!fs.existsSync(directory)) {
+        pendingDirectories.push(directory);
+        directory = path.dirname(directory);
+      }
+      fs.mkdirSync(path.dirname(plan.absolute), { recursive: true });
+      createdDirectories.push(...pendingDirectories);
+      if (process.env.ATOMIC_GOVERNANCE_TEST_FAIL_WRITE_AT === plan.relative) {
+        const partialLength = Math.max(1, Math.floor(plan.content.byteLength / 2));
+        fs.writeFileSync(plan.staged, plan.content.subarray(0, partialLength));
+        throw new Error(`Fallo de escritura inyectado para ${plan.relative}.`);
+      }
+      fs.writeFileSync(plan.staged, plan.content);
+    }
+    for (const plan of plans) {
+      const state = { backupMoved: false, destinationInstalled: false, plan };
+      applied.push(state);
+      if (plan.existed) {
+        fs.renameSync(plan.absolute, plan.backup);
+        state.backupMoved = true;
+      }
+      fs.renameSync(plan.staged, plan.absolute);
+      state.destinationInstalled = true;
+    }
+  } catch (error) {
+    const rollbackErrors = [];
+    for (const state of applied.reverse()) {
+      try {
+        if (state.destinationInstalled) fs.rmSync(state.plan.absolute, { force: true });
+        if (state.backupMoved) fs.renameSync(state.plan.backup, state.plan.absolute);
+      } catch (rollbackError) {
+        rollbackErrors.push(`${state.plan.relative}: ${rollbackError.message}`);
+      }
+    }
+    for (const plan of plans) {
+      try {
+        fs.rmSync(plan.staged, { force: true });
+        if (fs.existsSync(plan.backup) && !fs.existsSync(plan.absolute)) {
+          fs.renameSync(plan.backup, plan.absolute);
+        }
+        if (fs.existsSync(plan.backup)) {
+          rollbackErrors.push(`Respaldo pendiente para ${plan.relative}: ${plan.backup}`);
+        }
+      } catch (rollbackError) {
+        rollbackErrors.push(`${plan.relative}: ${rollbackError.message}`);
+      }
+    }
+    for (const directory of [...new Set(createdDirectories)].sort((left, right) => right.length - left.length)) {
+      try {
+        fs.rmdirSync(directory);
+      } catch {
+        // Se conserva un directorio si no está vacío o si otro proceso lo usa.
+      }
+    }
+    if (rollbackErrors.length > 0) {
+      throw new Error(`${error.message} Rollback incompleto: ${rollbackErrors.join('; ')}`);
+    }
+    throw error;
+  }
+  for (const plan of plans) {
+    try {
+      fs.rmSync(plan.backup, { force: true });
+      fs.rmSync(plan.staged, { force: true });
+    } catch {
+      // La transacción ya está confirmada; un respaldo huérfano no sustituye datos vigentes.
+    }
+  }
 }
 
 function filesBelow(root, base = root) {
   if (!fs.existsSync(root)) return [];
   return fs.readdirSync(root, { withFileTypes: true }).flatMap((entry) => {
     const current = path.join(root, entry.name);
+    if (entry.isSymbolicLink()) {
+      throw new Error(`La superficie gobernada no admite enlaces simbólicos: ${current}.`);
+    }
     return entry.isDirectory() ? filesBelow(current, base) : [normalize(path.relative(base, current))];
   }).sort((left, right) => left.localeCompare(right, 'en'));
 }
 
-function digest(file) {
-  return createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+const digest = (repositoryRoot, file, options = {}) =>
+  canonicalFileSha256(repositoryRoot, file, options);
+
+function git(args, options = {}) {
+  return execFileSync('git', args, {
+    cwd: atomicRoot,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+    ...options,
+  }).trim();
 }
 
-function auditComponents(consumerRoot, uiRoot) {
-  const absoluteUiRoot = path.join(consumerRoot, uiRoot);
+function pathspecBatches(pathspecs, maximumArgumentBytes = 8192) {
+  const batches = [];
+  let current = [];
+  let currentBytes = 0;
+  for (const pathspec of pathspecs) {
+    const pathspecBytes = Buffer.byteLength(pathspec, 'utf8') + 3;
+    if (current.length > 0 && currentBytes + pathspecBytes > maximumArgumentBytes) {
+      batches.push(current);
+      current = [];
+      currentBytes = 0;
+    }
+    current.push(pathspec);
+    currentBytes += pathspecBytes;
+  }
+  if (current.length > 0) batches.push(current);
+  return batches;
+}
+
+function gitForPathspecs(prefix, pathspecs) {
+  return pathspecBatches(pathspecs).map((batch) =>
+    git(['--literal-pathspecs', ...prefix, '--', ...batch]),
+  );
+}
+
+function assertCanonicalAtomicRemote() {
+  const remote = git(['remote', 'get-url', 'origin']);
+  const accepted = new Set([
+    'https://github.com/archware/-Atomic-UI.git',
+    'https://github.com/archware/-Atomic-UI',
+    'git@github.com:archware/-Atomic-UI.git',
+    'ssh://git@github.com/archware/-Atomic-UI.git',
+  ]);
+  if (!accepted.has(remote)) {
+    throw new Error('El remoto origin de Atomic debe ser exactamente archware/-Atomic-UI en GitHub.');
+  }
+}
+
+function assertAtomicSourceClean(pathspecs, reference) {
+  const protectedFiles = [...new Set(pathspecs.map((local) =>
+    relativePath(atomicRoot, local, 'ruta propagable Atomic'),
+  ))].sort();
+  const treeEntries = new Map();
+  for (const output of gitForPathspecs(
+    ['ls-tree', '-r', '-z', '--full-tree', reference],
+    protectedFiles,
+  )) {
+    for (const entry of output.split('\0').filter(Boolean)) {
+      const match = /^(\d{6})\s+blob\s+([0-9a-f]+)\t(.+)$/.exec(entry);
+      if (match) {
+        treeEntries.set(normalize(match[3]), { mode: match[1], oid: match[2] });
+      }
+    }
+  }
+  for (const local of protectedFiles) {
+    const treeEntry = treeEntries.get(local);
+    if (!treeEntry || !['100644', '100755'].includes(treeEntry.mode)) {
+      throw new Error(
+        `La ruta propagable Atomic debe existir en ${reference} como archivo regular: ${local}.`,
+      );
+    }
+    const absolute = confinedPath(atomicRoot, local, `ruta propagable ${local}`).absolute;
+    const stat = fs.lstatSync(absolute);
+    if (!stat.isFile() || stat.isSymbolicLink()) {
+      throw new Error(`La ruta propagable Atomic no puede ser un enlace: ${local}.`);
+    }
+    const physicalOid = canonicalFileObjectId(atomicRoot, absolute);
+    if (physicalOid !== treeEntry.oid) {
+      throw new Error(
+        `Los bytes físicos Atomic no coinciden con ${reference} para ${local}: ` +
+          `${physicalOid} != ${treeEntry.oid}.`,
+      );
+    }
+  }
+  const dirty = gitForPathspecs(
+    ['status', '--porcelain=v1', '-z', '--untracked-files=all', '--ignored=matching'],
+    protectedFiles,
+  ).join('');
+  if (dirty) {
+    throw new Error(
+      `La fuente Atomic contiene cambios sin confirmar en rutas propagables: ${dirty
+        .split('\0')
+        .filter(Boolean)
+        .join(', ')}`,
+    );
+  }
+}
+
+function protectedAtomicSources(sourceManifest, auditedComponents, auditedServices) {
+  const protectedFiles = new Set([
+    '.gitattributes',
+    'package.json',
+    'distribution/package-contract.json',
+    'distribution/atomic-source-manifest.json',
+    'governance/consumer/AGENTS.template.md',
+    '.node-version',
+    '.nvmrc',
+  ]);
+  for (const [source] of governanceCopies) protectedFiles.add(source);
+  for (const file of sourceManifest.files || []) protectedFiles.add(file.path);
+  for (const component of auditedComponents) {
+    for (const file of component.files) protectedFiles.add(`${component.atomic}/${file}`);
+  }
+  for (const service of auditedServices) {
+    protectedFiles.add(`${atomicServicesRoot}/${service.file}`);
+  }
+  return [...protectedFiles];
+}
+
+function auditComponents(consumerRoot, uiRoot, consumerDigestOptions = {}) {
+  const absoluteUiRoot = confinedPath(consumerRoot, uiRoot, 'raíz UI consumidora').absolute;
   const components = [];
   for (const layer of layers) {
-    const localLayer = path.join(absoluteUiRoot, layer);
+    const localLayer = confinedPath(consumerRoot, `${uiRoot}/${layer}`, `capa ${layer}`).absolute;
     if (!fs.existsSync(localLayer)) continue;
     for (const entry of fs.readdirSync(localLayer, { withFileTypes: true })) {
+      if (entry.isSymbolicLink()) {
+        throw new Error(`La capa gobernada no admite enlaces simbólicos: ${entry.name}.`);
+      }
       if (!entry.isDirectory()) continue;
       const local = normalize(path.join(uiRoot, layer, entry.name));
       const atomic = normalize(path.join('src/app/shared/ui', layer, entry.name));
-      const localRoot = path.join(consumerRoot, local);
-      const sourceRoot = path.join(atomicRoot, atomic);
+      const localRoot = confinedPath(consumerRoot, local, `componente consumidor ${local}`).absolute;
+      const sourceRoot = confinedPath(atomicRoot, atomic, `componente Atomic ${atomic}`).absolute;
       if (!fs.existsSync(sourceRoot)) {
         throw new Error(`No existe fuente Atomic para ${local}: ${atomic}`);
       }
@@ -70,7 +340,9 @@ function auditComponents(consumerRoot, uiRoot) {
           differences.push({ file, kind: 'missing-in-consumer' });
         } else if (!fs.existsSync(sourceFile)) {
           differences.push({ file, kind: 'consumer-only' });
-        } else if (digest(localFile) !== digest(sourceFile)) {
+        } else if (
+          digest(consumerRoot, localFile, consumerDigestOptions) !== digest(atomicRoot, sourceFile)
+        ) {
           differences.push({ file, kind: 'content-divergence' });
         }
       }
@@ -83,10 +355,10 @@ function auditComponents(consumerRoot, uiRoot) {
         snapshot: candidates.map((file) => ({
           file,
           localSha256: fs.existsSync(path.join(localRoot, file))
-            ? digest(path.join(localRoot, file))
+            ? digest(consumerRoot, path.join(localRoot, file), consumerDigestOptions)
             : null,
           atomicSha256: fs.existsSync(path.join(sourceRoot, file))
-            ? digest(path.join(sourceRoot, file))
+            ? digest(atomicRoot, path.join(sourceRoot, file))
             : null,
         })),
       });
@@ -95,22 +367,32 @@ function auditComponents(consumerRoot, uiRoot) {
   return components;
 }
 
-function auditServices(consumerRoot, uiRoot) {
+function auditServices(consumerRoot, uiRoot, consumerDigestOptions = {}) {
   const services = [];
   for (const file of requiredGovernedServices) {
-    const localFile = path.join(consumerRoot, uiRoot, 'services', file);
-    const atomicFile = path.join(atomicRoot, atomicServicesRoot, file);
+    const localFile = confinedPath(
+      consumerRoot,
+      `${uiRoot}/services/${file}`,
+      `servicio consumidor ${file}`,
+    ).absolute;
+    const atomicFile = confinedPath(
+      atomicRoot,
+      `${atomicServicesRoot}/${file}`,
+      `servicio Atomic ${file}`,
+    ).absolute;
     if (!fs.existsSync(atomicFile)) {
       throw new Error(`No existe fuente Atomic para el servicio gobernado: ${atomicServicesRoot}/${file}`);
     }
     if (!fs.existsSync(localFile)) {
       services.push({ file, classification: 'missing-in-consumer' });
-    } else if (digest(localFile) !== digest(atomicFile)) {
+    } else if (
+      digest(consumerRoot, localFile, consumerDigestOptions) !== digest(atomicRoot, atomicFile)
+    ) {
       services.push({
         file,
         classification: 'adaptation-required',
-        localSha256: digest(localFile),
-        atomicSha256: digest(atomicFile),
+        localSha256: digest(consumerRoot, localFile, consumerDigestOptions),
+        atomicSha256: digest(atomicRoot, atomicFile),
       });
     } else {
       services.push({ file, classification: 'exact' });
@@ -121,37 +403,21 @@ function auditServices(consumerRoot, uiRoot) {
 
 function atomicRef() {
   try {
-    return execFileSync('git', ['rev-parse', 'HEAD'], {
-      cwd: atomicRoot,
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'ignore'],
-    }).trim();
-  } catch {
-    return 'main';
+    const { objectFormat } = repositoryIdentity(atomicRoot);
+    const reference = git(['rev-parse', 'HEAD']);
+    if (!new RegExp(`^[0-9a-f]{${expectedObjectIdLength(objectFormat)}}$`, 'i').test(reference)) {
+      throw new Error(`Atomic no devolvió un OID completo para el formato ${objectFormat}.`);
+    }
+    return reference;
+  } catch (error) {
+    throw new Error(`No se pudo fijar el commit inmutable de Atomic: ${error.message}`);
   }
 }
 
-function atomicIdentity() {
-  const packageJson = JSON.parse(fs.readFileSync(path.join(atomicRoot, 'package.json'), 'utf8'));
-  const sourceManifestPath = path.join(
-    atomicRoot,
-    'distribution',
-    'atomic-source-manifest.json',
-  );
-  if (!fs.existsSync(sourceManifestPath)) {
-    throw new Error(
-      'No existe distribution/atomic-source-manifest.json. Ejecute npm run package:manifest.',
-    );
-  }
-  const sourceManifest = JSON.parse(fs.readFileSync(sourceManifestPath, 'utf8'));
+function atomicIdentity(verification) {
+  const { expected: sourceManifest, packageJson } = verification;
   if (!packageJson.version?.trim() || !sourceManifest.sourceTreeSha256?.trim()) {
     throw new Error('La identidad versionada de Atomic est\u00e1 incompleta.');
-  }
-  if (sourceManifest.packageVersion !== packageJson.version) {
-    throw new Error(
-      'La versi\u00f3n del manifiesto de fuentes no coincide con package.json. ' +
-        'Ejecute npm run package:manifest.',
-    );
   }
   return {
     atomicVersion: packageJson.version,
@@ -159,18 +425,20 @@ function atomicIdentity() {
   };
 }
 
-function appendAgentPolicy(consumerRoot) {
-  const agentsPath = path.join(consumerRoot, 'AGENTS.md');
-  const template = fs.readFileSync(path.join(kitRoot, 'AGENTS.template.md'), 'utf8');
+function agentPolicyContent(consumerRoot) {
+  const agentsPath = confinedPath(consumerRoot, 'AGENTS.md', 'AGENTS.md').absolute;
+  const templatePath = confinedPath(
+    atomicRoot,
+    'governance/consumer/AGENTS.template.md',
+    'plantilla AGENTS.md',
+  ).absolute;
+  const template = fs.readFileSync(templatePath, 'utf8');
   if (!fs.existsSync(agentsPath)) {
-    fs.writeFileSync(agentsPath, template, 'utf8');
-    return;
+    return template;
   }
 
   const current = fs.readFileSync(agentsPath, 'utf8');
-  if (!current.includes('ATOMIC_GOVERNANCE_REQUIRED')) {
-    fs.appendFileSync(agentsPath, `\n\n${template}`, 'utf8');
-  }
+  return current.includes('ATOMIC_GOVERNANCE_REQUIRED') ? current : `${current}\n\n${template}`;
 }
 
 function main() {
@@ -180,22 +448,75 @@ function main() {
     process.exit(1);
   }
 
-  const consumerRoot = path.resolve(consumerArg);
-  const packageRoot = normalize(option('package-root', '.'));
-  const uiRoot = normalize(option('ui-root', 'src/app/shared/ui'));
+  let consumerRoot;
+  let packageRoot;
+  let uiRoot;
+  try {
+    consumerRoot = fs.realpathSync.native(path.resolve(consumerArg));
+    const consumerRepository = repositoryIdentity(consumerRoot);
+    if (consumerRepository.topLevel !== consumerRoot) {
+      throw new Error('La ruta consumidora debe ser exactamente la raíz de su repositorio Git.');
+    }
+    packageRoot = relativePath(
+      consumerRoot,
+      option('package-root', '.'),
+      'package-root',
+      { allowDot: true },
+    );
+    uiRoot = relativePath(
+      consumerRoot,
+      option('ui-root', 'src/app/shared/ui'),
+      'ui-root',
+    );
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
   const shellRoot =
     (uiRoot.endsWith('/shared/ui')
       ? uiRoot.slice(0, -'/shared/ui'.length)
       : normalize(path.dirname(uiRoot))) || '.';
-  const packagePath = path.join(consumerRoot, packageRoot, 'package.json');
-  const absoluteUiRoot = path.join(consumerRoot, uiRoot);
+  let packagePath;
+  let absoluteUiRoot;
+  try {
+    packagePath = confinedPath(
+      consumerRoot,
+      `${packageRoot === '.' ? '' : `${packageRoot}/`}package.json`,
+      'package.json consumidor',
+    ).absolute;
+    absoluteUiRoot = confinedPath(consumerRoot, uiRoot, 'raíz UI consumidora').absolute;
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
   const auditOnly = process.argv.includes('--audit-only');
-  const adaptationDecision = normalize(option('adaptation-decision', ''));
+  const adaptationDecisionOption = option('adaptation-decision', '');
+  let adaptationDecision = '';
+  try {
+    if (adaptationDecisionOption) {
+      adaptationDecision = relativePath(
+        consumerRoot,
+        adaptationDecisionOption,
+        'adaptation-decision',
+      );
+    }
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
   const changeId = option('change-id', 'ATOMIC-BOOTSTRAP');
   let identity;
+  let reference;
+  let sourceVerification;
 
   try {
-    identity = atomicIdentity();
+    if (repositoryIdentity(atomicRoot).topLevel !== atomicRoot) {
+      throw new Error('ATOMIC_UI_ROOT debe ser exactamente la raíz del repositorio Git Atomic.');
+    }
+    assertCanonicalAtomicRemote();
+    sourceVerification = verifySourceManifest(atomicRoot);
+    identity = atomicIdentity(sourceVerification);
+    reference = atomicRef();
   } catch (error) {
     console.error(error.message);
     process.exit(1);
@@ -206,11 +527,29 @@ function main() {
     process.exit(1);
   }
 
+  let packageJson;
+  let attributes;
+  try {
+    packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+    attributes = attributePlan(consumerRoot);
+  } catch (error) {
+    console.error(`No se pudo prevalidar el consumidor: ${error.message}`);
+    process.exit(1);
+  }
+
   let auditedComponents;
   let auditedServices;
   try {
-    auditedComponents = auditComponents(consumerRoot, uiRoot);
-    auditedServices = auditServices(consumerRoot, uiRoot);
+    [auditedComponents, auditedServices] = withPlannedAttributeSource((plannedAttributesFile) => {
+      const consumerDigestOptions = { plannedAttributesFile };
+      const components = auditComponents(consumerRoot, uiRoot, consumerDigestOptions);
+      const services = auditServices(consumerRoot, uiRoot, consumerDigestOptions);
+      assertAtomicSourceClean(
+        protectedAtomicSources(sourceVerification.expected, components, services),
+        reference,
+      );
+      return [components, services];
+    });
   } catch (error) {
     console.error(error.message);
     process.exit(1);
@@ -227,8 +566,9 @@ function main() {
   const pendingAdaptations = adaptations.length + serviceAdaptations.length;
   const auditReport = {
     schemaVersion: 1,
+    policyVersion: '1.2.2',
     status: pendingAdaptations === 0 ? 'exact' : 'adaptation-records-required',
-    atomicRef: atomicRef(),
+    atomicRef: reference,
     ...identity,
     consumerRoot: normalize(consumerRoot),
     packageRoot,
@@ -253,10 +593,18 @@ function main() {
     return;
   }
   if (pendingAdaptations > 0 && adaptationDecision) {
-    const decisionPath = path.resolve(consumerRoot, adaptationDecision);
-    const decisionInsideConsumer =
-      decisionPath === consumerRoot || decisionPath.startsWith(`${consumerRoot}${path.sep}`);
-    if (!decisionInsideConsumer || !fs.existsSync(decisionPath)) {
+    let decisionPath;
+    try {
+      decisionPath = confinedPath(
+        consumerRoot,
+        adaptationDecision,
+        'adaptation-decision',
+      ).absolute;
+    } catch (error) {
+      console.error(error.message);
+      process.exit(2);
+    }
+    if (!fs.existsSync(decisionPath) || !fs.lstatSync(decisionPath).isFile()) {
       console.error('El registro de decisión Atomic debe existir dentro del consumidor.');
       process.exit(2);
     }
@@ -269,32 +617,35 @@ function main() {
     process.exit(2);
   }
 
-  copy(
-    path.join(kitRoot, 'ATOMIC_GOVERNANCE.md'),
-    path.join(consumerRoot, 'docs', 'ATOMIC_GOVERNANCE.md'),
-  );
-  copy(
-    path.join(kitRoot, 'check-atomic-provenance.mjs'),
-    path.join(consumerRoot, 'scripts', 'check-atomic-provenance.mjs'),
-  );
-  copy(
-    path.join(kitRoot, 'atomic-governance.yml'),
-    path.join(consumerRoot, '.github', 'workflows', 'atomic-governance.yml'),
-  );
+  const plannedFiles = new Map([['.gitattributes', attributes.content]]);
+  for (const [source, destination] of governanceCopies) {
+    const sourcePath = confinedPath(atomicRoot, source, `fuente ${source}`).absolute;
+    plannedFiles.set(destination, fs.readFileSync(sourcePath));
+  }
   for (const versionFile of ['.node-version', '.nvmrc']) {
-    if (!fs.existsSync(path.join(consumerRoot, versionFile))) {
-      copy(path.join(atomicRoot, versionFile), path.join(consumerRoot, versionFile));
+    const destination = confinedPath(consumerRoot, versionFile, versionFile).absolute;
+    if (!fs.existsSync(destination)) {
+      plannedFiles.set(
+        versionFile,
+        fs.readFileSync(confinedPath(atomicRoot, versionFile, versionFile).absolute),
+      );
     }
   }
   for (const service of auditedServices) {
     if (service.classification !== 'missing-in-consumer') continue;
-    copy(
-      path.join(atomicRoot, atomicServicesRoot, service.file),
-      path.join(consumerRoot, uiRoot, 'services', service.file),
+    plannedFiles.set(
+      `${uiRoot}/services/${service.file}`,
+      fs.readFileSync(
+        confinedPath(
+          atomicRoot,
+          `${atomicServicesRoot}/${service.file}`,
+          `servicio Atomic ${service.file}`,
+        ).absolute,
+      ),
     );
     service.classification = 'exact';
   }
-  appendAgentPolicy(consumerRoot);
+  plannedFiles.set('AGENTS.md', agentPolicyContent(consumerRoot));
 
   const components = auditedComponents.map((component) => {
     if (component.classification === 'exact') {
@@ -342,12 +693,13 @@ function main() {
 
   const manifest = {
     schemaVersion: 1,
-    policyVersion: '1.2.1',
+    policyVersion: '1.2.2',
     changeId,
     atomicRepository: normalize(path.relative(consumerRoot, atomicRoot)),
     atomicRemote: 'archware/-Atomic-UI',
-    atomicRef: atomicRef(),
+    atomicRef: reference,
     ...identity,
+    contentCanonicalization: CONTENT_CANONICALIZATION,
     packageRoot,
     uiRoots: [uiRoot],
     shellRoot,
@@ -369,6 +721,22 @@ function main() {
         atomic: 'governance/consumer/check-atomic-provenance.mjs',
       },
       {
+        local: 'scripts/git-clean-eol.cjs',
+        atomic: 'governance/consumer/git-clean-eol.cjs',
+      },
+      {
+        local: 'scripts/safe-paths.cjs',
+        atomic: 'governance/consumer/safe-paths.cjs',
+      },
+      {
+        local: 'scripts/read-atomic-contract.cjs',
+        atomic: 'governance/consumer/read-atomic-contract.cjs',
+      },
+      {
+        local: 'scripts/source-manifest.cjs',
+        atomic: 'governance/consumer/source-manifest.cjs',
+      },
+      {
         local: '.github/workflows/atomic-governance.yml',
         atomic: 'governance/consumer/atomic-governance.yml',
       },
@@ -379,11 +747,16 @@ function main() {
       required: [],
     },
   };
-  const manifestPath = path.join(consumerRoot, 'docs', 'atomic-provenance.json');
-  fs.mkdirSync(path.dirname(manifestPath), { recursive: true });
-  fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+  const manifestPath = confinedPath(
+    consumerRoot,
+    'docs/atomic-provenance.json',
+    'manifiesto consumidor',
+  ).absolute;
+  plannedFiles.set(
+    normalize(path.relative(consumerRoot, manifestPath)),
+    `${JSON.stringify(manifest, null, 2)}\n`,
+  );
 
-  const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
   packageJson.scripts ||= {};
   packageJson.scripts['check:atomic'] = checkAtomicCommand;
   if (!packageJson.scripts.check) {
@@ -391,7 +764,16 @@ function main() {
   } else if (!packageJson.scripts.check.includes('check:atomic')) {
     packageJson.scripts.check = `npm run check:atomic && ${packageJson.scripts.check}`;
   }
-  fs.writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`, 'utf8');
+  plannedFiles.set(
+    normalize(path.relative(consumerRoot, packagePath)),
+    `${JSON.stringify(packageJson, null, 2)}\n`,
+  );
+  try {
+    applyFileTransaction(consumerRoot, plannedFiles);
+  } catch (error) {
+    console.error(`Instalación revertida sin cambios parciales: ${error.message}`);
+    process.exit(1);
+  }
 
   console.log(
     `Gobierno Atomic instalado: ${exactComponents.length} componentes exactos, ` +

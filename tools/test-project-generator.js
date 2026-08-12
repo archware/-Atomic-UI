@@ -9,8 +9,51 @@ const atomicRoot = path.resolve(__dirname, '..');
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'atomic-governance-smoke-'));
 const projectName = 'governed-smoke';
 const projectRoot = path.join(tempRoot, projectName);
+const sourceRoot = path.join(tempRoot, 'atomic-source');
+
+function copy(relativePath) {
+  const source = path.join(atomicRoot, relativePath);
+  const target = path.join(sourceRoot, relativePath);
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.cpSync(source, target, { recursive: true });
+}
+
+function git(repositoryRoot, args) {
+  execFileSync('git', args, { cwd: repositoryRoot, stdio: 'pipe' });
+}
 
 try {
+  fs.mkdirSync(sourceRoot, { recursive: true });
+  for (const relativePath of [
+    '.gitattributes',
+    '.node-version',
+    '.nvmrc',
+    'package.json',
+    'distribution/package-contract.json',
+    'distribution/atomic-source-manifest.json',
+    'governance/consumer',
+    'src/app/shared/ui',
+    'src/styles',
+  ]) {
+    copy(relativePath);
+  }
+  const sourceManifest = JSON.parse(
+    fs.readFileSync(path.join(sourceRoot, 'distribution/atomic-source-manifest.json'), 'utf8'),
+  );
+  for (const file of sourceManifest.files || []) {
+    if (!fs.existsSync(path.join(sourceRoot, file.path))) copy(file.path);
+  }
+  git(sourceRoot, ['init', '--quiet']);
+  git(sourceRoot, ['config', 'user.name', 'Atomic Generator Test']);
+  git(sourceRoot, ['config', 'user.email', 'atomic-generator@example.invalid']);
+  git(sourceRoot, ['remote', 'add', 'origin', 'https://github.com/archware/-Atomic-UI.git']);
+  git(sourceRoot, ['add', '--all']);
+  git(sourceRoot, ['commit', '--quiet', '-m', 'test: immutable Atomic fixture']);
+  const sourceRef = execFileSync('git', ['rev-parse', 'HEAD'], {
+    cwd: sourceRoot,
+    encoding: 'utf8',
+  }).trim();
+
   execFileSync(
     process.execPath,
     [
@@ -20,11 +63,19 @@ try {
       `--output=${tempRoot}`,
       '--skip-install',
     ],
-    { cwd: atomicRoot, stdio: 'inherit' },
+    {
+      cwd: atomicRoot,
+      stdio: 'inherit',
+      env: { ...process.env, ATOMIC_UI_ROOT: sourceRoot },
+    },
   );
+  git(projectRoot, ['config', 'user.name', 'Atomic Generator Test']);
+  git(projectRoot, ['config', 'user.email', 'atomic-generator@example.invalid']);
+  git(projectRoot, ['add', '--all']);
+  git(projectRoot, ['commit', '--quiet', '-m', 'test: generated consumer baseline']);
   execFileSync(process.execPath, [path.join(projectRoot, 'scripts', 'check-atomic-provenance.mjs')], {
     cwd: projectRoot,
-    env: { ...process.env, ATOMIC_UI_ROOT: atomicRoot },
+    env: { ...process.env, ATOMIC_UI_ROOT: sourceRoot },
     stdio: 'inherit',
   });
 
@@ -35,9 +86,14 @@ try {
   const appConfig = fs.readFileSync(path.join(projectRoot, 'src/app/app.config.ts'), 'utf8');
   const routes = fs.readFileSync(path.join(projectRoot, 'src/app/app.routes.ts'), 'utf8');
   if (
-    manifest.policyVersion !== '1.2.1' ||
+    manifest.policyVersion !== '1.2.2' ||
+    manifest.atomicRef !== sourceRef ||
+    manifest.contentCanonicalization?.scheme !== 'git-clean-eol-v1' ||
     manifest.shellRoot !== 'src/app' ||
     manifest.components.length === 0 ||
+    !fs.existsSync(path.join(projectRoot, '.git')) ||
+    !fs.existsSync(path.join(projectRoot, '.gitattributes')) ||
+    !fs.existsSync(path.join(projectRoot, 'scripts/git-clean-eol.cjs')) ||
     packageJson.scripts?.['check:atomic'] !== 'node scripts/check-atomic-provenance.mjs'
   ) {
     throw new Error('El proyecto generado no contiene el contrato Atomic completo.');

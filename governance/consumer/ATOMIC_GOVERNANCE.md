@@ -2,7 +2,7 @@
 
 > Marcador normativo: `ATOMIC_GOVERNANCE_REQUIRED`
 >
-> Versión de política: `1.2.1`
+> Versión de política: `1.2.2`
 
 Este documento es un contrato, no una recomendación. `-Atomic-UI` es la única
 fuente de verdad para átomos, moléculas, organismos, superficies, plantillas,
@@ -50,6 +50,30 @@ tokens y patrones visuales reutilizables de todas las aplicaciones consumidoras.
     `-var(`. Motivo: un estilo inline con token fantasma
     `var(--surface-base, #f8fafc)` en el shell del tablero rompió el modo
     oscuro porque `app.component.ts` no pertenecía a ningún `featureRoot`.
+14. (Política 1.2.2) Toda comparación y todo snapshot SHA-256 de artefactos,
+    componentes y servicios gobernados usa `git-clean-eol-v1`. Cada archivo se
+    evalúa con atributos versionados y una configuración Git neutral: el texto
+    debe resolver a `text=auto|set` con `eol=crlf` y se representa con LF; el
+    binario debe declarar `-text` y conserva exactamente sus bytes. Solo se
+    acepta identidad o la transformación exacta CRLF a LF. Los atributos
+    globales y de sistema se neutralizan; `.git/info/attributes` no puede
+    aportar reglas. Los
+    atributos `filter`, `ident` y `working-tree-encoding`, las transformaciones
+    `clean` adicionales, las rutas externas, los enlaces y los archivos sin
+    repositorio Git se rechazan de forma cerrada. El manifiesto debe declarar
+    `contentCanonicalization` y el helper canónico debe permanecer como
+    artefacto de gobierno inmutable.
+15. (Política 1.2.2) `atomicRef` debe ser un OID Git completo de 40 caracteres
+    para SHA-1 o 64 para SHA-256, según el formato del repositorio, y coincidir
+    exactamente con `HEAD` del checkout Atomic usado por el gate.
+    Los archivos gobernados, el manifiesto de fuentes y la versión deben
+    existir en ese commit y permanecer limpios. Cambios auxiliares fuera de
+    esas rutas no bloquean la compuerta. `atomicRemote` debe ser exactamente
+    `archware/-Atomic-UI`. El workflow aplica acceso de solo lectura, no
+    persiste credenciales, ejecuta primero el gate del checkout Atomic fijado y
+    mantiene `ATOMIC_UI_ROOT` durante toda la verificación. El ruleset externo
+    de la rama protegida debe exigir ese workflow: una solicitud no puede usar
+    su propia copia modificada como prueba de que el verificador no fue degradado.
 
 ## Lo que sí pertenece al consumidor
 

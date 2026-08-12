@@ -1,17 +1,31 @@
 {
   "schemaVersion": 1,
-  "policyVersion": "1.0.0",
+  "policyVersion": "1.2.2",
   "changeId": "ATOMIC-BOOTSTRAP",
   "atomicRepository": "../-Atomic-UI",
   "atomicRemote": "archware/-Atomic-UI",
-  "atomicRef": "main",
+  "atomicRef": "<git-object-id-completo>",
   "atomicVersion": "<atomic-version>",
   "atomicSourceTreeSha256": "<sha256>",
+  "contentCanonicalization": {
+    "scheme": "git-clean-eol-v1",
+    "textLineEnding": "lf",
+    "binary": "identity",
+    "unsupportedCleanTransform": "reject"
+  },
   "packageRoot": ".",
   "uiRoots": ["src/app/shared/ui"],
+  "shellRoot": "src/app",
   "featureRoots": ["src/app/features", "src/app/pages", "src/app/dashboard"],
   "layers": ["atoms", "molecules", "organisms", "surfaces", "templates"],
   "components": [],
+  "governedServices": [
+    { "file": "theme.service.ts", "mode": "exact" },
+    { "file": "app-version.service.ts", "mode": "exact" },
+    { "file": "modal.service.ts", "mode": "exact" },
+    { "file": "popup.service.ts", "mode": "exact" },
+    { "file": "toast.service.ts", "mode": "exact" }
+  ],
   "governanceArtifacts": [
     {
       "local": "docs/ATOMIC_GOVERNANCE.md",
@@ -20,6 +34,22 @@
     {
       "local": "scripts/check-atomic-provenance.mjs",
       "atomic": "governance/consumer/check-atomic-provenance.mjs"
+    },
+    {
+      "local": "scripts/git-clean-eol.cjs",
+      "atomic": "governance/consumer/git-clean-eol.cjs"
+    },
+    {
+      "local": "scripts/safe-paths.cjs",
+      "atomic": "governance/consumer/safe-paths.cjs"
+    },
+    {
+      "local": "scripts/read-atomic-contract.cjs",
+      "atomic": "governance/consumer/read-atomic-contract.cjs"
+    },
+    {
+      "local": "scripts/source-manifest.cjs",
+      "atomic": "governance/consumer/source-manifest.cjs"
     },
     {
       "local": ".github/workflows/atomic-governance.yml",

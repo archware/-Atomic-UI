@@ -1,9 +1,21 @@
-import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { existsSync, readFileSync, readdirSync, realpathSync } from 'node:fs';
 import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import canonicalization from './git-clean-eol.cjs';
+import safePaths from './safe-paths.cjs';
+import sourceManifest from './source-manifest.cjs';
 
-const POLICY_VERSION = '1.2.1';
+const {
+  CONTENT_CANONICALIZATION,
+  canonicalFileObjectId,
+  canonicalFileSha256,
+  expectedObjectIdLength,
+  repositoryIdentity,
+} = canonicalization;
+const { confinedPath, relativePath } = safePaths;
+const { verifySourceManifest } = sourceManifest;
+const POLICY_VERSION = '1.2.2';
 const REQUIRED_MARKER = 'ATOMIC_GOVERNANCE_REQUIRED';
 const NATIVE_VISUAL_TAGS = /<(?:button|dialog|input|select|table|textarea)\b/i;
 const NATIVE_VISUAL_SELECTORS =
@@ -20,6 +32,7 @@ const REQUIRED_GOVERNED_SERVICES = [
   'toast.service.ts',
 ];
 const ATOMIC_SERVICES_ROOT = 'src/app/shared/ui/services';
+const ALLOWED_LAYERS = ['atoms', 'molecules', 'organisms', 'surfaces', 'templates'];
 const REQUIRED_GOVERNANCE_ARTIFACTS = [
   {
     local: 'docs/ATOMIC_GOVERNANCE.md',
@@ -28,6 +41,22 @@ const REQUIRED_GOVERNANCE_ARTIFACTS = [
   {
     local: 'scripts/check-atomic-provenance.mjs',
     atomic: 'governance/consumer/check-atomic-provenance.mjs',
+  },
+  {
+    local: 'scripts/git-clean-eol.cjs',
+    atomic: 'governance/consumer/git-clean-eol.cjs',
+  },
+  {
+    local: 'scripts/safe-paths.cjs',
+    atomic: 'governance/consumer/safe-paths.cjs',
+  },
+  {
+    local: 'scripts/read-atomic-contract.cjs',
+    atomic: 'governance/consumer/read-atomic-contract.cjs',
+  },
+  {
+    local: 'scripts/source-manifest.cjs',
+    atomic: 'governance/consumer/source-manifest.cjs',
   },
   {
     local: '.github/workflows/atomic-governance.yml',
@@ -40,21 +69,91 @@ const option = (name) => {
   const prefix = `${name}=`;
   return process.argv.slice(2).find((argument) => argument.startsWith(prefix))?.slice(prefix.length);
 };
-const consumerRoot = resolve(option('--consumer-root') || join(scriptDirectory, '..'));
-const manifestPath = resolve(
-  consumerRoot,
-  option('--manifest') || 'docs/atomic-provenance.json',
-);
 const failures = [];
 const normalize = (path) => path.replaceAll('\\', '/');
-const digest = (path) => createHash('sha256').update(readFileSync(path)).digest('hex');
+const stableJson = (value) => JSON.stringify(value);
+let consumerRoot;
+let manifestPath;
+try {
+  consumerRoot = realpathSync.native(resolve(option('--consumer-root') || join(scriptDirectory, '..')));
+  const manifestLocation = confinedPath(
+    consumerRoot,
+    option('--manifest') || 'docs/atomic-provenance.json',
+    'manifest',
+  );
+  manifestPath = manifestLocation.absolute;
+} catch (error) {
+  console.error(`- ${error.message}`);
+  process.exit(1);
+}
+const digestFailures = new Set();
+const digest = (repositoryRoot, path) => {
+  try {
+    return canonicalFileSha256(repositoryRoot, path);
+  } catch (error) {
+    const message = `No se pudo verificar ${normalize(relative(repositoryRoot, path))}: ${error.message}`;
+    if (!digestFailures.has(message)) {
+      digestFailures.add(message);
+      failures.push(message);
+    }
+    return null;
+  }
+};
 
-function filesBelow(root, extensions) {
+function git(repositoryRoot, args) {
+  const result = spawnSync('git', args, { cwd: repositoryRoot, encoding: 'utf8' });
+  if (result.error || result.status !== 0) {
+    failures.push(
+      `No se pudo verificar el repositorio Git ${repositoryRoot}: ${
+        result.error?.message || result.stderr || result.stdout
+      }`,
+    );
+    return null;
+  }
+  return result.stdout;
+}
+
+function gitPathspecBatches(repositoryRoot, baseArgs, paths, maximumArgumentLength = 8192) {
+  const sorted = [...new Set(paths)].sort();
+  if (sorted.length === 0) return [];
+  const batches = [];
+  let batch = [];
+  let argumentLength = baseArgs.reduce((total, value) => total + value.length + 1, 4);
+  for (const item of sorted) {
+    const itemLength = item.length + 1;
+    if (batch.length > 0 && argumentLength + itemLength > maximumArgumentLength) {
+      batches.push(batch);
+      batch = [];
+      argumentLength = baseArgs.reduce((total, value) => total + value.length + 1, 4);
+    }
+    if (argumentLength + itemLength > maximumArgumentLength) {
+      failures.push(`La ruta gobernada excede el límite seguro de argumentos Git: ${item}.`);
+      return null;
+    }
+    batch.push(item);
+    argumentLength += itemLength;
+  }
+  if (batch.length > 0) batches.push(batch);
+  const outputs = [];
+  for (const pathBatch of batches) {
+    const output = git(repositoryRoot, ['--literal-pathspecs', ...baseArgs, '--', ...pathBatch]);
+    if (output === null) return null;
+    outputs.push(output);
+  }
+  return outputs;
+}
+
+function filesBelow(root, extensions = null, base = root) {
   if (!existsSync(root)) return [];
   return readdirSync(root, { withFileTypes: true }).flatMap((entry) => {
-    const path = join(root, entry.name);
-    if (entry.isDirectory()) return filesBelow(path, extensions);
-    return extensions.some((extension) => entry.name.endsWith(extension)) ? [path] : [];
+    const entryPath = join(root, entry.name);
+    if (entry.isSymbolicLink()) {
+      failures.push(`La superficie gobernada no admite enlaces simbólicos: ${entryPath}.`);
+      return [];
+    }
+    if (entry.isDirectory()) return filesBelow(entryPath, extensions, base);
+    if (extensions && !extensions.some((extension) => entry.name.endsWith(extension))) return [];
+    return [normalize(relative(base, entryPath))];
   });
 }
 
@@ -74,17 +173,63 @@ if (!requireFile(manifestPath, `No existe el manifiesto obligatorio: ${manifestP
 const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
 const configuredAtomicRoot =
   process.env.ATOMIC_UI_ROOT || manifest.atomicRepository || '';
-const atomicRoot = isAbsolute(configuredAtomicRoot)
-  ? resolve(configuredAtomicRoot)
-  : resolve(consumerRoot, configuredAtomicRoot);
+let atomicRoot;
+try {
+  const resolvedAtomicRoot = isAbsolute(configuredAtomicRoot)
+    ? resolve(configuredAtomicRoot)
+    : resolve(consumerRoot, configuredAtomicRoot);
+  atomicRoot = realpathSync.native(resolvedAtomicRoot);
+} catch (error) {
+  failures.push(`No existe el repositorio fuente Atomic: ${configuredAtomicRoot || '(vacío)'}.`);
+  atomicRoot = resolve(consumerRoot, '__atomic-source-invalid__');
+}
+
+function safeRelative(root, value, label, options = {}) {
+  try {
+    return confinedPath(root, value, label, options).relative;
+  } catch (error) {
+    failures.push(error.message);
+    return null;
+  }
+}
+
+function safeJoin(root, value, label, options = {}) {
+  try {
+    return confinedPath(root, value, label, options).absolute;
+  } catch (error) {
+    failures.push(error.message);
+    return null;
+  }
+}
+const atomicProtectedFiles = new Set([
+  '.gitattributes',
+  'package.json',
+  'distribution/package-contract.json',
+  'distribution/atomic-source-manifest.json',
+]);
+const atomicProtectedPathspecs = new Set(atomicProtectedFiles);
+for (const artifact of REQUIRED_GOVERNANCE_ARTIFACTS) {
+  atomicProtectedFiles.add(artifact.atomic);
+  atomicProtectedPathspecs.add(artifact.atomic);
+}
 
 if (manifest.schemaVersion !== 1) failures.push('schemaVersion debe ser 1.');
 if (manifest.policyVersion !== POLICY_VERSION) {
   failures.push(`policyVersion debe ser ${POLICY_VERSION}.`);
 }
+if (stableJson(manifest.contentCanonicalization) !== stableJson(CONTENT_CANONICALIZATION)) {
+  failures.push(
+    'contentCanonicalization debe declarar git-clean-eol-v1, LF para texto, ' +
+      'identidad para binarios y rechazo de otros filtros clean.',
+  );
+}
 if (!manifest.changeId?.trim()) failures.push('changeId es obligatorio.');
-if (!manifest.atomicRemote?.trim()) failures.push('atomicRemote es obligatorio para CI.');
-if (!manifest.atomicRef?.trim()) failures.push('atomicRef es obligatorio para CI reproducible.');
+if (manifest.atomicRemote !== 'archware/-Atomic-UI') {
+  failures.push('atomicRemote debe ser la fuente canónica archware/-Atomic-UI.');
+}
+if (!/^(?:[0-9a-f]{40}|[0-9a-f]{64})$/i.test(manifest.atomicRef || '')) {
+  failures.push('atomicRef debe ser un commit Git completo de 40 o 64 caracteres hexadecimales.');
+}
 if (!manifest.atomicVersion?.trim()) {
   failures.push('atomicVersion es obligatorio para fijar la versi\u00f3n consumida.');
 }
@@ -99,9 +244,85 @@ if (!Array.isArray(manifest.featureRoots) || manifest.featureRoots.length === 0)
 }
 if (!Array.isArray(manifest.layers) || manifest.layers.length === 0) {
   failures.push('layers debe declarar las capas Atomic inventariadas.');
+} else if (
+  manifest.layers.length !== ALLOWED_LAYERS.length ||
+  !ALLOWED_LAYERS.every((layer, index) => manifest.layers[index] === layer)
+) {
+  failures.push(`layers debe coincidir exactamente con ${ALLOWED_LAYERS.join(', ')}.`);
 }
 if (!Array.isArray(manifest.components)) failures.push('components debe ser un arreglo.');
 if (!existsSync(atomicRoot)) failures.push(`No existe el repositorio fuente Atomic: ${atomicRoot}`);
+
+let atomicHead = null;
+let atomicObjectIdLength = null;
+if (existsSync(atomicRoot)) {
+  const topLevel = git(atomicRoot, ['rev-parse', '--show-toplevel']);
+  if (
+    topLevel &&
+    realpathSync.native(resolve(topLevel.trim())) !== realpathSync.native(atomicRoot)
+  ) {
+    failures.push('atomicRepository debe resolver exactamente a la raíz del repositorio Git Atomic.');
+  }
+  atomicHead = git(atomicRoot, ['rev-parse', 'HEAD'])?.trim() || null;
+  try {
+    atomicObjectIdLength = expectedObjectIdLength(repositoryIdentity(atomicRoot).objectFormat);
+  } catch (error) {
+    failures.push(error.message);
+  }
+  if (
+    atomicObjectIdLength &&
+    !new RegExp(`^[0-9a-f]{${atomicObjectIdLength}}$`, 'i').test(manifest.atomicRef || '')
+  ) {
+    failures.push(`atomicRef no coincide con el formato de objetos Git del repositorio Atomic.`);
+  }
+  if (
+    atomicHead &&
+    new RegExp(`^[0-9a-f]{${atomicObjectIdLength || 40}}$`, 'i').test(manifest.atomicRef || '') &&
+    atomicHead !== manifest.atomicRef
+  ) {
+    failures.push(
+      `La fuente Atomic disponible está en ${atomicHead}, pero atomicRef fija ${manifest.atomicRef}.`,
+    );
+  }
+}
+
+const consumerAttributesPath = safeJoin(
+  consumerRoot,
+  '.gitattributes',
+  '.gitattributes consumidor',
+);
+if (consumerAttributesPath && requireFile(
+  consumerAttributesPath,
+  '.gitattributes es obligatorio en todo consumidor.',
+)) {
+  const firstRule = readFileSync(consumerAttributesPath, 'utf8')
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .find((line) => line && !line.startsWith('#'));
+  if (firstRule !== '* text=auto eol=crlf') {
+    failures.push('.gitattributes debe iniciar con "* text=auto eol=crlf".');
+  }
+  const stage = git(consumerRoot, [
+    '--literal-pathspecs',
+    'ls-files',
+    '--stage',
+    '--',
+    '.gitattributes',
+  ]);
+  if (!stage?.trim() || stage.split(/\r?\n/).some((entry) => entry.startsWith('120000 '))) {
+    failures.push('.gitattributes debe estar versionado como archivo Git regular.');
+  }
+  const attributeStatus = git(consumerRoot, [
+    '--literal-pathspecs',
+    'status',
+    '--porcelain=v1',
+    '--',
+    '.gitattributes',
+  ]);
+  if (attributeStatus?.trim()) {
+    failures.push('.gitattributes debe permanecer limpio respecto del índice Git.');
+  }
+}
 
 if (existsSync(atomicRoot)) {
   const atomicPackagePath = join(atomicRoot, 'package.json');
@@ -119,6 +340,20 @@ if (existsSync(atomicRoot)) {
   ) {
     const atomicPackage = JSON.parse(readFileSync(atomicPackagePath, 'utf8'));
     const atomicSourceManifest = JSON.parse(readFileSync(atomicSourceManifestPath, 'utf8'));
+    try {
+      verifySourceManifest(atomicRoot);
+    } catch (error) {
+      failures.push(error.message);
+    }
+    for (const file of atomicSourceManifest.files || []) {
+      if (file.path) {
+        const protectedFile = safeRelative(atomicRoot, file.path, 'archivo del manifiesto Atomic');
+        if (protectedFile) {
+          atomicProtectedFiles.add(protectedFile);
+          atomicProtectedPathspecs.add(protectedFile);
+        }
+      }
+    }
     if (manifest.atomicVersion !== atomicPackage.version) {
       failures.push(
         `Versi\u00f3n Atomic divergente: se declar\u00f3 ${manifest.atomicVersion || '(vac\u00eda)'} ` +
@@ -134,17 +369,26 @@ if (existsSync(atomicRoot)) {
   }
 }
 
-const agentsPath = join(consumerRoot, 'AGENTS.md');
+const agentsPath = safeJoin(consumerRoot, 'AGENTS.md', 'AGENTS.md');
 if (
+  !agentsPath ||
   !requireFile(agentsPath, 'AGENTS.md es obligatorio en todo consumidor.') ||
   !readFileSync(agentsPath, 'utf8').includes(REQUIRED_MARKER)
 ) {
   failures.push(`AGENTS.md debe contener el marcador ${REQUIRED_MARKER}.`);
 }
 
-const packageRoot = normalize(manifest.packageRoot || '.');
-const packagePath = join(consumerRoot, packageRoot, 'package.json');
-if (requireFile(packagePath, 'package.json es obligatorio.')) {
+const packageRoot = safeRelative(consumerRoot, manifest.packageRoot || '.', 'packageRoot', {
+  allowDot: true,
+});
+const packagePath = packageRoot
+  ? safeJoin(
+      consumerRoot,
+      `${packageRoot === '.' ? '' : `${packageRoot}/`}package.json`,
+      'package.json',
+    )
+  : null;
+if (packagePath && requireFile(packagePath, 'package.json es obligatorio.')) {
   const packageJson = JSON.parse(readFileSync(packagePath, 'utf8'));
   const packageDirectory = dirname(packagePath);
   const gateRelative = normalize(
@@ -171,11 +415,12 @@ for (const requiredArtifact of REQUIRED_GOVERNANCE_ARTIFACTS) {
 }
 
 for (const artifact of REQUIRED_GOVERNANCE_ARTIFACTS) {
-  const localPath = join(consumerRoot, artifact.local);
-  const atomicPath = join(atomicRoot, artifact.atomic);
+  const localPath = safeJoin(consumerRoot, artifact.local, `artefacto ${artifact.local}`);
+  const atomicPath = safeJoin(atomicRoot, artifact.atomic, `fuente ${artifact.atomic}`);
+  if (!localPath || !atomicPath) continue;
   if (!requireFile(localPath, `Artefacto de gobierno ausente: ${artifact.local}`)) continue;
   if (!requireFile(atomicPath, `Fuente de gobierno Atomic ausente: ${artifact.atomic}`)) continue;
-  if (digest(localPath) !== digest(atomicPath)) {
+  if (digest(consumerRoot, localPath) !== digest(atomicRoot, atomicPath)) {
     failures.push(`Artefacto de gobierno modificado fuera de Atomic: ${artifact.local}`);
   }
 }
@@ -185,12 +430,19 @@ if (!Array.isArray(manifest.governedServices)) {
   failures.push('governedServices debe declarar los servicios de presentación gobernados.');
 }
 const primaryUiRoot =
-  Array.isArray(manifest.uiRoots) && manifest.uiRoots.length > 0 ? manifest.uiRoots[0] : null;
+  Array.isArray(manifest.uiRoots) && manifest.uiRoots.length > 0
+    ? safeRelative(consumerRoot, manifest.uiRoots[0], 'uiRoots[0]')
+    : null;
 const declaredServices = new Map();
 for (const service of governedServices) {
-  const file = (service.file || '').trim();
+  let file = (service.file || '').trim();
   if (!file) {
     failures.push('Todo servicio gobernado debe declarar file.');
+    continue;
+  }
+  file = safeRelative(consumerRoot, file, `servicio ${file}`);
+  if (!file || file.includes('/')) {
+    failures.push('Todo servicio gobernado debe declarar solo un nombre de archivo.');
     continue;
   }
   if (declaredServices.has(file)) {
@@ -207,8 +459,19 @@ for (const requiredService of REQUIRED_GOVERNED_SERVICES) {
 if (primaryUiRoot) {
   for (const [file, service] of declaredServices) {
     const localRelative = `${normalize(primaryUiRoot)}/services/${file}`;
-    const localPath = join(consumerRoot, primaryUiRoot, 'services', file);
-    const atomicPath = join(atomicRoot, ATOMIC_SERVICES_ROOT, file);
+    const localPath = safeJoin(
+      consumerRoot,
+      `${primaryUiRoot}/services/${file}`,
+      `servicio consumidor ${file}`,
+    );
+    const atomicPath = safeJoin(
+      atomicRoot,
+      `${ATOMIC_SERVICES_ROOT}/${file}`,
+      `servicio Atomic ${file}`,
+    );
+    if (!localPath || !atomicPath) continue;
+    atomicProtectedFiles.add(`${ATOMIC_SERVICES_ROOT}/${file}`);
+    atomicProtectedPathspecs.add(`${ATOMIC_SERVICES_ROOT}/${file}`);
     if (!['exact', 'adapted'].includes(service.mode)) {
       failures.push(`Modo inválido para servicio ${file}: use exact o adapted.`);
       continue;
@@ -217,7 +480,7 @@ if (primaryUiRoot) {
     const atomicExists = requireFile(atomicPath, `Fuente Atomic del servicio ausente: ${ATOMIC_SERVICES_ROOT}/${file}`);
     if (!localExists || !atomicExists) continue;
     if (service.mode === 'exact') {
-      if (digest(localPath) !== digest(atomicPath)) {
+      if (digest(consumerRoot, localPath) !== digest(atomicRoot, atomicPath)) {
         failures.push(`Propagación exacta divergente en servicio: ${localRelative}`);
       }
       continue;
@@ -226,10 +489,10 @@ if (primaryUiRoot) {
       failures.push(`Servicio adaptado sin snapshot verificable: ${file}`);
       continue;
     }
-    if (digest(localPath) !== service.localSha256) {
+    if (digest(consumerRoot, localPath) !== service.localSha256) {
       failures.push(`Adaptación de servicio modificada sin nueva decisión: ${localRelative}`);
     }
-    if (digest(atomicPath) !== service.atomicSha256) {
+    if (digest(atomicRoot, atomicPath) !== service.atomicSha256) {
       failures.push(`Fuente Atomic del servicio cambió respecto al snapshot: ${ATOMIC_SERVICES_ROOT}/${file}`);
     }
   }
@@ -238,69 +501,129 @@ if (primaryUiRoot) {
 const components = Array.isArray(manifest.components) ? manifest.components : [];
 const declared = new Set();
 for (const component of components) {
-  const local = normalize(component.local || '');
+  const local = safeRelative(consumerRoot, component.local || '', 'component.local');
   if (!local) {
     failures.push('Todo componente debe declarar local.');
     continue;
   }
+  const atomic = safeRelative(atomicRoot, component.atomic || '', `component.atomic de ${local}`);
+  if (!atomic) continue;
   if (declared.has(local)) failures.push(`Componente duplicado en manifiesto: ${local}`);
   declared.add(local);
+  atomicProtectedPathspecs.add(atomic);
 
   if (!['exact', 'adapted'].includes(component.mode)) {
     failures.push(`Modo inválido para ${local}: use exact o adapted.`);
   }
+  const localRoot = safeJoin(consumerRoot, local, `componente consumidor ${local}`);
+  const sourceRoot = safeJoin(atomicRoot, atomic, `componente Atomic ${atomic}`);
+  if (!localRoot || !sourceRoot) continue;
+  if (!requireFile(localRoot, `No existe el componente consumidor: ${local}`)) continue;
+  if (!requireFile(sourceRoot, `No existe la fuente Atomic: ${atomic}`)) continue;
+
+  const localFiles = filesBelow(localRoot).sort();
+  const atomicFiles = filesBelow(sourceRoot).sort();
+
   if (component.mode === 'adapted') {
     if (!component.justification?.trim()) {
       failures.push(`Adaptación sin justificación: ${local}`);
     }
     if (!component.decisionRecord?.trim()) {
       failures.push(`Adaptación sin decisionRecord: ${local}`);
-    } else if (!existsSync(join(consumerRoot, component.decisionRecord))) {
-      failures.push(`No existe decisionRecord para ${local}: ${component.decisionRecord}`);
+    } else {
+      const decisionRecord = safeJoin(
+        consumerRoot,
+        component.decisionRecord,
+        `decisionRecord de ${local}`,
+      );
+      if (decisionRecord && !existsSync(decisionRecord)) {
+        failures.push(`No existe decisionRecord para ${local}: ${component.decisionRecord}`);
+      }
     }
     if (!Array.isArray(component.adaptationSnapshot) || component.adaptationSnapshot.length === 0) {
       failures.push(`Adaptación sin snapshot verificable: ${local}`);
     } else {
+      const snapshotFiles = [];
+      const snapshotSet = new Set();
       for (const snapshot of component.adaptationSnapshot) {
-        const localFile = join(consumerRoot, local, snapshot.file || '');
-        const atomicFile = join(atomicRoot, component.atomic || '', snapshot.file || '');
-        const actualLocal = existsSync(localFile) ? digest(localFile) : null;
-        const actualAtomic = existsSync(atomicFile) ? digest(atomicFile) : null;
+        const snapshotFile = safeRelative(localRoot, snapshot.file || '', `snapshot de ${local}`);
+        if (!snapshotFile) continue;
+        if (snapshotSet.has(snapshotFile)) {
+          failures.push(`Snapshot duplicado en adaptación: ${local}/${snapshotFile}`);
+          continue;
+        }
+        snapshotSet.add(snapshotFile);
+        snapshotFiles.push(snapshotFile);
+        if (snapshot.atomicSha256 !== null && snapshot.atomicSha256 !== undefined) {
+          atomicProtectedFiles.add(`${atomic}/${snapshotFile}`);
+        }
+        const localFile = safeJoin(
+          consumerRoot,
+          `${local}/${snapshotFile}`,
+          `snapshot consumidor ${local}`,
+        );
+        const atomicFile = safeJoin(
+          atomicRoot,
+          `${atomic}/${snapshotFile}`,
+          `snapshot Atomic ${atomic}`,
+        );
+        if (!localFile || !atomicFile) continue;
+        const actualLocal = existsSync(localFile) ? digest(consumerRoot, localFile) : null;
+        const actualAtomic = existsSync(atomicFile) ? digest(atomicRoot, atomicFile) : null;
         if (actualLocal !== (snapshot.localSha256 ?? null)) {
           failures.push(`Adaptación modificada sin nueva decisión: ${local}/${snapshot.file}`);
         }
         if (actualAtomic !== (snapshot.atomicSha256 ?? null)) {
-          failures.push(`Fuente Atomic cambió respecto al snapshot: ${component.atomic}/${snapshot.file}`);
+          failures.push(`Fuente Atomic cambió respecto al snapshot: ${atomic}/${snapshot.file}`);
         }
+      }
+      const expectedFiles = [...new Set([...localFiles, ...atomicFiles])].sort();
+      if (stableJson(snapshotFiles.sort()) !== stableJson(expectedFiles)) {
+        failures.push(`El conjunto de archivos adaptados cambió: ${local}.`);
       }
     }
   }
-
-  const localRoot = join(consumerRoot, local);
-  const sourceRoot = join(atomicRoot, component.atomic || '');
-  if (!requireFile(localRoot, `No existe el componente consumidor: ${local}`)) continue;
-  if (!requireFile(sourceRoot, `No existe la fuente Atomic: ${component.atomic}`)) continue;
 
   if (component.mode === 'exact') {
     if (!Array.isArray(component.files) || component.files.length === 0) {
       failures.push(`La copia exacta debe declarar files: ${local}`);
       continue;
     }
+    const declaredFiles = [];
+    const declaredFileSet = new Set();
     for (const file of component.files) {
-      const localFile = join(localRoot, file);
-      const sourceFile = join(sourceRoot, file);
+      const componentFile = safeRelative(localRoot, file, `archivo exacto de ${local}`);
+      if (!componentFile) continue;
+      if (declaredFileSet.has(componentFile)) {
+        failures.push(`Archivo exacto duplicado en manifiesto: ${local}/${componentFile}`);
+        continue;
+      }
+      declaredFileSet.add(componentFile);
+      declaredFiles.push(componentFile);
+      atomicProtectedFiles.add(`${atomic}/${componentFile}`);
+      const localFile = safeJoin(localRoot, componentFile, `archivo consumidor ${local}`);
+      const sourceFile = safeJoin(sourceRoot, componentFile, `archivo Atomic ${atomic}`);
+      if (!localFile || !sourceFile) continue;
       if (!existsSync(localFile) || !existsSync(sourceFile)) {
         failures.push(`Archivo exacto ausente: ${local}/${file}`);
-      } else if (digest(localFile) !== digest(sourceFile)) {
+      } else if (digest(consumerRoot, localFile) !== digest(atomicRoot, sourceFile)) {
         failures.push(`Propagación exacta divergente: ${local}/${file}`);
       }
+    }
+    const sortedDeclaredFiles = declaredFiles.sort();
+    if (
+      stableJson(sortedDeclaredFiles) !== stableJson(localFiles) ||
+      stableJson(sortedDeclaredFiles) !== stableJson(atomicFiles)
+    ) {
+      failures.push(`El conjunto de archivos exactos cambió: ${local}.`);
     }
   }
 }
 
 const governedComponentRoots = components
   .filter((component) => component.local)
-  .map((component) => resolve(consumerRoot, component.local));
+  .map((component) => safeJoin(consumerRoot, component.local, 'component.local'))
+  .filter(Boolean);
 const belongsToGovernedComponent = (file) => {
   const absolute = resolve(file);
   return governedComponentRoots.some(
@@ -309,19 +632,25 @@ const belongsToGovernedComponent = (file) => {
 };
 
 for (const uiRoot of manifest.uiRoots || []) {
-  const absoluteUiRoot = join(consumerRoot, uiRoot);
+  const absoluteUiRoot = safeJoin(consumerRoot, uiRoot, 'uiRoot');
+  if (!absoluteUiRoot) continue;
   if (!requireFile(absoluteUiRoot, `Raíz UI consumidora ausente: ${uiRoot}`)) continue;
   for (const layer of manifest.layers || []) {
     const layerRoot = join(absoluteUiRoot, layer);
     if (!existsSync(layerRoot)) continue;
     for (const entry of readdirSync(layerRoot, { withFileTypes: true })) {
+      if (entry.isSymbolicLink()) {
+        failures.push(`La capa gobernada no admite enlaces simbólicos: ${join(layerRoot, entry.name)}.`);
+        continue;
+      }
       if (!entry.isDirectory()) continue;
       const local = normalize(relative(consumerRoot, join(layerRoot, entry.name)));
       if (!declared.has(local)) failures.push(`Componente sin procedencia Atomic: ${local}`);
     }
   }
 
-  for (const file of filesBelow(absoluteUiRoot, ['.html', '.scss', '.css', '.ts'])) {
+  for (const localFile of filesBelow(absoluteUiRoot, ['.html', '.scss', '.css', '.ts'])) {
+    const file = join(absoluteUiRoot, localFile);
     const local = normalize(relative(consumerRoot, file));
     if (local.includes('/styles/tokens/')) continue;
     const source = readFileSync(file, 'utf8');
@@ -367,10 +696,11 @@ function checkGovernedSurfaceFile(file) {
 }
 
 for (const featureRoot of manifest.featureRoots || []) {
-  const absoluteFeatureRoot = join(consumerRoot, featureRoot);
+  const absoluteFeatureRoot = safeJoin(consumerRoot, featureRoot, 'featureRoot');
+  if (!absoluteFeatureRoot) continue;
   if (!existsSync(absoluteFeatureRoot)) continue;
-  for (const file of filesBelow(absoluteFeatureRoot, ['.html', '.scss', '.css', '.ts'])) {
-    checkGovernedSurfaceFile(file);
+  for (const localFile of filesBelow(absoluteFeatureRoot, ['.html', '.scss', '.css', '.ts'])) {
+    checkGovernedSurfaceFile(join(absoluteFeatureRoot, localFile));
   }
 }
 
@@ -378,12 +708,19 @@ const shellRoot =
   typeof manifest.shellRoot === 'string' ? normalize(manifest.shellRoot).trim() : '';
 if (!shellRoot) {
   failures.push(
-    'shellRoot es obligatorio: el shell de la aplicación es superficie gobernada (política 1.2.1).',
+    'shellRoot es obligatorio: el shell de la aplicación es superficie gobernada (política 1.2.2).',
   );
 } else {
-  const absoluteShellRoot = join(consumerRoot, shellRoot);
-  if (requireFile(absoluteShellRoot, `Raíz del shell ausente: ${shellRoot}`)) {
+  const absoluteShellRoot = safeJoin(consumerRoot, shellRoot, 'shellRoot');
+  if (
+    absoluteShellRoot &&
+    requireFile(absoluteShellRoot, `Raíz del shell ausente: ${shellRoot}`)
+  ) {
     for (const entry of readdirSync(absoluteShellRoot, { withFileTypes: true })) {
+      if (entry.isSymbolicLink()) {
+        failures.push(`El shell gobernado no admite enlaces simbólicos: ${entry.name}.`);
+        continue;
+      }
       if (entry.isDirectory()) continue;
       if (!['.html', '.scss', '.css', '.ts'].some((extension) => entry.name.endsWith(extension))) {
         continue;
@@ -395,9 +732,18 @@ if (!shellRoot) {
 
 const tokens = manifest.tokens;
 if (tokens) {
-  const atomicTokensPath = join(atomicRoot, tokens.atomic || '');
-  const consumerTokensPath = join(consumerRoot, tokens.consumer || '');
+  if (tokens.atomic) {
+    const protectedToken = safeRelative(atomicRoot, tokens.atomic, 'tokens.atomic');
+    if (protectedToken) {
+      atomicProtectedFiles.add(protectedToken);
+      atomicProtectedPathspecs.add(protectedToken);
+    }
+  }
+  const atomicTokensPath = safeJoin(atomicRoot, tokens.atomic || '', 'tokens.atomic');
+  const consumerTokensPath = safeJoin(consumerRoot, tokens.consumer || '', 'tokens.consumer');
   if (
+    atomicTokensPath &&
+    consumerTokensPath &&
     requireFile(atomicTokensPath, `Archivo de tokens Atomic ausente: ${tokens.atomic}`) &&
     requireFile(consumerTokensPath, `Archivo de tokens consumidor ausente: ${tokens.consumer}`)
   ) {
@@ -407,6 +753,54 @@ if (tokens) {
       if (!atomicTokens.includes(token)) failures.push(`Token ausente en Atomic: ${token}`);
       if (!consumerTokens.includes(token)) failures.push(`Token no propagado: ${token}`);
     }
+  }
+}
+
+if (atomicHead && atomicHead === manifest.atomicRef) {
+  const protectedFiles = [...atomicProtectedFiles].sort();
+  const protectedPathspecs = [...atomicProtectedPathspecs].sort();
+  const trackedOutputs = gitPathspecBatches(
+    atomicRoot,
+    ['ls-tree', '-r', '-z', '--full-tree', manifest.atomicRef],
+    protectedFiles,
+  );
+  if (trackedOutputs !== null) {
+    const tracked = new Map();
+    for (const entry of trackedOutputs.flatMap((output) => output.split('\0')).filter(Boolean)) {
+      const match = /^(\d{6})\s+blob\s+([0-9a-f]+)\t(.+)$/.exec(entry);
+      if (match) tracked.set(normalize(match[3]), { mode: match[1], oid: match[2] });
+    }
+    for (const file of protectedFiles) {
+      const treeEntry = tracked.get(file);
+      if (!treeEntry || !['100644', '100755'].includes(treeEntry.mode)) {
+        failures.push(`La ruta Atomic gobernada no es un archivo regular en atomicRef: ${file}.`);
+        continue;
+      }
+      try {
+        const physicalOid = canonicalFileObjectId(atomicRoot, file);
+        if (physicalOid !== treeEntry.oid) {
+          failures.push(
+            `Los bytes físicos Atomic no coinciden con atomicRef para ${file}: ` +
+              `${physicalOid} != ${treeEntry.oid}.`,
+          );
+        }
+      } catch (error) {
+        failures.push(`No se pudo comparar ${file} con atomicRef: ${error.message}`);
+      }
+    }
+  }
+
+  const dirtyOutputs = gitPathspecBatches(
+    atomicRoot,
+    ['status', '--porcelain=v1', '-z', '--untracked-files=all'],
+    protectedPathspecs,
+  );
+  const dirtyEntries = (dirtyOutputs || []).flatMap((output) => output.split('\0').filter(Boolean));
+  if (dirtyEntries.length > 0) {
+    failures.push(
+      'La fuente Atomic contiene cambios sin confirmar en rutas gobernadas por atomicRef: ' +
+        dirtyEntries.join(', '),
+    );
   }
 }
 

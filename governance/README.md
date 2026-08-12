@@ -2,14 +2,18 @@
 title: "Gobierno obligatorio para consumidores Atomic"
 subtitle: "Procedencia, instalación y compuertas de conformidad"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
-date: "2026-08-03"
+date: "2026-08-12"
 ---
 
 # Gobierno obligatorio para consumidores Atomic
 
 La carpeta `governance/consumer` es la fuente canónica de la política que deben
 obedecer todas las aplicaciones. Sus archivos se propagan como copias exactas y
-el propio gate rechaza cualquier modificación local.
+el propio gate rechaza cualquier modificación local. Desde la política 1.2.2,
+las huellas usan `git-clean-eol-v1`: texto declarado con atributos versionados
+en LF y binarios `-text` byte a byte. Los atributos externos se neutralizan y
+cualquier filtro, conversión de codificación, enlace o transformación `clean`
+adicional bloquea la verificación.
 
 ## Aplicación nueva
 
@@ -38,7 +42,9 @@ npm run governance:install -- C:\ruta\al\consumidor \
   --ui-root=frontend/src/app/shared/ui
 ```
 
-Después se ejecuta `npm run check:atomic` en el consumidor. Las adaptaciones
+El instalador agrega al inicio la regla canónica de `.gitattributes` sin borrar
+reglas locales, pero esa política debe confirmarse en Git antes de ejecutar el
+gate. Después se ejecuta `npm run check:atomic` en el consumidor. Las adaptaciones
 existentes deben declararse manualmente como `adapted`, con `justification` y
 `decisionRecord`; el instalador registra como `exact` todo lo que acaba de
 comprobarse idéntico a Atomic.
@@ -72,18 +78,26 @@ registre una nueva decisión y se renueve deliberadamente el snapshot.
 
 - `AGENTS.md` contiene el marcador obligatorio para cualquier agente.
 - `atomic-provenance.json` inventaría cada directorio UI y su fuente.
-- El gate verifica hashes de componentes exactos y de sus propios artefactos.
+- El gate verifica hashes canónicos de componentes exactos y de sus propios
+  artefactos, independientemente de si el checkout materializa LF o CRLF.
 - Una adaptación sin justificación o registro de decisión falla.
 - Features y páginas no admiten primitivas visuales nativas, estilos inline,
   colores fijos ni selectores hacia el DOM interno de controles.
 - El gate canónico inspecciona plantillas HTML y hojas CSS/SCSS externas. Los
   consumidores que mantienen plantillas inline en TypeScript deben conservar su
   validador específico hasta completar la migración hacia archivos externos.
-- El workflow `Atomic governance` ejecuta la compuerta en push y pull request.
+- El workflow `Atomic governance` ejecuta primero el gate del checkout Atomic
+  fijado, antes de instalar o ejecutar dependencias del consumidor.
+- `atomicRef` fija un OID Git completo (40 caracteres para SHA-1 o 64 para
+  SHA-256) que debe coincidir con el checkout `archware/-Atomic-UI`;
+  la CI conserva esa ruta durante `check:atomic` y cualquier repetición del
+  gate dentro de `npm run check`, con permisos de contenido de solo lectura y
+  sin credenciales persistentes.
 - La CI de `-Atomic-UI` prueba el bootstrap y cuatro violaciones negativas,
   rechaza blueprints productivos que incumplan la norma y mantiene los demos
   históricos explícitamente aislados mediante su manifiesto.
 
 En GitHub se debe marcar el job `Atomic governance / atomic-governance` como
 status check requerido de la rama protegida. Esa configuración del repositorio
-es el único cerrojo externo que no puede expresarse dentro del código fuente.
+es el único cerrojo externo que no puede expresarse dentro del código fuente;
+el ruleset debe revisar o fijar por separado el workflow y el OID verificador.

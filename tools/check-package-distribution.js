@@ -1,143 +1,134 @@
 #!/usr/bin/env node
 
-const { createHash } = require('node:crypto');
 const { spawnSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
+const {
+  canonicalFileBytes: canonicalSourceBytes,
+  normalizeCrlfToLf,
+} = require('../governance/consumer/git-clean-eol.cjs');
+const { confinedPath } = require('../governance/consumer/safe-paths.cjs');
+const {
+  expectedSourceManifest,
+  loadSourceInputs,
+  readConfinedFile,
+  readConfinedJson,
+  stableJson,
+  verifySourceManifest,
+} = require('../governance/consumer/source-manifest.cjs');
 
 const root = path.resolve(__dirname, '..');
-const distributionRoot = path.join(root, 'distribution');
-const contractPath = path.join(distributionRoot, 'package-contract.json');
-const exportsPath = path.join(distributionRoot, 'public-exports.json');
-const manifestPath = path.join(distributionRoot, 'atomic-source-manifest.json');
+const manifestPath = confinedPath(
+  root,
+  'distribution/atomic-source-manifest.json',
+  'manifiesto',
+).absolute;
 const normalize = (value) => value.replaceAll('\\', '/');
-const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
-const sha256 = (content) => createHash('sha256').update(content).digest('hex');
-const gitBlobOid = (content) =>
-  createHash('sha1')
-    .update(`blob ${content.byteLength}\0`)
-    .update(content)
-    .digest('hex');
 
 function fail(message) {
   throw new Error(message);
 }
 
-function filesBelow(directory) {
+function repositoryPath(relativeValue, label, options = {}, repositoryRoot = root) {
+  return confinedPath(repositoryRoot, relativeValue, label, options).absolute;
+}
+
+function resolvedRepositoryPath(absoluteValue, label, repositoryRoot = root) {
+  return repositoryPath(
+    normalize(path.relative(repositoryRoot, absoluteValue)),
+    label,
+    {},
+    repositoryRoot,
+  );
+}
+
+function filesBelow(directory, confinementRoot = root) {
   if (!fs.existsSync(directory)) return [];
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const current = path.join(directory, entry.name);
-    return entry.isDirectory() ? filesBelow(current) : [current];
+    if (entry.isSymbolicLink()) {
+      fail(`La raíz inventariada no admite enlaces simbólicos: ${normalize(path.relative(root, current))}.`);
+    }
+    confinedPath(
+      confinementRoot,
+      normalize(path.relative(confinementRoot, current)),
+      'archivo inventariado',
+    );
+    return entry.isDirectory() ? filesBelow(current, confinementRoot) : [current];
   });
 }
 
-function normalizeCrlfToLf(content) {
-  if (!content.includes(13)) return content;
-
-  const normalized = Buffer.allocUnsafe(content.byteLength);
-  let readOffset = 0;
-  let writeOffset = 0;
-  while (readOffset < content.byteLength) {
-    if (
-      content[readOffset] === 13 &&
-      readOffset + 1 < content.byteLength &&
-      content[readOffset + 1] === 10
-    ) {
-      normalized[writeOffset] = 10;
-      writeOffset += 1;
-      readOffset += 2;
-      continue;
-    }
-    normalized[writeOffset] = content[readOffset];
-    writeOffset += 1;
-    readOffset += 1;
-  }
-  return normalized.subarray(0, writeOffset);
-}
-
-/**
- * Devuelve los bytes canónicos de una fuente sin depender del EOL materializado
- * por el checkout. Git decide si `text=auto` trata el archivo como texto. Los
- * binarios conservan sus bytes exactos y un filtro clean distinto de la
- * normalización CRLF -> LF se rechaza para no ocultar cambios semánticos.
- */
-function canonicalSourceBytes(repositoryRoot, local) {
-  const absolute = path.join(repositoryRoot, local);
-  const physical = fs.readFileSync(absolute);
-  const rawOid = gitBlobOid(physical);
-  const gitResult = spawnSync(
-    'git',
-    ['hash-object', `--path=${normalize(local)}`, '--', absolute],
-    { cwd: repositoryRoot, encoding: 'utf8' },
-  );
-  if (gitResult.error || gitResult.status !== 0) {
-    fail(
-      `No se pudo obtener la representación clean de Git para ${local}: ${
-        gitResult.error?.message || gitResult.stderr || gitResult.stdout
-      }`,
-    );
-  }
-
-  const cleanOid = gitResult.stdout.trim();
-  if (cleanOid === rawOid) return physical;
-
-  const canonical = normalizeCrlfToLf(physical);
-  if (gitBlobOid(canonical) !== cleanOid) {
-    fail(
-      `${local} usa una transformación clean de Git no admitida por git-clean-eol-v1. ` +
-        'El manifiesto solo canoniza EOL de texto y nunca acepta filtros que alteren contenido.',
-    );
-  }
-  return canonical;
-}
-
-function distributionFiles(contract) {
-  const files = [];
-  for (const sourceRoot of contract.sourceInventory.roots) {
-    const absoluteRoot = path.join(root, sourceRoot.path);
-    if (!fs.existsSync(absoluteRoot)) fail(`No existe la raíz inventariada: ${sourceRoot.path}`);
-    for (const file of filesBelow(absoluteRoot)) {
-      const local = normalize(path.relative(root, file));
-      if (!sourceRoot.extensions.some((extension) => local.endsWith(extension))) continue;
-      if (sourceRoot.excludeSuffixes.some((suffix) => local.endsWith(suffix))) continue;
-      files.push(local);
-    }
-  }
-  return [...new Set(files)].sort((left, right) => left.localeCompare(right, 'en'));
-}
-
-function expectedManifest(contract, packageJson) {
-  const files = distributionFiles(contract).map((local) => {
-    const content = canonicalSourceBytes(root, local);
-    return { path: local, bytes: content.byteLength, sha256: sha256(content) };
-  });
-  const sourceTreeSha256 = sha256(
-    files.map((file) => `${file.path}\0${file.bytes}\0${file.sha256}\n`).join(''),
-  );
-  return {
-    schemaVersion: 1,
-    packageName: contract.targetPackage,
-    packageVersion: packageJson.version,
-    distributionStatus: contract.status,
-    algorithm: contract.sourceInventory.algorithm,
-    contentCanonicalization: contract.sourceInventory.contentCanonicalization,
-    sourceTreeSha256,
-    fileCount: files.length,
-    files,
-  };
-}
-
-function stableJson(value) {
-  return `${JSON.stringify(value, null, 2)}\n`;
-}
-
-function stableJsonForWorkingTree(file, value) {
-  const current = fs.existsSync(file) ? fs.readFileSync(file) : Buffer.alloc(0);
+function stableJsonForWorkingTree(relativeFile, value) {
+  const absolute = repositoryPath(relativeFile, 'destino del manifiesto');
+  const current = fs.existsSync(absolute)
+    ? readConfinedFile(root, relativeFile, 'manifiesto de fuentes Atomic')
+    : Buffer.alloc(0);
   const lineEnding = current.includes(Buffer.from('\r\n')) ? '\r\n' : '\n';
   return stableJson(value).replaceAll('\n', lineEnding);
 }
 
-function validateContract(contract, publicExports, packageJson) {
+function validateConfinedDeclarations(repositoryRoot, contract, publicExports) {
+  const declaration = (value, label) => {
+    if (typeof value !== 'string') fail(`${label} debe ser una ruta relativa.`);
+    if (normalize(value).includes(':')) {
+      fail(`${label} debe permanecer dentro de su repositorio: ${value}.`);
+    }
+    return confinedPath(repositoryRoot, value, label).relative;
+  };
+
+  const library = contract.library || {};
+  for (const [field, value] of Object.entries({
+    projectRoot: library.projectRoot,
+    entryFile: library.entryFile,
+    output: library.output,
+    tokensOutput: library.tokensOutput,
+  })) {
+    declaration(value, `library.${field}`);
+  }
+
+  if (!Array.isArray(contract.sourceInventory?.roots)) {
+    fail('sourceInventory.roots debe ser una lista de rutas confinadas.');
+  }
+  contract.sourceInventory.roots.forEach((sourceRoot, index) => {
+    declaration(sourceRoot?.path, `sourceInventory.roots[${index}].path`);
+  });
+
+  if (!Array.isArray(contract.dryRunArtifact?.allowedFiles)) {
+    fail('dryRunArtifact.allowedFiles debe ser una lista de rutas confinadas.');
+  }
+  contract.dryRunArtifact.allowedFiles.forEach((allowed, index) => {
+    declaration(allowed, `dryRunArtifact.allowedFiles[${index}]`);
+  });
+
+  declaration(publicExports.rootBarrel, 'publicExports.rootBarrel');
+  for (const [index, layer] of (publicExports.visualLayers || []).entries()) {
+    const relative = declaration(layer, `publicExports.visualLayers[${index}]`);
+    if (relative.includes('/') || relative.includes(':')) {
+      fail(`publicExports.visualLayers[${index}] debe ser un nombre de capa, no una ruta.`);
+    }
+  }
+  (publicExports.uiSupportServices || []).forEach((service, index) => {
+    declaration(service, `publicExports.uiSupportServices[${index}]`);
+  });
+  (publicExports.excludedApplicationConcerns || []).forEach((excluded, index) => {
+    declaration(excluded?.source, `publicExports.excludedApplicationConcerns[${index}].source`);
+  });
+  for (const [subpath, exported] of Object.entries(publicExports.plannedPackageExports || {})) {
+    if (exported?.source) {
+      declaration(exported.source, `publicExports.plannedPackageExports[${subpath}].source`);
+    }
+  }
+}
+
+function validateContract(contract, publicExports, packageJson, repositoryRoot = root) {
+  validateConfinedDeclarations(repositoryRoot, contract, publicExports);
+  const repoPath = (relativeValue, label, options = {}) =>
+    repositoryPath(relativeValue, label, options, repositoryRoot);
+  const repoJson = (relativeValue, label) =>
+    readConfinedJson(repositoryRoot, relativeValue, label);
+  const resolvedPath = (absoluteValue, label) =>
+    resolvedRepositoryPath(absoluteValue, label, repositoryRoot);
+
   if (contract.schemaVersion !== 1) fail('package-contract.json debe usar schemaVersion 1.');
   if (contract.targetPackage !== '@hra/atomic-ui') fail('El paquete objetivo debe ser @hra/atomic-ui.');
   if (contract.versionSource !== 'package.json') fail('La versión debe provenir de package.json.');
@@ -178,7 +169,7 @@ function validateContract(contract, publicExports, packageJson) {
     if (!blockerCodes.has(code)) fail(`Falta el bloqueo vigente ${code}.`);
   }
 
-  const angular = readJson(path.join(root, 'angular.json'));
+  const angular = repoJson('angular.json', 'angular.json');
   const projects = Object.values(angular.projects || {});
   if (!projects.some((project) => project.projectType === 'application')) {
     fail('La aplicación de demostración debe seguir declarada en angular.json.');
@@ -199,21 +190,27 @@ function validateContract(contract, publicExports, packageJson) {
     fail('ng-packagr debe estar declarado en package.json para sostener el estado library-buildable.');
   }
 
-  const ngPackagePath = path.join(root, library.projectRoot || '', 'ng-package.json');
+  const projectRoot = confinedPath(
+    repositoryRoot,
+    library.projectRoot || '',
+    'library.projectRoot',
+  ).relative;
+  const ngPackagePath = repoPath(`${projectRoot}/ng-package.json`, 'ng-package.json');
   if (!fs.existsSync(ngPackagePath)) fail(`No existe ${library.projectRoot}/ng-package.json.`);
-  const ngPackage = readJson(ngPackagePath);
-  const declaredEntry = path
-    .resolve(path.dirname(ngPackagePath), ngPackage.lib?.entryFile || '')
-    .replaceAll('\\', '/');
-  const contractEntry = path.resolve(root, library.entryFile || '').replaceAll('\\', '/');
+  const ngPackage = repoJson(`${projectRoot}/ng-package.json`, 'ng-package.json');
+  const declaredEntry = resolvedPath(
+    path.resolve(path.dirname(ngPackagePath), ngPackage.lib?.entryFile || ''),
+    'lib.entryFile de ng-package.json',
+  );
+  const contractEntry = repoPath(library.entryFile || '', 'library.entryFile');
   if (declaredEntry !== contractEntry) {
     fail('El entryFile de ng-package.json no coincide con el declarado en el contrato.');
   }
   if (!fs.existsSync(contractEntry)) fail(`No existe el entryFile de la biblioteca: ${library.entryFile}`);
 
-  const libPackagePath = path.join(root, library.projectRoot || '', 'package.json');
+  const libPackagePath = repoPath(`${projectRoot}/package.json`, 'package.json library');
   if (!fs.existsSync(libPackagePath)) fail(`No existe ${library.projectRoot}/package.json.`);
-  const libPackage = readJson(libPackagePath);
+  const libPackage = repoJson(`${projectRoot}/package.json`, 'package.json library');
   if (libPackage.name !== contract.targetPackage) {
     fail('El package.json de la biblioteca no declara el paquete objetivo.');
   }
@@ -235,19 +232,36 @@ function validateContract(contract, publicExports, packageJson) {
   if (publicExports.schemaVersion !== 1 || publicExports.targetPackage !== contract.targetPackage) {
     fail('public-exports.json no coincide con el contrato del paquete.');
   }
-  const barrelPath = path.join(root, publicExports.rootBarrel);
+  const barrelPath = repoPath(publicExports.rootBarrel || '', 'rootBarrel');
   if (!fs.existsSync(barrelPath)) fail(`No existe el barrel declarado: ${publicExports.rootBarrel}`);
-  const barrel = fs.readFileSync(barrelPath, 'utf8');
+  const barrel = readConfinedFile(
+    repositoryRoot,
+    publicExports.rootBarrel,
+    'barrel público',
+  ).toString('utf8');
   for (const layer of publicExports.visualLayers) {
-    const layerPath = path.join(root, 'src', 'app', 'shared', 'ui', layer);
-    if (!fs.existsSync(layerPath)) fail(`No existe la capa visual declarada: ${layer}`);
+    const layerPath = repoPath(`src/app/shared/ui/${layer}`, `capa visual ${layer}`);
+    if (!fs.existsSync(layerPath) || !fs.lstatSync(layerPath).isDirectory()) {
+      fail(`No existe la capa visual declarada como directorio regular: ${layer}`);
+    }
   }
   for (const service of publicExports.uiSupportServices) {
-    if (!fs.existsSync(path.join(root, service))) fail(`No existe el servicio UI declarado: ${service}`);
+    if (!fs.existsSync(repoPath(service, `servicio UI ${service}`))) {
+      fail(`No existe el servicio UI declarado: ${service}`);
+    }
+    readConfinedFile(repositoryRoot, service, `servicio UI ${service}`);
   }
   for (const excluded of publicExports.excludedApplicationConcerns) {
-    if (!fs.existsSync(path.join(root, excluded.source))) {
+    if (!fs.existsSync(repoPath(excluded.source || '', `fuente excluida ${excluded.symbol}`))) {
       fail(`No existe la responsabilidad excluida: ${excluded.source}`);
+    }
+    readConfinedFile(
+      repositoryRoot,
+      excluded.source,
+      `fuente excluida ${excluded.symbol}`,
+    );
+    if (typeof excluded.symbol !== 'string' || !/^[A-Za-z_$][\w$]*$/.test(excluded.symbol)) {
+      fail(`El símbolo excluido debe ser un identificador válido: ${excluded.symbol}.`);
     }
     if (new RegExp(`\\b${excluded.symbol}\\b`).test(barrel)) {
       fail(
@@ -256,44 +270,48 @@ function validateContract(contract, publicExports, packageJson) {
     }
   }
   for (const exported of Object.values(publicExports.plannedPackageExports)) {
-    if (
-      exported.source &&
-      exported.source !== 'distribution/atomic-source-manifest.json' &&
-      !fs.existsSync(path.join(root, exported.source))
-    ) {
-      fail(`No existe la fuente del subpath planificado: ${exported.source}`);
+    if (exported.source) {
+      if (!fs.existsSync(repoPath(exported.source, 'fuente de exportación'))) {
+        fail(`No existe la fuente del subpath planificado: ${exported.source}`);
+      }
+      readConfinedFile(repositoryRoot, exported.source, 'fuente de exportación');
     }
   }
 }
 
-function validateManifest(expected) {
-  if (!fs.existsSync(manifestPath)) {
-    fail('Falta atomic-source-manifest.json. Ejecute npm run package:manifest.');
-  }
-  const actual = normalizeCrlfToLf(fs.readFileSync(manifestPath)).toString('utf8');
-  const wanted = stableJson(expected);
-  if (actual !== wanted) {
-    fail(
-      'El manifiesto SHA-256 no coincide con las fuentes. Revise el cambio y ejecute npm run package:manifest si es intencional.',
-    );
-  }
-}
-
-function npmPackDryRun(contract, expectedManifest, packageJson) {
-  const distRoot = path.resolve(root, 'dist');
-  const staging = path.resolve(distRoot, 'atomic-package-dry-run');
+function npmPackDryRun(contract, expectedManifest, packageJson, publicExports) {
+  const distRoot = repositoryPath('dist', 'directorio dist');
+  const staging = repositoryPath('dist/atomic-package-dry-run', 'directorio dry-run');
   if (!staging.startsWith(`${distRoot}${path.sep}`)) fail('La ruta temporal salió de dist.');
   fs.rmSync(staging, { recursive: true, force: true });
   fs.mkdirSync(staging, { recursive: true });
 
   const copied = {
-    'PACKAGE_STATUS.md': path.join(distributionRoot, 'PACKAGE_STATUS.md'),
-    'atomic-source-manifest.json': manifestPath,
-    'package-contract.json': contractPath,
-    'public-exports.json': exportsPath,
+    'PACKAGE_STATUS.md': 'distribution/PACKAGE_STATUS.md',
+    'atomic-source-manifest.json': 'distribution/atomic-source-manifest.json',
+    'package-contract.json': 'distribution/package-contract.json',
+    'public-exports.json': 'distribution/public-exports.json',
   };
+  const copiedSnapshots = new Map();
   for (const [name, source] of Object.entries(copied)) {
-    fs.copyFileSync(source, path.join(staging, name));
+    const content = readConfinedFile(root, source, `artefacto de distribución ${source}`);
+    copiedSnapshots.set(source, content);
+    fs.writeFileSync(path.join(staging, name), content);
+  }
+
+  const parsedContract = JSON.parse(copiedSnapshots.get('distribution/package-contract.json'));
+  const parsedManifest = JSON.parse(
+    copiedSnapshots.get('distribution/atomic-source-manifest.json'),
+  );
+  const parsedExports = JSON.parse(copiedSnapshots.get('distribution/public-exports.json'));
+  if (stableJson(parsedContract) !== stableJson(contract)) {
+    fail('El contrato de distribución cambió entre su validación y el dry-run.');
+  }
+  if (stableJson(parsedManifest) !== stableJson(expectedManifest)) {
+    fail('El manifiesto de distribución cambió entre su validación y el dry-run.');
+  }
+  if (stableJson(parsedExports) !== stableJson(publicExports)) {
+    fail('Las exportaciones públicas cambiaron entre su validación y el dry-run.');
   }
 
   const stagingPackage = {
@@ -315,18 +333,29 @@ function npmPackDryRun(contract, expectedManifest, packageJson) {
   };
   fs.writeFileSync(path.join(staging, 'package.json'), stableJson(stagingPackage), 'utf8');
 
-  const npmCli = process.env.npm_execpath;
-  const command = npmCli ? process.execPath : process.platform === 'win32' ? 'npm.cmd' : 'npm';
-  const commandArgs = npmCli
-    ? [npmCli, 'pack', '--dry-run', '--json', '--ignore-scripts', '--cache', path.join(distRoot, 'npm-cache')]
-    : ['pack', '--dry-run', '--json', '--ignore-scripts', '--cache', path.join(distRoot, 'npm-cache')];
+  const bundledNpmCli = path.join(path.dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npm-cli.js');
+  const npmCli = process.env.npm_execpath || (fs.existsSync(bundledNpmCli) ? bundledNpmCli : null);
+  const command = npmCli ? process.execPath : 'npm';
+  const packArgs = [
+    'pack',
+    '--dry-run',
+    '--json',
+    '--ignore-scripts',
+    '--cache',
+    path.join(distRoot, 'npm-cache'),
+  ];
+  const commandArgs = npmCli ? [npmCli, ...packArgs] : packArgs;
   const result = spawnSync(command, commandArgs, {
     cwd: staging,
     encoding: 'utf8',
     env: { ...process.env, npm_config_offline: 'true', npm_config_audit: 'false' },
   });
   if (result.status !== 0) {
-    fail(`npm pack --dry-run falló sin red:\n${result.stderr || result.stdout}`);
+    fail(
+      `npm pack --dry-run falló sin red (status=${result.status}, signal=${result.signal || 'none'}):\n${
+        result.error?.message || result.stderr || result.stdout || 'sin salida de diagnóstico'
+      }`,
+    );
   }
   let report;
   try {
@@ -345,30 +374,58 @@ function npmPackDryRun(contract, expectedManifest, packageJson) {
   }
   const tarballs = filesBelow(staging).filter((file) => file.endsWith('.tgz'));
   if (tarballs.length > 0) fail('El dry-run creó inesperadamente un archivo .tgz.');
+  for (const [source, snapshot] of copiedSnapshots) {
+    const current = readConfinedFile(root, source, `artefacto de distribución ${source}`);
+    if (!current.equals(snapshot)) {
+      fail(`El artefacto de distribución cambió durante el dry-run: ${source}.`);
+    }
+  }
   return { fileCount: actualFiles.length, unpackedSize: packed.unpackedSize };
 }
 
 function main() {
   const action = process.argv[2] || 'check';
-  const packageJson = readJson(path.join(root, 'package.json'));
-  const contract = readJson(contractPath);
-  const publicExports = readJson(exportsPath);
-  validateContract(contract, publicExports, packageJson);
-  const expected = expectedManifest(contract, packageJson);
+  if (!['manifest', 'check', 'dry-run'].includes(action)) {
+    fail('Uso: node tools/check-package-distribution.js [manifest|check|dry-run]');
+  }
+
+  const publicExports = readConfinedJson(
+    root,
+    'distribution/public-exports.json',
+    'exportaciones públicas',
+  );
+
+  let contract;
+  let expected;
+  let packageJson;
+  if (action === 'manifest') {
+    ({ contract, packageJson } = loadSourceInputs(root));
+    validateContract(contract, publicExports, packageJson);
+    expected = expectedSourceManifest(root, contract, packageJson);
+  } else {
+    ({ contract, expected, packageJson } = verifySourceManifest(root));
+    validateContract(contract, publicExports, packageJson);
+  }
 
   if (action === 'manifest') {
-    fs.writeFileSync(manifestPath, stableJsonForWorkingTree(manifestPath, expected), 'utf8');
+    const serialized = stableJsonForWorkingTree(
+      'distribution/atomic-source-manifest.json',
+      expected,
+    );
+    const target = confinedPath(
+      root,
+      'distribution/atomic-source-manifest.json',
+      'destino del manifiesto',
+    ).absolute;
+    if (target !== manifestPath) fail('El destino del manifiesto cambió durante su generación.');
+    fs.writeFileSync(target, serialized, 'utf8');
     console.log(
       `Manifiesto Atomic actualizado: ${expected.fileCount} archivos, SHA-256 ${expected.sourceTreeSha256}.`,
     );
     return;
   }
 
-  validateManifest(expected);
-  if (!['check', 'dry-run'].includes(action)) {
-    fail('Uso: node tools/check-package-distribution.js [manifest|check|dry-run]');
-  }
-  const dryRun = npmPackDryRun(contract, expected, packageJson);
+  const dryRun = npmPackDryRun(contract, expected, packageJson, publicExports);
   console.log(
     `Contrato ${contract.status} verificado: ${expected.fileCount} fuentes con SHA-256 y dry-run privado de ${dryRun.fileCount} archivos (${dryRun.unpackedSize} bytes).`,
   );
@@ -386,4 +443,8 @@ if (require.main === module) {
   }
 }
 
-module.exports = { canonicalSourceBytes, normalizeCrlfToLf };
+module.exports = {
+  canonicalSourceBytes,
+  normalizeCrlfToLf,
+  validateConfinedDeclarations,
+};

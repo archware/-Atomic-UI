@@ -1,9 +1,9 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.5.7'
+version: '5.5.8'
 status: 'vigente'
-updated: '2026-08-11'
+updated: '2026-08-12'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
@@ -14,6 +14,48 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.5.8] - 2026-08-12
+
+### Corregido
+
+- La identidad `git-clean-eol-v1` deja de depender de los finales de línea
+  físicos, de `core.autocrlf` y de atributos globales o de sistema. El texto
+  declarado con `text=auto|set` y `eol=crlf` se representa con LF; las rutas
+  `-text` conservan bytes exactos. Los filtros, `ident`, codificaciones de
+  árbol de trabajo y atributos no versionados se rechazan de forma cerrada.
+- El gate y el instalador validan OID completos SHA-1 o SHA-256, remoto
+  canónico, raíz Git exacta y coincidencia de `HEAD`. Cada ruta protegida
+  compara además el modo y OID del commit con el OID calculado desde sus bytes
+  físicos canónicos; `assume-unchanged`, `skip-worktree` y enlaces modo
+  `120000` no pueden ocultar una divergencia.
+- El manifiesto de fuentes se recalcula mediante un único verificador
+  compartido que confina rutas, rechaza enlaces y comprueba inventario, bytes,
+  hashes individuales y huella agregada. Los componentes exactos y adaptados
+  exigen igualdad del conjunto de archivos, incluidos casos exclusivos del
+  consumidor o ausentes en este.
+- El instalador prevalida fuente, consumidor y destinos antes de aplicar
+  cambios. Las escrituras se preparan en archivos temporales del mismo
+  directorio y se confirman con respaldo y renombrado; un fallo parcial revierte
+  el conjunto sin dejar modificaciones ni escribir fuera del repositorio.
+- El workflow instalado obtiene el contrato como datos no confiables, fija la
+  fuente `archware/-Atomic-UI`, ejecuta el gate canónico antes de dependencias,
+  limita permisos a lectura y no persiste credenciales. El ruleset externo
+  continúa siendo obligatorio para impedir que una solicitud degrade su propio
+  workflow o referencia verificadora.
+
+### Verificación
+
+- Las pruebas cubren LF/CRLF, binarios, cambio semántico, filtros y codificación,
+  atributos globales y `.git/info/attributes`, repositorios SHA-1/SHA-256,
+  enlaces físicos y Git, rutas de escape y batching seguro para Windows.
+- Los fixtures del consumidor cubren snapshots exactos y adaptados, archivos
+  agregados/eliminados, `consumer-only`, `missing-in-consumer`, remotos
+  alternos, raíces anidadas, `assume-unchanged`, `skip-worktree` y rollback
+  exacto ante una escritura parcial inyectada.
+- El manifiesto reproducible registra 157 fuentes y la huella SHA-256
+  `60b7ecf42ab6324664e42116273eea91c55da10dc7b323b1e6bdf3ac48ed3848`.
+- Identificador de cambio: `ATOMIC-20260812-PROVENANCE-PORTABILITY`.
 
 ## [5.5.7] - 2026-08-11
 
