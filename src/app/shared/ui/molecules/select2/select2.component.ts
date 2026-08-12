@@ -1,6 +1,6 @@
 import {
   Component, Input, Output, EventEmitter, signal, HostListener,
-  ElementRef, forwardRef, inject, ChangeDetectionStrategy
+  ElementRef, forwardRef, inject, ChangeDetectionStrategy, HostBinding
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
@@ -457,12 +457,16 @@ export interface Select2Option {
   `]
 })
 export class Select2Component implements ControlValueAccessor {
+  @HostBinding('style.zIndex') get zIndex() {
+    return this.isOpen() ? 1000 : 1;
+  }
+  @HostBinding('style.position') position = 'relative';
+
   @Input()
   set options(value: Select2Option[]) {
     this._options = [...(value || [])];
     this.reconcilePendingValue();
     this.ensureEnabledHighlight();
-  }
   get options(): Select2Option[] {
     return this._options;
   }
