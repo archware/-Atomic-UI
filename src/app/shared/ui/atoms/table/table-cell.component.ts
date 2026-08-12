@@ -3,9 +3,9 @@ import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@a
 
 /**
  * TableCellComponent - Celda de tabla atómica
- * 
+ *
  * Usa tokens centralizados --table-* de table-tokens.css
- * 
+ *
  * @example
  * ```html
  * <td app-table-cell>Contenido</td>
@@ -24,6 +24,7 @@ import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@a
     '[class.align-left]': 'align === "left"',
     '[class.align-center]': 'align === "center"',
     '[class.align-right]': 'align === "right"',
+    '[class.atomic-table-cell-wrap]': 'wrap',
     '[attr.data-label]': 'dataLabel'
   },
   styles: [`
@@ -39,21 +40,21 @@ import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@a
       text-align: left;
       font-weight: var(--table-font-weight-header);
     }
-    
+
     /* Clases de alineación */
-    td[app-table-cell].align-center, 
+    td[app-table-cell].align-center,
     th[app-table-header-cell].align-center,
     .text-center {
       text-align: center;
     }
-    
-    td[app-table-cell].align-right, 
+
+    td[app-table-cell].align-right,
     th[app-table-header-cell].align-right,
     .text-right {
       text-align: right;
     }
 
-    td[app-table-cell].align-left, 
+    td[app-table-cell].align-left,
     th[app-table-header-cell].align-left,
     .text-left {
       text-align: left;
@@ -66,4 +67,7 @@ export class TableCellComponent {
 
   /** Label para vista mobile (cards) */
   @Input() dataLabel?: string;
+
+  /** Permite envolver esta celda cuando la tabla usa truncado global. */
+  @Input() wrap = false;
 }

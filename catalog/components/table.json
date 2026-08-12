@@ -1,0 +1,193 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "table",
+  "layer": "atom",
+  "selector": "app-table",
+  "export": "TableComponent",
+  "source": "src/app/shared/ui/atoms/table/table.component.ts",
+  "relatedSources": [
+    "src/app/shared/ui/atoms/table/table-cell.component.ts",
+    "src/app/shared/ui/atoms/table/table-head.component.ts",
+    "src/app/shared/ui/atoms/table/table-header-cell.component.ts",
+    "src/app/shared/ui/atoms/table/table-row.component.ts",
+    "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts",
+    "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.html",
+    "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css",
+    "src/styles/themes/_tokens-components.css"
+  ],
+  "purpose": "Tabla semántica con truncado configurable, tarjetas responsive y un viewport unificado con indicadores overlay o barras nativas.",
+  "variants": [
+    {
+      "name": "striped",
+      "values": [
+        { "value": false, "meaning": "Mantiene un fondo uniforme.", "default": true },
+        { "value": true, "meaning": "Alterna el fondo de las filas del cuerpo." }
+      ]
+    },
+    {
+      "name": "unified-scroll",
+      "values": [
+        {
+          "value": false,
+          "meaning": "Conserva la resolución histórica de propietarios por eje.",
+          "default": true
+        },
+        { "value": true, "meaning": "Usa un único viewport para los ejes horizontal y vertical." }
+      ]
+    },
+    {
+      "name": "scrollbar-mode",
+      "values": [
+        {
+          "value": "overlay",
+          "meaning": "Presenta los rieles y thumbs superpuestos de ScrollOverlay.",
+          "default": true
+        },
+        {
+          "value": "native",
+          "meaning": "Presenta barras nativas tokenizadas y mantiene ocultos los rieles overlay."
+        }
+      ]
+    },
+    {
+      "name": "cell-overflow",
+      "values": [
+        {
+          "value": "wrap",
+          "meaning": "Permite envolver el contenido de todas las celdas.",
+          "default": true
+        },
+        {
+          "value": "truncate",
+          "meaning": "Trunca encabezados y celdas con elipsis; TableCell.wrap permite excepciones."
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "name": "striped",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Activa filas alternadas."
+    },
+    {
+      "name": "maxHeight",
+      "type": "number | string | undefined",
+      "meaning": "Limita la altura del viewport; los números se interpretan como píxeles."
+    },
+    {
+      "name": "columnTemplate",
+      "type": "string | undefined",
+      "meaning": "Fija la plantilla grid de columnas cuando se requiere alineación determinista."
+    },
+    {
+      "name": "unifiedScroll",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Resuelve ambos ejes sobre un único propietario sin imponer su representación visual."
+    },
+    {
+      "name": "scrollbarMode",
+      "type": "TableScrollbarMode",
+      "default": "overlay",
+      "meaning": "Selecciona indicadores overlay o barras nativas tokenizadas."
+    },
+    {
+      "name": "scrollResetKey",
+      "type": "unknown",
+      "meaning": "Identidad del conjunto de datos; al cambiar restablece ambos ejes."
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "default": "",
+      "meaning": "Nombre accesible del viewport real de escritorio."
+    },
+    {
+      "name": "cellOverflow",
+      "type": "TableCellOverflow",
+      "default": "wrap",
+      "meaning": "Selecciona envoltura normal o truncado global de encabezados y celdas."
+    }
+  ],
+  "outputs": [],
+  "slots": [
+    {
+      "name": "default",
+      "type": "table content",
+      "meaning": "Encabezado y cuerpo semánticos proyectados dentro de table."
+    }
+  ],
+  "behavior": [
+    "unifiedScroll delega ambos ejes al área interna de ScrollOverlay y evita propietarios duplicados.",
+    "scrollbarMode overlay conserva la rueda, el arrastre y los thumbs Atomic; native delega la interacción al navegador sin cambiar el propietario.",
+    "scrollResetKey restablece scrollTop y scrollLeft después de cambiar la identidad del conjunto de datos.",
+    "cellOverflow truncate aplica elipsis de forma canónica y TableCell.wrap permite envolver celdas descriptivas concretas.",
+    "A 768px o menos la tabla conserva table, thead y tbody en el DOM, presenta filas como tarjetas y devuelve el scroll vertical a la página."
+  ],
+  "states": [
+    { "name": "default", "meaning": "Tabla semántica con fondo uniforme." },
+    { "name": "striped", "meaning": "Filas alternadas visibles." },
+    { "name": "unified-scroll", "meaning": "Viewport único, enfocable y nombrado en escritorio." },
+    {
+      "name": "overlay-scrollbars",
+      "meaning": "Rieles superpuestos Atomic sincronizados con ambos ejes."
+    },
+    {
+      "name": "native-scrollbars",
+      "meaning": "Barras nativas tokenizadas sin rieles superpuestos."
+    },
+    {
+      "name": "responsive-cards",
+      "meaning": "Filas presentadas como tarjetas sin propietario de scroll interno."
+    }
+  ],
+  "a11y": [
+    "El contenido proyectado conserva la estructura table, thead, tbody, tr, th y td.",
+    "ariaLabel se aplica con role region y tabindex cuando el área interna es el propietario real por unifiedScroll o maxHeight.",
+    "En tarjetas responsive se retiran role, aria-label y tabindex del área interna porque la página recupera el desplazamiento.",
+    "El truncado visual no sustituye un nombre accesible completo ni elimina el texto del DOM."
+  ],
+  "responsive": [
+    "En escritorio unifiedScroll mantiene un único propietario para los ejes horizontal y vertical.",
+    "A 768px o menos el viewport interno usa altura automática y overflow visible; la página conserva el único scroll vertical.",
+    "Las celdas usan data-label para presentar la cabecera correspondiente en tarjetas sin alterar la semántica DOM."
+  ],
+  "tokens": [
+    "--scrollbar-thumb",
+    "--scrollbar-thumb-hover",
+    "--scrollbar-track",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-6",
+    "--table-border-radius",
+    "--table-card-gap",
+    "--table-card-padding",
+    "--table-card-shadow",
+    "--table-color-background",
+    "--table-color-border",
+    "--table-color-border-light",
+    "--table-color-primary",
+    "--table-color-text",
+    "--table-font-family",
+    "--table-font-size",
+    "--table-header-bg",
+    "--table-header-color"
+  ],
+  "story": { "path": "src/stories/ui-table.stories.ts", "status": "available" },
+  "test": {
+    "path": "src/app/shared/ui/atoms/table/table.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "candidate",
+    "notes": [
+      "La variante unified-scroll cubre propietario único, modos overlay y native, cambio de representación, reinicio de ambos ejes, truncado opt-in y transferencia responsive mediante pruebas automatizadas."
+    ]
+  },
+  "canonicalFor": ["table", "responsive-table", "unified-table-scroll", "transaction-preview"]
+}

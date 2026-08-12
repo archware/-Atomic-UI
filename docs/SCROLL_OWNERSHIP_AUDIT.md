@@ -10,6 +10,11 @@ padre usan `overflow: hidden` y no compiten. Los scrolls nativos se conservan
 únicamente en listas breves, acotadas y orientadas a interacción táctil o de
 teclado.
 
+`TableComponent.unifiedScroll` determina el propietario único, mientras que
+`scrollbarMode` determina exclusivamente su presentación. El valor `overlay`
+conserva los rieles y thumbs canónicos; `native` constituye una alternativa
+explícita y tokenizada que no crea un segundo propietario.
+
 ## Matriz auditada
 
 | Región o componente                                                     | Propietario                                               | Decisión                                                                 |

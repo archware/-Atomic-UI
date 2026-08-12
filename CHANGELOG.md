@@ -1,10 +1,10 @@
 ---
-title: "Registro de cambios de Atomic UI"
-document_type: "changelog"
-version: "5.5.6"
-status: "vigente"
-updated: "2026-08-10"
-owner: "Hospital Regional de Ayacucho"
+title: 'Registro de cambios de Atomic UI'
+document_type: 'changelog'
+version: '5.5.7'
+status: 'vigente'
+updated: '2026-08-11'
+owner: 'Hospital Regional de Ayacucho'
 ---
 
 # Registro de cambios
@@ -14,6 +14,52 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.5.7] - 2026-08-11
+
+### Añadido
+
+- `ScrollOverlayComponent` incorpora el modo `nativeScrollbars`, con barras
+  nativas estilizadas mediante tokens, gutter estable, contención horizontal y
+  supresión de los dos rieles overlay decorativos.
+- `scrollAreaAriaLabel` nombra y vuelve enfocable el área interna cuando esta es
+  el propietario real. `resetKey` restablece `scrollTop` y `scrollLeft` de todos
+  los propietarios resueltos cuando cambia la identidad del conjunto de datos.
+- `TableComponent` incorpora `unifiedScroll`, `scrollbarMode`, `scrollResetKey`,
+  `ariaLabel` y `cellOverflow`. `TableCellComponent.wrap` permite envolver
+  celdas descriptivas concretas cuando el resto de la tabla usa truncado con
+  elipsis. El modo `overlay` es el valor predeterminado y `native` permanece
+  disponible como alternativa explícita.
+
+### Corregido
+
+- En escritorio, la variante unificada concentra ambos ejes en un único
+  viewport sin imponer la representación de sus barras. Los rieles Atomic y las
+  barras nativas tokenizadas se seleccionan sin desactivar los ejes ni cambiar
+  su propietario. A 768 px o menos elimina el scroll interno, devuelve el
+  desplazamiento vertical a la página y retira `role`, `aria-label` y
+  `tabindex` del elemento que deja de ser propietario.
+- Los encabezados de las tarjetas responsive permanecen en el árbol accesible
+  mediante ocultamiento exclusivamente visual; no se utiliza `display: none`.
+- El recorrido utilizado al arrastrar cada thumb coincide con la longitud
+  visible de su riel, incluso cuando ambos ejes están activos. El extremo del
+  thumb alcanza ahora exactamente la última fila y la última columna.
+- Los estilos de barras, truncado y envoltura residen en los componentes
+  canónicos, por lo que el consumidor no necesita `::ng-deep` ni selectores de
+  implementación de `ScrollOverlay`.
+
+### Verificación
+
+- Las pruebas focales cubren escritorio, cambio a layout móvil, región
+  accesible, modo overlay predeterminado, barras nativas opcionales, cambio de
+  representación, wheel no interceptado en modo nativo, limpieza de marcadores,
+  reinicio de ambos ejes, arrastre hasta el máximo vertical y horizontal,
+  truncado y excepción de envoltura.
+- El catálogo registra los contratos de Table, TableCell y ScrollOverlay, y
+  Storybook publica el viewport unificado verificable.
+- El manifiesto reproducible registra 157 fuentes y la huella SHA-256
+  `bfa959021cdc60202c700e95d6c5bc0da86928274a13e0c18b7cf1a4a12665d1`.
+- Identificador de cambio: `ATOMIC-20260811-UNIFIED-TABLE-SCROLL`.
 
 ## [5.5.6] - 2026-08-10
 

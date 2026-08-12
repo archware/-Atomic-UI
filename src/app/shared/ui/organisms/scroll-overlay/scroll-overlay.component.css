@@ -93,6 +93,44 @@ html.dark .so-root,
   height: 0;
 }
 
+/* The canonical native mode keeps the browser as the only scroll mechanism. */
+.so-root [data-so-native-scrollbar] {
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: auto;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.so-root [data-so-native-scrollbar]::-webkit-scrollbar {
+  display: block;
+  width: var(--space-3);
+  height: var(--space-3);
+}
+
+.so-root [data-so-native-scrollbar]::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+.so-root [data-so-native-scrollbar]::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border: var(--space-1) solid var(--scrollbar-track);
+  border-radius: var(--radius-full);
+}
+
+.so-root [data-so-native-scrollbar]::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+.so-root [data-so-native-scrollbar]::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track);
+}
+
+.so-root.so-native-scrollbars > .so-scrollbar,
+.so-root.so-native-scrollbars::after {
+  display: none !important;
+}
+
 .so-scrollbar {
   position: absolute;
   pointer-events: none;

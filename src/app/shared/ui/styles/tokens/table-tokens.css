@@ -1,7 +1,7 @@
 /**
  * TABLE DESIGN TOKENS
  * Single Source of Truth para todos los estilos de tabla
- * 
+ *
  * Usado por:
  * - responsive-table.css (CSS global para HTML nativo)
  * - Atomic Table Components (app-table, app-table-row, etc.)
@@ -61,7 +61,6 @@
   /* === Breakpoint === */
   --table-breakpoint: 768px;
 }
-
 /* ============================================
    DARK MODE TOKENS
    ============================================ */

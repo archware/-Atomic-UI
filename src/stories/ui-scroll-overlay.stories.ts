@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { expect, within } from 'storybook/test';
 import { ScrollOverlayComponent } from '../app/shared/ui/organisms/scroll-overlay/scroll-overlay.component';
 
 const meta: Meta<ScrollOverlayComponent> = {
@@ -16,6 +17,43 @@ const meta: Meta<ScrollOverlayComponent> = {
 
 export default meta;
 type Story = StoryObj<ScrollOverlayComponent>;
+
+export const NativeViewport: Story = {
+  args: {
+    maxBodyHeight: 220,
+    nativeScrollbars: true,
+    disableVertical: true,
+    disableHorizontal: true,
+    scrollAreaAriaLabel: 'Resultados desplazables',
+    resetKey: 'dataset-1',
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+      <app-scroll-overlay
+        [maxBodyHeight]="maxBodyHeight"
+        [nativeScrollbars]="nativeScrollbars"
+        [disableVertical]="disableVertical"
+        [disableHorizontal]="disableHorizontal"
+        [scrollAreaAriaLabel]="scrollAreaAriaLabel"
+        [resetKey]="resetKey"
+      >
+        <div style="width: calc(var(--space-8) * 20); padding: var(--space-4);">
+          <p *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">
+            Resultado {{ i }} con contenido horizontal verificable.
+          </p>
+        </div>
+      </app-scroll-overlay>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const viewport = canvas.getByRole('region', { name: 'Resultados desplazables' });
+    const root = canvasElement.querySelector('app-scroll-overlay') as HTMLElement;
+    await expect(viewport.getAttribute('data-so-native-scrollbar')).toBe('true');
+    await expect(root.classList).toContain('so-native-scrollbars');
+  },
+};
 
 export const Default: Story = {
   args: {

@@ -1,9 +1,9 @@
 ---
-title: "Biblioteca de componentes Atomic UI"
-subtitle: "Contrato visual portable para aplicaciones Angular"
-author: "Ing. Havel CONTRERAS TAPAHUASCO"
-date: "2026-08-10"
-version: "5.5.6"
+title: 'Biblioteca de componentes Atomic UI'
+subtitle: 'Contrato visual portable para aplicaciones Angular'
+author: 'Ing. Havel CONTRERAS TAPAHUASCO'
+date: '2026-08-11'
+version: '5.5.7'
 ---
 
 # Biblioteca de componentes Atomic UI
@@ -11,7 +11,7 @@ version: "5.5.6"
 Librería de componentes Angular portables siguiendo **Atomic Design**.
 
 **Última actualización**: agosto de 2026
-**Versión**: 5.5.6
+**Versión**: 5.5.7
 **Angular**: 22
 
 ---
@@ -378,17 +378,25 @@ Componentes Angular que implementan una tabla con Atomic Design.
 ### Uso
 
 ```html
-<app-table [striped]="true">
-  <app-table-head>
+<app-table
+  [striped]="true"
+  [unifiedScroll]="true"
+  scrollbarMode="overlay"
+  [maxHeight]="'min(60vh, 34rem)'"
+  [scrollResetKey]="datasetId"
+  ariaLabel="Movimientos de la cuenta"
+  cellOverflow="truncate"
+>
+  <thead>
     <tr>
-      <th app-table-header-cell>Nombre</th>
-      <th app-table-header-cell>Rol</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Rol</th>
     </tr>
-  </app-table-head>
+  </thead>
   <tbody>
     <tr app-table-row>
-      <td app-table-cell data-label="Nombre:">Juan</td>
-      <td app-table-cell data-label="Rol:">Dev</td>
+      <td app-table-cell dataLabel="Nombre" [wrap]="true">Juan</td>
+      <td app-table-cell dataLabel="Rol">Desarrollo</td>
     </tr>
   </tbody>
 </app-table>
@@ -410,6 +418,20 @@ Componentes Angular que implementan una tabla con Atomic Design.
 - ✅ Sticky header
 - ✅ Hover elevado (lift effect)
 - ✅ Tokenización completa
+- ✅ Viewport único y nombrado con `unifiedScroll`
+- ✅ Rieles Atomic o barras nativas mediante `scrollbarMode="overlay|native"`
+- ✅ Reinicio de ambos ejes mediante `scrollResetKey`
+- ✅ Truncado global y envoltura selectiva mediante `cellOverflow` y `TableCell.wrap`
+
+En escritorio, `unifiedScroll` entrega ambos ejes al área interna de
+`ScrollOverlay`; por ello `ariaLabel` nombra exactamente la región desplazable.
+El modo `overlay`, aplicado de forma predeterminada, conserva los rieles y
+thumbs del organismo Atomic. El modo `native` se reserva para consumidores que
+requieran barras del navegador tokenizadas sin cambiar el propietario real.
+A 768 px o menos, las filas se presentan como tarjetas, la página recupera el
+scroll vertical y el área interna deja de exponer `role` y `tabindex`. Los
+encabezados `th` deben declarar `scope="col"`; permanecen disponibles para
+tecnología asistiva aunque se oculten visualmente en la presentación móvil.
 
 ---
 
@@ -561,11 +583,13 @@ sus reglas; el organismo únicamente gobierna estructura, foco y responsive.
   <form>
     <!-- Controles Atomic y reglas del consumidor -->
     @if (saveError()) {
-      <p role="alert" data-dialog-error tabindex="-1">{{ saveError() }}</p>
+    <p role="alert" data-dialog-error tabindex="-1">{{ saveError() }}</p>
     }
     <app-form-dialog-actions>
       <app-button type="submit" [loading]="saving()">Guardar</app-button>
-      <app-button variant="outline" [disabled]="saving()" (buttonClick)="editor.close()">Cancelar</app-button>
+      <app-button variant="outline" [disabled]="saving()" (buttonClick)="editor.close()"
+        >Cancelar</app-button
+      >
     </app-form-dialog-actions>
   </form>
 </app-form-dialog>
@@ -1205,12 +1229,23 @@ de la configuración del navegador embebido.
   [minColumnWidth]="40"
   [lockColumnTemplate]="true"
   [columnTemplate]="'70px minmax(120px, 1fr) 100px'"
+  [nativeScrollbars]="true"
+  [disableVertical]="true"
+  [disableHorizontal]="true"
+  [resetKey]="datasetId"
+  scrollAreaAriaLabel="Resultados desplazables"
 >
   <table class="rtc-table">
     ...
   </table>
 </app-scroll-overlay>
 ```
+
+El modo nativo aplica `--scrollbar-track`, `--scrollbar-thumb` y
+`--scrollbar-thumb-hover` dentro del componente, mantiene un gutter estable y
+deja el wheel al navegador. Cuando un layout responsive transfiere el scroll a
+la página, el consumidor debe retirar `scrollAreaAriaLabel`; `TableComponent`
+coordina este cambio automáticamente en su variante unificada.
 
 #### `TabsComponent`
 
@@ -1264,7 +1299,7 @@ export class MyComponent {
 ---
 
 📅 **Última actualización**: agosto de 2026
-🏷️ **Versión**: 5.5.6
+🏷️ **Versión**: 5.5.7
 ⚡ **Angular**: 22
 🌐 **i18n**: ngx-translate  
 📚 **Storybook**: Disponible

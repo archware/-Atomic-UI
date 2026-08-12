@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.5.6",
+  "packageVersion": "5.5.7",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "faaf94f6d3d7faf5066c96001fcc8846b9e44ccdd776fe6b4d248fde297d5641",
+  "sourceTreeSha256": "bfa959021cdc60202c700e95d6c5bc0da86928274a13e0c18b7cf1a4a12665d1",
   "fileCount": 157,
   "files": [
     {
@@ -21,7 +21,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 854,
-      "sha256": "89f6ea8fff10d6e0e4b7e331c95a99131f49ae475e180217c8c49e0cfb335ce5"
+      "sha256": "ce3da1a05f5eecd481efc5218f06a27255ffe2fbddbf9eee286601fd5d2ffe61"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -215,8 +215,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/table/table-cell.component.ts",
-      "bytes": 1791,
-      "sha256": "acef6053535af6bbbf78e8450e840c03cfadee30570c1b57301beb718d6645e5"
+      "bytes": 1924,
+      "sha256": "47165779e426d51625a93da6321db6960f8473789f0fecb6d51f6bb62285fa8e"
     },
     {
       "path": "src/app/shared/ui/atoms/table/table-head.component.ts",
@@ -235,8 +235,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/table/table.component.ts",
-      "bytes": 7195,
-      "sha256": "4547ad240578f24cbee96821eb04acab18e98efcbfbfc030f994a9a66fe4d7c0"
+      "bytes": 11537,
+      "sha256": "95cea55844d4649fa39f4d58407106088ea606b41f06a507c577a25497ce2b0b"
     },
     {
       "path": "src/app/shared/ui/atoms/text/text.component.ts",
@@ -280,8 +280,8 @@
     },
     {
       "path": "src/app/shared/ui/index.ts",
-      "bytes": 13759,
-      "sha256": "582fc6b0b1579dd34f8c43214942ee4fcbb5be97d937b7809c82419f5f86bc3b"
+      "bytes": 13851,
+      "sha256": "c1bd36c8eaefdc7d750c4b4f4800f4067db3ecadcacbed93dfec9dba6f5b3f24"
     },
     {
       "path": "src/app/shared/ui/interceptors/auth.interceptor.ts",
@@ -575,18 +575,18 @@
     },
     {
       "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css",
-      "bytes": 7137,
-      "sha256": "2f847e2a5f986c2b0016a1c8e8c1237a5603c344a4f645611ad39f83a870e9e6"
+      "bytes": 8209,
+      "sha256": "8ccc9f89c6ffd8edc664f5879486a65d61722a21a5a13de7015ec6400bb78fef"
     },
     {
       "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.html",
-      "bytes": 324,
-      "sha256": "33f24c2569c937882e39c32de3084a96f238f3c6bd80815fe39d43c028076dc7"
+      "bytes": 476,
+      "sha256": "b95bab8c73b2c6d63853520448d76fb9818752949df1b59390c6ed0ed17c86b8"
     },
     {
       "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts",
-      "bytes": 42552,
-      "sha256": "cd9e5c210148bded3f2bbab58b3a209f4e3c40771a28d99a1bc38c915a19dc86"
+      "bytes": 45528,
+      "sha256": "bcfe51177e057037247613059f29cfdd5b7e2443677044205becbebcca8066a5"
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.css",
@@ -705,8 +705,8 @@
     },
     {
       "path": "src/app/shared/ui/styles/tokens/table-tokens.css",
-      "bytes": 5295,
-      "sha256": "6f5179e2641e9895d746b8567d6d8dff55916fa444c88ebc979413dd9a56c4fc"
+      "bytes": 5293,
+      "sha256": "52ff61690c4983a0390580117a2c258edbe1501ea0b191489b2346cb323a32bf"
     },
     {
       "path": "src/app/shared/ui/surfaces/panel/panel.component.css",

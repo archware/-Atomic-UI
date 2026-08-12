@@ -1,0 +1,66 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "table-cell",
+  "layer": "atom",
+  "selector": "[app-table-cell]",
+  "export": "TableCellComponent",
+  "source": "src/app/shared/ui/atoms/table/table-cell.component.ts",
+  "relatedSources": ["src/app/shared/ui/atoms/table/table.component.ts"],
+  "purpose": "Celda semántica de tabla con alineación, etiqueta responsive y excepción tipada de envoltura.",
+  "variants": [
+    {
+      "name": "align",
+      "values": [
+        { "value": "left", "meaning": "Alinea el contenido al inicio.", "default": true },
+        { "value": "center", "meaning": "Centra el contenido." },
+        { "value": "right", "meaning": "Alinea el contenido al final." }
+      ]
+    },
+    {
+      "name": "wrap",
+      "values": [
+        { "value": false, "meaning": "Respeta la política de overflow de TableComponent.", "default": true },
+        { "value": true, "meaning": "Envuelve el contenido aunque la tabla use truncado global." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "align", "type": "'left' | 'center' | 'right'", "default": "left", "meaning": "Alineación horizontal del contenido." },
+    { "name": "dataLabel", "type": "string | undefined", "meaning": "Etiqueta visible de la celda en tarjetas responsive." },
+    { "name": "wrap", "type": "boolean", "default": false, "meaning": "Permite envolver una celda descriptiva bajo cellOverflow truncate." }
+  ],
+  "outputs": [],
+  "slots": [
+    { "name": "default", "type": "cell content", "meaning": "Contenido semántico de td o th." }
+  ],
+  "behavior": [
+    "wrap añade una clase canónica que TableComponent interpreta como excepción al truncado global.",
+    "dataLabel se refleja como data-label para la presentación responsive mediante pseudoelemento."
+  ],
+  "states": [
+    { "name": "default", "meaning": "Celda alineada al inicio que hereda la política de overflow." },
+    { "name": "wrapped", "meaning": "Celda que admite múltiples líneas y cortes de palabras extensas." }
+  ],
+  "a11y": [
+    "La directiva se aplica sobre td o th y conserva la semántica nativa del elemento.",
+    "dataLabel es una ayuda visual responsive; la asociación accesible debe provenir de encabezados th con scope o headers."
+  ],
+  "responsive": [
+    "dataLabel identifica visualmente la celda cuando TableComponent presenta cada fila como tarjeta.",
+    "wrap evita que descripciones extensas queden truncadas en escritorio y móvil."
+  ],
+  "tokens": [
+    "--table-cell-padding",
+    "--table-color-text",
+    "--table-font-size",
+    "--table-font-weight-header"
+  ],
+  "story": { "path": "src/stories/ui-table.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/atoms/table/table.component.spec.ts", "status": "available" },
+  "stability": {
+    "status": "candidate",
+    "notes": ["La excepción wrap se verifica junto con el truncado global de TableComponent."]
+  },
+  "canonicalFor": ["table-cell", "responsive-table-cell", "wrapped-description-cell"]
+}

@@ -24,7 +24,7 @@ type ListenerUnsubscriber = () => void;
 export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   /**
    * CSS selector used to locate the element that controls the vertical scroll.
-   * Defaults to the first <tbody> found within the component's content.
+   * Defaults to content marked explicitly with `data-scroll-overlay-vertical`.
    */
   @Input() verticalSelector: string | null = '[data-scroll-overlay-vertical]';
 
@@ -42,6 +42,39 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
   /** Delay (in ms) before auto-hiding the scrollbars after interaction. */
   @Input() autoHideDelay = 800;
+
+  /**
+   * Uses the browser scrollbars on the resolved owners and suppresses the decorative overlay rails.
+   * The scrollbar palette is provided by the canonical theme tokens.
+   */
+  @Input()
+  set nativeScrollbars(value: boolean) {
+    this._nativeScrollbars = !!value;
+    if (this.hostEl) {
+      this.hostEl.classList.toggle('so-native-scrollbars', this._nativeScrollbars);
+      this.updateNativeScrollbarMarkers();
+      this.hideBar();
+    }
+  }
+  get nativeScrollbars(): boolean {
+    return this._nativeScrollbars;
+  }
+
+  /** Accessible name for the internal viewport when it is the real scroll owner. */
+  @Input() scrollAreaAriaLabel: string | null = null;
+
+  /** Resets both axes of every resolved owner whenever its identity changes. */
+  @Input()
+  set resetKey(value: unknown) {
+    const changed = !Object.is(this._resetKey, value);
+    this._resetKey = value;
+    if (changed && this.hostEl) {
+      this.resetScrollPosition();
+    }
+  }
+  get resetKey(): unknown {
+    return this._resetKey;
+  }
 
   /** When true, the component will not override a custom --so-column-template value. */
   private _lockColumnTemplate = false;
@@ -181,6 +214,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   private verticalThumbSize = this.minThumbSize;
   private horizontalThumbSize = this.minThumbSize;
   private verticalBarHeight = 0;
+  private horizontalBarWidth = 0;
   private resizeObserver?: ResizeObserver;
   private mutationObserver?: MutationObserver;
   private geometryFrameId?: number;
@@ -198,6 +232,8 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   private _minColumnWidth = 140;
   private _disableVertical = false;
   private _disableHorizontal = false;
+  private _nativeScrollbars = false;
+  private _resetKey: unknown;
 
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
@@ -209,6 +245,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     this.hostEl = this.elementRef.nativeElement;
     this.hostEl.style.setProperty('--so-track-size', `${this.trackSize}px`);
     this.hostEl.classList.toggle('so-lock-template', this._lockColumnTemplate);
+    this.hostEl.classList.toggle('so-native-scrollbars', this._nativeScrollbars);
     this.applyMinColumnWidth();
     this.applyColumnTemplate();
     this.resolveScrollElements(true);
@@ -216,6 +253,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     if (!this.horizontalScroller) {
       this.horizontalScroller = this.scrollAreaRef.nativeElement;
     }
+    this.updateNativeScrollbarMarkers();
 
     if (this.disableVertical) {
       this.hostEl.classList.add('so-no-vertical');
@@ -255,6 +293,25 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     if (this.horizontalScroller !== this.verticalScroller) {
       this.removeManagedScrollbarMarker(this.horizontalScroller);
     }
+    this.removeNativeScrollbarMarkers();
+  }
+
+  /** Restores the beginning of both axes without assuming a shared owner. */
+  resetScrollPosition(): void {
+    const owners = new Set<HTMLElement>();
+    owners.add(this.scrollAreaRef.nativeElement);
+    if (this.verticalScroller) {
+      owners.add(this.verticalScroller);
+    }
+    if (this.horizontalScroller) {
+      owners.add(this.horizontalScroller);
+    }
+
+    owners.forEach((owner) => {
+      owner.scrollTop = 0;
+      owner.scrollLeft = 0;
+    });
+    this.updateThumbs();
   }
 
   private applyMinColumnWidth(): void {
@@ -525,7 +582,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
    * once they reach an edge, the gesture can continue through the parent overlay.
    */
   private handleWheel(event: WheelEvent): void {
-    if (event.defaultPrevented || event.ctrlKey || event.metaKey) {
+    if (this.nativeScrollbars || event.defaultPrevented || event.ctrlKey || event.metaKey) {
       return;
     }
 
@@ -669,7 +726,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   private showBar(): void {
-    if (this.disableVertical && this.disableHorizontal) {
+    if (this.nativeScrollbars || (this.disableVertical && this.disableHorizontal)) {
       return;
     }
 
@@ -722,8 +779,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     bar.style.opacity = '';
     bar.style.pointerEvents = 'auto';
 
-    // Use verticalBarHeight instead of clientHeight for the thumb track length
-    const trackHeight = this.verticalBarHeight > 0 ? this.verticalBarHeight : clientHeight;
+    const trackHeight = this.getVerticalTrackHeight(clientHeight);
     const thumbHeight = Math.max(this.minThumbSize, (trackHeight * clientHeight) / scrollHeight);
     this.verticalThumbSize = thumbHeight;
     thumb.style.height = `${thumbHeight}px`;
@@ -763,22 +819,31 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     bar.style.opacity = '';
     bar.style.pointerEvents = 'auto';
 
-    const thumbWidth = Math.max(this.minThumbSize, (clientWidth * clientWidth) / scrollWidth);
+    const trackWidth = this.getHorizontalTrackWidth(clientWidth);
+    const thumbWidth = Math.max(this.minThumbSize, (trackWidth * clientWidth) / scrollWidth);
     this.horizontalThumbSize = thumbWidth;
     thumb.style.width = `${thumbWidth}px`;
 
-    // Calcular el ancho efectivo de la barra cuando la vertical también está activa
-    const hasVerticalOverflow = this.hasVerticalScrollOverflow();
-    let effectiveBarWidth = clientWidth;
-    if (hasVerticalOverflow && !this.disableVertical) {
-      effectiveBarWidth = Math.max(0, clientWidth - this.trackSize - this.horizontalBarGap);
-    }
-
-    // Usar el ancho efectivo para calcular el offset del thumb
-    const maxThumbOffset = Math.max(1, effectiveBarWidth - thumbWidth);
+    const maxThumbOffset = Math.max(1, trackWidth - thumbWidth);
     const maxScrollLeft = Math.max(1, scrollWidth - clientWidth);
     const offset = (scrollLeft / maxScrollLeft) * maxThumbOffset;
     thumb.style.transform = `translateX(${offset}px)`;
+  }
+
+  private getVerticalTrackHeight(clientHeight: number): number {
+    return this.verticalBarHeight > 0 ? this.verticalBarHeight : clientHeight;
+  }
+
+  private getHorizontalTrackWidth(clientWidth: number): number {
+    if (this.horizontalBarWidth > 0) {
+      return this.horizontalBarWidth;
+    }
+
+    if (this.hasVerticalScrollOverflow() && !this.disableVertical) {
+      return Math.max(0, clientWidth - this.trackSize - this.horizontalBarGap);
+    }
+
+    return clientWidth;
   }
 
   private updateThumbs(): void {
@@ -805,6 +870,8 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     }
 
     const hostRect = this.getSafeRect(this.hostEl);
+    this.verticalBarHeight = 0;
+    this.horizontalBarWidth = 0;
 
     // Primero detectar overflow real ANTES de ajustar posiciones
     const hasVerticalOverflow = this.hasVerticalScrollOverflow();
@@ -856,6 +923,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
         const horizontalInset = this.trackSize + this.horizontalBarGap;
         barWidth = Math.max(0, barWidth - horizontalInset);
       }
+      this.horizontalBarWidth = barWidth;
       barX.style.width = `${barWidth}px`;
     }
 
@@ -940,6 +1008,39 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
     element.setAttribute('data-so-managed-scrollbar', 'true');
     element.setAttribute('data-so-managed-scrollbar-temp', 'true');
+  }
+
+  private updateNativeScrollbarMarkers(): void {
+    this.removeNativeScrollbarMarkers();
+    if (!this.nativeScrollbars) {
+      return;
+    }
+
+    const owners = new Set([
+      this.scrollAreaRef.nativeElement,
+      this.verticalScroller,
+      this.horizontalScroller,
+    ]);
+    owners.forEach((owner) => {
+      if (!owner) {
+        return;
+      }
+      owner.setAttribute('data-so-native-scrollbar', 'true');
+      owner.setAttribute('data-so-native-scrollbar-temp', 'true');
+    });
+  }
+
+  private removeNativeScrollbarMarkers(): void {
+    if (!this.hostEl) {
+      return;
+    }
+    this.hostEl.querySelectorAll('[data-so-native-scrollbar-temp]').forEach((element) => {
+      if (element.closest('.so-root') !== this.hostEl) {
+        return;
+      }
+      element.removeAttribute('data-so-native-scrollbar');
+      element.removeAttribute('data-so-native-scrollbar-temp');
+    });
   }
 
   private removeManagedScrollbarMarker(element: HTMLElement | undefined): void {
@@ -1173,7 +1274,8 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       1,
       this.verticalScroller.scrollHeight - this.verticalScroller.clientHeight,
     );
-    const maxThumbOffset = Math.max(1, this.verticalScroller.clientHeight - this.verticalThumbSize);
+    const trackHeight = this.getVerticalTrackHeight(this.verticalScroller.clientHeight);
+    const maxThumbOffset = Math.max(1, trackHeight - this.verticalThumbSize);
     const delta = event.clientY - this.dragStartClientY;
     const scrollDelta = (delta * maxScrollTop) / maxThumbOffset;
     this.verticalScroller.scrollTop = this.dragStartScrollTop + scrollDelta;
@@ -1225,10 +1327,8 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       1,
       this.horizontalScroller.scrollWidth - this.horizontalScroller.clientWidth,
     );
-    const maxThumbOffset = Math.max(
-      1,
-      this.horizontalScroller.clientWidth - this.horizontalThumbSize,
-    );
+    const trackWidth = this.getHorizontalTrackWidth(this.horizontalScroller.clientWidth);
+    const maxThumbOffset = Math.max(1, trackWidth - this.horizontalThumbSize);
     const delta = event.clientX - this.dragStartClientX;
     const scrollDelta = (delta * maxScrollLeft) / maxThumbOffset;
     this.horizontalScroller.scrollLeft = this.dragStartScrollLeft + scrollDelta;

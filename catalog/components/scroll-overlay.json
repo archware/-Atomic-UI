@@ -10,7 +10,7 @@
     "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.html",
     "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css"
   ],
-  "purpose": "Contenedor que sincroniza scroll horizontal y vertical con indicadores overlay y alineación opcional de tablas.",
+  "purpose": "Contenedor que resuelve propietarios de desplazamiento, alinea tablas y ofrece indicadores overlay o barras nativas tokenizadas.",
   "variants": [
     {
       "name": "lock-column-template",
@@ -65,6 +65,20 @@
           "default": true
         },
         { "value": true, "meaning": "Desactiva el overlay horizontal." }
+      ]
+    },
+    {
+      "name": "native-scrollbars",
+      "values": [
+        {
+          "value": false,
+          "meaning": "Mantiene los indicadores overlay personalizados.",
+          "default": true
+        },
+        {
+          "value": true,
+          "meaning": "Suprime los rieles overlay y muestra barras nativas tokenizadas en los propietarios resueltos."
+        }
       ]
     }
   ],
@@ -145,6 +159,23 @@
       "type": "boolean",
       "default": false,
       "meaning": "Desactiva el overlay horizontal."
+    },
+    {
+      "name": "nativeScrollbars",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Usa barras nativas tokenizadas y deja inertes los indicadores overlay."
+    },
+    {
+      "name": "scrollAreaAriaLabel",
+      "type": "string | null",
+      "default": null,
+      "meaning": "Nombra y vuelve enfocable el área interna cuando esta es el propietario real."
+    },
+    {
+      "name": "resetKey",
+      "type": "unknown",
+      "meaning": "Restablece los ejes horizontal y vertical cuando cambia su identidad."
     }
   ],
   "outputs": [],
@@ -157,9 +188,10 @@
   ],
   "behavior": [
     "Ignora candidatos de scroll pertenecientes a un ScrollOverlay anidado.",
-    "Oculta el scrollbar nativo en cada scroller horizontal o vertical administrado, incluso durante la medición temporal de columnas.",
+    "Oculta el scrollbar nativo en los scrollers administrados por el modo overlay.",
+    "nativeScrollbars deja el wheel al navegador, estiliza cada propietario mediante tokens y suprime los rieles decorativos.",
+    "resetKey reinicia scrollTop y scrollLeft en todos los propietarios resueltos sin asumir que comparten elemento.",
     "ResizeObserver y MutationObserver agrupan la sincronización de geometría en un único animation frame.",
-    "Muestra los thumbs durante scroll, wheel, touch, hover o drag y los oculta después de autoHideDelay.",
     "Al destruirse cancela timers, listeners, observers, animation frames y atributos temporales."
   ],
   "states": [
@@ -171,21 +203,30 @@
       "name": "table-sync",
       "meaning": "Alinea encabezado y cuerpo usando una plantilla medida o bloqueada."
     },
-    { "name": "axis-disabled", "meaning": "Una o ambas orientaciones se excluyen explícitamente." }
+    { "name": "axis-disabled", "meaning": "Una o ambas orientaciones se excluyen explícitamente." },
+    {
+      "name": "native-scrollbars",
+      "meaning": "El navegador controla ambos ejes con barras tokenizadas y gutter estable."
+    }
   ],
   "a11y": [
-    "Los tracks y thumbs son decorativos y se excluyen con aria-hidden.",
-    "El contenido proyectado conserva su semántica y debe proporcionar su propio nombre accesible.",
-    "La implementación actual no hace los thumbs operables por teclado ni añade tabindex al área de scroll."
+    "Los tracks y thumbs overlay son decorativos y se excluyen con aria-hidden.",
+    "El contenido proyectado conserva su semántica.",
+    "scrollAreaAriaLabel aplica role region, aria-label y tabindex al área interna solamente cuando el consumidor confirma que es el propietario real.",
+    "nativeScrollbars deja la operación por teclado al viewport nativo."
   ],
   "responsive": [
     "El host limita su ancho al contenedor y el área interna puede desplazarse en ambos ejes.",
     "A 768px o menos elimina el borde y radio externos de las tablas detectadas.",
-    "No controla el reflujo semántico de tablas; solo su geometría y desplazamiento."
+    "El consumidor debe retirar scrollAreaAriaLabel cuando transfiere el desplazamiento a la página en un layout responsive.",
+    "No controla por sí solo el reflujo semántico de tablas; TableComponent coordina ese cambio."
   ],
   "tokens": [
     "--border-color",
     "--radius-full",
+    "--scrollbar-thumb",
+    "--scrollbar-thumb-hover",
+    "--scrollbar-track",
     "--so-body-height",
     "--so-max-height",
     "--so-min-column-width",
@@ -198,6 +239,7 @@
     "--so-track-size",
     "--space-1",
     "--space-2",
+    "--space-3",
     "--space-8",
     "--table-border-radius",
     "--table-color-border"
@@ -211,13 +253,14 @@
     "status": "candidate",
     "notes": [
       "La implementación usa ViewEncapsulation.None y no declara ChangeDetectionStrategy.OnPush.",
-      "La prueba automatizada cubre coalescencia de geometría, aislamiento anidado y ocultamiento del scrollbar nativo, pero no drag, teclado ni todos los modos de tabla."
+      "La prueba automatizada cubre coalescencia de geometría, aislamiento anidado, modo nativo accesible, reinicio de ambos ejes y arrastre overlay hasta los máximos vertical y horizontal."
     ]
   },
   "canonicalFor": [
     "scroll-overlay",
     "table-scroll-indicator",
     "two-axis-scroll",
+    "native-scroll-viewport",
     "layout-scroll-owner",
     "dialog-scroll-owner",
     "navigation-scroll-owner"

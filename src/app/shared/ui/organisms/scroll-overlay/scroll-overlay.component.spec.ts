@@ -35,7 +35,9 @@ describe('ScrollOverlayComponent', () => {
 
   const setScrollMetrics = (
     element: HTMLElement,
-    metrics: Partial<Pick<HTMLElement, 'clientHeight' | 'clientWidth' | 'scrollHeight' | 'scrollWidth'>>,
+    metrics: Partial<
+      Pick<HTMLElement, 'clientHeight' | 'clientWidth' | 'scrollHeight' | 'scrollWidth'>
+    >,
   ): void => {
     for (const [property, value] of Object.entries(metrics)) {
       Object.defineProperty(element, property, { configurable: true, value });
@@ -50,6 +52,26 @@ describe('ScrollOverlayComponent', () => {
       value: element.scrollLeft,
       writable: true,
     });
+  };
+
+  const setRect = (
+    element: HTMLElement,
+    width: number,
+    height: number,
+    left = 0,
+    top = 0,
+  ): void => {
+    spyOn(element, 'getBoundingClientRect').and.returnValue({
+      x: left,
+      y: top,
+      left,
+      top,
+      width,
+      height,
+      right: left + width,
+      bottom: top + height,
+      toJSON: () => '',
+    } as DOMRect);
   };
 
   beforeEach(async () => {
@@ -127,6 +149,82 @@ describe('ScrollOverlayComponent', () => {
     expect(getComputedStyle(vertical).getPropertyValue('scrollbar-width')).toBe('none');
   });
 
+  it('drags both overlay rails through the complete unified viewport', async () => {
+    const fixture = TestBed.createComponent(ScrollOverlayComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const viewport = host.querySelector('.so-scroll-area') as HTMLElement;
+    const verticalRail = host.querySelector('.so-scrollbar-y') as HTMLElement;
+    const horizontalRail = host.querySelector('.so-scrollbar-x') as HTMLElement;
+    const verticalThumb = host.querySelector('.so-thumb-y') as HTMLElement;
+    const horizontalThumb = host.querySelector('.so-thumb-x') as HTMLElement;
+    setScrollMetrics(viewport, {
+      clientHeight: 220,
+      clientWidth: 360,
+      scrollHeight: 880,
+      scrollWidth: 1080,
+    });
+    setRect(host, 360, 220);
+    setRect(viewport, 360, 220);
+    spyOn(verticalThumb, 'setPointerCapture').and.stub();
+    spyOn(horizontalThumb, 'setPointerCapture').and.stub();
+
+    const component = fixture.componentInstance as unknown as { syncGeometry: () => void };
+    component.syncGeometry();
+
+    expect(host.classList).toContain('so-has-overflow-y');
+    expect(host.classList).toContain('so-has-overflow-x');
+    expect(getComputedStyle(verticalRail).display).toBe('block');
+    expect(getComputedStyle(horizontalRail).display).toBe('block');
+    expect(parseFloat(verticalThumb.style.height)).toBeGreaterThan(0);
+    expect(parseFloat(horizontalThumb.style.width)).toBeGreaterThan(0);
+
+    const verticalTravel =
+      parseFloat(verticalRail.style.height) - parseFloat(verticalThumb.style.height);
+    const horizontalTravel =
+      parseFloat(horizontalRail.style.width) - parseFloat(horizontalThumb.style.width);
+    expect(verticalTravel).toBeGreaterThan(0);
+    expect(horizontalTravel).toBeGreaterThan(0);
+
+    verticalThumb.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        cancelable: true,
+        clientY: 0,
+        pointerId: 1,
+      }),
+    );
+    verticalThumb.dispatchEvent(
+      new PointerEvent('pointermove', {
+        bubbles: true,
+        cancelable: true,
+        clientY: verticalTravel,
+        pointerId: 1,
+      }),
+    );
+    expect(viewport.scrollTop).toBeCloseTo(660, 2);
+
+    horizontalThumb.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        cancelable: true,
+        clientX: 0,
+        pointerId: 2,
+      }),
+    );
+    horizontalThumb.dispatchEvent(
+      new PointerEvent('pointermove', {
+        bubbles: true,
+        cancelable: true,
+        clientX: horizontalTravel,
+        pointerId: 2,
+      }),
+    );
+    expect(viewport.scrollLeft).toBeCloseTo(720, 2);
+  });
+
   it('does not remove managed-axis markers from a nested overlay', async () => {
     const fixture = TestBed.createComponent(NestedScrollOverlayHostComponent);
     fixture.detectChanges();
@@ -138,6 +236,89 @@ describe('ScrollOverlayComponent', () => {
     expect(innerScrollArea.getAttribute('data-so-horizontal')).toBe('true');
     expect(innerScrollArea.getAttribute('data-so-vertical')).toBe('true');
     expect(innerScrollArea.getAttribute('data-so-managed-scrollbar')).toBe('true');
+  });
+
+  it('uses one accessible native viewport and suppresses both overlay rails', async () => {
+    const fixture = TestBed.createComponent(ScrollOverlayComponent);
+    fixture.componentRef.setInput('nativeScrollbars', true);
+    fixture.componentRef.setInput('disableVertical', true);
+    fixture.componentRef.setInput('disableHorizontal', true);
+    fixture.componentRef.setInput('scrollAreaAriaLabel', 'Resultados de búsqueda');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const viewport = host.querySelector('.so-scroll-area') as HTMLElement;
+    const verticalRail = host.querySelector('.so-scrollbar-y') as HTMLElement;
+    const horizontalRail = host.querySelector('.so-scrollbar-x') as HTMLElement;
+
+    expect(host.classList).toContain('so-native-scrollbars');
+    expect(viewport.getAttribute('data-so-native-scrollbar')).toBe('true');
+    expect(getComputedStyle(viewport).getPropertyValue('scrollbar-width')).toBe('thin');
+    expect(viewport.getAttribute('role')).toBe('region');
+    expect(viewport.getAttribute('aria-label')).toBe('Resultados de búsqueda');
+    expect(viewport.tabIndex).toBe(0);
+    expect(getComputedStyle(verticalRail).display).toBe('none');
+    expect(getComputedStyle(horizontalRail).display).toBe('none');
+  });
+
+  it('resets both axes of the resolved viewport when resetKey changes', async () => {
+    const fixture = TestBed.createComponent(ScrollOverlayComponent);
+    fixture.componentRef.setInput('nativeScrollbars', true);
+    fixture.componentRef.setInput('resetKey', 'dataset-a');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const viewport = fixture.nativeElement.querySelector('.so-scroll-area') as HTMLElement;
+    setScrollMetrics(viewport, {
+      clientHeight: 200,
+      clientWidth: 200,
+      scrollHeight: 800,
+      scrollWidth: 900,
+    });
+    viewport.scrollTop = 170;
+    viewport.scrollLeft = 240;
+
+    fixture.componentRef.setInput('resetKey', 'dataset-b');
+    fixture.detectChanges();
+
+    expect(viewport.scrollTop).toBe(0);
+    expect(viewport.scrollLeft).toBe(0);
+  });
+
+  it('leaves wheel gestures to the browser in native mode', async () => {
+    const fixture = TestBed.createComponent(ScrollOverlayComponent);
+    fixture.componentRef.setInput('nativeScrollbars', true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const viewport = fixture.nativeElement.querySelector('.so-scroll-area') as HTMLElement;
+    setScrollMetrics(viewport, { clientHeight: 200, scrollHeight: 800 });
+
+    const wheel = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 120 });
+    viewport.dispatchEvent(wheel);
+
+    expect(wheel.defaultPrevented).toBe(false);
+    expect(viewport.scrollTop).toBe(0);
+  });
+
+  it('cleans native ownership markers when toggled and destroyed', async () => {
+    const fixture = TestBed.createComponent(ScrollOverlayComponent);
+    fixture.componentRef.setInput('nativeScrollbars', true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const viewport = fixture.nativeElement.querySelector('.so-scroll-area') as HTMLElement;
+    expect(viewport.getAttribute('data-so-native-scrollbar')).toBe('true');
+
+    fixture.componentRef.setInput('nativeScrollbars', false);
+    fixture.detectChanges();
+    expect(viewport.hasAttribute('data-so-native-scrollbar')).toBe(false);
+
+    fixture.componentRef.setInput('nativeScrollbars', true);
+    fixture.detectChanges();
+    expect(viewport.getAttribute('data-so-native-scrollbar')).toBe('true');
+
+    fixture.destroy();
+    expect(viewport.hasAttribute('data-so-native-scrollbar')).toBe(false);
   });
 
   it('routes wheel gestures from projected content to the managed viewport', async () => {
