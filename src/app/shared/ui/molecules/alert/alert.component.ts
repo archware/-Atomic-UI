@@ -50,12 +50,12 @@ export type AlertFlowSpacing = 'default' | 'compact' | 'none';
         </span>
 
         <!-- Body -->
-        <div class="alert__body">
+        <div class="alert__content">
           @if (title) {
-            <p class="alert__title">{{ title }}</p>
+            <h4 class="alert__title">{{ title }}</h4>
           }
           @if (message) {
-            <p class="alert__message">{{ message }}</p>
+            <p class="alert__message" [innerHTML]="message"></p>
           }
           <ng-content></ng-content>
         </div>

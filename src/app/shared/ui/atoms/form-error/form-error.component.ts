@@ -24,7 +24,7 @@ import { ValidationService } from '../../services/validation.service';
     @if (showError) {
       <div class="form-error" role="alert" aria-live="polite">
         <i class="fa-solid fa-circle-exclamation error-icon" aria-hidden="true"></i>
-        <span class="error-message">{{ errorMessage }}</span>
+        <span class="error-message" [innerHTML]="errorMessage"></span>
       </div>
     }
   `,

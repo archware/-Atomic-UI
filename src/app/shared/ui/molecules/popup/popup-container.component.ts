@@ -55,7 +55,7 @@ import { PopupService, PopupItem } from '../../services/popup.service';
           <!-- Body -->
           <div class="popup-body">
             @if (popup.message) {
-              <p class="popup-message">{{ popup.message }}</p>
+              <p class="popup-message" [innerHTML]="popup.message"></p>
             }
             @if (popup.htmlContent) {
               <div [innerHTML]="popup.htmlContent"></div>

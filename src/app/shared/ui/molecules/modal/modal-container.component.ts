@@ -53,7 +53,7 @@ import { ModalService, ModalItem } from '../../services/modal.service';
           <!-- Body -->
           <div class="modal-body">
             @if (modal.message) {
-              <p class="modal-message">{{ modal.message }}</p>
+              <p class="modal-message" [innerHTML]="modal.message"></p>
             }
             @if (modal.htmlContent) {
               <div [innerHTML]="modal.htmlContent"></div>
