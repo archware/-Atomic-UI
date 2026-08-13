@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.6.0'
+version: '5.7.0'
 status: 'vigente'
 updated: '2026-08-13'
 owner: 'Hospital Regional de Ayacucho'
@@ -14,6 +14,46 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.7.0] - 2026-08-13
+
+Cierra el rescate abierto en 5.6.0 y resuelve lo que aquella dejo anotado como
+conocido y sin resolver.
+
+### Agregado
+
+- **`check:catalog-api`**, cableada en `governance:check`: compara las entradas
+  declaradas en `catalog/components/*.json` con las que el componente declara de
+  verdad (`@Input()`, `input()`, `input.required()` y `model()`).
+  Nace de que la ruptura de `alert` en 5.6.0 dejo atras el catalogo, el
+  generador y su test, y `governance:check` los encontro DE UNO EN UNO porque la
+  cadena se detiene en el primer paso rojo. El catalogo es la peor superficie de
+  tener desactualizada precisamente porque no rompe nada: ningun compilador lo
+  lee, lo leen las herramientas y quien pide un componente sin abrir su codigo.
+  En su primera ejecucion encontro deriva real: `data-table.pagination`,
+  `file-input.maxPreviewSizeMB` y `file-input.maxPreviewFiles`, ya documentadas.
+- **Roles de tabla declarados bajo la rejilla de columnas.** Con
+  `syncTableColumns` —activo por omision en cuanto hay `<thead>`— las filas
+  pasan a `display: grid` y el cuerpo a `display: block`. Se declara ahora la
+  jerarquia completa: `table`, `rowgroup`, `row`, `columnheader`/`rowheader` y
+  `cell`. Se aplica en `syncGeometry`, de modo que una fila que llega con datos
+  nuevos nace con su rol, y solo se escribe cuando el valor difiere.
+- **Cobertura de maquetacion de columnas** para `app-table`, rescatada de la
+  rama y reescrita contra el DOM de main: que la plantilla llegue verbatim y al
+  nodo correcto, que cabecera y celda queden alineadas, que sin plantilla mande
+  el contenido y que sin `<thead>` no haya rejilla.
+
+### Nota sobre los roles de tabla
+
+Cambiar el `display` de los elementos de tabla ha retirado historicamente su rol
+implicito; Chrome y Firefox lo corrigieron y Safari con VoiceOver ha sido el
+rezagado. **No se ha medido en este repositorio**: la suite corre en Chrome
+Headless, `Element.computedRole` no esta disponible y no se logro instrumentar
+el arbol de accesibilidad. La decision no se apoya en un defecto demostrado sino
+en una asimetria: declarar el rol cuesta unas pocas escrituras condicionales, es
+inocuo donde el navegador ya lo conserva, y es la diferencia entre una tabla
+navegable y una lista de textos donde no. **Queda pendiente validarlo con NVDA o
+VoiceOver.**
 
 ## [5.6.0] - 2026-08-13
 
