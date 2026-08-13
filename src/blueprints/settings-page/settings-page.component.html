@@ -21,12 +21,12 @@
 
     <!-- Mensajes globales -->
     @if (successMessage()) {
-      <app-alert variant="success" [closable]="true" (closed)="successMessage.set(null)">
+      <app-alert kind="success" [closable]="true" (closed)="successMessage.set(null)">
         {{ successMessage() }}
       </app-alert>
     }
     @if (errorMessage()) {
-      <app-alert variant="danger" [closable]="true" (closed)="errorMessage.set(null)">
+      <app-alert kind="danger" [closable]="true" (closed)="errorMessage.set(null)">
         {{ errorMessage() }}
       </app-alert>
     }
@@ -117,7 +117,7 @@
         <app-panel title="Cambiar contraseña" icon="🔐" variant="default" padding="lg">
           <form [formGroup]="passwordForm" (ngSubmit)="savePassword()">
 
-            <app-alert variant="info">
+            <app-alert kind="info">
               La nueva contraseña debe tener al menos 8 caracteres, incluir mayúsculas y números.
             </app-alert>
 

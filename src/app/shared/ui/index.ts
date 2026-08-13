@@ -197,8 +197,13 @@ export type { ModalConfig, ModalItem, ModalButton, ModalSize } from './services/
 
 export { UserMenuComponent } from './molecules/user-menu/user-menu.component';
 
-export { AlertComponent } from './molecules/alert/alert.component';
-export type { AlertVariant, AlertSize, AlertFlowSpacing } from './molecules/alert/alert.component';
+// `Alert` es el nombre nuevo; el alias `AlertComponent` se conserva para no
+// romper a quien ya lo importaba. `AlertVariant`, `AlertSize` y
+// `AlertFlowSpacing` desaparecen: el primero se renombra a `AlertKind`, el
+// tercero a `AlertSpacing`, y `size` se retira porque competia con el sistema
+// de espaciado sin tener un uso legitimo.
+export { Alert, Alert as AlertComponent } from './molecules/alert/alert.component';
+export type { AlertKind, AlertSpacing } from './molecules/alert/alert.component';
 
 export { TagInputComponent } from './molecules/tag-input/tag-input.component';
 export type { TagInputOption } from './molecules/tag-input/tag-input.component';
