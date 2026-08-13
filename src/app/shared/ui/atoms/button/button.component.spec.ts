@@ -285,3 +285,25 @@ describe('ButtonComponent aria de divulgacion', () => {
     expect(nativo().getAttribute('aria-expanded')).toBeNull();
   });
 });
+
+describe('ButtonComponent foco programatico', () => {
+  /*
+   Devolver el foco es la mitad que se olvida del patron de divulgacion. Sin un
+   `focus()` que llegue al control real, `nativeElement.focus()` sobre
+   `<app-button>` —que no es focusable— manda el foco al <body>: la siguiente
+   tabulacion reempieza desde el principio del documento y quien navega con
+   teclado pierde el sitio.
+  */
+  it('lleva el foco al control real y no al elemento anfitrion', async () => {
+    await TestBed.configureTestingModule({
+      imports: [ButtonComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(ButtonComponent);
+    fixture.detectChanges();
+
+    fixture.componentInstance.focus();
+
+    expect(document.activeElement).toBe(fixture.nativeElement.querySelector('button'));
+  });
+});

@@ -32,6 +32,11 @@ archivo. El formato se basa en
   Lo destapo migrar el consumidor a la politica 1.2.2, que prohibe primitivas
   visuales nativas en la superficie gobernada: al convertir el boton de menu de
   su shell en `app-button`, su `aria-expanded` se quedaba sin sitio donde vivir.
+- **`app-button.focus()`**, la otra mitad del mismo patron. Al pulsar Escape hay
+  que devolver el foco al boton que abrio, y `nativeElement.focus()` sobre
+  `<app-button>` —que no es focusable— manda el foco al `<body>`: la siguiente
+  tabulacion reempieza desde el principio del documento y quien navega con
+  teclado pierde el sitio.
 
 ## [5.7.0] - 2026-08-13
 

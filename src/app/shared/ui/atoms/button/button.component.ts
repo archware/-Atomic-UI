@@ -1,4 +1,12 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  viewChild,
+} from '@angular/core';
 import { SpinnerComponent } from '../spinner/spinner.component';
 
 /**
@@ -38,6 +46,7 @@ export type IconPosition = 'left' | 'right' | 'none';
   },
   template: `
     <button
+      #control
       [type]="type"
       [disabled]="isDisabled"
       [attr.aria-label]="ariaLabel || null"
@@ -243,6 +252,21 @@ export class ButtonComponent {
   debe declarar el atributo, porque `aria-expanded="false"` sobre algo que no
   se despliega es una promesa falsa.
   */
+  /**
+   * Devuelve el foco al control real.
+   *
+   * Sin esto, un patron de divulgacion no se puede cerrar bien: al pulsar
+   * Escape hay que devolver el foco al boton que abrio, y `nativeElement.focus()`
+   * sobre `<app-button>` —que no es focusable— manda el foco al `<body>`. La
+   * siguiente tabulacion reempieza desde el principio del documento y quien
+   * navega con teclado pierde el sitio.
+   */
+  private readonly control = viewChild<ElementRef<HTMLButtonElement>>('control');
+
+  focus(options?: FocusOptions): void {
+    this.control()?.nativeElement.focus(options);
+  }
+
   @Input() ariaLabel = '';
   @Input() ariaControls = '';
   @Input() ariaExpanded: boolean | null = null;

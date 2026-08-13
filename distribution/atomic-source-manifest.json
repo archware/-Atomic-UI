@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "282c17a78629ff26ead91e291c7f4e60d88ce37073eff11d3173bf0eea7e8c3a",
+  "sourceTreeSha256": "abacfa36785d546fb3cb07d1ffcb11db9811f8752573ffccb0d83d3cf973a5b7",
   "fileCount": 158,
   "files": [
     {
@@ -50,8 +50,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/button/button.component.ts",
-      "bytes": 8205,
-      "sha256": "2ed5293a2b38586aff557e2d9b50992adafd291854d58f70efe99a25d21de582"
+      "bytes": 8850,
+      "sha256": "c894cc98c0271a92d413fbbd3e556887a5299f15937b519c545517c2c8678d0f"
     },
     {
       "path": "src/app/shared/ui/atoms/checkbox/checkbox.component.ts",
