@@ -2,6 +2,11 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const uiRoot = path.resolve('src/app/shared/ui');
+// REGISTRO DE DEUDA, no lista de permitidos. Cada entrada es un componente que
+// todavia responde al alias `prest-*` porque hay marcado de consumidor
+// escrito asi. El canonico `app-*` debe ir primero; el alias solo acompana.
+// La lista deberia encoger con el tiempo: que crezca sin motivo escrito es la
+// senal de que se dejo de migrar marcado y se empezo a normalizar la excepcion.
 const transitionalAliasFiles = new Set([
   'atoms/choice-control/choice-control.ts',
   'atoms/form-input/input.ts',
@@ -9,6 +14,9 @@ const transitionalAliasFiles = new Set([
   'atoms/table-action/table-action.ts',
   'atoms/toggle/toggle.component.ts',
   'molecules/action-group/action-group.component.ts',
+  // 5.6.0: alert unifica su API con la del consumidor, que la invoca como
+  // `prest-alert` en 26 ficheros y por tres repos.
+  'molecules/alert/alert.component.ts',
   'organisms/crud-dialog/crud-dialog.ts',
   'organisms/data-table/data-table.ts',
   'organisms/denomination-counter/denomination-counter.ts',
