@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideZonelessChangeDetection } from '@angular/core';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ButtonComponent, ButtonTone, ButtonVariant } from './button.component';
 
 describe('ButtonComponent', () => {
@@ -226,5 +226,62 @@ describe('ButtonComponent', () => {
       expect(iconSpan?.textContent?.trim()).toBe('🔍');
       expect(iconSpan?.getAttribute('aria-hidden')).toBe('true');
     });
+  });
+});
+
+/*
+ARIA del control, no del envoltorio.
+
+Sin estas entradas, quien necesita un boton de divulgacion solo podia poner
+`aria-expanded` sobre `<app-button>`, que es un elemento sin rol: el atributo
+quedaba inerte y el lector anunciaba un boton corriente que nunca decia si
+estaba abierto o cerrado. Se veia bien, se pulsaba bien, y no informaba.
+*/
+describe('ButtonComponent aria de divulgacion', () => {
+  let fixture: ComponentFixture<ButtonComponent>;
+
+  const nativo = () => fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+  const set = (name: string, value: unknown) => {
+    fixture.componentRef.setInput(name, value);
+    fixture.detectChanges();
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ButtonComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
+    fixture = TestBed.createComponent(ButtonComponent);
+    fixture.detectChanges();
+  });
+
+  it('pone el aria en el <button> real y no en el elemento anfitrion', () => {
+    set('ariaLabel', 'Abrir menu');
+    set('ariaControls', 'cajon');
+    set('ariaExpanded', false);
+
+    expect(nativo().getAttribute('aria-label')).toBe('Abrir menu');
+    expect(nativo().getAttribute('aria-controls')).toBe('cajon');
+    expect(nativo().getAttribute('aria-expanded')).toBe('false');
+    // Y no se queda en el anfitrion, que es donde no sirve para nada.
+    expect((fixture.nativeElement as HTMLElement).getAttribute('aria-expanded')).toBeNull();
+  });
+
+  it('refleja el cambio de estado', () => {
+    set('ariaExpanded', false);
+    expect(nativo().getAttribute('aria-expanded')).toBe('false');
+
+    set('ariaExpanded', true);
+    expect(nativo().getAttribute('aria-expanded')).toBe('true');
+  });
+
+  /*
+   `null` no declara el atributo. `aria-expanded="false"` sobre un boton que no
+   despliega nada es una promesa falsa: el lector anuncia que hay algo que abrir.
+  */
+  it('sin estado de divulgacion no declara el atributo', () => {
+    set('ariaExpanded', null);
+
+    expect(nativo().getAttribute('aria-expanded')).toBeNull();
   });
 });

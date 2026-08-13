@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.7.0'
+version: '5.7.1'
 status: 'vigente'
 updated: '2026-08-13'
 owner: 'Hospital Regional de Ayacucho'
@@ -14,6 +14,24 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.7.1] - 2026-08-13
+
+### Agregado
+
+- **`app-button` acepta `ariaLabel`, `ariaControls` y `ariaExpanded`.** Sin
+  ellas, un boton de divulgacion —el que abre un cajon o un menu— solo podia
+  declarar `aria-expanded` sobre `<app-button>`, que es un elemento sin rol: el
+  atributo quedaba inerte y el lector anunciaba un boton corriente que nunca
+  decia si estaba abierto o cerrado. Se veia bien, se pulsaba bien, y no
+  informaba.
+  `ariaExpanded` admite `null` a proposito, y es el valor por omision: un boton
+  que no despliega nada NO debe declarar el atributo, porque
+  `aria-expanded="false"` sobre algo que no se abre es una promesa falsa.
+
+  Lo destapo migrar el consumidor a la politica 1.2.2, que prohibe primitivas
+  visuales nativas en la superficie gobernada: al convertir el boton de menu de
+  su shell en `app-button`, su `aria-expanded` se quedaba sin sitio donde vivir.
 
 ## [5.7.0] - 2026-08-13
 

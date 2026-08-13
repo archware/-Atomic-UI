@@ -15,93 +15,280 @@
     {
       "name": "variant",
       "values": [
-        { "value": "primary", "meaning": "Acción dominante de la vista.", "default": true },
-        { "value": "secondary", "meaning": "Alternativa sólida a la acción dominante." },
-        { "value": "success", "meaning": "Confirmación o finalización positiva." },
-        { "value": "warning", "meaning": "Acción que requiere cautela." },
-        { "value": "danger", "meaning": "Acción destructiva o irreversible." },
-        { "value": "soft", "meaning": "Acción semántica de baja intensidad; combinar con tone." },
-        { "value": "outline", "meaning": "Acción secundaria delimitada; admite tone." },
-        { "value": "ghost", "meaning": "Acción de mínima prominencia visual." },
-        { "value": "link", "meaning": "Acción textual con apariencia de enlace." }
+        {
+          "value": "primary",
+          "meaning": "Acción dominante de la vista.",
+          "default": true
+        },
+        {
+          "value": "secondary",
+          "meaning": "Alternativa sólida a la acción dominante."
+        },
+        {
+          "value": "success",
+          "meaning": "Confirmación o finalización positiva."
+        },
+        {
+          "value": "warning",
+          "meaning": "Acción que requiere cautela."
+        },
+        {
+          "value": "danger",
+          "meaning": "Acción destructiva o irreversible."
+        },
+        {
+          "value": "soft",
+          "meaning": "Acción semántica de baja intensidad; combinar con tone."
+        },
+        {
+          "value": "outline",
+          "meaning": "Acción secundaria delimitada; admite tone."
+        },
+        {
+          "value": "ghost",
+          "meaning": "Acción de mínima prominencia visual."
+        },
+        {
+          "value": "link",
+          "meaning": "Acción textual con apariencia de enlace."
+        }
       ]
     },
     {
       "name": "tone",
       "appliesWhen": "variant es soft u outline",
       "values": [
-        { "value": "neutral", "meaning": "Sin semántica de estado.", "default": true },
-        { "value": "primary", "meaning": "Énfasis de marca." },
-        { "value": "success", "meaning": "Resultado positivo." },
-        { "value": "warning", "meaning": "Cautela." },
-        { "value": "danger", "meaning": "Riesgo o destrucción." },
-        { "value": "info", "meaning": "Información o inspección." }
+        {
+          "value": "neutral",
+          "meaning": "Sin semántica de estado.",
+          "default": true
+        },
+        {
+          "value": "primary",
+          "meaning": "Énfasis de marca."
+        },
+        {
+          "value": "success",
+          "meaning": "Resultado positivo."
+        },
+        {
+          "value": "warning",
+          "meaning": "Cautela."
+        },
+        {
+          "value": "danger",
+          "meaning": "Riesgo o destrucción."
+        },
+        {
+          "value": "info",
+          "meaning": "Información o inspección."
+        }
       ]
     },
     {
       "name": "size",
       "values": [
-        { "value": "sm", "meaning": "Acciones compactas." },
-        { "value": "md", "meaning": "Tamaño estándar.", "default": true },
-        { "value": "lg", "meaning": "Mayor área y énfasis." }
+        {
+          "value": "sm",
+          "meaning": "Acciones compactas."
+        },
+        {
+          "value": "md",
+          "meaning": "Tamaño estándar.",
+          "default": true
+        },
+        {
+          "value": "lg",
+          "meaning": "Mayor área y énfasis."
+        }
       ]
     },
     {
       "name": "icon-position",
       "values": [
-        { "value": "left", "meaning": "Icono antes de la etiqueta.", "default": true },
-        { "value": "right", "meaning": "Icono después de la etiqueta." },
-        { "value": "none", "meaning": "Ignora icon e iconClass configurados." }
+        {
+          "value": "left",
+          "meaning": "Icono antes de la etiqueta.",
+          "default": true
+        },
+        {
+          "value": "right",
+          "meaning": "Icono después de la etiqueta."
+        },
+        {
+          "value": "none",
+          "meaning": "Ignora icon e iconClass configurados."
+        }
       ]
     },
     {
       "name": "html-type",
       "values": [
-        { "value": "button", "meaning": "No envía formularios por defecto.", "default": true },
-        { "value": "submit", "meaning": "Envía el formulario contenedor." },
-        { "value": "reset", "meaning": "Restablece el formulario contenedor." }
+        {
+          "value": "button",
+          "meaning": "No envía formularios por defecto.",
+          "default": true
+        },
+        {
+          "value": "submit",
+          "meaning": "Envía el formulario contenedor."
+        },
+        {
+          "value": "reset",
+          "meaning": "Restablece el formulario contenedor."
+        }
       ]
     },
     {
       "name": "width",
       "values": [
-        { "value": "intrinsic", "meaning": "El control conserva el ancho de su etiqueta.", "default": true },
-        { "value": "full", "meaning": "El host y el botón nativo ocupan todo el ancho disponible." }
+        {
+          "value": "intrinsic",
+          "meaning": "El control conserva el ancho de su etiqueta.",
+          "default": true
+        },
+        {
+          "value": "full",
+          "meaning": "El host y el botón nativo ocupan todo el ancho disponible."
+        }
       ]
     },
     {
       "name": "loading",
       "values": [
-        { "value": false, "meaning": "La acción permanece disponible.", "default": true },
-        { "value": true, "meaning": "Muestra progreso, deshabilita el botón y bloquea activaciones repetidas." }
+        {
+          "value": false,
+          "meaning": "La acción permanece disponible.",
+          "default": true
+        },
+        {
+          "value": true,
+          "meaning": "Muestra progreso, deshabilita el botón y bloquea activaciones repetidas."
+        }
       ]
     }
   ],
   "inputs": [
-    { "name": "loading", "type": "boolean", "default": false, "meaning": "Marca aria-busy, muestra un Spinner decorativo y aplica disabled nativo mientras la acción está pendiente." },
-    { "name": "type", "type": "'button' | 'submit' | 'reset'", "default": "button", "meaning": "Tipo del botón HTML." },
-    { "name": "variant", "type": "ButtonVariant", "default": "primary", "meaning": "Jerarquía visual." },
-    { "name": "tone", "type": "ButtonTone", "default": "neutral", "meaning": "Tono semántico de variantes sutiles." },
-    { "name": "size", "type": "ButtonSize", "default": "md", "meaning": "Escala del control." },
-    { "name": "icon", "type": "string", "default": "", "meaning": "Emoji o texto iconográfico." },
-    { "name": "iconClass", "type": "string", "default": "", "meaning": "Alias o clases Font Awesome normalizadas." },
-    { "name": "iconPosition", "type": "IconPosition", "default": "left", "meaning": "Posición del icono configurado." },
-    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Bloquea interacción y emisión." },
-    { "name": "fullWidth", "type": "boolean", "default": false, "meaning": "Expande el host y el botón nativo al ancho disponible." }
+    {
+      "name": "loading",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Marca aria-busy, muestra un Spinner decorativo y aplica disabled nativo mientras la acción está pendiente."
+    },
+    {
+      "name": "type",
+      "type": "'button' | 'submit' | 'reset'",
+      "default": "button",
+      "meaning": "Tipo del botón HTML."
+    },
+    {
+      "name": "variant",
+      "type": "ButtonVariant",
+      "default": "primary",
+      "meaning": "Jerarquía visual."
+    },
+    {
+      "name": "tone",
+      "type": "ButtonTone",
+      "default": "neutral",
+      "meaning": "Tono semántico de variantes sutiles."
+    },
+    {
+      "name": "size",
+      "type": "ButtonSize",
+      "default": "md",
+      "meaning": "Escala del control."
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "default": "",
+      "meaning": "Emoji o texto iconográfico."
+    },
+    {
+      "name": "iconClass",
+      "type": "string",
+      "default": "",
+      "meaning": "Alias o clases Font Awesome normalizadas."
+    },
+    {
+      "name": "iconPosition",
+      "type": "IconPosition",
+      "default": "left",
+      "meaning": "Posición del icono configurado."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Bloquea interacción y emisión."
+    },
+    {
+      "name": "fullWidth",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Expande el host y el botón nativo al ancho disponible."
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "default": "",
+      "meaning": "Nombre accesible cuando el boton solo muestra icono."
+    },
+    {
+      "name": "ariaControls",
+      "type": "string",
+      "default": "",
+      "meaning": "Id del elemento que este boton despliega o controla."
+    },
+    {
+      "name": "ariaExpanded",
+      "type": "boolean | null",
+      "default": null,
+      "meaning": "Estado de divulgacion. `null` NO declara el atributo: un boton que no despliega nada no debe prometer que lo hace."
+    }
   ],
   "outputs": [
-    { "name": "buttonClick", "type": "MouseEvent", "meaning": "Clic válido; no emite si disabled o loading y detiene propagación." }
+    {
+      "name": "buttonClick",
+      "type": "MouseEvent",
+      "meaning": "Clic válido; no emite si disabled o loading y detiene propagación."
+    }
   ],
   "slots": [
-    { "name": "default", "type": "projected content", "meaning": "Etiqueta accesible del botón." },
-    { "name": "[icon-left]", "type": "projected content", "meaning": "Icono personalizado anterior." },
-    { "name": "[icon-right]", "type": "projected content", "meaning": "Icono personalizado posterior." }
+    {
+      "name": "default",
+      "type": "projected content",
+      "meaning": "Etiqueta accesible del botón."
+    },
+    {
+      "name": "[icon-left]",
+      "type": "projected content",
+      "meaning": "Icono personalizado anterior."
+    },
+    {
+      "name": "[icon-right]",
+      "type": "projected content",
+      "meaning": "Icono personalizado posterior."
+    }
   ],
   "states": [
-    { "name": "loading", "meaning": "Usa disabled nativo, aria-busy y spinner sin emitir comandos adicionales." },
-    { "name": "enabled", "meaning": "Interactivo y emite buttonClick." },
-    { "name": "disabled", "meaning": "Usa disabled nativo y no emite." },
-    { "name": "focus-visible", "meaning": "El tema global aplica el anillo de foco." }
+    {
+      "name": "loading",
+      "meaning": "Usa disabled nativo, aria-busy y spinner sin emitir comandos adicionales."
+    },
+    {
+      "name": "enabled",
+      "meaning": "Interactivo y emite buttonClick."
+    },
+    {
+      "name": "disabled",
+      "meaning": "Usa disabled nativo y no emite."
+    },
+    {
+      "name": "focus-visible",
+      "meaning": "El tema global aplica el anillo de foco."
+    }
   ],
   "a11y": [
     "loading conserva la etiqueta textual, expone aria-busy y oculta el spinner decorativo del árbol accesible.",
@@ -142,11 +329,24 @@
     "--space-1",
     "--space-2"
   ],
-  "story": { "path": "src/stories/ui-button.stories.ts", "status": "available" },
-  "test": { "path": "src/app/shared/ui/atoms/button/button.component.spec.ts", "status": "available" },
+  "story": {
+    "path": "src/stories/ui-button.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/button/button.component.spec.ts",
+    "status": "available"
+  },
   "stability": {
     "status": "stable",
-    "notes": ["La apariencia base reside en src/styles/themes/_buttons.css."]
+    "notes": [
+      "La apariencia base reside en src/styles/themes/_buttons.css."
+    ]
   },
-  "canonicalFor": ["action", "form-submit", "form-cancel", "dialog-action"]
+  "canonicalFor": [
+    "action",
+    "form-submit",
+    "form-cancel",
+    "dialog-action"
+  ]
 }

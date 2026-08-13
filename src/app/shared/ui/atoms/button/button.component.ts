@@ -40,6 +40,9 @@ export type IconPosition = 'left' | 'right' | 'none';
     <button
       [type]="type"
       [disabled]="isDisabled"
+      [attr.aria-label]="ariaLabel || null"
+      [attr.aria-controls]="ariaControls || null"
+      [attr.aria-expanded]="expandedAttribute"
       [attr.aria-busy]="loading ? 'true' : null"
       [class]="buttonClasses"
       (click)="onButtonClick($event)"
@@ -228,6 +231,25 @@ export class ButtonComponent {
 
   /** Expands both the host and the native button to the available width. */
   @Input() fullWidth = false;
+
+  /*
+  ARIA DEL CONTROL, NO DEL ENVOLTORIO. Sin estas entradas, quien necesita un
+  boton de divulgacion —el que abre un cajon o un menu— solo puede poner
+  `aria-expanded` sobre `<app-button>`, que es un elemento sin rol: el atributo
+  queda inerte y el lector anuncia un boton corriente que nunca dice si esta
+  abierto o cerrado. Se ve bien, se pulsa bien, y no informa.
+
+  `ariaExpanded` admite `null` a proposito: un boton que no controla nada NO
+  debe declarar el atributo, porque `aria-expanded="false"` sobre algo que no
+  se despliega es una promesa falsa.
+  */
+  @Input() ariaLabel = '';
+  @Input() ariaControls = '';
+  @Input() ariaExpanded: boolean | null = null;
+
+  protected get expandedAttribute(): string | null {
+    return this.ariaExpanded === null ? null : this.ariaExpanded ? 'true' : 'false';
+  }
 
   /**
    * Emits when the button is clicked.
