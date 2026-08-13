@@ -2,7 +2,7 @@
 title: "Lecciones aprendidas de Atomic UI"
 document_type: "registro técnico"
 status: "en revisión"
-last_updated: "2026-08-03"
+last_updated: "2026-08-13"
 owners:
   - "Hospital Regional de Ayacucho"
 ---
@@ -10,6 +10,75 @@ owners:
 # Lecciones aprendidas de Atomic UI
 
 Este documento centraliza el conocimiento adquirido tras solucionar problemas complejos de arquitectura, diseño e integración en el ecosistema de Atomic-UI, sirviendo como guía maestra para que agentes y desarrolladores entiendan el "por qué" de ciertas decisiones técnicas críticas y puedan portar este comportamiento a otros ecosistemas (Wails, Tauri, Web, etc).
+
+---
+
+## [2026-08-13] - `display: grid` NO retira la semántica de tabla, y lo medimos tarde
+
+**La creencia.** Cambiar el `display` de los elementos de tabla les retira su rol
+implícito, así que la rejilla de columnas de `ScrollOverlay` —que pone
+`display: grid` en las filas y `display: block` en el cuerpo— dejaría a un lector
+de pantalla sin poder anunciar filas ni celdas. Es lo que dice la guía clásica de
+ARIA in HTML, y sobre esa creencia se añadió en 5.7.0 un `restoreTableSemantics()`
+que declaraba la jerarquía completa de roles.
+
+**La medición.** Se preguntó al árbol de accesibilidad REAL de los dos motores
+que importan: por CDP (`Accessibility.getFullAXTree`) en Chromium y por
+`page.accessibility.snapshot()` en WebKit, con una tabla de doce filas y
+cabeceras con `scope="col"`.
+
+```text
+WebKit    nativa    {"table":1,"row":13,"columnheader":9,"cell":72}
+          con rejilla  ← IDÉNTICO
+          con roles    ← IDÉNTICO
+
+Chromium  nativa    {"table":1,"rowgroup":1,"row":13,"columnheader":3,"cell":36}
+          con rejilla  ← IDÉNTICO
+          con roles    ← rowgroup:2, un nodo que el navegador no expone solo
+```
+
+**El resultado.** Ninguno de los dos motores pierde la semántica. Y los roles
+explícitos no eran «redundantes e inocuos»: en Chromium **añadían** un `rowgroup`
+que el navegador deliberadamente no expone. Se revirtió en 5.7.3.
+
+### Lo que hay que llevarse de aquí
+
+1. **El árbol de accesibilidad se puede medir, y no hace falta un lector de
+   pantalla para la mayor parte.** El árbol *es* lo que consume la tecnología
+   asistiva. Si el de una tabla con rejilla es idéntico al de una nativa, no
+   queda nada que un lector pueda anunciar distinto.
+2. **`getByRole` de Playwright NO sirve para esto.** Calcula el rol él mismo en
+   JavaScript siguiendo la especificación ARIA, así que es ciego a lo que el
+   navegador hace de verdad y responde «idéntico» por construcción. Hay que
+   pedir el árbol real. Estuvimos a punto de dar por buena una medición vacía.
+3. **Cuidado con la tabla de juguete.** Con dos filas los tres casos daban
+   `columnheader: 0`, por la heurística de «tabla de maquetación». La conclusión
+   solo aparece con una tabla realista.
+4. **Una guía de accesibilidad de hace años no es una medición de hoy.** Los
+   motores corrigieron esto; el documento que lo advertía sigue circulando.
+
+### Cómo repetirlo
+
+Requiere Playwright y WebKit (`npx playwright install webkit`), que Atomic no
+trae. Se ejecuta desde un consumidor que sí los tenga:
+
+```js
+import { webkit, chromium } from '@playwright/test';
+const cuenta = (n, acc = {}) => {
+  if (n.role) acc[n.role] = (acc[n.role] ?? 0) + 1;
+  for (const h of n.children ?? []) cuenta(h, acc);
+  return acc;
+};
+const b = await webkit.launch({ headless: true });
+const page = await b.newPage();
+await page.goto(urlDeLaPaginaDePrueba);
+console.log(cuenta(await page.accessibility.snapshot({ interestingOnly: false })));
+await b.close();
+```
+
+Compara tres variantes en la misma página —tabla nativa, tabla con la rejilla, y
+tabla con los roles declarados— retirando las otras dos del documento antes de
+cada medición para que los conteos no se sumen.
 
 ---
 

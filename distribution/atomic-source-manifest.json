@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.7.3",
+  "packageVersion": "5.7.4",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "df53c9d5dcc15c84f3896beb6120b5ea217365ab5d45d8f0c637394f1b497042",
+  "sourceTreeSha256": "0343e9cccf737e6cee5de1498a9d7889beec41a1f3598cd4f34e386335cb291f",
   "fileCount": 158,
   "files": [
     {
@@ -21,7 +21,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 854,
-      "sha256": "becf79583db8dd9aaa26b4fe76e04947fa8ab1fdccccf58ee5c222a4ff0db0b8"
+      "sha256": "69e27fb0a99d80497fa6ab3747369a387ae9a3ac94050c218960c9a5f88f401d"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -590,8 +590,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts",
-      "bytes": 48898,
-      "sha256": "2446ce878acaaaddcd29bf16c4ec44a03c6d8fb3d73160afebe7894a5cd29a03"
+      "bytes": 45528,
+      "sha256": "bcfe51177e057037247613059f29cfdd5b7e2443677044205becbebcca8066a5"
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.css",

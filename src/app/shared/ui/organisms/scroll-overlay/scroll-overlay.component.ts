@@ -851,74 +851,6 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     this.updateHorizontalThumb();
   }
 
-  /**
-   * Devuelve a la tabla los roles que el `display` le quita.
-   *
-   * EL RIESGO, dicho con la precision que se pudo comprobar. Para cuadrar
-   * columnas, este componente pasa `thead tr` y `tbody tr` a `display: grid` y
-   * `tbody` a `display: block`. Cambiar el `display` de los elementos de tabla
-   * ha retirado historicamente su rol implicito, y con el la navegacion por
-   * tabla: el lector deja de anunciar «fila 3 de 20, columna Importe» y lee una
-   * lista plana. Chrome y Firefox lo corrigieron; Safari con VoiceOver ha sido
-   * el rezagado.
-   *
-   * NO SE HA MEDIDO EN ESTE REPOSITORIO, y conviene no fingir lo contrario: la
-   * suite corre en Chrome Headless, `Element.computedRole` no esta disponible
-   * ahi y no se logro instrumentar el arbol de accesibilidad. Asi que esto NO
-   * es «se comprobo que se pierde el rol y aqui esta el arreglo». Es: declarar
-   * el rol explicito cuesta unas pocas escrituras condicionales, es redundante
-   * e inocuo donde el navegador ya lo conserva, y es la diferencia entre una
-   * tabla navegable y una lista de textos donde no. Con esa asimetria, se
-   * declara.
-   *
-   * Y ALCANZA A CASI TODAS LAS TABLAS, no solo a las que declaran columnas:
-   * `syncTableColumns` vale `true` por omision y basta con que exista un
-   * `<thead>` para que la rejilla se active.
-   *
-   * POR QUE SE RESTITUYE TODO Y NO SOLO `role="table"`. Un `role="table"` cuyos
-   * hijos ya no son filas describe una tabla vacia, y segun el lector eso puede
-   * ser PEOR que no declarar nada: se anuncia una tabla y luego no hay
-   * contenido que recorrer. O se restituye la jerarquia entera —tabla, grupos
-   * de fila, filas y celdas— o no se toca.
-   *
-   * SE HACE AQUI, EN syncGeometry, porque las filas las proyecta el consumidor
-   * y llegan y se van con los datos. Este metodo corre tambien cuando el
-   * MutationObserver detecta que el contenido cambio, de modo que las filas
-   * nuevas nacen con su rol. Solo escribe cuando el valor difiere, para no
-   * castigar tablas grandes ni disparar observadores en cadena.
-   */
-  private restoreTableSemantics(table: HTMLElement, gridActive: boolean): void {
-    const apply = (element: Element | null, role: string): void => {
-      if (!element) {
-        return;
-      }
-      if (gridActive) {
-        if (element.getAttribute('role') !== role) {
-          element.setAttribute('role', role);
-        }
-      } else if (element.getAttribute('role') === role) {
-        // Sin rejilla, el `display` nativo ya da el rol correcto y declararlo
-        // seria ruido que ademas mentiria si el marcado cambiara.
-        element.removeAttribute('role');
-      }
-    };
-
-    apply(table, 'table');
-    for (const group of Array.from(table.querySelectorAll(':scope > thead, :scope > tbody, :scope > tfoot'))) {
-      apply(group, 'rowgroup');
-    }
-    for (const row of Array.from(table.querySelectorAll('tr'))) {
-      apply(row, 'row');
-    }
-    for (const cell of Array.from(table.querySelectorAll('th'))) {
-      // Una cabecera dentro del cuerpo encabeza su FILA, no su columna.
-      apply(cell, cell.closest('thead') ? 'columnheader' : 'rowheader');
-    }
-    for (const cell of Array.from(table.querySelectorAll('td'))) {
-      apply(cell, 'cell');
-    }
-  }
-
   private syncGeometry(): void {
     this.syncColumnTemplate();
     this.updateScrollAreaDimensions();
@@ -934,7 +866,6 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
         const tbody = table.querySelector('tbody') as HTMLElement;
         if (thead) thead.style.width = '100%';
         if (tbody) tbody.style.width = '100%';
-        this.restoreTableSemantics(table, this.hostEl.hasAttribute('data-so-sync-columns'));
       }
     }
 

@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.7.3'
+version: '5.7.4'
 status: 'vigente'
 updated: '2026-08-13'
 owner: 'Hospital Regional de Ayacucho'
@@ -14,6 +14,25 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.7.4] - 2026-08-13
+
+### Retirado
+
+- **Los roles de tabla declarados bajo la rejilla, que 5.7.0 anadio.** La
+  creencia era que `display: grid` en las filas retira su rol implicito y deja a
+  un lector de pantalla sin poder anunciar filas ni celdas. Se midio el arbol de
+  accesibilidad REAL de los dos motores —CDP en Chromium,
+  `page.accessibility.snapshot()` en WebKit, con una tabla de doce filas— y es
+  falso: los tres casos (nativa, con rejilla, con roles) son identicos.
+
+  Peor: en Chromium los roles explicitos **anadian** un `rowgroup` que el
+  navegador no expone por su cuenta. No eran redundantes e inocuos, como decia
+  su propio comentario.
+
+  El coste era real —recorrer todas las filas y celdas en cada `syncGeometry`,
+  que corre en cada mutacion del contenido— a cambio de un beneficio medido de
+  cero. La medicion, el metodo y las trampas quedan en `LESSONS_LEARNED.md`.
 
 ## [5.7.3] - 2026-08-13
 
