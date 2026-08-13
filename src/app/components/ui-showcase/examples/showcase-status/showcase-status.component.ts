@@ -92,11 +92,11 @@ import { SkeletonComponent } from '../../../../shared/ui/atoms/skeleton/skeleton
     .subsection-title { font-size: 1rem; font-weight: 500; margin: 1rem 0 0.5rem; color: var(--text-color-secondary); }
     
     .loader-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
-    .loader-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1rem; background: var(--surface-card); border-radius: 0.5rem; }
+    .loader-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1rem; background: var(--surface-elevated); border-radius: 0.5rem; }
     .loader-sizes { display: flex; gap: 2rem; align-items: flex-end; }
     .loader-size-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
     
-    .loading-container { display: flex; flex-direction: column; gap: 1rem; padding: 1rem; background: var(--surface-card); border-radius: 0.5rem; border: 1px solid var(--border-color); }
+    .loading-container { display: flex; flex-direction: column; gap: 1rem; padding: 1rem; background: var(--surface-elevated); border-radius: 0.5rem; border: 1px solid var(--border-color); }
     
     /* Progress bar styles */
     .progress-container { margin-bottom: 1rem; }

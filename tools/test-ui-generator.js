@@ -162,7 +162,7 @@ function assertGeneratedQuality(fixture, output) {
     assert(aggregate.includes('[min]="0"'), 'No se aplico el minimo numerico explicito.');
     assert(aggregate.includes('[max]="9999"'), 'No se aplico el maximo numerico explicito.');
     assert(aggregate.includes('[step]="1"'), 'No se aplico el step numerico explicito.');
-    assert(aggregate.includes('variant="success"'), 'No se renderiza feedback de exito.');
+    assert(aggregate.includes('kind="success"'), 'No se renderiza feedback de exito.');
     const permissions = generated['relationship.permissions.ts'];
     assert(permissions.includes('=> false'), 'PermissionPort no deniega por defecto.');
     assert(permissions.includes('RELATIONSHIP_PERMISSION_PORT'), 'No se genero el token de permisos tipado.');

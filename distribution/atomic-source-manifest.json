@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.5.8",
+  "packageVersion": "5.7.0",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,8 +10,8 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "e4adb67ae1c3d9fb5713d9e92f30a091a541818c04cdea72f986b593f749d798",
-  "fileCount": 157,
+  "sourceTreeSha256": "9a909a262577d2711fdf142bba626f6c8cc63de84713a622a9803e38112b4379",
+  "fileCount": 158,
   "files": [
     {
       "path": "projects/atomic-ui/ng-package.json",
@@ -21,7 +21,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 854,
-      "sha256": "fb7f3b619a2f2018bb4122058eb94cc34070528f713e7352d1139a879372249a"
+      "sha256": "8336ca12fdcf9f76c23ac802d6271479ba0c87f495e60d3e06717dbd857275b4"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -70,8 +70,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/choice-control/choice-control.scss",
-      "bytes": 1637,
-      "sha256": "bba6b2622dae26aa2b8867a56c76a3bd9b3f459395de68a5266e8cc6cfa6b942"
+      "bytes": 1746,
+      "sha256": "137744124fa322200e2547f715d64adab3854f01b45e60d6bb3cf2093038dd74"
     },
     {
       "path": "src/app/shared/ui/atoms/choice-control/choice-control.ts",
@@ -85,8 +85,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/file-input/file-input.component.ts",
-      "bytes": 13807,
-      "sha256": "0f0f7a17fe4480d9734a243cdfaf9ed932bb923ec51b54d1e9e84a1296064fd9"
+      "bytes": 14768,
+      "sha256": "76b24ecfa24b47480f114956174dd16a4d6c4cc0c73ca4639cd3ad9e4fb0b1e5"
     },
     {
       "path": "src/app/shared/ui/atoms/floating-input/floating-input.component.ts",
@@ -105,8 +105,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/form-input/input.scss",
-      "bytes": 1891,
-      "sha256": "a7dedce95a1acff2fde28653d999d34366012614cf7f3af0cc0c2ea96ba006bc"
+      "bytes": 2432,
+      "sha256": "7a3438229368c57373562485a82d06a7656d747f8f83265c92249ba7f76f9e54"
     },
     {
       "path": "src/app/shared/ui/atoms/form-input/input.ts",
@@ -125,8 +125,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/form-select/select.scss",
-      "bytes": 2053,
-      "sha256": "970ed292fa4365e193b29bc626c8d4fac369d65832aa4f5b5de65f1cc055cf10"
+      "bytes": 2378,
+      "sha256": "2f3f3c1d8cc97c0131e10d3f2db082fa1e9dd7fd04a7b3544660dc6c617985c3"
     },
     {
       "path": "src/app/shared/ui/atoms/form-select/select.ts",
@@ -280,8 +280,8 @@
     },
     {
       "path": "src/app/shared/ui/index.ts",
-      "bytes": 13851,
-      "sha256": "c1bd36c8eaefdc7d750c4b4f4800f4067db3ecadcacbed93dfec9dba6f5b3f24"
+      "bytes": 14189,
+      "sha256": "5a317f37e2ae2e02dc9b980607f3192dd31075a6ab0fa7871fa093f459aadd37"
     },
     {
       "path": "src/app/shared/ui/interceptors/auth.interceptor.ts",
@@ -300,8 +300,13 @@
     },
     {
       "path": "src/app/shared/ui/molecules/alert/alert.component.ts",
-      "bytes": 5463,
-      "sha256": "676674be38857dda75940e583557702fee9e7eefe222aeb22e05d1aa2e19e390"
+      "bytes": 3215,
+      "sha256": "5beb796f90014def7a114b0fb66d7dcf48148b6302535a31a114aec7cdb3d5f9"
+    },
+    {
+      "path": "src/app/shared/ui/molecules/alert/alert.scss",
+      "bytes": 2359,
+      "sha256": "bd90e92b7a5df8d45c1bfb34fa2ec7baf761a98be25ba402b33189161a7ab8d2"
     },
     {
       "path": "src/app/shared/ui/molecules/avatar-group/avatar-group.component.ts",
@@ -330,8 +335,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/datepicker/datepicker.component.css",
-      "bytes": 4173,
-      "sha256": "77173c51c4f7eba57c4531b2335a76c58625386d71a1f7339875889506e53402"
+      "bytes": 4275,
+      "sha256": "364c4c10e75a8598081d258680d5f33c3783575d9ef5d8a609497db415106f17"
     },
     {
       "path": "src/app/shared/ui/molecules/datepicker/datepicker.component.html",
@@ -360,8 +365,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/modal/modal.component.ts",
-      "bytes": 9992,
-      "sha256": "cd68a01a506d53b0dc4f404f4ad069e006bc959e3163887cb76a18d4bb278779"
+      "bytes": 11224,
+      "sha256": "32f636659c60e0015e144b353bcddf6ded95df7d572a9705e748763d22509161"
     },
     {
       "path": "src/app/shared/ui/molecules/pagination/pagination.component.ts",
@@ -445,8 +450,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.html",
-      "bytes": 7811,
-      "sha256": "dffbeb954da52752e8366b409d362f236ff00542bf287e9c3b4448e6c6159d89"
+      "bytes": 7804,
+      "sha256": "e7d87a3f9af3155e7d3cda977f14a8e5d7fbda5864682b75d511893684ea187b"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.scss",
@@ -455,8 +460,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.ts",
-      "bytes": 13652,
-      "sha256": "a511353a130e5b39656527b63e666d6eeb199cda217a6ef3fa880b8c1e3d3771"
+      "bytes": 13634,
+      "sha256": "f80ec35a8fede1fdb13a9b397555d5a6604d09992e190a3be1fda61edad7f2b2"
     },
     {
       "path": "src/app/shared/ui/organisms/denomination-counter/denomination-counter.ts",
@@ -585,8 +590,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts",
-      "bytes": 45528,
-      "sha256": "bcfe51177e057037247613059f29cfdd5b7e2443677044205becbebcca8066a5"
+      "bytes": 48898,
+      "sha256": "2446ce878acaaaddcd29bf16c4ec44a03c6d8fb3d73160afebe7894a5cd29a03"
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.css",
@@ -770,8 +775,8 @@
     },
     {
       "path": "src/styles/themes/_tokens-components.css",
-      "bytes": 35946,
-      "sha256": "c1c4de886f7cbc12a5dd2131d7c472bfe2a590ae6bef58479aaadab19005a53b"
+      "bytes": 36755,
+      "sha256": "a02601efabbc64729d753a931d47b49eec166c3ba3a5d3e0bc35dfe5532e580f"
     },
     {
       "path": "src/styles/themes/_tokens-primitives.css",

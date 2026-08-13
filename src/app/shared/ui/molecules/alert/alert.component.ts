@@ -1,187 +1,80 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-} from '@angular/core';
-
-
-export type AlertVariant = 'info' | 'success' | 'warning' | 'danger';
-export type AlertSize = 'sm' | 'md' | 'lg';
-export type AlertFlowSpacing = 'default' | 'compact' | 'none';
-
 /**
- * AlertComponent — Mensaje de estado inline.
- * A diferencia del Toast (global/flotante), el Alert se embebe en el flujo del documento.
+ * Alert unificado (5.4.0). Sustituye la implementacion previa del ADN, que
+ * divergia del consumidor en nombres de entrada y perdia por merito tecnico:
  *
- * @example
- * ```html
- * <app-alert variant="success" title="Guardado" message="Los cambios fueron guardados."></app-alert>
- * <app-alert variant="danger" [closable]="true" (closed)="onClose()">
- *   Error al procesar la solicitud.
- * </app-alert>
- * ```
+ * - `variant` -> `kind` y `flowSpacing` -> `spacing`: mismo conjunto de valores,
+ *   renombrado puro. `AlertKind` conserva su nombre porque es contrato de
+ *   dominio en el consumidor (credit-score-presentation.ts).
+ * - Se retiran `size` y `message`. `size` no tenia ningun uso legitimo y
+ *   competia con el sistema de espaciado; `message` duplicaba la proyeccion de
+ *   contenido, que pasa a ser el unico canal del cuerpo.
+ * - `role` condicional: `alert` solo para `danger`, `status` para el resto. El
+ *   anterior fijaba role="alert" -que implica aria-live assertive- y luego lo
+ *   sobrescribia con polite: una combinacion contradictoria.
+ * - Signals en vez de campos planos: con provideZonelessChangeDetection, el
+ *   `dismiss()` anterior escribia un campo que no agendaba deteccion de
+ *   cambios, de modo que la alerta no llegaba a desaparecer.
+ * - Mapa `Record<AlertKind, string>` exhaustivo: anadir un kind sin icono ahora
+ *   falla en compilacion, donde el @switch anterior simplemente no pintaba.
  */
+import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+
+export type AlertKind = 'info' | 'success' | 'warning' | 'danger';
+export type AlertSpacing = 'default' | 'compact' | 'none';
+
+const ALERT_ICONS: Readonly<Record<AlertKind, string>> = {
+  info: 'fa-circle-info',
+  success: 'fa-circle-check',
+  warning: 'fa-triangle-exclamation',
+  danger: 'fa-circle-xmark',
+};
+
 @Component({
-  selector: 'app-alert',
-  standalone: true,
-  imports: [],
+  selector: 'app-alert, prest-alert',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (visible) {
+    @if (visible()) {
       <div
         class="alert"
-        [class]="
-          'alert--' + variant + ' alert--' + size + ' alert--flow-' + flowSpacing
-        "
-        [class.alert--dismissible]="closable"
-        role="alert"
-        [attr.aria-live]="variant === 'danger' ? 'assertive' : 'polite'"
+        [class]="classes()"
+        [attr.role]="kind() === 'danger' ? 'alert' : 'status'"
+        [attr.aria-live]="kind() === 'danger' ? 'assertive' : 'polite'"
       >
-        <!-- Icon -->
-        <span class="alert__icon" aria-hidden="true">
-          @switch (variant) {
-            @case ('info')    { <i class="fa-solid fa-circle-info"></i> }
-            @case ('success') { <i class="fa-solid fa-circle-check"></i> }
-            @case ('warning') { <i class="fa-solid fa-triangle-exclamation"></i> }
-            @case ('danger')  { <i class="fa-solid fa-circle-xmark"></i> }
+        <i class="fa-solid {{ iconClass() }} alert__icon" aria-hidden="true"></i>
+        <div class="alert__body">
+          @if (title()) {
+            <strong class="alert__title">{{ title() }}</strong>
           }
-        </span>
-
-        <!-- Body -->
-        <div class="alert__content">
-          @if (title) {
-            <h4 class="alert__title">{{ title }}</h4>
-          }
-          @if (message) {
-            <p class="alert__message" [innerHTML]="message"></p>
-          }
-          <ng-content></ng-content>
+          <div class="alert__message"><ng-content /></div>
         </div>
-
-        <!-- Close button -->
-        @if (closable) {
-          <button
-            type="button"
-            class="alert__close"
-            aria-label="Cerrar alerta"
-            (click)="dismiss()"
-          >
-            <i class="fa-solid fa-xmark"></i>
+        @if (closable()) {
+          <button class="alert__close" type="button" aria-label="Cerrar mensaje" (click)="close()">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
           </button>
         }
       </div>
     }
   `,
-  styles: [`
-    .alert {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-3);
-      padding: var(--space-3) var(--space-4);
-      border-radius: var(--radius-md);
-      border: 1px solid transparent;
-      font-size: var(--text-sm);
-      position: relative;
-    }
-
-    /* Sizes */
-    .alert--sm { padding: var(--space-2) var(--space-3); font-size: var(--text-xs); }
-    .alert--md { padding: var(--space-3) var(--space-4); }
-    .alert--lg { padding: var(--space-4) var(--space-5); font-size: var(--text-md); }
-
-    /* Flow spacing keeps feedback separate from the next content section. */
-    .alert--flow-default { margin-block-end: var(--alert-flow-gap, 2.25rem); }
-    .alert--flow-compact { margin-block-end: var(--alert-flow-gap-compact, var(--space-4)); }
-    .alert--flow-none { margin-block-end: 0; }
-
-    /* Variants */
-    .alert--info {
-      background-color: var(--alert-info-bg, var(--info-color-lighter));
-      border-color: var(--alert-info-border, var(--info-color));
-      color: var(--alert-info-text, var(--info-color-text));
-    }
-    .alert--success {
-      background-color: var(--alert-success-bg, var(--success-color-lighter));
-      border-color: var(--alert-success-border, var(--success-color));
-      color: var(--alert-success-text, var(--success-color-text));
-    }
-    .alert--warning {
-      background-color: var(--alert-warning-bg, var(--warning-color-lighter));
-      border-color: var(--alert-warning-border, var(--warning-color));
-      color: var(--alert-warning-text, var(--warning-color-text));
-    }
-    .alert--danger {
-      background-color: var(--alert-danger-bg, var(--danger-color-lighter));
-      border-color: var(--alert-danger-border, var(--danger-color));
-      color: var(--alert-danger-text, var(--danger-color-text));
-    }
-
-    /* Icon */
-    .alert__icon {
-      flex-shrink: 0;
-      font-size: var(--space-4);
-      margin-top: 1px;
-    }
-
-    /* Body */
-    .alert__body {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .alert__title {
-      margin: 0 0 var(--space-1);
-      font-weight: var(--font-semibold, 600);
-      line-height: 1.4;
-      text-transform: uppercase;
-    }
-
-    .alert__message {
-      margin: 0;
-      opacity: 0.9;
-      line-height: 1.5;
-    }
-
-    /* Close button */
-    .alert--dismissible { padding-right: var(--space-10, 2.5rem); }
-
-    .alert__close {
-      position: absolute;
-      top: var(--space-2);
-      right: var(--space-2);
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: var(--space-1);
-      border-radius: var(--radius-sm);
-      opacity: 0.6;
-      color: inherit;
-      transition: opacity 150ms ease;
-      line-height: 1;
-    }
-    .alert__close:hover { opacity: 1; }
-    .alert__close:focus-visible {
-      outline: var(--space-1) solid currentColor;
-      outline-offset: 1px;
-    }
-  `],
+  styleUrl: './alert.scss',
+  host: {
+    '[class.alert-flow--default]': "spacing() === 'default'",
+    '[class.alert-flow--compact]': "spacing() === 'compact'",
+    '[class.alert-flow--none]': "spacing() === 'none'",
+  },
 })
-export class AlertComponent {
-  @Input() variant: AlertVariant = 'info';
-  @Input() size: AlertSize = 'md';
-  @Input() title = '';
-  @Input() message = '';
-  @Input() closable = false;
-  @Input() flowSpacing: AlertFlowSpacing = 'default';
+export class Alert {
+  readonly kind = input<AlertKind>('info');
+  readonly title = input('');
+  readonly closable = input(false);
+  readonly spacing = input<AlertSpacing>('default');
+  readonly closed = output<void>();
 
-  @Output() closed = new EventEmitter<void>();
+  protected readonly visible = signal(true);
+  protected readonly iconClass = computed(() => ALERT_ICONS[this.kind()]);
+  protected readonly classes = computed(() => `alert alert--${this.kind()}`);
 
-  protected visible = true;
-
-  dismiss(): void {
-    this.visible = false;
+  protected close(): void {
+    this.visible.set(false);
     this.closed.emit();
   }
 }

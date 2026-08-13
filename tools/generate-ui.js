@@ -1382,7 +1382,7 @@ function buildModalTemplate(spec, recipe) {
         (buttonClick)="cancelDelete()"
       >${html(deleteAction.confirmation.cancelLabel)}</app-button>
       @if (facade.mutationError(); as message) {
-        <app-alert variant="danger" [message]="message" />
+        <app-alert kind="danger">{{ message }}</app-alert>
       }
       <prest-form-dialog-actions>
         <app-button type="button" variant="ghost" [disabled]="facade.isMutating()" (buttonClick)="cancelDelete()">${html(deleteAction.confirmation.cancelLabel)}</app-button>
@@ -1403,10 +1403,10 @@ function buildModalTemplate(spec, recipe) {
   </prest-page-header>
 
   @if (facade.error(); as message) {
-    <app-alert variant="danger" [message]="message" />
+    <app-alert kind="danger">{{ message }}</app-alert>
   }
   @if (facade.feedback(); as message) {
-    <app-alert variant="success" [message]="message" />
+    <app-alert kind="success">{{ message }}</app-alert>
   }
 
   <app-card class="atomic-generated-list">
@@ -1460,7 +1460,7 @@ function buildModalTemplate(spec, recipe) {
       <form #editorForm class="atomic-generated-form" [attr.data-form-layout]="'${html(spec.variants.formLayout)}'" [formGroup]="form" (ngSubmit)="save()" novalidate>
 ${editorTemplate(spec)}
         @if (facade.mutationError(); as message) {
-          <app-alert variant="danger" [message]="message" />
+          <app-alert kind="danger">{{ message }}</app-alert>
         }
         <prest-form-dialog-actions>
           <app-button type="button" variant="ghost" [disabled]="facade.isMutating()" (buttonClick)="closeEditor()">Cancelar</app-button>
@@ -1555,7 +1555,7 @@ function buildListTemplate(spec, recipe) {
     <app-button page-header-actions type="button" (buttonClick)="create()">Nuevo</app-button>
   </prest-page-header>
   @if (facade.error(); as message) {
-    <app-alert variant="danger" [message]="message" />
+    <app-alert kind="danger">{{ message }}</app-alert>
   }
   <app-card class="atomic-generated-list">
     <prest-query-toolbar
@@ -1719,10 +1719,10 @@ function buildRouteFormTemplate(spec, recipe) {
         <form #editorForm class="atomic-generated-form" [attr.data-form-layout]="'${html(spec.variants.formLayout)}'" [formGroup]="form" (ngSubmit)="save()" novalidate>
 ${editorTemplate(spec)}
           @if (facade.mutationError(); as message) {
-            <app-alert variant="danger" [message]="message" />
+            <app-alert kind="danger">{{ message }}</app-alert>
           }
           @if (facade.feedback(); as message) {
-            <app-alert variant="success" [message]="message" />
+            <app-alert kind="success">{{ message }}</app-alert>
           }
           <div class="atomic-generated-form__actions">
             <app-button type="button" variant="ghost" [disabled]="facade.isMutating()" (buttonClick)="cancel()">Volver</app-button>
@@ -1857,7 +1857,7 @@ function buildMasterTemplate(spec, recipe) {
     density="${html(spec.variants.density)}"
   />
   @if (facade.error(); as message) {
-    <app-alert variant="danger" [message]="message" />
+    <app-alert kind="danger">{{ message }}</app-alert>
   }
   <app-card class="atomic-generated-list">
     <prest-query-toolbar

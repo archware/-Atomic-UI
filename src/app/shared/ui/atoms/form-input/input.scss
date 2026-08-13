@@ -55,11 +55,18 @@
   outline: none;
 }
 
+/* Sin `opacity`: atenuaba texto y fondo a la vez contra la página, de modo que
+   el contraste ya no era el que declaran los tokens. Con los tokens corregidos
+   y opacity 0.7 el resultado seguía en 4.09:1; sin ella son 6.99:1.
+   WCAG 1.4.3 exime a los controles inactivos del 4.5:1, así que esto no es un
+   incumplimiento formal: es legibilidad, y un campo que no se lee es un defecto
+   igual. Se sostiene 4.5:1 como listón propio. El estado deshabilitado lo
+   comunican los tokens y el cursor, no una transparencia que falsea lo
+   calculado. */
 .field__input:disabled {
   background: var(--input-disabled-bg);
   color: var(--input-disabled-text);
   cursor: not-allowed;
-  opacity: 0.7;
 }
 
 .field--error .field__input {

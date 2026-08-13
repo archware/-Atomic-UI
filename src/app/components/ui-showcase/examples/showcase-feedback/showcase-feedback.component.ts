@@ -88,7 +88,7 @@ import { ModalService } from '../../../../shared/ui/services/modal.service';
     .button-grid { display: flex; gap: 0.5rem; flex-wrap: wrap; }
     
     /* Alerts styles reuse */
-    .alert { padding: 1rem; border-radius: var(--radius-md); border-left: 4px solid transparent; display: flex; gap: 0.75rem; margin-bottom: 1rem; background: var(--surface-card); }
+    .alert { padding: 1rem; border-radius: var(--radius-md); border-left: 4px solid transparent; display: flex; gap: 0.75rem; margin-bottom: 1rem; background: var(--surface-elevated); }
     .alert-icon { font-size: 1.25rem; }
     .alert-info { border-color: var(--info-color); background: color-mix(in srgb, var(--info-color), transparent 90%); }
     .alert-success { border-color: var(--success-color); background: color-mix(in srgb, var(--success-color), transparent 90%); }
@@ -113,7 +113,7 @@ import { ModalService } from '../../../../shared/ui/services/modal.service';
       left: 50%;
       transform: translateX(-50%);
       background: var(--text-color);
-      color: var(--surface-card);
+      color: var(--text-color-on-primary);
       padding: 0.25rem 0.5rem;
       border-radius: 0.25rem;
       font-size: 0.75rem;

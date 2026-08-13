@@ -20,6 +20,12 @@ const REQUIRED_MARKER = 'ATOMIC_GOVERNANCE_REQUIRED';
 const NATIVE_VISUAL_TAGS = /<(?:button|dialog|input|select|table|textarea)\b/i;
 const NATIVE_VISUAL_SELECTORS =
   /(?<![-\w])(?:button|dialog|input|select|table|textarea)(?=\s*(?:\[|:|\.|#|\{|,|>|\+|~))/im;
+// Arriba del todo, con el resto de constantes del modulo: stripComments() se
+// llama desde funciones declaradas antes que ella, y un `const` a media altura
+// las dejaba en zona muerta temporal.
+const BACKSLASH = String.fromCharCode(92);
+const BLOCK_COMMENT = /\/\*[\s\S]*?\*\//g;
+const NEWLINE = String.fromCharCode(10);
 const FIXED_COLOR = /(?<!&)#[0-9a-f]{3,8}\b/i;
 const INVALID_NUMERIC_TOKEN = /\d+(?:\.\d+)?var\s*\(/i;
 const INVALID_NEGATED_TOKEN = /(?<![\w-])-var\s*\(/i;
@@ -654,7 +660,7 @@ for (const uiRoot of manifest.uiRoots || []) {
     const local = normalize(relative(consumerRoot, file));
     if (local.includes('/styles/tokens/')) continue;
     const source = readFileSync(file, 'utf8');
-    const executableSource = source.replace(/\/\*[\s\S]*?\*\//g, '');
+    const executableSource = stripComments(source, { lineComments: file.endsWith('.ts') });
     if (!belongsToGovernedComponent(file) && FIXED_COLOR.test(executableSource)) {
       failures.push(`Color fijo fuera de tokens: ${local}`);
     }
@@ -667,9 +673,62 @@ for (const uiRoot of manifest.uiRoots || []) {
   }
 }
 
+/*
+Deja el codigo sin comentarios, para que las comprobaciones de color y de
+tokens miren solo lo que se ejecuta.
+
+DOS PASADAS, Y CADA UNA CON UNA REGLA DISTINTA. No es simetria mal resuelta:
+los dos tipos de comentario tienen problemas opuestos.
+
+1) BLOQUE, `/* … *\/`: se retiran EN TODAS PARTES, tambien dentro de las
+   plantillas literales. Es lo que hacia la version original con una regex, y
+   hay que conservarlo: en este repositorio las plantillas literales llevan CSS
+   dentro, y un `/* 4var(--space-2) → var(--space-8) *\/` que documenta el valor
+   ANTERIOR es un comentario, no codigo. Respetar ahi el estado de comillas
+   —como intente en una primera version— hace que sobrevivan y se denuncien
+   como valores danados: paso en toggle, button, floating-input, action-group y
+   avatar-group.
+
+2) LINEA, `//`: se retiran solo FUERA de las cadenas, y solo en TypeScript. Un
+   `//` aparece dentro de 'https://…', y cortar la linea ahi mutila la cadena y
+   esconde lo que venga despues. En CSS y HTML no abre nada.
+
+El orden tambien importa: la pasada de bloque va primero, y de paso se lleva
+los apostrofos que viajen dentro de un comentario —«don't»— que si no
+descuadrarian el seguimiento de comillas de la segunda.
+*/
+function stripComments(source, { lineComments }) {
+  const withoutBlocks = source.replace(BLOCK_COMMENT, '');
+  if (!lineComments) {
+    return withoutBlocks;
+  }
+
+  let out = '';
+  let quote = null;
+  for (let i = 0; i < withoutBlocks.length; i += 1) {
+    const c = withoutBlocks[i];
+    const next = withoutBlocks[i + 1];
+    if (quote) {
+      out += c;
+      if (c === BACKSLASH) { out += next ?? ''; i += 1; continue; }
+      if (c === quote) quote = null;
+      continue;
+    }
+    if (c === '/' && next === '/') {
+      const end = withoutBlocks.indexOf(NEWLINE, i);
+      if (end === -1) break;
+      i = end - 1;
+      continue;
+    }
+    if (c === "'" || c === '"' || c === '`') { quote = c; out += c; continue; }
+    out += c;
+  }
+  return out;
+}
+
 function checkGovernedSurfaceFile(file) {
   const source = readFileSync(file, 'utf8');
-  const executableSource = source.replace(/\/\*[\s\S]*?\*\//g, '');
+  const executableSource = stripComments(source, { lineComments: file.endsWith('.ts') });
   const local = normalize(relative(consumerRoot, file));
   if (local.endsWith('.spec.ts')) return;
   const isHtml = file.endsWith('.html');

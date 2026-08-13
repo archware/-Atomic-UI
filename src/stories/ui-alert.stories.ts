@@ -1,75 +1,66 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AlertComponent } from '../app/shared/ui/molecules/alert/alert.component';
+import { Alert } from '../app/shared/ui/molecules/alert/alert.component';
 
-const meta: Meta<AlertComponent> = {
+// El cuerpo de la alerta se proyecta como contenido: la entrada `message`
+// desapareció en 5.4.0 porque duplicaba ese mismo canal. Por eso las historias
+// usan `render` con plantilla en vez de `args`.
+const meta: Meta<Alert> = {
   title: '2. Molecules/Alert',
-  component: AlertComponent,
+  component: Alert,
   tags: ['autodocs'],
   argTypes: {
-    variant:    { control: 'select', options: ['info', 'success', 'warning', 'danger'] },
-    size:       { control: 'select', options: ['sm', 'md', 'lg'] },
-    title:      { control: 'text' },
-    message:    { control: 'text' },
-    closable:   { control: 'boolean' },
+    kind: { control: 'select', options: ['info', 'success', 'warning', 'danger'] },
+    spacing: { control: 'select', options: ['default', 'compact', 'none'] },
+    title: { control: 'text' },
+    closable: { control: 'boolean' },
   },
 };
 
 export default meta;
-type Story = StoryObj<AlertComponent>;
+type Story = StoryObj<Alert>;
 
-export const Info: Story = {
-  args: {
-    variant: 'info',
-    title:   'Información',
-    message: 'Tu sesión expirará en 5 minutos.',
-    closable: true,
-  },
-};
+function story(template: string): Story {
+  return { render: () => ({ template, imports: [Alert] }) };
+}
 
-export const Exito: Story = {
-  args: {
-    variant: 'success',
-    title:   '¡Operación exitosa!',
-    message: 'Los cambios han sido guardados correctamente.',
-    closable: true,
-  },
-};
+export const Info = story(`
+  <app-alert kind="info" title="Información" [closable]="true">
+    Tu sesión expirará en 5 minutos.
+  </app-alert>
+`);
 
-export const Advertencia: Story = {
-  args: {
-    variant: 'warning',
-    title:   'Atención',
-    message: 'Este proceso no se puede deshacer.',
-    closable: false,
-  },
-};
+export const Exito = story(`
+  <app-alert kind="success" title="¡Operación exitosa!" [closable]="true">
+    Los cambios han sido guardados correctamente.
+  </app-alert>
+`);
 
-export const Error: Story = {
-  args: {
-    variant: 'danger',
-    title:   'Error al guardar',
-    message: 'No se pudo conectar con el servidor. Intente nuevamente.',
-    closable: true,
-  },
-};
+export const Advertencia = story(`
+  <app-alert kind="warning" title="Atención">
+    Este proceso no se puede deshacer.
+  </app-alert>
+`);
 
-export const SinTitulo: Story = {
-  args: {
-    variant: 'info',
-    message: 'Recuerda completar tu perfil para acceder a todas las funciones.',
-    closable: false,
-  },
-};
+export const Error = story(`
+  <app-alert kind="danger" title="Error al guardar" [closable]="true">
+    No se pudo conectar con el servidor. Intente nuevamente.
+  </app-alert>
+`);
 
-export const Tamaños: Story = {
-  render: () => ({
-    template: `
-      <div style="display:flex;flex-direction:column;gap:1rem;padding:1rem">
-        <app-alert variant="primary" size="sm" message="Alert pequeño (sm)"></app-alert>
-        <app-alert variant="primary" size="md" message="Alert mediano (md)"></app-alert>
-        <app-alert variant="primary" size="lg" message="Alert grande (lg)"></app-alert>
-      </div>
-    `,
-    imports: [AlertComponent],
-  }),
-};
+export const SinTitulo = story(`
+  <app-alert kind="info">
+    Recuerda completar tu perfil para acceder a todas las funciones.
+  </app-alert>
+`);
+
+// Sustituye a la antigua historia «Tamaños», que demostraba una entrada `size`
+// inexistente y usaba kind="primary", un valor que nunca estuvo en el tipo: se
+// pintaba sin estilo porque las clases se construían por concatenación, de modo
+// que cualquier cadena producía una clase válida y el fallo era silencioso.
+export const Espaciado = story(`
+  <div style="display:flex;flex-direction:column;padding:1rem">
+    <app-alert kind="info" spacing="default">Separación por omisión</app-alert>
+    <app-alert kind="info" spacing="compact">Separación compacta</app-alert>
+    <app-alert kind="info" spacing="none">Sin separación de flujo</app-alert>
+  </div>
+`);

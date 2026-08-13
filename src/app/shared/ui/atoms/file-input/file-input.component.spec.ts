@@ -33,7 +33,7 @@ describe('FileInputComponent', () => {
     expect(emitted[emitted.length - 1]?.[0].file).toBe(file);
   });
 
-  it('rechaza formatos no permitidos sin reemplazar la selección', () => {
+  it('rechaza formatos no permitidos', () => {
     const file = new File(['texto'], 'contrato.txt', {
       type: 'text/plain',
     });
@@ -57,6 +57,43 @@ describe('FileInputComponent', () => {
 
     expect(component.files()).toEqual([]);
     expect(component.validationError()).toContain('supera el máximo');
+  });
+
+  it('descarta la selección anterior cuando el nuevo archivo se rechaza', () => {
+    // Las dos pruebas de rechazo de arriba parten de vacío, así que pasaban con
+    // el defecto y sin él. Éste es el caso real: ya había un archivo válido.
+    //
+    // Antes, al rechazar el segundo se pintaba el error y se salía SIN tocar
+    // `files`: el componente seguía mostrando el primero, el formulario no
+    // recibía cambio y el botón de guardar del consumidor seguía habilitado. En
+    // un archivado documental eso guarda el documento equivocado, de forma
+    // inmutable, mientras la pantalla señala un error sobre otro fichero.
+    const emitted: FileInputFile[][] = [];
+    component.filesChange.subscribe((files) => emitted.push(files));
+    let formValue: FileInputFile[] | null = null as FileInputFile[] | null;
+    component.registerOnChange((value: FileInputFile[]) => {
+      formValue = value;
+    });
+
+    const valido = new File(['ok'], 'contrato-v1.pdf', { type: 'application/pdf' });
+    component.onFileChange({
+      target: { files: [valido], value: 'selected' },
+    } as unknown as Event);
+    expect(component.files()).toHaveSize(1);
+
+    const grande = new File([new Uint8Array(1024 * 1024 + 1)], 'contrato-firmado.pdf', {
+      type: 'application/pdf',
+    });
+    component.onFileChange({
+      target: { files: [grande], value: 'selected' },
+    } as unknown as Event);
+
+    expect(component.files()).toEqual([]);
+    expect(component.validationError()).toContain('supera el máximo');
+    // El formulario y el evento se enteran: sin esto el consumidor sigue creyendo
+    // que tiene un archivo válido.
+    expect(emitted[emitted.length - 1]).toEqual([]);
+    expect(formValue as FileInputFile[] | null).toEqual([]);
   });
 
   it('no abre ni procesa archivos cuando está deshabilitado', () => {

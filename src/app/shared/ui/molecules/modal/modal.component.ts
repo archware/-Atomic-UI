@@ -14,6 +14,11 @@ import {
   ViewChild,
 } from '@angular/core';
 
+/* orden-dom: es un CONJUNTO de tipos de control equivalentes, no una lista de
+   prioridad. Aqui se quiere el primer control del marcado, que es el que la
+   persona ve arriba; anteponer `button` a `input` enfocaria «Aceptar» en vez
+   del primer campo del formulario. La marca de foco explicita no vive en esta
+   lista: se resuelve aparte con [data-modal-initial-focus]. */
 const MODAL_FOCUSABLE_SELECTOR = [
   'button:not([disabled])',
   '[href]',
@@ -23,12 +28,17 @@ const MODAL_FOCUSABLE_SELECTOR = [
   '[tabindex]:not([tabindex="-1"])'
 ].join(',');
 
-const MODAL_ERROR_SELECTOR = [
+/* Esta SI es una lista de prioridad, y por eso no se une con comas: el marcador
+   explicito `[data-modal-error]` tiene que ganar a un `[role="alert"]` generico
+   aunque este aparezca antes en el marcado. Unirlas y entregarlas a un
+   `querySelector` singular devolvia orden de DOM y derrotaba esa intencion en
+   silencio. Se recorre en orden con `firstMatching`. */
+const MODAL_ERROR_SELECTORS = [
   '[data-modal-error]',
   '[data-dialog-error]',
   '[role="alert"]',
-  '[aria-invalid="true"]'
-].join(',');
+  '[aria-invalid="true"]',
+] as const;
 
 @Component({
   selector: 'app-modal',
@@ -304,7 +314,7 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
 
   private tryFocusError(): boolean {
     const dialog = this.dialogRef?.nativeElement;
-    const errorRoot = dialog?.querySelector<HTMLElement>(MODAL_ERROR_SELECTOR);
+    const errorRoot = dialog ? firstMatching(dialog, MODAL_ERROR_SELECTORS) : null;
     if (!errorRoot) return false;
 
     const target = errorRoot.matches(MODAL_FOCUSABLE_SELECTOR)
@@ -360,4 +370,19 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
       first.focus({ preventScroll: true });
     }
   }
+}
+
+/** Recorre los selectores EN ORDEN y devuelve el primero que exista.
+ *
+ * Es la diferencia con `querySelector('a, b, c')`, que devuelve el primer
+ * elemento en orden de DOM y por tanto ignora el orden de la lista.
+ */
+function firstMatching(root: ParentNode, selectors: readonly string[]): HTMLElement | null {
+  for (const selector of selectors) {
+    const found = root.querySelector<HTMLElement>(selector);
+    if (found) {
+      return found;
+    }
+  }
+  return null;
 }

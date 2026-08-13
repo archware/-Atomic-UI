@@ -10,7 +10,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { AlertComponent } from '../../molecules/alert/alert.component';
+import { Alert } from '../../molecules/alert/alert.component';
 import {
   StatusBadgeComponent,
   StatusBadgeStatus,
@@ -69,7 +69,7 @@ function trackByIdentity<T extends object>(_index: number, row: T): T {
 
 @Component({
   selector: 'app-data-table, prest-data-table',
-  imports: [AlertComponent, NgTemplateOutlet, ScrollOverlayComponent, StatusBadgeComponent],
+  imports: [Alert, NgTemplateOutlet, ScrollOverlayComponent, StatusBadgeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './data-table.html',
   styleUrl: './data-table.scss',
