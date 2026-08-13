@@ -294,10 +294,10 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
     .input-variants-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
     
     /* Form Styles */
-    .showcase-form { background: var(--surface-card); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); }
+    .showcase-form { background: var(--surface-elevated); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); }
     .form-group { margin-bottom: 1rem; }
     .form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-color); }
-    .form-input, .form-select, .form-textarea { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--surface-input); color: var(--text-color); }
+    .form-input, .form-select, .form-textarea { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--input-bg); color: var(--text-color); }
     .form-actions { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem; }
     
     /* Checkbox & Radio */

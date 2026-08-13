@@ -151,10 +151,11 @@
   font-weight: 600;
 }
 
+/* Ver form-input/input.scss: `--text-color-disabled` ya define el contraste
+   por tema y la opacidad lo dividia. */
 .calendar-day.disabled {
   color: var(--text-color-disabled);
   cursor: not-allowed;
-  opacity: 0.5;
 }
 
 /* 

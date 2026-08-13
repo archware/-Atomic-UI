@@ -163,7 +163,7 @@ import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
     }
     /* ... Copiado estilos básicos de card inline ... */
     .card {
-      background: var(--surface-card);
+      background: var(--surface-elevated);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
       padding: 1.5rem;
