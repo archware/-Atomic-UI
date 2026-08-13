@@ -22,6 +22,19 @@ const sourceRoot = resolve(projectRoot, 'src');
 // Un selector CSS de foco contiene casi siempre uno de estos. Se exige para no
 // marcar cualquier `join(',')` sobre texto corriente.
 const SELECTOR_HINT = /[[\].#:]/;
+
+// UNA LISTA PUEDE SER UN CONJUNTO, NO UNA PRIORIDAD.
+//
+// `['button', 'input', 'select', …]` enumera tipos de control equivalentes: ahi
+// el orden de DOM es justo lo que se quiere, porque se busca el primer control
+// del marcado y no «los botones antes que los campos». Marcar eso como fallo
+// seria un falso positivo, y un trinquete que grita en falso acaba desactivado
+// —y entonces deja de proteger tambien los casos de verdad—.
+//
+// Se admite declararlo, con dos condiciones: la marca va pegada a la lista y
+// LLEVA MOTIVO ESCRITO. Un silenciador mudo es lo que convierte una compuerta
+// en decoracion; obligar a escribir por que fuerza a pensarlo una vez.
+const ORDEN_DOM_DECLARADO = /\/\*\s*orden-dom:\s*\S[\s\S]*?\*\//;
 const JOIN_CALL = /\]\s*\.join\(\s*(['"`])\s*,\s*\1\s*\)/;
 
 function sourceFiles(directory) {
@@ -71,6 +84,14 @@ for (const file of sourceFiles(sourceRoot)) {
     const selectorish = entries.filter((entry) => SELECTOR_HINT.test(entry));
     // Un solo elemento no expresa prioridad; dos o mas si.
     if (selectorish.length < 2) continue;
+
+    // Intencion declarada: el autor afirma que la lista es un conjunto y que el
+    // orden de DOM es el correcto. Se busca la marca justo encima de la lista.
+    const antesDeLaLista = source.slice(
+      Math.max(0, literalStart(source, absolute) - 600),
+      literalStart(source, absolute),
+    );
+    if (ORDEN_DOM_DECLARADO.test(antesDeLaLista)) continue;
 
     // Se marca solo si ESTE valor llega a un `querySelector` singular: o bien
     // porque la llamada lo envuelve, o bien a traves del identificador al que
