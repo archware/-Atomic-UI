@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "crud-dialog",
   "layer": "organism",
-  "selector": "prest-crud-dialog",
+  "selector": "app-crud-dialog",
   "export": "CrudDialog",
   "source": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.ts",
   "relatedSources": [

@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "form-dialog-actions",
   "layer": "organism",
-  "selector": "prest-form-dialog-actions",
+  "selector": "app-form-dialog-actions",
   "export": "FormDialogActions",
   "source": "src/app/shared/ui/organisms/form-dialog/form-dialog.ts",
   "relatedSources": ["src/app/shared/ui/organisms/form-dialog/form-dialog-actions.scss"],

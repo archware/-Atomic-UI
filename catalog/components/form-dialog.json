@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "form-dialog",
   "layer": "organism",
-  "selector": "prest-form-dialog",
+  "selector": "app-form-dialog",
   "export": "FormDialog",
   "source": "src/app/shared/ui/organisms/form-dialog/form-dialog.ts",
   "purpose": "Diálogo CRUD canónico con encabezado, descripción, cuerpo, cierre proyectado y control declarativo de apertura.",

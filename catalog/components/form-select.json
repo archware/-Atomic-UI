@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "form-select",
   "layer": "atom",
-  "selector": "prest-select",
+  "selector": "app-select",
   "export": "Select",
   "source": "src/app/shared/ui/atoms/form-select/select.ts",
   "purpose": "Selección canónica de una opción con etiqueta, ayuda, error y soporte CVA.",

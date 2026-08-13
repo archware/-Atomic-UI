@@ -1,6 +1,6 @@
 {
   "name": "atomic-ui",
-  "version": "5.7.4",
+  "version": "5.7.5",
   "type": "module",
   "author": "COTAHA",
   "scripts": {
@@ -29,7 +29,7 @@
     "create:project": "node tools/create-project.js",
     "catalog:query": "node tools/query-atomic-catalog.js",
     "catalog:check": "node tools/check-atomic-catalog.js --strict-references",
-    "tokens:check": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit-tokens.ps1 -ComponentGlob src/app/shared/ui -Json",
+    "tokens:check": "node tools/run-powershell.cjs scripts/audit-tokens.ps1 -ComponentGlob src/app/shared/ui -Json",
     "agent:context": "node tools/build-agent-context.js",
     "generate:ui": "node tools/generate-ui.js",
     "tooling:test": "node tools/test-atomic-catalog.js && node tools/test-atomic-blueprints.js && node tools/test-audit-tokens.js && node tools/test-ui-generator.js",

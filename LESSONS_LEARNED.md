@@ -39,7 +39,7 @@ Chromium  nativa    {"table":1,"rowgroup":1,"row":13,"columnheader":3,"cell":36}
 
 **El resultado.** Ninguno de los dos motores pierde la semántica. Y los roles
 explícitos no eran «redundantes e inocuos»: en Chromium **añadían** un `rowgroup`
-que el navegador deliberadamente no expone. Se revirtió en 5.7.3.
+que el navegador deliberadamente no expone. Se revirtió en 5.7.4.
 
 ### Lo que hay que llevarse de aquí
 

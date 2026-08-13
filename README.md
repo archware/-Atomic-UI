@@ -3,7 +3,7 @@ title: "Atomic UI: sistema de componentes y temas"
 subtitle: "Fuente visual canónica para aplicaciones de escritorio HRA"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-12"
-version: "5.7.3"
+version: "5.7.5"
 ---
 
 # Atomic UI: sistema de componentes y temas
@@ -141,7 +141,7 @@ El listado es representativo; el conteo corresponde a los directorios vigentes d
 | Capa | Ejemplos de componentes | Descripción |
 | ------ | ----------- | ----------- |
 | **Átomos (34)** | Avatar, Badge, Breadcrumb, Button, Checkbox, Chip, ChoiceControl, Divider, FileInput, FloatingInput, FormError, FormInput, FormRow, FormSelect, IconButton, Input, LanguageSwitcher, Loader, NumberInput, Progress, Radio, Rating, Row, Select, Skeleton, Spinner, StatusBadge, Table, TableAction, Text, Textarea, Toggle, Tooltip y Version | Elementos básicos e indivisibles |
-| **Moléculas (18)** | ActionGroup, Alert, AvatarGroup, Card, Combobox, DataState, Datepicker, Dropdown, KpiCard, Modal, Pagination, Popup, Select2, TableActions, TagInput, Timeline, Toast y UserMenu | Combinaciones de átomos con funcionalidad |
+| **Moléculas (19)** | ActionGroup, Alert, AvatarGroup, Card, Combobox, ContextMenu, DataState, Datepicker, Dropdown, KpiCard, Modal, Pagination, Popup, Select2, TableActions, TagInput, Timeline, Toast y UserMenu | Combinaciones de átomos con funcionalidad |
 | **Organismos (21)** | Accordion, Chart, CrudDialog, DataPager, DataTable, DenominationCounter, Filters, Footer, FormDialog, MetricsGrid, NavBar, PageHeader, PrintDocumentPanel, QueryToolbar, ReceiptPanel, ScrollOverlay, Sidebar, Stepper, Tabs, ThemeSwitcher y Topbar | Secciones completas de interfaz |
 | **Superficies (1)** | Panel | Contenedores y superficies |
 | **Plantillas (2)** | AuthLayout y LayoutShell | Layouts completos de página |
@@ -247,8 +247,8 @@ src/
 │   └── shared/
 │       └── ui/
 │           ├── atoms/            # 34 directorios de componentes básicos
-│           ├── molecules/        # 18 directorios de componentes compuestos
-│           ├── organisms/        # 19 directorios de componentes complejos
+│           ├── molecules/        # 19 directorios de componentes compuestos
+│           ├── organisms/        # 21 directorios de componentes complejos
 │           ├── surfaces/         # 1 contenedor (Panel)
 │           ├── templates/        # 2 layouts
 │           ├── services/         # ThemeService, ToastService, etc.
@@ -325,7 +325,7 @@ Este proyecto está bajo la Licencia MIT.
 
 ---
 
-**Versión:** 5.7.3
+**Versión:** 5.7.5
 **Última actualización:** 12 de agosto de 2026
 **Angular:** 22
 **TypeScript:** 6.0

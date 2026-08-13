@@ -20,7 +20,7 @@ date: "2026-08-12"
 
 El entorno de trabajo se compone de una fuente visual transicional y sus consumidores:
 
-1. **`-Atomic-UI`**: fuente de la verdad visual. El repositorio conserva componentes, sistema de diseño, tokens CSS y utilidades visuales. En el estado actual funciona como scaffold privado verificable; todavía no es una biblioteca Angular compilada ni instalable.
+1. **`-Atomic-UI`**: fuente de la verdad visual. El repositorio conserva componentes, sistema de diseño, tokens CSS y utilidades visuales. Desde 5.5.0 declara ademas el proyecto Angular de tipo `library` **atomic-ui**: `npx ng build atomic-ui` compila `@hra/atomic-ui` en formato Angular Package Format. Lo que sigue bloqueado no es la compilacion sino la **publicacion** en un registro npm, que espera registro privado y procedencia firmada. Vease `distribution/PACKAGE_STATUS.md`.
 2. **`base_python_angular`**: aplicación de escritorio con backend Python, frontend Angular y WebView2.
 3. **`base_wails_angular`**: aplicación de escritorio con backend Go, frontend Angular y Wails sobre WebView2 en Windows.
 4. **`base_tauri_angular`**: aplicación de escritorio con backend Rust, frontend Angular y Tauri.

@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "choice-control",
   "layer": "atom",
-  "selector": "prest-choice-control",
+  "selector": "app-choice-control",
   "export": "ChoiceControl",
   "source": "src/app/shared/ui/atoms/choice-control/choice-control.ts",
   "purpose": "Elección booleana o exclusiva con checkbox o radio nativo y presentación Atomic.",

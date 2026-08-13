@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "page-header",
   "layer": "organism",
-  "selector": "prest-page-header",
+  "selector": "app-page-header",
   "export": "PageHeader",
   "source": "src/app/shared/ui/organisms/page-header/page-header.ts",
   "purpose": "Encabezado canónico de página con jerarquía h1, contexto y grupo de acciones proyectadas.",

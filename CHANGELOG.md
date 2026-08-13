@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.7.4'
+version: '5.7.5'
 status: 'vigente'
 updated: '2026-08-13'
 owner: 'Hospital Regional de Ayacucho'
@@ -14,6 +14,70 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.7.5] - 2026-08-13
+
+Una auditoría del propio repositorio, hecha al dar por cerrada la 5.7.4,
+encontró que no lo estaba. Esta versión no añade comportamiento: retira
+afirmaciones falsas y desbloquea una compuerta que no podía ejecutarse.
+
+### Corregido
+
+- **`governance:check` no podía completarse en el CI de este repositorio.** La
+  cadena incluye `tokens:check`, que invocaba `powershell` —el ejecutable de
+  Windows PowerShell 5.1, que solo existe en Windows—, mientras
+  `.github/workflows/ci.yml` corre en `ubuntu-latest`, donde PowerShell 7 se
+  llama `pwsh`. Se interpone `tools/run-powershell.cjs`, que elige el intérprete
+  disponible prefiriendo `pwsh`, y falla con un mensaje explícito y código 127
+  si no hay ninguno. Una compuerta que no puede correr en su propio CI es
+  gobierno decorativo.
+
+- **El catálogo publicaba el alias de deuda `prest-*` como selector canónico de
+  diez componentes.** `input.json` declaraba `prest-input`, `form-select.json`
+  `prest-select`, y así en `choice-control`, `crud-dialog`, `data-table`,
+  `form-dialog`, `form-dialog-actions`, `page-header`, `query-toolbar` y
+  `table-action`. La fuente de los diez declara el canónico `app-*` primero y el
+  alias detrás, y `tools/check-selector-prefixes.cjs` lo describe literalmente
+  como «REGISTRO DE DEUDA, no lista de permitidos», pero esa compuerta vigila la
+  fuente y no el catálogo, así que la deriva pasó inadvertida.
+
+  Importa más de lo que parece: `tools/generate-ui.js` y
+  `tools/build-agent-context.js` leen ese campo, de modo que el generador y el
+  contexto que reciben los agentes repartían el alias de un producto ajeno a
+  cualquier consumidor nuevo.
+
+- **`LESSONS_LEARNED.md` atribuía a la 5.7.3 la retirada de los roles de tabla,
+  que hizo la 5.7.4.** El texto se escribió cuando la versión iba a ser 5.7.3 y
+  no se actualizó al renumerar. Lo introdujo el mismo commit que publicó la
+  5.7.4, contradiciendo a su propio CHANGELOG.
+
+- **`ATOMIC_GOVERNANCE.md` mostraba `ó` y `á` crudos** en su cuarto
+  invariante: se leía «la versión» y «del árbol». Es el documento que
+  todos los consumidores vendorizan con su huella verificada, así que el defecto
+  quedaba congelado en cada repositorio.
+
+- **`ECOSYSTEM_WORKFLOW.md` negaba que Atomic fuese una biblioteca compilable**,
+  cosa que `distribution/PACKAGE_STATUS.md` contradice desde 5.5.0. Lo bloqueado
+  no es la compilación sino la publicación en un registro.
+
+- **Sellos de versión que la 5.7.4 se dejó atrás**: `package-lock.json`, el
+  `README.md` de la raíz y el `README.md` de `src/app/shared/ui`, que además
+  viaja a los consumidores. El inventario del README declaraba 18 moléculas
+  frente a 19 directorios reales —faltaba `ContextMenu`, publicado en 5.5.5— y
+  su diagrama de estructura se contradecía con su propia tabla.
+
+- **Los textos de la demo anunciaban Angular 21** y la insignia de Storybook
+  «Angular 20+», con Angular 22 instalado.
+
+### Verificación
+
+- `governance:check` sin hallazgos, 385 pruebas y build correcto.
+- El resolutor de intérprete se probó por mutación: sin ningún candidato
+  disponible falla con código 127 y mensaje explícito; con el primero ausente
+  cae al segundo y completa la auditoría de tokens. **No se ha podido verificar
+  desde aquí que `scripts/audit-tokens.ps1` se ejecute sin cambios bajo
+  PowerShell 7 en Linux**; esta versión desbloquea la invocación, no lo
+  garantiza. La comprobación definitiva es la primera ejecución del CI.
 
 ## [5.7.4] - 2026-08-13
 

@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "query-toolbar",
   "layer": "organism",
-  "selector": "prest-query-toolbar",
+  "selector": "app-query-toolbar",
   "export": "QueryToolbar",
   "source": "src/app/shared/ui/organisms/query-toolbar/query-toolbar.ts",
   "purpose": "Barra canónica para filtros y acciones de consulta sin absorber permisos ni lógica del consumidor.",

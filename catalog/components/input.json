@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "input",
   "layer": "atom",
-  "selector": "prest-input",
+  "selector": "app-input",
   "export": "Input",
   "source": "src/app/shared/ui/atoms/form-input/input.ts",
   "purpose": "Control de texto canónico para formularios reactivos, con etiqueta, ayuda, error y soporte CVA.",

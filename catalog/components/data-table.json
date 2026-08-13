@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "data-table",
   "layer": "organism",
-  "selector": "prest-data-table",
+  "selector": "app-data-table",
   "export": "DataTable<T>",
   "source": "src/app/shared/ui/organisms/data-table/data-table.ts",
   "purpose": "Tabla CRUD canónica con columnas tipadas, estados, ordenamiento, paginación y acciones proyectadas.",

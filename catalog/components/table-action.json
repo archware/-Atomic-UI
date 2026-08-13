@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "id": "table-action",
   "layer": "atom",
-  "selector": "prest-table-action",
+  "selector": "app-table-action",
   "export": "TableAction",
   "source": "src/app/shared/ui/atoms/table-action/table-action.ts",
   "purpose": "Acción iconográfica compacta y accesible para una fila de tabla o lista operativa.",
