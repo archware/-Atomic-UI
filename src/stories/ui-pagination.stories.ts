@@ -45,3 +45,48 @@ export const SmallPageSize: Story = {
     template: `<app-pagination [total]="100" [pageSize]="5"></app-pagination>`,
   }),
 };
+
+export const Minimal: Story = {
+  args: {
+    variant: 'minimal',
+    total: 100,
+    pageSize: 10,
+    page: 4,
+  },
+};
+
+export const Rounded: Story = {
+  args: {
+    variant: 'rounded',
+    total: 100,
+    pageSize: 10,
+    page: 4,
+  },
+};
+
+export const Cards: Story = {
+  args: {
+    variant: 'cards',
+    total: 100,
+    pageSize: 10,
+    page: 4,
+  },
+};
+
+export const Compact: Story = {
+  args: {
+    size: 'sm',
+    total: 100,
+    pageSize: 10,
+    page: 4,
+  },
+};
+
+export const Large: Story = {
+  args: {
+    size: 'lg',
+    total: 100,
+    pageSize: 10,
+    page: 4,
+  },
+};

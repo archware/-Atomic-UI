@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "b6ef5600f7e832ad398a7d33a5b885582f0f0e6e8f57297cbb7bcd58bcac188b",
+  "sourceTreeSha256": "e4adb67ae1c3d9fb5713d9e92f30a091a541818c04cdea72f986b593f749d798",
   "fileCount": 157,
   "files": [
     {
@@ -185,8 +185,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/skeleton/skeleton.component.ts",
-      "bytes": 3492,
-      "sha256": "ea9a9067660c62287b9cf99f8a51484db6da4a356a54941145b2391f412960ba"
+      "bytes": 4565,
+      "sha256": "6bb30fdffd0bfe2ad74b0f7ea81c9227c0e6e3cd4593aaec3a89e74905d5d307"
     },
     {
       "path": "src/app/shared/ui/atoms/spinner/spinner.component.ts",
@@ -365,8 +365,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/pagination/pagination.component.ts",
-      "bytes": 10586,
-      "sha256": "4280bb88ebc04c7bed0dde72aacf377297cd95f0c9c8396115d593010a5cbed3"
+      "bytes": 11486,
+      "sha256": "0070d362be388504328afa4974ede3ba99d2efed205c61e92ddedb56324c3d93"
     },
     {
       "path": "src/app/shared/ui/molecules/popup/popup-container.component.ts",
@@ -375,8 +375,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/select2/select2.component.ts",
-      "bytes": 22770,
-      "sha256": "f9d959d81c08f3d15b2d10f612524b6e72500c8f7b7a11decce01ba93d01283c"
+      "bytes": 22927,
+      "sha256": "5959596698d2079f91e8b66168f19fd70c59cf8adc35a3cb8bbdd395cf934ac8"
     },
     {
       "path": "src/app/shared/ui/molecules/table-actions/table-actions.component.css",
@@ -620,18 +620,18 @@
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.css",
-      "bytes": 3644,
-      "sha256": "614f8a7a0540e1de471003bd9897167521f3ad44b9d7befeabd0657cccda229e"
+      "bytes": 3838,
+      "sha256": "9684a2a672ff17cd7f7625781f6361620f4a6af8ff614bffa5dfc4d3eeb68452"
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.html",
-      "bytes": 1234,
-      "sha256": "0fcfc4bb7cfafb833fc05fd6d7945af5d43a92223eedb04150d3128b777e2103"
+      "bytes": 1228,
+      "sha256": "86223d31ba5e37642eea318c19426d10aa1496c281ba8d057ef393cd54197235"
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.ts",
-      "bytes": 1784,
-      "sha256": "9aff665a1314ad2dc971168ddb992bb5141c6f80a688a14048b1be733f04adbc"
+      "bytes": 1860,
+      "sha256": "f8e6d0cbbf87e413f0494b3293f1dade8085960c0f08dc34fd23e0638f90bad7"
     },
     {
       "path": "src/app/shared/ui/services/api.service.ts",
@@ -770,8 +770,8 @@
     },
     {
       "path": "src/styles/themes/_tokens-components.css",
-      "bytes": 35198,
-      "sha256": "74921a626058ba90b3d01b66826340357a9ce44de2bb58212acaab27eca068fd"
+      "bytes": 35946,
+      "sha256": "c1c4de886f7cbc12a5dd2131d7c472bfe2a590ae6bef58479aaadab19005a53b"
     },
     {
       "path": "src/styles/themes/_tokens-primitives.css",

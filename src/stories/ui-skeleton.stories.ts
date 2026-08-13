@@ -18,13 +18,13 @@ export const Text: Story = {
 
 export const Circle: Story = {
   render: () => ({
-    template: `<app-skeleton variant="circle" width="48px" height="48px"></app-skeleton>`,
+    template: `<app-skeleton variant="circular" width="var(--space-8)" height="var(--space-8)"></app-skeleton>`,
   }),
 };
 
 export const Rectangle: Story = {
   render: () => ({
-    template: `<app-skeleton variant="rectangle" width="100%" height="120px"></app-skeleton>`,
+    template: `<app-skeleton variant="rectangular" width="100%" height="var(--skeleton-card-media-block-size)"></app-skeleton>`,
   }),
 };
 
@@ -42,30 +42,45 @@ export const AvatarText: Story = {
 
 export const TableRow: Story = {
   render: () => ({
-    template: `<app-skeleton variant="table-row"></app-skeleton>`,
+    template: `<app-skeleton variant="text" width="100%" height="var(--control-height)"></app-skeleton>`,
   }),
 };
 
 export const TextLines: Story = {
   render: () => ({
     template: `
-      <div style="display: flex; flex-direction: column; gap: 0.5rem; max-width: 400px;">
+      <div class="story-skeleton-lines">
         <app-skeleton variant="text" width="100%"></app-skeleton>
         <app-skeleton variant="text" width="85%"></app-skeleton>
         <app-skeleton variant="text" width="70%"></app-skeleton>
       </div>
     `,
+    styles: [
+      `.story-skeleton-lines {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+        max-inline-size: 25rem;
+      }`,
+    ],
   }),
 };
 
 export const CardList: Story = {
   render: () => ({
     template: `
-      <div style="display: flex; flex-direction: column; gap: 1rem;">
+      <div class="story-skeleton-list">
         <app-skeleton variant="card"></app-skeleton>
         <app-skeleton variant="card"></app-skeleton>
         <app-skeleton variant="card"></app-skeleton>
       </div>
     `,
+    styles: [
+      `.story-skeleton-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+      }`,
+    ],
   }),
 };

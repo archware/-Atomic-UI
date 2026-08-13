@@ -23,6 +23,30 @@ describe('PaginationComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('keeps the shared button contract in the minimal variant', () => {
+    component.variant = 'minimal';
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+    const buttons = Array.from(element.querySelectorAll<HTMLButtonElement>('.page-text-btn'));
+
+    expect(buttons.length).toBe(2);
+    expect(buttons.every((button) => button.classList.contains('page-btn'))).toBeTrue();
+    expect(buttons[0].getAttribute('aria-label')).toContain('anterior');
+    expect(buttons[1].getAttribute('aria-label')).toContain('siguiente');
+  });
+
+  it('uses classes instead of static inline styles for layout and icons', () => {
+    component.variant = 'minimal';
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+    expect(element.querySelector('.page-size-control')).not.toBeNull();
+    expect(element.querySelector('.page-icon--start')).not.toBeNull();
+    expect(element.querySelector('.page-icon--end')).not.toBeNull();
+    expect(element.querySelectorAll('.page-text-btn[style], .page-icon[style]').length).toBe(0);
+  });
+
   // ── totalPages computed ───────────────────────────────────────────────────
   describe('totalPages', () => {
     it('should compute correct total pages', () => {

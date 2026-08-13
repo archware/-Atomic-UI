@@ -22,6 +22,13 @@
    --nav-item-active-bg: var(--primary-color-lighter);
    --nav-item-active-text: var(--primary-color);
    --nav-shadow: var(--shadow-sm);
+   --topbar-action-icon-size: var(--icon-md);
+   --topbar-title-max-inline-size: 10rem;
+   --topbar-title-compact-min-inline-size: 5rem;
+   --topbar-title-compact-max-inline-size: 9.375rem;
+
+   /* === CONTENEDORES DESPLAZABLES === */
+   --size-panel-scroll-max: clamp(12rem, 55dvh, 25rem);
 
    /* === SIDEBAR === */
    --sidebar-bg: var(--surface-background);
@@ -203,6 +210,7 @@
    --dropdown-shadow: var(--shadow-dropdown);
    --dropdown-item-hover: var(--hover-background-subtle);
    --dropdown-item-selected: var(--selected-background);
+   --select2-min-width: 15rem;
 
    /* === NG-SELECT (específico del proyecto) === */
    --ng-select-border: var(--border-color-strong);
@@ -310,6 +318,7 @@
    --pagination-active-text: var(--text-color-on-primary);
    --pagination-disabled-text: var(--text-color-muted);
    --pagination-border: var(--border-color);
+   --pagination-page-size-inline-size: 5rem;
 
    /* === PROGRESS BAR === */
    --progress-bg: var(--gray-200);
@@ -332,6 +341,14 @@
    /* === SKELETON === */
    --skeleton-bg: var(--gray-200);
    --skeleton-shimmer: var(--gray-100);
+   --skeleton-rectangular-block-size: 8rem;
+   --skeleton-card-media-block-size: clamp(5rem, 30vw, 8.75rem);
+   --skeleton-card-title-inline-size: 80%;
+   --skeleton-card-line-inline-size: 60%;
+   --skeleton-card-line-short-inline-size: 40%;
+   --skeleton-avatar-size: var(--space-7);
+   --skeleton-avatar-title-inline-size: 7.5rem;
+   --skeleton-avatar-subtitle-inline-size: 5rem;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────

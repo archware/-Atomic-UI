@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 import { UserMenuComponent, UserMenuAction } from '../../molecules/user-menu/user-menu.component';
@@ -8,6 +8,7 @@ import { LanguageSwitcherComponent } from '../../atoms/language-switcher/languag
   selector: 'app-topbar',
   standalone: true,
   imports: [IconButtonComponent, UserMenuComponent, LanguageSwitcherComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.css',
 })

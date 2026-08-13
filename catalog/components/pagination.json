@@ -63,12 +63,21 @@
     "La etiqueta visible del tamaño no se conecta actualmente con un id del Select2 interno."
   ],
   "responsive": [
-    "A 639px o menos el host permite scroll horizontal y evita comprimir botones y elipsis.",
-    "La información superior admite wrap, pero la navegación numérica conserva su ancho de contenido."
+    "A 40rem o menos el host permite desplazamiento horizontal y evita comprimir botones y elipsis.",
+    "La información superior admite wrap y el selector de tamaño ocupa el ancho disponible sin desbordar.",
+    "La variante minimal conserva acciones completas y un resumen sin saltos de línea en pantallas reducidas."
   ],
   "tokens": [
     "--border-color",
     "--control-height-sm",
+    "--pagination-active-bg",
+    "--pagination-active-text",
+    "--pagination-bg",
+    "--pagination-border",
+    "--pagination-disabled-text",
+    "--pagination-hover-bg",
+    "--pagination-page-size-inline-size",
+    "--pagination-text",
     "--primary-50",
     "--primary-700",
     "--primary-color",
@@ -76,6 +85,8 @@
     "--radius-full",
     "--radius-md",
     "--radius-sm",
+    "--select2-min-width",
+    "--shadow-focus-primary",
     "--shadow-sm",
     "--space-1",
     "--space-2",
@@ -94,10 +105,10 @@
   "story": { "path": "src/stories/ui-pagination.stories.ts", "status": "available" },
   "test": { "path": "src/app/shared/ui/molecules/pagination/pagination.component.spec.ts", "status": "available" },
   "stability": {
-    "status": "candidate",
+    "status": "stable",
     "notes": [
-      "La implementación no declara ChangeDetectionStrategy.OnPush y conserva estilos inline en el template.",
-      "Las stories actuales ejercitan standard, pero no documentan minimal, rounded, cards ni tamaños."
+      "La implementación usa ChangeDetectionStrategy.OnPush, tokens de componente y clases semánticas sin estilos inline estáticos.",
+      "Las pruebas verifican la clase base de las acciones minimal, nombres accesibles y ausencia de estilos inline estáticos."
     ]
   },
   "canonicalFor": ["pagination", "record-pagination", "page-navigation"]

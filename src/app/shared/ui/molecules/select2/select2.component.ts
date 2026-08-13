@@ -467,6 +467,7 @@ export class Select2Component implements ControlValueAccessor {
     this._options = [...(value || [])];
     this.reconcilePendingValue();
     this.ensureEnabledHighlight();
+  }
   get options(): Select2Option[] {
     return this._options;
   }

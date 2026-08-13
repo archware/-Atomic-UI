@@ -32,6 +32,10 @@
   margin-left: auto;
 }
 
+.topbar-icon {
+  font-size: var(--topbar-action-icon-size);
+}
+
 /* Sidebar Toggle Button */
 .sidebar-toggle {
   display: flex;
@@ -135,7 +139,7 @@
  */
 
 /* RESPONSIVE: Compact topbar on mobile */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .topbar-container {
     padding: 0 var(--space-3);
     gap: var(--space-2);
@@ -152,7 +156,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 160px;
+    max-width: var(--topbar-title-max-inline-size);
   }
 
   .topbar-right {
@@ -166,12 +170,16 @@
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 35rem) {
   .topbar-right ::ng-deep app-language-switcher {
     display: none;
   }
 
   .page-title {
-    max-width: clamp(80px, 30vw, 150px);
+    max-width: clamp(
+      var(--topbar-title-compact-min-inline-size),
+      30vw,
+      var(--topbar-title-compact-max-inline-size)
+    );
   }
 }

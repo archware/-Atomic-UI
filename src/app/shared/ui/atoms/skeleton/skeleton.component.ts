@@ -1,10 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 
 @Component({
   selector: 'app-skeleton',
   standalone: true,
   imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { 'aria-hidden': 'true' },
   template: `
     @switch (variant) {
       @case ('text') {
@@ -14,24 +16,24 @@ import { Component, Input } from '@angular/core';
         <div class="skeleton skeleton-circular" [style.width]="width || 'var(--space-8)'" [style.height]="height || 'var(--space-8)'"></div>
       }
       @case ('rectangular') {
-        <div class="skeleton skeleton-rectangular" [style.width]="width || '100%'" [style.height]="height || '8rem'"></div>
+        <div class="skeleton skeleton-rectangular" [style.width]="width || '100%'" [style.height]="height || 'var(--skeleton-rectangular-block-size)'"></div>
       }
       @case ('card') {
         <div class="skeleton-card">
-          <div class="skeleton skeleton-rectangular" style="height: 8.75rem"></div>
+          <div class="skeleton skeleton-rectangular skeleton-card-media"></div>
           <div class="skeleton-card-content">
-            <div class="skeleton skeleton-text" style="width: 80%; height: var(--space-4)"></div>
-            <div class="skeleton skeleton-text" style="width: 60%; height: var(--space-3)"></div>
-            <div class="skeleton skeleton-text" style="width: 40%; height: var(--space-3)"></div>
+            <div class="skeleton skeleton-text skeleton-card-title"></div>
+            <div class="skeleton skeleton-text skeleton-card-line"></div>
+            <div class="skeleton skeleton-text skeleton-card-line-short"></div>
           </div>
         </div>
       }
       @case ('avatar-text') {
         <div class="skeleton-avatar-text">
-          <div class="skeleton skeleton-circular" style="width: 2.5rem; height: 2.5rem"></div>
+          <div class="skeleton skeleton-circular skeleton-avatar"></div>
           <div class="skeleton-text-group">
-            <div class="skeleton skeleton-text" style="width: 7.5rem; height: 0.875rem"></div>
-            <div class="skeleton skeleton-text" style="width: 5rem; height: var(--space-3)"></div>
+            <div class="skeleton skeleton-text skeleton-avatar-title"></div>
+            <div class="skeleton skeleton-text skeleton-avatar-subtitle"></div>
           </div>
         </div>
       }
@@ -71,6 +73,41 @@ import { Component, Input } from '@angular/core';
       border-radius: var(--radius-md);
     }
 
+    .skeleton-card-media {
+      block-size: var(--skeleton-card-media-block-size);
+    }
+
+    .skeleton-card-title {
+      inline-size: var(--skeleton-card-title-inline-size);
+      block-size: var(--space-4);
+    }
+
+    .skeleton-card-line {
+      inline-size: var(--skeleton-card-line-inline-size);
+      block-size: var(--space-3);
+    }
+
+    .skeleton-card-line-short {
+      inline-size: var(--skeleton-card-line-short-inline-size);
+      block-size: var(--space-3);
+    }
+
+    .skeleton-avatar {
+      inline-size: var(--skeleton-avatar-size);
+      block-size: var(--skeleton-avatar-size);
+      flex: 0 0 var(--skeleton-avatar-size);
+    }
+
+    .skeleton-avatar-title {
+      inline-size: var(--skeleton-avatar-title-inline-size);
+      block-size: var(--text-sm);
+    }
+
+    .skeleton-avatar-subtitle {
+      inline-size: var(--skeleton-avatar-subtitle-inline-size);
+      block-size: var(--space-3);
+    }
+
     .skeleton-card {
       background: var(--skeleton-card-bg);
       border: 1px solid var(--skeleton-card-border);
@@ -100,6 +137,13 @@ import { Component, Input } from '@angular/core';
     @keyframes shimmer {
       0% { background-position: 200% 0; }
       100% { background-position: -200% 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .skeleton {
+        animation: none;
+        background-position: 0 0;
+      }
     }
 
     /*

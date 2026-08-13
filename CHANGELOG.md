@@ -3,7 +3,7 @@ title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
 version: '5.5.8'
 status: 'vigente'
-updated: '2026-08-12'
+updated: '2026-08-13'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
@@ -14,6 +14,36 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+### Corregido
+
+- `SkeletonComponent` sustituye los estilos inline estáticos de los presets
+  `card` y `avatar-text` por clases semánticas y tokens de dimensiones. El
+  medio de la tarjeta adopta una altura fluida acotada, el host se declara
+  decorativo y `prefers-reduced-motion` detiene la animación cuando corresponde.
+- `PaginationComponent` conserva `page-btn` en las acciones de la variante
+  `minimal`, elimina los estilos inline del selector y de sus iconos, reduce el
+  ancho de `Select2` mediante su variable pública y usa los tokens específicos
+  de paginación para fondo, texto, borde, estados activos, foco y modo oscuro.
+- `TopbarComponent` traslada el tamaño de los iconos a
+  `--topbar-action-icon-size`, reemplaza medidas responsivas fijas por límites
+  tokenizados y marca los iconos proyectados como decorativos.
+- El token `--size-panel-scroll-max` normaliza la altura máxima de paneles con
+  desplazamiento mediante `clamp(12rem, 55dvh, 25rem)`. Los consumidores pueden
+  reemplazar alturas fijas sin crear un componente ni alterar el comportamiento
+  de las superficies existentes.
+- Los tres componentes utilizan `ChangeDetectionStrategy.OnPush`. Las pruebas
+  focales impiden reintroducir estilos inline estáticos y verifican la clase
+  base de las acciones minimal, la semántica decorativa y los nombres
+  accesibles. El catálogo incorpora contratos completos para `skeleton` y
+  `topbar`, y actualiza el estado estable de `pagination`.
+
+### Verificación
+
+- Las stories de `skeleton` usan variantes válidas y composiciones sin estilos
+  inline; las stories de `pagination` cubren las cuatro variantes y los tres
+  tamaños declarados.
+- Identificador de cambio: `ATOMIC-20260813-RESPONSIVE-PRIMITIVES`.
 
 ## [5.5.8] - 2026-08-12
 

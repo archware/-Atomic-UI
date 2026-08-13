@@ -2,7 +2,7 @@
   <div class="topbar-left">
     <!-- Sidebar Toggle Button (usando IconButton) -->
     <app-icon-button tooltip="Toggle Sidebar" (clicked)="toggleSidebar.emit()">
-      <i class="fa-solid fa-bars" style="font-size: var(--space-5)"></i>
+      <i class="fa-solid fa-bars topbar-icon" aria-hidden="true"></i>
     </app-icon-button>
 
     <!-- Page Title -->
@@ -25,7 +25,7 @@
         [badge]="notificationCount"
         (clicked)="notificationClick.emit()"
       >
-        <i class="fa-regular fa-bell" style="font-size: var(--space-5)"></i>
+        <i class="fa-regular fa-bell topbar-icon" aria-hidden="true"></i>
       </app-icon-button>
     }
 

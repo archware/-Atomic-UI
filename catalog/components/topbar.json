@@ -1,0 +1,79 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "topbar",
+  "layer": "organism",
+  "selector": "app-topbar",
+  "export": "TopbarComponent",
+  "source": "src/app/shared/ui/organisms/topbar/topbar.component.ts",
+  "relatedSources": [
+    "src/app/shared/ui/atoms/icon-button/icon-button.component.ts",
+    "src/app/shared/ui/atoms/language-switcher/language-switcher.component.ts",
+    "src/app/shared/ui/molecules/user-menu/user-menu.component.ts"
+  ],
+  "purpose": "Cabecera de aplicación que coordina navegación lateral, título, idioma, tema, notificaciones y sesión.",
+  "variants": [],
+  "inputs": [
+    { "name": "title", "type": "string", "default": "", "meaning": "Título de la vista actual." },
+    { "name": "userInitials", "type": "string", "default": "U", "meaning": "Iniciales de la sesión." },
+    { "name": "userName", "type": "string", "default": "Usuario", "meaning": "Nombre visible de la sesión." },
+    { "name": "userEmail", "type": "string", "default": "usuario@email.com", "meaning": "Correo visible de la sesión." },
+    { "name": "userRole", "type": "string", "default": "", "meaning": "Rol visible de la sesión." },
+    { "name": "notificationCount", "type": "number", "default": 0, "meaning": "Cantidad de notificaciones sin leer." },
+    { "name": "showLanguageSwitcher", "type": "boolean", "default": true, "meaning": "Controla la presencia del selector de idioma." },
+    { "name": "showNotifications", "type": "boolean", "default": true, "meaning": "Controla la presencia de notificaciones." }
+  ],
+  "outputs": [
+    { "name": "toggleSidebar", "type": "void", "meaning": "Solicita alternar la navegación lateral." },
+    { "name": "logout", "type": "void", "meaning": "Solicita cerrar la sesión." },
+    { "name": "notificationClick", "type": "void", "meaning": "Notifica la activación del control de notificaciones." },
+    { "name": "userAction", "type": "UserMenuAction", "meaning": "Propaga una acción seleccionada en el menú de sesión." }
+  ],
+  "states": [
+    { "name": "full", "meaning": "Presenta idioma, tema, notificaciones y sesión." },
+    { "name": "compact", "meaning": "Reduce separaciones y trunca el título en pantallas estrechas." },
+    { "name": "optional-controls-hidden", "meaning": "Omite idioma o notificaciones según sus entradas tipadas." }
+  ],
+  "a11y": [
+    "Las acciones se delegan en botones de icono con nombre accesible.",
+    "Los iconos internos son decorativos y publican aria-hidden=true.",
+    "El título conserva semántica h1 y se trunca solo visualmente."
+  ],
+  "responsive": [
+    "A 48rem se reducen espaciados y el título usa un límite tokenizado.",
+    "A 35rem se oculta el selector de idioma y el título adopta un ancho fluido tokenizado."
+  ],
+  "tokens": [
+    "--border-color",
+    "--control-height",
+    "--danger-color",
+    "--primary-color",
+    "--primary-color-dark",
+    "--radius-full",
+    "--radius-md",
+    "--shadow-glow-primary",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--text-color",
+    "--text-color-on-primary",
+    "--text-color-secondary",
+    "--text-md",
+    "--text-xs",
+    "--topbar-action-icon-size",
+    "--topbar-title-compact-max-inline-size",
+    "--topbar-title-compact-min-inline-size",
+    "--topbar-title-max-inline-size"
+  ],
+  "story": { "path": "src/stories/ui-topbar.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/organisms/topbar/topbar.component.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Los iconos usan una clase semántica y el token --topbar-action-icon-size; no se permiten estilos inline estáticos.",
+      "El organismo usa ChangeDetectionStrategy.OnPush y tokens semánticos compatibles con temas claro y oscuro."
+    ]
+  },
+  "canonicalFor": ["topbar", "application-header", "session-header"]
+}

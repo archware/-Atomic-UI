@@ -1,4 +1,12 @@
-import { Component, Input, Output, EventEmitter, signal, computed } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  signal,
+  computed,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Select2Component } from '../select2/select2.component';
 
@@ -20,6 +28,7 @@ import { Select2Component } from '../select2/select2.component';
   selector: 'app-pagination',
   standalone: true,
   imports: [FormsModule, Select2Component],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="pagination-wrapper">
       <div class="pagination-info">
@@ -28,14 +37,13 @@ import { Select2Component } from '../select2/select2.component';
         </span>
         <div class="page-size-selector">
           <label [for]="'pageSize' + variant">Mostrar:</label>
-          <div style="width: 80px;">
-            <app-select2 
-              [options]="pageSizeOptions()" 
-              [ngModel]="_pageSize()" 
-              (ngModelChange)="onPageSizeChange($event)"
-              [searchable]="false">
-            </app-select2>
-          </div>
+          <app-select2
+            class="page-size-control"
+            [options]="pageSizeOptions()"
+            [ngModel]="_pageSize()"
+            (ngModelChange)="onPageSizeChange($event)"
+            [searchable]="false">
+          </app-select2>
         </div>
       </div>
       <nav class="pagination" [class]="'pagination-' + size + ' pagination-' + variant" aria-label="Paginación">
@@ -44,8 +52,9 @@ import { Select2Component } from '../select2/select2.component';
             class="page-btn page-text-btn"
             [disabled]="currentPage() === 1"
             (click)="goToPage(currentPage() - 1)"
+            aria-label="Página anterior"
           >
-            <i class="fa-solid fa-arrow-left" aria-hidden="true" style="margin-right: var(--space-2)"></i> Anterior
+            <i class="fa-solid fa-arrow-left page-icon page-icon--start" aria-hidden="true"></i> Anterior
           </button>
           
           <span class="page-minimal-text">
@@ -56,8 +65,9 @@ import { Select2Component } from '../select2/select2.component';
             class="page-btn page-text-btn"
             [disabled]="currentPage() === totalPages()"
             (click)="goToPage(currentPage() + 1)"
+            aria-label="Página siguiente"
           >
-            Siguiente <i class="fa-solid fa-arrow-right" aria-hidden="true" style="margin-left: var(--space-2)"></i>
+            Siguiente <i class="fa-solid fa-arrow-right page-icon page-icon--end" aria-hidden="true"></i>
           </button>
         } @else {
           <button type="button"
@@ -131,6 +141,12 @@ import { Select2Component } from '../select2/select2.component';
       gap: var(--space-2);
     }
 
+    .page-size-control {
+      --select2-min-width: var(--pagination-page-size-inline-size);
+      inline-size: var(--pagination-page-size-inline-size);
+      flex: 0 0 var(--pagination-page-size-inline-size);
+    }
+
     .page-size-selector label {
       font-size: var(--text-sm);
       color: var(--text-color-secondary);
@@ -162,7 +178,7 @@ import { Select2Component } from '../select2/select2.component';
     }
 
     /* En móvil con muchas páginas, el nav hace scroll horizontal */
-    @media (max-width: 639px) {
+    @media (max-width: 40rem) {
       :host {
         display: block;
         overflow-x: auto;
@@ -179,6 +195,19 @@ import { Select2Component } from '../select2/select2.component';
       .page-ellipsis {
         flex-shrink: 0;
       }
+
+      .pagination-info {
+        align-items: stretch;
+      }
+
+      .page-size-selector {
+        inline-size: 100%;
+        justify-content: space-between;
+      }
+
+      .page-minimal-text {
+        white-space: nowrap;
+      }
     }
 
     .page-btn {
@@ -188,12 +217,12 @@ import { Select2Component } from '../select2/select2.component';
       min-width: var(--control-height-sm);
       height: var(--control-height-sm);
       padding: 0 var(--space-2);
-      background: var(--surface-background);
-      border: 1px solid var(--border-color);
+      background: var(--pagination-bg);
+      border: 1px solid var(--pagination-border);
       border-radius: var(--radius-md);
       box-shadow: var(--shadow-sm);
       font-size: var(--text-sm);
-      color: var(--text-color);
+      color: var(--pagination-text);
       cursor: pointer;
       transition: all 150ms ease;
     }
@@ -211,19 +240,25 @@ import { Select2Component } from '../select2/select2.component';
     }
 
     .page-btn:hover:not(:disabled):not(.active) {
-      background: var(--surface-hover);
+      background: var(--pagination-hover-bg);
       border-color: var(--primary-color);
+    }
+
+    .page-btn:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-focus-primary);
     }
 
     .page-btn:disabled {
       opacity: 0.5;
+      color: var(--pagination-disabled-text);
       cursor: not-allowed;
     }
 
     .page-btn.active {
-      background: var(--primary-color);
-      border-color: var(--primary-color);
-      color: var(--text-color-on-primary);
+      background: var(--pagination-active-bg);
+      border-color: var(--pagination-active-bg);
+      color: var(--pagination-active-text);
     }
 
     .page-ellipsis {
@@ -245,8 +280,16 @@ import { Select2Component } from '../select2/select2.component';
     .page-text-btn {
       padding: 0 var(--space-4);
       background: transparent;
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--pagination-border);
       min-width: auto;
+    }
+
+    .page-icon--start {
+      margin-inline-end: var(--space-2);
+    }
+
+    .page-icon--end {
+      margin-inline-start: var(--space-2);
     }
 
     .page-minimal-text {
@@ -267,29 +310,29 @@ import { Select2Component } from '../select2/select2.component';
     }
 
     .pagination-rounded .page-btn:hover:not(:disabled):not(.active) {
-      background: var(--surface-hover);
+      background: var(--pagination-hover-bg);
     }
 
     .pagination-rounded .page-btn.active {
-      background: var(--primary-color);
-      color: var(--text-color-on-primary);
+      background: var(--pagination-active-bg);
+      color: var(--pagination-active-text);
       box-shadow: var(--shadow-focus-primary);
     }
 
     /* Cards Variant */
     .pagination-cards .page-btn {
       border-radius: var(--radius-sm);
-      border: 1px solid var(--border-color);
-      box-shadow: 0 1px var(--space-1) rgba(0,0,0,0.05);
-      background: var(--surface-background);
+      border: 1px solid var(--pagination-border);
+      box-shadow: var(--shadow-sm);
+      background: var(--pagination-bg);
       margin: 0 var(--space-1);
     }
 
     .pagination-cards .page-btn.active {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 1px var(--primary-color);
-      background: var(--primary-color-lighter);
-      color: var(--primary-color-text);
+      border-color: var(--pagination-active-bg);
+      box-shadow: var(--shadow-focus-primary);
+      background: var(--pagination-active-bg);
+      color: var(--pagination-active-text);
     }
 
     /*

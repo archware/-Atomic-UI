@@ -30,6 +30,19 @@ describe('TopbarComponent', () => {
     expect(fixture.nativeElement.querySelector('app-user-menu')).not.toBeNull();
   });
 
+  it('renders action icons without static inline styles', () => {
+    component.showLanguageSwitcher = false;
+    component.showNotifications = true;
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+    const icons = Array.from(element.querySelectorAll<HTMLElement>('.topbar-icon'));
+
+    expect(icons.length).toBe(2);
+    expect(icons.every((icon) => icon.getAttribute('aria-hidden') === 'true')).toBeTrue();
+    expect(element.querySelectorAll('.topbar-icon[style]').length).toBe(0);
+  });
+
   it('passes the user role to the session menu', () => {
     component.showLanguageSwitcher = false;
     component.userRole = 'Administrador';

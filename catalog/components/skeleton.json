@@ -1,0 +1,73 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "skeleton",
+  "layer": "atom",
+  "selector": "app-skeleton",
+  "export": "SkeletonComponent",
+  "source": "src/app/shared/ui/atoms/skeleton/skeleton.component.ts",
+  "purpose": "Representación visual decorativa del estado de carga con presets tipados y dimensiones gobernadas por tokens.",
+  "variants": [
+    {
+      "name": "variant",
+      "values": [
+        { "value": "text", "meaning": "Línea de texto en carga.", "default": true },
+        { "value": "circular", "meaning": "Marcador circular para avatares o iconos." },
+        { "value": "rectangular", "meaning": "Bloque rectangular de contenido." },
+        { "value": "card", "meaning": "Composición de tarjeta con medio y tres líneas." },
+        { "value": "avatar-text", "meaning": "Composición horizontal de avatar y dos líneas." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "variant", "type": "'text' | 'circular' | 'rectangular' | 'card' | 'avatar-text'", "default": "text", "meaning": "Preset visual que se representa." },
+    { "name": "width", "type": "string | undefined", "meaning": "Ancho dinámico para variantes simples cuando el consumidor requiere una medida contextual." },
+    { "name": "height", "type": "string | undefined", "meaning": "Altura dinámica para variantes simples cuando el consumidor requiere una medida contextual." }
+  ],
+  "outputs": [],
+  "states": [
+    { "name": "animated", "meaning": "El degradado se desplaza mientras no se solicite movimiento reducido." },
+    { "name": "reduced-motion", "meaning": "La animación se detiene cuando el sistema solicita movimiento reducido." }
+  ],
+  "a11y": [
+    "El host es decorativo y publica aria-hidden=true; el contenedor consumidor conserva la responsabilidad de anunciar la carga.",
+    "La preferencia prefers-reduced-motion desactiva la animación de brillo."
+  ],
+  "responsive": [
+    "El medio de la tarjeta usa una altura fluida con límites tokenizados.",
+    "Las composiciones conservan anchos relativos y se adaptan al ancho del host."
+  ],
+  "tokens": [
+    "--radius-lg",
+    "--radius-md",
+    "--radius-sm",
+    "--skeleton-avatar-size",
+    "--skeleton-avatar-subtitle-inline-size",
+    "--skeleton-avatar-title-inline-size",
+    "--skeleton-card-bg",
+    "--skeleton-card-border",
+    "--skeleton-card-line-inline-size",
+    "--skeleton-card-line-short-inline-size",
+    "--skeleton-card-media-block-size",
+    "--skeleton-card-title-inline-size",
+    "--skeleton-gradient-mid",
+    "--skeleton-gradient-start",
+    "--skeleton-rectangular-block-size",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-8",
+    "--text-sm"
+  ],
+  "story": { "path": "src/stories/ui-skeleton.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/atoms/skeleton/skeleton.component.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Los presets compuestos no contienen estilos inline estáticos y usan clases semánticas gobernadas por tokens.",
+      "Las dimensiones dinámicas width y height permanecen disponibles exclusivamente para variantes simples."
+    ]
+  },
+  "canonicalFor": ["skeleton", "loading-placeholder", "content-placeholder"]
+}
