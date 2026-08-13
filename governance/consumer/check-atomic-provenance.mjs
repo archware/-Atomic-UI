@@ -20,6 +20,11 @@ const REQUIRED_MARKER = 'ATOMIC_GOVERNANCE_REQUIRED';
 const NATIVE_VISUAL_TAGS = /<(?:button|dialog|input|select|table|textarea)\b/i;
 const NATIVE_VISUAL_SELECTORS =
   /(?<![-\w])(?:button|dialog|input|select|table|textarea)(?=\s*(?:\[|:|\.|#|\{|,|>|\+|~))/im;
+// Arriba del todo, con el resto de constantes del modulo: stripComments() se
+// llama desde funciones declaradas antes que ella, y un `const` a media altura
+// las dejaba en zona muerta temporal.
+const BACKSLASH = String.fromCharCode(92);
+const NEWLINE = String.fromCharCode(10);
 const FIXED_COLOR = /(?<!&)#[0-9a-f]{3,8}\b/i;
 const INVALID_NUMERIC_TOKEN = /\d+(?:\.\d+)?var\s*\(/i;
 const INVALID_NEGATED_TOKEN = /(?<![\w-])-var\s*\(/i;
@@ -654,7 +659,7 @@ for (const uiRoot of manifest.uiRoots || []) {
     const local = normalize(relative(consumerRoot, file));
     if (local.includes('/styles/tokens/')) continue;
     const source = readFileSync(file, 'utf8');
-    const executableSource = source.replace(/\/\*[\s\S]*?\*\//g, '');
+    const executableSource = stripComments(source, { lineComments: file.endsWith('.ts') });
     if (!belongsToGovernedComponent(file) && FIXED_COLOR.test(executableSource)) {
       failures.push(`Color fijo fuera de tokens: ${local}`);
     }
@@ -667,9 +672,57 @@ for (const uiRoot of manifest.uiRoots || []) {
   }
 }
 
+/*
+Deja el codigo sin comentarios, para que las comprobaciones de color y de
+tokens miren solo lo que se ejecuta.
+
+POR QUE NO BASTA CON BORRAR LOS DE BLOQUE. Antes solo se retiraban los `/* … *\/`,
+asi que un color escrito dentro de un `//` —tipicamente el comentario que
+JUSTIFICA por que un token vale lo que vale— se denunciaba como color fijo. Una
+compuerta que empuja a borrar la documentacion de una decision de contraste
+trabaja en contra de si misma.
+
+Y POR QUE NO SE BORRA CON UNA EXPRESION REGULAR. `//` aparece dentro de las
+cadenas: en `'https://…'`, sin ir mas lejos. Cortar la linea ahi no solo mutila
+la cadena, sino que ESCONDE cualquier color escrito despues, que es un falso
+negativo y peor que el falso positivo que se venia a arreglar. Se recorre el
+texto siguiendo el estado de comillas.
+
+Los comentarios de linea solo se retiran donde existen: en TypeScript. En CSS y
+en HTML, `//` no abre nada.
+*/
+function stripComments(source, { lineComments }) {
+  let out = '';
+  let quote = null;
+  for (let i = 0; i < source.length; i += 1) {
+    const c = source[i];
+    const next = source[i + 1];
+    if (quote) {
+      out += c;
+      if (c === BACKSLASH) { out += next ?? ''; i += 1; continue; }
+      if (c === quote) quote = null;
+      continue;
+    }
+    if (c === "'" || c === '"' || c === '`') { quote = c; out += c; continue; }
+    if (c === '/' && next === '*') {
+      const end = source.indexOf('*/', i + 2);
+      i = end === -1 ? source.length : end + 1;
+      continue;
+    }
+    if (lineComments && c === '/' && next === '/') {
+      const end = source.indexOf(NEWLINE, i);
+      if (end === -1) break;
+      i = end - 1;
+      continue;
+    }
+    out += c;
+  }
+  return out;
+}
+
 function checkGovernedSurfaceFile(file) {
   const source = readFileSync(file, 'utf8');
-  const executableSource = source.replace(/\/\*[\s\S]*?\*\//g, '');
+  const executableSource = stripComments(source, { lineComments: file.endsWith('.ts') });
   const local = normalize(relative(consumerRoot, file));
   if (local.endsWith('.spec.ts')) return;
   const isHtml = file.endsWith('.html');
