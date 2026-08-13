@@ -1,7 +1,7 @@
 ---
 title: 'Migrar un consumidor a Atomic 5.7 y a la política 1.2.2'
 document_type: 'guide'
-version: '5.7.2'
+version: '5.7.4'
 status: 'vigente'
 updated: '2026-08-13'
 owner: 'Hospital Regional de Ayacucho'
@@ -199,8 +199,12 @@ entre el cajón y el contenido. El teclado ya lo resuelve Escape.
 
 - **El gate lee la fuente CRUDA para las primitivas nativas.** Un comentario que
   mencione `<button>` hace fallar la comprobación. Escribe «botón nativo».
-- **`viewChild<Button>` ya no falla** desde 5.7.2: la comprobación dejó de
-  ignorar mayúsculas. Si ves ese falso positivo, estás en una versión anterior.
+- **`viewChild<Button>` ya no falla** desde 5.7.2, y desde 5.7.3 con el matiz
+  correcto: la comprobación es sensible a mayúsculas **solo en TypeScript**,
+  donde `Button` es un tipo y `<button` una etiqueta; en `.html` sigue siendo
+  insensible, porque `<BUTTON>` es la misma primitiva nativa y no puede
+  convertirse en una vía de elusión. Si ves ese falso positivo, estás en una
+  versión anterior.
 - **`form-dialog` llama a `crudDialog.focusError()`.** Si tu `crud-dialog` es
   `adapted` y no lo tiene, el build falla con `TS2339`. Pórtalo: recorre los
   selectores de error en orden y **reintenta tras el render**, porque el aviso lo
@@ -228,9 +232,18 @@ anuncia un lector de pantalla.
 
 ## 6. Lo que esta guía no cubre
 
-- **La validación con lector de pantalla.** 5.7.0 declara la jerarquía de roles
-  de tabla bajo la rejilla de columnas, pero eso verifica los atributos, no lo
-  que anuncia NVDA o VoiceOver. Sigue pendiente y requiere una persona.
+- **La validación con lector de pantalla.** Sigue pendiente y requiere una
+  persona: ninguna comprobación automática oye lo que anuncia NVDA o VoiceOver.
+
+  Lo que sí se mide sin persona es el **árbol de accesibilidad** que construye
+  el navegador, y conviene saberlo antes de escribir código «por accesibilidad»:
+  5.7.0 declaró una jerarquía de roles de tabla bajo la rejilla de columnas, y
+  **5.7.4 la retiró** porque esa medición demostró que no arreglaba nada —y que
+  en Chromium añadía un `rowgroup` que el navegador no expone por su cuenta—. La
+  receta, con las dos trampas que casi invalidan la medición, está en
+  `LESSONS_LEARNED.md`, entrada del 2026-08-13.
+
+  Moraleja para quien migre: una guía de ARIA de hace años no es una medición.
 - **CI.** Si tu repositorio vive en Azure DevOps, el flujo que se vendoriza es de
   GitHub Actions y **no se ejecuta nunca**. Un gate que no corre es gobierno
   decorativo: dale integración real antes de migrar, o al menos a la vez.
