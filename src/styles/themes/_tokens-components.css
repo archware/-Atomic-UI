@@ -513,7 +513,7 @@ html.dark {
    /* === ALERTS === */
    --alert-info-bg: var(--info-color-lighter);
    --alert-info-border: var(--info-color);
-   --alert-info-text: var(--info-color-text);
+   --alert-info-text: var(--blue-300);
    --alert-success-bg: var(--success-color-lighter);
    --alert-success-border: var(--success-color);
    --alert-success-text: var(--success-color-text);
@@ -522,7 +522,7 @@ html.dark {
    --alert-warning-text: var(--warning-color-text);
    --alert-danger-bg: var(--danger-color-lighter);
    --alert-danger-border: var(--danger-color);
-   --alert-danger-text: var(--danger-color-text);
+   --alert-danger-text: var(--red-300);
 
    /* === SCROLLBAR === */
    --scrollbar-track: color-mix(in srgb, var(--info-color), transparent 88%);
@@ -751,7 +751,7 @@ html.dark {
    /* === ALERTS === */
    --alert-info-bg: var(--info-color-lighter);
    --alert-info-border: var(--info-color);
-   --alert-info-text: var(--info-color-text);
+   --alert-info-text: var(--blue-300);
    --alert-success-bg: var(--success-color-lighter);
    --alert-success-border: var(--success-color);
    --alert-success-text: var(--success-color-text);
@@ -760,7 +760,7 @@ html.dark {
    --alert-warning-text: var(--warning-color-text);
    --alert-danger-bg: var(--danger-color-lighter);
    --alert-danger-border: var(--danger-color);
-   --alert-danger-text: var(--danger-color-text);
+   --alert-danger-text: var(--red-300);
 
    /* === SCROLLBAR === */
    --scrollbar-track: color-mix(in srgb, var(--info-color), transparent 88%);
