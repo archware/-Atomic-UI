@@ -1,9 +1,9 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.5.8'
+version: '5.6.0'
 status: 'vigente'
-updated: '2026-08-12'
+updated: '2026-08-13'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
@@ -14,6 +14,79 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.6.0] - 2026-08-13
+
+**Numero nuevo a proposito.** Durante agosto dos historias paralelas de este
+repositorio publicaron un 5.4.0 y un 5.5.0 con el mismo numero y contenido
+distinto, de modo que «la version 5.5.0» dejo de identificar nada. No se
+reutiliza ningun 5.5.x: 5.6.0 es el primer numero que vuelve a designar un solo
+arbol. `main` es el tronco unico desde aqui.
+
+Esta version RESCATA sobre `main` el trabajo que se habia quedado en la rama
+`PREST-20260805-194-contraste-y-531`, rehaciendolo en vez de fusionarlo: la
+fusion producia 13 conflictos y ninguna de las dos resoluciones compilaba.
+
+### Cambios que rompen
+
+- **`alert` unifica su API con la que ya habla el consumidor.** `variant` pasa
+  a `kind` y `flowSpacing` a `spacing` —renombrado puro, mismo conjunto de
+  valores—. Se retiran `size`, que competia con el sistema de espaciado sin uso
+  legitimo, y `message`, que duplicaba la proyeccion de contenido: el cuerpo va
+  ahora siempre como contenido proyectado.
+  Los tipos `AlertVariant`, `AlertSize` y `AlertFlowSpacing` desaparecen; los
+  sustituyen `AlertKind` y `AlertSpacing`. El barrel conserva el alias
+  `AlertComponent` junto al nombre nuevo `Alert`.
+  **El generador de UI y el catalogo tambien se actualizan**: `generate-ui`
+  emitia plantillas con la API vieja, de modo que los proyectos generados no
+  compilaban, y `catalog/components/alert.json` declaraba entradas que ya no
+  existen. Quien genere un proyecto nuevo desde 5.6.0 obtiene `kind` y cuerpo
+  proyectado.
+
+### Agregado
+
+- **Dos compuertas nuevas en `governance:check`:** `check:contrast`, que
+  replica la cascada de `:root` y detecta que un tema herede tokens del bloque
+  claro, y `check:focus`, que impide degradar una lista de PRIORIDAD de
+  selectores a un `querySelector` singular.
+  `check:focus` admite declarar `/* orden-dom: <motivo> */` cuando la lista es
+  un conjunto y no una prioridad, **exigiendo motivo escrito**: un silenciador
+  mudo convierte una compuerta en decoracion.
+
+### Corregido
+
+- **Contraste de los controles deshabilitados.** El bloque oscuro no declaraba
+  `--input-disabled-bg` ni `--input-disabled-text` y heredaba los del bloque
+  claro, anclado a `:root`: un campo casi blanco sobre pagina oscura con el
+  texto a 2.05:1. brand-dark estaba en 1.68:1 y el propio tema claro en 2.31:1.
+  Ademas once controles dividian su contraste con `opacity` DESPUES de
+  resolverlo por token, lo que dejaba el resultado en 4.09:1 aun con los tokens
+  corregidos; en `form-select` la flecha se atenuaba dos veces.
+- **Contraste del texto de las alertas oscuras**, que apuntaba al color base del
+  tono en vez de a su variante clara: 3.74:1 y 4.06:1, ahora 7.57:1 y 7.29:1.
+- **Siete referencias a `--surface-card` y `--surface-input`**, tokens que no
+  existen en ningun tema, en cuatro paginas del escaparate.
+- **`file-input`: un archivo rechazado descarta la seleccion anterior.** Antes
+  se ponia el mensaje de error y se salia sin tocar `files`, asi que el
+  componente seguia mostrando el fichero viejo y el formulario no recibia
+  cambio alguno: lo que se enviaba no era lo que la pantalla senalaba con el
+  error.
+- **`modal`: la lista de selectores de error vuelve a ser una prioridad.**
+  Unida con comas y entregada a un `querySelector` singular devolvia orden de
+  DOM, de modo que el marcador explicito `[data-modal-error]` perdia frente a
+  cualquier `[role="alert"]` que apareciera antes en el marcado.
+- **El gate dejaba de ver los comentarios de linea** y denunciaba como «color
+  fijo» un color que estaba dentro de un `//`, tipicamente el que justifica el
+  valor de un token.
+
+### Conocido y sin resolver
+
+- Con la rejilla de columnas activa, `scroll-overlay` cambia el `display` de
+  `thead tr`, `tbody tr` y `tbody` **sin restituir ningun rol**, de modo que un
+  lector de pantalla deja de anunciar filas y celdas. Afecta a los dos linajes
+  y no se parchea aqui: un `role="table"` suelto, con los hijos ya sin rol,
+  produce un arbol de accesibilidad invalido. Requiere decidirse entero y
+  validarse con un lector de pantalla.
 
 ## [5.5.8] - 2026-08-12
 
