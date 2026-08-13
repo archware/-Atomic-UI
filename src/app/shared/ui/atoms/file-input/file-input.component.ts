@@ -378,17 +378,32 @@ export class FileInputComponent implements ControlValueAccessor {
     this.onTouched();
     this.validationError.set('');
     const selectedFiles = this.multiple ? rawFiles : rawFiles.slice(0, 1);
+    // Un archivo rechazado DESCARTA la seleccion anterior.
+    //
+    // Antes se ponia el mensaje de error y se salia sin tocar `files`, asi que lo
+    // que hubiera seleccionado antes sobrevivia: el componente seguia mostrando
+    // el fichero viejo, el formulario no recibia cambio alguno y el boton de
+    // guardar del consumidor seguia habilitado. Lo que se enviaba no era lo que
+    // la pantalla senalaba con el error, y en un flujo de archivado documental
+    // eso significa guardar el documento equivocado de forma inmutable.
+    //
+    // Vaciar es la unica lectura en la que lo que se ve y lo que se envia
+    // coinciden. Se notifica tambien al formulario, no solo al evento.
     const invalidSize = selectedFiles.find(
       (file) => this.maxSizeMB && file.size > this.maxSizeMB * 1024 * 1024,
     );
     if (invalidSize) {
-      this.validationError.set(`${invalidSize.name} supera el máximo de ${this.maxSizeMB} MB.`);
+      this.rejectSelection(
+        `${invalidSize.name} supera el máximo de ${this.maxSizeMB} MB.`,
+      );
       return;
     }
 
     const invalidType = selectedFiles.find((file) => !this.isAccepted(file));
     if (invalidType) {
-      this.validationError.set(`${invalidType.name} no corresponde a los formatos permitidos.`);
+      this.rejectSelection(
+        `${invalidType.name} no corresponde a los formatos permitidos.`,
+      );
       return;
     }
 
@@ -405,6 +420,14 @@ export class FileInputComponent implements ControlValueAccessor {
     this.files.set(newFiles);
     this.onChange(newFiles);
     this.filesChange.emit(newFiles);
+  }
+
+  /** Deja el campo vacio y avisa: al formulario y al evento. */
+  private rejectSelection(message: string): void {
+    this.validationError.set(message);
+    this.files.set([]);
+    this.onChange([]);
+    this.filesChange.emit([]);
   }
 
   private generateImagePreviews(files: FileInputFile[]): void {
