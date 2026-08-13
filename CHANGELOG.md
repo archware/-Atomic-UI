@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.7.1'
+version: '5.7.2'
 status: 'vigente'
 updated: '2026-08-13'
 owner: 'Hospital Regional de Ayacucho'
@@ -14,6 +14,18 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.7.2] - 2026-08-13
+
+### Corregido
+
+- **El gate confundia un generico de TypeScript con una etiqueta HTML.**
+  `viewChild<Button>('x')` se denunciaba como primitiva visual nativa, y el
+  unico modo de callarlo era renombrar el import: un rodeo que ensucia el
+  codigo para contentar a una expresion regular. La comprobacion deja de
+  ignorar mayusculas —las etiquetas HTML se escriben en minuscula, los tipos de
+  TypeScript en mayuscula inicial—, con lo que `<button` sigue detectandose y
+  desaparece la unica familia de falsos positivos que tenia.
 
 ## [5.7.1] - 2026-08-13
 

@@ -17,7 +17,19 @@ const { confinedPath, relativePath } = safePaths;
 const { verifySourceManifest } = sourceManifest;
 const POLICY_VERSION = '1.2.2';
 const REQUIRED_MARKER = 'ATOMIC_GOVERNANCE_REQUIRED';
-const NATIVE_VISUAL_TAGS = /<(?:button|dialog|input|select|table|textarea)\b/i;
+/*
+SIN el indicador `i`, y es deliberado. Con el, `viewChild<Button>('x')` —un
+generico de TypeScript— se denunciaba como primitiva visual nativa, y el unico
+modo de callarlo era renombrar el import: un rodeo que ensucia el codigo para
+contentar a una expresion regular, que es como una compuerta pierde el respeto
+de quien la usa.
+
+Las etiquetas HTML se escriben en minuscula por convencion universal; los tipos
+de TypeScript, en mayuscula inicial. Distinguirlas por ahi no pierde deteccion
+—`<button` sigue casando— y elimina la unica familia de falsos positivos que
+esta comprobacion tenia.
+*/
+const NATIVE_VISUAL_TAGS = /<(?:button|dialog|input|select|table|textarea)\b/;
 const NATIVE_VISUAL_SELECTORS =
   /(?<![-\w])(?:button|dialog|input|select|table|textarea)(?=\s*(?:\[|:|\.|#|\{|,|>|\+|~))/im;
 // Arriba del todo, con el resto de constantes del modulo: stripComments() se
