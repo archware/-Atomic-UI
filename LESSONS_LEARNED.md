@@ -446,7 +446,7 @@ Queda estrictamente prohibido usar `(click)` sobre elementos custom de la librer
 **La Leccion**: Al propagar componentes que dependen de librerias con versiones semanticas distintas entre proyectos, el primer paso es alinear TODAS las versiones al semver del proyecto Fuente de la Verdad. Nunca asumir que `^18` incluye la API de `^17` — los breaking changes son reales aunque sean parches mayores.
 
 ### 4. Scripts de Desarrollo con Credenciales Hardcodeadas (OWASP A07)
-**Contexto**: Se encontraron credenciales SQL Server (`sa:Password123.@10.100.6.11`) hardcodeadas en 14 archivos a lo largo del workspace (3 scripts `.go` raiz, 11 archivos `.js` en `db_test/`, 1 archivo `scratch/test_db.go`).
+**Contexto**: Se encontraron credenciales SQL Server privilegiadas en texto plano dentro de scripts auxiliares del workspace. Los valores fueron redactados y deben tratarse como comprometidos; la documentación no conserva contraseñas, cuentas ni direcciones internas.
 **La Leccion**: Los scripts de utilidad de desarrollo deben seguir el mismo patron de seguridad que el codigo de produccion. El patron correcto para scripts locales es: centralizar en `config.js` o usar el keyring del sistema (`go-keyring`), gitignorear el archivo de credenciales, y proveer un `config.example.js` como plantilla. Ningun password debe existir en texto plano en el repositorio.
 
 ---
