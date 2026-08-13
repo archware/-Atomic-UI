@@ -24,6 +24,7 @@ const NATIVE_VISUAL_SELECTORS =
 // llama desde funciones declaradas antes que ella, y un `const` a media altura
 // las dejaba en zona muerta temporal.
 const BACKSLASH = String.fromCharCode(92);
+const BLOCK_COMMENT = /\/\*[\s\S]*?\*\//g;
 const NEWLINE = String.fromCharCode(10);
 const FIXED_COLOR = /(?<!&)#[0-9a-f]{3,8}\b/i;
 const INVALID_NUMERIC_TOKEN = /\d+(?:\.\d+)?var\s*\(/i;
@@ -676,45 +677,50 @@ for (const uiRoot of manifest.uiRoots || []) {
 Deja el codigo sin comentarios, para que las comprobaciones de color y de
 tokens miren solo lo que se ejecuta.
 
-POR QUE NO BASTA CON BORRAR LOS DE BLOQUE. Antes solo se retiraban los `/* … *\/`,
-asi que un color escrito dentro de un `//` —tipicamente el comentario que
-JUSTIFICA por que un token vale lo que vale— se denunciaba como color fijo. Una
-compuerta que empuja a borrar la documentacion de una decision de contraste
-trabaja en contra de si misma.
+DOS PASADAS, Y CADA UNA CON UNA REGLA DISTINTA. No es simetria mal resuelta:
+los dos tipos de comentario tienen problemas opuestos.
 
-Y POR QUE NO SE BORRA CON UNA EXPRESION REGULAR. `//` aparece dentro de las
-cadenas: en `'https://…'`, sin ir mas lejos. Cortar la linea ahi no solo mutila
-la cadena, sino que ESCONDE cualquier color escrito despues, que es un falso
-negativo y peor que el falso positivo que se venia a arreglar. Se recorre el
-texto siguiendo el estado de comillas.
+1) BLOQUE, `/* … *\/`: se retiran EN TODAS PARTES, tambien dentro de las
+   plantillas literales. Es lo que hacia la version original con una regex, y
+   hay que conservarlo: en este repositorio las plantillas literales llevan CSS
+   dentro, y un `/* 4var(--space-2) → var(--space-8) *\/` que documenta el valor
+   ANTERIOR es un comentario, no codigo. Respetar ahi el estado de comillas
+   —como intente en una primera version— hace que sobrevivan y se denuncien
+   como valores danados: paso en toggle, button, floating-input, action-group y
+   avatar-group.
 
-Los comentarios de linea solo se retiran donde existen: en TypeScript. En CSS y
-en HTML, `//` no abre nada.
+2) LINEA, `//`: se retiran solo FUERA de las cadenas, y solo en TypeScript. Un
+   `//` aparece dentro de 'https://…', y cortar la linea ahi mutila la cadena y
+   esconde lo que venga despues. En CSS y HTML no abre nada.
+
+El orden tambien importa: la pasada de bloque va primero, y de paso se lleva
+los apostrofos que viajen dentro de un comentario —«don't»— que si no
+descuadrarian el seguimiento de comillas de la segunda.
 */
 function stripComments(source, { lineComments }) {
+  const withoutBlocks = source.replace(BLOCK_COMMENT, '');
+  if (!lineComments) {
+    return withoutBlocks;
+  }
+
   let out = '';
   let quote = null;
-  for (let i = 0; i < source.length; i += 1) {
-    const c = source[i];
-    const next = source[i + 1];
+  for (let i = 0; i < withoutBlocks.length; i += 1) {
+    const c = withoutBlocks[i];
+    const next = withoutBlocks[i + 1];
     if (quote) {
       out += c;
       if (c === BACKSLASH) { out += next ?? ''; i += 1; continue; }
       if (c === quote) quote = null;
       continue;
     }
-    if (c === "'" || c === '"' || c === '`') { quote = c; out += c; continue; }
-    if (c === '/' && next === '*') {
-      const end = source.indexOf('*/', i + 2);
-      i = end === -1 ? source.length : end + 1;
-      continue;
-    }
-    if (lineComments && c === '/' && next === '/') {
-      const end = source.indexOf(NEWLINE, i);
+    if (c === '/' && next === '/') {
+      const end = withoutBlocks.indexOf(NEWLINE, i);
       if (end === -1) break;
       i = end - 1;
       continue;
     }
+    if (c === "'" || c === '"' || c === '`') { quote = c; out += c; continue; }
     out += c;
   }
   return out;
