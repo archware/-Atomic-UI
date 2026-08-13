@@ -83,7 +83,7 @@ import { ApiError } from '../../services/api.service';
               <i class="fa-solid fa-circle-exclamation"></i>
             </div>
             <h4 class="error-title">{{ errorTitle }}</h4>
-            <p class="error-message" [innerHTML]="error.message"></p>
+            <p class="error-message">{{ error.message }}</p>
             @if (showRetryButton) {
               <button type="button" class="retry-button" (click)="onRetry.emit()">
                 <i class="fa-solid fa-rotate-right"></i>

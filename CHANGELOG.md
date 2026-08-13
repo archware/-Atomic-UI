@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.7.0'
+version: '5.7.1'
 status: 'vigente'
 updated: '2026-08-13'
 owner: 'Hospital Regional de Ayacucho'
@@ -14,6 +14,12 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.7.1] - 2026-08-13
+
+La versión integra de forma no destructiva la línea local de mejoras
+responsivas sobre el tronco único 5.7.0 y conserva la historia de ambos
+linajes.
 
 ### Corregido
 
@@ -43,6 +49,20 @@ archivo. El formato se basa en
 - Las stories de `skeleton` usan variantes válidas y composiciones sin estilos
   inline; las stories de `pagination` cubren las cuatro variantes y los tres
   tamaños declarados.
+- `governance:check` valida la política 1.2.2, el catálogo, la API, los tokens,
+  el contraste, el foco y el contrato de distribución sin hallazgos.
+- ESLint finaliza sin observaciones, las 384 pruebas unitarias concluyen
+  correctamente y los builds de Angular y Storybook se generan sin errores.
+- El manifiesto inventaría 158 fuentes mediante `git-clean-eol-v1` y registra
+  la huella SHA-256
+  `311d77c4979ffa76fd07bd7a417a29ddf480f66195288eb7984ae63c750f3ec1`.
+- La integración conserva la API de `Alert` basada en contenido proyectado,
+  vigente desde 5.6.0. La entrada histórica `message` no se reintroduce; el
+  contenido con formato se proyecta de forma explícita desde el consumidor.
+- Los mensajes textuales de validación, estado, modal, ventana emergente y
+  notificación conservan la interpolación escapada de Angular. Los canales
+  explícitos `htmlContent` permanecen disponibles donde el contrato ya los
+  declara, sin promover mensajes ordinarios a HTML.
 - Identificador de cambio: `ATOMIC-20260813-RESPONSIVE-PRIMITIVES`.
 ## [5.7.0] - 2026-08-13
 

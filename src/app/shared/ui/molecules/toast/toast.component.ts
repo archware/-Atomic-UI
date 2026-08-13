@@ -59,7 +59,7 @@ export interface ToastConfig {
             @default { <i class="fa-solid fa-circle-info"></i> }
           }
         </span>
-        <span class="toast-message" [innerHTML]="toast.message"></span>
+        <span class="toast-message">{{ toast.message }}</span>
         @if (toast.dismissible) {
           <button type="button" class="toast-close" (click)="toastService.dismiss(toast.id)" aria-label="Cerrar"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         }

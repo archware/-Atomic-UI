@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.7.0",
+  "packageVersion": "5.7.1",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "9a909a262577d2711fdf142bba626f6c8cc63de84713a622a9803e38112b4379",
+  "sourceTreeSha256": "311d77c4979ffa76fd07bd7a417a29ddf480f66195288eb7984ae63c750f3ec1",
   "fileCount": 158,
   "files": [
     {
@@ -21,7 +21,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 854,
-      "sha256": "8336ca12fdcf9f76c23ac802d6271479ba0c87f495e60d3e06717dbd857275b4"
+      "sha256": "7205e28bda5b5ce3b57cba35881d8cb3ab231bb4e6076dbb729f6562c8e59245"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -95,8 +95,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/form-error/form-error.component.ts",
-      "bytes": 2306,
-      "sha256": "a168a3c680f9fc9309b7db2e062b450df2006c6ec9189df33777df4938570bed"
+      "bytes": 2297,
+      "sha256": "4b1877dd220907f5113b9ad335cef72bbc5d09aa402482e11f92e9d4aef3f7c1"
     },
     {
       "path": "src/app/shared/ui/atoms/form-input/input.html",
@@ -330,8 +330,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/data-state/data-state.component.ts",
-      "bytes": 6490,
-      "sha256": "31fa25570fee7fc6f1862844d4981d10a0ef26721db42f5c0f36441240455301"
+      "bytes": 6481,
+      "sha256": "13145fe0046f3089dd13c5afb1fef4265a7cba86cb8c71084d09a7c3b95ec6a9"
     },
     {
       "path": "src/app/shared/ui/molecules/datepicker/datepicker.component.css",
@@ -360,8 +360,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/modal/modal-container.component.ts",
-      "bytes": 7922,
-      "sha256": "b4b85d8907fd5397a2a4b9820247edb41c07dff88e15a15dc91974f8037f1640"
+      "bytes": 7913,
+      "sha256": "77198624f548c16b46cd8c75646ee7cb48c708696ed06c4ae973902ecca9462c"
     },
     {
       "path": "src/app/shared/ui/molecules/modal/modal.component.ts",
@@ -375,8 +375,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/popup/popup-container.component.ts",
-      "bytes": 7739,
-      "sha256": "73c364c42807d3f9fdf5f683eafba1af74243233dacb652661e8747893fef214"
+      "bytes": 7730,
+      "sha256": "00e091cb411bfda02cae6b2562dcd5aea838ee52ed30758a691e1d2064f2224f"
     },
     {
       "path": "src/app/shared/ui/molecules/select2/select2.component.ts",
@@ -410,8 +410,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/toast/toast.component.ts",
-      "bytes": 5422,
-      "sha256": "d5355613f8820d1e8e4bf81d7770d6196dcf508488e0233ff0e272cc9e8a4e9a"
+      "bytes": 5413,
+      "sha256": "908bf3e85fd05f82e3689297c3ad61ac81d1442093aeadade3c1edcf9e8d0898"
     },
     {
       "path": "src/app/shared/ui/molecules/user-menu/user-menu.component.ts",
