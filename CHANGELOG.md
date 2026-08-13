@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.7.1'
+version: '5.7.3'
 status: 'vigente'
 updated: '2026-08-13'
 owner: 'Hospital Regional de Ayacucho'
@@ -15,7 +15,7 @@ archivo. El formato se basa en
 
 ## [Sin publicar]
 
-## [5.7.1] - 2026-08-13
+## [5.7.3] - 2026-08-13
 
 La versión integra de forma no destructiva la línea local de mejoras
 responsivas sobre el tronco único 5.7.0 y conserva la historia de ambos
@@ -51,11 +51,11 @@ linajes.
   tamaños declarados.
 - `governance:check` valida la política 1.2.2, el catálogo, la API, los tokens,
   el contraste, el foco y el contrato de distribución sin hallazgos.
-- ESLint finaliza sin observaciones, las 384 pruebas unitarias concluyen
+- ESLint finaliza sin observaciones, las 388 pruebas unitarias concluyen
   correctamente y los builds de Angular y Storybook se generan sin errores.
 - El manifiesto inventaría 158 fuentes mediante `git-clean-eol-v1` y registra
   la huella SHA-256
-  `311d77c4979ffa76fd07bd7a417a29ddf480f66195288eb7984ae63c750f3ec1`.
+  `df53c9d5dcc15c84f3896beb6120b5ea217365ab5d45d8f0c637394f1b497042`.
 - La integración conserva la API de `Alert` basada en contenido proyectado,
   vigente desde 5.6.0. La entrada histórica `message` no se reintroduce; el
   contenido con formato se proyecta de forma explícita desde el consumidor.
@@ -63,7 +63,46 @@ linajes.
   notificación conservan la interpolación escapada de Angular. Los canales
   explícitos `htmlContent` permanecen disponibles donde el contrato ya los
   declara, sin promover mensajes ordinarios a HTML.
+- El gate distingue el genérico TypeScript `viewChild<Button>` de una etiqueta
+  embebida, pero conserva la semántica insensible a mayúsculas de HTML:
+  `<BUTTON>` y `<button>` se rechazan por igual en archivos `.html`.
 - Identificador de cambio: `ATOMIC-20260813-RESPONSIVE-PRIMITIVES`.
+
+## [5.7.2] - 2026-08-13
+
+### Corregido
+
+- **El gate confundia un generico de TypeScript con una etiqueta HTML.**
+  `viewChild<Button>('x')` se denunciaba como primitiva visual nativa, y el
+  unico modo de callarlo era renombrar el import: un rodeo que ensucia el
+  codigo para contentar a una expresion regular. La comprobacion deja de
+  ignorar mayusculas —las etiquetas HTML se escriben en minuscula, los tipos de
+  TypeScript en mayuscula inicial—, con lo que `<button` sigue detectandose y
+  desaparece la unica familia de falsos positivos que tenia.
+
+## [5.7.1] - 2026-08-13
+
+### Agregado
+
+- **`app-button` acepta `ariaLabel`, `ariaControls` y `ariaExpanded`.** Sin
+  ellas, un boton de divulgacion —el que abre un cajon o un menu— solo podia
+  declarar `aria-expanded` sobre `<app-button>`, que es un elemento sin rol: el
+  atributo quedaba inerte y el lector anunciaba un boton corriente que nunca
+  decia si estaba abierto o cerrado. Se veia bien, se pulsaba bien, y no
+  informaba.
+  `ariaExpanded` admite `null` a proposito, y es el valor por omision: un boton
+  que no despliega nada NO debe declarar el atributo, porque
+  `aria-expanded="false"` sobre algo que no se abre es una promesa falsa.
+
+  Lo destapo migrar el consumidor a la politica 1.2.2, que prohibe primitivas
+  visuales nativas en la superficie gobernada: al convertir el boton de menu de
+  su shell en `app-button`, su `aria-expanded` se quedaba sin sitio donde vivir.
+- **`app-button.focus()`**, la otra mitad del mismo patron. Al pulsar Escape hay
+  que devolver el foco al boton que abrio, y `nativeElement.focus()` sobre
+  `<app-button>` —que no es focusable— manda el foco al `<body>`: la siguiente
+  tabulacion reempieza desde el principio del documento y quien navega con
+  teclado pierde el sitio.
+
 ## [5.7.0] - 2026-08-13
 
 Cierra el rescate abierto en 5.6.0 y resuelve lo que aquella dejo anotado como

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.7.1",
+  "packageVersion": "5.7.3",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "311d77c4979ffa76fd07bd7a417a29ddf480f66195288eb7984ae63c750f3ec1",
+  "sourceTreeSha256": "df53c9d5dcc15c84f3896beb6120b5ea217365ab5d45d8f0c637394f1b497042",
   "fileCount": 158,
   "files": [
     {
@@ -21,7 +21,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 854,
-      "sha256": "7205e28bda5b5ce3b57cba35881d8cb3ab231bb4e6076dbb729f6562c8e59245"
+      "sha256": "becf79583db8dd9aaa26b4fe76e04947fa8ab1fdccccf58ee5c222a4ff0db0b8"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -50,8 +50,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/button/button.component.ts",
-      "bytes": 7239,
-      "sha256": "03d7f62734568453cb6cf95a5dcaa15b04dd027673ada638dba5642473c18972"
+      "bytes": 8850,
+      "sha256": "c894cc98c0271a92d413fbbd3e556887a5299f15937b519c545517c2c8678d0f"
     },
     {
       "path": "src/app/shared/ui/atoms/checkbox/checkbox.component.ts",

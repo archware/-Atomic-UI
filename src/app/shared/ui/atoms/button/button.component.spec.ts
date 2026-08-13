@@ -228,3 +228,82 @@ describe('ButtonComponent', () => {
     });
   });
 });
+
+/*
+ARIA del control, no del envoltorio.
+
+Sin estas entradas, quien necesita un boton de divulgacion solo podia poner
+`aria-expanded` sobre `<app-button>`, que es un elemento sin rol: el atributo
+quedaba inerte y el lector anunciaba un boton corriente que nunca decia si
+estaba abierto o cerrado. Se veia bien, se pulsaba bien, y no informaba.
+*/
+describe('ButtonComponent aria de divulgacion', () => {
+  let fixture: ComponentFixture<ButtonComponent>;
+
+  const nativo = () => fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+  const set = (name: string, value: unknown) => {
+    fixture.componentRef.setInput(name, value);
+    fixture.detectChanges();
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ButtonComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
+    fixture = TestBed.createComponent(ButtonComponent);
+    fixture.detectChanges();
+  });
+
+  it('pone el aria en el <button> real y no en el elemento anfitrion', () => {
+    set('ariaLabel', 'Abrir menu');
+    set('ariaControls', 'cajon');
+    set('ariaExpanded', false);
+
+    expect(nativo().getAttribute('aria-label')).toBe('Abrir menu');
+    expect(nativo().getAttribute('aria-controls')).toBe('cajon');
+    expect(nativo().getAttribute('aria-expanded')).toBe('false');
+    // Y no se queda en el anfitrion, que es donde no sirve para nada.
+    expect((fixture.nativeElement as HTMLElement).getAttribute('aria-expanded')).toBeNull();
+  });
+
+  it('refleja el cambio de estado', () => {
+    set('ariaExpanded', false);
+    expect(nativo().getAttribute('aria-expanded')).toBe('false');
+
+    set('ariaExpanded', true);
+    expect(nativo().getAttribute('aria-expanded')).toBe('true');
+  });
+
+  /*
+   `null` no declara el atributo. `aria-expanded="false"` sobre un boton que no
+   despliega nada es una promesa falsa: el lector anuncia que hay algo que abrir.
+  */
+  it('sin estado de divulgacion no declara el atributo', () => {
+    set('ariaExpanded', null);
+
+    expect(nativo().getAttribute('aria-expanded')).toBeNull();
+  });
+});
+
+describe('ButtonComponent foco programatico', () => {
+  /*
+   Devolver el foco es la mitad que se olvida del patron de divulgacion. Sin un
+   `focus()` que llegue al control real, `nativeElement.focus()` sobre
+   `<app-button>` —que no es focusable— manda el foco al <body>: la siguiente
+   tabulacion reempieza desde el principio del documento y quien navega con
+   teclado pierde el sitio.
+  */
+  it('lleva el foco al control real y no al elemento anfitrion', async () => {
+    await TestBed.configureTestingModule({
+      imports: [ButtonComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(ButtonComponent);
+    fixture.detectChanges();
+
+    fixture.componentInstance.focus();
+
+    expect(document.activeElement).toBe(fixture.nativeElement.querySelector('button'));
+  });
+});

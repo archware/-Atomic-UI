@@ -17,7 +17,16 @@ const { confinedPath, relativePath } = safePaths;
 const { verifySourceManifest } = sourceManifest;
 const POLICY_VERSION = '1.2.2';
 const REQUIRED_MARKER = 'ATOMIC_GOVERNANCE_REQUIRED';
-const NATIVE_VISUAL_TAGS = /<(?:button|dialog|input|select|table|textarea)\b/i;
+/*
+HTML no distingue mayusculas, por lo que el archivo `.html` se comprueba con
+`i`: `<BUTTON>` es la misma primitiva que `<button>` y no puede convertirse en
+una via de elusion. En TypeScript la comprobacion permanece sensible a
+mayusculas para no confundir un generico como `viewChild<Button>('x')` con una
+etiqueta embebida; las etiquetas de una plantilla Angular se escriben en
+minuscula.
+*/
+const NATIVE_VISUAL_TAGS_HTML = /<(?:button|dialog|input|select|table|textarea)\b/i;
+const NATIVE_VISUAL_TAGS_TYPESCRIPT = /<(?:button|dialog|input|select|table|textarea)\b/;
 const NATIVE_VISUAL_SELECTORS =
   /(?<![-\w])(?:button|dialog|input|select|table|textarea)(?=\s*(?:\[|:|\.|#|\{|,|>|\+|~))/im;
 // Arriba del todo, con el resto de constantes del modulo: stripComments() se
@@ -733,7 +742,8 @@ function checkGovernedSurfaceFile(file) {
   if (local.endsWith('.spec.ts')) return;
   const isHtml = file.endsWith('.html');
   const isTs = file.endsWith('.ts');
-  if ((isHtml || isTs) && NATIVE_VISUAL_TAGS.test(source)) {
+  const nativeVisualTags = isHtml ? NATIVE_VISUAL_TAGS_HTML : NATIVE_VISUAL_TAGS_TYPESCRIPT;
+  if ((isHtml || isTs) && nativeVisualTags.test(source)) {
     failures.push(`Primitiva visual nativa fuera del ADN: ${local}`);
   }
   if (!isHtml && !isTs && NATIVE_VISUAL_SELECTORS.test(source)) {

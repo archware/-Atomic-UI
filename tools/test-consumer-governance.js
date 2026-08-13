@@ -449,7 +449,18 @@ try {
   write(path.join(consumerRoot, 'src/app/features/home/home.html'), '<button>Prohibido</button>\n');
   runGate(false, 'Primitiva visual nativa fuera del ADN');
 
+  write(path.join(consumerRoot, 'src/app/features/home/home.html'), '<BUTTON>Prohibido</BUTTON>\n');
+  runGate(false, 'Primitiva visual nativa fuera del ADN');
+
   write(path.join(consumerRoot, 'src/app/features/home/home.html'), '<prest-example />\n');
+  const featureGenericPath = path.join(consumerRoot, 'src/app/features/home/home.ts');
+  write(
+    featureGenericPath,
+    "export const trigger = viewChild<Button>('trigger');\n",
+  );
+  runGate(true, 'Ley Atomic verificada');
+  fs.rmSync(featureGenericPath);
+
   write(path.join(consumerRoot, 'src/app/ui/atoms/unknown/unknown.ts'), 'export const unknown = true;\n');
   runGate(false, 'Componente sin procedencia Atomic');
   fs.rmSync(path.join(consumerRoot, 'src/app/ui/atoms/unknown'), { recursive: true });
