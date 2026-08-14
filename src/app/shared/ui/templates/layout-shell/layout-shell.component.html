@@ -1,6 +1,14 @@
 <div class="layout-shell" [class.sidebar-hidden]="!sidebarVisible" [style.--sidebar-width]="sidebarWidth">
+  <!--
+    Enlace de salto. Invisible hasta que recibe el foco, y entonces es lo
+    primero que encuentra quien navega con teclado: sin él, llegar al contenido
+    obliga a recorrer el menú entero en cada carga de página.
+  -->
+  <a class="layout-skip-link" href="#layout-main-content">{{ skipLinkLabel }}</a>
+
   <!-- Sidebar Slot -->
-  <aside class="layout-sidebar" [class.active]="sidebarVisible">
+  <aside class="layout-sidebar" [class.active]="sidebarVisible" [attr.aria-label]="sidebarLabel"
+    [attr.aria-hidden]="sidebarVisible ? null : 'true'" [attr.inert]="sidebarInert">
     <ng-content select="[slot=sidebar]"></ng-content>
   </aside>
 
@@ -9,12 +17,16 @@
     (keydown.escape)="onOverlayClick()" tabindex="-1" role="presentation"></div>
 
   <!-- Topbar Slot -->
-  <header class="layout-header">
+  <header class="layout-header" [attr.inert]="contentInert">
     <ng-content select="[slot=topbar]"></ng-content>
   </header>
 
-  <!-- Main Content Slot -->
-  <main class="layout-content">
+  <!--
+    `tabindex="-1"` lo hace destino de foco sin meterlo en el orden de
+    tabulación: es lo que permite que el enlace de salto lleve el foco de
+    verdad y no solo desplace la página.
+  -->
+  <main #mainContent id="layout-main-content" class="layout-content" tabindex="-1" [attr.inert]="contentInert">
     <app-scroll-overlay class="so-block h-full w-full" [skipTableDetection]="true">
       <div class="content-wrapper">
         <ng-content></ng-content>
@@ -23,7 +35,7 @@
   </main>
 
   @if (footerVisible) {
-    <div class="layout-footer">
+    <div class="layout-footer" [attr.inert]="contentInert">
       <app-footer
         variant="inline"
         [companyName]="footerCompanyName"

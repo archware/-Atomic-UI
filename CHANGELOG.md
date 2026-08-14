@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.7.5'
+version: '5.8.0'
 status: 'vigente'
 updated: '2026-08-13'
 owner: 'Hospital Regional de Ayacucho'
@@ -14,6 +14,100 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.8.0] - 2026-08-13
+
+Ocho defectos del ADN encontrados auditando un consumidor **contra** el ADN, en
+vez de al revés. Todos venían de casos vividos en `prestamo_front_atomic`, y
+todos se heredaban tal cual al front del ERP y al del POS: el ADN no podía
+verlos porque su entorno —Karma sobre Chrome, en una máquina de escritorio— no
+los produce.
+
+Cada corrección lleva prueba, y cada prueba se comprobó **por mutación**:
+retirando el arreglo, la prueba tiene que ponerse roja. Una prueba que pasa con
+y sin el arreglo no protege nada.
+
+### Corregido
+
+- **`ThemeService` tumbaba el arranque cuando el navegador denegaba
+  `localStorage`.** Los tres accesos eran desnudos, y el primero ocurre al
+  inicializar el campo `selectedTheme`, es decir **durante la construcción** de
+  un servicio `providedIn: 'root'`. Con cookies de terceros bloqueadas, dentro
+  de un iframe o en modo restrictivo, hasta la *lectura* lanza `SecurityError`:
+  la excepción subía por el inyector y dejaba **pantalla en blanco** por una
+  preferencia visual prescindible. Ahora degrada a «sin persistencia» y el tema
+  dura lo que la pestaña.
+
+- **`ToastService` no tenía tope ni deduplicación.** Un interceptor de errores o
+  un reintento en bucle producía N avisos idénticos que crecían hasta cubrir la
+  ventana y dejar la aplicación sin operar. Se añaden tres defensas: no se pinta
+  un mensaje vacío —la caja tiene `role="alert"`, así que era una alerta
+  anunciada sin contenido—, no se duplica un aviso ya visible del mismo tipo, y
+  la pila se recorta a cuatro.
+
+- **El `datepicker` retrocedía un día.** ECMAScript obliga a interpretar las
+  cadenas de solo fecha como UTC, así que `new Date('2026-08-13')` es el 12 a
+  las 19:00 en Perú —y en todo huso negativo—, y el `DatePipe` lo pintaba como
+  **12/08/2026**. Ahora una fecha civil se interpreta en la medianoche local, y
+  una fecha imposible como `2026-02-30` se rechaza en vez de desbordar
+  silenciosamente al 2 de marzo.
+
+- **El `combobox` no encontraba nada con tildes.** El filtro comparaba con
+  `toLowerCase().includes()`, de modo que «jose» no encontraba «José» ni
+  «angelica» a «Angélica»: la pantalla respondía «no hay resultados» sobre un
+  dato que sí existía. Ahora normaliza a los dos lados (NFD, sin diacríticos,
+  minúsculas del español) y busca también en `description` y `keywords`.
+
+- **El selector «POR PÁGINA» del `data-table` se quedaba en blanco** cuando el
+  `pageSize` vigente no estaba entre las opciones: la tabla paginaba de 25 en 25
+  y el control no decía de cuánto. Ahora el tamaño vigente se inyecta ordenado
+  en la lista.
+
+- **`layout-shell` dejaba el cajón oculto dentro del orden de tabulación.** Se
+  escondía solo con una clase, así que sus enlaces seguían siendo alcanzables
+  con el teclado y anunciados por el lector. Se declara `inert` y `aria-hidden`
+  al ocultarse; con el cajón abierto sobre el contenido, es el contenido el que
+  queda inerte —un cajón modal que no inertiza lo de detrás no es modal—.
+
+- **El interceptor entregaba la credencial a cualquiera.** Decidía por una lista
+  **negra** de tres rutas públicas: todo lo demás se firmaba, incluidas las URL
+  absolutas a terceros, de modo que pedir un tipo de cambio o un PDF alojado
+  fuera llevaba el JWT del usuario a un host ajeno. Ahora es lista **blanca por
+  origen**, comparando `URL.origin` y no prefijos de cadena, que dejarían pasar
+  `https://api.ejemplo.com.atacante.net`.
+
+  Ningún consumidor de este ecosistema usaba este interceptor —los tres tienen
+  el suyo en `core/auth/`—, así que no había fuga en producción; lo que había
+  era un patrón publicado como canónico que el siguiente consumidor habría
+  adoptado.
+
+### Añadido
+
+- **`layout-shell` publica un enlace de salto al contenido** y un `<main>`
+  enfocable. Sin ellos, llegar al contenido con teclado obligaba a recorrer el
+  menú entero en cada carga. Nuevas entradas `skipLinkLabel`, `sidebarLabel` y
+  `compactViewportQuery`.
+- **`ComboboxOption` acepta `description` y `keywords`**, que entran en la
+  búsqueda: un catálogo suele tener sinónimos que el usuario teclea antes que el
+  nombre oficial.
+- **`governance/consumer/testing/`**: el polyfill de `<dialog>` para jsdom, con
+  su spec y su README. **No es artefacto obligatorio** —el gate no lo compara y
+  no hay que declararlo—, pero resuelve algo que el ADN no puede descubrir
+  desde su propio entorno: Atomic corre Karma sobre Chrome, donde `showModal`
+  siempre existe, y todos sus consumidores corren Vitest sobre jsdom, donde
+  nunca. Documenta las dos trampas caras: `writable: true` y la restauración
+  entre ficheros bajo `isolate: false`.
+- Primeras pruebas unitarias de `datepicker`, `toast.service` y
+  `auth.interceptor`, que no tenían ninguna.
+
+### Verificación
+
+- `governance:check` sin hallazgos, **417 pruebas** (385 antes) y build
+  correcto. Manifiesto de 158 fuentes, SHA-256 `caec139f`.
+- Cada arreglo se validó por mutación. Una de las pruebas del interceptor
+  **sobrevivió** al primer mutante —comparar por prefijo acertaba por accidente
+  con una base que lleva ruta— y se reescribió con una base sin ruta, que es
+  como muchos consumidores la configuran, hasta que el mutante murió.
 
 ## [5.7.5] - 2026-08-13
 

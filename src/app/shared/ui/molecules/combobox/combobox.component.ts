@@ -11,6 +11,27 @@ export interface ComboboxOption {
   label: string;
   disabled?: boolean;
   group?: string;
+  /** Texto secundario; entra también en la búsqueda. */
+  description?: string;
+  /** Sinónimos por los que el usuario podría teclear esta opción. */
+  keywords?: readonly string[];
+}
+
+/*
+Normaliza para comparar: separa los diacríticos de su letra (NFD), los retira, y
+minusculiza con las reglas del español. Colapsa además los espacios, para que
+«San  Juan» y «San Juan» sean lo mismo al buscar.
+
+El rango ̀-ͯ es el bloque de marcas diacríticas combinantes, que es lo
+que NFD deja suelto detrás de cada letra acentuada.
+*/
+function normalizeSearch(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLocaleLowerCase('es')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 /**
@@ -268,11 +289,34 @@ export class ComboboxComponent implements ControlValueAccessor {
   private readonly disabledState = signal(false);
   private readonly optionsState = signal<readonly ComboboxOption[]>([]);
 
+  /*
+    La búsqueda IGNORA LAS TILDES, y no es un adorno.
+
+    Comparar con `toLowerCase().includes()` a secas significa que escribir
+    «jose» no encuentra «José», «angelica» no encuentra «Angélica» y «bano» no
+    encuentra «Baño». En un catálogo con nombres propios o descripciones en
+    español, el usuario lee «no hay resultados» sobre un dato que sí existe, y
+    la conclusión razonable —que el registro no está— es falsa.
+
+    Se normaliza a los DOS lados: descomponer en NFD separa la letra de su
+    diacrítico, y quitar el rango de marcas combinantes deja la letra base.
+    `toLocaleLowerCase('es')` en vez del genérico porque el minusculizado
+    depende del idioma.
+
+    También se busca en `description` y `keywords`: un catálogo suele tener
+    sinónimos que el usuario teclea antes que el nombre oficial.
+  */
   filteredOptions = computed(() => {
-    const query = this.inputValue().toLowerCase().trim();
+    const query = normalizeSearch(this.inputValue());
     const options = this.optionsState();
     if (!query) return options;
-    return options.filter(o => o.label.toLowerCase().includes(query));
+    return options.filter(option =>
+      normalizeSearch(
+        [option.label, option.description, ...(option.keywords ?? [])]
+          .filter((part): part is string => typeof part === 'string' && part.length > 0)
+          .join(' '),
+      ).includes(query),
+    );
   });
 
   activeOptionId = computed(() => {

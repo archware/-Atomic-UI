@@ -87,4 +87,52 @@ describe('ComboboxComponent', () => {
       'HUA',
     ]);
   });
+
+  /*
+    BUSCAR SIN TILDES. Un teclado que no compone la tilde, o un usuario con
+    prisa, escribe «jose». Con una comparacion literal eso no encuentra «José»
+    y la pantalla responde «no hay resultados» sobre un dato que si existe: el
+    usuario concluye, razonablemente y en falso, que el registro no esta.
+  */
+  it('encuentra opciones acentuadas escribiendo sin tildes', () => {
+    fixture.componentRef.setInput('options', [
+      { label: 'José Pérez', value: 1 },
+      { label: 'Angélica Ñaupa', value: 2 },
+      { label: 'Carlos Rojas', value: 3 },
+    ]);
+
+    fixture.componentInstance.onInput({ target: { value: 'jose' } } as unknown as Event);
+    fixture.detectChanges();
+    expect(etiquetas(fixture)).toEqual(['José Pérez']);
+
+    fixture.componentInstance.onInput({ target: { value: 'angelica' } } as unknown as Event);
+    fixture.detectChanges();
+    expect(etiquetas(fixture)).toEqual(['Angélica Ñaupa']);
+
+    // Y a la inversa: escribir CON tilde tiene que seguir encontrando.
+    fixture.componentInstance.onInput({ target: { value: 'PÉREZ' } } as unknown as Event);
+    fixture.detectChanges();
+    expect(etiquetas(fixture)).toEqual(['José Pérez']);
+  });
+
+  it('busca tambien en la descripcion y en los sinonimos', () => {
+    fixture.componentRef.setInput('options', [
+      { label: 'Boleta', value: 'B', description: 'Comprobante para consumidor final' },
+      { label: 'Factura', value: 'F', keywords: ['ruc', 'credito fiscal'] },
+    ]);
+
+    fixture.componentInstance.onInput({ target: { value: 'ruc' } } as unknown as Event);
+    fixture.detectChanges();
+    expect(etiquetas(fixture)).toEqual(['Factura']);
+
+    fixture.componentInstance.onInput({ target: { value: 'consumidor' } } as unknown as Event);
+    fixture.detectChanges();
+    expect(etiquetas(fixture)).toEqual(['Boleta']);
+  });
 });
+
+function etiquetas(fixture: ComponentFixture<ComboboxComponent>): string[] {
+  return Array.from(
+    (fixture.nativeElement as HTMLElement).querySelectorAll('.combobox-option'),
+  ).map((option) => option.textContent?.trim() ?? '');
+}

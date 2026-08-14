@@ -271,8 +271,8 @@ export class DatepickerComponent implements ControlValueAccessor {
     if (obj instanceof Date) {
       this.value.set(obj);
     } else if (typeof obj === 'string') {
-      const d = new Date(obj);
-      if (!isNaN(d.getTime())) {
+      const d = parseFechaEntrante(obj);
+      if (d) {
         this.value.set(d);
       } else {
         this.value.set(null);
@@ -293,4 +293,42 @@ export class DatepickerComponent implements ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
+}
+
+/*
+UNA FECHA CIVIL NO ES UN INSTANTE, Y CONFUNDIRLAS RESTA UN DIA.
+
+El backend manda «2026-08-13»: una fecha de calendario, sin hora y sin huso.
+Pero ECMAScript obliga a interpretar las cadenas de SOLO FECHA como **UTC**, de
+modo que `new Date('2026-08-13')` es, en cualquier huso negativo —Perú en
+UTC-5, y todo el continente—, el 12 a las 19:00 local. Como el `DatePipe`
+formatea en hora local, el usuario veía **12/08/2026** para una fecha que el
+servidor guardó como el 13.
+
+El arreglo es interpretar la fecha civil en la medianoche LOCAL, que es lo que
+el resto del componente ya asume: así lo que se pinta coincide con lo que se
+recibió, sin que el valor pase nunca por un instante UTC.
+
+Las cadenas CON hora se dejan al parseo normal: ahí sí hay un instante, y una
+sin `Z` ya se interpreta como local.
+*/
+const SOLO_FECHA = /^(\d{4})-(\d{2})-(\d{2})$/;
+
+function parseFechaEntrante(value: string): Date | null {
+  const civil = SOLO_FECHA.exec(value.trim());
+  if (civil) {
+    const [, year, month, day] = civil;
+    const fecha = new Date(Number(year), Number(month) - 1, Number(day));
+    // `new Date(2026, 12, 40)` no falla: desborda al mes siguiente. Se compara
+    // contra lo pedido para rechazar «2026-02-30» en vez de aceptar el 2 de
+    // marzo en su lugar.
+    const coincide =
+      fecha.getFullYear() === Number(year) &&
+      fecha.getMonth() === Number(month) - 1 &&
+      fecha.getDate() === Number(day);
+    return coincide ? fecha : null;
+  }
+
+  const instante = new Date(value);
+  return isNaN(instante.getTime()) ? null : instante;
 }

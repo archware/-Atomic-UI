@@ -132,6 +132,25 @@ export class DataTable<T extends object = Record<string, unknown>> {
       ? this.clientPageSize()
       : Math.max(this.pageSize(), 1),
   );
+  /*
+    El desplegable «POR PÁGINA» tiene que poder mostrar el tamaño REALMENTE
+    vigente, aunque nadie lo haya incluido en la lista de opciones.
+
+    Sin esto, un consumidor que fije `[pageSize]="25"` con las opciones por
+    omisión —10, 20, 30, 40, 50— obtiene una tabla que pagina de 25 en 25 y un
+    desplegable sin ninguna opción que coincida, que queda en blanco: el
+    paginador contradice a su propia tabla y el usuario no puede saber de cuánto
+    está paginando.
+
+    Se inserta ordenado, no al final, para que la escala siga leyéndose.
+  */
+  protected readonly effectivePageSizeOptions = computed<readonly number[]>(() => {
+    const options = this.pageSizeOptions();
+    const current = this.effectivePageSize();
+    return options.includes(current)
+      ? options
+      : [...options, current].sort((first, second) => first - second);
+  });
   protected readonly effectiveTotalRecords = computed(
     () => this.totalRecords() ?? this.rows().length,
   );

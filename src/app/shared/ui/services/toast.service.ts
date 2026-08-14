@@ -39,22 +39,63 @@ export interface ToastItem extends ToastConfig {
 export class ToastService {
   private toastId = 0;
 
+  /**
+   * Tope de avisos simultáneos.
+   *
+   * POR QUE HAY UN TOPE. Sin él, un interceptor de errores, un reintento en
+   * bucle o una pantalla que dispara N peticiones a la vez producen N avisos
+   * que crecen hasta cubrir la ventana y dejan la aplicación sin operar: el
+   * usuario no puede pulsar lo que hay debajo. Cuatro caben en pantalla en la
+   * resolución más pequeña que se soporta y siguen siendo legibles.
+   */
+  private static readonly MAX_VISIBLE = 4;
+
   /** Signal público para que el componente lea los toasts */
   readonly toasts = signal<ToastItem[]>([]);
 
   /**
    * Muestra un toast con la configuración especificada.
+   *
+   * Tres defensas, y ninguna es hipotética:
+   *
+   * 1. UN MENSAJE VACIO NO SE PINTA. La caja se renderiza con `role="alert"`,
+   *    así que un mensaje en blanco es una alerta anunciada sin contenido: el
+   *    lector de pantalla interrumpe para no decir nada.
+   * 2. NO SE DUPLICA UN AVISO YA VISIBLE. Cuarenta «Error de conexión»
+   *    idénticos no informan cuarenta veces: informan una y estorban treinta y
+   *    nueve. Si ya hay uno vivo con el mismo tipo y el mismo texto, no se
+   *    añade otro.
+   * 3. LA PILA SE RECORTA a `MAX_VISIBLE` aunque los avisos sean distintos.
+   *
+   * Nota sobre el recorte: al descartar el más antiguo queda su temporizador
+   * pendiente, que llamará a `dismiss` con un identificador que ya no existe.
+   * Es inocuo —`dismiss` filtra por identificador— y evita tener que llevar un
+   * registro de temporizadores solo para eso.
    */
   show(config: ToastConfig): void {
+    const message = config.message?.trim() ?? '';
+    if (!message) {
+      return;
+    }
+
+    const type = config.type ?? 'info';
+    const yaVisible = this.toasts().some(
+      toast => !toast.exiting && toast.type === type && toast.message === message
+    );
+    if (yaVisible) {
+      return;
+    }
+
     const id = ++this.toastId;
     const toast: ToastItem = {
       ...config,
+      message,
       id,
-      type: config.type ?? 'info',
+      type,
       dismissible: config.dismissible ?? true
     };
 
-    this.toasts.update(t => [...t, toast]);
+    this.toasts.update(t => [...t, toast].slice(-ToastService.MAX_VISIBLE));
 
     if (config.duration !== 0) {
       setTimeout(() => this.dismiss(id), config.duration ?? 4000);

@@ -414,6 +414,71 @@ describe('DataTable', () => {
   });
 });
 
+/*
+  EL DESPLEGABLE NO PUEDE CONTRADECIR A SU PROPIA TABLA.
+
+  Un `[pageSize]` fuera de `pageSizeOptions` —25 sobre las opciones por
+  omisión— paginaba de 25 en 25 mientras el selector se quedaba sin ninguna
+  opción coincidente, es decir en blanco. El usuario veía una tabla paginando de
+  una forma y un control que no decía de cuál.
+*/
+@Component({
+  imports: [DataTable],
+  template: `
+    <app-data-table
+      caption="Tamaño fuera de catálogo"
+      [columns]="columns"
+      [rows]="rows"
+      pagination="client"
+      [pageSize]="pageSize()"
+      [pageSizeOptions]="pageSizeOptions"
+    ></app-data-table>
+  `,
+})
+class PageSizeHost {
+  protected readonly columns = columns;
+  protected readonly rows = rows;
+  readonly pageSize = signal(25);
+  protected readonly pageSizeOptions = [10, 20, 30, 40, 50] as const;
+}
+
+describe('DataTable — tamaño de página fuera del catálogo', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({ providers: [provideZonelessChangeDetection()] });
+  });
+
+  function opciones(root: HTMLElement): number[] {
+    return Array.from(root.querySelectorAll('.data-table__page-size option')).map((option) =>
+      Number((option as HTMLOptionElement).value),
+    );
+  }
+
+  it('inyecta el tamaño vigente, ordenado, cuando no está entre las opciones', async () => {
+    const fixture = TestBed.createComponent(PageSizeHost);
+    await fixture.whenStable();
+
+    expect(opciones(fixture.nativeElement)).toEqual([10, 20, 25, 30, 40, 50]);
+
+    // Se comprueba sobre el `<select>`, no sobre `option[selected]`: Angular
+    // fija la PROPIEDAD del DOM y no el atributo, asi que el selector de
+    // atributo no encuentra nada aunque el control muestre lo correcto. Y lo
+    // que importa aqui es justo lo que el usuario ve elegido.
+    const select = fixture.nativeElement.querySelector(
+      '.data-table__page-size select',
+    ) as HTMLSelectElement;
+    expect(select.value).toBe('25');
+    expect(select.selectedOptions[0]?.textContent?.trim()).toBe('25');
+  });
+
+  it('no toca la lista cuando el tamaño vigente ya está en ella', async () => {
+    const fixture = TestBed.createComponent(PageSizeHost);
+    fixture.componentInstance.pageSize.set(30);
+    await fixture.whenStable();
+
+    expect(opciones(fixture.nativeElement)).toEqual([10, 20, 30, 40, 50]);
+  });
+});
+
 function renderedCustomers(root: HTMLElement): string[] {
   return Array.from(
     root.querySelectorAll(

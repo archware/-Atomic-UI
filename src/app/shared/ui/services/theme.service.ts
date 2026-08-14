@@ -64,17 +64,50 @@ export class ThemeService {
   }
 
   /**
+   * Lee la preferencia guardada. Nunca lanza.
+   *
+   * EL ACCESO A `localStorage` VA PROTEGIDO, Y NO ES DEFENSA DECORATIVA. El
+   * navegador puede denegarlo —cookies de terceros bloqueadas, iframe sin
+   * permiso de almacenamiento, modo restrictivo— y en ese caso hasta la simple
+   * LECTURA lanza `SecurityError`.
+   *
+   * Aquí eso no degradaba el tema: lo tumbaba todo. Este servicio es
+   * `providedIn: 'root'` y la lectura ocurre al inicializar el campo
+   * `selectedTheme`, es decir DURANTE la construcción; la excepción subía por
+   * el inyector en el arranque y dejaba la aplicación en pantalla en blanco.
+   * Una preferencia visual prescindible no puede impedir que la aplicación
+   * abra. Sin persistencia el tema dura lo que la pestaña, que es
+   * incomparablemente mejor.
+   */
+  private readStoredTheme(): Theme | null {
+    try {
+      return localStorage.getItem(this.THEME_STORAGE_KEY) as Theme | null;
+    } catch {
+      return null;
+    }
+  }
+
+  /** Guarda la preferencia si se puede. Ver `readStoredTheme`. */
+  private persistTheme(theme: Theme): void {
+    try {
+      localStorage.setItem(this.THEME_STORAGE_KEY, theme);
+    } catch {
+      // Sin persistencia el tema dura lo que la pestaña.
+    }
+  }
+
+  /**
    * Obtiene el tema inicial del localStorage o del SO
    */
   private getInitialTheme(): Theme {
     if (typeof window === 'undefined') return 'light';
 
-    let stored = localStorage.getItem(this.THEME_STORAGE_KEY) as Theme | null;
-    
+    let stored = this.readStoredTheme();
+
     // Migración automática: forzar el azul corporativo ('brand-dark') a dark neutral ('dark')
     if (stored === 'brand-dark') {
       stored = 'dark';
-      localStorage.setItem(this.THEME_STORAGE_KEY, 'dark');
+      this.persistTheme('dark');
     }
 
     if (stored && ['light', 'dark', 'brand-dark', 'system'].includes(stored)) {
@@ -131,7 +164,7 @@ export class ThemeService {
         htmlElement.classList.remove(this.DARK_CLASS);
         htmlElement.setAttribute('data-theme', 'light');
       }
-      localStorage.setItem(this.THEME_STORAGE_KEY, theme);
+      this.persistTheme(theme);
     };
 
     // Carga inicial o tema sin cambio → aplicar directo, sin animación

@@ -74,6 +74,72 @@ describe('ThemeService', () => {
       const newService = TestBed.inject(ThemeService);
       expect(newService.getSelectedTheme()).toBe('dark');
     });
+
+    /*
+      El navegador puede DENEGAR el almacenamiento —cookies de terceros
+      bloqueadas, iframe sin permiso, modo restrictivo—, y entonces hasta la
+      lectura lanza SecurityError.
+
+      Este servicio es `providedIn: 'root'` y lee al inicializar un campo, o
+      sea durante su construccion: sin proteger, la excepcion sube por el
+      inyector en el arranque y deja la aplicacion en pantalla en blanco por
+      una preferencia visual prescindible.
+
+      Las dos pruebas cubren los dos accesos por separado. La segunda importa
+      tanto como la primera: la escritura tambien corre en la construccion, a
+      traves de applyTheme() desde el constructor.
+    */
+    it('arranca con el tema por omision si LEER localStorage lanza', () => {
+      const almacen = Object.getOwnPropertyDescriptor(window, 'localStorage');
+      Object.defineProperty(window, 'localStorage', {
+        configurable: true,
+        get: () => {
+          throw new DOMException('acceso denegado', 'SecurityError');
+        },
+      });
+
+      try {
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+          providers: [
+            provideZonelessChangeDetection(),
+            ThemeService,
+            { provide: PLATFORM_ID, useValue: 'browser' },
+          ],
+        });
+
+        expect(() => TestBed.inject(ThemeService)).not.toThrow();
+        expect(TestBed.inject(ThemeService).getSelectedTheme()).toBe('system');
+      } finally {
+        if (almacen) {
+          Object.defineProperty(window, 'localStorage', almacen);
+        }
+      }
+    });
+
+    it('arranca aunque ESCRIBIR en localStorage lance', () => {
+      const original = Storage.prototype.setItem;
+      Storage.prototype.setItem = () => {
+        throw new DOMException('cuota o permiso denegado', 'SecurityError');
+      };
+
+      try {
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+          providers: [
+            provideZonelessChangeDetection(),
+            ThemeService,
+            { provide: PLATFORM_ID, useValue: 'browser' },
+          ],
+        });
+
+        const servicio = TestBed.inject(ThemeService);
+        expect(() => servicio.setDarkTheme()).not.toThrow();
+        expect(servicio.getSelectedTheme()).toBe('dark');
+      } finally {
+        Storage.prototype.setItem = original;
+      }
+    });
   });
 
   describe('setLightTheme', () => {

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.7.5",
+  "packageVersion": "5.8.0",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "4c19b530bfd0338165c886d5a9602185e32854eebe9339a11e1fde3e8dacbd69",
+  "sourceTreeSha256": "caec139f70f425593324a7da644dd37a908eb3fc269ca800e88a1f0828db990f",
   "fileCount": 158,
   "files": [
     {
@@ -21,7 +21,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 854,
-      "sha256": "36044b04128f1df3591f1d21e20371d9212f3b709a1dd9a6c8849ffe962071ca"
+      "sha256": "f1f919ef76080dc2000cf250df206aaaae2fdc461f626dd71de26bcd3e1d2bba"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -285,8 +285,8 @@
     },
     {
       "path": "src/app/shared/ui/interceptors/auth.interceptor.ts",
-      "bytes": 4242,
-      "sha256": "5cdb55b50ab115d57e083fcb4fcb3f29f4f8f748d2213b81416ce041cd608df8"
+      "bytes": 6329,
+      "sha256": "7946914e58ef327c5c5298dc77b4fc91b87f2393c2813a0f2f0963ee08aa5ae2"
     },
     {
       "path": "src/app/shared/ui/interceptors/cache.interceptor.ts",
@@ -320,8 +320,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/combobox/combobox.component.ts",
-      "bytes": 12879,
-      "sha256": "791837333cd6d59663d09eda3772eb9cae003c8e68137eddbc52112dc12fd589"
+      "bytes": 14664,
+      "sha256": "136c7da05b1617ac2f563db02b4c1db3324deffffaa56307490878c1b2ab3c6c"
     },
     {
       "path": "src/app/shared/ui/molecules/context-menu/context-menu.component.ts",
@@ -345,8 +345,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/datepicker/datepicker.component.ts",
-      "bytes": 8519,
-      "sha256": "d0e60b95d21dfc9a2c957f830a6906ecdb3716cddb513edfec74dc0ab8da765b"
+      "bytes": 10092,
+      "sha256": "03df19096720bd26fb60fc72a9b4b9c47407164579837e981c53b8a864194638"
     },
     {
       "path": "src/app/shared/ui/molecules/dropdown/dropdown.component.ts",
@@ -450,8 +450,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.html",
-      "bytes": 7804,
-      "sha256": "e7d87a3f9af3155e7d3cda977f14a8e5d7fbda5864682b75d511893684ea187b"
+      "bytes": 7813,
+      "sha256": "28df3f4f3038059bbc985d792661061f6395cf0f9825b6eb78d90ea0ecf602c3"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.scss",
@@ -460,8 +460,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.ts",
-      "bytes": 13634,
-      "sha256": "f80ec35a8fede1fdb13a9b397555d5a6604d09992e190a3be1fda61edad7f2b2"
+      "bytes": 14509,
+      "sha256": "737d81467918a88eddec669c4f846009cbd4f2afcff64f7d368e6d1dbeed2813"
     },
     {
       "path": "src/app/shared/ui/organisms/denomination-counter/denomination-counter.ts",
@@ -670,13 +670,13 @@
     },
     {
       "path": "src/app/shared/ui/services/theme.service.ts",
-      "bytes": 6843,
-      "sha256": "697341d6b4c9897adadd8f4c2fe3ab0548bf51ef083d01d98831148c20299df8"
+      "bytes": 8003,
+      "sha256": "c0f45586b2fd6014c0a2c3ff4150afdc0ed05eeecf0f06abe44e7953b27209f8"
     },
     {
       "path": "src/app/shared/ui/services/toast.service.ts",
-      "bytes": 2356,
-      "sha256": "36e7dce152874b188edf7c5daa0794f915fc79ce476138cc89279cf3a057045d"
+      "bytes": 4063,
+      "sha256": "29b6be44da9d6b349c9e259bdcfe93111ebc8b5d62b8e6e3f25bd9a136ffd854"
     },
     {
       "path": "src/app/shared/ui/services/token.service.ts",
@@ -745,18 +745,18 @@
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.css",
-      "bytes": 3072,
-      "sha256": "86318b5cd8d92e728ddc0a7b1e39de296edf3211bfdeb144e6a9b6ef341c9ffd"
+      "bytes": 4212,
+      "sha256": "33c75357753c2f2ed6f7f116d0421252277e41b21f6cf7094e7ed51ae8d6591e"
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.html",
-      "bytes": 1254,
-      "sha256": "f9f403c26f667421721ed909b5407cd30363d744c42d53abcc20f5a35cf7bb34"
+      "bytes": 1994,
+      "sha256": "04021674eec5a66a7cb92ce130dbaceb548d735f727f627d320cb22170efd550"
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.ts",
-      "bytes": 1260,
-      "sha256": "f7624eb974a904a104e10a46f93448f42385f64fe84a4fd9b0075f3afe3f320c"
+      "bytes": 4928,
+      "sha256": "0bcfad6047c417085d1e640f66a0462a8201a75b44c730f9003c72d2c56fb533"
     },
     {
       "path": "src/styles/themes/_buttons.css",

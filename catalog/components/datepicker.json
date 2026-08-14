@@ -74,7 +74,7 @@
   "test": { "path": null, "status": "missing" },
   "stability": {
     "status": "candidate",
-    "notes": ["No usa OnPush y carece de prueba unitaria.", "No expone min, max, required ni controlId y el popup fijo puede desbordar pantallas estrechas."]
+    "notes": ["No usa OnPush. Desde 5.8.0 tiene prueba unitaria del contrato de valor.", "No expone min, max, required ni controlId y el popup fijo puede desbordar pantallas estrechas."]
   },
   "canonicalFor": ["date-input", "calendar-selection"]
 }
