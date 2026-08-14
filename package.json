@@ -1,6 +1,6 @@
 {
   "name": "atomic-ui",
-  "version": "5.8.0",
+  "version": "5.8.1",
   "type": "module",
   "author": "COTAHA",
   "scripts": {
@@ -30,9 +30,10 @@
     "catalog:query": "node tools/query-atomic-catalog.js",
     "catalog:check": "node tools/check-atomic-catalog.js --strict-references",
     "tokens:check": "node tools/run-powershell.cjs scripts/audit-tokens.ps1 -ComponentGlob src/app/shared/ui -Json",
+    "tokens:sizes:test": "node tools/test-semantic-size-tokens.js",
     "agent:context": "node tools/build-agent-context.js",
     "generate:ui": "node tools/generate-ui.js",
-    "tooling:test": "node tools/test-atomic-catalog.js && node tools/test-atomic-blueprints.js && node tools/test-audit-tokens.js && node tools/test-ui-generator.js",
+    "tooling:test": "node tools/test-atomic-catalog.js && node tools/test-atomic-blueprints.js && node tools/test-audit-tokens.js && npm run tokens:sizes:test && node tools/test-ui-generator.js",
     "quality:check": "npm run governance:check && npm run lint && npm test -- --watch=false && npm run build && npm run build-storybook",
     "governance:install": "node tools/install-consumer-governance.js",
     "governance:test": "node tools/test-consumer-governance.js",

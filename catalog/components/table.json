@@ -159,6 +159,7 @@
     "--scrollbar-thumb",
     "--scrollbar-thumb-hover",
     "--scrollbar-track",
+    "--size-table-viewport-compact",
     "--space-1",
     "--space-2",
     "--space-3",

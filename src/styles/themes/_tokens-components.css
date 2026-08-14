@@ -29,6 +29,8 @@
 
    /* === CONTENEDORES DESPLAZABLES === */
    --size-panel-scroll-max: clamp(12rem, 55dvh, 25rem);
+   --size-scroll-region-compact: 7.5rem;
+   --size-table-viewport-compact: 13.75rem;
 
    /* === SIDEBAR === */
    --sidebar-bg: var(--surface-background);
@@ -229,6 +231,7 @@
    --modal-header-bg: var(--surface-section);
    --modal-footer-bg: var(--surface-section);
    --modal-border: var(--border-color-light);
+   --size-dialog-wide: 53.125rem;
    --crud-dialog-max-width-sm: 32rem;
    --crud-dialog-max-width-md: 42rem;
    --crud-dialog-max-width-lg: 48rem;

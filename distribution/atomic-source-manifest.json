@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.8.0",
+  "packageVersion": "5.8.1",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "caec139f70f425593324a7da644dd37a908eb3fc269ca800e88a1f0828db990f",
+  "sourceTreeSha256": "8029634d8582c515df746579c8a686672d30cc48d507b7dfa87e603be5c34449",
   "fileCount": 158,
   "files": [
     {
@@ -21,7 +21,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 854,
-      "sha256": "f1f919ef76080dc2000cf250df206aaaae2fdc461f626dd71de26bcd3e1d2bba"
+      "sha256": "5579fb379610334657f18c99946638f6a3df132af0f29588c35cb2f5e7281bfa"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -775,8 +775,8 @@
     },
     {
       "path": "src/styles/themes/_tokens-components.css",
-      "bytes": 36755,
-      "sha256": "a02601efabbc64729d753a931d47b49eec166c3ba3a5d3e0bc35dfe5532e580f"
+      "bytes": 36874,
+      "sha256": "4cede947518475e9b49aeb7eb5c0c981476770b44501f2cb4f782249d45c086f"
     },
     {
       "path": "src/styles/themes/_tokens-primitives.css",

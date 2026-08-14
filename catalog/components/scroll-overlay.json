@@ -227,6 +227,7 @@
     "--scrollbar-thumb",
     "--scrollbar-thumb-hover",
     "--scrollbar-track",
+    "--size-scroll-region-compact",
     "--so-body-height",
     "--so-max-height",
     "--so-min-column-width",

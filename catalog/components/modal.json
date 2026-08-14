@@ -74,6 +74,7 @@
     "--radius-lg",
     "--radius-md",
     "--shadow-xl",
+    "--size-dialog-wide",
     "--space-3",
     "--space-4",
     "--space-5",

@@ -1,9 +1,9 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.8.0'
+version: '5.8.1'
 status: 'vigente'
-updated: '2026-08-13'
+updated: '2026-08-14'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
@@ -14,6 +14,43 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.8.1] - 2026-08-14
+
+### Añadido
+
+- Los tokens `--size-scroll-region-compact`,
+  `--size-table-viewport-compact` y `--size-dialog-wide` incorporan una escala
+  semántica de contención equivalente a 120, 220 y 850 píxeles con una raíz
+  de 16 píxeles. Los valores iniciales preservan la geometría de los
+  consumidores y evitan que las medidas vuelvan a definirse en sus
+  funcionalidades.
+- Los catálogos de `app-scroll-overlay`, `app-table` y `app-modal` publican el
+  token que corresponde a cada contrato. La prueba
+  `tokens:sizes:test` verifica declaración única, valor canónico, equivalencia
+  y registro de catálogo.
+
+### Documentación
+
+- El índice Compodoc versionado se regenera durante la compilación de Storybook
+  para reflejar las fuentes vigentes de la biblioteca.
+
+### Verificación
+
+- `quality:check` valida la política Atomic 1.2.2, el catálogo de 41 entradas,
+  la API de 29 componentes y 239 entradas, 648 tokens sin referencias
+  ausentes, 417 pruebas, lint, contraste, foco, la aplicación con 14 rutas
+  prerenderizadas y Storybook.
+- `lib:build` genera `@hra/atomic-ui` en formato Angular Package Format y copia
+  los nueve archivos CSS de tokens.
+- El manifiesto registra 158 fuentes con SHA-256
+  `8029634d8582c515df746579c8a686672d30cc48d507b7dfa87e603be5c34449`;
+  el paquete privado en seco contiene cinco archivos y no produce un tarball.
+- La revisión del cambio no identifica hallazgos P0, P1 ni P2.
+
+### Identificador de cambio
+
+- `ATOMIC-20260814-SEMANTIC-SIZE-TOKENS`.
 
 ## [5.8.0] - 2026-08-13
 

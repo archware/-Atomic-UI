@@ -3,7 +3,7 @@ title: 'Biblioteca de componentes Atomic UI'
 subtitle: 'Contrato visual portable para aplicaciones Angular'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-08-12'
-version: '5.8.0'
+version: '5.8.1'
 ---
 
 # Biblioteca de componentes Atomic UI
@@ -11,7 +11,7 @@ version: '5.8.0'
 Librería de componentes Angular portables siguiendo **Atomic Design**.
 
 **Última actualización**: agosto de 2026
-**Versión**: 5.8.0
+**Versión**: 5.8.1
 **Angular**: 22
 
 ---
@@ -1299,7 +1299,7 @@ export class MyComponent {
 ---
 
 📅 **Última actualización**: agosto de 2026
-🏷️ **Versión**: 5.8.0
+🏷️ **Versión**: 5.8.1
 ⚡ **Angular**: 22
 🌐 **i18n**: ngx-translate  
 📚 **Storybook**: Disponible

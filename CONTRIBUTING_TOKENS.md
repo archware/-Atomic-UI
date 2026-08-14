@@ -295,4 +295,5 @@ Cuando **renombres** tokens existentes, mantener aliases por al menos 1 sprint:
 | `--loader-*` | `app-loader` | `loader.component.ts` | ✅ Definido |
 | `--skeleton-*` | Skeleton loaders | skeleton components | ✅ Definido |
 | `--scroll-*` | `app-scroll-overlay` | `scroll-overlay.component.ts` | ⚠️ Auditar |
+| `--size-*` | Escala semántica de contención | `_tokens-components.css` | ✅ Definido |
 | `--data-pager-*` | `app-data-pager` | `data-pager.component.ts` | ⚠️ Auditar |
