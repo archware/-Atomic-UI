@@ -21,8 +21,22 @@ invención; una que se cumple en casi todas partes menos en tres sitios es
 doctrina con deuda, y es la que enseña.
 
 De esa auditoría salieron 24 reglas y **114 incumplimientos concretos repartidos
-en 85 ficheros**. Ninguno en el ADN: la deuda estaba toda en el consumidor, que
-es exactamente el motivo de escribir esto aquí.
+en 85 ficheros**.
+
+> **Corrección.** Aquí se afirmó que ninguno estaba en el ADN y que la deuda
+> era toda del consumidor. **Era falso.** Una segunda auditoría, esta vez con
+> cada hallazgo pasado por un refutador que intentaba tumbarlo, dejó 77 en pie
+> y **18 de ellos viven en componentes gobernados**: `button.scss` apaga con
+> `opacity`, el paginador de `data-table` también, `status-badge` pinta los ocho
+> tonos con el color de relleno, y el `confirm` genérico documenta como ejemplo
+> el contraejemplo exacto del capítulo 7.
+>
+> La frase se conserva tachada en vez de borrarse porque el error es
+> instructivo: **se dio por limpio el ADN sin medirlo**, justo en el documento
+> que exige medir. La primera auditoría miró donde se veían los síntomas —las
+> pantallas— y dedujo el estado del origen. Es el mismo patrón que el propio
+> capítulo 8 describe: alguien resuelve el caso que tiene delante y nadie
+> generaliza.
 
 > **Cómo se usa.** Antes de construir una pantalla, lee los nueve títulos. Antes
 > de darla por terminada, léelos otra vez como lista de verificación. Cada regla
