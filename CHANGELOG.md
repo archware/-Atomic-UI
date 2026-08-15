@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.8.3'
+version: '5.8.4'
 status: 'vigente'
 updated: '2026-08-14'
 owner: 'Hospital Regional de Ayacucho'
@@ -14,6 +14,36 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.8.4] - 2026-08-14
+
+### Anadido
+
+- **`ChoiceControl` acepta `error`.** Una casilla o radio no tenia forma de decir
+  que estaba mal, y eso hacia posible el peor final de un formulario: pulsar
+  «Confirmar» y que no pase NADA. Sin mensaje, sin marca, sin foco.
+
+  Peor todavia: las rutinas que llevan el foco al primer campo invalido buscan
+  `input.ng-invalid` o `[aria-invalid="true"]`. Sin ese atributo, este control
+  era **invisible** para ellas, asi que ni siquiera el foco delataba donde
+  estaba el problema.
+
+  Al declarar `error`, el control queda `aria-invalid`, se asocia al mensaje con
+  `aria-describedby`, y el aviso se anuncia con `role="alert"` —porque aparece
+  despues de que la persona ya intento enviar; si no se anuncia, quien usa lector
+  de pantalla se queda con un boton que no responde—.
+
+  El mensaje usa el token de TEXTO del tono y no se atenua con `opacity`, segun
+  el capitulo 8 de `DOCTRINA_DE_INTERFAZ.md`.
+
+  Detectado en `prestamo_front_atomic`, donde una correccion de documento de
+  identidad se rechazaba en silencio. Corregido aqui primero.
+
+### Verificacion
+
+- Dos pruebas: que el error se anuncia y queda alcanzable por las rutinas de
+  foco, y que sin error no se ensucia el marcado. Catalogo actualizado.
+
 
 ## [5.8.3] - 2026-08-14
 

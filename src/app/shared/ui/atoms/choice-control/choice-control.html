@@ -8,6 +8,8 @@
     [checked]="checked()"
     [disabled]="disabled()"
     [attr.aria-label]="accessibleLabel()"
+    [attr.aria-invalid]="hasError() ? 'true' : null"
+    [attr.aria-describedby]="hasError() ? errorId() : null"
     (change)="handleChange($event)"
   />
   <span class="choice__indicator" aria-hidden="true"></span>
@@ -15,3 +17,6 @@
     <span class="choice__label">{{ label() }}</span>
   }
 </label>
+@if (hasError()) {
+  <p class="choice__error" [id]="errorId()" role="alert">{{ error() }}</p>
+}

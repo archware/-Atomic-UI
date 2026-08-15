@@ -11,29 +11,98 @@
     {
       "name": "type",
       "values": [
-        { "value": "checkbox", "meaning": "Activa o desactiva una opción independiente.", "default": true },
-        { "value": "radio", "meaning": "Elige una opción dentro de un grupo con el mismo name." }
+        {
+          "value": "checkbox",
+          "meaning": "Activa o desactiva una opción independiente.",
+          "default": true
+        },
+        {
+          "value": "radio",
+          "meaning": "Elige una opción dentro de un grupo con el mismo name."
+        }
       ]
     }
   ],
   "inputs": [
-    { "name": "controlId", "type": "string | null", "default": null, "meaning": "Id explícito; si falta se genera uno estable por instancia." },
-    { "name": "type", "type": "ChoiceControlType", "default": "checkbox", "meaning": "Semántica checkbox o radio." },
-    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible." },
-    { "name": "ariaLabel", "type": "string | null", "default": null, "meaning": "Nombre accesible explícito; usa label como respaldo." },
-    { "name": "name", "type": "string | null", "default": null, "meaning": "Nombre del grupo, imprescindible para radios relacionados." },
-    { "name": "value", "type": "string", "default": "", "meaning": "Valor nativo del control." },
-    { "name": "checked", "type": "boolean", "default": false, "meaning": "Estado controlado de selección." },
-    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Bloquea la interacción nativa." }
+    {
+      "name": "controlId",
+      "type": "string | null",
+      "default": null,
+      "meaning": "Id explícito; si falta se genera uno estable por instancia."
+    },
+    {
+      "name": "type",
+      "type": "ChoiceControlType",
+      "default": "checkbox",
+      "meaning": "Semántica checkbox o radio."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "default": "",
+      "meaning": "Etiqueta visible."
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string | null",
+      "default": null,
+      "meaning": "Nombre accesible explícito; usa label como respaldo."
+    },
+    {
+      "name": "name",
+      "type": "string | null",
+      "default": null,
+      "meaning": "Nombre del grupo, imprescindible para radios relacionados."
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "default": "",
+      "meaning": "Valor nativo del control."
+    },
+    {
+      "name": "checked",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Estado controlado de selección."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Bloquea la interacción nativa."
+    },
+    {
+      "name": "error",
+      "type": "string | null",
+      "default": null,
+      "meaning": "Mensaje de validacion. Al declararlo, el control queda marcado aria-invalid y asociado al aviso, que se anuncia con role=alert."
+    }
   ],
   "outputs": [
-    { "name": "changed", "type": "boolean", "meaning": "Nuevo valor checked emitido por change." }
+    {
+      "name": "changed",
+      "type": "boolean",
+      "meaning": "Nuevo valor checked emitido por change."
+    }
   ],
   "states": [
-    { "name": "unchecked", "meaning": "Opción no elegida." },
-    { "name": "checked", "meaning": "Opción elegida." },
-    { "name": "disabled", "meaning": "No permite modificación." },
-    { "name": "focus-visible", "meaning": "El input nativo activa el anillo del indicador." }
+    {
+      "name": "unchecked",
+      "meaning": "Opción no elegida."
+    },
+    {
+      "name": "checked",
+      "meaning": "Opción elegida."
+    },
+    {
+      "name": "disabled",
+      "meaning": "No permite modificación."
+    },
+    {
+      "name": "focus-visible",
+      "meaning": "El input nativo activa el anillo del indicador."
+    }
   ],
   "a11y": [
     "Mantiene input checkbox o radio nativo dentro de un label asociado.",
@@ -57,11 +126,24 @@
     "--text-color",
     "--text-color-on-primary"
   ],
-  "story": { "path": null, "status": "missing" },
-  "test": { "path": "src/app/shared/ui/atoms/choice-control/choice-control.spec.ts", "status": "available" },
+  "story": {
+    "path": null,
+    "status": "missing"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/choice-control/choice-control.spec.ts",
+    "status": "available"
+  },
   "stability": {
     "status": "stable",
-    "notes": ["No implementa ControlValueAccessor; el consumidor controla checked y escucha changed."]
+    "notes": [
+      "No implementa ControlValueAccessor; el consumidor controla checked y escucha changed."
+    ]
   },
-  "canonicalFor": ["boolean-choice", "exclusive-choice", "checkbox", "radio"]
+  "canonicalFor": [
+    "boolean-choice",
+    "exclusive-choice",
+    "checkbox",
+    "radio"
+  ]
 }
