@@ -165,8 +165,8 @@ export interface Select2Option {
     }
 
     .select2-wrapper.disabled {
-      opacity: 0.6;
       pointer-events: none;
+      color: var(--input-disabled-text);
     }
 
     .select2-wrapper.disabled .select2-trigger,
@@ -223,7 +223,7 @@ export interface Select2Option {
       transform: translateY(0);
       font-size: var(--text-xs);
       font-weight: 500;
-      color: var(--info-color);
+      color: var(--info-color-text);
     }
 
     /* === MULTI-SELECT FIX === */
@@ -310,7 +310,7 @@ export interface Select2Option {
       border: none;
       border-radius: 50%;
       font-size: var(--text-sm);
-      color: var(--info-color);
+      color: var(--info-color-text);
       cursor: pointer;
       transition: all 150ms ease;
     }
@@ -414,7 +414,7 @@ export interface Select2Option {
       cursor: pointer;
       transition: background 100ms ease;
     }
-    
+
 
 
     .select2-option:hover:not(.disabled),
@@ -424,13 +424,13 @@ export interface Select2Option {
 
     .select2-option.selected {
       background: var(--dropdown-item-selected);
-      color: var(--info-color);
+      color: var(--info-color-text);
       font-weight: 500;
     }
 
     .select2-option.disabled {
-      opacity: 0.5;
       cursor: not-allowed;
+      color: var(--input-disabled-text);
     }
 
     .option-icon {
@@ -442,7 +442,7 @@ export interface Select2Option {
     }
 
     .check-icon {
-      color: var(--info-color);
+      color: var(--info-color-text);
       font-weight: bold;
     }
 
@@ -534,7 +534,7 @@ export class Select2Component implements ControlValueAccessor {
       this.isOpen.update(v => !v);
       if (this.isOpen()) {
         this.ensureEnabledHighlight();
-        
+
         // Focus search input if searchable
         if (this.searchable) {
           setTimeout(() => {
@@ -637,7 +637,7 @@ export class Select2Component implements ControlValueAccessor {
       this.selectedOption.set(option);
       this.onChange(option.value);
       this.valueChange.emit(option.value);
-      
+
       this.isOpen.set(false);
       this.searchTerm.set('');
       this.highlightedIndex.set(-1);

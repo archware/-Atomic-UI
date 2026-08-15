@@ -23,14 +23,14 @@ import { Select2Component } from '../../molecules/select2/select2.component';
             </app-select2>
           </div>
         </div>
-        
+
         <app-text variant="body-sm" color="muted" weight="semibold">Total de registros: {{ total }}</app-text>
       </div>
 
       <!-- Right: Pagination Controls -->
       <div class="pager-group pager-right">
         <app-text variant="body-sm" color="muted" weight="semibold">Página {{ page }} de {{ totalPages() }}</app-text>
-        
+
         <div class="pager-controls">
           <app-icon-button 
             size="sm" 
@@ -41,7 +41,7 @@ import { Select2Component } from '../../molecules/select2/select2.component';
           >
             <i class="fa-solid fa-angles-left"></i>
           </app-icon-button>
-          
+
           <app-icon-button 
             size="sm" 
             variant="ghost" 
@@ -51,7 +51,7 @@ import { Select2Component } from '../../molecules/select2/select2.component';
           >
             <i class="fa-solid fa-angle-left"></i>
           </app-icon-button>
-          
+
           <app-icon-button 
             size="sm" 
             variant="ghost" 
@@ -61,7 +61,7 @@ import { Select2Component } from '../../molecules/select2/select2.component';
           >
             <i class="fa-solid fa-angle-right"></i>
           </app-icon-button>
-          
+
           <app-icon-button 
             size="sm" 
             variant="ghost" 

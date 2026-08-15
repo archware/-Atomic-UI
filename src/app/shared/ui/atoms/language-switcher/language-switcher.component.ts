@@ -36,7 +36,7 @@ export interface Language {
         <span class="language-code">{{ currentLanguage().code.toUpperCase() }}</span>
         <i class="fa-solid fa-chevron-down chevron"></i>
       </button>
-      
+
       @if (isOpen()) {
         <div class="language-dropdown" role="listbox">
           @for (lang of languages; track lang.code) {

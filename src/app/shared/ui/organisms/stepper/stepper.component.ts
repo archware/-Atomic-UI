@@ -85,7 +85,7 @@ export interface Step {
 
     .step.disabled {
       cursor: not-allowed;
-      opacity: 0.6;
+      color: var(--input-disabled-text);
     }
 
     /* STEP INDICATOR (CIRCLE) */

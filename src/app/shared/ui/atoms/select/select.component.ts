@@ -69,7 +69,7 @@ export interface SelectOption {
 
     .select-error {
       font-size: var(--text-xs);
-      color: var(--danger-color);
+      color: var(--danger-color-text);
     }
   `]
 })

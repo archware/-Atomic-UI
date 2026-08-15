@@ -180,9 +180,9 @@ export type FileInputDensity = 'comfortable' | 'compact';
         border-color: var(--danger-color);
       }
       .disabled .drop-zone {
-        opacity: 0.5;
         pointer-events: none;
         cursor: not-allowed;
+        color: var(--input-disabled-text);
       }
 
       .compact .drop-zone {
@@ -247,7 +247,7 @@ export type FileInputDensity = 'comfortable' | 'compact';
         gap: var(--space-2);
         margin: var(--space-2) 0 0;
         font-size: var(--text-sm);
-        color: var(--danger-color);
+        color: var(--danger-color-text);
       }
 
       .file-list {
@@ -306,7 +306,7 @@ export type FileInputDensity = 'comfortable' | 'compact';
         flex-shrink: 0;
       }
       .file-remove:hover {
-        color: var(--danger-color);
+        color: var(--danger-color-text);
         background: var(--surface-hover);
       }
     `,

@@ -9,7 +9,7 @@ export type LoaderSize = 'sm' | 'md' | 'lg';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="loader-container" [class]="'loader-' + variant" [class.loader-sm]="size === 'sm'" [class.loader-lg]="size === 'lg'">
-      
+
       <!-- Spinner con degradado -->
       @if (variant === 'spinner') {
         <div class="gradient-spinner">
@@ -35,7 +35,7 @@ export type LoaderSize = 'sm' | 'md' | 'lg';
           </svg>
         </div>
       }
-      
+
       <!-- 5 Dots con degradado -->
       @if (variant === 'dots') {
         <div class="dots">
@@ -46,7 +46,7 @@ export type LoaderSize = 'sm' | 'md' | 'lg';
           <span class="dot dot-5"></span>
         </div>
       }
-      
+
       <!-- Pulse con degradado multicolor -->
       @if (variant === 'pulse') {
         <div class="pulse">
@@ -56,7 +56,7 @@ export type LoaderSize = 'sm' | 'md' | 'lg';
           <div class="pulse-core"></div>
         </div>
       }
-      
+
       <!-- 5 Barras con degradado -->
       @if (variant === 'bars') {
         <div class="bars">
@@ -67,7 +67,7 @@ export type LoaderSize = 'sm' | 'md' | 'lg';
           <span class="bar bar-5"></span>
         </div>
       }
-      
+
       <!-- Gradiente circular animado con cónica -->
       @if (variant === 'gradient') {
         <div class="gradient-ring">

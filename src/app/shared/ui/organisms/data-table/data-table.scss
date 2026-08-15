@@ -316,8 +316,8 @@ tbody tr:last-child td {
 }
 
 .data-table__page-btn:disabled {
-  opacity: 0.4;
   cursor: not-allowed;
+  color: var(--input-disabled-text);
 }
 
 @keyframes data-table-spin {

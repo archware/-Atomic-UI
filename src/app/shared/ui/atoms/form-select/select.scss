@@ -18,7 +18,7 @@
 }
 
 .field__required {
-  color: var(--danger-color);
+  color: var(--danger-color-text);
 }
 
 .field__control {
@@ -105,5 +105,5 @@
 }
 
 .field__message--error {
-  color: var(--danger-color);
+  color: var(--danger-color-text);
 }

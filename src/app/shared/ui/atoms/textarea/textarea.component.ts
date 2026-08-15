@@ -52,13 +52,13 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
       ></textarea>
       <label class="textarea-label" [attr.for]="textareaId()">{{ label }}</label>
       <span class="textarea-line"></span>
-      
+
       <!-- Character counter -->
       @if (maxlength && showCounter) {
         <span class="textarea-counter">{{ value.length }} / {{ maxlength }}</span>
       }
     </div>
-    
+
     <!-- Error message -->
     @if (error) {
       <span class="textarea-error">{{ error }}</span>
@@ -104,9 +104,9 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
     }
 
     .textarea-input:disabled {
-      opacity: 0.6;
       cursor: not-allowed;
       background: var(--input-disabled-bg);
+      color: var(--input-disabled-text);
     }
 
     /* Floating label */
@@ -181,14 +181,14 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
     }
 
     .has-error .textarea-label {
-      color: var(--danger-color);
+      color: var(--danger-color-text);
     }
 
     .textarea-error {
       display: block;
       margin-top: var(--space-1);
       font-size: var(--text-xs);
-      color: var(--danger-color);
+      color: var(--danger-color-text);
     }
 
     /* Character counter */

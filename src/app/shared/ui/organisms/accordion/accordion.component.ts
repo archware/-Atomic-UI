@@ -195,7 +195,7 @@ export class AccordionComponent {
 
       .accordion-header:disabled {
         cursor: not-allowed;
-        opacity: 0.65;
+        color: var(--input-disabled-text);
       }
 
       .accordion-heading {

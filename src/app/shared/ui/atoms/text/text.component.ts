@@ -44,7 +44,7 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify';
     .text-h2 { font-size: var(--text-3xl, 1.875rem); letter-spacing: -0.025em; line-height: 1.25; margin-top: var(--space-9); margin-bottom: var(--space-3); }
     .text-h3 { font-size: var(--text-2xl, var(--space-5)); letter-spacing: -0.025em; line-height: 1.3; margin-top: var(--space-9); margin-bottom: var(--space-3); }
     .text-h4 { font-size: var(--text-xl, var(--space-5)); letter-spacing: -0.015em; line-height: 1.4; margin-top: var(--space-9); margin-bottom: var(--space-3); }
-    
+
     /* First heading in container should not have top margin */
     :host(:first-child) .text-h1,
     :host(:first-child) .text-h2,
@@ -52,11 +52,11 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify';
     :host(:first-child) .text-h4 {
       margin-top: 0;
     }
-    
+
     .text-body-lg { font-size: var(--text-lg); }
     .text-body { font-size: var(--text-md); }
     .text-body-sm { font-size: var(--text-sm); }
-    
+
     .text-caption { font-size: var(--text-xs); letter-spacing: 0.02em; }
     .text-label { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; }
 
@@ -71,9 +71,9 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify';
     .color-primary { color: var(--primary-color); }
     .color-secondary { color: var(--secondary-color); }
     .color-muted { color: var(--text-color-secondary); }
-    .color-success { color: var(--success-color); }
-    .color-warning { color: var(--warning-color); }
-    .color-danger { color: var(--danger-color); }
+    .color-success { color: var(--success-color-text); }
+    .color-warning { color: var(--warning-color-text); }
+    .color-danger { color: var(--danger-color-text); }
     .color-white { color: var(--white, var(--gray-0)); }
 
     /* 

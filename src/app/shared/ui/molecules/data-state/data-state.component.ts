@@ -152,7 +152,7 @@ import { ApiError } from '../../services/api.service';
 
     .error-icon {
       font-size: var(--text-3xl);
-      color: var(--danger-color);
+      color: var(--danger-color-text);
     }
 
     .error-title {

@@ -187,7 +187,6 @@ let nextContextMenuId = 0;
       .context-menu__item:disabled {
         color: var(--input-disabled-text);
         cursor: not-allowed;
-        opacity: 0.6;
       }
 
       .context-menu__icon {

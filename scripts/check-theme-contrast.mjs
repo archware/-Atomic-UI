@@ -242,6 +242,99 @@ for (const [file, source] of allSources) {
   }
 }
 
+/*
+LA COMPUERTA MIRABA LA LISTA, NO LA INTERFAZ. OTRA VEZ.
+
+Arriba esta escrito que auditar cuatro pares mientras las alertas fallaban daba
+una garantia falsa. Se anadieron las alertas a la lista... y `status-badge`
+siguio pintando los ocho tonos con el token de RELLENO sobre el fondo claro del
+mismo tono, en verde, porque ese par no estaba enumerado. Enumerar casos no
+cierra una clase de defecto: hay que buscar el PATRON.
+
+El patron es exactamente este: en la misma regla, fondo `--TONO-color-lighter`
+—o `-light`— y texto `--TONO-color`. Eso es pintar el texto con el relleno, que
+es lo que el capitulo 8 de la doctrina prohibe, y lo que estaba medido por
+debajo de 4,5:1 en los cuatro tonos.
+
+Buscarlo asi encuentra tambien el que nadie ha escrito todavia.
+*/
+const TONOS = ['success', 'warning', 'danger', 'info'];
+for (const [file, source] of allSources) {
+  if (!/\.(?:scss|css)$/.test(file)) continue;
+  for (const { selector, body } of topLevelBlocks(source)) {
+    for (const tono of TONOS) {
+      const fondoTonal = new RegExp(
+        String.raw`background(?:-color)?\s*:\s*var\(\s*--` + tono + String.raw`-color-light(?:er)?\s*[,)]`,
+      ).test(body);
+      const textoDeRelleno = new RegExp(
+        String.raw`(?:^|[^-\w])color\s*:\s*var\(\s*--` + tono + String.raw`-color\s*[,)]`,
+      ).test(body);
+      if (fondoTonal && textoDeRelleno) {
+        failures.push(
+          `${relative(projectRoot, file)}: en \`${selector}\` el fondo es ` +
+            `--${tono}-color-light(er) y el texto --${tono}-color, que es el token de RELLENO. ` +
+            `Use --${tono}-color-text: pintar el texto con el relleno queda por debajo de 4,5:1.`,
+        );
+      }
+    }
+  }
+}
+
+/*
+EL TOKEN DE RELLENO NO PINTA TEXTO NI ICONOS. EN NINGUN SITIO.
+
+La regla de arriba caza el par «fondo tonal + texto de relleno». Faltaba el caso
+mas comun, que no tiene fondo tonal ninguno: `color: var(--danger-color)` sobre
+la superficie blanca de la pagina. Asi estaban el mensaje de error de TODOS los
+campos, el asterisco de obligatorio, los cuatro tonos del aviso flotante y los
+botones de accion de tabla, que son solo icono.
+
+`--TONO-color` es el color de RELLENO: sirve para fondos y bordes. Para texto
+esta `--TONO-color-text`, con el contraste ya calculado. Y para iconos tambien:
+el liston de WCAG 1.4.11 es 3:1, y success y warning como color de icono sobre
+superficie clara dan 2,22 y 2,20.
+
+Se mira `color:` y solo `color:`. `background` y `border-color` con el token de
+relleno son justo su uso correcto.
+*/
+for (const [file, source] of allSources) {
+  if (/[\/]themes[\/]/.test(file)) continue;
+  for (const match of source.matchAll(
+    /(?:^|[^-\w])color:\s*var\(\s*--(success|warning|danger|info)-color\s*\)/g,
+  )) {
+    failures.push(
+      `${relative(projectRoot, file)}: pinta texto o icono con --${match[1]}-color, que es el ` +
+        `token de RELLENO. Use --${match[1]}-color-text, que es el que trae el contraste calculado.`,
+    );
+  }
+}
+
+/*
+UN ESTADO DESHABILITADO NO SE COMUNICA CON TRANSPARENCIA.
+
+`opacity` atenua texto Y fondo contra la pagina a la vez, asi que anula el
+contraste que el token ya traia calculado —medido: 4,09:1 con transparencia,
+6,99:1 sin ella— y el icono que acompana al control recibe la atenuacion por
+partida doble, con lo que queda mas apagado que su propio texto.
+
+Solo se mira dentro de reglas cuyo selector habla de deshabilitado. Una
+transparencia decorativa —una marca de agua, un separador— no comunica estado y
+no es asunto de esta compuerta.
+*/
+const SELECTOR_APAGADO = /(?::disabled|disabled|--disabled|--retired|--inactive)/;
+for (const [file, source] of allSources) {
+  for (const { selector, body } of topLevelBlocks(source)) {
+    if (!SELECTOR_APAGADO.test(selector)) continue;
+    if (!/(?:^|[^-\w])opacity\s*:/.test(body)) continue;
+    failures.push(
+      `${relative(projectRoot, file)}: \`${selector}\` apaga con \`opacity\`. ` +
+        `Un estado deshabilitado se comunica con los tokens (--input-disabled-text, ` +
+        `--input-disabled-bg, --text-color-disabled) y el cursor, que traen el contraste ` +
+        `verificado; la transparencia lo deshace.`,
+    );
+  }
+}
+
 if (failures.length > 0) {
   console.error('Contraste y tokens de tema: fallos encontrados.\n');
   for (const failure of failures) console.error(`- ${failure}`);

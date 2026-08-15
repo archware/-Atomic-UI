@@ -150,11 +150,11 @@ export interface DenominationCounterRow extends DenominationDefinition {
       }
 
       .denomination-counter__status[data-state='suggested'] {
-        color: var(--warning-color);
+        color: var(--warning-color-text);
       }
 
       .denomination-counter__status[data-state='confirmed'] {
-        color: var(--success-color);
+        color: var(--success-color-text);
       }
 
       .denomination-counter__head,

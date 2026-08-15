@@ -187,8 +187,8 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
 
     .action-btn.disabled,
     .action-btn:disabled {
-      opacity: 0.5;
       cursor: not-allowed;
+      color: var(--input-disabled-text);
     }
 
     /* Variants */
@@ -204,28 +204,28 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
       color: var(--secondary-color);
     }
 
-    .action-btn--danger { color: var(--danger-color); }
+    .action-btn--danger { color: var(--danger-color-text); }
     .action-btn--danger:hover:not(:disabled) { 
       background: var(--danger-color-lighter); 
-      color: var(--danger-color);
+      color: var(--danger-color-text);
     }
 
-    .action-btn--warning { color: var(--warning-color); }
+    .action-btn--warning { color: var(--warning-color-text); }
     .action-btn--warning:hover:not(:disabled) { 
       background: var(--warning-color-lighter); 
-      color: var(--warning-color);
+      color: var(--warning-color-text);
     }
 
-    .action-btn--success { color: var(--success-color); }
+    .action-btn--success { color: var(--success-color-text); }
     .action-btn--success:hover:not(:disabled) { 
       background: var(--success-color-lighter); 
-      color: var(--success-color);
+      color: var(--success-color-text);
     }
 
-    .action-btn--info { color: var(--info-color); }
+    .action-btn--info { color: var(--info-color-text); }
     .action-btn--info:hover:not(:disabled) { 
       background: var(--info-color-lighter); 
-      color: var(--info-color);
+      color: var(--info-color-text);
     }
 
     .action-btn--more {
@@ -337,8 +337,8 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
 
     .menu-item.disabled,
     .menu-item:disabled {
-      opacity: 0.5;
       cursor: not-allowed;
+      color: var(--input-disabled-text);
     }
 
     .menu-item i {
@@ -353,16 +353,16 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
     .menu-item--secondary { color: var(--secondary-color); }  
     .menu-item--secondary:hover:not(:disabled) { background: var(--secondary-color-lighter); }
 
-    .menu-item--danger { color: var(--danger-color); }
+    .menu-item--danger { color: var(--danger-color-text); }
     .menu-item--danger:hover:not(:disabled) { background: var(--danger-color-lighter); }
 
-    .menu-item--warning { color: var(--warning-color); }
+    .menu-item--warning { color: var(--warning-color-text); }
     .menu-item--warning:hover:not(:disabled) { background: var(--warning-color-lighter); }
 
-    .menu-item--success { color: var(--success-color); }
+    .menu-item--success { color: var(--success-color-text); }
     .menu-item--success:hover:not(:disabled) { background: var(--success-color-lighter); }
 
-    .menu-item--info { color: var(--info-color); }
+    .menu-item--info { color: var(--info-color-text); }
     .menu-item--info:hover:not(:disabled) { background: var(--info-color-lighter); }
 
     .menu-item-label {

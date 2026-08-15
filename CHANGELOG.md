@@ -1,9 +1,9 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.8.4'
+version: '5.9.0'
 status: 'vigente'
-updated: '2026-08-14'
+updated: '2026-08-15'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
@@ -12,6 +12,43 @@ owner: 'Hospital Regional de Ayacucho'
 Todas las modificaciones importantes de este proyecto se documentan en este
 archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
+
+
+## 5.9.0 - 2026-08-15
+
+### Corregido
+
+- **El texto no se pinta con el token de RELLENO. 49 sitios en 19 componentes.**
+  `color: var(--danger-color)` y sus tres hermanos son el color de relleno del
+  tono; para texto e iconos existe `--TONO-color-text`, con el contraste ya
+  calculado. Medido sobre tema claro: info 3,69 · success 2,12 · warning 2,13 ·
+  danger 3,24, todos por debajo de 4,5:1. Afectaba al mensaje de error de todos
+  los campos, al asterisco de obligatorio, al aviso flotante, a los botones de
+  accion de tabla —que son solo icono, con liston de 3:1— y al menu de usuario.
+
+- **Un estado deshabilitado ya no se comunica con `opacity`. 28 reglas.**
+  La transparencia atenua texto Y fondo contra la pagina, asi que anula el
+  contraste que el token traia calculado —medido: 4,09:1 con ella, 6,99:1 sin
+  ella— y el icono que acompana al control la recibe por partida doble. Ahora lo
+  dicen `--input-disabled-text`, `--input-disabled-bg` y el cursor. Alcanza a
+  botones, campos, casillas, radios, interruptor, paginador, acordeon, pestanas,
+  pasos, menus y desplegables.
+
+### Anadido
+
+- **La compuerta de contraste busca PATRONES, no una lista.** Es el cambio que
+  de verdad importa. `scripts/check-theme-contrast.mjs` enumeraba pares de
+  tokens; se le anadieron las alertas tras un fallo y aun asi todo lo anterior
+  paso en verde, porque ningun par de los enumerados los cubria. Ahora recorre
+  todos los ficheros de estilo buscando dos formas concretas: texto pintado con
+  `--TONO-color`, y `opacity` dentro de una regla cuyo selector habla de
+  deshabilitado. Encuentra tambien lo que nadie ha escrito todavia.
+
+### Notas
+
+Cambio visible en pantalla: los estados apagados dejan de verse translucidos y
+pasan a verse en gris con contraste verificado. Es el aspecto correcto, no un
+efecto secundario.
 
 ## [Sin publicar]
 

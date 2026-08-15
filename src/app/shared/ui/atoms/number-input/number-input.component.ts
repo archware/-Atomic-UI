@@ -120,8 +120,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       color: var(--text-color-on-primary);
     }
     .number-input__btn:disabled {
-      opacity: 0.4;
       cursor: not-allowed;
+      color: var(--input-disabled-text);
     }
 
     .number-input__field {
@@ -142,8 +142,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     .number-input__field::-webkit-outer-spin-button { -webkit-appearance: none; }
 
     .number-input--disabled .number-input__control {
-      opacity: 0.6;
       pointer-events: none;
+      color: var(--input-disabled-text);
     }
 
     .number-input__hint {
@@ -157,7 +157,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       display: block;
       margin-top: var(--space-1);
       font-size: var(--text-xs);
-      color: var(--danger-color);
+      color: var(--danger-color-text);
     }
   `],
 })

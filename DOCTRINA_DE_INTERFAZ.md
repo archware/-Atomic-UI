@@ -1,9 +1,9 @@
 ---
 title: 'Doctrina de interfaz de Atomic UI'
 document_type: 'doctrine'
-version: '5.8.3'
+version: '5.9.0'
 status: 'vigente'
-updated: '2026-08-14'
+updated: '2026-08-15'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
@@ -238,6 +238,18 @@ hecho no pueden pintarse con colores opuestos en la misma pantalla.**
 
 **El estado deshabilitado lo comunican los tokens y el cursor**, no una
 transparencia que falsea lo calculado.
+
+**Y la regla vive en la compuerta, no en este documento.** Enumerar casos no
+cierra una clase de defecto: la comprobación de contraste llevaba una LISTA de
+pares, se le añadieron las alertas, y `status-badge` siguió en verde porque su
+par no estaba en la lista. Ahora `check-theme-contrast.mjs` busca **patrones**
+—texto pintado con `--TONO-color`, y `opacity` dentro de una regla cuyo selector
+habla de deshabilitado— sobre todos los ficheros de estilo. Fue la compuerta la
+que encontró las píldoras de `kpi-card`, que nadie estaba buscando, y las 49 del
+propio ADN.
+
+Cada regla que se convierte en compuerta deja de necesitar vigilancia. Las que
+no se pueden automatizar son las que justifican leer este documento.
 
 ## 9. Lo que la persona escribió vale tanto como lo que ya estaba guardado
 

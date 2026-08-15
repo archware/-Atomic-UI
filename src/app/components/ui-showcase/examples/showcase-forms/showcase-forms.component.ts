@@ -37,7 +37,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
           [(ngModel)]="floatingInputValue"
           [ngModelOptions]="{standalone: true}"
         ></app-floating-input>
-        
+
         <app-floating-input 
           variant="underline" 
           label="Email" 
@@ -45,7 +45,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
           [(ngModel)]="underlineInputValue"
           [ngModelOptions]="{standalone: true}"
         ></app-floating-input>
-        
+
         <app-floating-input 
           variant="material" 
           label="Contraseña" 
@@ -53,7 +53,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
           [(ngModel)]="materialInputValue"
           [ngModelOptions]="{standalone: true}"
         ></app-floating-input>
-        
+
         <app-floating-input 
           variant="outline" 
           label="Teléfono" 
@@ -62,7 +62,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
           [ngModelOptions]="{standalone: true}"
         ></app-floating-input>
       </div>
-      
+
       <h4 class="subsection-title">Estados y tipos especiales</h4>
       <div class="input-variants-grid">
         <app-floating-input 
@@ -72,7 +72,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
           [(ngModel)]="errorInputValue"
           [ngModelOptions]="{standalone: true}"
         ></app-floating-input>
-        
+
         <app-floating-input 
           variant="floating" 
           label="Deshabilitado" 
@@ -80,14 +80,14 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
           [ngModel]="'Valor deshabilitado'"
           [ngModelOptions]="{standalone: true}"
         ></app-floating-input>
-        
+
         <app-datepicker 
           variant="floating" 
           label="Fecha de nacimiento" 
           [(ngModel)]="dateInputValue"
           [ngModelOptions]="{standalone: true}"
         ></app-datepicker>
-        
+
         <app-floating-input 
           variant="floating" 
           label="Contraseña (con toggle)" 
@@ -96,7 +96,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
           [ngModelOptions]="{standalone: true}"
         ></app-floating-input>
       </div>
-      
+
       <h4 class="subsection-title">Anchos Personalizados</h4>
         <app-row wrap="wrap" gap="1rem" align="left">
           <app-floating-input 
@@ -127,7 +127,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
           [ngModelOptions]="{standalone: true}"
         ></app-floating-input>
       </app-row>
-      
+
       <app-row wrap="wrap" gap="1rem" align="left" style="margin-top: 1rem;">
         <app-select2 
           [options]="select2Options" 
@@ -144,7 +144,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
           placeholder="auto (default)"
         ></app-select2>
       </app-row>
-      
+
       <h4 class="subsection-title" style="margin-top: 1.5rem;">Anchos en Porcentaje</h4>
       <div style="display: flex; flex-direction: column; gap: 0.75rem;">
         <app-floating-input 
@@ -184,7 +184,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
           ></app-select2>
           <p class="mt-2 text-sm">Seleccionado: {{ select2Value || 'Ninguno' }}</p>
         </div>
-        
+
         <div>
           <h4 class="subsection-title">Multi-select con tags</h4>
           <app-select2 
@@ -220,7 +220,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
             [(ngModel)]="formData.name"
             name="name"
           ></app-floating-input>
-          
+
           <app-floating-input 
             variant="floating" 
             label="Correo electrónico" 
@@ -229,7 +229,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
             name="email"
           ></app-floating-input>
         </app-row>
-        
+
         <!-- Fila 2: Teléfono y País -->
         <app-row variant="form">
           <app-floating-input 
@@ -239,7 +239,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
             [(ngModel)]="formData.phone"
             name="phone"
           ></app-floating-input>
-          
+
           <app-select2 
             label="País"
             [options]="formSelect2Options" 
@@ -248,7 +248,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
             placeholder="Seleccionar..."
           ></app-select2>
         </app-row>
-        
+
         <!-- Mensaje - fila completa -->
         <app-row variant="form" columns="1fr">
           <app-textarea 
@@ -260,7 +260,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
           name="message"
           ></app-textarea>
         </app-row>
-        
+
         
         <!-- Checkbox y Radio en fila -->
         <app-row variant="form">
@@ -269,7 +269,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
             [(ngModel)]="formData.terms"
             name="terms"
           ></app-checkbox>
-          
+
           <app-radio 
             label="Preferencia de contacto"
             name="preference"
@@ -278,7 +278,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
             [(ngModel)]="formData.preference"
           ></app-radio>
         </app-row>
-        
+
         <!-- Botones -->
         <app-row columns="auto auto" gap="1rem" align="right">
           <app-button variant="outline" (buttonClick)="onCancel()">Cancelar</app-button>
@@ -292,18 +292,18 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
     .section-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-color); }
     .subsection-title { font-size: 1rem; font-weight: 500; margin: 1rem 0 0.5rem; color: var(--text-color-secondary); }
     .input-variants-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-    
+
     /* Form Styles */
     .showcase-form { background: var(--surface-elevated); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); }
     .form-group { margin-bottom: 1rem; }
     .form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-color); }
     .form-input, .form-select, .form-textarea { width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--input-bg); color: var(--text-color); }
     .form-actions { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem; }
-    
+
     /* Checkbox & Radio */
     .checkbox-label, .radio-label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--text-color); }
     .radio-group { display: flex; gap: 1rem; }
-    
+
     /* Helper buttons */
     .btn { padding: 0.5rem 1rem; border-radius: 0.375rem; border: none; cursor: pointer; }
     .btn-primary { background: var(--primary-color); color: white; }

@@ -56,7 +56,7 @@ import { Select2Component } from '../select2/select2.component';
           >
             <i class="fa-solid fa-arrow-left page-icon page-icon--start" aria-hidden="true"></i> Anterior
           </button>
-          
+
           <span class="page-minimal-text">
             Página <strong>{{ currentPage() }}</strong> de <strong>{{ totalPages() }}</strong>
           </span>
@@ -250,7 +250,6 @@ import { Select2Component } from '../select2/select2.component';
     }
 
     .page-btn:disabled {
-      opacity: 0.5;
       color: var(--pagination-disabled-text);
       cursor: not-allowed;
     }
@@ -344,10 +343,10 @@ export class PaginationComponent {
   @Input() variant: 'standard' | 'minimal' | 'rounded' | 'cards' = 'standard';
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() maxVisible = 5;
-  
+
   _total = signal(0);
   @Input() set total(val: number) { this._total.set(val); }
-  
+
   _pageSize = signal(10);
   @Input() set pageSize(val: number) { this._pageSize.set(val); }
 

@@ -82,8 +82,8 @@ export interface DropdownOption {
     }
 
     .dropdown.disabled {
-      opacity: 0.6;
       pointer-events: none;
+      color: var(--input-disabled-text);
     }
 
     .dropdown-trigger {
@@ -170,8 +170,8 @@ export interface DropdownOption {
     }
 
     .dropdown-option.disabled {
-      opacity: 0.5;
       cursor: not-allowed;
+      color: var(--input-disabled-text);
     }
 
     .option-icon {

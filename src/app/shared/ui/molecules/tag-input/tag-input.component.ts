@@ -114,9 +114,9 @@ export interface TagInputOption {
     }
 
     .tag-input--disabled .tag-input__field {
-      opacity: 0.6;
       cursor: not-allowed;
       background: var(--surface-section);
+      color: var(--input-disabled-text);
     }
 
     .tag-input__input {
@@ -141,7 +141,7 @@ export interface TagInputOption {
       display: block;
       margin-top: var(--space-1);
       font-size: var(--text-xs);
-      color: var(--danger-color);
+      color: var(--danger-color-text);
     }
   `],
 })

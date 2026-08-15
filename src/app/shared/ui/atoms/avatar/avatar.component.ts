@@ -61,10 +61,10 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
     /* Variants */
     .avatar-primary { background-color: var(--primary-color-lighter); color: var(--primary-color); }
     .avatar-secondary { background-color: var(--secondary-color-lighter); color: var(--secondary-color); }
-    .avatar-success { background-color: var(--success-color-lighter); color: var(--success-color); }
-    .avatar-warning { background-color: var(--warning-color-lighter); color: var(--warning-color); }
-    .avatar-danger { background-color: var(--danger-color-lighter); color: var(--danger-color); }
-    .avatar-info { background-color: var(--info-color-lighter); color: var(--info-color); }
+    .avatar-success { background-color: var(--success-color-lighter); color: var(--success-color-text); }
+    .avatar-warning { background-color: var(--warning-color-lighter); color: var(--warning-color-text); }
+    .avatar-danger { background-color: var(--danger-color-lighter); color: var(--danger-color-text); }
+    .avatar-info { background-color: var(--info-color-lighter); color: var(--info-color-text); }
 
     .avatar-xs { width: var(--avatar-size-xs, var(--space-5)); height: var(--avatar-size-xs, var(--space-5)); font-size: var(--text-xs); }
     .avatar-sm { width: var(--avatar-size-sm, var(--space-6)); height: var(--avatar-size-sm, var(--space-6)); font-size: var(--text-xs); }

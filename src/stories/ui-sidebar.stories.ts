@@ -59,7 +59,7 @@ export const WithContent: Story = {
             </div>
             <div style="padding: 1.5rem; background: var(--surface-background); border-radius: 0.5rem; box-shadow: var(--shadow-md);">
               <h3>Pedidos</h3>
-              <p style="font-size: 2rem; font-weight: bold; color: var(--success-color);">89</p>
+              <p style="font-size: 2rem; font-weight: bold; color: var(--success-color-text);">89</p>
             </div>
           </div>
         </div>

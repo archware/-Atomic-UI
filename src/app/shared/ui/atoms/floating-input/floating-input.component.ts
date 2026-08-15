@@ -179,7 +179,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       transform: translateY(0);
       font-size: 0.8125rem;
       font-weight: 500;
-      color: var(--info-color);
+      color: var(--info-color-text);
     }
 
     /* === INPUT LINE (for underline/material) === */
@@ -384,7 +384,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
 
     .input-icon-btn:disabled {
       cursor: not-allowed;
-      opacity: 0.6;
+      color: var(--input-disabled-text);
     }
 
     .input-icon-btn:disabled:hover {
@@ -406,7 +406,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     .disabled .floating-input {
       background: var(--input-disabled-bg);
       cursor: not-allowed;
-      opacity: 0.6;
+      color: var(--input-disabled-text);
     }
 
     .has-error .floating-input {
@@ -414,7 +414,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     }
 
     .has-error .floating-label {
-      color: var(--danger-color) !important;
+      color: var(--danger-color-text) !important;
     }
 
     .has-error .input-line::after {
@@ -425,7 +425,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       display: block;
       margin-top: var(--space-2);
       font-size: 0.8125rem;
-      color: var(--danger-color);
+      color: var(--danger-color-text);
     }
 
     /* Dark mode handled automatically by CSS variables */

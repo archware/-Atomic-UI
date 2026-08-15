@@ -55,8 +55,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
 
     .toggle-wrapper.disabled {
-      opacity: 0.6;
       cursor: not-allowed;
+      color: var(--input-disabled-text);
     }
 
     .toggle-input {

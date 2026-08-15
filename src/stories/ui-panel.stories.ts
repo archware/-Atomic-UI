@@ -34,7 +34,7 @@ export const WithHeader: Story = {
             <div style="color: var(--text-color-secondary);">Pedidos</div>
           </div>
           <div>
-            <div style="font-size: 2rem; font-weight: bold; color: var(--success-color);">$12,450</div>
+            <div style="font-size: 2rem; font-weight: bold; color: var(--success-color-text);">$12,450</div>
             <div style="color: var(--text-color-secondary);">Ventas</div>
           </div>
         </div>

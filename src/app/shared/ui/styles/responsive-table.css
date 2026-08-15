@@ -151,7 +151,7 @@
    Alta especificidad para evitar !important
    ============================================ */
 @media screen and (max-width: 768px) {
-    
+
     /* Hide header on mobile */
     .so-root[data-so-table][data-so-sync-columns] .rtc-header,
     .so-root[data-so-table] .rtc-header,

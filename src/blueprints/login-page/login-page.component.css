@@ -105,7 +105,7 @@
   justify-content: center;
   width: var(--space-10);
   height: var(--space-10);
-  color: var(--success-color);
+  color: var(--success-color-text);
   background: var(--success-color-lighter);
   border-radius: var(--radius-full);
   font-size: var(--text-2xl);

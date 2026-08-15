@@ -175,7 +175,7 @@ function normalizeSearch(value: string): string {
     .combobox-input:disabled {
       background: var(--input-disabled-bg);
       cursor: not-allowed;
-      opacity: 0.6;
+      color: var(--input-disabled-text);
     }
 
     .combobox-icon, .combobox-clear {
@@ -242,7 +242,7 @@ function normalizeSearch(value: string): string {
     .combobox-error {
       display: block;
       font-size: var(--text-xs);
-      color: var(--danger-color);
+      color: var(--danger-color-text);
       margin-top: var(--space-1);
     }
   `]

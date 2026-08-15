@@ -20,15 +20,15 @@ import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
       <app-text variant="body">Párrafo superior</app-text>
       <app-divider></app-divider>
       <app-text variant="body">Párrafo inferior (Divider simple)</app-text>
-      
+
       <br>
-      
+
       <app-text variant="body">Sección A</app-text>
       <app-divider text="O"></app-divider>
       <app-text variant="body">Sección B (Divider con texto)</app-text>
-      
+
       <br>
-      
+
       <app-text variant="body">Inicio</app-text>
       <app-divider text="Continuar" align="start"></app-divider>
       <app-text variant="body">Fin (Divider alineado al inicio)</app-text>
@@ -76,7 +76,7 @@ import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
           <app-text variant="caption">Column 3</app-text>
         </div>
       </app-row>
-      
+
       <div style="margin-top: 1rem;">
         <app-text variant="caption" color="muted">align="left"</app-text>
         <app-row columns="repeat(3, auto)" gap="1rem" align="left" style="margin-bottom: 0.5rem;">
@@ -85,7 +85,7 @@ import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
           <div style="background: var(--success-color); color: white; padding: 0.5rem 1rem; border-radius: 0.25rem;">Item C</div>
         </app-row>
       </div>
-      
+
       <div style="margin-top: 0.5rem;">
         <app-text variant="caption" color="muted">align="center"</app-text>
         <app-row columns="repeat(3, auto)" gap="1rem" align="center" justify="center" style="margin-bottom: 0.5rem;">
@@ -94,7 +94,7 @@ import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
           <div style="background: var(--warning-color); color: white; padding: 0.5rem 1rem; border-radius: 0.25rem;">Item C</div>
         </app-row>
       </div>
-      
+
       <div style="margin-top: 0.5rem;">
         <app-text variant="caption" color="muted">align="right"</app-text>
         <app-row columns="repeat(3, auto)" gap="1rem" align="right" justify="end">
@@ -119,7 +119,7 @@ import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
             <button class="btn btn-ghost btn-sm">Ver más</button>
           </div>
         </div>
-        
+
         <div class="card card-elevated">
           <div class="card-header">
             <span class="card-icon">⚙️</span>
@@ -130,7 +130,7 @@ import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
             <button class="btn btn-primary btn-sm">Configurar</button>
           </div>
         </div>
-        
+
         <div class="card card-success">
           <div class="card-header">
             <span class="card-icon">✅</span>
@@ -175,7 +175,7 @@ import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
     .card-content { color: var(--text-color-secondary); margin-bottom: 1.5rem; line-height: 1.5; }
     .badge { padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; background: var(--surface-hover); }
     .badge-success { background: var(--success-color); color: white; }
-    
+
     /* Helper buttons for card demo */
     .btn { padding: 0.5rem 1rem; border-radius: 0.375rem; border: none; cursor: pointer; }
     .btn-primary { background: var(--primary-color); color: white; }

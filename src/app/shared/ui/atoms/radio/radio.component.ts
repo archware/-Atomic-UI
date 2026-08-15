@@ -40,7 +40,7 @@ export interface RadioOption {
       @if (label) {
         <span class="radio-group-label">{{ label }}</span>
       }
-      
+
       <div class="radio-options" [class.horizontal]="direction === 'horizontal'">
         @for (option of options; track option.value) {
           <label 
@@ -106,8 +106,8 @@ export interface RadioOption {
     }
 
     .radio-wrapper.disabled {
-      opacity: 0.6;
       cursor: not-allowed;
+      color: var(--input-disabled-text);
     }
 
     .radio-input {

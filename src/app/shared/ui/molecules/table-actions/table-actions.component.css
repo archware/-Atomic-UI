@@ -45,11 +45,11 @@
 }
 
 .action-btn.delete { 
-  color: var(--danger-color); 
+  color: var(--danger-color-text); 
 }
 
 .action-btn.delete:hover { 
-  color: var(--danger-color);
+  color: var(--danger-color-text);
   background: var(--danger-color-lighter);
 }
 

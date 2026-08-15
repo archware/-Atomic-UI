@@ -177,7 +177,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
     }
 
     .user-menu__item--danger {
-      color: var(--danger-color);
+      color: var(--danger-color-text);
     }
 
     .user-menu__item--danger:hover {

@@ -16,11 +16,11 @@ export type VersionVariant = 'pill' | 'badge' | 'text' | 'compact';
       @if (variant === 'pill' || variant === 'badge' || !variant) {
         <span class="atomic-version__dot" [class]="'atomic-version__dot--' + (environment || 'beta').toLowerCase()"></span>
       }
-      
+
       @if (appName) {
         <span class="atomic-version__name">{{ appName }}</span>
       }
-      
+
       <span class="atomic-version__number">{{ version || 'v1.1.0' }}</span>
 
       @if (environment) {

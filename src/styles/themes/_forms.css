@@ -3,7 +3,7 @@
    =============================================================================
    Define las clases para inputs, selects y otros elementos de formulario
    utilizando los tokens CSS del sistema de temas.
-   
+
    📅 Última actualización: Diciembre 2025
    ============================================================================= */
 
@@ -72,7 +72,6 @@
 .form-textarea:disabled {
   background-color: var(--input-disabled-bg);
   color: var(--input-disabled-text);
-  opacity: 0.7;
   cursor: not-allowed;
 }
 
@@ -196,7 +195,7 @@ html.dark .form-select {
   margin-bottom: 0.5rem;
   font-size: 0.9375rem;
   font-weight: 500;
-  color: var(--info-color);
+  color: var(--info-color-text);
 }
 
 .form-group {

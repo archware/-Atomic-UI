@@ -44,8 +44,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
 
     .checkbox-wrapper.disabled {
-      opacity: 0.6;
       cursor: not-allowed;
+      color: var(--input-disabled-text);
     }
 
     .checkbox-input {
