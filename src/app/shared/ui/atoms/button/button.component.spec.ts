@@ -145,13 +145,20 @@ describe('ButtonComponent', () => {
   });
 
   describe('loading state', () => {
-    it('announces progress, disables the native control and renders a decorative spinner', () => {
+    /*
+      La carga ya NO pone `disabled`. Deshabilitar un boton al pulsarlo hace que
+      el navegador le descarte el foco —se lo quita a si mismo— y lo saca del
+      arbol de accesibilidad, con lo que el `aria-busy` que anuncia el progreso
+      no le llega a nadie. Ahora lo dicen `aria-disabled` y `aria-busy`.
+    */
+    it('announces progress without removing itself from focus', () => {
       setInput('loading', true);
 
       const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
       const spinner = button.querySelector('.btn-spinner') as HTMLElement;
 
-      expect(button.disabled).toBeTrue();
+      expect(button.disabled).toBeFalse();
+      expect(button.getAttribute('aria-disabled')).toBe('true');
       expect(button.getAttribute('aria-busy')).toBe('true');
       expect(spinner).not.toBeNull();
       expect(spinner.getAttribute('aria-hidden')).toBe('true');
@@ -169,7 +176,10 @@ describe('ButtonComponent', () => {
       button.click();
 
       expect(emissions).toBe(1);
-      expect(button.disabled).toBeTrue();
+      // Sigue sin emitir la segunda vez, pero por la guarda de `onButtonClick`,
+      // no por haberse quitado del recorrido del teclado.
+      expect(button.disabled).toBeFalse();
+      expect(button.getAttribute('aria-disabled')).toBe('true');
     });
   });
 
@@ -305,5 +315,66 @@ describe('ButtonComponent foco programatico', () => {
     fixture.componentInstance.focus();
 
     expect(document.activeElement).toBe(fixture.nativeElement.querySelector('button'));
+  });
+});
+
+/*
+  UN BOTON QUE SE DESHABILITA AL PULSARLO SE QUITA EL FOCO A SI MISMO.
+
+  Es el caso de todo boton de guardar: se pulsa, arranca la peticion, `loading`
+  pasa a true. Con `disabled` el navegador descarta el foco, y quien confirma con
+  el teclado pierde el punto de partida —el siguiente Tab empieza desde el
+  principio del documento— justo cuando esperaba el resultado. Ademas `disabled`
+  saca al elemento del arbol de accesibilidad, asi que el `aria-busy` que dice
+  «sigo trabajando» no le llega a nadie.
+*/
+describe('AtomicButton: la carga no roba el foco', () => {
+  it('conserva el foco al entrar en carga y lo anuncia con aria', async () => {
+    await TestBed.configureTestingModule({
+      imports: [ButtonComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(ButtonComponent);
+    fixture.detectChanges();
+
+    const boton = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    boton.focus();
+    expect(document.activeElement).toBe(boton);
+
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+
+    expect(document.activeElement).toBe(boton);
+    expect(boton.disabled).toBe(false);
+    expect(boton.getAttribute('aria-disabled')).toBe('true');
+    expect(boton.getAttribute('aria-busy')).toBe('true');
+  });
+
+  it('sigue sin emitir mientras carga', async () => {
+    await TestBed.configureTestingModule({
+      imports: [ButtonComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(ButtonComponent);
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+
+    let emitidos = 0;
+    fixture.componentInstance.buttonClick.subscribe(() => (emitidos += 1));
+    (fixture.nativeElement.querySelector('button') as HTMLButtonElement).click();
+
+    expect(emitidos).toBe(0);
+  });
+
+  it('el deshabilitado de verdad si sale del recorrido', async () => {
+    await TestBed.configureTestingModule({
+      imports: [ButtonComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(ButtonComponent);
+    fixture.componentRef.setInput('disabled', true);
+    fixture.detectChanges();
+
+    expect((fixture.nativeElement.querySelector('button') as HTMLButtonElement).disabled).toBe(true);
   });
 });

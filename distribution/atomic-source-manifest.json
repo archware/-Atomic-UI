@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.9.0",
+  "packageVersion": "5.10.0",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "a156a66345024a02eb055f0f7a10fb4929660dc1dfc526240bf94a8ad7fdd60a",
+  "sourceTreeSha256": "65cf48325ae821b7c109cb757fa1856bcc87eabc53a81ec7f5d72071136e98dd",
   "fileCount": 158,
   "files": [
     {
@@ -20,8 +20,8 @@
     },
     {
       "path": "projects/atomic-ui/package.json",
-      "bytes": 854,
-      "sha256": "7a1125a64d8024cc903b8a55335ef89f4e3a27d85aeefecca77fb8c2954261e3"
+      "bytes": 855,
+      "sha256": "e2358c909ec605d2f5f21d028f8b115001b0a8957e8d6fe8deac09aacb27b87e"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -50,8 +50,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/button/button.component.ts",
-      "bytes": 8850,
-      "sha256": "c894cc98c0271a92d413fbbd3e556887a5299f15937b519c545517c2c8678d0f"
+      "bytes": 9736,
+      "sha256": "2b16ec60b3b0070b0e22f230a514d2b24dde1078177f1e6527945743ccce0a72"
     },
     {
       "path": "src/app/shared/ui/atoms/checkbox/checkbox.component.ts",
@@ -440,8 +440,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.ts",
-      "bytes": 5767,
-      "sha256": "fe7d5a3bdb28d3a9d4d895b764df16dd0ac7266d5976eb6a968315cb67705a85"
+      "bytes": 7058,
+      "sha256": "9c73b892842323d9e819a7c7d3e3ab95c721798f97f8b4a83e248801dfda35b7"
     },
     {
       "path": "src/app/shared/ui/organisms/data-pager/data-pager.component.ts",
@@ -460,8 +460,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.ts",
-      "bytes": 14509,
-      "sha256": "737d81467918a88eddec669c4f846009cbd4f2afcff64f7d368e6d1dbeed2813"
+      "bytes": 15773,
+      "sha256": "f88dec555609f0a1e1ad7fc15793ff8ef388c480ddd5599813fd6d4e91616d5b"
     },
     {
       "path": "src/app/shared/ui/organisms/denomination-counter/denomination-counter.ts",

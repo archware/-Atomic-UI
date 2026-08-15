@@ -486,3 +486,43 @@ function renderedCustomers(root: HTMLElement): string[] {
     ),
   ).map((cell) => cell.textContent?.trim() ?? '');
 }
+
+/*
+  PAGINAR CON EL TECLADO NO PUEDE DEJARTE SIN SITIO.
+
+  Los dos botones se deshabilitan al llegar al extremo y durante cada carga. Con
+  el foco encima, el navegador lo descarta y el siguiente Tab empieza desde el
+  principio del documento. Es el caso normal, no el raro: con tres paginas pasa
+  siempre al llegar a la ultima.
+*/
+describe('DataTable: el foco sobrevive al paginador', () => {
+  it('traslada el foco al resumen antes de que el boton se deshabilite', async () => {
+    await TestBed.configureTestingModule({ imports: [DataTable] }).compileComponents();
+    const fixture = TestBed.createComponent(DataTable);
+    fixture.componentRef.setInput('columns', [{ key: 'a', header: 'A' }]);
+    fixture.componentRef.setInput('rows', [{ a: 1 }]);
+    fixture.componentRef.setInput('caption', 'Tabla');
+    fixture.componentRef.setInput('totalRecords', 2);
+    fixture.componentRef.setInput('totalPages', 2);
+    fixture.componentRef.setInput('page', 1);
+    fixture.componentRef.setInput('hasNextPage', true);
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const siguiente = Array.from(
+      host.querySelectorAll<HTMLButtonElement>('.data-table__page-btn'),
+    ).find((boton) => !boton.disabled);
+    if (!siguiente) {
+      throw new Error('No hay ningun boton de pagina habilitado.');
+    }
+
+    siguiente.focus();
+    expect(document.activeElement).toBe(siguiente);
+
+    siguiente.click();
+    fixture.detectChanges();
+
+    expect(document.activeElement).toBe(host.querySelector('.data-table__summary'));
+    expect(document.activeElement).not.toBe(document.body);
+  });
+});

@@ -48,7 +48,8 @@ export type IconPosition = 'left' | 'right' | 'none';
     <button
       #control
       [type]="type"
-      [disabled]="isDisabled"
+      [disabled]="disabled"
+      [attr.aria-disabled]="loading ? 'true' : null"
       [attr.aria-label]="ariaLabel || null"
       [attr.aria-controls]="ariaControls || null"
       [attr.aria-expanded]="expandedAttribute"
@@ -281,6 +282,21 @@ export class ButtonComponent {
    */
   @Output() buttonClick = new EventEmitter<MouseEvent>();
 
+  /*
+  MIENTRAS CARGA, EL BOTON SIGUE ENFOCABLE.
+
+  Antes se ponia `disabled` tambien durante la carga. El navegador descarta el
+  foco de un elemento que se deshabilita, asi que el boton se quitaba el foco a
+  si mismo justo al pulsarlo: quien confirma un cobro con el teclado pierde el
+  punto de partida y el siguiente Tab empieza desde el principio del documento.
+  Y con `disabled` el lector de pantalla deja de anunciar el elemento, asi que
+  tampoco llegaba el `aria-busy` que decia que la operacion seguia en curso.
+
+  Ahora la carga se comunica con `aria-disabled` y `aria-busy` —que se anuncian
+  y no roban el foco— y la activacion la bloquea `onButtonClick`, que ya
+  comprobaba `loading` antes de emitir. El `disabled` real se reserva para el
+  deshabilitado de verdad, que es el que si debe salir del recorrido.
+  */
   /** Native interaction is unavailable while disabled or loading. */
   get isDisabled(): boolean {
     return this.disabled || this.loading;

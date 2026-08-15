@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.9.0'
+version: '5.10.0'
 status: 'vigente'
 updated: '2026-08-15'
 owner: 'Hospital Regional de Ayacucho'
@@ -13,6 +13,42 @@ Todas las modificaciones importantes de este proyecto se documentan en este
 archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
+
+
+## 5.10.0 - 2026-08-15
+
+### Corregido
+
+- **`focusFirst` daba por bueno un foco que no habia ocurrido.** Bastaba con que
+  `querySelector` devolviera algo para devolver `true`, y el primer selector de
+  la lista de errores es `[role="alert"]`: un `<div>`, que no es enfocable.
+  `focus()` no hacia nada, `focusError()` cancelaba su reintento convencido de
+  haber avisado, y el foco se quedaba en el boton que acababa de fallar. Ahora
+  se comprueba `activeElement`, y si el elemento no puede recibir el foco por si
+  mismo se le pone `tabindex="-1"` —enfocable POR PROGRAMA, fuera del recorrido
+  del tabulador—, que es la tecnica estandar para llevar la atencion a un aviso.
+
+  La prueba que lo cubria se ponia `tabIndex = -1` a si misma; por eso pasaba
+  mientras el aviso real no recibia el foco. Ahora hay una que usa el aviso tal
+  y como existe en el producto.
+
+- **El paginador de `data-table` dejaba el foco en el `<body>`.** Los dos botones
+  se deshabilitan al llegar al extremo y durante cada carga; con el foco encima,
+  el navegador lo descarta y el siguiente Tab empieza desde el principio del
+  documento. Con tres paginas eso pasa SIEMPRE al llegar a la ultima. Ahora el
+  foco se traslada al resumen antes de emitir el cambio.
+
+### Cambiado
+
+- **Un boton en carga ya no se pone `disabled`.** Se quitaba el foco a si mismo
+  justo al pulsarlo, y `disabled` ademas lo saca del arbol de accesibilidad, con
+  lo que el `aria-busy` que anuncia el progreso no le llegaba a nadie. Ahora la
+  carga se comunica con `aria-disabled` y `aria-busy`, y la segunda activacion
+  la sigue bloqueando la guarda de `onButtonClick`. El `disabled` real se
+  reserva para el deshabilitado de verdad, que si debe salir del recorrido.
+
+  Dos pruebas del propio ADN fijaban el contrato viejo (`expect(button.disabled)
+  .toBeTrue()` durante la carga) y se han reescrito: describian el defecto.
 
 ## 5.9.0 - 2026-08-15
 

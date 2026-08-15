@@ -146,4 +146,50 @@ describe('CrudDialog', () => {
     expect(document.activeElement).toBe(error);
     fixture.componentInstance.close();
   });
+
+  /*
+    LA PRUEBA DE ARRIBA SE PONIA `tabIndex = -1` A SI MISMA.
+
+    Por eso pasaba mientras el aviso REAL no recibia el foco: `prest-alert`
+    renderiza un <div role="alert"> sin tabindex, que no es enfocable. El
+    `focus()` no hacia nada, `focusFirst` devolvia `true` igual, y `focusError`
+    cancelaba su reintento convencido de haber avisado.
+
+    Esta prueba usa el aviso tal y como existe en el producto.
+  */
+  it('enfoca un aviso que no es enfocable por si mismo', async () => {
+    await TestBed.configureTestingModule({ imports: [CrudDialog] }).compileComponents();
+    const fixture = TestBed.createComponent(CrudDialog);
+    fixture.componentRef.setInput('labelledBy', 'editor-title');
+    fixture.detectChanges();
+
+    const error = document.createElement('div');
+    error.setAttribute('role', 'alert');
+    error.textContent = 'No se pudo registrar el cobro.';
+    fixture.componentInstance.nativeElement.appendChild(error);
+
+    fixture.componentInstance.showModal();
+
+    expect(fixture.componentInstance.focusError()).toBe(true);
+    expect(document.activeElement).toBe(error);
+    expect(error.getAttribute('tabindex')).toBe('-1');
+    fixture.componentInstance.close();
+  });
+
+  /*
+    Y no puede mentir cuando de verdad no hay nada que enfocar: `focusError`
+    devuelve false y programa el reintento para cuando el consumidor proyecte el
+    aviso.
+  */
+  it('no da por enfocado lo que no existe', async () => {
+    await TestBed.configureTestingModule({ imports: [CrudDialog] }).compileComponents();
+    const fixture = TestBed.createComponent(CrudDialog);
+    fixture.componentRef.setInput('labelledBy', 'editor-title');
+    fixture.detectChanges();
+
+    fixture.componentInstance.showModal();
+
+    expect(fixture.componentInstance.focusError()).toBe(false);
+    fixture.componentInstance.close();
+  });
 });

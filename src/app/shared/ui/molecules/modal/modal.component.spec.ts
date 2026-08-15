@@ -341,7 +341,9 @@ describe('ModalComponent', () => {
       await hostFixture.whenStable();
 
       expect(dialog.getAttribute('aria-busy')).toBe('true');
-      expect(submit.disabled).toBeTrue();
+      // El boton en curso ya no se pone `disabled` —se quitaba el foco a si
+      // mismo—: lo dice `aria-disabled`, que se anuncia y no roba el foco.
+      expect(submit.getAttribute('aria-disabled')).toBe('true');
       dialog.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
       expect(hostFixture.componentInstance.opened()).toBeTrue();
 
