@@ -41,6 +41,9 @@ const meta: Meta<TableComponent> = {
   decorators: [
     moduleMetadata({ imports: [TableComponent, TableRowComponent, TableCellComponent] }),
   ],
+  args: {
+    mobileScrollMode: 'page',
+  },
   argTypes: {
     striped: { control: 'boolean', description: 'Alterna el fondo de las filas.' },
     maxHeight: { control: 'text', description: 'Altura máxima del viewport.' },
@@ -50,6 +53,12 @@ const meta: Meta<TableComponent> = {
       control: 'radio',
       options: ['overlay', 'native'],
       description: 'Selecciona indicadores Atomic superpuestos o barras nativas tokenizadas.',
+    },
+    mobileScrollMode: {
+      control: 'radio',
+      options: ['page', 'bounded'],
+      description:
+        'Transfiere el scroll móvil a la página o conserva el viewport acotado cuando maxHeight es válido.',
     },
     scrollResetKey: { control: 'text', description: 'Reinicia ambos ejes al cambiar.' },
     ariaLabel: { control: 'text', description: 'Nombre accesible del viewport real.' },
@@ -69,6 +78,7 @@ const renderTable = (args: Partial<TableComponent>) => ({
       [columnTemplate]="columnTemplate"
       [unifiedScroll]="unifiedScroll"
       [scrollbarMode]="scrollbarMode"
+      [mobileScrollMode]="mobileScrollMode"
       [scrollResetKey]="scrollResetKey"
       [ariaLabel]="ariaLabel"
       [cellOverflow]="cellOverflow"
@@ -172,6 +182,36 @@ export const UnifiedOverlayViewport: Story = {
     await expect(root.classList).not.toContain('so-no-horizontal');
     await expect(root.classList).toContain('so-has-overflow-x');
     await expect(root.classList).toContain('so-has-overflow-y');
+  },
+};
+
+export const BoundedMobileViewport: Story = {
+  args: {
+    striped: true,
+    maxHeight: 'var(--size-table-viewport-compact)',
+    unifiedScroll: true,
+    scrollbarMode: 'overlay',
+    mobileScrollMode: 'bounded',
+    scrollResetKey: 'dataset-mobile-bounded',
+    ariaLabel: 'Evaluaciones desplazables en móvil',
+    cellOverflow: 'wrap',
+  },
+  parameters: {
+    viewport: { defaultViewport: 'mobile1' },
+  },
+  render: renderTable,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const viewport = canvas.getByRole('region', {
+      name: 'Evaluaciones desplazables en móvil',
+    });
+    const root = canvasElement.querySelector('app-scroll-overlay') as HTMLElement;
+    const body = canvasElement.querySelector('tbody') as HTMLTableSectionElement;
+
+    await expect(root.classList).toContain('atomic-table-mobile-scroll-bounded');
+    await expect(viewport.tabIndex).toBe(0);
+    await expect(viewport.getAttribute('data-so-vertical')).toBe('true');
+    await expect(body.hasAttribute('data-so-vertical')).toBe(false);
   },
 };
 

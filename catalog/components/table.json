@@ -16,7 +16,7 @@
     "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css",
     "src/styles/themes/_tokens-components.css"
   ],
-  "purpose": "Tabla semántica con truncado configurable, tarjetas responsive y un viewport unificado con indicadores overlay o barras nativas.",
+  "purpose": "Tabla semántica con truncado configurable, tarjetas responsive y un viewport unificado cuyo propietario móvil puede ser la página o una región acotada.",
   "variants": [
     {
       "name": "striped",
@@ -47,6 +47,20 @@
         {
           "value": "native",
           "meaning": "Presenta barras nativas tokenizadas y mantiene ocultos los rieles overlay."
+        }
+      ]
+    },
+    {
+      "name": "mobile-scroll-mode",
+      "values": [
+        {
+          "value": "page",
+          "meaning": "Transfiere el desplazamiento vertical móvil a la página.",
+          "default": true
+        },
+        {
+          "value": "bounded",
+          "meaning": "Conserva el viewport de ScrollOverlay cuando maxHeight contiene la tabla."
         }
       ]
     },
@@ -95,6 +109,12 @@
       "meaning": "Selecciona indicadores overlay o barras nativas tokenizadas."
     },
     {
+      "name": "mobileScrollMode",
+      "type": "TableMobileScrollMode",
+      "default": "page",
+      "meaning": "Selecciona si la página o el viewport acotado posee el desplazamiento vertical en anchos de 768 píxeles o menos."
+    },
+    {
       "name": "scrollResetKey",
       "type": "unknown",
       "meaning": "Identidad del conjunto de datos; al cambiar restablece ambos ejes."
@@ -125,7 +145,8 @@
     "scrollbarMode overlay conserva la rueda, el arrastre y los thumbs Atomic; native delega la interacción al navegador sin cambiar el propietario.",
     "scrollResetKey restablece scrollTop y scrollLeft después de cambiar la identidad del conjunto de datos.",
     "cellOverflow truncate aplica elipsis de forma canónica y TableCell.wrap permite envolver celdas descriptivas concretas.",
-    "A 768px o menos la tabla conserva table, thead y tbody en el DOM, presenta filas como tarjetas y devuelve el scroll vertical a la página."
+    "A 768px o menos la tabla conserva table, thead y tbody en el DOM y presenta filas como tarjetas.",
+    "mobileScrollMode page devuelve el desplazamiento vertical a la página; bounded conserva ScrollOverlay únicamente con maxHeight válido y nunca aplica overflow al tbody."
   ],
   "states": [
     { "name": "default", "meaning": "Tabla semántica con fondo uniforme." },
@@ -142,17 +163,23 @@
     {
       "name": "responsive-cards",
       "meaning": "Filas presentadas como tarjetas sin propietario de scroll interno."
+    },
+    {
+      "name": "responsive-cards-bounded",
+      "meaning": "Filas presentadas como tarjetas dentro de un viewport interno acotado y nombrado."
     }
   ],
   "a11y": [
     "El contenido proyectado conserva la estructura table, thead, tbody, tr, th y td.",
     "ariaLabel se aplica con role region y tabindex cuando el área interna es el propietario real por unifiedScroll o maxHeight.",
-    "En tarjetas responsive se retiran role, aria-label y tabindex del área interna porque la página recupera el desplazamiento.",
+    "En tarjetas responsive con mobileScrollMode page se retiran role, aria-label y tabindex del área interna porque la página recupera el desplazamiento.",
+    "En tarjetas responsive con mobileScrollMode bounded y maxHeight válido se conservan role region, aria-label y tabindex sobre .so-scroll-area.",
     "El truncado visual no sustituye un nombre accesible completo ni elimina el texto del DOM."
   ],
   "responsive": [
     "En escritorio unifiedScroll mantiene un único propietario para los ejes horizontal y vertical.",
-    "A 768px o menos el viewport interno usa altura automática y overflow visible; la página conserva el único scroll vertical.",
+    "A 768px o menos mobileScrollMode page usa altura automática y overflow visible; la página conserva el único scroll vertical.",
+    "A 768px o menos mobileScrollMode bounded preserva maxHeight y el scroll vertical de .so-scroll-area sin convertir tbody en scroller.",
     "Las celdas usan data-label para presentar la cabecera correspondiente en tarjetas sin alterar la semántica DOM."
   ],
   "tokens": [
@@ -187,7 +214,8 @@
   "stability": {
     "status": "candidate",
     "notes": [
-      "La variante unified-scroll cubre propietario único, modos overlay y native, cambio de representación, reinicio de ambos ejes, truncado opt-in y transferencia responsive mediante pruebas automatizadas."
+      "La variante unified-scroll cubre propietario único, modos overlay y native, cambio de representación, reinicio de ambos ejes, truncado opt-in y transferencia responsive mediante pruebas automatizadas.",
+      "La variante mobile-scroll-mode conserva page como contrato predeterminado y prueba bounded a 390 píxeles con altura, propietario y accesibilidad verificables."
     ]
   },
   "canonicalFor": ["table", "responsive-table", "unified-table-scroll", "transaction-preview"]

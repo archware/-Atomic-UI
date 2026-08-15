@@ -116,7 +116,11 @@ export { RadioComponent } from './atoms/radio/radio.component';
 export type { RadioOption } from './atoms/radio/radio.component';
 
 export { TableComponent } from './atoms/table/table.component';
-export type { TableCellOverflow, TableScrollbarMode } from './atoms/table/table.component';
+export type {
+  TableCellOverflow,
+  TableMobileScrollMode,
+  TableScrollbarMode,
+} from './atoms/table/table.component';
 export { TableHeadComponent } from './atoms/table/table-head.component';
 export { TableRowComponent } from './atoms/table/table-row.component';
 export { TableCellComponent } from './atoms/table/table-cell.component';

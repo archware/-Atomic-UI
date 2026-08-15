@@ -12,6 +12,7 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
 
 export type TableCellOverflow = 'wrap' | 'truncate';
 export type TableScrollbarMode = 'overlay' | 'native';
+export type TableMobileScrollMode = 'page' | 'bounded';
 
 @Component({
   selector: 'app-table',
@@ -25,6 +26,7 @@ export type TableScrollbarMode = 'overlay' | 'native';
       [class.atomic-table-striped]="striped"
       [class.atomic-table-unified-scroll]="unifiedScroll"
       [class.atomic-table-bounded-scroll]="hasBoundedScroll"
+      [class.atomic-table-mobile-scroll-bounded]="hasBoundedMobileScroll"
       [class.atomic-table-truncate-cells]="cellOverflow === 'truncate'"
       [maxBodyHeight]="maxHeight"
       [minColumnWidth]="40"
@@ -170,18 +172,28 @@ export type TableScrollbarMode = 'overlay' | 'native';
        Usamos selectores de alta especificidad para anular ScrollOverlay
        ============================================ */
       @media screen and (max-width: 768px) {
-        .so-root[data-so-table].atomic-table-container,
-        .atomic-table-container {
+        .so-root[data-so-table].atomic-table-container:not(.atomic-table-mobile-scroll-bounded),
+        .atomic-table-container:not(.atomic-table-mobile-scroll-bounded) {
           border: none;
           border-radius: 0;
           overflow: auto;
           max-height: none;
         }
 
-        .so-root[data-so-table].atomic-table-container.atomic-table-unified-scroll,
-        .so-root[data-so-table].atomic-table-container.atomic-table-bounded-scroll,
-        .so-root[data-so-table].atomic-table-container.atomic-table-unified-scroll .so-scroll-area,
-        .so-root[data-so-table].atomic-table-container.atomic-table-bounded-scroll .so-scroll-area {
+        .so-root[data-so-table].atomic-table-container.atomic-table-unified-scroll:not(
+            .atomic-table-mobile-scroll-bounded
+          ),
+        .so-root[data-so-table].atomic-table-container.atomic-table-bounded-scroll:not(
+            .atomic-table-mobile-scroll-bounded
+          ),
+        .so-root[data-so-table].atomic-table-container.atomic-table-unified-scroll:not(
+            .atomic-table-mobile-scroll-bounded
+          )
+          .so-scroll-area,
+        .so-root[data-so-table].atomic-table-container.atomic-table-bounded-scroll:not(
+            .atomic-table-mobile-scroll-bounded
+          )
+          .so-scroll-area {
           height: auto !important;
           min-height: 0 !important;
           max-height: none !important;
@@ -282,6 +294,7 @@ export class TableComponent implements OnInit, OnDestroy {
   @Input() ariaLabel = '';
   @Input() cellOverflow: TableCellOverflow = 'wrap';
   @Input() scrollbarMode: TableScrollbarMode = 'overlay';
+  @Input() mobileScrollMode: TableMobileScrollMode = 'page';
 
   isResponsiveCardLayout = false;
 
@@ -299,10 +312,15 @@ export class TableComponent implements OnInit, OnDestroy {
     return typeof this.maxHeight === 'string' && this.maxHeight.trim().length > 0;
   }
 
+  get hasBoundedMobileScroll(): boolean {
+    return this.mobileScrollMode === 'bounded' && this.hasBoundedScroll;
+  }
+
   get scrollViewportLabel(): string | null {
     const label = this.ariaLabel.trim();
     const ownsScroll = this.unifiedScroll || this.hasBoundedScroll;
-    return ownsScroll && !this.isResponsiveCardLayout && label ? label : null;
+    const keepsResponsiveViewport = !this.isResponsiveCardLayout || this.hasBoundedMobileScroll;
+    return ownsScroll && keepsResponsiveViewport && label ? label : null;
   }
 
   ngOnInit(): void {

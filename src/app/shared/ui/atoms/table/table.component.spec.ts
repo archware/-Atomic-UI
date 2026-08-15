@@ -3,7 +3,11 @@ import { By } from '@angular/platform-browser';
 import { TestBed } from '@angular/core/testing';
 import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-overlay.component';
 import { TableCellComponent } from './table-cell.component';
-import { TableComponent, type TableScrollbarMode } from './table.component';
+import {
+  TableComponent,
+  type TableMobileScrollMode,
+  type TableScrollbarMode,
+} from './table.component';
 
 @Component({
   standalone: true,
@@ -62,11 +66,55 @@ class UnifiedTableHostComponent {
 })
 class OverlayTableHostComponent {}
 
+@Component({
+  standalone: true,
+  imports: [TableComponent, TableCellComponent],
+  template: `
+    <app-table
+      [maxHeight]="240"
+      [ariaLabel]="'Evaluaciones desplazables en móvil'"
+      [mobileScrollMode]="mobileScrollMode"
+      scrollbarMode="overlay"
+    >
+      <thead>
+        <tr>
+          <th scope="col">Periodo</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows; track row) {
+          <tr>
+            <td app-table-cell dataLabel="Periodo">{{ row }}/2026</td>
+          </tr>
+        }
+      </tbody>
+    </app-table>
+  `,
+})
+class BoundedMobileTableHostComponent {
+  readonly mobileScrollMode: TableMobileScrollMode = 'bounded';
+  readonly rows = Array.from({ length: 12 }, (_, index) => index + 1);
+}
+
 describe('TableComponent unified viewport', () => {
   const originalMatchMedia = window.matchMedia;
   let responsiveMatches = false;
   let responsiveListener: ((event: MediaQueryListEvent) => void) | undefined;
   let removeResponsiveListener: jasmine.Spy;
+  let constrainedFrame: { element: HTMLElement; previousWidth: string } | undefined;
+
+  function constrainViewportToMobile(): void {
+    const frame = window.frameElement as HTMLElement | null;
+    expect(frame).withContext('la prueba responsive necesita el iframe de Karma').not.toBeNull();
+    if (!frame) {
+      return;
+    }
+
+    constrainedFrame = { element: frame, previousWidth: frame.style.width };
+    frame.style.width = '390px';
+    frame.getBoundingClientRect();
+    expect(window.innerWidth).toBeLessThanOrEqual(768);
+  }
 
   beforeEach(async () => {
     removeResponsiveListener = jasmine.createSpy('removeEventListener');
@@ -87,12 +135,21 @@ describe('TableComponent unified viewport', () => {
     );
 
     await TestBed.configureTestingModule({
-      imports: [UnifiedTableHostComponent, OverlayTableHostComponent],
+      imports: [
+        UnifiedTableHostComponent,
+        OverlayTableHostComponent,
+        BoundedMobileTableHostComponent,
+      ],
       providers: [provideZonelessChangeDetection()],
     }).compileComponents();
   });
 
   afterEach(() => {
+    if (constrainedFrame) {
+      constrainedFrame.element.style.width = constrainedFrame.previousWidth;
+      constrainedFrame.element.getBoundingClientRect();
+      constrainedFrame = undefined;
+    }
     window.matchMedia = originalMatchMedia;
     responsiveMatches = false;
     responsiveListener = undefined;
@@ -191,6 +248,7 @@ describe('TableComponent unified viewport', () => {
 
   it('hands ownership to the page at 768px or less without changing table semantics', async () => {
     responsiveMatches = true;
+    constrainViewportToMobile();
     const fixture = TestBed.createComponent(UnifiedTableHostComponent);
     fixture.detectChanges();
     await fixture.whenStable();
@@ -206,6 +264,10 @@ describe('TableComponent unified viewport', () => {
     expect(viewport.hasAttribute('role')).toBe(false);
     expect(viewport.hasAttribute('aria-label')).toBe(false);
     expect(viewport.hasAttribute('tabindex')).toBe(false);
+    const root = fixture.nativeElement.querySelector('app-scroll-overlay') as HTMLElement;
+    expect(root.classList).not.toContain('atomic-table-mobile-scroll-bounded');
+    expect(getComputedStyle(viewport).maxHeight).toBe('none');
+    expect(getComputedStyle(viewport).overflowY).toBe('visible');
     const header = table.querySelector('th') as HTMLTableCellElement;
     expect(header.scope).toBe('col');
     expect(header.hasAttribute('aria-hidden')).toBe(false);
@@ -219,6 +281,37 @@ describe('TableComponent unified viewport', () => {
       .find((text) => text.includes('.atomic-table thead') && text.includes('clip-path'));
     expect(responsiveRuleText).toContain('inset(50%)');
     expect(responsiveRuleText).not.toContain('display: none');
+  });
+
+  it('keeps one bounded and accessible ScrollOverlay viewport on mobile when opted in', async () => {
+    responsiveMatches = true;
+    constrainViewportToMobile();
+    const fixture = TestBed.createComponent(BoundedMobileTableHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const overlayDebug = fixture.debugElement.query(By.directive(ScrollOverlayComponent));
+    const overlay = overlayDebug.componentInstance as ScrollOverlayComponent;
+    const root = overlayDebug.nativeElement as HTMLElement;
+    const viewport = fixture.nativeElement.querySelector('.so-scroll-area') as HTMLElement;
+    const body = fixture.nativeElement.querySelector('tbody') as HTMLTableSectionElement;
+
+    expect(root.classList).toContain('atomic-table-mobile-scroll-bounded');
+    expect(overlay.maxBodyHeight).toBe(240);
+    expect(overlay.verticalSelector).toBeNull();
+    expect(viewport.getAttribute('data-so-vertical')).toBe('true');
+    expect(viewport.getAttribute('data-so-managed-scrollbar')).toBe('true');
+    expect(viewport.getAttribute('role')).toBe('region');
+    expect(viewport.getAttribute('aria-label')).toBe('Evaluaciones desplazables en móvil');
+    expect(viewport.tabIndex).toBe(0);
+    expect(getComputedStyle(viewport).maxHeight).toBe('240px');
+    expect(getComputedStyle(viewport).overflowY).toBe('auto');
+    expect(body.hasAttribute('data-so-vertical')).toBe(false);
+    expect(body.style.overflowY).toBe('');
+    expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight + 1);
+
+    viewport.scrollTop = 9999;
+    expect(viewport.scrollTop).toBeGreaterThan(0);
   });
 
   it('moves the accessible owner when the responsive media query changes', async () => {
@@ -424,7 +517,7 @@ describe('TableComponent maquetacion de columnas', () => {
     const host = fixture.nativeElement as HTMLElement;
     host.style.display = 'block';
     host.style.width = `${HOST_WIDTH}px`; // sin ancho definido, 1fr tomaria el del iframe
-    fixture.detectChanges();              // ngAfterViewInit es sincrono
+    fixture.detectChanges(); // ngAfterViewInit es sincrono
     await fixture.whenStable();
 
     return {
@@ -476,9 +569,7 @@ describe('TableComponent maquetacion de columnas', () => {
   // la configuracion tal cual esta.
   it('sin cabeceras que alinear no hay rejilla: la tabla se maqueta como tabla y la plantilla declarada no deja huella', async () => {
     const frame = window.frameElement as HTMLIFrameElement | null;
-    expect(frame)
-      .withContext('el caso mide columnas y necesita el modo escritorio')
-      .not.toBeNull();
+    expect(frame).withContext('el caso mide columnas y necesita el modo escritorio').not.toBeNull();
     if (!frame) {
       return;
     }
@@ -488,7 +579,7 @@ describe('TableComponent maquetacion de columnas', () => {
 
     try {
       const template = '70px minmax(150px, 1fr)';
-        const { root, row, cellWidths } = await createHeadlessHost(template);
+      const { root, row, cellWidths } = await createHeadlessHost(template);
 
       // Guarda: la plantilla SI llega al overlay. Sin este aserto, la ausencia de
       // rejilla podria deberse a que la entrada nunca llego, y el caso seria vacuo.
@@ -517,51 +608,51 @@ describe('TableComponent maquetacion de columnas', () => {
     }
   });
 
-    // Adaptacion de 'traslada la plantilla de columnas al elemento que la consume'
-    // (82bf8de), que afirmaba
-    //     container.style.getPropertyValue('--atomic-table-columns') === template
-    // sobre `.atomic-table-container`. En main ni esa clase-con-variable ni esa
-    // propiedad existen: la plantilla la escribe scroll-overlay como custom
-    // property INLINE `--so-column-template` sobre SU PROPIO host
-    // (<app-scroll-overlay>, .so-root; applyColumnTemplate,
-    // scroll-overlay.component.ts:324-334) y la consume la regla
-    // `.so-root[data-so-table][data-so-sync-columns] thead tr|tbody tr`
-    // (scroll-overlay.component.css:283-292).
-    //
-    // El caso sigue siendo el de "la plantilla LLEGA" (el original lo separaba
-    // expresamente de los de geometria), pero cubre las dos mitades del trayecto,
-    // que se rompen por separado:
-    //  (a) llega VERBATIM —sin resolver— y AL NODO CORRECTO. El nodo es lo que de
-    //      verdad protege este caso y nadie mas: mover el setProperty al
-    //      .so-scroll-area deja los anchos medidos IDENTICOS (la custom property
-    //      se hereda), asi que ninguna prueba de layout lo ve; solo el style
-    //      inline del host lo fija.
-    //  (b) el elemento que la consume la recibe y la USA: la fila de cabecera la
-    //      hereda y su grid-template-columns resuelto arranca en la pista fija
-    //      declarada (70px), no en el fallback auto-fit. Sin (b), (a) seria un eco
-    //      de string: la variable podria estar puesta y la regla CSS leer otro
-    //      nombre.
-    //
-    // Se mide sobre `thead tr` a proposito: es display:grid con las dos anchuras
-    // de ventana, mientras que `tbody tr` pasa a flex-column bajo la media query
-    // responsive de table.component.ts:172, activa en el iframe de 749px de Karma.
-    // Este caso, por tanto, NO necesita ensanchar la ventana de pruebas.
-    // Medido: theadGTC '70px 150px' a 749px y '70px 528px' a 1369px; sin plantilla,
-    // '66.59px ...' y '133.19px 90.63px 0px...' respectivamente.
-    it('traslada la plantilla de columnas al elemento que la consume', async () => {
-      const template = '70px minmax(150px, 1fr)';
-      const { host, root } = await createHost(template);
+  // Adaptacion de 'traslada la plantilla de columnas al elemento que la consume'
+  // (82bf8de), que afirmaba
+  //     container.style.getPropertyValue('--atomic-table-columns') === template
+  // sobre `.atomic-table-container`. En main ni esa clase-con-variable ni esa
+  // propiedad existen: la plantilla la escribe scroll-overlay como custom
+  // property INLINE `--so-column-template` sobre SU PROPIO host
+  // (<app-scroll-overlay>, .so-root; applyColumnTemplate,
+  // scroll-overlay.component.ts:324-334) y la consume la regla
+  // `.so-root[data-so-table][data-so-sync-columns] thead tr|tbody tr`
+  // (scroll-overlay.component.css:283-292).
+  //
+  // El caso sigue siendo el de "la plantilla LLEGA" (el original lo separaba
+  // expresamente de los de geometria), pero cubre las dos mitades del trayecto,
+  // que se rompen por separado:
+  //  (a) llega VERBATIM —sin resolver— y AL NODO CORRECTO. El nodo es lo que de
+  //      verdad protege este caso y nadie mas: mover el setProperty al
+  //      .so-scroll-area deja los anchos medidos IDENTICOS (la custom property
+  //      se hereda), asi que ninguna prueba de layout lo ve; solo el style
+  //      inline del host lo fija.
+  //  (b) el elemento que la consume la recibe y la USA: la fila de cabecera la
+  //      hereda y su grid-template-columns resuelto arranca en la pista fija
+  //      declarada (70px), no en el fallback auto-fit. Sin (b), (a) seria un eco
+  //      de string: la variable podria estar puesta y la regla CSS leer otro
+  //      nombre.
+  //
+  // Se mide sobre `thead tr` a proposito: es display:grid con las dos anchuras
+  // de ventana, mientras que `tbody tr` pasa a flex-column bajo la media query
+  // responsive de table.component.ts:172, activa en el iframe de 749px de Karma.
+  // Este caso, por tanto, NO necesita ensanchar la ventana de pruebas.
+  // Medido: theadGTC '70px 150px' a 749px y '70px 528px' a 1369px; sin plantilla,
+  // '66.59px ...' y '133.19px 90.63px 0px...' respectivamente.
+  it('traslada la plantilla de columnas al elemento que la consume', async () => {
+    const template = '70px minmax(150px, 1fr)';
+    const { host, root } = await createHost(template);
 
-      // (a) Viaja tal cual, sin resolver, al host del overlay que la publica.
-      expect(root.style.getPropertyValue('--so-column-template')).toBe(template);
+    // (a) Viaja tal cual, sin resolver, al host del overlay que la publica.
+    expect(root.style.getPropertyValue('--so-column-template')).toBe(template);
 
-      // (b) Y aterriza en el elemento que la consume, que la aplica de verdad.
-      const headerRow = host.querySelector('thead tr') as HTMLElement;
-      const headerStyle = getComputedStyle(headerRow);
-      expect(headerStyle.getPropertyValue('--so-column-template').trim()).toBe(template);
-      expect(headerStyle.display).toBe('grid');
-      expect(headerStyle.gridTemplateColumns.split(' ')[0]).toBe('70px');
-    });
+    // (b) Y aterriza en el elemento que la consume, que la aplica de verdad.
+    const headerRow = host.querySelector('thead tr') as HTMLElement;
+    const headerStyle = getComputedStyle(headerRow);
+    expect(headerStyle.getPropertyValue('--so-column-template').trim()).toBe(template);
+    expect(headerStyle.display).toBe('grid');
+    expect(headerStyle.gridTemplateColumns.split(' ')[0]).toBe('70px');
+  });
 
   // ---------------------------------------------------------------------------
   // FIXTURES QUE NECESITA EL CASO
@@ -781,100 +872,100 @@ describe('TableComponent maquetacion de columnas', () => {
     }
   });
 
-    // Protege lo unico que justifica admitir unidades flexibles en la plantilla:
-    // que `1fr` se reparta sobre el ANCHO DEL CONTENEDOR y no sobre el texto de
-    // las celdas. Quien lo consigue en main no es app-table sino la fila-rejilla
-    // del overlay (`.so-root[data-so-table][data-so-sync-columns] thead tr` con
-    // `width: max-content; min-width: 100%`, scroll-overlay.component.css:283-292),
-    // que app-table enciende con `[columnTemplate]` + `[lockColumnTemplate]`.
-    // No vale comparar las dos columnas entre si: si la rejilla se dimensionara
-    // por contenido la fila entera encogeria y la proporcion se conservaria. Por
-    // eso se miden contra el viewport que las contiene y se vuelven a medir con
-    // el contenedor 300px mas ancho; solo una pista `fr` sigue al contenedor.
-    it('la columna flexible absorbe el espacio restante', async () => {
-      // Por debajo de 768px app-table renuncia a las columnas y apila tarjetas
-      // (media query de table.component.ts:172), luego alli no hay espacio
-      // sobrante que repartir. El iframe de Karma mide 749px: el caso ensancha su
-      // propio viewport para pedir el layout de escritorio y lo deja como estaba.
-      const testFrame = window.frameElement as HTMLElement | null;
-      const previousFrameWidth = testFrame ? testFrame.style.width : '';
-      try {
-        if (testFrame) {
-          testFrame.style.width = '1400px';
-          testFrame.getBoundingClientRect(); // fuerza el reflujo del contenedor
-        }
-        expect(window.innerWidth)
-          .withContext('el caso mide columnas: por debajo de 768px app-table apila tarjetas')
-          .toBeGreaterThan(768);
-
-        const { host, viewport, widths } = await createHost('70px minmax(150px, 1fr)');
-        const available = viewport.getBoundingClientRect().width;
-        const [fixed, flexible] = widths('thead th');
-
-        // La flexible se queda con todo lo que sobra: entre las dos cubren el
-        // viewport entero, no el ancho de su propio contenido.
-        expect(Math.round(fixed)).toBe(70);
-        expect(flexible).toBeGreaterThan(fixed * 3);
-        expect(Math.round(fixed + flexible)).toBe(Math.round(available));
-
-        // Y manda el contenedor: 300px mas de sitio son 300px mas para la
-        // flexible y ni uno para la fija. La primera asercion comprueba que el
-        // ensanche llego de verdad, para que la segunda no pueda salir 0 === 0.
-        host.style.width = '900px';
-        const widerAvailable = viewport.getBoundingClientRect().width;
-        const [fixedWider, flexibleWider] = widths('thead th');
-        expect(Math.round(widerAvailable - available)).toBe(300);
-        expect(Math.round(fixedWider)).toBe(70);
-        expect(Math.round(flexibleWider - flexible)).toBe(300);
-      } finally {
-        if (testFrame) {
-          testFrame.style.width = previousFrameWidth;
-          testFrame.getBoundingClientRect();
-        }
+  // Protege lo unico que justifica admitir unidades flexibles en la plantilla:
+  // que `1fr` se reparta sobre el ANCHO DEL CONTENEDOR y no sobre el texto de
+  // las celdas. Quien lo consigue en main no es app-table sino la fila-rejilla
+  // del overlay (`.so-root[data-so-table][data-so-sync-columns] thead tr` con
+  // `width: max-content; min-width: 100%`, scroll-overlay.component.css:283-292),
+  // que app-table enciende con `[columnTemplate]` + `[lockColumnTemplate]`.
+  // No vale comparar las dos columnas entre si: si la rejilla se dimensionara
+  // por contenido la fila entera encogeria y la proporcion se conservaria. Por
+  // eso se miden contra el viewport que las contiene y se vuelven a medir con
+  // el contenedor 300px mas ancho; solo una pista `fr` sigue al contenedor.
+  it('la columna flexible absorbe el espacio restante', async () => {
+    // Por debajo de 768px app-table renuncia a las columnas y apila tarjetas
+    // (media query de table.component.ts:172), luego alli no hay espacio
+    // sobrante que repartir. El iframe de Karma mide 749px: el caso ensancha su
+    // propio viewport para pedir el layout de escritorio y lo deja como estaba.
+    const testFrame = window.frameElement as HTMLElement | null;
+    const previousFrameWidth = testFrame ? testFrame.style.width : '';
+    try {
+      if (testFrame) {
+        testFrame.style.width = '1400px';
+        testFrame.getBoundingClientRect(); // fuerza el reflujo del contenedor
       }
-    });
+      expect(window.innerWidth)
+        .withContext('el caso mide columnas: por debajo de 768px app-table apila tarjetas')
+        .toBeGreaterThan(768);
 
-    // Contraste que da valor a los casos de arriba: sin plantilla NO aparece por
-    // ninguna parte el 70px declarado. Cuidado, porque en main "sin plantilla" NO
-    // es "sin rejilla" (la rejilla la enciende el <thead>, no columnTemplate): es
-    // que no se escribe --so-column-template y los tracks caen al fallback
-    // repeat(auto-fit, minmax(var(--so-min-column-width), max-content)) de
-    // scroll-overlay.component.css:283-292, donde el ancho lo decide el contenido.
-    // Por eso no basta con mirar la propiedad: se MIDE. Se alarga el texto de la
-    // cabecera y su columna tiene que seguirlo; y como control del regimen
-    // contrario, con plantilla declarada ese mismo texto no la mueve ni un pixel.
-    // El [maxHeight] del host es carga util: sin el, el scroller vertical es el
-    // <tbody>, syncColumnTemplate() automide y congela --so-column-template en
-    // pixeles, con lo que "sin plantilla" dejaria de significar "sin plantilla".
-    // Medido en Chrome Headless: 66.59 -> 337.92 px a 749px de iframe (el ancho
-    // por defecto de Karma) y 133.19 -> 428.55 px con ventana ancha; la columna
-    // declarada vale 70 en ambos. El caso no necesita tocar la config de Karma.
-    it('sin plantilla, los anchos los decide el contenido y no son los declarados', async () => {
-      const TEXTO_LARGO = 'Identificador larguisimo de la fila con texto de sobra';
+      const { host, viewport, widths } = await createHost('70px minmax(150px, 1fr)');
+      const available = viewport.getBoundingClientRect().width;
+      const [fixed, flexible] = widths('thead th');
 
-      const sinPlantilla = await createHost();
-      const cabecera = sinPlantilla.host.querySelector('thead th') as HTMLElement;
+      // La flexible se queda con todo lo que sobra: entre las dos cubren el
+      // viewport entero, no el ancho de su propio contenido.
+      expect(Math.round(fixed)).toBe(70);
+      expect(flexible).toBeGreaterThan(fixed * 3);
+      expect(Math.round(fixed + flexible)).toBe(Math.round(available));
 
-      // Nada declarado llega al DOM: ni la variable de la rejilla ni el bloqueo.
-      expect(sinPlantilla.root.style.getPropertyValue('--so-column-template')).toBe('');
-      expect(sinPlantilla.root.classList).not.toContain('so-lock-template');
+      // Y manda el contenedor: 300px mas de sitio son 300px mas para la
+      // flexible y ni uno para la fija. La primera asercion comprueba que el
+      // ensanche llego de verdad, para que la segunda no pueda salir 0 === 0.
+      host.style.width = '900px';
+      const widerAvailable = viewport.getBoundingClientRect().width;
+      const [fixedWider, flexibleWider] = widths('thead th');
+      expect(Math.round(widerAvailable - available)).toBe(300);
+      expect(Math.round(fixedWider)).toBe(70);
+      expect(Math.round(flexibleWider - flexible)).toBe(300);
+    } finally {
+      if (testFrame) {
+        testFrame.style.width = previousFrameWidth;
+        testFrame.getBoundingClientRect();
+      }
+    }
+  });
 
-      const anchoTextoCorto = cabecera.getBoundingClientRect().width;
-      expect(Math.round(anchoTextoCorto)).not.toBe(70);
+  // Contraste que da valor a los casos de arriba: sin plantilla NO aparece por
+  // ninguna parte el 70px declarado. Cuidado, porque en main "sin plantilla" NO
+  // es "sin rejilla" (la rejilla la enciende el <thead>, no columnTemplate): es
+  // que no se escribe --so-column-template y los tracks caen al fallback
+  // repeat(auto-fit, minmax(var(--so-min-column-width), max-content)) de
+  // scroll-overlay.component.css:283-292, donde el ancho lo decide el contenido.
+  // Por eso no basta con mirar la propiedad: se MIDE. Se alarga el texto de la
+  // cabecera y su columna tiene que seguirlo; y como control del regimen
+  // contrario, con plantilla declarada ese mismo texto no la mueve ni un pixel.
+  // El [maxHeight] del host es carga util: sin el, el scroller vertical es el
+  // <tbody>, syncColumnTemplate() automide y congela --so-column-template en
+  // pixeles, con lo que "sin plantilla" dejaria de significar "sin plantilla".
+  // Medido en Chrome Headless: 66.59 -> 337.92 px a 749px de iframe (el ancho
+  // por defecto de Karma) y 133.19 -> 428.55 px con ventana ancha; la columna
+  // declarada vale 70 en ambos. El caso no necesita tocar la config de Karma.
+  it('sin plantilla, los anchos los decide el contenido y no son los declarados', async () => {
+    const TEXTO_LARGO = 'Identificador larguisimo de la fila con texto de sobra';
 
-      // Mismo DOM, solo cambia el contenido: la columna lo sigue.
-      cabecera.textContent = TEXTO_LARGO;
-      expect(cabecera.getBoundingClientRect().width).toBeGreaterThan(anchoTextoCorto * 2);
+    const sinPlantilla = await createHost();
+    const cabecera = sinPlantilla.host.querySelector('thead th') as HTMLElement;
 
-      // Control del regimen contrario, dentro del mismo caso para que la medicion
-      // de arriba no pueda pasar por casualidad: con plantilla, el ancho es el
-      // declarado y el texto largo le da exactamente igual.
-      TestBed.resetTestingModule();
-      const conPlantilla = await createHost('70px 200px');
-      const anclada = conPlantilla.host.querySelector('thead th') as HTMLElement;
+    // Nada declarado llega al DOM: ni la variable de la rejilla ni el bloqueo.
+    expect(sinPlantilla.root.style.getPropertyValue('--so-column-template')).toBe('');
+    expect(sinPlantilla.root.classList).not.toContain('so-lock-template');
 
-      expect(Math.round(anclada.getBoundingClientRect().width)).toBe(70);
-      anclada.textContent = TEXTO_LARGO;
-      expect(Math.round(anclada.getBoundingClientRect().width)).toBe(70);
-    });
+    const anchoTextoCorto = cabecera.getBoundingClientRect().width;
+    expect(Math.round(anchoTextoCorto)).not.toBe(70);
+
+    // Mismo DOM, solo cambia el contenido: la columna lo sigue.
+    cabecera.textContent = TEXTO_LARGO;
+    expect(cabecera.getBoundingClientRect().width).toBeGreaterThan(anchoTextoCorto * 2);
+
+    // Control del regimen contrario, dentro del mismo caso para que la medicion
+    // de arriba no pueda pasar por casualidad: con plantilla, el ancho es el
+    // declarado y el texto largo le da exactamente igual.
+    TestBed.resetTestingModule();
+    const conPlantilla = await createHost('70px 200px');
+    const anclada = conPlantilla.host.querySelector('thead th') as HTMLElement;
+
+    expect(Math.round(anclada.getBoundingClientRect().width)).toBe(70);
+    anclada.textContent = TEXTO_LARGO;
+    expect(Math.round(anclada.getBoundingClientRect().width)).toBe(70);
+  });
 });

@@ -2,8 +2,8 @@
 title: 'Biblioteca de componentes Atomic UI'
 subtitle: 'Contrato visual portable para aplicaciones Angular'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
-date: '2026-08-12'
-version: '5.8.1'
+date: '2026-08-14'
+version: '5.8.2'
 ---
 
 # Biblioteca de componentes Atomic UI
@@ -11,7 +11,7 @@ version: '5.8.1'
 Librería de componentes Angular portables siguiendo **Atomic Design**.
 
 **Última actualización**: agosto de 2026
-**Versión**: 5.8.1
+**Versión**: 5.8.2
 **Angular**: 22
 
 ---
@@ -382,6 +382,7 @@ Componentes Angular que implementan una tabla con Atomic Design.
   [striped]="true"
   [unifiedScroll]="true"
   scrollbarMode="overlay"
+  mobileScrollMode="page"
   [maxHeight]="'min(60vh, 34rem)'"
   [scrollResetKey]="datasetId"
   ariaLabel="Movimientos de la cuenta"
@@ -422,15 +423,27 @@ Componentes Angular que implementan una tabla con Atomic Design.
 - ✅ Rieles Atomic o barras nativas mediante `scrollbarMode="overlay|native"`
 - ✅ Reinicio de ambos ejes mediante `scrollResetKey`
 - ✅ Truncado global y envoltura selectiva mediante `cellOverflow` y `TableCell.wrap`
+- ✅ Propietario móvil configurable mediante `mobileScrollMode="page|bounded"`
 
 En escritorio, `unifiedScroll` entrega ambos ejes al área interna de
 `ScrollOverlay`; por ello `ariaLabel` nombra exactamente la región desplazable.
 El modo `overlay`, aplicado de forma predeterminada, conserva los rieles y
 thumbs del organismo Atomic. El modo `native` se reserva para consumidores que
 requieran barras del navegador tokenizadas sin cambiar el propietario real.
-A 768 px o menos, las filas se presentan como tarjetas, la página recupera el
-scroll vertical y el área interna deja de exponer `role` y `tabindex`. Los
-encabezados `th` deben declarar `scope="col"`; permanecen disponibles para
+A 768 px o menos, las filas se presentan como tarjetas. El valor predeterminado
+`mobileScrollMode="page"` conserva el contrato histórico: la página recupera el
+scroll vertical y el área interna deja de exponer `role`, `aria-label` y
+`tabindex`.
+
+Las tablas extensas dentro de superficies cuya altura ya está contenida pueden
+seleccionar `mobileScrollMode="bounded"` junto con un `maxHeight` válido. En
+ese modo, `.so-scroll-area` conserva la altura máxima, continúa como único
+propietario vertical de `ScrollOverlay` y mantiene `role="region"`, el nombre
+aportado por `ariaLabel` y `tabindex="0"`. El elemento `tbody` no recibe
+`overflow` ni se convierte en un segundo scroller. Esta variante limita la
+tabla; no limita ni vuelve desplazable el diálogo o contenedor padre.
+
+Los encabezados `th` deben declarar `scope="col"`; permanecen disponibles para
 tecnología asistiva aunque se oculten visualmente en la presentación móvil.
 
 ---
@@ -1299,7 +1312,7 @@ export class MyComponent {
 ---
 
 📅 **Última actualización**: agosto de 2026
-🏷️ **Versión**: 5.8.1
+🏷️ **Versión**: 5.8.2
 ⚡ **Angular**: 22
 🌐 **i18n**: ngx-translate  
 📚 **Storybook**: Disponible

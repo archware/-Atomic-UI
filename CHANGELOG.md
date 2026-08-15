@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.8.1'
+version: '5.8.2'
 status: 'vigente'
 updated: '2026-08-14'
 owner: 'Hospital Regional de Ayacucho'
@@ -14,6 +14,51 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.8.2] - 2026-08-14
+
+### Añadido
+
+- `TableComponent` publica el tipo `TableMobileScrollMode` y la entrada
+  `mobileScrollMode: 'page' | 'bounded'`. El valor predeterminado `page`
+  conserva sin cambios la transferencia del desplazamiento vertical a la
+  página en anchos de 768 píxeles o menos.
+- La variante opt-in `bounded`, efectiva únicamente cuando `maxHeight` es
+  válido, conserva `.so-scroll-area` como único propietario vertical de
+  `ScrollOverlay`. La altura máxima y los indicadores overlay o nativos se
+  mantienen sin aplicar `overflow` al elemento `tbody`.
+
+### Accesibilidad
+
+- El modo móvil `page` continúa retirando `role`, `aria-label` y `tabindex` del
+  viewport interno cuando este deja de ser el propietario real.
+- El modo móvil `bounded` conserva `role="region"`, el nombre recibido mediante
+  `ariaLabel` y `tabindex="0"` sobre `.so-scroll-area`, de modo que la región
+  acotada siga siendo nombrable y operable con teclado.
+
+### Documentación
+
+- El catálogo de `app-table`, la API pública, la guía de la biblioteca y
+  Storybook documentan la diferencia entre ambos modos. La guía aclara que
+  `bounded` limita la tabla, pero no contiene el diálogo o superficie padre.
+
+### Verificación
+
+- `quality:check` valida la política Atomic 1.2.2, el catálogo de 41 entradas,
+  la API de 29 componentes y 240 entradas, 648 tokens sin referencias
+  ausentes, 418 pruebas Angular, lint, contraste, foco, la aplicación con 14
+  rutas prerenderizadas y Storybook.
+- `lib:build` genera `@hra/atomic-ui` en formato Angular Package Format y copia
+  los nueve archivos CSS de tokens. El paquete privado en seco contiene cinco
+  archivos y no produce un tarball.
+- El manifiesto registra 158 fuentes con SHA-256
+  `56f436acb2df6ca9d277942d91248cebc33987a6c10c8b364212c0d5acac66e4`.
+- La revisión del cambio y la comprobación móvil cruzada no identifican
+  hallazgos P0, P1 ni P2.
+
+### Identificador de cambio
+
+- `ATOMIC-20260814-TABLE-MOBILE-BOUNDED-SCROLL`.
 
 ## [5.8.1] - 2026-08-14
 
