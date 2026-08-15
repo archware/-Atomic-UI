@@ -5,6 +5,10 @@ description: Build or evolve Angular interfaces with Atomic UI's canonical compo
 
 # Atomic UI Builder
 
+Read `DOCTRINA_DE_INTERFAZ.md` before composing any screen: the catalog says
+which component to use, the doctrine says how a screen must behave so it does not
+lie about its state, lose the user's work, or become unusable without a mouse.
+
 Use the repository catalog as the source of truth. Load only the context required by the requested intent and components.
 
 ## Workflow

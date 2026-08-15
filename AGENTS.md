@@ -28,6 +28,19 @@ propia del consumidor.
 La lógica de negocio, permisos, DTO, endpoints y estado específico no pertenece
 al ADN visual y debe permanecer en cada aplicación consumidora.
 
+## Cómo se hace una pantalla, no solo con qué
+
+**Antes de construir o modificar cualquier pantalla, lee
+`DOCTRINA_DE_INTERFAZ.md`.** Son ocho reglas con el daño que evita cada una,
+sacadas de auditar un producto de cobranzas en producción y contrastadas contra
+su código: solo entraron las que ese front ya cumple **en parte**, porque una
+regla que nadie cumple suele ser una invención.
+
+El catálogo te dice qué componente usar. Esa doctrina te dice por qué «cargando»
+y «vacío» no pueden compartir texto, por qué una negativa no debe moverte de
+sitio, por qué rechazar una entrada obliga a borrar la anterior, y por qué
+`opacity` está prohibida para comunicar un estado apagado.
+
 ## Ejecución eficiente de solicitudes UI
 
 - Para crear o evolucionar un CRUD, formulario, listado, detalle, dashboard o
