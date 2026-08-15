@@ -24,7 +24,7 @@ De esa auditoría salieron 24 reglas y **114 incumplimientos concretos repartido
 en 85 ficheros**. Ninguno en el ADN: la deuda estaba toda en el consumidor, que
 es exactamente el motivo de escribir esto aquí.
 
-> **Cómo se usa.** Antes de construir una pantalla, lee los ocho títulos. Antes
+> **Cómo se usa.** Antes de construir una pantalla, lee los nueve títulos. Antes
 > de darla por terminada, léelos otra vez como lista de verificación. Cada regla
 > lleva el **daño** que evita y el **contraejemplo**: lo que hace, sin querer,
 > quien no la conoce.
@@ -224,6 +224,34 @@ hecho no pueden pintarse con colores opuestos en la misma pantalla.**
 
 **El estado deshabilitado lo comunican los tokens y el cursor**, no una
 transparencia que falsea lo calculado.
+
+## 9. Lo que la persona escribió vale tanto como lo que ya estaba guardado
+
+**La regla.** Toda pantalla con un formulario **pregunta antes de abandonarlo si
+hay algo escrito sin guardar**, y lo hace por los dos caminos: el guardián de
+salida del enrutador —enlaces, botones, Atrás del navegador— y el aviso del
+navegador al cerrar la pestaña o recargar. Con uno solo, el agujero sigue abierto
+por el otro lado.
+
+**Pregunta por `dirty`, no por «hay un formulario abierto».** Quien solo entró a
+mirar no puede tropezarse con un diálogo. Y **los campos de búsqueda quedan
+fuera**: teclear un documento para consultar no es trabajo que se pierda.
+
+**Por qué esa segunda mitad importa igual que la primera.** Un aviso que salta de
+más enseña a pulsar «Salir sin guardar» sin leer; el día que de verdad haya
+trabajo escrito, también lo ignorará. Un guardián que molesta es un guardián que
+se desactiva solo.
+
+Lo demás lo fija el capítulo 7: el botón dice el acto —«Salir sin guardar»—, el
+de cancelar invita a volver —«Seguir editando»—, y **el foco inicial se pone en
+cancelar**, para que un Intro por inercia no sea lo que borre el trabajo.
+
+**El caso que lo ilustra.** Un alta de cliente de tres pasos rellenados que se
+perdía entera al pulsar por error un enlace del menú, sin una sola pregunta. La
+misma pantalla **sí** pedía confirmación para dar de baja una cuenta: se protegía
+el dato ya guardado y no el que la persona acababa de escribir.
+
+---
 
 ---
 
