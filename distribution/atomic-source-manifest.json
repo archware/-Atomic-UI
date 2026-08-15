@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.8.2",
+  "packageVersion": "5.8.3",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "56f436acb2df6ca9d277942d91248cebc33987a6c10c8b364212c0d5acac66e4",
+  "sourceTreeSha256": "4cfc2fc7436842ad020b76cb5ec7c99204d29b0d6d9c70d90d2e345922ab8ab4",
   "fileCount": 158,
   "files": [
     {
@@ -21,7 +21,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 854,
-      "sha256": "2318e500eaa893c32e533b74a7c2de2945bc83f8de1fc52055cf572fc0f2e437"
+      "sha256": "383a0b2dfd8c98c184a8342b4e4e93bc134e4d94f0755e63f86a26d6daf27c27"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -345,8 +345,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/datepicker/datepicker.component.ts",
-      "bytes": 10092,
-      "sha256": "03df19096720bd26fb60fc72a9b4b9c47407164579837e981c53b8a864194638"
+      "bytes": 11044,
+      "sha256": "4561c4fe944beeba60823e6d90fc0dfb9a8f759ad611354b47081c76352bb4c2"
     },
     {
       "path": "src/app/shared/ui/molecules/dropdown/dropdown.component.ts",

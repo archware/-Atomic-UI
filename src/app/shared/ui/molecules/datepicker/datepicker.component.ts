@@ -182,6 +182,21 @@ export class DatepickerComponent implements ControlValueAccessor {
 
     if (this.currentView() !== 'day') {
       if (event.key === 'Escape') {
+        /*
+          SE CANCELA EL EVENTO, igual que en la vista de dia.
+
+          Esta rama lo cerraba sin `preventDefault` mientras la de mas abajo si
+          lo llamaba: el mismo componente se comportaba distinto segun la vista
+          en la que estuvieras. Y la consecuencia no queda dentro del
+          calendario: dentro de un `<dialog>`, una pulsacion de Escape no
+          cancelada se trata como peticion de cierre, asi que cerrar el selector
+          de mes se llevaba por delante el formulario entero con todo lo escrito.
+
+          Con teclado o lector de pantalla Escape es LA forma de descartar un
+          desplegable, de modo que se perdia el trabajo por hacer lo correcto.
+        */
+        event.preventDefault();
+        event.stopPropagation();
         this.close();
         this.elementRef.nativeElement.querySelector('.datepicker-trigger')?.focus();
       }
@@ -219,9 +234,12 @@ export class DatepickerComponent implements ControlValueAccessor {
         }
         break;
       case 'Escape':
+        // `stopPropagation` acompana a `preventDefault`: dentro de un dialogo,
+        // un ancestro tambien podria interpretar la pulsacion.
+        event.preventDefault();
+        event.stopPropagation();
         this.close();
         this.elementRef.nativeElement.querySelector('.datepicker-trigger')?.focus();
-        event.preventDefault();
         break;
     }
   }

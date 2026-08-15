@@ -79,4 +79,27 @@ describe('DatepickerComponent — fechas civiles', () => {
 
     expect(component.value()).toBeNull();
   });
+
+  /*
+    ESCAPE NO PUEDE LLEVARSE EL DIALOGO QUE CONTIENE AL CALENDARIO.
+
+    Dentro de un `<dialog>`, una pulsacion no cancelada se trata como peticion
+    de cierre: cerrar el calendario cerraba el formulario entero con todo lo
+    escrito. La rama de vista de dia ya lo cancelaba; la de mes y ano no, de
+    modo que el mismo componente se comportaba distinto segun donde estuvieras.
+  */
+  it('cancela el Escape en las tres vistas, no solo en la de dia', () => {
+    for (const vista of ['day', 'month', 'year'] as const) {
+      component.isOpen.set(true);
+      component.currentView.set(vista);
+
+      const evento = new KeyboardEvent('keydown', { key: 'Escape', cancelable: true });
+      component.onKeyDown(evento);
+
+      expect(evento.defaultPrevented)
+        .withContext(`vista ${vista}`)
+        .toBeTrue();
+      expect(component.isOpen()).toBeFalse();
+    }
+  });
 });

@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.8.2'
+version: '5.8.3'
 status: 'vigente'
 updated: '2026-08-14'
 owner: 'Hospital Regional de Ayacucho'
@@ -14,6 +14,39 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 ## [Sin publicar]
+
+## [5.8.3] - 2026-08-14
+
+### Corregido
+
+- **`datepicker` cancelaba Escape solo en una de sus tres vistas.** En vista de
+  dia llamaba a `preventDefault`; en las de mes y ano lo cerraba sin cancelar,
+  de modo que el mismo componente se comportaba distinto segun donde estuvieras.
+
+  La consecuencia no se queda dentro del calendario: dentro de un `<dialog>`,
+  una pulsacion de Escape no cancelada se trata como peticion de cierre, asi que
+  cerrar el selector de mes **se llevaba por delante el formulario entero** con
+  todo lo escrito. Con teclado o lector de pantalla, Escape es LA forma de
+  descartar un desplegable: se perdia el trabajo por hacer lo correcto.
+
+  Detectado en `prestamo_front_atomic` y corregido primero aqui, como manda la
+  ley Atomic-first.
+
+### Anadido
+
+- **`DOCTRINA_DE_INTERFAZ.md`**: ocho reglas sobre como se hace una pantalla que
+  no miente sobre su estado, no pierde el trabajo de nadie y se puede usar sin
+  raton. Salen de auditar un producto en produccion y de contrastar cada regla
+  contra su codigo; solo entraron las que ese front ya cumple EN PARTE.
+  Enganchado desde `AGENTS.md` y desde la skill `atomic-ui-builder`.
+- `npm run docs:json` regenera `documentation.json`, que Storybook consume y que
+  ningun script producia.
+
+### Verificacion
+
+- Prueba nueva que recorre las TRES vistas y exige el evento cancelado en todas.
+  Validada por mutacion: retirando el `preventDefault`, se pone roja.
+
 
 ## [5.8.2] - 2026-08-14
 
