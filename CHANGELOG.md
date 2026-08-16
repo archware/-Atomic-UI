@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.11.0'
+version: '5.12.0'
 status: 'vigente'
 updated: '2026-08-15'
 owner: 'Hospital Regional de Ayacucho'
@@ -15,6 +15,21 @@ archivo. El formato se basa en
 
 
 
+
+
+## 5.12.0 - 2026-08-15
+
+### Anadido
+
+- **`icon-only`: un boton de solo icono que no se sale de su propio borde.** El
+  consumidor puede darle al host un tamaño cuadrado, pero el control de dentro
+  conserva su relleno horizontal y su ancho minimo, asi que desborda y pisa lo
+  que tenga al lado. Ocurrio literalmente: el boton de tema de la barra superior
+  se solapaba con el menu de usuario. No se puede arreglar desde el consumidor
+  —sus estilos no alcanzan al interior del componente—, tiene que vivir aqui.
+
+  El atributo `dialog-close` ya resolvia exactamente esto para el aspa de cerrar.
+  En vez de añadir un segundo caso especial se generalizo.
 
 ## 5.11.0 - 2026-08-15
 

@@ -378,3 +378,32 @@ describe('AtomicButton: la carga no roba el foco', () => {
     expect((fixture.nativeElement.querySelector('button') as HTMLButtonElement).disabled).toBe(true);
   });
 });
+
+/*
+  UN BOTON DE SOLO ICONO SE SALIA DE SU PROPIO BORDE.
+
+  El consumidor puede darle al host un tamaño cuadrado, pero el <button> de
+  dentro conserva su relleno horizontal, asi que desborda y pisa lo que tenga al
+  lado. Paso de verdad: el boton de tema de la barra superior se solapaba con el
+  menu de usuario.
+*/
+describe('ButtonComponent: solo icono', () => {
+  it('deja el control interior cuadrado y sin relleno', async () => {
+    await TestBed.configureTestingModule({
+      imports: [ButtonComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(ButtonComponent);
+    fixture.nativeElement.setAttribute('icon-only', '');
+    fixture.detectChanges();
+
+    const boton = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    const estilo = getComputedStyle(boton);
+
+    expect(estilo.paddingLeft).toBe('0px');
+    expect(estilo.paddingRight).toBe('0px');
+    expect(boton.getBoundingClientRect().width).toBeLessThanOrEqual(
+      (fixture.nativeElement as HTMLElement).getBoundingClientRect().width,
+    );
+  });
+});
