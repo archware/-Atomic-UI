@@ -4,11 +4,26 @@
 >
   @if (paginationEnabled()) {
     <header class="data-table__toolbar">
+      <!--
+        «0 REGISTRO(S)» ES UNA RESPUESTA, Y NO SIEMPRE SE TIENE.
+
+        El resumen vivia fuera de toda comprobacion de estado, asi que escribia
+        «Mostrando 0 - 0 de 0 registro(s)» encima del indicador de carga y
+        tambien junto al panel de error. Ese cero es exactamente lo que alguien
+        lee para decidir si su busqueda dio resultado: ahi decia que no hay nada
+        cuando lo que pasaba es que no se pudo preguntar.
+
+        Con un resultado confirmado se dice la cifra; sin el, una raya.
+      -->
       <div class="data-table__summary">
-        <span
-          >Mostrando <strong>{{ rangeStart() }} - {{ rangeEnd() }}</strong> de
-          <strong>{{ effectiveTotalRecords() }}</strong> registro(s)</span
-        >
+        @if (effectiveStatus() === 'success' || effectiveStatus() === 'empty') {
+          <span
+            >Mostrando <strong>{{ rangeStart() }} - {{ rangeEnd() }}</strong> de
+            <strong>{{ effectiveTotalRecords() }}</strong> registro(s)</span
+          >
+        } @else {
+          <span aria-hidden="true">—</span>
+        }
       </div>
 
       <div class="data-table__pagination">

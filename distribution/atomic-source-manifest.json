@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.10.0",
+  "packageVersion": "5.11.0",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "65cf48325ae821b7c109cb757fa1856bcc87eabc53a81ec7f5d72071136e98dd",
+  "sourceTreeSha256": "e3a11bd3528c0680e0072ed22eec8ee3a7087a72f5c271c43751fd49046bb17c",
   "fileCount": 158,
   "files": [
     {
@@ -21,7 +21,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 855,
-      "sha256": "e2358c909ec605d2f5f21d028f8b115001b0a8957e8d6fe8deac09aacb27b87e"
+      "sha256": "fed61bf92539c99faf2c9c1938e1ec3034d66737e3d86ad115c416cde64af879"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -450,8 +450,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.html",
-      "bytes": 7813,
-      "sha256": "28df3f4f3038059bbc985d792661061f6395cf0f9825b6eb78d90ea0ecf602c3"
+      "bytes": 8514,
+      "sha256": "77930ce2e11d62093a52be1cebe4819fbf757278810f23fd3187e62336d677d2"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.scss",

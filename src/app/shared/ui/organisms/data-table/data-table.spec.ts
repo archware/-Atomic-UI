@@ -526,3 +526,36 @@ describe('DataTable: el foco sobrevive al paginador', () => {
     expect(document.activeElement).not.toBe(document.body);
   });
 });
+
+/*
+  «0 REGISTRO(S)» ES UNA RESPUESTA, Y NO SIEMPRE SE TIENE.
+
+  El resumen se pintaba fuera de toda comprobacion de estado. Sobre el indicador
+  de carga, y junto al panel de error, decia «Mostrando 0 - 0 de 0 registro(s)».
+  Ese cero es lo que alguien lee para decidir si su busqueda dio resultado: decia
+  que no hay nada cuando lo que pasaba es que no se pudo preguntar.
+*/
+describe('DataTable: el resumen no afirma un recuento que no tiene', () => {
+  async function tabla(status: string) {
+    await TestBed.configureTestingModule({ imports: [DataTable] }).compileComponents();
+    const fixture = TestBed.createComponent(DataTable);
+    fixture.componentRef.setInput('columns', [{ key: 'a', header: 'A' }]);
+    fixture.componentRef.setInput('rows', []);
+    fixture.componentRef.setInput('caption', 'Tabla');
+    fixture.componentRef.setInput('status', status);
+    fixture.detectChanges();
+    return (fixture.nativeElement as HTMLElement).querySelector('.data-table__summary');
+  }
+
+  it('calla mientras carga', async () => {
+    expect((await tabla('loading'))?.textContent).not.toContain('registro');
+  });
+
+  it('calla cuando la consulta fallo', async () => {
+    expect((await tabla('error'))?.textContent).not.toContain('registro');
+  });
+
+  it('y lo dice cuando de verdad no hay ninguno', async () => {
+    expect((await tabla('success'))?.textContent).toContain('registro');
+  });
+});

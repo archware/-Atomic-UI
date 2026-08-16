@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.10.0'
+version: '5.11.0'
 status: 'vigente'
 updated: '2026-08-15'
 owner: 'Hospital Regional de Ayacucho'
@@ -14,6 +14,19 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
 
 
+
+
+## 5.11.0 - 2026-08-15
+
+### Corregido
+
+- **La tabla afirmaba «0 registro(s)» sin haber preguntado.** El resumen y el
+  paginador se pintaban FUERA de toda comprobacion de estado, asi que escribian
+  «Mostrando 0 - 0 de 0 registro(s)» encima del indicador de carga y tambien
+  junto al panel de error. Ese cero es exactamente lo que alguien lee para
+  decidir si su busqueda dio resultado: decia que no hay nada cuando lo que
+  pasaba es que no se pudo preguntar. Con un resultado confirmado se dice la
+  cifra; sin el, una raya.
 
 ## 5.10.0 - 2026-08-15
 
