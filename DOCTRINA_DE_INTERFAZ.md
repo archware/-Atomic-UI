@@ -38,7 +38,7 @@ en 85 ficheros**.
 > capítulo 8 describe: alguien resuelve el caso que tiene delante y nadie
 > generaliza.
 
-> **Cómo se usa.** Antes de construir una pantalla, lee los nueve títulos. Antes
+> **Cómo se usa.** Antes de construir una pantalla, lee los doce títulos. Antes
 > de darla por terminada, léelos otra vez como lista de verificación. Cada regla
 > lleva el **daño** que evita y el **contraejemplo**: lo que hace, sin querer,
 > quien no la conoce.
@@ -277,6 +277,96 @@ perdía entera al pulsar por error un enlace del menú, sin una sola pregunta. L
 misma pantalla **sí** pedía confirmación para dar de baja una cuenta: se protegía
 el dato ya guardado y no el que la persona acababa de escribir.
 
+## 10. La escala de espaciado es una escala, y un tamaño no es un espacio
+
+**La regla.** Todo margen, relleno y hueco sale de `--space-N`. Un número mayor
+es un espacio mayor, **siempre**, y ningún valor entra en la escala por hacer
+falta una vez.
+
+**Lo que la escala publica hoy:** 0,25 · 0,5 · 0,75 · 1 · 1,5 · 2 · 2,5 · 3 · 3,5
+· 4 rem, del 1 al 10. Cuatro pasos finos abajo, donde se ajusta el interior de un
+control, y saltos de medio rem arriba, donde se separan secciones. Elegir es
+elegir un paso, no un número.
+
+**El caso que lo ilustra, y está en el propio ADN.** `--space-11: 2,75rem`. Está
+al final de una escala ascendente y es **más pequeño que el 8, el 9 y el 10**.
+Quien pide el 11 esperando «más que el 10» recibe menos que el 8, y nada se lo
+dice. Su comentario delata cómo llegó ahí: *«44px — tamaños de componente
+(botones, elementos de menú)»*. **No es un espacio: es el objetivo táctil mínimo**
+de WCAG 2.5.5, una medida de OTRA cosa, metida en la escala de espaciado porque
+no había dónde ponerla. Se usa como ancho y alto del círculo del `stepper`, como
+`--action-btn-size`, y como relleno derecho para dejar sitio a un icono: tres
+cosas que no son «separación entre elementos».
+
+**La consecuencia práctica.** Un tamaño mínimo de toque tiene su propio token y su
+propia razón para cambiar —si mañana el listón sube a 48px, sube el objetivo
+táctil y no se mueve ni un margen—. Mezclados, cualquier ajuste de uno arrastra al
+otro sin que nadie lo prevea.
+
+**Cuándo se puede escribir un número a mano: casi nunca, y se justifica.** Medido
+en el consumidor: 673 usos de `var(--space-N)` frente a 29 valores sueltos. De
+esos 29, trece son `1rem`, que **es** `--space-4` y no debería estar escrito a
+mano. Los que merecen mirarse son los que no existen en ninguna escala —`0.35rem`,
+`0.8rem`, `0.625rem`, `0.125rem`—, porque cada uno es alguien afinando a ojo un
+caso concreto. Si de verdad hace falta un valor intermedio, el paso es **añadirlo
+a la escala en el orden que le toca**, no dejarlo suelto en un fichero ni
+apilarlo al final con el número siguiente.
+
+## 11. Una tabla deja de ser una tabla antes de necesitar barra horizontal
+
+**La regla.** Por debajo de **48rem** cada fila se convierte en una tarjeta: la
+cabecera desaparece, y cada celda lleva delante su etiqueta —`data-label` pintada
+con `::before`—. Nada de desplazamiento horizontal para leer un dato.
+
+**Por qué en `rem` y nunca en `px`.** `rem` sigue el tamaño de letra del
+navegador. Quien lo aumenta porque le cuesta leer necesita las tarjetas **antes**,
+no en el mismo ancho físico; con un corte en píxeles se queda con una tabla que ya
+no le cabe. Medido en el ADN: quince cortes en `768px` conviven con cuatro en
+`48rem`, que son el mismo ancho **solo si nadie tocó el tamaño de letra**. Y hay
+`769px` y `639px` —los vecinos de un corte escrito dos veces con signo contrario—,
+que es como aparece una franja de un píxel en la que no se aplica ninguna de las
+dos reglas.
+
+**Qué sobrevive a la conversión.** La etiqueta de cada celda, porque una tarjeta
+sin cabecera es una lista de valores sin nombre. Las acciones, que pasan a ocupar
+la fila entera. Y el estado —cargando, vacío, error—, que **no** se convierte en
+tarjeta: sigue siendo un bloque, porque no es un registro.
+
+**Lo que la conversión no arregla.** Una tabla de doce columnas se vuelve una
+tarjeta de doce filas: legible y larguísima. Si al pasar a tarjetas el resultado
+no cabe en una pantalla, el problema no era el ancho, era que la tabla enseña más
+de lo que hace falta para decidir. Esa decisión es de la pantalla y no de la
+tabla.
+
+## 12. Qué actos piden confirmación, y cuáles piden otra cosa
+
+El capítulo 7 dice **cómo** se redacta una confirmación. Este dice **cuándo** hace
+falta, y cuándo lo correcto es no ponerla.
+
+**La regla, en tres clases.**
+
+1. **Lo que se deshace desde la misma pantalla no se confirma.** Abrir un diálogo,
+   cambiar un filtro, seleccionar una fila. Preguntar aquí es ruido, y el ruido se
+   paga en el punto 3: quien lleva cuarenta diálogos al día deja de leerlos.
+2. **Lo que se juega en una cifra no se confirma: se revisa.** Un cobro, un
+   desembolso, un pago parcial. «¿Está seguro?» no aporta nada cuando lo que puede
+   estar mal es el importe, la cuenta o la cuota a la que se aplica: lo que hace
+   falta es **ver esas cifras** antes del «sí». Medido en el consumidor: las
+   dieciocho llamadas a `dialogs.confirm` están en catálogos y bajas, y **ninguna**
+   en caja; las operaciones de dinero pasan por un resumen con sus importes.
+3. **Lo que no se puede deshacer desde la pantalla sí se confirma**, con el verbo
+   del acto en el botón y el foco en cancelar. Y si el acto tendrá que explicarse
+   meses después —anular una solicitud, revertir un pago—, la confirmación **pide
+   el motivo**, porque será lo único que quede.
+
+**La prueba de si una confirmación sobra.** Pregúntese qué hace la persona si se
+equivoca. Si la respuesta es «lo vuelve a pulsar bien», la confirmación sobra. Si
+es «llama a alguien», hace falta. Si es «no se entera», entonces lo que falta no
+es una confirmación: es que la pantalla diga lo que pasó.
+
+**Y una confirmación no es un permiso.** El capítulo 7 ya lo exige: el permiso se
+comprueba otra vez **después** del «sí».
+
 ---
 
 ---
@@ -288,10 +378,14 @@ el dato ya guardado y no el que la persona acababa de escribir.
 - **Lo que anuncia un lector de pantalla.** Ninguna regla de aquí lo sustituye.
   El árbol de accesibilidad **sí** es medible sin una persona; lo que la persona
   oye, no. Ver `LESSONS_LEARNED.md`, entrada del 2026-08-13.
-- **La escala de espaciado, el criterio de tabla-a-tarjetas en móvil y cuándo una
-  acción necesita confirmación.** La auditoría los señaló como huecos: hoy cada
-  pantalla los resuelve a su manera. Fijarlos es trabajo pendiente de este mismo
-  documento.
+- **La jerarquía tipográfica y la densidad de una pantalla completa.** Cuántos
+  niveles de título, cuánto puede caber antes de partir en pestañas. Hoy cada
+  pantalla lo resuelve a su manera y no hay medición que sostenga una regla.
+- **El idioma y el tono de los textos.** Este documento exige que un mensaje diga
+  qué pasó; no fija cómo se escribe.
+
+Los tres huecos que esta sección declaraba —espaciado, tabla-a-tarjetas y cuándo
+confirmar— se cerraron en los capítulos 10, 11 y 12.
 
 ## Una advertencia sobre cómo se aplicó hasta ahora
 

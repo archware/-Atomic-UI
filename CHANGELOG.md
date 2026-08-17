@@ -1,9 +1,9 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.13.0'
+version: '5.14.0'
 status: 'vigente'
-updated: '2026-08-16'
+updated: '2026-08-17'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
@@ -16,6 +16,36 @@ archivo. El formato se basa en
 
 
 
+
+## 5.14.0 - 2026-08-17
+
+### Anadido
+
+- **La doctrina cierra sus tres huecos declarados: capitulos 10, 11 y 12.** La
+  seccion «lo que esta doctrina no cubre» anunciaba tres desde la auditoria
+  —espaciado, tabla-a-tarjetas en movil y cuando hace falta confirmar—; se
+  escribieron midiendo el codigo, no proponiendo criterios.
+
+  El 10 encontro un defecto en el propio ADN: `--space-11: 2.75rem` esta al final
+  de una escala ascendente y es **mas pequeño que el 8, el 9 y el 10**. Quien pide
+  el 11 esperando «mas que el 10» recibe menos que el 8. Su comentario delata como
+  llego ahi —«44px, tamaños de componente»—: no es un espacio, es el objetivo
+  tactil minimo de WCAG 2.5.5, una medida de otra cosa metida en la escala de
+  espaciado porque no habia donde ponerla.
+
+  El 11 fija el corte en `rem` y no en `px`, porque `rem` sigue el tamaño de letra
+  del navegador: quien lo aumenta necesita las tarjetas ANTES, no en el mismo
+  ancho fisico. Medido: quince cortes en `768px` conviven con cuatro en `48rem`,
+  que son el mismo ancho solo si nadie tocó el tamaño de letra. Hay ademas un
+  `769px` y un `639px`, que es como aparece una franja de un pixel sin ninguna
+  regla aplicada.
+
+  El 12 separa tres clases donde antes se decia «confirma lo destructivo»: lo que
+  se deshace desde la pantalla no se confirma; lo que se juega en una cifra no se
+  confirma, se REVISA con las cifras delante; y lo que no se puede deshacer se
+  confirma, con el motivo si habra que explicarlo meses despues. Medido en un
+  consumidor: las dieciocho llamadas a `dialogs.confirm` estan en catalogos y
+  bajas, y ninguna en caja.
 
 ## 5.13.0 - 2026-08-16
 
