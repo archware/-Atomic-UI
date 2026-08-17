@@ -160,11 +160,13 @@ export class ShowcaseFeedbackComponent {
   }
 
   showConfirmPopup() {
+    // El ejemplo tambien es doctrina: dice QUE pasa y el boton lleva el verbo.
     this.popup.confirm({
-      title: '¿Eliminar elemento?',
-      message: 'Esta acción no se puede deshacer. ¿Estás seguro de continuar?',
-      confirmLabel: 'Sí, eliminar',
+      title: 'Eliminar el elemento seleccionado',
+      message: 'Se retira de la lista y de los reportes que lo incluyen. No se puede deshacer.',
+      confirmLabel: 'Eliminar el elemento',
       cancelLabel: 'Cancelar',
+      tone: 'danger',
       onConfirm: () => this.toast.success('Elemento eliminado'),
       onCancel: () => this.toast.info('Operación cancelada')
     });

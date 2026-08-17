@@ -38,8 +38,10 @@ class PopupDemoComponent {
   }
   showConfirm() {
     this.popup.confirm({
-      title: '¿Eliminar elemento?',
-      message: '¿Estás seguro de que deseas eliminar este elemento? Esta acción no se puede deshacer.',
+      title: 'Eliminar el elemento seleccionado',
+      message: 'Se retira de la lista y de los reportes que lo incluyen. No se puede deshacer.',
+      confirmLabel: 'Eliminar el elemento',
+      tone: 'danger',
       onConfirm: () => this.popup.success('Eliminado', 'El elemento fue eliminado correctamente.'),
       onCancel: () => {},
     });

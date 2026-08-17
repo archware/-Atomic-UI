@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.12.0",
+  "packageVersion": "5.13.0",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "9334f30839f4e570587d0dfc1134da0f9f05f78b87b043bf63f955c01a4ac3cd",
+  "sourceTreeSha256": "42a2b6dc529227e1ba1e00f6c326119d1241dfe1677a22b252890b59ecb7d626",
   "fileCount": 158,
   "files": [
     {
@@ -21,7 +21,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 855,
-      "sha256": "b02b61002a89117d767c81eb059b4d7e263d9c0c2713231b487042796e329320"
+      "sha256": "4c9d471fa04aa8f78415a961d5240caa8b7d27527fc90f8bcee17c66362cea86"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -155,8 +155,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/number-input/number-input.component.ts",
-      "bytes": 6229,
-      "sha256": "b60350e0880976be7e56e1151b32e03f5c7693dad8b2616d189f83b63572b6b4"
+      "bytes": 9461,
+      "sha256": "bd505ee6fec792d9d434046c532c30fda30a85edc07b38ab60b1856e3a60fd93"
     },
     {
       "path": "src/app/shared/ui/atoms/progress/progress.component.ts",
@@ -180,8 +180,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/select/select.component.ts",
-      "bytes": 2782,
-      "sha256": "3d7d7c976e1985f9b4416ee47dd263a9f60d00cd097310070a58b4a09ab9d3fe"
+      "bytes": 4109,
+      "sha256": "94b19a3de306ba091053170b90724a346bc4270759aa885a0e06dc06987a1757"
     },
     {
       "path": "src/app/shared/ui/atoms/skeleton/skeleton.component.ts",
@@ -375,8 +375,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/popup/popup-container.component.ts",
-      "bytes": 7730,
-      "sha256": "00e091cb411bfda02cae6b2562dcd5aea838ee52ed30758a691e1d2064f2224f"
+      "bytes": 9747,
+      "sha256": "7d3d05eb05f9a188949cf1ae366baab8e137c9783f83fab0e52a210a7ce6f05a"
     },
     {
       "path": "src/app/shared/ui/molecules/select2/select2.component.ts",
@@ -665,8 +665,8 @@
     },
     {
       "path": "src/app/shared/ui/services/popup.service.ts",
-      "bytes": 4397,
-      "sha256": "0d178367d866e9eb4dd678827566e2ce108a7c3658bded6a34577e5ef0e6f0b8"
+      "bytes": 6073,
+      "sha256": "060506d14c3b42f150213c79f907506072acf028d59db4993cd43480132fd06d"
     },
     {
       "path": "src/app/shared/ui/services/theme.service.ts",

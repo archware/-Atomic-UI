@@ -1,9 +1,9 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.12.0'
+version: '5.13.0'
 status: 'vigente'
-updated: '2026-08-15'
+updated: '2026-08-16'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
@@ -16,6 +16,37 @@ archivo. El formato se basa en
 
 
 
+
+## 5.13.0 - 2026-08-16
+
+### Cambiado
+
+- **`app-select` devuelve el desplegable al valor del padre aunque ese valor no
+  cambie.** Cuando el padre rechaza lo elegido y repone lo que ya tenia, llega un
+  `writeValue` con un valor identico al anterior: el binding `[value]` compara,
+  ve que no cambio y no toca el DOM, mientras el navegador ya movio el `<select>`
+  con el clic de la persona. A partir de ahi lo que se ve deja de ser lo que se
+  envia, y el consumidor no tiene forma de arreglarlo desde fuera. Ahora el
+  atomo reconcilia el elemento nativo en cada `writeValue`. Es la mitad olvidada
+  del capitulo 4: rechazar una entrada incluye retirarla de la pantalla.
+
+- **`app-number-input` deja de recortar en silencio.** `[value]` solo reescribe
+  cuando el numero CAMBIA, asi que teclear una segunda cantidad por encima del
+  maximo dejaba el campo enseñando lo tecleado mientras el modelo contaba otra
+  cosa —en el contador de billetes, una fila que suma distinto de lo que muestra.
+  Ademas, en un `type=number` el texto invalido (`1o0`) llega como cadena vacia
+  mientras el campo lo sigue enseñando: se detecta con `validity.badInput`, se
+  limpia y se repone la cantidad contada. Todo ajuste se anuncia en un
+  `role="status"`; antes el recorte era mudo.
+
+- **`PopupService.confirm` se alinea con el capitulo 7.** `confirmLabel` pasa a
+  ser obligatorio —un boton que dice «Confirmar» obliga a leer el titulo, y quien
+  lleva cuarenta dialogos al dia ya no lo lee—, se añade `tone: 'danger'` para lo
+  que no se puede deshacer e `initialFocus`, que por defecto pone el foco en la
+  salida segura. El contenedor mueve el foco al abrir y **se retira `onEnter`**:
+  ejecutaba el boton primario desde el fondo del dialogo, de modo que un Intro
+  por inercia confirmaba. Escape ejecuta ahora la cancelacion del llamador en vez
+  de cerrar en silencio y dejarlo esperando una respuesta que no llega.
 
 ## 5.12.0 - 2026-08-15
 
