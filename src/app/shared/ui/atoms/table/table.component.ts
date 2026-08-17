@@ -171,7 +171,7 @@ export type TableMobileScrollMode = 'page' | 'bounded';
        RESPONSIVE: Cards en móvil (Sin usar !important)
        Usamos selectores de alta especificidad para anular ScrollOverlay
        ============================================ */
-      @media screen and (max-width: 768px) {
+      @media screen and (max-width: 48rem) {
         .so-root[data-so-table].atomic-table-container:not(.atomic-table-mobile-scroll-bounded),
         .atomic-table-container:not(.atomic-table-mobile-scroll-bounded) {
           border: none;

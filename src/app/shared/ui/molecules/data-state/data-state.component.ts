@@ -158,7 +158,7 @@ import { ApiError } from '../../services/api.service';
     .error-title {
       margin: 0;
       font-size: var(--text-lg);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       color: var(--text-color);
     }
 

@@ -87,7 +87,7 @@ export interface Language {
     }
 
     .language-code {
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
     }
 
     .chevron {
@@ -141,7 +141,7 @@ export interface Language {
     .language-option.active {
       background: var(--primary-color-lighter);
       color: var(--primary-color);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
     }
 
     .language-name {

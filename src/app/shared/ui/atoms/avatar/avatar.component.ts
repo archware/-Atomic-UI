@@ -83,7 +83,7 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
     }
 
     .avatar-initials {
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       text-transform: uppercase;
       color: white;
     }

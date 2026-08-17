@@ -63,7 +63,7 @@ prest-print-document-panel [print-document-actions] {
 .print-document-panel__eyebrow {
   color: var(--print-document-accent);
   font-size: var(--text-xs);
-  font-weight: 700;
+  font-weight: var(--font-weight-title);
   letter-spacing: var(--letter-spacing-wide);
   text-transform: uppercase;
 }
@@ -90,7 +90,7 @@ prest-print-document-panel [print-document-actions] {
 .print-document-panel__fields dd {
   margin: 0;
   overflow-wrap: anywhere;
-  font-weight: 600;
+  font-weight: var(--font-weight-emphasis);
 }
 
 .print-document-panel__section {

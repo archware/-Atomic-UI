@@ -289,7 +289,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
   `,
   styles: [`
     .showcase-section { margin-bottom: 2rem; display: block; }
-    .section-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-color); }
+    .section-title { font-size: 1.25rem; font-weight: var(--font-weight-emphasis); margin-bottom: 1rem; color: var(--text-color); }
     .subsection-title { font-size: 1rem; font-weight: 500; margin: 1rem 0 0.5rem; color: var(--text-color-secondary); }
     .input-variants-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
 

@@ -127,7 +127,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
 
     .user-menu__name {
       font-size: var(--text-sm);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       color: var(--text-color);
       white-space: nowrap;
       overflow: hidden;
@@ -145,7 +145,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
     .user-menu__role {
       color: var(--primary-color);
       font-size: var(--text-xs);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       text-transform: uppercase;
     }
 

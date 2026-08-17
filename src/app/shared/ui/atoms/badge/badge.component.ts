@@ -55,7 +55,7 @@ export type BadgePosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       line-height: 1;
       border-radius: var(--radius-full, 9999px);
       white-space: nowrap;

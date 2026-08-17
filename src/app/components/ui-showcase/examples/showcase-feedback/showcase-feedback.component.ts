@@ -84,7 +84,7 @@ import { ModalService } from '../../../../shared/ui/services/modal.service';
   `,
   styles: [`
     .showcase-section { margin-bottom: 2rem; display: block; }
-    .section-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-color); }
+    .section-title { font-size: 1.25rem; font-weight: var(--font-weight-emphasis); margin-bottom: 1rem; color: var(--text-color); }
     .button-grid { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
     /* Alerts styles reuse */

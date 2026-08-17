@@ -127,7 +127,7 @@ export type RowVariant = 'default' | 'form';
     ::ng-deep .align-self-end { align-self: end !important; }
 
     /* === Responsive: Stack on mobile === */
-    @media (max-width: 640px) {
+    @media (max-width: 40rem) {
       .row:not(.row--responsive) {
         grid-template-columns: 1fr !important;
         gap: var(--space-5) !important; /* 24px vertical on mobile */

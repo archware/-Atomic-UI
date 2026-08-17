@@ -125,7 +125,7 @@ export class TabComponent {
 
     .tab-button.active {
       color: var(--text-color);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       background: var(--surface-background);
 
       /* Active: Thick Top Border + Sides matching content border */
@@ -162,7 +162,7 @@ export class TabComponent {
      */
 
     /* RESPONSIVE: Compact scrollable tabs on mobile */
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {
       .tabs-header {
         overflow-x: auto;
         overflow-y: hidden;

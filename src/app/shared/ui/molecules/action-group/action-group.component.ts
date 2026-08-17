@@ -173,7 +173,7 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
     /* Size variants */
     .action-group--sm { --action-btn-size: 1.75rem; }  /* 2var(--space-2) */
     .action-group--md { --action-btn-size: var(--space-7); }  /* 3var(--space-2) */
-    .action-group--lg { --action-btn-size: var(--space-11); }  /* 44px */
+    .action-group--lg { --action-btn-size: var(--touch-target-min); }  /* 44px */
 
     .action-btn:hover:not(:disabled) {
       background: var(--surface-hover);

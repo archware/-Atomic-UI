@@ -219,7 +219,7 @@ const ERROR_DEFAULTS: Record<ErrorCode, Omit<ErrorPageConfig, 'primaryAction' | 
       to   { transform: scale(1);   opacity: 1; }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 30rem) {
       .error-code { font-size: 5rem; }
       .error-icon { font-size: 3.5rem; }
     }

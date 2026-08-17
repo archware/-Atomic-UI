@@ -246,7 +246,7 @@ describe('TableComponent unified viewport', () => {
     expect(viewport.scrollLeft).toBe(0);
   });
 
-  it('hands ownership to the page at 768px or less without changing table semantics', async () => {
+  it('hands ownership to the page at 48rem or less without changing table semantics', async () => {
     responsiveMatches = true;
     constrainViewportToMobile();
     const fixture = TestBed.createComponent(UnifiedTableHostComponent);
@@ -275,7 +275,10 @@ describe('TableComponent unified viewport', () => {
     const responsiveRuleText = Array.from(document.styleSheets)
       .flatMap((sheet) => Array.from(sheet.cssRules))
       .filter((rule): rule is CSSMediaRule => rule instanceof CSSMediaRule)
-      .filter((rule) => rule.conditionText.includes('max-width: 768px'))
+      // El corte va en rem, no en px: rem sigue el tamaño de letra del navegador,
+      // asi que quien lo aumenta recibe la vista compacta ANTES y no en el mismo
+      // ancho fisico. Capitulo 11 de la doctrina.
+      .filter((rule) => rule.conditionText.includes('max-width: 48rem'))
       .flatMap((rule) => Array.from(rule.cssRules))
       .map((rule) => rule.cssText)
       .find((text) => text.includes('.atomic-table thead') && text.includes('clip-path'));

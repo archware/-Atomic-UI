@@ -76,9 +76,9 @@
   margin-top: var(--space-2);
 }
 
-/* app-row ya colapsa columns a 1fr en @media (max-width: 640px) automáticamente.
+/* app-row ya colapsa columns a 1fr en @media (max-width: 40rem) automáticamente.
    Esta regla es un fallback explícito para elementos de grid manuales. */
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   .responsive-fields {
     grid-template-columns: 1fr;
   }

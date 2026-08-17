@@ -95,7 +95,7 @@
 .grid-cols-350 { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important; }
 .chart-grid-compact { grid-auto-rows: 430px !important; }
 
-@media (max-width: 900px) {
+@media (max-width: 56.25rem) {
   .chart-grid-compact { grid-auto-rows: auto !important; }
 }
 

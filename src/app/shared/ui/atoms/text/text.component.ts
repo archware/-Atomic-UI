@@ -61,10 +61,10 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify';
     .text-label { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; }
 
     /* Weights */
-    .weight-normal { font-weight: 400; }
+    .weight-normal { font-weight: var(--font-weight-body); }
     .weight-medium { font-weight: 500; }
-    .weight-semibold { font-weight: 600; }
-    .weight-bold { font-weight: 700; }
+    .weight-semibold { font-weight: var(--font-weight-emphasis); }
+    .weight-bold { font-weight: var(--font-weight-title); }
 
     /* Colors - Tokens without fallbacks */
     .color-default { color: var(--text-color); }

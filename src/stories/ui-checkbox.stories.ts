@@ -64,7 +64,7 @@ export const InForm: Story = {
   render: () => ({
     template: `
       <div style="max-width: 400px; padding: 1.5rem; background: var(--surface-background); border: 1px solid var(--border-color); border-radius: 0.5rem;">
-        <h3 style="margin-bottom: 1rem; font-weight: 600;">Preferencias</h3>
+        <h3 style="margin-bottom: 1rem; font-weight: var(--font-weight-emphasis);">Preferencias</h3>
         <div style="display: flex; flex-direction: column; gap: 0.75rem;">
           <app-checkbox label="Recibir notificaciones por email" [checked]="true"></app-checkbox>
           <app-checkbox label="Recibir notificaciones push"></app-checkbox>

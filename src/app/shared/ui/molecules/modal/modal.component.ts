@@ -129,7 +129,7 @@ const MODAL_ERROR_SELECTORS = [
     .modal-lg { max-width: 800px; }
 
     /* En móvil el modal ocupa casi todo el ancho y se ancla al fondo */
-      @media (max-width: 479px) {
+      @media (max-width: 30rem) {
         .modal-overlay {
           align-items: flex-end;
           padding: 0;
@@ -173,7 +173,7 @@ const MODAL_ERROR_SELECTORS = [
 
     .modal-title {
       font-size: var(--text-lg);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       color: var(--text-color);
       margin: 0;
     }

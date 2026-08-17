@@ -185,7 +185,10 @@ export interface Select2Option {
       align-items: center;
       height: var(--control-height);
       padding: var(--space-1) var(--space-3);
-      padding-right: var(--space-11);
+      /* Deja sitio al icono: es un ESPACIO, asi que le toca un paso de la
+         escala. Estaba en --space-11, que no es un espacio sino el objetivo
+         tactil minimo colado en la escala. Capitulo 10. */
+      padding-right: var(--space-7);
       background: var(--input-bg);
       border: var(--input-border-width, 1.5px) solid var(--input-border);
       border-radius: var(--radius-md);
@@ -231,7 +234,10 @@ export interface Select2Option {
       min-height: var(--control-height);
       height: auto;
       padding: var(--space-1) var(--space-3);
-      padding-right: var(--space-11);
+      /* Deja sitio al icono: es un ESPACIO, asi que le toca un paso de la
+         escala. Estaba en --space-11, que no es un espacio sino el objetivo
+         tactil minimo colado en la escala. Capitulo 10. */
+      padding-right: var(--space-7);
       align-items: center;
     }
 

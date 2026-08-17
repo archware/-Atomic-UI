@@ -191,7 +191,7 @@ export interface TimelineItem {
 
     .timeline-title {
       font-size: var(--text-sm);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       color: var(--text-color);
     }
 

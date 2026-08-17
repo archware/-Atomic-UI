@@ -222,13 +222,13 @@ export class AccordionComponent {
 
       .accordion-title {
         font-size: var(--text-md);
-        font-weight: 600;
+        font-weight: var(--font-weight-emphasis);
       }
 
       .accordion-description {
         color: var(--text-color-secondary);
         font-size: var(--text-xs);
-        font-weight: 400;
+        font-weight: var(--font-weight-body);
       }
 
       .accordion-item.open .accordion-header {

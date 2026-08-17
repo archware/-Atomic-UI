@@ -35,11 +35,11 @@ interface DashboardStats { totalUsers: number; activeProjects: number; pendingTa
     .bento-half { grid-column: span 6; }
     .bento-small { grid-column: span 4; }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 64rem) {
       .bento-large { grid-column: span 12; }
       .bento-medium, .bento-half, .bento-small { grid-column: span 6; }
     }
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {
       .bento-large, .bento-medium, .bento-half, .bento-small { grid-column: span 12; }
     }
 

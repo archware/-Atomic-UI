@@ -294,7 +294,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       top: calc(-1 * var(--space-1));
       font-size: var(--space-3);
       color: var(--primary-color);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
     }
 
     /* === VARIANT: OUTLINE === */

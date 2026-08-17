@@ -100,7 +100,7 @@ export class ExampleBasicComponent {
     .theme-indicator {
       margin-top: 15px;
       font-size: 1.1rem;
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
     }
   `]
 })
@@ -326,7 +326,7 @@ export class ExampleListenerComponent implements OnDestroy {
     label {
       display: block;
       margin-bottom: 8px;
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
     }
 
     select {

@@ -170,7 +170,7 @@ export interface DenominationCounterRow extends DenominationDefinition {
         border-bottom: thin solid var(--border-color);
         color: var(--text-color-muted);
         font-size: var(--text-xs);
-        font-weight: 600;
+        font-weight: var(--font-weight-emphasis);
       }
 
       .denomination-counter__head span:last-child {
@@ -213,7 +213,7 @@ export interface DenominationCounterRow extends DenominationDefinition {
       .denomination-counter__subtotal {
         color: var(--text-color);
         font-variant-numeric: tabular-nums;
-        font-weight: 600;
+        font-weight: var(--font-weight-emphasis);
         text-align: end;
       }
 

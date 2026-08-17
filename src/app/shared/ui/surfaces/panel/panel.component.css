@@ -153,7 +153,7 @@
 
 .panel__title {
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: var(--font-weight-emphasis);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--text-color-secondary);
@@ -180,7 +180,7 @@
 
 /* Title Modifiers - Weights */
 .panel__title--weight-normal {
-  font-weight: 400;
+  font-weight: var(--font-weight-body);
 }
 
 .panel__title--weight-medium {
@@ -188,11 +188,11 @@
 }
 
 .panel__title--weight-semibold {
-  font-weight: 600;
+  font-weight: var(--font-weight-emphasis);
 }
 
 .panel__title--weight-bold {
-  font-weight: 700;
+  font-weight: var(--font-weight-title);
 }
 
 /* Title Modifiers - Alignment */
@@ -245,7 +245,7 @@
  */
 
 /* === RESPONSIVE === */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .panel__header {
     padding: var(--space-3) var(--space-4);
   }

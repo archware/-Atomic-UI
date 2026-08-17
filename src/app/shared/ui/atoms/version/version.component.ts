@@ -113,7 +113,7 @@ export type VersionVariant = 'pill' | 'badge' | 'text' | 'compact';
     }
 
     .atomic-version__number {
-      font-weight: 700 !important;
+      font-weight: var(--font-weight-title) !important;
       letter-spacing: 0.03em !important;
       color: #ffffff !important;
     }
@@ -122,7 +122,7 @@ export type VersionVariant = 'pill' | 'badge' | 'text' | 'compact';
       padding: 2px 6px !important;
       border-radius: 4px !important;
       font-size: 0.65rem !important;
-      font-weight: 700 !important;
+      font-weight: var(--font-weight-title) !important;
       text-transform: uppercase !important;
       background: #3b82f6 !important;
       color: #ffffff !important;

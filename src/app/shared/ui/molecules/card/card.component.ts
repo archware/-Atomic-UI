@@ -224,7 +224,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
     .card__title {
       margin: 0;
       font-size: var(--text-lg);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       color: var(--text-color);
       line-height: 1.3;
     }
@@ -280,7 +280,7 @@ export type CardSize = 'sm' | 'md' | 'lg';
     }
 
     /* === Responsive === */
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {
       .card--horizontal {
         flex-direction: column;
       }

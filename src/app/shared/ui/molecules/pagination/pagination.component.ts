@@ -132,7 +132,7 @@ import { Select2Component } from '../select2/select2.component';
 
     .info-text strong {
       color: var(--text-color);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
     }
 
     .page-size-selector {
@@ -298,7 +298,7 @@ import { Select2Component } from '../select2/select2.component';
 
     .page-minimal-text strong {
       color: var(--text-color);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
     }
 
     /* Rounded Variant */

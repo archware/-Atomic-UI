@@ -121,7 +121,7 @@ import { Select2Component } from '../../molecules/select2/select2.component';
       padding: 0 var(--space-2) !important;
       border-radius: var(--radius-sm);
       font-size: var(--text-sm);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
     }
     ::ng-deep .page-size-select-wrapper .select2-value {
       line-height: var(--control-height-sm);

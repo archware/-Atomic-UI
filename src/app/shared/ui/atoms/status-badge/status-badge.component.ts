@@ -65,7 +65,7 @@ const CHANNELS: Readonly<
         box-sizing: border-box;
         border: 1px solid transparent;
         border-radius: var(--radius-full);
-        font-weight: 700;
+        font-weight: var(--font-weight-title);
         line-height: 1.2;
       }
 

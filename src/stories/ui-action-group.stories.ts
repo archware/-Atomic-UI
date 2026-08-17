@@ -141,10 +141,10 @@ export const InTable: Story = {
       <table style="width: 100%; border-collapse: collapse; background: var(--surface-background); border-radius: 8px; overflow: hidden;">
         <thead style="background: var(--surface-section);">
           <tr>
-            <th style="padding: 12px; text-align: left; font-weight: 600;">Nombre</th>
-            <th style="padding: 12px; text-align: left; font-weight: 600;">Email</th>
-            <th style="padding: 12px; text-align: left; font-weight: 600;">Estado</th>
-            <th style="padding: 12px; text-align: right; font-weight: 600;">Acciones</th>
+            <th style="padding: 12px; text-align: left; font-weight: var(--font-weight-emphasis);">Nombre</th>
+            <th style="padding: 12px; text-align: left; font-weight: var(--font-weight-emphasis);">Email</th>
+            <th style="padding: 12px; text-align: left; font-weight: var(--font-weight-emphasis);">Estado</th>
+            <th style="padding: 12px; text-align: right; font-weight: var(--font-weight-emphasis);">Acciones</th>
           </tr>
         </thead>
         <tbody>

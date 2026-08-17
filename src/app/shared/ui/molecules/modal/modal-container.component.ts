@@ -149,7 +149,7 @@ import { ModalService, ModalItem } from '../../services/modal.service';
     .modal-title {
       margin: 0;
       font-size: var(--text-lg);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       color: var(--text-color);
     }
 

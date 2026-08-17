@@ -32,7 +32,7 @@ export const InNavbar: Story = {
   render: () => ({
     template: `
       <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--surface-background); border: 1px solid var(--border-color); border-radius: 0.5rem;">
-        <span style="font-weight: 600;">Mi Aplicación</span>
+        <span style="font-weight: var(--font-weight-emphasis);">Mi Aplicación</span>
         <div style="display: flex; gap: 1rem; align-items: center;">
           <span>Usuario</span>
           <app-theme-switcher></app-theme-switcher>

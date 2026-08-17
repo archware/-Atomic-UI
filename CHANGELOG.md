@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.16.0'
+version: '5.17.0'
 status: 'vigente'
 updated: '2026-08-17'
 owner: 'Hospital Regional de Ayacucho'
@@ -16,6 +16,35 @@ archivo. El formato se basa en
 
 
 
+
+## 5.17.0 - 2026-08-17
+
+### Cambiado
+
+- **99 pesos tipograficos migrados a la escala, y el trinquete baja de 147 a 48.**
+  Solo los EXACTOS: 400, 600 y 700 coinciden con `--font-weight-body`, `-emphasis`
+  y `-title`, asi que el dibujo no cambia ni un pixel. Los 48 que quedan —500, 650,
+  800 y 900— si alteran el trazo y van componente a componente, mirando el
+  resultado.
+
+- **Los 31 cortes `@media` en pixeles pasan a `rem`** (capitulo 11). `rem` sigue
+  el tamaño de letra del navegador: quien lo aumenta recibe la vista compacta
+  ANTES, no en el mismo ancho fisico.
+
+  De paso se cierra la franja que la doctrina describia: `layout-shell` tenia
+  `min-width: 769px` y `max-width: 768px` en el mismo fichero, asi que a 768,5px
+  —que ocurre con zoom o escalado fraccionario— no se aplicaba ninguna de las dos.
+  Los dos cortes comparten ahora frontera en `48rem`: solapan en un unico ancho,
+  donde gana la ultima regla, en vez de dejar un hueco.
+
+  Una prueba de `table` afirmaba el corte en `768px`; describia el defecto y se
+  reescribio.
+
+- **`--space-11` deja de usarse.** Los cuatro sitios que lo consumian se reparten
+  segun lo que de verdad pedian: `action-group` y `stepper` querian el objetivo
+  tactil y pasan a `--touch-target-min`; el relleno de `select2`, que si era un
+  espacio, pasa a `--space-7`, un paso real de la escala. El token se conserva
+  publicado por compatibilidad, con su aviso al lado.
 
 ## 5.16.0 - 2026-08-17
 

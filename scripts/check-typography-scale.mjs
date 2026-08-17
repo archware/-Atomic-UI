@@ -29,9 +29,13 @@ ve en el diff.
 const raiz = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const origen = resolve(raiz, 'src');
 
-// Pesos escritos a mano al fijar el trinquete. Cada migracion a
-// var(--font-weight-*) baja este numero.
-const MAXIMO_PESOS_A_MANO = 147;
+// Pesos escritos a mano. Cada migracion a var(--font-weight-*) baja este numero.
+//
+// 147 al fijar el trinquete -> 48 tras migrar los 99 que eran EXACTOS (400, 600 y
+// 700 coinciden con body, emphasis y title, asi que el dibujo no cambia ni un
+// pixel). Los 48 que quedan son 500, 650, 800 y 900: cambiarlos SI altera el
+// trazo, asi que van componente a componente, mirando el resultado.
+const MAXIMO_PESOS_A_MANO = 48;
 
 const EXTENSIONES = new Set(['.css', '.scss', '.ts', '.html']);
 const PESO_A_MANO = /font-weight\s*:\s*(\d{3})\b/g;

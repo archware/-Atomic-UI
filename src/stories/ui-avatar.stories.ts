@@ -146,21 +146,21 @@ export const UserList: Story = {
         <div style="display: flex; align-items: center; gap: 0.75rem;">
           <app-avatar name="Juan Pérez" size="md" status="online"></app-avatar>
           <div>
-            <div style="font-weight: 600;">Juan Pérez</div>
+            <div style="font-weight: var(--font-weight-emphasis);">Juan Pérez</div>
             <div style="font-size: 0.875rem; color: #6b7280;">Online</div>
           </div>
         </div>
         <div style="display: flex; align-items: center; gap: 0.75rem;">
           <app-avatar name="María García" size="md" status="away"></app-avatar>
           <div>
-            <div style="font-weight: 600;">María García</div>
+            <div style="font-weight: var(--font-weight-emphasis);">María García</div>
             <div style="font-size: 0.875rem; color: #6b7280;">Away</div>
           </div>
         </div>
         <div style="display: flex; align-items: center; gap: 0.75rem;">
           <app-avatar name="Carlos López" size="md" status="busy"></app-avatar>
           <div>
-            <div style="font-weight: 600;">Carlos López</div>
+            <div style="font-weight: var(--font-weight-emphasis);">Carlos López</div>
             <div style="font-size: 0.875rem; color: #6b7280;">Busy</div>
           </div>
         </div>
