@@ -121,6 +121,21 @@ export class AccordionComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="accordion-item" [class.open]="isOpen()" [class.disabled]="disabled">
+      <!--
+        EL TITULO DE UN PANEL ES UN ENCABEZADO, Y AQUI NO LO ERA.
+
+        El disparador era un <button> suelto, asi que los paneles NO aparecian en
+        el indice de encabezados. Quien navega saltando por titulos —que es como
+        se recorre una pantalla con lector de pantalla— pasaba del titulo de la
+        pagina directamente a lo que hubiera DENTRO del primer panel abierto, sin
+        enterarse de que existian los demas ni de como se llamaban.
+
+        Es lo que dicen las practicas de ARIA para acordeon: el boton va envuelto
+        en un elemento con rol de encabezado. El nivel lo decide quien monta la
+        pantalla, porque solo alli se sabe que hay por encima; 3 es el valor
+        sensato bajo un <h1> de pagina y un <h2> de seccion.
+      -->
+      <div role="heading" [attr.aria-level]="headingLevel">
       <button
         #header
         type="button"
@@ -142,6 +157,7 @@ export class AccordionComponent {
           <i class="fa-solid fa-chevron-down"></i>
         </span>
       </button>
+      </div>
       <div
         class="accordion-content"
         [id]="contentId"
@@ -278,6 +294,8 @@ export class AccordionItemComponent implements OnInit, OnDestroy {
   @Input() id = `accordion-${++AccordionItemComponent.nextId}`;
   @Input() title = '';
   @Input() description = '';
+  /** Nivel del encabezado que anuncia este panel. Ver el comentario de arriba. */
+  @Input() headingLevel = 3;
   @Input() disabled = false;
   @Input() set open(value: boolean) {
     this.setOpen(value, false);

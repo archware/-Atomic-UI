@@ -11,7 +11,7 @@ import { AccordionComponent, AccordionItemComponent } from './accordion.componen
       <app-accordion-item title="Cliente" description="Cliente seleccionado" [open]="true">
         <button type="button">Acción cliente</button>
       </app-accordion-item>
-      <app-accordion-item title="Cotización">
+      <app-accordion-item title="Cotización" [headingLevel]="2">
         Contenido cotización
       </app-accordion-item>
     </app-accordion>
@@ -80,5 +80,30 @@ describe('AccordionComponent', () => {
     expect(
       host().querySelector<HTMLElement>('.accordion-content')?.getAttribute('aria-hidden'),
     ).toBe('true');
+  });
+
+  /*
+  Los paneles tienen que salir en el indice de encabezados. Sin esto, quien
+  recorre la pantalla saltando por titulos no se entera de que existen los
+  paneles ni de como se llaman: pasa del titulo de la pagina a lo que haya dentro
+  del primero que este abierto.
+  */
+  it('anuncia el titulo de cada panel como encabezado', () => {
+    const encabezados = host().querySelectorAll<HTMLElement>('[role="heading"]');
+
+    expect(encabezados.length).toBe(2);
+    expect(encabezados[0].getAttribute('aria-level')).toBe('3');
+    expect(encabezados[0].querySelector('button')).not.toBeNull();
+    expect(encabezados[0].textContent).toContain('Cliente');
+    expect(encabezados[1].textContent).toContain('Cotización');
+  });
+
+  it('deja elegir el nivel a quien monta la pantalla', () => {
+    const encabezados = host().querySelectorAll<HTMLElement>('[role="heading"]');
+
+    // Solo la pantalla sabe que hay por encima: el primero se queda con el 3 por
+    // omision y el segundo pide un 2 desde la plantilla que lo monta.
+    expect(encabezados[0].getAttribute('aria-level')).toBe('3');
+    expect(encabezados[1].getAttribute('aria-level')).toBe('2');
   });
 });

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.15.0",
+  "packageVersion": "5.16.0",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "c198be3e01147319ee85cd8d24368c54ee729fe57745adf40cb99c5c3351b7e8",
+  "sourceTreeSha256": "76c312507e04d9054e2832a1c83ae69425d574df4f16cd4900f52afb45ffe4e9",
   "fileCount": 158,
   "files": [
     {
@@ -21,7 +21,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 855,
-      "sha256": "edf0e59d7886d6296f1a3ef3d0881fa7b217e90b21ea46b490929c4643f9bb56"
+      "sha256": "c44c33f407be5919d364f3bfa7a907b0a707d02564b2d483336c408ce0874c52"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -420,8 +420,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/accordion/accordion.component.ts",
-      "bytes": 8671,
-      "sha256": "0904c4775d1615474c20a6df4fa0277ceeca814347419e59391e32355ef47cbb"
+      "bytes": 9642,
+      "sha256": "e0697374f4de0a51fc173bd5f315b9a8ef92e6149c77fedc7248589a339fca14"
     },
     {
       "path": "src/app/shared/ui/organisms/chart/chart.component.ts",

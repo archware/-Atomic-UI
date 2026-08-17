@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.15.0'
+version: '5.16.0'
 status: 'vigente'
 updated: '2026-08-17'
 owner: 'Hospital Regional de Ayacucho'
@@ -16,6 +16,26 @@ archivo. El formato se basa en
 
 
 
+
+## 5.16.0 - 2026-08-17
+
+### Corregido
+
+- **Los paneles del acordeon no aparecian en el indice de encabezados.** El
+  disparador era un `<button>` suelto, sin envolver en nada con rol de
+  encabezado. Quien recorre una pantalla saltando por titulos —que es como se
+  navega con lector de pantalla— pasaba del titulo de la pagina a lo que hubiera
+  DENTRO del primer panel abierto, sin enterarse de que existian los demas ni de
+  como se llamaban.
+
+  Salio midiendo el capitulo 13 recien escrito: una pantalla parecia saltar de
+  `<h1>` a `<h3>`, y el `<h2>` que faltaba era precisamente el nombre de cada
+  panel, que no se anunciaba como titulo de nada. La regla encontro el defecto el
+  mismo dia que se enuncio.
+
+  El boton va ahora envuelto en `role="heading"` con `aria-level`, como piden las
+  practicas de ARIA para acordeon. El nivel lo decide quien monta la pantalla
+  —`headingLevel`, 3 por omision— porque solo alli se sabe que hay por encima.
 
 ## 5.15.0 - 2026-08-17
 
