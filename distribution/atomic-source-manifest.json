@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "42a2b6dc529227e1ba1e00f6c326119d1241dfe1677a22b252890b59ecb7d626",
+  "sourceTreeSha256": "c0f45129e074efc2ffc510a71dd32e03b6b778ff4e0d9ae33b6a20649e9ea514",
   "fileCount": 158,
   "files": [
     {
@@ -120,8 +120,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/form-select/select.html",
-      "bytes": 1701,
-      "sha256": "0a573dde344ad8db823db1a59b356242f8564423a474b5d890eb02e9dea73e48"
+      "bytes": 1721,
+      "sha256": "ed64205a42813272ea48ec7c9a1f6dffe2efcc71ab81bb2b77d55a6336dd2bf3"
     },
     {
       "path": "src/app/shared/ui/atoms/form-select/select.scss",
@@ -130,8 +130,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/form-select/select.ts",
-      "bytes": 3104,
-      "sha256": "109f1b7e779fe9adc28ecb66e5acb6dcc0f1b402c2df6e7cf09e36e5250589f9"
+      "bytes": 4545,
+      "sha256": "bf77985bc46a724f5e0b151658f21047675e2b59f1b9902e071770f84401c4c4"
     },
     {
       "path": "src/app/shared/ui/atoms/icon-button/icon-button.component.ts",

@@ -30,6 +30,14 @@ archivo. El formato se basa en
   atomo reconcilia el elemento nativo en cada `writeValue`. Es la mitad olvidada
   del capitulo 4: rechazar una entrada incluye retirarla de la pantalla.
 
+- **`form-select` reconcilia el `<select>` gobernado.** Es el gemelo con signals
+  del mismo defecto: en modo gobernado —`[selected]` mas `(selectionChange)`— si
+  el padre rechaza lo elegido y deja su señal como estaba, las expresiones
+  `[selected]` de las `<option>` no cambian y el desplegable se queda en lo que
+  marco el navegador. Un `afterRenderEffect` devuelve el elemento nativo al valor
+  del padre; se vuelve a ejecutar aunque `selected()` no cambie porque
+  `handleChange` escribe `formValue` en cada interaccion.
+
 - **`app-number-input` deja de recortar en silencio.** `[value]` solo reescribe
   cuando el numero CAMBIA, asi que teclear una segunda cantidad por encima del
   maximo dejaba el campo enseñando lo tecleado mientras el modelo contaba otra
