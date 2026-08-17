@@ -195,6 +195,28 @@
    /* 64px - Large section spacing */
    --space-11: 2.75rem;
    /* 44px - Component sizes (buttons, menu items) */
+   /* AVISO: este valor NO respeta el orden de la escala —es menor que el 8, el 9
+      y el 10— porque no es un espacio: es el objetivo tactil minimo de WCAG
+      2.5.5, que entro aqui por no haber donde ponerlo. Se conserva por
+      compatibilidad; lo nuevo usa --touch-target-min. Capitulo 10. */
+   --touch-target-min: 2.75rem;
+   /* 44px - Objetivo tactil minimo (WCAG 2.5.5). Es un TAMAÑO, no un espacio. */
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     ESCALA DE PESO TIPOGRAFICO
+
+     Tres pasos y no seis. La familia base cae a `system-ui` —Segoe UI en
+     Windows, estatica—, asi que 650 y 700 se dibujan igual, y 750 y 800 tambien:
+     los valores intermedios son distinciones que el navegador colapsa en
+     silencio. Capitulo 13.
+     ───────────────────────────────────────────────────────────────────────── */
+   --font-weight-body: 400;
+   /* Texto corrido. */
+   --font-weight-emphasis: 600;
+   /* Etiquetas, cabeceras de tabla, cifras que hay que leer primero. */
+   --font-weight-title: 700;
+   /* Titulos. Por encima no hay nada: 800 y 900 no aportan trazo en la familia
+      que de verdad se carga. */
 
    /* ─────────────────────────────────────────────────────────────────────────
      ESCALA DE TAMAÑOS DE FUENTE

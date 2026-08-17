@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.14.0'
+version: '5.15.0'
 status: 'vigente'
 updated: '2026-08-17'
 owner: 'Hospital Regional de Ayacucho'
@@ -16,6 +16,48 @@ archivo. El formato se basa en
 
 
 
+
+## 5.15.0 - 2026-08-17
+
+### Anadido
+
+- **La doctrina se termina: capitulos 13 y 14, y su seccion de huecos queda
+  vacia.** Eran los dos que quedaban declarados —jerarquia tipografica e idioma—
+  y se escribieron midiendo, como los cinco anteriores.
+
+  El 13 encontro que el tamaño de letra esta resuelto (279 usos de `var(--text-*)`
+  frente a 8 valores sueltos) y el **peso no tenia escala ninguna**: seis valores
+  compitiendo en el consumidor —400, 600, 650, 700, 750, 800— y ocho en el ADN,
+  hasta 900. La mitad de esas distinciones **no se dibujan**: la familia declarada
+  es `'Open Sans', system-ui, …` pero no hay ningun `@font-face`, no se sirve
+  ningun fichero de fuente y la CSP del consumidor dice `font-src 'self'`, asi que
+  Open Sans no se carga nunca y se cae a `system-ui` —Segoe UI en Windows,
+  estatica—, donde 650 y 700 son el mismo trazo.
+
+  Ademas: `login` y `change-password` empiezan en `<h2>` y **no tienen `<h1>`**,
+  de modo que su indice de encabezados arranca sin titulo de pagina; el catalogo
+  de clientes salta de `<h1>` a `<h3>`. Las pantallas que si cumplen son las que
+  usan `page-header`, que emite el `<h1>` por su cuenta.
+
+  El 14 midio 221 mensajes de error de los que **207 se detienen en lo que fallo**
+  y nunca dicen que hacer; y dos nombres para el mismo objeto —«credito» 78 veces,
+  «prestamo» 38—, con «Alta del prestamo» y «Alta de credito» conviviendo como el
+  mismo acto.
+
+- **Escala de peso tipografico publicada**: `--font-weight-body` (400),
+  `--font-weight-emphasis` (600) y `--font-weight-title` (700). Tres pasos y no
+  seis, porque la familia que de verdad se carga no dibuja mas.
+
+- **`--touch-target-min`**, el objetivo tactil de WCAG 2.5.5, con su propio nombre
+  en vez de vivir como `--space-11` al final de la escala de espaciado siendo mas
+  pequeño que el 8, el 9 y el 10 (capitulo 10). `--space-11` se conserva por
+  compatibilidad, ahora con el aviso escrito al lado.
+
+- **`npm run check:typography`**, trinquete de la escala: cuenta los pesos
+  escritos a mano —hoy 147— y falla si suben. No se barren de golpe a proposito;
+  cambiar 500 por 600 engorda el trazo y 900 por 700 lo adelgaza, asi que la
+  migracion va componente a componente. El trinquete solo impide que la deuda
+  crezca mientras se paga.
 
 ## 5.14.0 - 2026-08-17
 

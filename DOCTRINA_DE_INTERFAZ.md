@@ -38,7 +38,7 @@ en 85 ficheros**.
 > capítulo 8 describe: alguien resuelve el caso que tiene delante y nadie
 > generaliza.
 
-> **Cómo se usa.** Antes de construir una pantalla, lee los doce títulos. Antes
+> **Cómo se usa.** Antes de construir una pantalla, lee los catorce títulos. Antes
 > de darla por terminada, léelos otra vez como lista de verificación. Cada regla
 > lleva el **daño** que evita y el **contraejemplo**: lo que hace, sin querer,
 > quien no la conoce.
@@ -367,25 +367,103 @@ es una confirmación: es que la pantalla diga lo que pasó.
 **Y una confirmación no es un permiso.** El capítulo 7 ya lo exige: el permiso se
 comprueba otra vez **después** del «sí».
 
+## 13. La tipografía tiene escala de tamaño, y también tiene que tenerla de peso
+
+**La regla.** Los tamaños salen de `--text-*`. Los **pesos salen de una escala de
+tres** —cuerpo, énfasis, título— y no de un número escrito a mano. Cada página
+tiene **un** `<h1>`, y de ahí para abajo no se salta ningún nivel.
+
+**El caso que lo ilustra.** El tamaño está resuelto: 279 usos de `var(--text-*)`
+frente a 8 valores sueltos en el consumidor. El peso no tiene escala **ninguna**,
+y por el hueco se colaron seis valores compitiendo: 800 (43 veces), 700 (41), 600
+(18), **650 (14)**, **750 (3)** y 400 (2). En el ADN, otros ocho: 600, 500, 700,
+800, 400, **650**, **900**, y un `font-weight:600` sin espacio que ninguna
+búsqueda por el patrón normal encuentra.
+
+**Y la mitad de esas distinciones no se ven.** 650 y 750 son pesos de fuente
+variable. La familia declarada es `'Open Sans', system-ui, …`, pero **no hay
+ningún `@font-face`, ningún fichero de fuente en el proyecto, y la CSP dice
+`font-src 'self'`**: Open Sans no se carga nunca, ni podría cargarse de fuera. Se
+cae a `system-ui`, que en Windows es Segoe UI —una familia estática—, así que 650
+y 700 aterrizan en el mismo trazo, y 750 y 800 en otro. Alguien afinó un contraste
+que el navegador colapsa en silencio.
+
+**Por qué el `<h1>` no es decoración.** Quien navega con lector de pantalla salta
+por encabezados, y ese salto es su índice. Medido: `login` y `change-password`
+empiezan en `<h2>` y **no tienen `<h1>`** —su índice arranca sin título de
+página—; el catálogo de clientes pasa de `<h1>` a `<h3>` sin `<h2>`. Las pantallas
+que **sí** están bien son las que usan `page-header`, que emite el `<h1>` por su
+cuenta: donde el organismo gobierna, la regla se cumple sola.
+
+**Y la regla vive en la compuerta.** La escala se publica —`--font-weight-body`,
+`--font-weight-emphasis`, `--font-weight-title`— y `check-typography-scale.mjs`
+lleva la cuenta de los pesos escritos a mano: hoy 147, y **el número solo puede
+bajar**. No se barren de golpe a propósito: cambiar 500 por 600 engorda el trazo y
+900 por 700 lo adelgaza, así que la migración va componente a componente, cuando
+se toca por otra razón y se puede mirar el resultado. El trinquete impide que la
+deuda crezca mientras se paga, que es lo único que no se puede dejar al criterio
+de nadie.
+
+**Cuatro niveles de encabezado son una pantalla que hay que partir.** Medido:
+`account-detail` tiene once `<h3>` colgando de un solo `<h2>`, y `credit-page`
+llega a `<h4>`. Cuando hace falta un cuarto nivel para situar un dato, lo que se
+ha alcanzado no es un límite tipográfico: es el punto en que la pantalla dejó de
+tener un tema.
+
+## 14. Un mensaje dice qué pasó Y qué hacer, y cada cosa tiene un solo nombre
+
+**La regla.** Un mensaje de error termina con **lo que la persona puede hacer a
+continuación**. Y el producto llama a cada cosa por **un** nombre, el mismo en
+todas las pantallas.
+
+**El caso que lo ilustra.** Medido en el consumidor: 221 mensajes de error, y
+**207 se detienen en lo que falló**. Solo 15 añaden una segunda frase. «No fue
+posible cargar los préstamos del cliente.» es cierta, es específica, cumple los
+capítulos 1 y 2 —y deja a quien la lee sin saber si esperar, reintentar, o
+llamar a alguien—. La diferencia entre un error informado y un error útil cabe en
+una frase.
+
+**Un nombre, no dos.** Medido: «crédito» aparece 78 veces en las plantillas y
+«préstamo» 38, para el mismo objeto. Conviven **«Alta del préstamo»** y **«Alta de
+crédito»**, que son el mismo acto; «Iniciar préstamo» junto a «Crear crédito»;
+«Historial de préstamos» bajo «Administración de créditos». Nadie se pierde del
+todo, y todos pagan un peaje: cada vez que aparece el segundo nombre hay que
+decidir si nombra lo mismo. Elegir cuál de los dos es asunto del negocio; tener
+uno solo es asunto de esta doctrina.
+
+**Y la forma de tratar también es un nombre.** Aquí se trata de **usted**: 184
+usos frente a cero de tuteo en texto visible. No se enuncia porque esté roto —está
+impecable—, sino porque es exactamente el tipo de acuerdo que se pierde el día que
+entra alguien que no lo sabía, y entonces la mitad de la aplicación tutea.
+
+**Lo que este capítulo NO pide.** Ni disculpas, ni «por favor», ni tono amable. Un
+mensaje que se disculpa gasta la única frase que tenía para decir qué hacer.
+
 ---
 
 ---
 
 ## Lo que esta doctrina no cubre
 
+**Esta sección ya no declara ningún hueco pendiente.** Los cinco que llegó a
+tener —espaciado, tabla-a-tarjetas, cuándo confirmar, jerarquía tipográfica e
+idioma— se cerraron en los capítulos 10 a 14, cada uno midiendo el código en vez
+de proponer un criterio.
+
+Lo que queda fuera, y seguirá fuera:
+
 - **Qué componente elegir.** Eso es el catálogo, y es obligatorio: solo se usan
   componentes y variantes declarados en `catalog/`.
 - **Lo que anuncia un lector de pantalla.** Ninguna regla de aquí lo sustituye.
   El árbol de accesibilidad **sí** es medible sin una persona; lo que la persona
   oye, no. Ver `LESSONS_LEARNED.md`, entrada del 2026-08-13.
-- **La jerarquía tipográfica y la densidad de una pantalla completa.** Cuántos
-  niveles de título, cuánto puede caber antes de partir en pestañas. Hoy cada
-  pantalla lo resuelve a su manera y no hay medición que sostenga una regla.
-- **El idioma y el tono de los textos.** Este documento exige que un mensaje diga
-  qué pasó; no fija cómo se escribe.
+- **Qué palabra elegir cuando hay dos.** El capítulo 14 exige que haya una sola;
+  cuál sea es decisión del negocio.
 
-Los tres huecos que esta sección declaraba —espaciado, tabla-a-tarjetas y cuándo
-confirmar— se cerraron en los capítulos 10, 11 y 12.
+Y una advertencia sobre esta lista: que hoy no tenga huecos no significa que esté
+terminada. **Cada capítulo nació de un daño medido**, no de una previsión. El
+siguiente aparecerá igual: alguien encontrará una pantalla que engaña de una
+forma que aquí no está escrita.
 
 ## Una advertencia sobre cómo se aplicó hasta ahora
 
