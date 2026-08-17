@@ -60,7 +60,7 @@ export type ProgressSize = 'sm' | 'md' | 'lg';
 
     .progress-label {
       font-size: var(--text-sm);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       color: var(--text-color);
     }
 

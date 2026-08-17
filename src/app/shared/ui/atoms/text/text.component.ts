@@ -62,7 +62,7 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify';
 
     /* Weights */
     .weight-normal { font-weight: var(--font-weight-body); }
-    .weight-medium { font-weight: 500; }
+    .weight-medium { font-weight: var(--font-weight-body); }
     .weight-semibold { font-weight: var(--font-weight-emphasis); }
     .weight-bold { font-weight: var(--font-weight-title); }
 

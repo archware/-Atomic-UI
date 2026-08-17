@@ -217,7 +217,7 @@ import { PopupService, PopupItem } from '../../services/popup.service';
     .popup-btn {
       padding: var(--space-2) var(--space-4);
       font-size: var(--text-sm);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       border: none;
       border-radius: var(--radius-md);
       cursor: pointer;

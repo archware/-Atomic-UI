@@ -124,7 +124,7 @@ export interface Step {
 
     .step-check {
       font-size: var(--text-md);
-      font-weight: 800;
+      font-weight: var(--font-weight-display);
     }
 
     /* TEXT CONTENT */

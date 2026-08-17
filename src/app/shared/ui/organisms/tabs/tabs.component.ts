@@ -99,7 +99,7 @@ export class TabComponent {
 
       margin-bottom: -1px;
       font-size: var(--text-md);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       color: var(--text-color-secondary);
       cursor: pointer;
       transition: all 200ms ease;

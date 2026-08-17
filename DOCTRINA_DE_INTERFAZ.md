@@ -370,8 +370,8 @@ comprueba otra vez **después** del «sí».
 ## 13. La tipografía tiene escala de tamaño, y también tiene que tenerla de peso
 
 **La regla.** Los tamaños salen de `--text-*`. Los **pesos salen de una escala de
-tres** —cuerpo, énfasis, título— y no de un número escrito a mano. Cada página
-tiene **un** `<h1>`, y de ahí para abajo no se salta ningún nivel.
+cuatro** —cuerpo, énfasis, título, destacado— y no de un número escrito a mano.
+Cada página tiene **un** `<h1>`, y de ahí para abajo no se salta ningún nivel.
 
 **El caso que lo ilustra.** El tamaño está resuelto: 279 usos de `var(--text-*)`
 frente a 8 valores sueltos en el consumidor. El peso no tiene escala **ninguna**,
@@ -380,13 +380,22 @@ y por el hueco se colaron seis valores compitiendo: 800 (43 veces), 700 (41), 60
 800, 400, **650**, **900**, y un `font-weight:600` sin espacio que ninguna
 búsqueda por el patrón normal encuentra.
 
-**Y la mitad de esas distinciones no se ven.** 650 y 750 son pesos de fuente
-variable. La familia declarada es `'Open Sans', system-ui, …`, pero **no hay
-ningún `@font-face`, ningún fichero de fuente en el proyecto, y la CSP dice
-`font-src 'self'`**: Open Sans no se carga nunca, ni podría cargarse de fuera. Se
-cae a `system-ui`, que en Windows es Segoe UI —una familia estática—, así que 650
-y 700 aterrizan en el mismo trazo, y 750 y 800 en otro. Alguien afinó un contraste
-que el navegador colapsa en silencio.
+**Y tres de esos valores no se ven.** La familia declarada es
+`'Open Sans', system-ui, …`, pero **no hay ningún `@font-face`, ningún fichero de
+fuente en el proyecto, y la CSP dice `font-src 'self'`**: Open Sans no se carga
+nunca, ni podría cargarse de fuera. Manda `system-ui`, que en Windows es Segoe UI.
+
+Contado en `C:\Windows\Fonts`, esa familia tiene cara propia en 400
+(`segoeui`), 600 (`seguisb`), 700 (`segoeuib`) y 900 (`seguibl`) — **cuatro
+grados reales**. Lo que no tiene cara es 500, 650 y 750: el navegador los resuelve
+a su vecino sin decirlo. Alguien afinó un contraste que no se dibuja.
+
+> **Corrección.** La primera versión de este capítulo afirmaba que «800 y 900 no
+> aportan trazo». Era falso: Segoe UI Black existe y se instala con Windows. Lo
+> que se colapsa son 500, 650 y 750, no la parte alta. La escala tiene por eso
+> cuatro pasos —`body` 400, `emphasis` 600, `title` 700, `display` 800— y no tres.
+> Se deja escrito porque la doctrina se sostiene sobre mediciones, y una medición
+> mal hecha se corrige donde se hizo.
 
 **Por qué el `<h1>` no es decoración.** Quien navega con lector de pantalla salta
 por encabezados, y ese salto es su índice. Medido: `login` y `change-password`
@@ -395,14 +404,19 @@ página—; el catálogo de clientes pasa de `<h1>` a `<h3>` sin `<h2>`. Las pan
 que **sí** están bien son las que usan `page-header`, que emite el `<h1>` por su
 cuenta: donde el organismo gobierna, la regla se cumple sola.
 
-**Y la regla vive en la compuerta.** La escala se publica —`--font-weight-body`,
-`--font-weight-emphasis`, `--font-weight-title`— y `check-typography-scale.mjs`
-lleva la cuenta de los pesos escritos a mano: hoy 147, y **el número solo puede
-bajar**. No se barren de golpe a propósito: cambiar 500 por 600 engorda el trazo y
-900 por 700 lo adelgaza, así que la migración va componente a componente, cuando
-se toca por otra razón y se puede mirar el resultado. El trinquete impide que la
-deuda crezca mientras se paga, que es lo único que no se puede dejar al criterio
-de nadie.
+**Y la regla vive en la compuerta.** `check-typography-scale.mjs` llevaba la
+cuenta de los pesos escritos a mano —147 al empezar— con una sola condición: que
+el número **solo pudiera bajar**. Hoy está en **cero**, así que ha dejado de ser
+un trinquete y es una prohibición: cualquier peso escrito a mano falla.
+
+El camino importa tanto como el destino. Primero se migraron los 167 que eran
+exactos —400, 600 y 700 son `body`, `emphasis` y `title`, así que no se movió un
+píxel—. Los 109 restantes se hicieron después, ya con la medición de las caras
+reales delante: 500 va a `body` porque no existe cara de 500 y el navegador ya lo
+dibujaba como 400; 650 va a `title` porque ya se dibujaba como 700; y 750, 800 y
+900 van a `display` porque los tres aterrizan en la misma cara Black. Ninguno de
+los dos pasos cambió lo que se ve, y el segundo no se podría haber justificado sin
+haber medido primero.
 
 **Cuatro niveles de encabezado son una pantalla que hay que partir.** Medido:
 `account-detail` tiene once `<h3>` colgando de un solo `<h2>`, y `credit-page`

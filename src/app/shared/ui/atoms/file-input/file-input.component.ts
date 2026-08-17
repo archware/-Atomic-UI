@@ -150,7 +150,7 @@ export type FileInputDensity = 'comfortable' | 'compact';
         display: block;
         margin-bottom: var(--space-2);
         font-size: var(--text-sm);
-        font-weight: 500;
+        font-weight: var(--font-weight-body);
         color: var(--text-color);
       }
 

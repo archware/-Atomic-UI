@@ -198,7 +198,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
       gap: var(--space-2);
       color: var(--text-color-secondary);
       font-size: var(--text-xs);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       line-height: 1.4;
     }
 

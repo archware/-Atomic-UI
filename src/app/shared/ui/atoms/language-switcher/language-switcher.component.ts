@@ -72,7 +72,7 @@ export interface Language {
       border-radius: var(--radius-md);
       color: var(--text-color);
       font-size: var(--text-sm);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       cursor: pointer;
       transition: all 150ms ease;
     }

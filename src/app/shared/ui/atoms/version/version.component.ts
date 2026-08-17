@@ -108,7 +108,7 @@ export type VersionVariant = 'pill' | 'badge' | 'text' | 'compact';
     }
 
     .atomic-version__name {
-      font-weight: 500 !important;
+      font-weight: var(--font-weight-body) !important;
       color: #94a3b8 !important;
     }
 

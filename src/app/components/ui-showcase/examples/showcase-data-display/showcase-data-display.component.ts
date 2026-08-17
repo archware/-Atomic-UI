@@ -173,7 +173,7 @@ import { ChartComponent } from '../../../../shared/ui/organisms/chart/chart.comp
   styles: [`
     .showcase-section { margin-bottom: 2rem; display: block; }
     .section-title { font-size: 1.25rem; font-weight: var(--font-weight-emphasis); margin-bottom: 1rem; color: var(--text-color); }
-    .subsection-title { font-size: 1rem; font-weight: 500; margin: 1rem 0 0.5rem; color: var(--text-color-secondary); }
+    .subsection-title { font-size: 1rem; font-weight: var(--font-weight-body); margin: 1rem 0 0.5rem; color: var(--text-color-secondary); }
     .avatar-grid, .chip-grid { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
 
     /* Badges styles */

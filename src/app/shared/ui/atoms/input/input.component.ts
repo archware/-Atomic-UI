@@ -59,7 +59,7 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
 
     .form-label {
       font-size: var(--text-sm);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       color: var(--text-color);
     }
 

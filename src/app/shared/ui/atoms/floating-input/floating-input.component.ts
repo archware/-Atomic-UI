@@ -178,7 +178,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
       top: var(--space-1);
       transform: translateY(0);
       font-size: 0.8125rem;
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       color: var(--info-color-text);
     }
 

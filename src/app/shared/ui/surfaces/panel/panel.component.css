@@ -184,7 +184,7 @@
 }
 
 .panel__title--weight-medium {
-  font-weight: 500;
+  font-weight: var(--font-weight-body);
 }
 
 .panel__title--weight-semibold {

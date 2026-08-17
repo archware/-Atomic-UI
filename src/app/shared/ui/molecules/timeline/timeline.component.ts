@@ -201,7 +201,7 @@ export interface TimelineItem {
       border-radius: var(--radius-full);
       background: var(--primary-color-lighter);
       color: var(--primary-color);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
     }
 
     .timeline-description {

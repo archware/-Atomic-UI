@@ -143,7 +143,7 @@ function normalizeSearch(value: string): string {
     .combobox-label {
       display: block;
       font-size: var(--text-sm);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       color: var(--text-color-secondary);
       margin-bottom: var(--space-1);
     }
@@ -225,7 +225,7 @@ function normalizeSearch(value: string): string {
 
     .combobox-option:hover,
     .combobox-option-highlighted { background: var(--surface-hover); }
-    .combobox-option-selected { color: var(--primary-color); font-weight: 500; }
+    .combobox-option-selected { color: var(--primary-color); font-weight: var(--font-weight-body); }
     .combobox-option-disabled { opacity: 0.5; cursor: not-allowed; }
 
     .combobox-check { color: var(--primary-color); font-size: var(--text-xs); }

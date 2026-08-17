@@ -67,7 +67,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
     .btn {
       padding: 0.5rem 1rem;
       border-radius: 0.375rem;
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       cursor: pointer;
       display: inline-flex;
       align-items: center;

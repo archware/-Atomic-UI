@@ -225,7 +225,7 @@ export interface Select2Option {
       top: -0.625rem;
       transform: translateY(0);
       font-size: var(--text-xs);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       color: var(--info-color-text);
     }
 
@@ -302,7 +302,7 @@ export interface Select2Option {
       color: var(--info-color-text);
       border-radius: var(--radius-full);
       font-size: var(--text-xs);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
     }
 
     .tag-remove {
@@ -431,7 +431,7 @@ export interface Select2Option {
     .select2-option.selected {
       background: var(--dropdown-item-selected);
       color: var(--info-color-text);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
     }
 
     .select2-option.disabled {

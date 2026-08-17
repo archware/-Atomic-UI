@@ -23,7 +23,7 @@
 .text-right { text-align: right !important; }
 
 .font-bold { font-weight: bold !important; }
-.font-medium { font-weight: 500 !important; }
+.font-medium { font-weight: var(--font-weight-body) !important; }
 .font-normal { font-weight: normal !important; }
 
 .text-muted { color: var(--text-color-muted) !important; }

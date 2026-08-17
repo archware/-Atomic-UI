@@ -29,13 +29,12 @@ ve en el diff.
 const raiz = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const origen = resolve(raiz, 'src');
 
-// Pesos escritos a mano. Cada migracion a var(--font-weight-*) baja este numero.
+// Pesos escritos a mano. 147 al fijar el trinquete, 0 hoy.
 //
-// 147 al fijar el trinquete -> 48 tras migrar los 99 que eran EXACTOS (400, 600 y
-// 700 coinciden con body, emphasis y title, asi que el dibujo no cambia ni un
-// pixel). Los 48 que quedan son 500, 650, 800 y 900: cambiarlos SI altera el
-// trazo, asi que van componente a componente, mirando el resultado.
-const MAXIMO_PESOS_A_MANO = 48;
+// A cero deja de ser un trinquete y pasa a ser una prohibicion: cualquier peso
+// escrito a mano falla. Es lo que se queria desde el principio; el trinquete solo
+// existia para poder llegar aqui sin bloquear el trabajo mientras tanto.
+const MAXIMO_PESOS_A_MANO = 0;
 
 const EXTENSIONES = new Set(['.css', '.scss', '.ts', '.html']);
 const PESO_A_MANO = /font-weight\s*:\s*(\d{3})\b/g;
@@ -43,6 +42,7 @@ const ESCALA = new Map([
   ['400', '--font-weight-body'],
   ['600', '--font-weight-emphasis'],
   ['700', '--font-weight-title'],
+  ['800', '--font-weight-display'],
 ]);
 
 function recolectar(directorio) {

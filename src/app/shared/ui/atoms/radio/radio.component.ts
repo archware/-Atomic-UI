@@ -79,7 +79,7 @@ export interface RadioOption {
 
     .radio-group-label {
       font-size: var(--text-sm);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       color: var(--text-color);
       margin-bottom: var(--space-1);
     }
@@ -170,7 +170,7 @@ export interface RadioOption {
     /* Selected label styling */
     .radio-wrapper.selected .radio-label {
       color: var(--primary-color);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
     }
   `]
 })

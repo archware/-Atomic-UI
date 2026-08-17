@@ -18,7 +18,7 @@
   height: var(--control-height);
   padding: 0 1rem;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: var(--font-weight-body);
   line-height: 1.25;
   border-radius: 0.5rem;
   border: 1px solid transparent;
@@ -221,7 +221,7 @@
   padding: 0;
   height: auto;
   line-height: inherit;
-  font-weight: 500;
+  font-weight: var(--font-weight-body);
 }
 
 .btn-link:hover:not(:disabled) {

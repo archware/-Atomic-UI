@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.17.0'
+version: '5.18.0'
 status: 'vigente'
 updated: '2026-08-17'
 owner: 'Hospital Regional de Ayacucho'
@@ -16,6 +16,32 @@ archivo. El formato se basa en
 
 
 
+
+## 5.18.0 - 2026-08-17
+
+### Cambiado
+
+- **Los 48 pesos que quedaban a mano, migrados. El trinquete llega a cero.** Ya
+  no es un trinquete: es una prohibicion, y cualquier peso escrito a mano falla el
+  gate.
+
+- **La escala pasa a cuatro pasos: se añade `--font-weight-display` (800).**
+
+### Corregido
+
+- **La doctrina afirmaba que «800 y 900 no aportan trazo». Era falso.** Contado en
+  `C:\Windows\Fonts`, Segoe UI tiene cara propia en 400 (`segoeui`), 600
+  (`seguisb`), 700 (`segoeuib`) y **900 (`seguibl`, Segoe UI Black, que se instala
+  con Windows)**. Lo que no tiene cara es 500, 650 y 750, que el navegador
+  resuelve a su vecino sin decirlo.
+
+  La correccion queda escrita dentro del capitulo 13, no borrada: la doctrina se
+  sostiene sobre mediciones, y una medicion mal hecha se corrige donde se hizo.
+
+  Con las caras reales delante, la migracion de los 48 tampoco cambia lo que se
+  ve: 500 va a `body` porque ya se dibujaba como 400; 650 va a `title` porque ya
+  se dibujaba como 700; y 750, 800 y 900 van a `display` porque los tres aterrizan
+  en la misma cara Black.
 
 ## 5.17.0 - 2026-08-17
 

@@ -165,7 +165,7 @@ export interface DropdownOption {
 
     .dropdown-option.selected {
       color: var(--primary-color);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       background: var(--primary-color-lighter);
     }
 

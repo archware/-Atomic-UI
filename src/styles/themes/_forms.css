@@ -194,7 +194,7 @@ html.dark .form-select {
   display: block;
   margin-bottom: 0.5rem;
   font-size: 0.9375rem;
-  font-weight: 500;
+  font-weight: var(--font-weight-body);
   color: var(--info-color-text);
 }
 

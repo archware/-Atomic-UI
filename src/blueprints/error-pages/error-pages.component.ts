@@ -169,7 +169,7 @@ const ERROR_DEFAULTS: Record<ErrorCode, Omit<ErrorPageConfig, 'primaryAction' | 
 
     .error-code {
       font-size: 7rem;
-      font-weight: 900;
+      font-weight: var(--font-weight-display);
       line-height: 1;
       color: var(--primary-color);
       opacity: 0.15;
