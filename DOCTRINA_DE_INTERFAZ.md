@@ -484,10 +484,24 @@ accesible, no como botones con etiqueta. Medido: tres botones etiquetados
 columnas de datos juntas, se montaban unos sobre otros **y tapaban la columna de
 estado**, que es justo lo que hay que leer para decidir qué hacer con esa fila.
 
+**El mismo acto lleva el mismo icono en toda la aplicación.** Un boton que abre
+un alta —«Nuevo», «Agregar», «Autorizar»— lleva su verbo Y su icono: el texto se
+lee, el icono se reconoce, y es lo que hace que ese botón se encuentre igual de
+rápido en una pantalla que nunca se ha visto. Medido antes de corregirlo: de 19
+botones de alta, **uno solo** llevaba icono. Alguien lo hizo bien una vez y nadie
+lo generalizó, que es el patrón del que advierte el cierre de este documento.
+
 **Cuando ni así cabe, la fila necesita un menú, no letra más pequeña.** Por
 encima de tres o cuatro acciones se agrupan en un desplegable con las frecuentes
 a la vista. Reducir el tamaño para que quepan es empujar el problema al objetivo
 táctil, que tiene su propio mínimo y no se negocia.
+
+**El contenedor pone el hueco; el contenido pone su tipografía.** El cuerpo de un
+panel fijaba color y tamaño de letra, y eso lo hereda todo lo que se meta dentro.
+La misma tabla se dibujaba más pequeña y más apagada por el solo hecho de estar
+dentro de un acordeon, y quien la comparaba con la de otra pantalla veia dos
+tablas distintas sin que nada lo explicara. Un contenedor de disposición decide
+dónde van las cosas, no de qué color son.
 
 **Y lo que se pliega sigue existiendo para quien no lo ve.** Cada panel se
 anuncia como encabezado, con el nivel que le toque en la pantalla: si no, quien

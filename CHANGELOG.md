@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.20.0'
+version: '5.21.0'
 status: 'vigente'
 updated: '2026-08-18'
 owner: 'Hospital Regional de Ayacucho'
@@ -16,6 +16,24 @@ archivo. El formato se basa en
 
 
 
+
+## 5.21.0 - 2026-08-18
+
+### Corregido
+
+- **El panel del acordeon imponia su tipografia a lo que contenia.** El cuerpo
+  fijaba `color` y `font-size`, y eso lo hereda todo lo que se meta dentro: la
+  misma tabla se dibujaba mas pequeña y mas apagada por el solo hecho de estar
+  dentro de un acordeon, y quien la comparaba con la de otra pantalla veia dos
+  tablas distintas sin que nada lo explicara. El panel se queda con el hueco, que
+  es lo suyo.
+
+### Anadido
+
+- **Dos reglas mas en el capitulo 15.** Que un contenedor de disposicion decide
+  donde van las cosas y no de que color son; y que el mismo acto lleva el mismo
+  icono en toda la aplicacion —medido: de 19 botones de alta, uno solo lo
+  llevaba—.
 
 ## 5.20.0 - 2026-08-18
 

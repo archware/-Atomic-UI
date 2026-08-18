@@ -262,12 +262,23 @@ export class AccordionComponent {
         grid-template-rows: 1fr;
       }
 
+      /*
+      UN CONTENEDOR DE DISPOSICION NO DECIDE LA TIPOGRAFIA DE LO QUE CONTIENE.
+
+      El cuerpo del panel fijaba el color y el tamaño de letra, y eso lo hereda todo lo
+      que se meta dentro: una tabla, un formulario, una tarjeta. La misma tabla se
+      dibujaba mas pequeña y mas apagada por el solo hecho de estar dentro de un
+      acordeon, y quien la comparaba con la de otra pantalla veia dos tablas
+      distintas sin que nada lo explicara.
+
+      El panel se queda con lo suyo —el hueco— y cada componente sigue trayendo su
+      propia tipografia. El texto suelto que antes se apoyaba en esto la hereda
+      ahora del contenedor de la pagina, que es de donde debe venir.
+      */
       .accordion-body {
         min-height: 0;
         overflow: hidden;
         padding-inline: var(--space-4);
-        color: var(--text-color-secondary);
-        font-size: var(--text-sm);
         line-height: 1.6;
       }
 
