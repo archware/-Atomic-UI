@@ -4,16 +4,30 @@
   max-width: 100%;
 }
 
+/*
+UN MARGEN SOLO ABAJO DEJA EL AVISO PEGADO A LO DE ARRIBA.
+
+Casi todas las pantallas que consumen esto disponen su contenido con
+`display: grid` y un `gap` —22 de 27 medidas—, y en una rejilla los margenes NO
+se colapsan con el hueco: se suman. Resultado medido en la cola de solicitudes:
+1rem de separacion con lo que hay ENCIMA y 3,25rem con lo que hay DEBAJO. El
+aviso queda pegado al titulo y flotando sobre la tabla, y lo que se lee como
+descuido es esa asimetria.
+
+El margen se reparte ahora a los dos lados. En una rejilla eso deja el aviso
+centrado en su hueco; en flujo de bloque los margenes contiguos se colapsan, asi
+que la separacion total no crece.
+*/
 :host.alert-flow--default {
-  margin-block-end: var(--feedback-section-gap, 2.25rem);
+  margin-block: calc(var(--feedback-section-gap, 2.25rem) / 2);
 }
 
 :host.alert-flow--compact {
-  margin-block-end: var(--feedback-compact-gap, 1rem);
+  margin-block: calc(var(--feedback-compact-gap, 1rem) / 2);
 }
 
 :host.alert-flow--none {
-  margin-block-end: 0;
+  margin-block: 0;
 }
 
 .alert {

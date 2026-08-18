@@ -1,9 +1,9 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.18.0'
+version: '5.19.0'
 status: 'vigente'
-updated: '2026-08-17'
+updated: '2026-08-18'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
@@ -16,6 +16,21 @@ archivo. El formato se basa en
 
 
 
+
+## 5.19.0 - 2026-08-18
+
+### Corregido
+
+- **El aviso quedaba pegado a lo de arriba y flotando sobre lo de abajo.** El
+  margen de flujo era solo `margin-block-end`, y casi todas las pantallas que
+  consumen el componente disponen su contenido con `display: grid` y un `gap`
+  —22 de 27 medidas—. En una rejilla los margenes NO se colapsan con el hueco:
+  se suman. Medido en una cola real: 1rem de separacion con lo que hay ENCIMA y
+  3,25rem con lo que hay DEBAJO.
+
+  Lo que se lee como descuido es esa asimetria. El margen se reparte ahora a los
+  dos lados: en rejilla el aviso queda centrado en su hueco, y en flujo de bloque
+  los margenes contiguos se colapsan, asi que la separacion total no crece.
 
 ## 5.18.0 - 2026-08-17
 
