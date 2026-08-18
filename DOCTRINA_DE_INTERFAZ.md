@@ -38,7 +38,7 @@ en 85 ficheros**.
 > capítulo 8 describe: alguien resuelve el caso que tiene delante y nadie
 > generaliza.
 
-> **Cómo se usa.** Antes de construir una pantalla, lee los catorce títulos. Antes
+> **Cómo se usa.** Antes de construir una pantalla, lee los quince títulos. Antes
 > de darla por terminada, léelos otra vez como lista de verificación. Cada regla
 > lleva el **daño** que evita y el **contraejemplo**: lo que hace, sin querer,
 > quien no la conoce.
@@ -453,6 +453,48 @@ entra alguien que no lo sabía, y entonces la mitad de la aplicación tutea.
 **Lo que este capítulo NO pide.** Ni disculpas, ni «por favor», ni tono amable. Un
 mensaje que se disculpa gasta la única frase que tenía para decir qué hacer.
 
+## 15. Se pliega lo que compite, no lo único que hay
+
+**La regla.** Un contenedor tiene un presupuesto —el alto de la pantalla, el
+ancho de una fila— y el contenido tiene que caber dentro. Cuando **varias** cosas
+compiten por ese sitio se pliegan o se comprimen; cuando hay **una sola**, no.
+Plegar lo único que hay esconde tras un clic la razón por la que alguien entró.
+
+**Acordeón: desde dos secciones, y ni una menos.** El acordeón sirve cuando la
+pantalla apila secciones que compiten por el mismo alto y hay que recorrerlas
+todas para llegar a la de abajo. Con una sección, un acordeón de un elemento
+convierte «lo que buscabas está aquí» en «lo que buscabas está detrás de esto».
+
+**Y no todos los paneles nacen igual.** Se abre lo que se viene a hacer; arranca
+plegado lo que se consulta de vez en cuando. Un acordeón que abre todo no plegó
+nada; uno que lo cierra todo obliga a abrir para saber qué hay dentro.
+
+**El caso que lo ilustra.** Seis pantallas de catálogo, medidas: una agrupaba en
+acordeón porque presenta **seis** catálogos distintos, y otra apila **tres**
+secciones —el gasto administrativo, las tasas de crédito y las de ahorro— que
+había que recorrer enteras para llegar a la última. Esas dos lo piden. Las otras
+cuatro tienen **una sola tabla** cada una: darles el mismo acordeón «por
+uniformidad» habría escondido tras un clic lo único que esas pantallas muestran.
+La uniformidad que faltaba estaba en la cabecera, no en el plegado.
+
+**El mismo presupuesto, en horizontal: la fila.** Las acciones de una fila
+comparten ancho con las columnas de datos, así que van como iconos con nombre
+accesible, no como botones con etiqueta. Medido: tres botones etiquetados
+—«Abrir y evaluar», «Generar crédito», «Anular»— ocupaban más que las seis
+columnas de datos juntas, se montaban unos sobre otros **y tapaban la columna de
+estado**, que es justo lo que hay que leer para decidir qué hacer con esa fila.
+
+**Cuando ni así cabe, la fila necesita un menú, no letra más pequeña.** Por
+encima de tres o cuatro acciones se agrupan en un desplegable con las frecuentes
+a la vista. Reducir el tamaño para que quepan es empujar el problema al objetivo
+táctil, que tiene su propio mínimo y no se negocia.
+
+**Y lo que se pliega sigue existiendo para quien no lo ve.** Cada panel se
+anuncia como encabezado, con el nivel que le toque en la pantalla: si no, quien
+recorre saltando por títulos pasa del título de la página al contenido del primer
+panel abierto sin enterarse de que los demás existen. Eso era un defecto real del
+acordeón del ADN, y está contado en el capítulo 13.
+
 ---
 
 ---
@@ -462,7 +504,7 @@ mensaje que se disculpa gasta la única frase que tenía para decir qué hacer.
 **Esta sección ya no declara ningún hueco pendiente.** Los cinco que llegó a
 tener —espaciado, tabla-a-tarjetas, cuándo confirmar, jerarquía tipográfica e
 idioma— se cerraron en los capítulos 10 a 14, cada uno midiendo el código en vez
-de proponer un criterio.
+de proponer un criterio. El 15 llegó después, de mirar la aplicación en marcha.
 
 Lo que queda fuera, y seguirá fuera:
 

@@ -1,7 +1,7 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.19.0'
+version: '5.20.0'
 status: 'vigente'
 updated: '2026-08-18'
 owner: 'Hospital Regional de Ayacucho'
@@ -16,6 +16,26 @@ archivo. El formato se basa en
 
 
 
+
+## 5.20.0 - 2026-08-18
+
+### Anadido
+
+- **Capitulo 15 de la doctrina: «Se pliega lo que compite, no lo unico que hay».**
+  Un contenedor tiene un presupuesto —el alto de la pantalla, el ancho de una
+  fila— y cuando VARIAS cosas compiten por ese sitio se pliegan; cuando hay una
+  sola, no. Plegar lo unico que hay esconde tras un clic la razon por la que
+  alguien entro.
+
+  Sale de una decision real: seis pantallas de catalogo medidas, dos con varias
+  secciones —una con seis catalogos, otra con tres— que si piden acordeon, y
+  cuatro con una sola tabla, a las que darselo «por uniformidad» habria escondido
+  lo unico que muestran.
+
+  El capitulo recoge tambien el mismo presupuesto en horizontal: las acciones de
+  una fila comparten ancho con las columnas, asi que van como iconos con nombre
+  accesible. Medido: tres botones etiquetados ocupaban mas que las seis columnas
+  de datos juntas, se solapaban y tapaban la columna de estado.
 
 ## 5.19.0 - 2026-08-18
 

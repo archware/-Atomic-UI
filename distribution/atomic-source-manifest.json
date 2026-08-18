@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.19.0",
+  "packageVersion": "5.20.0",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "656d248e0e8f6ab5ccc4c8f7e5f71bb9652802dbec03275cf51106b9de50ef48",
+  "sourceTreeSha256": "49fd8fd41bbdb9c6d8648658d3e844767dd0baae60887968dda83ffa2bd9de5e",
   "fileCount": 158,
   "files": [
     {
@@ -21,7 +21,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 855,
-      "sha256": "28329c691958c7f015019b8ef3ed7bf0e859c088d025b05dc96bc1e95af57673"
+      "sha256": "024dfaf2720d0f6b5326ae10521e79748c8614fd0f037c01cad3d629d3a58fc0"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
