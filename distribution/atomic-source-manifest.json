@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@hra/atomic-ui",
-  "packageVersion": "5.21.0",
+  "packageVersion": "5.22.0",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "396c4686a20c5bb6c9d7a04f8767b9160671d130beb174c769eaf59c23eda30a",
+  "sourceTreeSha256": "bae5a8e939f719c15eace755834f6e0d63edbe289d5899e077d07fad58d1b37d",
   "fileCount": 158,
   "files": [
     {
@@ -250,8 +250,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/toggle/toggle.component.ts",
-      "bytes": 4067,
-      "sha256": "54931d4e79f961ebd0ae82bc4e9d61c29c9a8728d8bf2f353f87809d2c89b5ef"
+      "bytes": 4974,
+      "sha256": "c0adb5cc9cc45aab9edf9cf4ab9098c73ae1f8e3a0ca3b9dec849283ea88c85d"
     },
     {
       "path": "src/app/shared/ui/atoms/tooltip/tooltip.directive.ts",
@@ -805,3 +805,4 @@
     }
   ]
 }
+
