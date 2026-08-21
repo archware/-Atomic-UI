@@ -513,6 +513,41 @@ acordeón del ADN, y está contado en el capítulo 13.
 
 ---
 
+## 16. Un token no es una unidad: la sustitución tiene que cerrar la cuenta
+
+Pasar de píxeles a tokens parece traducción y no lo es. `24px` y `20px` son dos
+medidas distintas; si las dos acaban en `var(--space-5)` porque «se parecen»,
+la geometría deja de cerrar y nadie lo nota hasta que se mira de cerca.
+
+Eso le pasó al interruptor. Con los valores reales —pista de 3 rem por 1,75 rem,
+relleno 0,25 rem, pulgar 1,5 rem— el pulgar era **más alto que el interior de su
+propia pista** y sobresalía por abajo, y al marcarlo se iba medio rem por fuera
+del borde derecho, porque el recorrido disponible era 1 rem y se pedía 1,5.
+
+Compilaba. Pasaba las pruebas. Las 444 del ADN seguían en verde, porque ninguna
+mide dónde cae un pulgar. Solo se veía mirándolo.
+
+**La regla.** Cuando una pieza se compone de varias medidas —contenedor,
+relleno, contenido, recorrido— la sustitución no está hecha hasta que la cuenta
+cierra con los valores reales de los tokens, no con los que uno supone que
+tienen. Y si no cierra, no se ajusta a ojo: se eligen medidas que caigan en la
+escala y se deja escrita la aritmética.
+
+    interior  = pista − 2·relleno
+    contenido ≤ interior
+    recorrido = interior − contenido
+
+En el interruptor: interior 2,5 × 1 rem, pulgar 1 rem —cabe exacto en el alto, y
+por eso queda centrado solo, sin un `align-items` que lo disimule— y recorrido
+1,5 rem, que resulta ser `--space-5`. Esa coincidencia es la señal de que la
+cuenta cierra, no la causa de que se eligiera.
+
+**Un token con respaldo que siempre usa el respaldo es una mentira.** El relleno
+de la pista era `var(--space-0, var(--space-1))` y `--space-0` no existe en
+ninguna parte. El valor salía siempre de `--space-1`; el primer término solo
+servía para hacer creer a quien leyera que el relleno era cero. Si el respaldo
+es el valor, el respaldo es el valor: se escribe y ya está.
+
 ## Lo que esta doctrina no cubre
 
 **Esta sección ya no declara ningún hueco pendiente.** Los cinco que llegó a
