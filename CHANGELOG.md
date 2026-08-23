@@ -29,6 +29,8 @@ archivo. El formato se basa en
 - Se registró que los consumidores se migran mediante auditoría, decisión y
   procedencia verificable; las referencias y huellas no se actualizan de forma
   aislada para silenciar una divergencia.
+- Se regeneró `documentation.json` con la superficie real de Atomic UI 5.22.0
+  después de validar la aplicación, la biblioteca y Storybook.
 
 ## 5.22.0 - 2026-08-20
 
