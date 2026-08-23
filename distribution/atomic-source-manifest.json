@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "fde48b6c97d9dad600df87caee313462fac0607477f60a1de5474e99a2d0c04c",
+  "sourceTreeSha256": "ad325fb77bfbfc3d57a0494f38a13d7e689ddb79d4c59f746a37a62ea08248f6",
   "fileCount": 158,
   "files": [
     {
@@ -385,8 +385,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/table-actions/table-actions.component.css",
-      "bytes": 1316,
-      "sha256": "00769caa829022ef26c3a51f1830dd702007da7bb8b118df5a80494fed45bfb7"
+      "bytes": 1315,
+      "sha256": "51fa56471ec27e59ce85d74e463aebac53fe9e56b40e6db2aa90f09bc30ebd1e"
     },
     {
       "path": "src/app/shared/ui/molecules/table-actions/table-actions.component.html",
