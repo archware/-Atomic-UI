@@ -20,6 +20,8 @@ archivo. El formato se basa en
 - El instalador de gobierno conserva `tokens.required` y la justificación con
   su `decisionRecord` cuando una adaptación mantiene exactamente la misma
   huella. Una diferencia nueva continúa exigiendo una decisión nueva.
+- Se retiraron dos espacios finales de `_forms.css` para que la fuente
+  propagable cumpla `git diff --check` sin obligar a divergir a los consumidores.
 
 ### Documentación
 

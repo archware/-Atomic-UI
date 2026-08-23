@@ -126,8 +126,8 @@ input::-ms-clear {
 }
 
 /* Dark mode semantic override for arrow icon (inverted color if needed) */
-/* Note: For simplicity, checking if we need a light arrow for dark mode. 
-   Ideally, use an SVG with currentColor or a CSS variable for the URL if supported, 
+/* Note: For simplicity, checking if we need a light arrow for dark mode.
+   Ideally, use an SVG with currentColor or a CSS variable for the URL if supported,
    but data URI with separate definitions is safer for cross-browser. */
 [data-theme="dark"] .form-select,
 [data-theme="brand-dark"] .form-select,
