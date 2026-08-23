@@ -158,7 +158,7 @@
   cursor: not-allowed;
 }
 
-/* 
+/*
  * Dark mode se maneja automáticamente via tokens semánticos.
  * --surface-elevated, --border-color, etc. ya tienen valores
  * apropiados para temas oscuros.

@@ -250,8 +250,8 @@ export class ButtonComponent {
 
   /**
    * Indicates that the action is pending.
-   * Loading disables the native control, exposes aria-busy and suppresses
-   * repeated buttonClick emissions while preserving the projected label.
+   * Loading exposes aria-disabled and aria-busy, preserves focus, and suppresses
+   * repeated activations and native form actions while preserving the projected label.
    * @default false
    */
   @Input() loading = false;
@@ -321,9 +321,17 @@ export class ButtonComponent {
 
   onButtonClick(event: MouseEvent): void {
     event.stopPropagation();
-    if (!this.isDisabled) {
-      this.buttonClick.emit(event);
+    if (this.isDisabled) {
+      /*
+       * aria-disabled mantiene el foco durante loading, pero no cancela el
+       * comportamiento nativo. Sin preventDefault, un botón submit todavía
+       * enviaría el formulario aunque no emitiera buttonClick.
+       */
+      event.preventDefault();
+      return;
     }
+
+    this.buttonClick.emit(event);
   }
 
   /** @internal */

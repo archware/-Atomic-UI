@@ -82,7 +82,12 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
     .btn-danger { background-color: var(--danger-color); color: white; }
     .btn-outline { background-color: transparent; border-color: var(--border-color); color: var(--text-color); }
     .btn-ghost { background-color: transparent; color: var(--text-color); }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn:disabled {
+      background: var(--input-disabled-bg);
+      border-color: var(--input-disabled-text);
+      color: var(--input-disabled-text);
+      cursor: not-allowed;
+    }
     .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.875rem; }
     .btn-lg { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
   `]

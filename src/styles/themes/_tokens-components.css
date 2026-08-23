@@ -183,6 +183,9 @@
 
    --button-ghost-text: var(--text-color-secondary);
    --button-ghost-hover-bg: var(--hover-background-subtle);
+   --button-disabled-bg: var(--input-disabled-bg);
+   --button-disabled-text: var(--input-disabled-text);
+   --button-disabled-border: var(--input-disabled-text);
    --action-bar-gap: 2.25rem;
 
    /* Button Shadows */
@@ -475,6 +478,9 @@ html.dark {
 
    --button-ghost-text: var(--text-color-secondary);
    --button-ghost-hover-bg: var(--hover-background-subtle);
+   --button-disabled-bg: var(--input-disabled-bg);
+   --button-disabled-text: var(--input-disabled-text);
+   --button-disabled-border: var(--input-disabled-text);
 
    /* Button Shadows (Dark Mode - more subtle) */
    --button-shadow-inset: inset 0 1px 0 hsla(224, 60%, 70%, 0.4);
@@ -716,6 +722,9 @@ html.dark {
 
    --button-ghost-text: var(--text-color-secondary);
    --button-ghost-hover-bg: var(--hover-background-subtle);
+   --button-disabled-bg: var(--input-disabled-bg);
+   --button-disabled-text: var(--input-disabled-text);
+   --button-disabled-border: var(--input-disabled-text);
 
    /* Button Shadows (Brand-Dark Mode) */
    --button-shadow-inset: inset 0 1px 0 hsla(224, 60%, 70%, 0.4);

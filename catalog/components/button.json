@@ -8,6 +8,7 @@
   "source": "src/app/shared/ui/atoms/button/button.component.ts",
   "relatedSources": [
     "src/styles/themes/_buttons.css",
+    "src/styles/themes/_tokens-components.css",
     "src/app/shared/ui/atoms/spinner/spinner.component.ts"
   ],
   "purpose": "Acción nativa principal o secundaria con jerarquía, tono, tamaño e iconografía consistentes.",
@@ -163,7 +164,7 @@
         },
         {
           "value": true,
-          "meaning": "Muestra progreso, deshabilita el botón y bloquea activaciones repetidas."
+          "meaning": "Muestra progreso, conserva el foco y bloquea activaciones y acciones nativas repetidas."
         }
       ]
     }
@@ -173,7 +174,7 @@
       "name": "loading",
       "type": "boolean",
       "default": false,
-      "meaning": "Marca aria-busy, muestra un Spinner decorativo y aplica disabled nativo mientras la acción está pendiente."
+      "meaning": "Marca aria-disabled y aria-busy, muestra un Spinner decorativo, conserva el foco y cancela la activación mientras la acción está pendiente."
     },
     {
       "name": "type",
@@ -252,7 +253,7 @@
     {
       "name": "buttonClick",
       "type": "MouseEvent",
-      "meaning": "Clic válido; no emite si disabled o loading y detiene propagación."
+      "meaning": "Clic válido; si disabled o loading no emite y cancela propagación y comportamiento nativo."
     }
   ],
   "slots": [
@@ -275,7 +276,7 @@
   "states": [
     {
       "name": "loading",
-      "meaning": "Usa disabled nativo, aria-busy y spinner sin emitir comandos adicionales."
+      "meaning": "Usa aria-disabled, aria-busy y spinner; conserva el foco y cancela la activación, incluido el submit nativo."
     },
     {
       "name": "enabled",
@@ -283,7 +284,7 @@
     },
     {
       "name": "disabled",
-      "meaning": "Usa disabled nativo y no emite."
+      "meaning": "Usa disabled nativo, aplica una superficie semántica accesible y no emite."
     },
     {
       "name": "focus-visible",
@@ -291,8 +292,8 @@
     }
   ],
   "a11y": [
-    "loading conserva la etiqueta textual, expone aria-busy y oculta el spinner decorativo del árbol accesible.",
-    "Usa button nativo y disabled nativo.",
+    "loading conserva el foco y la etiqueta textual, expone aria-disabled y aria-busy, cancela el comportamiento nativo y oculta el spinner decorativo del árbol accesible.",
+    "disabled usa el atributo nativo; disabled y loading comparten una superficie de alto contraste sin reducir la opacidad.",
     "La etiqueta proyectada debe proporcionar el nombre accesible.",
     "Los iconos configurados y proyectados son decorativos y se excluyen del nombre accesible mediante aria-hidden.",
     "El contenido textual proyectado debe proporcionar el nombre accesible."
@@ -317,6 +318,9 @@
     "--button-outline-text",
     "--button-ghost-hover-bg",
     "--button-ghost-text",
+    "--button-disabled-bg",
+    "--button-disabled-text",
+    "--button-disabled-border",
     "--button-tone-bg",
     "--button-tone-bg-hover",
     "--button-tone-border",

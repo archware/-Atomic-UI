@@ -172,6 +172,25 @@ export interface RadioOption {
       color: var(--primary-color);
       font-weight: var(--font-weight-body);
     }
+
+    .radio-group.disabled .radio-group-label,
+    .radio-wrapper.disabled .radio-label {
+      color: var(--input-disabled-text);
+    }
+
+    .radio-wrapper.disabled .radio-circle {
+      background: var(--input-disabled-bg);
+      border-color: var(--input-disabled-text);
+    }
+
+    .radio-wrapper.disabled .radio-input:checked + .radio-circle {
+      background: var(--input-disabled-text);
+      border-color: var(--input-disabled-text);
+    }
+
+    .radio-wrapper.disabled .radio-dot {
+      background: var(--input-disabled-bg);
+    }
   `]
 })
 export class RadioComponent implements ControlValueAccessor {

@@ -926,12 +926,26 @@ export * from './atoms/mi-componente/mi-componente.component';
 <app-button variant="primary" size="md" [loading]="false"> Guardar </app-button>
 ```
 
-| Input      | Tipo                                                           | Default     | Descripción     |
-| ---------- | -------------------------------------------------------------- | ----------- | --------------- |
-| `variant`  | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'danger'` | `'primary'` | Estilo visual   |
-| `size`     | `'sm' \| 'md' \| 'lg'`                                         | `'md'`      | Tamaño          |
-| `loading`  | `boolean`                                                      | `false`     | Mostrar spinner |
-| `disabled` | `boolean`                                                      | `false`     | Deshabilitar    |
+| Input      | Tipo                                                                                                        | Default     | Descripción     |
+| ---------- | ----------------------------------------------------------------------------------------------------------- | ----------- | --------------- |
+| `variant`  | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger' \| 'soft' \| 'outline' \| 'ghost' \| 'link'` | `'primary'` | Estilo visual   |
+| `size`     | `'sm' \| 'md' \| 'lg'`                                                                                      | `'md'`      | Tamaño          |
+| `loading`  | `boolean`                                                                                                   | `false`     | Mostrar spinner |
+| `disabled` | `boolean`                                                                                                   | `false`     | Deshabilitar    |
+
+El estado `disabled` utiliza el atributo nativo. El estado `loading` conserva
+el foco mediante `aria-disabled`, comunica la operación con `aria-busy` y
+cancela tanto `buttonClick` como la acción nativa de un botón `submit`. Ambos
+estados comparten los tokens `--button-disabled-bg`,
+`--button-disabled-text` y `--button-disabled-border`; ninguna variante reduce
+la opacidad para comunicar que no está disponible.
+
+#### `CheckboxComponent` y `RadioComponent`
+
+Los controles nativos mantienen su semántica y su estado `disabled`. La
+etiqueta, el borde y el indicador visual utilizan `--input-disabled-text` y
+`--input-disabled-bg`; las opciones seleccionadas invierten ese par para que la
+marca continúe siendo distinguible sin depender de opacidad.
 
 #### `ChipComponent`
 

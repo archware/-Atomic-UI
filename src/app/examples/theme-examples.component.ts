@@ -172,9 +172,10 @@ export class ExampleConditionalComponent {
     }
 
     button:disabled {
-      background-color: #cbd5e1;
+      background-color: var(--input-disabled-bg);
+      border-color: var(--input-disabled-text);
+      color: var(--input-disabled-text);
       cursor: not-allowed;
-      opacity: 0.6;
     }
   `]
 })

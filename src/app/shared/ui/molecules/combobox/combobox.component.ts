@@ -226,7 +226,15 @@ function normalizeSearch(value: string): string {
     .combobox-option:hover,
     .combobox-option-highlighted { background: var(--surface-hover); }
     .combobox-option-selected { color: var(--primary-color); font-weight: var(--font-weight-body); }
-    .combobox-option-disabled { opacity: 0.5; cursor: not-allowed; }
+    .combobox-option-disabled {
+      background: var(--input-disabled-bg);
+      color: var(--input-disabled-text);
+      cursor: not-allowed;
+    }
+
+    .combobox-option-disabled .combobox-check {
+      color: var(--input-disabled-text);
+    }
 
     .combobox-check { color: var(--primary-color); font-size: var(--text-xs); }
 

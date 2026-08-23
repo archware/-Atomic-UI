@@ -1,6 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideZonelessChangeDetection } from '@angular/core';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ButtonComponent, ButtonTone, ButtonVariant } from './button.component';
+
+@Component({
+  selector: 'app-formulario-button-host',
+  standalone: true,
+  imports: [ButtonComponent],
+  template: `
+    <form (submit)="registrarEnvio($event)">
+      <app-button type="submit" [loading]="cargando">Guardar</app-button>
+    </form>
+  `,
+})
+class FormularioButtonHost {
+  cargando = true;
+  envios = 0;
+
+  registrarEnvio(event: Event): void {
+    event.preventDefault();
+    this.envios += 1;
+  }
+}
 
 describe('ButtonComponent', () => {
   let component: ButtonComponent;
@@ -36,6 +56,7 @@ describe('ButtonComponent', () => {
       'soft',
       'outline',
       'ghost',
+      'link',
     ];
 
     variants.forEach((variant) => {
@@ -142,6 +163,50 @@ describe('ButtonComponent', () => {
       const button = fixture.nativeElement.querySelector('button');
       expect(button.disabled).toBeFalse();
     });
+
+    it('usa la superficie deshabilitada accesible en todas las variantes', () => {
+      const anfitrion = fixture.nativeElement as HTMLElement;
+      anfitrion.style.setProperty('--button-disabled-bg', '#112233');
+      anfitrion.style.setProperty('--button-disabled-text', '#eeeff0');
+      anfitrion.style.setProperty('--button-disabled-border', '#aabbcc');
+      setInput('disabled', true);
+
+      const variantes: ButtonVariant[] = [
+        'primary',
+        'secondary',
+        'success',
+        'warning',
+        'danger',
+        'soft',
+        'outline',
+        'ghost',
+        'link',
+      ];
+
+      for (const variante of variantes) {
+        setInput('variant', variante);
+        const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+        const estilo = getComputedStyle(button);
+
+        expect(estilo.backgroundColor).withContext(variante).toBe('rgb(17, 34, 51)');
+        expect(estilo.color).withContext(variante).toBe('rgb(238, 239, 240)');
+        expect(estilo.borderTopColor).withContext(variante).toBe('rgb(170, 187, 204)');
+        expect(estilo.opacity).withContext(variante).toBe('1');
+        expect(estilo.boxShadow).withContext(variante).toBe('none');
+      }
+    });
+
+    it('cancela la acción nativa cuando el componente no está disponible', () => {
+      for (const estado of ['disabled', 'loading'] as const) {
+        setInput('disabled', estado === 'disabled');
+        setInput('loading', estado === 'loading');
+        const evento = new MouseEvent('click', { cancelable: true });
+
+        component.onButtonClick(evento);
+
+        expect(evento.defaultPrevented).withContext(estado).toBeTrue();
+      }
+    });
   });
 
   describe('loading state', () => {
@@ -152,16 +217,25 @@ describe('ButtonComponent', () => {
       no le llega a nadie. Ahora lo dicen `aria-disabled` y `aria-busy`.
     */
     it('announces progress without removing itself from focus', () => {
+      const anfitrion = fixture.nativeElement as HTMLElement;
+      anfitrion.style.setProperty('--button-disabled-bg', '#112233');
+      anfitrion.style.setProperty('--button-disabled-text', '#eeeff0');
+      anfitrion.style.setProperty('--button-disabled-border', '#aabbcc');
       setInput('loading', true);
 
       const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
       const spinner = button.querySelector('.btn-spinner') as HTMLElement;
+      const estilo = getComputedStyle(button);
 
       expect(button.disabled).toBeFalse();
       expect(button.getAttribute('aria-disabled')).toBe('true');
       expect(button.getAttribute('aria-busy')).toBe('true');
       expect(spinner).not.toBeNull();
       expect(spinner.getAttribute('aria-hidden')).toBe('true');
+      expect(estilo.backgroundColor).toBe('rgb(17, 34, 51)');
+      expect(estilo.color).toBe('rgb(238, 239, 240)');
+      expect(estilo.borderTopColor).toBe('rgb(170, 187, 204)');
+      expect(estilo.opacity).toBe('1');
     });
 
     it('prevents a second activation after the consumer marks the first one as loading', () => {
@@ -236,6 +310,26 @@ describe('ButtonComponent', () => {
       expect(iconSpan?.textContent?.trim()).toBe('🔍');
       expect(iconSpan?.getAttribute('aria-hidden')).toBe('true');
     });
+  });
+});
+
+describe('ButtonComponent dentro de un formulario', () => {
+  it('no dispara submit nativo mientras loading conserva el foco', async () => {
+    await TestBed.configureTestingModule({
+      imports: [FormularioButtonHost],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(FormularioButtonHost);
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+    button.focus();
+    button.click();
+
+    expect(fixture.componentInstance.envios).toBe(0);
+    expect(document.activeElement).toBe(button);
+    expect(button.disabled).toBeFalse();
+    expect(button.getAttribute('aria-disabled')).toBe('true');
   });
 });
 

@@ -41,16 +41,23 @@ describe('SelectComponent: el rechazo se ve', () => {
   it('devuelve el desplegable al valor del padre cuando ese valor no cambia', () => {
     expect(native.value).toBe('A');
 
-    // La persona elige B.
+    // El padre rechaza B dentro del mismo flujo del cambio. No debe existir un
+    // ciclo intermedio que actualice el binding, porque esa espera ocultaba la
+    // regresión: para Angular el último valor renderizado y el repuesto siguen
+    // siendo A, aunque el navegador ya haya movido el control nativo a B.
+    const subscription = fixture.componentInstance.control.valueChanges.subscribe((value) => {
+      if (value === 'B') {
+        fixture.componentInstance.control.setValue('A', { emitEvent: false });
+      }
+    });
+
     native.value = 'B';
     native.dispatchEvent(new Event('change'));
     fixture.detectChanges();
 
-    // El padre lo rechaza y repone lo que ya tenia: mismo valor, sin cambio de binding.
-    fixture.componentInstance.control.setValue('A');
-    fixture.detectChanges();
-
+    expect(fixture.componentInstance.control.value).toBe('A');
     expect(native.value).toBe('A');
+    subscription.unsubscribe();
   });
 
   it('acepta una eleccion valida sin deshacerla', () => {

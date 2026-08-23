@@ -7,7 +7,7 @@ describe('NumberInputComponent', () => {
   tambien del campo. Un recorte mudo deja la pantalla contando una cifra y el
   total sumando otra, que en un arqueo de caja es dinero que no cuadra.
   */
-  async function montar(max: number): Promise<{
+  async function montar(max: number, min = 0): Promise<{
     readonly input: HTMLInputElement;
     readonly host: HTMLElement;
     readonly cambios: number[];
@@ -15,7 +15,7 @@ describe('NumberInputComponent', () => {
   }> {
     await TestBed.configureTestingModule({ imports: [NumberInputComponent] }).compileComponents();
     const fixture = TestBed.createComponent(NumberInputComponent);
-    fixture.componentRef.setInput('min', 0);
+    fixture.componentRef.setInput('min', min);
     fixture.componentRef.setInput('max', max);
     const cambios: number[] = [];
     fixture.componentInstance.registerOnChange((value) => cambios.push(value));
@@ -92,6 +92,31 @@ describe('NumberInputComponent', () => {
     expect(cambios[cambios.length - 1]).toBe(0);
     // Lo que se ve y lo que se cuenta dicen lo mismo: cero.
     expect(input.value).toBe('0');
+  });
+
+  it('limita el vacio al minimo cuando el rango no admite cero', async () => {
+    const { input, host, cambios, refrescar } = await montar(10, 1);
+
+    teclear(input, '5');
+    refrescar();
+    teclear(input, '');
+    refrescar();
+
+    expect(cambios[cambios.length - 1]).toBe(1);
+    expect(input.value).toBe('1');
+    expect(host.querySelector('.number-input__adjustment')?.textContent).toContain('1');
+  });
+
+  it('limita el vacio al maximo cuando todo el rango es negativo', async () => {
+    const { input, cambios, refrescar } = await montar(-1, -10);
+
+    teclear(input, '-5');
+    refrescar();
+    teclear(input, '');
+    refrescar();
+
+    expect(cambios[cambios.length - 1]).toBe(-1);
+    expect(input.value).toBe('-1');
   });
 
   it('relaciona ayuda y error con el campo y expone el estado invalido', async () => {

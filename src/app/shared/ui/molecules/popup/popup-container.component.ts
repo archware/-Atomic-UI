@@ -24,15 +24,17 @@ import { PopupService, PopupItem } from '../../services/popup.service';
         class="popup-overlay" 
         [class.popup-closing]="popup.closing"
         (click)="onBackdropClick(popup)"
-        (keydown.escape)="onEscape(popup)"
+        (keydown.escape)="onEscape(popup, $event)"
         tabindex="0"
         role="dialog"
         aria-modal="true"
+        [attr.aria-labelledby]="'popup-title-' + popup.id"
       >
         <div 
           class="popup" 
           [class]="'popup-' + popup.size + ' popup-type-' + popup.type"
           (click)="$event.stopPropagation()"
+          (keydown.escape)="onEscape(popup, $event)"
           (keydown)="$event.stopPropagation()"
           tabindex="-1"
         >
@@ -43,10 +45,10 @@ import { PopupService, PopupItem } from '../../services/popup.service';
                 <i [class]="popup.icon"></i>
               </span>
             }
-            <h3 class="popup-title">{{ popup.title }}</h3>
+            <h3 class="popup-title" [id]="'popup-title-' + popup.id">{{ popup.title }}</h3>
             @if (popup.closable) {
-              <button class="popup-close" (click)="popupService.close(popup.id)" type="button" aria-label="Cerrar">
-                <i class="fa-solid fa-xmark"></i>
+              <button class="popup-close" (click)="onDismiss(popup)" type="button" aria-label="Cerrar">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
               </button>
             }
           </div>
@@ -315,7 +317,17 @@ export class PopupContainerComponent {
 
   Si hay un boton que cancela, Escape hace exactamente lo que ese boton.
   */
-  onEscape(popup: PopupItem): void {
+  onEscape(popup: PopupItem, event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
+    this.onDismiss(popup);
+  }
+
+  /**
+   * Escape y la aspa representan la misma decisión: cancelar cuando el popup
+   * expone esa salida, o cerrar un aviso meramente informativo.
+   */
+  onDismiss(popup: PopupItem): void {
     const cancelButton = popup.buttons?.find(button => button.cancels);
     if (cancelButton) {
       cancelButton.action();

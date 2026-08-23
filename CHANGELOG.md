@@ -17,6 +17,17 @@ archivo. El formato se basa en
 
 ### Corregido
 
+- Button aplica una superficie deshabilitada legible a todas sus variantes y
+  cancela también el submit nativo durante `loading`; Checkbox y Radio señalan
+  el estado deshabilitado en etiqueta, borde e indicador sin reducir opacidad
+  (`ATOMIC-20260823-DISABLED-CONTRAST`).
+- La compuerta de contraste verifica el estado deshabilitado en los temas
+  claro, oscuro y corporativo oscuro, y analiza únicamente CSS real cuando los
+  estilos se encuentran embebidos en componentes Angular.
+- Popup atiende Escape desde el control realmente enfocado, canaliza la aspa por
+  la acción de cancelación y enlaza cada diálogo con su título accesible.
+- NumberInput interpreta el vacío como cero sin salir del intervalo declarado:
+  cuando cero no es válido, aplica y anuncia el límite más próximo.
 - El instalador de gobierno conserva `tokens.required` y la justificación con
   su `decisionRecord` cuando una adaptación mantiene exactamente la misma
   huella. Una diferencia nueva continúa exigiendo una decisión nueva.

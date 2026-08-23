@@ -104,6 +104,24 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       line-height: 1.4;
     }
 
+    .checkbox-wrapper.disabled .checkbox-label {
+      color: var(--input-disabled-text);
+    }
+
+    .checkbox-wrapper.disabled .checkbox-box {
+      background: var(--input-disabled-bg);
+      border-color: var(--input-disabled-text);
+    }
+
+    .checkbox-wrapper.disabled .checkbox-input:checked + .checkbox-box {
+      background: var(--input-disabled-text);
+      border-color: var(--input-disabled-text);
+    }
+
+    .checkbox-wrapper.disabled .checkbox-check {
+      color: var(--input-disabled-bg);
+    }
+
     /*
      * Dark mode se maneja automáticamente via tokens semánticos.
      * --surface-background, --border-color, --primary-color, --shadow-focus-primary

@@ -22,9 +22,9 @@ const sourceRoot = resolve(projectRoot, 'src');
 
 const THEME_FILES = ['_tokens-primitives.css', '_tokens-semantic.css', '_tokens-components.css'];
 
-// Temas alcanzables desde la interfaz. app-shell solo alterna estos dos, asi que
-// exigir contraste en temas que nadie puede seleccionar seria ruido.
-const REACHABLE_THEMES = ['light', 'dark'];
+// El switcher alterna light/dark, pero ThemeService mantiene brand-dark como
+// selección pública explícita. Los tres temas son alcanzables por contrato.
+const REACHABLE_THEMES = ['light', 'dark', 'brand-dark'];
 
 // Un control inactivo esta exento del 4.5:1 por WCAG 1.4.3. Se sostiene igual
 // como liston propio: un campo que no se lee es un defecto, lo exima la norma
@@ -40,6 +40,16 @@ const CONTRAST_PAIRS = [
   { what: 'texto principal sobre el fondo de pagina', fg: '--text-color', bg: '--surface-background' },
   { what: 'texto principal sobre una seccion', fg: '--text-color', bg: '--surface-section' },
   { what: 'texto de un campo activo', fg: '--input-text', bg: '--input-bg' },
+  {
+    what: 'texto de un boton deshabilitado',
+    fg: '--button-disabled-text',
+    bg: '--button-disabled-bg',
+  },
+  {
+    what: 'borde de un boton deshabilitado',
+    fg: '--button-disabled-border',
+    bg: '--button-disabled-bg',
+  },
 
   // Las alertas se anaden tras encontrarlas incumpliendo las cuatro en tema
   // claro —warning 2,13:1 y danger 3,24:1— mientras esta comprobacion salia en
@@ -73,6 +83,65 @@ function topLevelBlocks(text) {
     index = cursor;
   }
   return blocks;
+}
+
+/*
+ * Los componentes Angular pueden declarar CSS dentro de styles: [`...`].
+ * Analizar el TypeScript completo como si fuera una hoja de estilos mezcla
+ * selectores presentes en cadenas de lógica con keyframes del decorador y
+ * produce falsos positivos. El recorrido mantiene el balance del arreglo fuera
+ * de cadenas y devuelve únicamente los literales de plantilla que contienen
+ * estilos.
+ */
+function embeddedStyleSources(source) {
+  const found = [];
+  const marker = /\bstyles\s*:\s*\[/g;
+
+  for (const match of source.matchAll(marker)) {
+    let cursor = (match.index ?? 0) + match[0].length;
+    let depth = 1;
+    let quote = null;
+    let templateStart = -1;
+    let escaped = false;
+
+    while (cursor < source.length && depth > 0) {
+      const character = source[cursor];
+
+      if (quote !== null) {
+        if (escaped) {
+          escaped = false;
+        } else if (character === '\\') {
+          escaped = true;
+        } else if (character === quote) {
+          if (quote === '`') {
+            found.push(source.slice(templateStart, cursor));
+          }
+          quote = null;
+          templateStart = -1;
+        }
+        cursor += 1;
+        continue;
+      }
+
+      if (character === "'" || character === '"' || character === '`') {
+        quote = character;
+        if (character === '`') templateStart = cursor + 1;
+      } else if (character === '[') {
+        depth += 1;
+      } else if (character === ']') {
+        depth -= 1;
+      }
+      cursor += 1;
+    }
+  }
+
+  return found;
+}
+
+function styleSources(file, source) {
+  if (/\.(?:scss|css)$/.test(file)) return [source];
+  if (file.endsWith('.ts')) return embeddedStyleSources(source);
+  return [];
 }
 
 /**
@@ -223,6 +292,18 @@ function sourceFiles2(directory) {
 
 const allSources = sourceFiles2(sourceRoot).map((file) => [file, readFileSync(file, 'utf8')]);
 
+const embeddedStyleFixture =
+  '@Component({ styles: [`.control[disabled] { opacity: 0.5; }`] })';
+const extractedFixtureStyles = embeddedStyleSources(embeddedStyleFixture);
+if (
+  extractedFixtureStyles.length !== 1 ||
+  !extractedFixtureStyles[0].includes('.control[disabled]')
+) {
+  failures.push(
+    '[gate] el extractor de estilos Angular no conserva un selector [disabled] dentro de styles.',
+  );
+}
+
 // Un token tambien es legitimo si se declara en el ambito de su propia regla,
 // como las utilidades `.surface-tone`. Solo interesa el que no se declara EN
 // NINGUN sitio: ese es el que deja la propiedad invalida.
@@ -260,21 +341,22 @@ Buscarlo asi encuentra tambien el que nadie ha escrito todavia.
 */
 const TONOS = ['success', 'warning', 'danger', 'info'];
 for (const [file, source] of allSources) {
-  if (!/\.(?:scss|css)$/.test(file)) continue;
-  for (const { selector, body } of topLevelBlocks(source)) {
-    for (const tono of TONOS) {
-      const fondoTonal = new RegExp(
-        String.raw`background(?:-color)?\s*:\s*var\(\s*--` + tono + String.raw`-color-light(?:er)?\s*[,)]`,
-      ).test(body);
-      const textoDeRelleno = new RegExp(
-        String.raw`(?:^|[^-\w])color\s*:\s*var\(\s*--` + tono + String.raw`-color\s*[,)]`,
-      ).test(body);
-      if (fondoTonal && textoDeRelleno) {
-        failures.push(
-          `${relative(projectRoot, file)}: en \`${selector}\` el fondo es ` +
-            `--${tono}-color-light(er) y el texto --${tono}-color, que es el token de RELLENO. ` +
-            `Use --${tono}-color-text: pintar el texto con el relleno queda por debajo de 4,5:1.`,
-        );
+  for (const styleSource of styleSources(file, source)) {
+    for (const { selector, body } of topLevelBlocks(styleSource)) {
+      for (const tono of TONOS) {
+        const fondoTonal = new RegExp(
+          String.raw`background(?:-color)?\s*:\s*var\(\s*--` + tono + String.raw`-color-light(?:er)?\s*[,)]`,
+        ).test(body);
+        const textoDeRelleno = new RegExp(
+          String.raw`(?:^|[^-\w])color\s*:\s*var\(\s*--` + tono + String.raw`-color\s*[,)]`,
+        ).test(body);
+        if (fondoTonal && textoDeRelleno) {
+          failures.push(
+            `${relative(projectRoot, file)}: en \`${selector}\` el fondo es ` +
+              `--${tono}-color-light(er) y el texto --${tono}-color, que es el token de RELLENO. ` +
+              `Use --${tono}-color-text: pintar el texto con el relleno queda por debajo de 4,5:1.`,
+          );
+        }
       }
     }
   }
@@ -299,13 +381,15 @@ relleno son justo su uso correcto.
 */
 for (const [file, source] of allSources) {
   if (/[\/]themes[\/]/.test(file)) continue;
-  for (const match of source.matchAll(
-    /(?:^|[^-\w])color:\s*var\(\s*--(success|warning|danger|info)-color\s*\)/g,
-  )) {
-    failures.push(
-      `${relative(projectRoot, file)}: pinta texto o icono con --${match[1]}-color, que es el ` +
-        `token de RELLENO. Use --${match[1]}-color-text, que es el que trae el contraste calculado.`,
-    );
+  for (const styleSource of styleSources(file, source)) {
+    for (const match of styleSource.matchAll(
+      /(?:^|[^-\w])color:\s*var\(\s*--(success|warning|danger|info)-color\s*\)/g,
+    )) {
+      failures.push(
+        `${relative(projectRoot, file)}: pinta texto o icono con --${match[1]}-color, que es el ` +
+          `token de RELLENO. Use --${match[1]}-color-text, que es el que trae el contraste calculado.`,
+      );
+    }
   }
 }
 
@@ -321,17 +405,27 @@ Solo se mira dentro de reglas cuyo selector habla de deshabilitado. Una
 transparencia decorativa —una marca de agua, un separador— no comunica estado y
 no es asunto de esta compuerta.
 */
-const SELECTOR_APAGADO = /(?::disabled|disabled|--disabled|--retired|--inactive)/;
-for (const [file, source] of allSources) {
-  for (const { selector, body } of topLevelBlocks(source)) {
-    if (!SELECTOR_APAGADO.test(selector)) continue;
-    if (!/(?:^|[^-\w])opacity\s*:/.test(body)) continue;
+const SELECTOR_APAGADO = /(?::disabled|\bdisabled\b|--disabled|--retired|--inactive)/;
+
+for (const selector of ['.control:disabled', '.control.disabled', '.control--disabled']) {
+  if (!SELECTOR_APAGADO.test(selector)) {
     failures.push(
-      `${relative(projectRoot, file)}: \`${selector}\` apaga con \`opacity\`. ` +
-        `Un estado deshabilitado se comunica con los tokens (--input-disabled-text, ` +
-        `--input-disabled-bg, --text-color-disabled) y el cursor, que traen el contraste ` +
-        `verificado; la transparencia lo deshace.`,
+      `[gate] el detector de estados deshabilitados no reconoce el selector de control ${selector}.`,
     );
+  }
+}
+for (const [file, source] of allSources) {
+  for (const styleSource of styleSources(file, source)) {
+    for (const { selector, body } of topLevelBlocks(styleSource)) {
+      if (!SELECTOR_APAGADO.test(selector)) continue;
+      if (!/(?:^|[^-\w])opacity\s*:/.test(body)) continue;
+      failures.push(
+        `${relative(projectRoot, file)}: \`${selector}\` apaga con \`opacity\`. ` +
+          `Un estado deshabilitado se comunica con los tokens (--input-disabled-text, ` +
+          `--input-disabled-bg, --text-color-disabled) y el cursor, que traen el contraste ` +
+          `verificado; la transparencia lo deshace.`,
+      );
+    }
   }
 }
 

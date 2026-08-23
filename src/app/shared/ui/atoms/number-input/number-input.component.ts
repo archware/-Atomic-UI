@@ -276,10 +276,15 @@ export class NumberInputComponent implements ControlValueAccessor, AfterViewInit
         return;
       }
 
-      // Vacio de verdad: cuenta cero, que es lo que significa, y deja seguir
-      // tecleando sin pelear con quien escribe.
-      this.adjustment.set(null);
-      this.setValue(0);
+      // Vacio de verdad: se interpreta como cero, pero conserva el contrato
+      // declarado por min/max igual que cualquier otro valor tecleado.
+      const bounded = this.boundToRange(0);
+      this.adjustment.set(
+        bounded === 0
+          ? null
+          : `Se ajustó a ${bounded} (permitido de ${this.min} a ${this.max}).`,
+      );
+      this.setValue(bounded);
       return;
     }
 
@@ -290,7 +295,7 @@ export class NumberInputComponent implements ControlValueAccessor, AfterViewInit
       return;
     }
 
-    const bounded = Math.min(Math.max(parsed, this.min), this.max);
+    const bounded = this.boundToRange(parsed);
     this.adjustment.set(
       bounded === parsed
         ? null
@@ -308,6 +313,10 @@ export class NumberInputComponent implements ControlValueAccessor, AfterViewInit
       // no reescribe y el campo se queda con lo tecleado.
       this.syncNative();
     }
+  }
+
+  private boundToRange(value: number): number {
+    return Math.min(Math.max(value, this.min), this.max);
   }
 
   private syncNative(): void {

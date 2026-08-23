@@ -9,6 +9,28 @@ owners:
 
 # Lecciones aprendidas de Atomic UI
 
+## [2026-08-23] - Un estado deshabilitado debe dominar la cascada y la acción nativa
+
+**Contexto.** Button, Checkbox y Radio disponían de tokens semánticos con
+contraste suficiente, pero las variantes y las etiquetas internas volvían a
+aplicar colores activos después de la regla deshabilitada. Además, `loading`
+conservaba correctamente el foco mediante `aria-disabled`, aunque un botón de
+tipo `submit` todavía podía ejecutar la acción predeterminada del navegador.
+
+**Problema.** Cambiar solo el color heredado no neutraliza fondos, bordes ni
+descendientes con declaraciones propias. `aria-disabled` tampoco reemplaza el
+comportamiento de `disabled`: anuncia indisponibilidad, pero no cancela por sí
+solo un clic ni el envío de un formulario. Una compuerta que analiza todo un
+archivo TypeScript como CSS mezcla lógica y animaciones con selectores y puede
+producir falsos positivos.
+
+**Lección aprendida.** La regla deshabilitada se sitúa después de todas las
+variantes y estiliza explícitamente superficie, borde, texto, etiqueta y marca
+con pares de tokens verificados. Cuando se conserva el foco con
+`aria-disabled`, el manejador cancela también la acción predeterminada. Las
+compuertas de CSS embebido extraen los literales de `styles` antes de inspeccionar
+selectores y validan todos los temas que expone la API pública.
+
 ## [2026-08-23] - La regeneración debe ser monótona para los metadatos del consumidor
 
 **Contexto.** El instalador canónico regenera la procedencia a partir de una
