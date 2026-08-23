@@ -3,7 +3,7 @@ title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
 version: '5.8.4'
 status: 'vigente'
-updated: '2026-08-14'
+updated: '2026-08-21'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
@@ -11,9 +11,29 @@ owner: 'Hospital Regional de Ayacucho'
 
 Todas las modificaciones importantes de este proyecto se documentan en este
 archivo. El formato se basa en
-[Keep a Changelog](https://keepachangelog.com/es/1.0.0/).
+[Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
 ## [Sin publicar]
+
+### Documentación
+
+- Se consolidaron desarrollo, integración y comandos seguros en una sola guía
+  de diseño; gobierno absorbió la guía de portabilidad y migración 5.8 conservó
+  las restricciones todavía vigentes de 5.7.
+- Las auditorías de desplazamiento y respuesta se trasladaron al catálogo de
+  componentes y al roadmap histórico. Se retiraron siete rutas redundantes sin
+  perder matrices, invariantes ni evidencia fechada.
+- Se alinearon las guías de adopción, desarrollo y componentes con Atomic UI
+  5.8.4, Angular 22.1, Node.js fijado por `engines` y la política 1.2.2.
+- Se retiraron instrucciones de copia directa, credenciales demo y operaciones
+  globales sobre procesos; los registros antiguos quedaron identificados como
+  históricos y enlazados a su reemplazo.
+- Se corrigieron rutas, API de temas y validación, paleta canónica, inventarios,
+  comandos de tokens y la guía de migración de consumidores.
+- Se registró que Acopiador BCP conserva procedencia Atomic UI 5.5.8 y requiere
+  el checkout fijado por su `atomicRef` para validar esa línea. El árbol local
+  5.8.4 produce un bloqueo esperado; una migración posterior exige autorización
+  y adopción auditada, sin actualizar referencias o huellas de forma aislada.
 
 ## [5.8.4] - 2026-08-14
 

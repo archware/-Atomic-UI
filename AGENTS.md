@@ -4,10 +4,10 @@
 
 Este repositorio es la única fuente de verdad visual del ecosistema. Antes de
 trabajar, leer `governance/consumer/ATOMIC_GOVERNANCE.md`,
-`ECOSYSTEM_WORKFLOW.md` y la guía aplicable de `.agent/workflows/`.
+`ECOSYSTEM_WORKFLOW.md` y la guía aplicable de `.agents/workflows/`.
 
-**Si vienes a subir un consumidor a 5.8.2 y a la política 1.2.2, empieza por
-`governance/consumer/MIGRAR_A_5.8.2.md`.** No describe los pasos —esos se deducen
+**Para subir un consumidor a la línea 5.8 y a la política 1.2.2, se empieza por
+`governance/consumer/MIGRAR_A_5.8.md`.** No describe cada paso —esos se deducen
 leyendo el gate— sino las trampas, que son las que cuestan una tarde cada una:
 que el código y la política van soldados, que los `.spec.ts` no pueden ser
 `exact` entre Karma y Vitest, y que propagar sin mirar sobrescribe la cobertura

@@ -71,4 +71,4 @@ Use narrower component tests during iteration, but finish with the applicable re
 - Query `catalog/recipes/` for page composition.
 - Query `catalog/ux-rules/` for interaction and accessibility behavior.
 - Read `governance/consumer/ATOMIC_GOVERNANCE.md` only when consumer ownership or propagation is in question.
-- Read `.agent/workflows/atomic-design-guide.md` only when changing Atomic itself or when the compact catalog lacks a required decision.
+- Read `.agents/workflows/atomic-design-guide.md` only when changing Atomic itself or when the compact catalog lacks a required decision.

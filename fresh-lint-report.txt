@@ -1,4 +1,8 @@
 ﻿
+status: historical-generated-artifact
+captured_state: not-current
+superseded_by: npm run lint
+---
 Linting "angular-scrollable-table"...
 
 <REPOSITORY_ROOT>\src\app\shared\ui\atoms\file-input\file-input.component.ts

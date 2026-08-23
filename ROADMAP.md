@@ -1,7 +1,22 @@
-# 🗺️ ROADMAP — Atomic-UI
+---
+title: "Roadmap histórico de Atomic UI"
+document_type: "roadmap histórico"
+status: "histórico"
+date: "2026-05-01"
+last_updated: "2026-08-20"
+superseded_by: "../.agents/roadmaps/ROADMAP_20260820_saneamiento_documental_y_generacion_manuales.md"
+owner: "Hospital Regional de Ayacucho"
+---
+
+# Roadmap histórico de Atomic UI
+
+> **Instantánea histórica.** Los inventarios y versiones de Angular preservan
+> el diagnóstico de mayo de 2026 y no representan el estado vigente. El roadmap
+> maestro indicado en `superseded_by`, el `package.json` y el catálogo son las
+> fuentes actuales.
 
 **Generado:** Mayo 2026 — basado en auditoría completa del proyecto  
-**Angular:** 20 · **Design System:** Atomic Design · **Status:** Activo
+**Angular observado:** 20 · **Sistema de diseño:** Atomic Design · **Estado de la instantánea:** cerrado
 
 ---
 
@@ -188,7 +203,7 @@
 | 8.4 | `FiltersComponent` genérico | Media | ✅ Stub documentado; blueprint crud-table lo integra |
 | 8.5 | Soporte RTL (right-to-left) | Baja | ✅ `avatar-group`: `margin-left` → `margin-inline-start` |
 | 8.6 | Container Queries | Baja | ✅ `card`: `@container card (max-width: 280px)` colapsa footer buttons |
-| 8.7 | `datepicker` story y responsive | Media | ✅ Auditado y documentado en `RESPONSIVE_COMPONENT_AUDIT.md` |
+| 8.7 | `datepicker` story y responsive | Media | ✅ Auditado en el anexo responsivo de este roadmap |
 | 8.8 | Tests unitarios de componentes | Media | ✅ `toggle.spec.ts` (12), `modal.spec.ts` (12), `pagination.spec.ts` (14) |
 | 8.9 | WCAG 2.1 AA completo | Media | ✅ `:focus-visible` global con ring de `--primary-color` en `index.css` |
 | 8.10 | Animaciones reducidas | Baja | ✅ `@media (prefers-reduced-motion: reduce)` global en `index.css` |
@@ -288,3 +303,112 @@ Pendiente Fase 8.1:         Publicación npm con ng-packagr
 | 11.14 | `ui-popup.stories.ts` | Selector `sb-popup-demo` sin prefijo `app` | Cambiado a `app-popup-demo` |
 | 11.15 | `ui-tooltip.stories.ts` | Selector `tooltip-demo` sin prefijo `app` | Cambiado a `app-tooltip-demo` |
 | 11.16 | `ui-tooltip.stories.ts` | Selector `tooltip-long-demo` sin prefijo `app` | Cambiado a `app-tooltip-long-demo` |
+
+## Anexo de auditoría responsiva histórica
+
+La evidencia siguiente se trasladó desde `docs/RESPONSIVE_COMPONENT_AUDIT.md`. Mantiene su fecha y estado histórico; las reglas vigentes se consultan en el catálogo de componentes.
+
+### Alcance
+
+Auditoria de componentes base y blueprints con foco en dashboards.
+
+- Layout y navegacion: LayoutShell, Topbar, Sidebar, Row.
+- Blueprint: dashboard-page.
+- Componentes de indicadores: KpiCard y MetricsGrid.
+
+Fecha: 2026-05-27
+
+### Revision del 2026-07-16
+
+Se reviso el comportamiento de `ScrollOverlayComponent` y `TableComponent` en tablas de escritorio con cabecera fija, cuerpo vertical scrolleable, columnas sincronizadas y barra horizontal visible. El caso nominal del indicador 11 mostro que una tabla puede compilar correctamente y aun asi dejar la ultima fila demasiado pegada a la barra horizontal si el cierre inferior se resuelve fuera del scroller real.
+
+- Estado: resuelto en esta iteracion.
+- Accion aplicada: `--so-scroll-end-space` se amplio a `calc(var(--so-track-size) + var(--space-8))`.
+- Accion aplicada: el padding inferior se aplica sobre `tbody[data-so-vertical]` solo cuando el host tiene `so-has-overflow-x`.
+- Accion aplicada: las celdas de chip unico se centran verticalmente sin cambiar celdas compuestas con texto secundario.
+- Accion aplicada: se sanearon expresiones CSS invalidas en la ruta de tabla, incluyendo `76var(...)` y `1var(...)`.
+- Criterio de QA: la ultima fila debe poder desplazarse por encima de la barra horizontal hasta mostrar completo el chip principal y cualquier detalle secundario.
+
+### Hallazgos principales
+
+#### Alta prioridad
+
+1. Dashboard con tarjetas estadisticas en markup ad-hoc.
+
+- Impacto: baja reutilizacion y deuda de mantenimiento para nuevos dashboards.
+- Estado: resuelto en esta iteracion.
+- Accion aplicada: reemplazo por MetricsGrid y KpiCard con dataset declarativo.
+
+1. Padding global de contenido alto en mobile.
+
+- Impacto: se reduce el area util en pantallas pequenas.
+- Estado: resuelto en esta iteracion.
+- Accion aplicada: padding responsivo en LayoutShell por breakpoints.
+
+#### Prioridad media
+
+1. Topbar con riesgo de colision horizontal en anchos muy pequenos.
+
+- Impacto: truncado agresivo y controles superpuestos.
+- Estado: mitigado.
+- Accion aplicada: ocultar language switcher bajo 560px y ajustar max-width de titulo.
+
+1. Sidebar con riesgo de overflow en labels largos y badges.
+
+- Impacto: texto recortado y alineacion inconsistente.
+- Estado: mitigado.
+- Accion aplicada: estilos de nav-label y nav-badge para truncado seguro y badge fijo.
+
+#### Prioridad baja
+
+1. Warnings NG8113 por imports no usados en algunos componentes.
+
+- Impacto: ruido en CI y reportes de build.
+- Estado: pendiente.
+- Siguiente accion: limpieza de imports en app.ts y forgot-password-page.component.ts.
+
+### Gap de componentes para dashboards de indicadores
+
+Se identificaron y consolidaron componentes para estadisticas.
+
+1. KpiCard (molecule)
+
+- Soporta formatos: number, currency, percent, compact, duration.
+- Soporta tendencia: up, down, neutral.
+- Incluye sparkline opcional via series.
+- Permite comparativa textual con comparisonLabel.
+
+1. MetricsGrid (organism)
+
+- Render declarativo de multiples KPI cards.
+- Grid responsive auto-fit con minCardWidth configurable.
+
+### Cambios aplicados en esta iteracion
+
+- Integracion de MetricsGrid en dashboard-page.
+- Extensiones de KpiCard para indicadores de mas tipos.
+- Export de KpiCard y MetricsGrid en barrel shared/ui.
+- Storybook agregado para MetricsGrid.
+- Ajustes responsive en LayoutShell, Topbar y Sidebar.
+
+### Backlog recomendado (siguiente iteracion)
+
+1. ChartPanel (organism).
+
+- Contenedor estandar para graficos con header, filtros y leyenda.
+
+1. StatDeltaList (molecule).
+
+- Lista compacta de indicadores con variacion y semaforizacion.
+
+1. Funnel/Conversion widget (organism).
+
+- Panel para embudos comerciales y operativos con porcentajes por etapa.
+
+1. Heatmap KPI (organism).
+
+- Matriz de ocupacion, rendimiento o demanda por franja horaria y dia.
+
+1. Responsive QA automatizada.
+
+- Historias visuales en viewport 320, 375, 768, 1024 y 1440 con snapshots.

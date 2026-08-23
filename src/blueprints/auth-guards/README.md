@@ -1,121 +1,54 @@
-# 🔐 Auth Guards Blueprint
+---
+title: "Blueprint histórico de guardas de autenticación"
+document_type: "referencia histórica"
+status: "histórico"
+date: "2026-06-01"
+last_updated: "2026-08-20"
+superseded_by: "../../../docs/ATOMIC_UI_AGENT_RUNTIME.md"
+owner: "Hospital Regional de Ayacucho"
+---
 
-Este blueprint proporciona un sistema completo de autenticación para proyectos Angular.
+# Blueprint histórico de guardas de autenticación
 
-## 📦 Contenido
+> **No usar en productos ni como ejemplo de seguridad.**
+> `blueprints.manifest.json` clasifica este directorio como `legacy-demo`. Los
+> archivos se preservan para evidencia y pruebas negativas de la compuerta, pero
+> no se copian, importan ni publican como API de Atomic UI.
 
-| Archivo | Descripción |
-|---------|-------------|
-| `token.service.ts` | Manejo de JWT con cookies |
-| `auth.service.ts` | Login, logout, refresh token |
-| `auth.guard.ts` | Guards para rutas protegidas |
-| `auth.interceptor.ts` | Interceptor HTTP automático |
+## Razón del retiro
 
-## 🚀 Uso Rápido
+La demostración mezcló servicios de login, DTO, cookies, guardas, interceptor y
+endpoints dentro del sistema visual. También incluyó credenciales literales en
+un componente. Esa arquitectura contradice la frontera vigente:
 
-### 1. Configurar en `app.config.ts`
+- Atomic UI contiene presentación, tokens, variantes y accesibilidad.
+- El consumidor contiene autenticación, permisos, rutas, DTO, endpoints,
+  credenciales, sesiones y reglas de negocio.
+- Ninguna contraseña, token o identidad de usuario se incluye en un componente,
+  blueprint o documentación ejecutable.
 
-```typescript
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from '@shared/ui/interceptors/auth.interceptor';
+## Evidencia conservada
 
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideHttpClient(withInterceptors([authInterceptor]))
-  ]
-};
+| Archivo | Significado histórico |
+|---|---|
+| `token.service.ts` | Demostración heredada de almacenamiento de tokens. |
+| `auth.service.ts` | Demostración heredada de login y renovación. |
+| `auth.guard.ts` | Demostración heredada de guardas de rutas. |
+| `auth.interceptor.ts` | Demostración heredada de interceptor HTTP. |
+
+Estos archivos solo pueden modificarse para mantener aislamiento, pruebas
+negativas o metadata histórica. No definen endpoints esperados ni un contrato
+reutilizable.
+
+## Ruta vigente
+
+Una UI de autenticación se genera como presentación sin integración implícita.
+El consumidor aporta un puerto tipado y su implementación de seguridad:
+
+```powershell
+npm run generate:ui -- --spec .\ruta\requisito-ui.json --output .\consumidor --dry-run
 ```
 
-### 2. Proteger rutas en `app.routes.ts`
-
-```typescript
-import { authGuard, guestGuard } from '@shared/ui/guards/auth.guard';
-
-export const routes: Routes = [
-  { 
-    path: 'login', 
-    loadComponent: () => import('./pages/login'),
-    canActivate: [guestGuard]  // Solo usuarios no autenticados
-  },
-  { 
-    path: 'dashboard', 
-    loadComponent: () => import('./pages/dashboard'),
-    canActivate: [authGuard]   // Solo usuarios autenticados
-  }
-];
-```
-
-### 3. Usar AuthService en componentes
-
-```typescript
-import { AuthService, LoginRequest } from '@shared/ui/services/auth.service';
-
-@Component({...})
-export class LoginComponent {
-  private auth = inject(AuthService);
-
-  onLogin() {
-    const credentials: LoginRequest = {
-      v_user: 'admin',
-      v_password: '123456',
-      v_ip: '127.0.0.1'
-    };
-
-    this.auth.login(credentials).subscribe({
-      next: () => this.router.navigate(['/dashboard']),
-      error: (err) => console.error(err)
-    });
-  }
-}
-```
-
-## ⚙️ Configuración
-
-### TokenService
-
-```typescript
-// Multi-app: cada app tiene su propio token
-tokenService.saveTokenApp('jwt-token', '2');  // App ID 2
-tokenService.getTokenApp('2');
-tokenService.hasValidToken('2');
-tokenService.removeTokenApp('2');
-```
-
-### AuthService
-
-```typescript
-// Configurar app ID
-authService.configure('2');
-
-// Estado reactivo
-authService.isAuthenticated();  // Signal<boolean>
-authService.currentUser();       // Signal<UserProfile | null>
-authService.loading();           // Signal<boolean>
-authService.error();             // Signal<string | null>
-```
-
-## 📝 Endpoints Esperados
-
-| Endpoint | Método | Descripción |
-|----------|--------|-------------|
-| `/Authentication/PostLogin` | POST | Login |
-| `/Authentication/Get_user_profile` | GET | Perfil de usuario |
-| `/Authentication/Post_refresh_token` | POST | Refresh token |
-
-## 🔄 Flujo de Autenticación
-
-```
-1. Usuario envía credenciales
-   ↓
-2. POST /Authentication/PostLogin
-   ↓
-3. Recibe access_Token + refresh_Token
-   ↓
-4. TokenService guarda en cookies
-   ↓
-5. AuthService configura estado
-   ↓
-6. authInterceptor agrega token a requests
-   ↓
-7. Si 401 → refresh automático
-```
+El contrato debe declarar los campos y estados de interfaz; no contiene valores
+de credenciales ni inventa un endpoint. La salida se valida con
+`npm run check:atomic`, las pruebas del consumidor y su build.

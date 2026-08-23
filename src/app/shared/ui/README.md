@@ -2,8 +2,11 @@
 title: 'Biblioteca de componentes Atomic UI'
 subtitle: 'Contrato visual portable para aplicaciones Angular'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
-date: '2026-08-14'
-version: '5.8.2'
+document_type: 'manual técnico'
+status: 'vigente'
+date: '2026-08-20'
+version: '5.8.4'
+owner: 'Hospital Regional de Ayacucho'
 ---
 
 # Biblioteca de componentes Atomic UI
@@ -11,229 +14,73 @@ version: '5.8.2'
 Librería de componentes Angular portables siguiendo **Atomic Design**.
 
 **Última actualización**: agosto de 2026
-**Versión**: 5.8.2
+**Versión**: 5.8.4
 **Angular**: 22
 
 ---
 
 ## 📋 Índice
 
-1. [Instalación Rápida](#-instalación-rápida)
-2. [Proyecto Existente - Migración](#-proyecto-existente---migración)
-3. [Clasificación por Dificultad](#-clasificación-por-dificultad)
-4. [Estructura de Carpetas](#-estructura)
-5. [Uso de Componentes](#-uso-de-componentes)
-6. [Sistema de Temas](#-sistema-de-temas)
-7. [Paleta de Colores](#-paleta-de-colores)
-8. [Dark Mode](#-dark-mode)
-9. [Análisis de Componentes](#-análisis-de-componentes)
-10. [Problemas Conocidos y Soluciones](#-problemas-conocidos-y-soluciones)
+1. [Adopción gobernada](#adopción-gobernada)
+2. [Validación de adopción](#validación-de-adopción)
+3. [Estructura](#-estructura)
+4. [Uso de componentes](#uso-de-componentes)
+5. [Sistema de temas](#sistema-de-temas)
+6. [Paleta de colores](#paleta-de-colores)
+7. [Modo oscuro](#modo-oscuro)
+8. [Análisis de componentes](#análisis-de-componentes)
+9. [Problemas conocidos y soluciones](#problemas-conocidos-y-soluciones)
 
 ---
 
-## 🚀 Instalación Rápida
+## Adopción gobernada
 
-### Paso 1: Copiar la librería
+Esta carpeta es la implementación visual canónica de Atomic UI. No se copia a
+mano en un consumidor. Una aplicación nueva se crea con el único template
+vigente:
 
-```bash
-cp -r shared/ui /tu-proyecto/src/app/shared/
+```powershell
+npm ci
+npm run create:project -- mi-aplicacion --template=shell
 ```
 
-### Paso 2: Importar estilos
+Una aplicación existente se audita antes de instalar la política:
 
-En `styles.scss`:
-
-```scss
-@import 'app/shared/ui/styles/tokens.css';
-@import 'app/shared/ui/styles/animations.css';
+```powershell
+npm run governance:install -- D:\ruta\consumidor `
+  --ui-root=src/app/shared/ui \`
+  --audit-only
 ```
 
-### Paso 3: Configurar path alias (opcional)
+Si Angular se encuentra en `frontend`, también se declara
+`--package-root=frontend`. Una divergencia requiere un ADR y una adopción
+explícita; el instalador no sobrescribe adaptaciones ni inventa justificaciones.
 
-En `tsconfig.json`:
+La UI inicial se genera desde un contrato y se inspecciona en modo seco:
 
-```json
-{
-  "compilerOptions": {
-    "paths": {
-      "@shared/ui": ["src/app/shared/ui"],
-      "@shared/ui/*": ["src/app/shared/ui/*"]
-    }
-  }
-}
+```powershell
+npm run generate:ui -- --spec .\ruta\requisito-ui.json --output .\mi-aplicacion --dry-run
 ```
 
-### Paso 4: Usar componentes
+Atomic conserva componentes, tokens, variantes y comportamiento de
+presentación. El consumidor conserva rutas, formularios tipados, permisos, DTO,
+endpoints, HTTP o IPC, credenciales y reglas de negocio. Los blueprints demo no
+son fuentes productivas.
 
-```typescript
-import { AvatarComponent, ChipComponent } from '@shared/ui';
-// O sin alias:
-import { AvatarComponent } from './shared/ui/atoms/avatar/avatar.component';
+## Validación de adopción
+
+```powershell
+# En Atomic UI
+npm run quality:check
+
+# En el consumidor
+npm run check:atomic
+npm test -- --watch=false
+npm run build
 ```
 
-✅ **Tiempo estimado: 5-10 minutos**
-
----
-
-## 🔄 PROYECTO EXISTENTE - Migración
-
-### Escenario A: Sin componentes UI existentes (FÁCIL)
-
-Si tu proyecto no tiene componentes similares, sigue los pasos de instalación rápida.
-
-### Escenario B: Con componentes UI que quieres reemplazar (MEDIO)
-
-#### 1. Copiar librería SIN sobrescribir
-
-```bash
-cp -r shared/ui /tu-proyecto/src/app/shared/
-```
-
-#### 2. Importar estilos (agregar, no reemplazar)
-
-```scss
-// styles.scss
-/* Tus estilos existentes */
-@import 'tu-tema-existente';
-
-/* Agregar al final */
-@import 'app/shared/ui/styles/tokens.css';
-```
-
-#### 3. Migrar componente por componente
-
-```typescript
-// ANTES (tu componente actual)
-import { MiBotonComponent } from './components/mi-boton';
-
-// DESPUÉS (nuevo componente)
-import { ChipComponent } from '@shared/ui';
-```
-
-#### 4. Búsqueda y reemplazo gradual
-
-| Buscar        | Reemplazar por |
-| ------------- | -------------- |
-| `<mi-avatar>` | `<app-avatar>` |
-| `<mi-badge>`  | `<app-chip>`   |
-| `<mi-tabs>`   | `<app-tabs>`   |
-
-### Escenario C: Variables CSS conflictivas (DIFÍCIL)
-
-Si tu proyecto ya usa variables como `--primary-color`:
-
-#### Opción 1: Prefijo único (Recomendado)
-
-Los componentes usan tokens semánticos del sistema.
-
-```css
-/* Tu proyecto */
---primary-color: #ff0000;
-
-/* Librería UI (asegúrate de cargar tokens después) */
---primary-color: #793576;
-```
-
-#### Opción 2: Mapear tus variables
-
-```css
-:root {
-  /* Mapear tus variables a las de la librería */
-  --primary-color: var(--tu-color-primario);
-  --secondary-color: var(--tu-color-secundario);
-}
-```
-
----
-
-## 📊 Clasificación por Dificultad
-
-### 🟢 FÁCIL (Copiar y usar)
-
-| Componente            | Por qué es fácil             |
-| --------------------- | ---------------------------- |
-| `AvatarComponent`     | Sin dependencias, standalone |
-| `ChipComponent`       | Sin dependencias, standalone |
-| `SkeletonComponent`   | Sin dependencias, standalone |
-| `RatingComponent`     | Sin dependencias, standalone |
-| `LoaderComponent`     | Sin dependencias, standalone |
-| `PaginationComponent` | Sin dependencias externas    |
-
-**Migración:** Solo copiar y usar directamente.
-
-### 🟡 MEDIO (Requiere configuración)
-
-| Componente           | Consideraciones                                      |
-| -------------------- | ---------------------------------------------------- |
-| `DropdownComponent`  | Verificar que no conflicte con ng-select existente   |
-| `ToastComponent`     | Puede conflictuar con ngx-toastr, SweetAlert, etc.   |
-| `TabsComponent`      | Si usas Angular Material Tabs, decidir cuál mantener |
-| `AccordionComponent` | Similar a MatExpansionPanel                          |
-| `StepperComponent`   | Similar a MatStepper                                 |
-
-**Migración:**
-
-1. Decidir si reemplazar o coexistir
-2. Actualizar templates gradualmente
-3. Eliminar dependencia anterior cuando esté completo
-
-### 🔴 DIFÍCIL (Requiere planificación)
-
-| Componente               | Por qué es difícil                                   |
-| ------------------------ | ---------------------------------------------------- |
-| `ThemeService`           | Si ya tienes sistema de temas, decidir cuál usar     |
-| `ScrollOverlayComponent` | CSS complejo, puede conflictuar con otros scrollbars |
-| `ThemeSwitcherComponent` | Requiere ThemeService                                |
-
-**Migración:**
-
-1. Evaluar sistema de temas actual
-2. Crear plan de transición
-3. Migrar por módulos/features
-
----
-
-## 🔧 Guía de Resolución de Conflictos
-
-### Conflicto: Ya uso ng-select
-
-```typescript
-// Mantener ambos temporalmente
-import { NgSelectModule } from '@ng-select/ng-select'; // Actual
-import { DropdownComponent } from '@shared/ui'; // Nuevo
-
-// Migrar pantalla por pantalla
-// Cuando todas usen DropdownComponent, eliminar ng-select
-```
-
-### Conflicto: Ya uso Angular Material
-
-```typescript
-// Los componentes son standalone, pueden coexistir
-import { MatTabsModule } from '@angular/material/tabs';
-import { TabsComponent } from '@shared/ui';
-
-// En template, usar uno u otro:
-<mat-tab-group>...</mat-tab-group>  // Material
-<app-tabs>...</app-tabs>             // UI Library
-```
-
-### Conflicto: Variables CSS duplicadas
-
-```css
-/* Si tu proyecto usa --primary-color */
-:root {
-  --primary-color: #ff0000; /* Tu variable */
-
-  /* Puedes reasignar si es necesario */
-  --primary-color: #793576;
-}
-
-/* Para unificar (opcional) */
-:root {
-  --primary-color: var(--primary-color);
-}
-```
+La CI debe fijar el OID de Atomic y exigir la compuerta de gobierno. Un resultado
+local no autoriza publicación ni despliegue.
 
 ---
 
@@ -246,7 +93,7 @@ shared/ui/
 │   ├── animations.css       # Keyframes compartidos
 │   └── responsive-table.css # Tablas → Cards en móvil
 │
-├── atoms/              # 🟢 Inventario ilustrativo parcial (34 directorios en el catálogo actual)
+├── atoms/              # 🟢 Inventario ilustrativo parcial (34 directorios físicos)
 │   ├── avatar/         # Imagen de usuario con iniciales
 │   ├── button/         # Botón con variantes y tamaños
 │   ├── checkbox/       # Checkbox con label
@@ -264,7 +111,7 @@ shared/ui/
 │   ├── text/           # Texto con variantes
 │   └── toggle/         # Switch on/off
 │
-├── molecules/          # 🟡 Inventario ilustrativo parcial (18 directorios en el catálogo actual)
+├── molecules/          # 🟡 Inventario ilustrativo parcial (19 directorios físicos)
 │   ├── datepicker/     # Selector de fecha con calendario
 │   ├── dropdown/       # Menú desplegable
 │   ├── modal/          # Diálogo modal
@@ -274,7 +121,7 @@ shared/ui/
 │   ├── toast/          # Notificaciones
 │   └── user-menu/      # Menú de usuario con dropdown
 │
-├── organisms/          # 🔴 Inventario ilustrativo parcial (19 directorios en el catálogo actual)
+├── organisms/          # 🔴 Inventario ilustrativo parcial (21 directorios físicos)
 │   ├── accordion/      # Paneles colapsables
 │   ├── filters/        # Panel de filtros
 │   ├── scroll-overlay/ # Scroll customizado con overlays
@@ -284,17 +131,14 @@ shared/ui/
 │   ├── theme-switcher/ # Selector light/dark/system
 │   └── topbar/         # Barra superior
 │
-├── surfaces/           # 📦 Contenedores (3)
-│   ├── card/           # Tarjeta de contenido
-│   ├── panel/          # Panel con header/footer
-│   └── section/        # Sección de página
+├── surfaces/           # 📦 Superficies (1)
+│   └── panel/          # Superficie estructural gobernada
 │
-├── templates/          # 📄 Layouts (6)
+├── templates/          # 📄 Plantillas (2)
 │   ├── auth-layout/    # Layout de autenticación
-│   ├── layout-shell/   # Shell principal con sidebar
-│   └── ...
+│   └── layout-shell/   # Shell principal con sidebar
 │
-├── services/           # 🔧 Servicios (3)
+├── services/           # 🔧 Servicios de presentación (inventario ilustrativo)
 │   ├── theme.service.ts      # Gestión de temas light/dark
 │   ├── validation.service.ts # Validadores y mensajes de error
 │   └── theme.service.spec.ts # Tests de ThemeService
@@ -304,7 +148,7 @@ shared/ui/
 
 ---
 
-## 📱 Responsive Table → Cards (RTC)
+## Tablas responsivas como tarjetas (RTC)
 
 CSS puro que transforma tablas en **tarjetas (cards)** en móvil (< 768px).
 
@@ -371,7 +215,7 @@ Desktop:              Móvil:
 
 ---
 
-## 🔄 Tabla Atomic (Componentes Angular)
+## Tabla Atomic con componentes Angular
 
 Componentes Angular que implementan una tabla con Atomic Design.
 
@@ -448,7 +292,7 @@ tecnología asistiva aunque se oculten visualmente en la presentación móvil.
 
 ---
 
-## ⚡ Conceptos Técnicos
+## Conceptos técnicos
 
 ### ChangeDetectionStrategy.OnPush
 
@@ -469,7 +313,7 @@ changeDetection: ChangeDetectionStrategy.OnPush;
 
 **Beneficio:** En tablas con 100+ filas = **mejor rendimiento**.
 
-### Sticky Header
+### Encabezado fijo
 
 El header de la tabla se **"pega" arriba** cuando haces scroll.
 
@@ -484,7 +328,7 @@ El header de la tabla se **"pega" arriba** cuando haces scroll.
 **Sin sticky:** Al scrollear, el header desaparece.
 **Con sticky:** El header siempre visible mientras scrolleas.
 
-### Hover Elevado (Lift Effect)
+### Elevación al pasar el puntero
 
 Efecto visual donde la fila se **"eleva"** al hacer hover.
 
@@ -497,7 +341,7 @@ Efecto visual donde la fila se **"eleva"** al hacer hover.
 
 ---
 
-## 📊 RTC vs Atomic: ¿Cuál usar?
+## Comparación entre RTC y Atomic
 
 | Aspecto                | RTC (CSS)       | Atomic (Componentes) |
 | ---------------------- | --------------- | -------------------- |
@@ -516,9 +360,9 @@ Efecto visual donde la fila se **"eleva"** al hacer hover.
 
 ---
 
-## 📖 Uso de Componentes
+## Uso de componentes
 
-### Atoms (Más simples)
+### Átomos
 
 ```typescript
 import { AvatarComponent, ChipComponent, RatingComponent, LoaderComponent } from '@shared/ui';
@@ -534,7 +378,7 @@ import { AvatarComponent, ChipComponent, RatingComponent, LoaderComponent } from
 })
 ```
 
-### Molecules
+### Moléculas
 
 ```typescript
 import { DropdownComponent, ToastComponent, PaginationComponent } from '@shared/ui';
@@ -551,7 +395,7 @@ this.toast.show({ message: 'Éxito!', type: 'success' });
 <app-pagination [total]="100" [pageSize]="10" (pageChange)="onPage($event)"></app-pagination>
 ```
 
-### Organisms
+### Organismos
 
 ```typescript
 import { TabsComponent, TabComponent, StepperComponent, AccordionComponent } from '@shared/ui';
@@ -636,7 +480,7 @@ comprobación no persistente puede mantener el diálogo abierto y mostrar
 Use `ScrollOverlay` para el shell, tablas, navegación extensa y diálogos altos.
 Las listas breves acotadas de combobox, dropdown y select conservan scroll
 nativo localizado; no deben envolverse en un segundo overlay. La matriz
-canónica está en `docs/SCROLL_OWNERSHIP_AUDIT.md`.
+canónica se conserva en la sección [Propietarios canónicos de desplazamiento](#propietarios-canónicos-de-desplazamiento) de este catálogo.
 
 ### Skeleton
 
@@ -648,19 +492,17 @@ canónica está en `docs/SCROLL_OWNERSHIP_AUDIT.md`.
 
 ---
 
-## 🎨 Sistema de Temas
+## Sistema de temas
 
-### Estructura de Variables CSS
+### Estructura de variables CSS
 
 ```css
 :root {
-  /* COLORES PRIMARIOS */
-  --primary-color-lighter: #efe7ef;
-  --primary-color: #793576; /* Principal */
-  --primary-color-dark: #662863;
-
-  /* COLORES SECUNDARIOS */
-  --secondary-color: #23a7d4;
+  /* COLORES DE MARCA */
+  --primary-color-lighter: #fbf5fb;
+  --primary-color: #5F295C; /* Principal */
+  --primary-color-dark: #381836;
+  --secondary-color: #FFB800;
 
   /* ESTADOS */
   --success-color: #10b981;
@@ -698,24 +540,24 @@ canónica está en `docs/SCROLL_OWNERSHIP_AUDIT.md`.
 
 ---
 
-## Paleta de Colores
+## Paleta de colores
 
-### Paleta Primary (Púrpura)
+### Paleta primaria púrpura
 
 | Tono    | Hexadecimal |
 | ------- | ----------- |
-| 50      | #efe7ef     |
-| 100     | #d7c2d6     |
-| 200     | #bc9abb     |
-| 300     | #a1729f     |
-| 400     | #8d538b     |
-| **500** | **#793576** |
-| 600     | #71306e     |
-| 700     | #662863     |
-| 800     | #5c2259     |
-| 900     | #491646     |
+| 50      | #fbf5fb     |
+| 100     | #f5e6f6     |
+| 200     | #ecccec     |
+| 300     | #dfa6df     |
+| 400     | #bb6bbb     |
+| **500** | **#5F295C** |
+| 600     | #4a2048     |
+| 700     | #381836     |
+| 800     | #261024     |
+| 900     | #1a0818     |
 
-### Paleta Secondary (Ámbar/Dorado)
+### Paleta secundaria ámbar y dorada
 
 | Tono    | Hexadecimal |
 | ------- | ----------- |
@@ -727,7 +569,7 @@ canónica está en `docs/SCROLL_OWNERSHIP_AUDIT.md`.
 | 600     | #e09600     |
 | 700     | #b37000     |
 
-### Colores de Estado
+### Colores de estado
 
 | Color   | Hexadecimal | Uso                    |
 | ------- | ----------- | ---------------------- |
@@ -742,23 +584,23 @@ Usa [UI Colors](https://uicolors.app) para generar escalas de color automáticam
 
 ---
 
-## 🌙 Dark Mode
+## Modo oscuro
 
 ### Activación
 
-#### Método 1: Clase CSS
+#### Método 1: clase CSS
 
 ```html
 <html class="dark"></html>
 ```
 
-#### Método 2: Atributo data-theme
+#### Método 2: atributo `data-theme`
 
 ```html
 <html data-theme="dark"></html>
 ```
 
-#### Método 3: ThemeService
+#### Método 3: `ThemeService`
 
 ```typescript
 import { ThemeService } from '@shared/ui';
@@ -768,18 +610,18 @@ export class MyComponent {
   constructor(private themeService: ThemeService) {}
 
   toggleDark() {
-    this.themeService.setTheme('dark');
+    this.themeService.setDarkTheme();
   }
 }
 ```
 
-#### Método 4: Componente visual
+#### Método 4: componente visual
 
 ```html
 <app-theme-switcher></app-theme-switcher>
 ```
 
-### Variables en Dark Mode
+### Variables del modo oscuro
 
 ```css
 html.dark,
@@ -797,9 +639,9 @@ html.dark,
 
 ---
 
-## 🔍 Análisis de Componentes
+## Análisis de componentes
 
-### Resumen de Optimizaciones Aplicadas
+### Resumen de optimizaciones aplicadas
 
 | Componente            | Mejoras aplicadas                               |
 | --------------------- | ----------------------------------------------- |
@@ -820,7 +662,7 @@ html.dark,
 
 ---
 
-## ⚠️ Problemas Conocidos y Soluciones
+## Problemas conocidos y soluciones
 
 ### 1. `:host-context()` tiene soporte limitado
 
@@ -838,13 +680,13 @@ puede quedar detrás de un diálogo nativo.
 confirmación persistente solo después de cerrar el diálogo. Popup se reserva
 para mensajes interruptivos que requieren una acción explícita.
 
-### 3. Múltiples Loaders
+### 3. Múltiples indicadores de carga
 
 **Problema (RESUELTO):** Los IDs de SVG gradient se duplicaban
 
 **Solución:** Ahora cada Loader genera IDs únicos (`spinner-abc123`).
 
-### 4. Dropdown en Reactive Forms
+### 4. Desplegable en formularios reactivos
 
 **Problema (RESUELTO):** No funcionaba con `formControlName`
 
@@ -852,7 +694,7 @@ para mensajes interruptivos que requieren una acción explícita.
 
 ---
 
-## 📈 Estrategia de Migración Recomendada
+## Estrategia de migración recomendada
 
 ```
 Fase 1 (Semana 1): Copiar librería + Tokens CSS
@@ -870,13 +712,13 @@ Fase 5 (Semana 5): Eliminar dependencias antiguas
 
 ## ⚡ Requisitos
 
-- **Angular 17+** (usa control flow `@if`, `@for`)
+- **Angular 22.1+** (usa control flow `@if`, `@for`)
 - Soporta **SSR** (Angular Universal)
 - Componentes **standalone** (no requiere NgModule)
 
 ---
 
-## 📋 Mapeo de Clases Tailwind → Variables CSS
+## Mapeo de clases Tailwind a variables CSS
 
 | Clase Tailwind     | Variable CSS                   |
 | ------------------ | ------------------------------ |
@@ -892,9 +734,9 @@ Fase 5 (Semana 5): Eliminar dependencias antiguas
 
 ---
 
-## 🔨 Crear Nuevos Componentes
+## Creación de componentes
 
-### Nomenclatura y Ubicación
+### Nomenclatura y ubicación
 
 | Tipo     | Ubicación             | Prefijo Selector | Ejemplo                       |
 | -------- | --------------------- | ---------------- | ----------------------------- |
@@ -912,17 +754,20 @@ transitorios para evitar una ruptura inmediata de consumidores externos. Todo
 nuevo uso deberá utilizar `app-*`; el alias se retirará mediante una versión
 mayor y después de publicar una migración verificable.
 
-### Paso 1: Generar el componente
+### Paso 1: Generar el componente y sus pruebas
+
+Las pruebas se generan y mantienen junto con cada componente; no se usa una
+opción para omitirlas.
 
 ```bash
 # Atom (componente simple)
-ng g c shared/ui/atoms/mi-componente --standalone --skip-tests
+ng g c shared/ui/atoms/mi-componente --standalone
 
 # Molecule (componentes compuestos)
-ng g c shared/ui/molecules/mi-componente --standalone --skip-tests
+ng g c shared/ui/molecules/mi-componente --standalone
 
 # Organism (componentes complejos)
-ng g c shared/ui/organisms/mi-componente --standalone --skip-tests
+ng g c shared/ui/organisms/mi-componente --standalone
 ```
 
 ### Paso 2: Estructura base del componente
@@ -1008,7 +853,7 @@ export class MiComponenteComponent {
 }
 ````
 
-### Paso 3: Exportar en barrel file
+### Paso 3: exportar en el barrel
 
 Agregar al archivo `src/app/shared/ui/index.ts`:
 
@@ -1017,13 +862,13 @@ Agregar al archivo `src/app/shared/ui/index.ts`:
 export * from './atoms/mi-componente/mi-componente.component';
 ```
 
-### Paso 4: Usar tokens CSS (OBLIGATORIO)
+### Paso 4: usar tokens CSS
 
 **❌ INCORRECTO - Colores hardcodeados:**
 
 ```css
 .mi-componente {
-  background: #793576; /* NO usar hex directo */
+  background: #5F295C; /* NO usar hex directo */
   color: #ffffff;
 }
 ```
@@ -1037,7 +882,7 @@ export * from './atoms/mi-componente/mi-componente.component';
 }
 ```
 
-### Tokens CSS Disponibles
+### Tokens CSS disponibles
 
 | Categoría       | Token                     | Descripción                |
 | --------------- | ------------------------- | -------------------------- |
@@ -1058,7 +903,7 @@ export * from './atoms/mi-componente/mi-componente.component';
 |                 | `--focus-ring`            | Anillo de foco             |
 |                 | `--shadow-md`             | Sombra media               |
 
-### Checklist de Nuevo Componente
+### Checklist de un componente nuevo
 
 - [ ] Componente standalone (`standalone: true`)
 - [ ] ChangeDetectionStrategy.OnPush aplicada
@@ -1071,9 +916,9 @@ export * from './atoms/mi-componente/mi-componente.component';
 
 ---
 
-## 📦 Referencia de Componentes
+## Referencia de componentes
 
-### Atoms
+### Átomos
 
 #### `ButtonComponent`
 
@@ -1127,7 +972,7 @@ controles duplicados aunque la hoja global de formularios no esté disponible.
 <app-language-switcher></app-language-switcher>
 ```
 
-### Molecules
+### Moléculas
 
 #### `Select2Component`
 
@@ -1232,7 +1077,7 @@ la acción completada y `actionError` comunica una razón tipada:
 contenido del portapapeles. El permiso efectivo depende del contexto seguro y
 de la configuración del navegador embebido.
 
-### Organisms
+### Organismos
 
 #### `ScrollOverlayComponent`
 
@@ -1277,7 +1122,7 @@ coordina este cambio automáticamente en su variante unificada.
 </app-accordion>
 ```
 
-### Services
+### Servicios
 
 #### `ValidationService`
 
@@ -1307,12 +1152,65 @@ export class MyComponent {
 - `ValidationService.phone` - Teléfono (9 dígitos)
 - `ValidationService.notFutureDate` - Fecha no futura
 - `ValidationService.notPastDate` - Fecha no pasada
-- `ValidationService.passwordMatch(field)` - Confirmación de contraseña
+- `ValidationService.passwordMatch('password', 'confirmPassword')` - Confirmación de contraseña
 
 ---
 
 📅 **Última actualización**: agosto de 2026
-🏷️ **Versión**: 5.8.2
+🏷️ **Versión**: 5.8.4
 ⚡ **Angular**: 22
 🌐 **i18n**: ngx-translate  
 📚 **Storybook**: Disponible
+
+## Propietarios canónicos de desplazamiento
+
+La auditoría `PREST-20260802-188` se consolidó en este catálogo para que la regla, la matriz y los invariantes permanezcan junto a los componentes que gobiernan.
+
+> Auditoría `PREST-20260802-188` del ADN Atomic UI.
+
+### Regla
+
+Cada región desplazable tiene un solo propietario. Un `ScrollOverlay` oculta
+el scrollbar nativo de todos los scrollers que administra; sus contenedores
+padre usan `overflow: hidden` y no compiten. Los scrolls nativos se conservan
+únicamente en listas breves, acotadas y orientadas a interacción táctil o de
+teclado.
+
+`TableComponent.unifiedScroll` determina el propietario único, mientras que
+`scrollbarMode` determina exclusivamente su presentación. El valor `overlay`
+conserva los rieles y thumbs canónicos; `native` constituye una alternativa
+explícita y tokenizada que no crea un segundo propietario.
+
+### Matriz auditada
+
+| Región o componente                                                     | Propietario                                               | Decisión                                                                 |
+| ----------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `LayoutShell` contenido principal                                       | `ScrollOverlay`                                           | Overlay canónico; `.layout-content` solo recorta.                        |
+| `AuthLayout` contenido                                                  | `ScrollOverlay`                                           | Overlay canónico para viewport completo.                                 |
+| `Sidebar` navegación extensa                                            | `ScrollOverlay` sobre `[data-sidebar-scroll-surface]`     | El aside del shell y el host no desplazan.                               |
+| `DataTable`                                                             | `ScrollOverlay` de `.data-table__viewport`                | Único propietario horizontal/vertical; región y tabla no crean barras.   |
+| `CrudDialog` / `FormDialog`                                             | `ScrollOverlay` sobre `[data-crud-dialog-scroll-surface]` | El `dialog` usa `overflow: hidden`; header y acciones permanecen sticky. |
+| `Combobox`, `Dropdown`, `Select2`                                       | Scroll nativo localizado                                  | Listas acotadas; preserva teclado, rueda y tacto sin anidar overlays.    |
+| `Datepicker`                                                            | Sin scroll interno                                        | La cuadrícula cabe en su popup; no debe introducir un scroller.          |
+| `Tabs` y `Pagination` en móvil                                          | Scroll horizontal nativo                                  | Interacción táctil acotada; no es scroll de página.                      |
+| `ModalComponent`, `ModalContainer`, `PopupContainer` heredados          | Scroll nativo localizado                                  | Compatibilidad heredada. Nuevos formularios deben usar `FormDialog`.     |
+| `overflow: hidden` en avatar, imagen, badge, accordion o clips visuales | No aplica                                                 | Es recorte visual, no un propietario de scroll.                          |
+
+### Invariantes verificables
+
+1. Ningún ancestro de `ScrollOverlay` usa `overflow: auto` para el mismo eje.
+2. Todo scroller custom recibe `data-so-managed-scrollbar` y oculta la barra
+   nativa en Chromium, Firefox y motores MS heredados.
+3. Un overlay exterior ignora candidatos pertenecientes a overlays anidados.
+4. Abrir o reutilizar `CrudDialog` reinicia el `scrollTop` de su superficie.
+5. El scroll nativo localizado nunca se promueve a dueño de shell o página.
+6. La rueda funciona sobre toda la superficie de contenido. Un scroller anidado
+   conserva prioridad mientras puede desplazarse y, al llegar a su borde, el
+   gesto puede continuar en el `ScrollOverlay` exterior.
+
+### Criterio para consumidores
+
+Una pantalla no debe agregar `overflow-y: auto` al `main`, al panel exterior de
+un modal o al wrapper de una tabla. Debe componer el `ScrollOverlay` canónico o
+consumir un organismo que ya lo incluya. Los controles de lista breve no se
+envuelven en overlays adicionales.

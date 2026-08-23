@@ -15,6 +15,14 @@ en LF y binarios `-text` byte a byte. Los atributos externos se neutralizan y
 cualquier filtro, conversión de codificación, enlace o transformación `clean`
 adicional bloquea la verificación.
 
+## Requisitos de adopción
+
+- Node.js compatible con `^22.22.3 || ^24.15.0 || >=26.0.0`.
+- Checkout íntegro de la versión Atomic declarada por el consumidor.
+- Árbol consumidor revisado, con rutas conocidas para `package.json` y la raíz
+  de componentes.
+- Registro de decisión existente para cualquier adaptación local.
+
 ## Aplicación nueva
 
 ```bash
@@ -101,3 +109,19 @@ En GitHub se debe marcar el job `Atomic governance / atomic-governance` como
 status check requerido de la rama protegida. Esa configuración del repositorio
 es el único cerrojo externo que no puede expresarse dentro del código fuente;
 el ruleset debe revisar o fijar por separado el workflow y el OID verificador.
+
+## Verificación y límites de responsabilidad
+
+Atomic UI ejecuta `npm run governance:check` y `npm run quality:check`; cada
+consumidor ejecuta `npm run check:atomic`, sus pruebas y su compilación. Un
+resultado local no autoriza publicar un paquete ni desplegar una aplicación.
+
+Atomic conserva presentación, tokens, variantes, accesibilidad, recetas y
+generación determinista. El consumidor conserva rutas, permisos, formularios,
+endpoints, DTO, HTTP o IPC, credenciales, sesiones y reglas de negocio. Un
+componente visual ausente se implementa y cataloga en Atomic; una capacidad de
+dominio se implementa exclusivamente en el consumidor.
+
+Las referencias complementarias son `docs/ATOMIC_UI_AGENT_RUNTIME.md` para el
+runtime de agentes, `distribution/README.md` para empaquetado y
+`governance/consumer/MIGRAR_A_5.8.md` para adopciones vigentes.

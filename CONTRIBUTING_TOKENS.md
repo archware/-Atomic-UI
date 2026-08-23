@@ -1,12 +1,24 @@
-# Guía de Migración y Contribución — Atomic-UI
-## Protocolo para evitar el bug de desacoplamiento Componente ↔ Token
+---
+title: "Guía de contribución de tokens en Atomic UI"
+subtitle: "Convenciones, auditoría y propagación gobernada de tokens visuales"
+author: "Hospital Regional de Ayacucho"
+document_type: "guía técnica"
+status: "vigente"
+date: "2026-08-20"
+version: "5.8.4"
+owner: "Hospital Regional de Ayacucho"
+---
+
+# Guía de contribución de tokens en Atomic UI
+
+## Protocolo para evitar el desacoplamiento entre componente y token
 
 > **Fecha:** Julio 2026  
 > **Contexto:** Este documento nació del bug donde `table.component.ts` consumía 25+ tokens (`--table-color-*`, `--table-font-*`, `--table-card-*`) que **nunca fueron definidos** en `_tokens-components.css`, dejando las tablas sin estilos en producción.
 
 ---
 
-## 🔴 El Anti-Patrón (lo que causó el bug)
+## El antipatrón que causó el defecto
 
 ```
 Flujo ROTO:
@@ -24,7 +36,7 @@ Por eso el bug puede vivir semanas sin ser detectado.
 
 ---
 
-## ✅ El Patrón Correcto — Token-First Development
+## El patrón correcto de desarrollo basado en tokens
 
 > **Regla de Oro:** El token debe existir en `_tokens-components.css`
 > **antes o al mismo tiempo** que se usa en el componente. Nunca después.
@@ -39,7 +51,7 @@ Flujo CORRECTO:
 
 ---
 
-## 📐 Convenciones de Nomenclatura de Tokens
+## Convenciones de nomenclatura de tokens
 
 Todo token de componente sigue el esquema:
 
@@ -101,7 +113,7 @@ Todo token de componente sigue el esquema:
 
 ---
 
-## 📋 Checklist — Agregar un Nuevo Componente
+## Checklist para agregar un nuevo componente
 
 Antes de hacer commit de cualquier componente nuevo o refactorizado:
 
@@ -139,7 +151,7 @@ Antes de hacer commit de cualquier componente nuevo o refactorizado:
 
 ---
 
-## 🔍 Script de Auditoría — Detectar Tokens Rotos
+## Script de auditoría para detectar tokens rotos
 
 Ejecutar en PowerShell desde la raíz de `-Atomic-UI` para **cualquier componente**:
 
@@ -180,46 +192,36 @@ if ($missing.Count -gt 0) {
 
 **Uso:**
 ```powershell
-# Auditar tabla
-.\audit-tokens.ps1 -ComponentGlob "src\app\shared\ui\atoms\table\*.ts"
+# Auditoría completa mediante el script canónico de npm
+npm run tokens:check
 
-# Auditar chart
-.\audit-tokens.ps1 -ComponentGlob "src\app\shared\ui\organisms\chart\*.ts"
-
-# Auditar todos los organisms
-.\audit-tokens.ps1 -ComponentGlob "src\app\shared\ui\organisms\**\*.ts"
+# Auditoría focal desde la raíz de Atomic UI
+.\scripts\audit-tokens.ps1 -ComponentGlob "src\app\shared\ui\atoms\table\*.ts"
+.\scripts\audit-tokens.ps1 -ComponentGlob "src\app\shared\ui\organisms\chart\*.ts"
+.\scripts\audit-tokens.ps1 -ComponentGlob "src\app\shared\ui\organisms\**\*.ts"
 ```
 
 ---
 
-## 📦 Script de Propagación — Atomic-UI → Wails → Tauri
+## Propagación gobernada hacia consumidores
+
+Los tokens no se sobrescriben mediante una copia directa. Primero se ejecuta la
+auditoría de solo lectura del consumidor:
 
 ```powershell
-# propagate-tokens.ps1
-# Ejecutar desde la raíz de -Atomic-UI
-
-$src = "src\styles\themes\_tokens-components.css"
-$repos = @(
-    "..\wails-angular-app\frontend\src\styles\themes\_tokens-components.css",
-    "..\tauri-angular-app\src\styles\themes\_tokens-components.css"
-)
-
-$hash_src = (Get-FileHash $src -Algorithm SHA256).Hash
-
-foreach ($dst in $repos) {
-    Copy-Item $src $dst -Force
-    $hash_dst = (Get-FileHash $dst -Algorithm SHA256).Hash
-    $status = if ($hash_src -eq $hash_dst) { "✅" } else { "❌ HASH MISMATCH" }
-    $bytes = (Get-Item $dst).Length
-    Write-Host "$status Propagado → $dst ($bytes bytes)"
-}
-Write-Host ""
-Write-Host "Hash Atomic-UI: $hash_src"
+npm run governance:install -- D:\ruta\consumidor `
+  --ui-root=src/app/shared/ui `
+  --audit-only
 ```
+
+Una diferencia se revisa y, si es una adaptación deliberada, se vincula con un
+ADR y un identificador de cambio. El instalador canónico actualiza la política y
+la procedencia; después el consumidor ejecuta `npm run check:atomic`. No se
+editan hashes, snapshots ni archivos de tokens a mano.
 
 ---
 
-## 🗂️ Plantilla para Nuevo Componente
+## Plantilla para un nuevo componente
 
 ```css
 /* ═══════════════════════════════════════════════════════════════════════
@@ -251,7 +253,7 @@ Write-Host "Hash Atomic-UI: $hash_src"
 
 ---
 
-## ⚠️ Regla de Tokens Legado
+## Regla de tokens heredados
 
 Cuando **renombres** tokens existentes, mantener aliases por al menos 1 sprint:
 
@@ -271,7 +273,7 @@ Cuando **renombres** tokens existentes, mantener aliases por al menos 1 sprint:
 
 ---
 
-## 📚 Registro de Namespaces Activos
+## Registro de espacios de nombres activos
 
 | Namespace | Componente | Archivo | Estado |
 |---|---|---|---|
@@ -286,7 +288,7 @@ Cuando **renombres** tokens existentes, mantener aliases por al menos 1 sprint:
 | `--card-*` | `app-card` | `card.component.ts` | ✅ Definido |
 | `--modal-*` | `app-modal` | `modal.component.ts` | ✅ Definido |
 | `--input-*` | `app-floating-input` | `floating-input.component.ts` | ✅ Definido |
-| `--button-*` | `app-btn` | `_buttons.css` | ✅ Definido |
+| `--button-*` | `app-button` | `_buttons.css` | ✅ Definido |
 | `--badge-*` | `app-chip` | `chip.component.ts` | ✅ Definido |
 | `--pagination-*` | `app-data-pager` | `data-pager.component.ts` | ✅ Definido |
 | `--tab-*` | `app-tabs` | `tabs.component.ts` | ✅ Definido |

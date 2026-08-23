@@ -1,4 +1,15 @@
-# Atomic UI: runtime de diseño para agentes
+---
+title: "Runtime de diseño de Atomic UI para agentes"
+subtitle: "Autoridad, contratos y generación determinista de interfaces"
+author: "Hospital Regional de Ayacucho"
+document_type: "arquitectura"
+status: "vigente"
+date: "2026-08-20"
+version: "5.8.4"
+owner: "Hospital Regional de Ayacucho"
+---
+
+# Runtime de diseño de Atomic UI para agentes
 
 ## Resultado esperado
 

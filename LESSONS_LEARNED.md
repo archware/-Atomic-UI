@@ -2,12 +2,58 @@
 title: "Lecciones aprendidas de Atomic UI"
 document_type: "registro técnico"
 status: "en revisión"
-last_updated: "2026-08-13"
+last_updated: "2026-08-21"
 owners:
   - "Hospital Regional de Ayacucho"
 ---
 
 # Lecciones aprendidas de Atomic UI
+
+## [2026-08-21] - La documentación se organiza por autoridad y audiencia
+
+**Contexto.** Desarrollo, integración, comandos, portabilidad y auditorías
+visuales estaban distribuidos en archivos que repetían requisitos, gates y
+límites de responsabilidad.
+
+**Problema.** Una actualización debía replicarse en varias rutas y podía dejar
+versiones contradictorias de Node.js, Angular, gobierno o procedencia.
+
+**Lección aprendida.** La guía de diseño reúne el trabajo cotidiano; gobierno
+reúne adopción y portabilidad; el catálogo conserva reglas de componentes; y el
+roadmap conserva evidencia histórica. Un archivo separado solo se justifica por
+una autoridad o audiencia distinta.
+
+## [2026-08-21] - Una procedencia antigua es un bloqueo de migración, no una huella pendiente
+
+**Contexto.** Acopiador BCP declara Atomic UI 5.5.8 y el árbol institucional
+local disponible corresponde a 5.8.4. La compuerta también encontró que el
+usuario aislado no podía validar la propiedad Git del repositorio Atomic.
+
+**Problema.** Ejecutar la validación de la línea 5.5.8 contra el árbol 5.8.4
+mezcla dos revisiones y produce un bloqueo correcto. Cambiar únicamente la
+versión, la referencia o las huellas ocultaría divergencias reales entre
+componentes exactos, adaptaciones aprobadas y artefactos de gobierno.
+
+**Lección aprendida.** La línea actual se comprueba con un checkout fijado al
+`atomicRef` declarado. Una migración a 5.8.4 solo se inicia con autorización y
+se cierra cuando el consumidor se audita, declara sus adaptaciones, regenera la
+procedencia mediante el flujo canónico y supera sus pruebas. La restricción
+`safe.directory` se resuelve en un checkout controlado por su propietario o en
+CI; no se usa como sustituto de ninguno de esos controles.
+
+## [2026-08-20] - Un ejemplo de presentación no puede convertirse en contrato de dominio
+
+**Contexto.** Las guías históricas mezclaban copia manual del sistema visual,
+credenciales literales, DTO de autenticación y endpoints dentro de Atomic.
+
+**Problema.** Un ejemplo ejecutable tiende a copiarse como arquitectura oficial,
+aunque el manifiesto lo clasifique como demostración heredada.
+
+**Lección aprendida.** Atomic solo publica contratos visuales, variantes y
+generación determinista. Autenticación, permisos, DTO, endpoints y credenciales
+permanecen en el consumidor. Las migraciones empiezan con auditoría de solo
+lectura y se cierran mediante procedencia, pruebas y build; la copia manual no
+es una ruta de adopción.
 
 Este documento centraliza el conocimiento adquirido tras solucionar problemas complejos de arquitectura, diseño e integración en el ecosistema de Atomic-UI, sirviendo como guía maestra para que agentes y desarrolladores entiendan el "por qué" de ciertas decisiones técnicas críticas y puedan portar este comportamiento a otros ecosistemas (Wails, Tauri, Web, etc).
 

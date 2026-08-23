@@ -2,8 +2,8 @@
 title: "Atomic UI: sistema de componentes y temas"
 subtitle: "Fuente visual canónica para aplicaciones de escritorio HRA"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
-date: "2026-08-14"
-version: "5.8.2"
+date: "2026-08-20"
+version: "5.8.4"
 ---
 
 # Atomic UI: sistema de componentes y temas
@@ -120,15 +120,15 @@ npm start
 
 ---
 
-## 📦 Integración Manual
+## Integración gobernada
 
 Para integrar Atomic UI en un proyecto existente, consulte primero el catálogo
 compacto y el runtime de agentes:
 
 - `catalog/README.md` - contratos consultables y extensión de variantes
 - `docs/ATOMIC_UI_AGENT_RUNTIME.md` - recetas, límites y definición de terminado
-- `.agent/workflows/integration.md` - integración manual
-- `.agent/workflows/development.md` - desarrollo con hot-reload
+- `.agents/workflows/atomic-design-guide.md` - diseño, desarrollo, comandos e integración gobernada
+- `GENERATED_ARTIFACTS.md` - clasificación de logs y reportes históricos
 
 ---
 
@@ -136,7 +136,8 @@ compacto y el runtime de agentes:
 
 ### Inventario de Componentes
 
-El listado es representativo; el conteo corresponde a los directorios vigentes del catálogo.
+El listado es representativo; el conteo corresponde a los directorios físicos
+vigentes. El catálogo consultable puede exponer un subconjunto declarado.
 
 | Capa | Ejemplos de componentes | Descripción |
 | ------ | ----------- | ----------- |
@@ -262,20 +263,18 @@ src/
 
 ## Comandos CLI
 
-```bash
-# Desarrollo
-npm start                 # Servidor de desarrollo (localhost:4200)
-
-# Build
-npm run build             # Build de producción
-
-# Deploy
-npm run deploy            # Despliegue a GitHub Pages
-
-# Testing
-ng test                   # Unit tests
-ng e2e                    # E2E tests
+```powershell
+npm ci
+npm run governance:check
+npm run lint
+npm test -- --watch=false
+npm run build
+npm run build-storybook
 ```
+
+`npm start` y `npm run storybook` son procesos interactivos. La orden
+`npm run deploy` cambia estado externo y solo se ejecuta con autorización
+explícita, árbol limpio y compuertas de release aprobadas.
 
 ---
 
@@ -325,7 +324,7 @@ Este proyecto está bajo la Licencia MIT.
 
 ---
 
-**Versión:** 5.8.2
-**Última actualización:** 14 de agosto de 2026
+**Versión:** 5.8.4
+**Última actualización:** 20 de agosto de 2026
 **Angular:** 22
 **TypeScript:** 6.0

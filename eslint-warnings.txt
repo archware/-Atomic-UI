@@ -1,3 +1,7 @@
+status: historical-generated-artifact
+captured_state: not-current
+superseded_by: npm run lint
+---
 (node:2184) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///<REPOSITORY_ROOT>/eslint.config.js?mtime=1766103639099 is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to <REPOSITORY_ROOT>\package.json.

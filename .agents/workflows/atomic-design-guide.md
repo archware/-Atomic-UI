@@ -1,19 +1,32 @@
-# Guía de Atomic Design - Atomic UI
+---
+title: "Guía de diseño atómico de Atomic UI"
+subtitle: "Jerarquía, tokens y reglas de composición visual"
+author: "Hospital Regional de Ayacucho"
+document_type: "guía técnica"
+status: "vigente"
+date: "2026-08-20"
+version: "5.8.4"
+owner: "Hospital Regional de Ayacucho"
+---
+
+# Guía de diseño atómico de Atomic UI
 
 > Para solicitudes de UI o CRUD dirigidas a agentes, comenzar por el contexto
 > compacto y el flujo de `docs/ATOMIC_UI_AGENT_RUNTIME.md`. Esta guía completa
 > se usa al crear o modificar el ADN de Atomic, no como contexto predeterminado
 > de cada pantalla.
 
-## Jerarquía de Componentes
+## Jerarquía de componentes
 
 ```mermaid
 graph TB
     A[Tokens CSS] --> B[Átomos]
     B --> C[Moléculas]
     C --> D[Organismos]
-    D --> E[Templates]
-    E --> F[Pages]
+    D --> E[Superficies]
+    D --> F[Plantillas]
+    E --> G[Páginas del consumidor]
+    F --> G
 ```
 
 | Nivel | Descripción | Ejemplos |
@@ -21,7 +34,9 @@ graph TB
 | **Átomos** | Elementos UI básicos e indivisibles | Button, Input, Avatar, Chip |
 | **Moléculas** | Combinación de átomos | Select2, Datepicker, Modal |
 | **Organismos** | Secciones completas de UI | Sidebar, Topbar, Tabs |
-| **Templates** | Layouts estructurales | LayoutShell, AuthLayout |
+| **Superficies** | Regiones estructurales gobernadas | Panel |
+| **Plantillas** | Layouts estructurales | LayoutShell, AuthLayout |
+| **Páginas** | Composición y dominio del consumidor | Rutas funcionales fuera de Atomic |
 
 ---
 
@@ -191,3 +206,65 @@ height: var(--checkbox-size, 1.5rem);
 - [ ] Estados hover/focus definidos
 - [ ] Sin valores hardcodeados (hex, px, rem sueltos)
 - [ ] Accesibilidad: `role`, `aria-*`, `tabindex` donde aplique
+
+## Desarrollo local reproducible
+
+| Herramienta | Contrato vigente |
+|---|---|
+| Node.js | `^22.22.3 || ^24.15.0 || >=26.0.0` |
+| npm | Versión incluida con el runtime seleccionado y compatible con `package-lock.json` |
+| Angular | 22.1.x, fijado por `package.json` y `package-lock.json` |
+
+La preparación utiliza `npm ci` y `npm run governance:check`; una divergencia
+de dependencias se resuelve mediante un cambio explícito de manifiesto y lock.
+El ciclo local ejecuta Storybook o `npm start` desde una terminal controlada y
+después aplica `npm test -- --watch=false`, `npm run lint` y `npm run build`.
+Los procesos interactivos se detienen desde la misma terminal; no se finalizan
+globalmente todos los procesos Node del equipo.
+
+Solo existe el template `shell`:
+
+```powershell
+npm run create:project -- mi-aplicacion --template=shell
+npm run generate:ui -- --spec .\ruta\requisito-ui.json --output .\mi-aplicacion --dry-run
+```
+
+La generación no inventa acceso, dashboard, CRUD, credenciales, endpoints, DTO
+ni datos simulados. El cierre ejecuta `npm run quality:check`,
+`git diff --check` y `git status --short`. Un despliegue o una publicación queda
+fuera del desarrollo y requiere autorización, árbol limpio y compuertas de
+release.
+
+## Integración gobernada en consumidores
+
+La integración no se realiza mediante copia manual. Primero se ejecuta una
+auditoría de solo lectura:
+
+```powershell
+npm run governance:install -- D:\ruta\consumidor `
+  --ui-root=src/app/shared/ui `
+  --audit-only
+```
+
+Cuando Angular está bajo `frontend`, se agregan `--package-root=frontend` y
+`--ui-root=frontend/src/app/shared/ui`. Toda divergencia se enlaza a un ADR real
+y se adopta mediante `--adaptation-decision` y `--change-id`; el instalador no
+sobrescribe una adaptación ni crea una justificación genérica.
+
+El consumidor comprueba, desde su raíz, `npm ci`, `npm run check:atomic`, pruebas
+y compilación. Rutas, permisos, formularios, endpoints, DTO, HTTP o IPC,
+credenciales, sesiones y reglas de negocio permanecen en el consumidor. Atomic
+aporta presentación, tokens, variantes, accesibilidad y comportamiento visual.
+
+## Comandos frecuentes y límites
+
+| Categoría | Comandos o acción | Límite |
+|---|---|---|
+| Calidad | `catalog:check`, `tokens:check`, `governance:check`, `lint`, pruebas y builds | Solo fuentes y artefactos regenerables |
+| Interactivo | `storybook`, `start` | Se detiene con `Ctrl+C` en su terminal |
+| Generación | `create:project`, `generate:ui --dry-run` | Se revisa antes de escribir |
+| Externo | despliegue, publicación, versión o sobrescritura | Requiere autorización explícita |
+
+Si un proceso queda huérfano, se identifica por PID y directorio de trabajo. No
+se utiliza una orden global contra todos los procesos Node. No se eliminan locks
+ni dependencias para forzar una compilación.

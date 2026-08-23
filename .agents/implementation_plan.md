@@ -1,4 +1,19 @@
-# Especificación Técnica: ADMIN_GENERAL_FE
+---
+title: "Especificación histórica de ADMIN_GENERAL_FE"
+document_type: "plan de implementación histórico"
+status: "histórico"
+date: "2026-06-01"
+last_updated: "2026-08-20"
+superseded_by: "../docs/ATOMIC_UI_AGENT_RUNTIME.md"
+owner: "Hospital Regional de Ayacucho"
+---
+
+# Especificación histórica de ADMIN_GENERAL_FE
+
+> **Documento sustituido.** Conserva requisitos de una demostración anterior en
+> Angular 17. No define la API actual de Atomic UI ni autoriza incorporar login,
+> endpoints, DTO o reglas administrativas al sistema visual. La generación
+> vigente se rige por `superseded_by` y por el catálogo ejecutable.
 
 > **Objetivo**: Documento para que un agente pueda recrear el frontend usando Arquitectura Atómica
 
