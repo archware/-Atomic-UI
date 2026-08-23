@@ -141,17 +141,17 @@ export const InTable: Story = {
       <table style="width: 100%; border-collapse: collapse; background: var(--surface-background); border-radius: 8px; overflow: hidden;">
         <thead style="background: var(--surface-section);">
           <tr>
-            <th style="padding: 12px; text-align: left; font-weight: 600;">Nombre</th>
-            <th style="padding: 12px; text-align: left; font-weight: 600;">Email</th>
-            <th style="padding: 12px; text-align: left; font-weight: 600;">Estado</th>
-            <th style="padding: 12px; text-align: right; font-weight: 600;">Acciones</th>
+            <th style="padding: 12px; text-align: left; font-weight: var(--font-weight-emphasis);">Nombre</th>
+            <th style="padding: 12px; text-align: left; font-weight: var(--font-weight-emphasis);">Email</th>
+            <th style="padding: 12px; text-align: left; font-weight: var(--font-weight-emphasis);">Estado</th>
+            <th style="padding: 12px; text-align: right; font-weight: var(--font-weight-emphasis);">Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr style="border-bottom: 1px solid var(--border-color);">
             <td style="padding: 12px;">Juan Pérez</td>
             <td style="padding: 12px;">juan@email.com</td>
-            <td style="padding: 12px;"><span style="color: var(--success-color);">Activo</span></td>
+            <td style="padding: 12px;"><span style="color: var(--success-color-text);">Activo</span></td>
             <td style="padding: 12px; text-align: right;">
               <app-action-group
                 [actions]="actions"
@@ -163,7 +163,7 @@ export const InTable: Story = {
           <tr style="border-bottom: 1px solid var(--border-color);">
             <td style="padding: 12px;">María García</td>
             <td style="padding: 12px;">maria@email.com</td>
-            <td style="padding: 12px;"><span style="color: var(--warning-color);">Pendiente</span></td>
+            <td style="padding: 12px;"><span style="color: var(--warning-color-text);">Pendiente</span></td>
             <td style="padding: 12px; text-align: right;">
               <app-action-group
                 [actions]="actions"
@@ -175,7 +175,7 @@ export const InTable: Story = {
           <tr>
             <td style="padding: 12px;">Carlos López</td>
             <td style="padding: 12px;">carlos@email.com</td>
-            <td style="padding: 12px;"><span style="color: var(--danger-color);">Inactivo</span></td>
+            <td style="padding: 12px;"><span style="color: var(--danger-color-text);">Inactivo</span></td>
             <td style="padding: 12px; text-align: right;">
               <app-action-group
                 [actions]="actions"

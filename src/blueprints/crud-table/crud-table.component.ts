@@ -234,7 +234,7 @@ export class CrudTableComponent implements OnInit {
   // ============================================
 
   /** @customize Status options for filter */
-  
+
   searchTypeOptions = [
     { value: '', label: 'Seleccione' },
     { value: 'name', label: 'Nombre del personal' },
@@ -329,17 +329,17 @@ export class CrudTableComponent implements OnInit {
     }
     if (filters.status) filtered = filtered.filter(e => e.status === filters.status);
     if (filters.role) filtered = filtered.filter(e => e.role === filters.role);
-    
+
     const page = this.currentPage();
     const perPage = this.pageSize();
     const start = (page - 1) * perPage;
     const paginated = filtered.slice(start, start + perPage);
-    
+
     const res: PaginatedResponse<Entity> = {
       data: paginated,
       meta: { total: filtered.length, page, perPage, totalPages: Math.ceil(filtered.length / perPage) }
     };
-    
+
     this.listApi.execute(of(res).pipe(delay(600)));
   }
 

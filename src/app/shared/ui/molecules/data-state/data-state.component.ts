@@ -152,13 +152,13 @@ import { ApiError } from '../../services/api.service';
 
     .error-icon {
       font-size: var(--text-3xl);
-      color: var(--danger-color);
+      color: var(--danger-color-text);
     }
 
     .error-title {
       margin: 0;
       font-size: var(--text-lg);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       color: var(--text-color);
     }
 
@@ -176,7 +176,7 @@ import { ApiError } from '../../services/api.service';
       padding: var(--space-2) var(--space-4);
       margin-top: var(--space-2);
       font-size: var(--text-sm);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       color: var(--primary-color);
       background: var(--primary-color-lighter);
       border: none;

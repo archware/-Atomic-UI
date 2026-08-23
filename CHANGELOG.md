@@ -1,9 +1,9 @@
 ---
 title: 'Registro de cambios de Atomic UI'
 document_type: 'changelog'
-version: '5.8.4'
+version: '5.22.0'
 status: 'vigente'
-updated: '2026-08-21'
+updated: '2026-08-23'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
@@ -17,23 +17,373 @@ archivo. El formato se basa en
 
 ### Documentación
 
-- Se consolidaron desarrollo, integración y comandos seguros en una sola guía
-  de diseño; gobierno absorbió la guía de portabilidad y migración 5.8 conservó
-  las restricciones todavía vigentes de 5.7.
+- Se reconciliaron la línea funcional 5.22.0 y las mejoras locales de gobierno
+  posteriores a 5.8.4. La fuente conserva `.agents`, la guía consolidada de
+  diseño y la migración 5.8 con las restricciones todavía vigentes de 5.7.
 - Las auditorías de desplazamiento y respuesta se trasladaron al catálogo de
   componentes y al roadmap histórico. Se retiraron siete rutas redundantes sin
   perder matrices, invariantes ni evidencia fechada.
-- Se alinearon las guías de adopción, desarrollo y componentes con Atomic UI
-  5.8.4, Angular 22.1, Node.js fijado por `engines` y la política 1.2.2.
 - Se retiraron instrucciones de copia directa, credenciales demo y operaciones
   globales sobre procesos; los registros antiguos quedaron identificados como
   históricos y enlazados a su reemplazo.
-- Se corrigieron rutas, API de temas y validación, paleta canónica, inventarios,
-  comandos de tokens y la guía de migración de consumidores.
-- Se registró que Acopiador BCP conserva procedencia Atomic UI 5.5.8 y requiere
-  el checkout fijado por su `atomicRef` para validar esa línea. El árbol local
-  5.8.4 produce un bloqueo esperado; una migración posterior exige autorización
-  y adopción auditada, sin actualizar referencias o huellas de forma aislada.
+- Se registró que los consumidores se migran mediante auditoría, decisión y
+  procedencia verificable; las referencias y huellas no se actualizan de forma
+  aislada para silenciar una divergencia.
+
+## 5.22.0 - 2026-08-20
+
+### Corregido
+
+- **La geometría del interruptor vuelve a cerrar con los valores reales de los
+  tokens.** La pista utiliza un relleno existente, el pulgar cabe en su altura y
+  el recorrido marcado coincide con el espacio interior disponible. El control
+  deja de depender de `--space-0`, que no estaba definido, y evita que el pulgar
+  sobresalga del borde.
+
+### Distribución
+
+- Se publicó el manifiesto de 158 fuentes correspondiente a Atomic UI 5.22.0,
+  con huella agregada verificable para los consumidores.
+
+
+
+
+
+## 5.21.0 - 2026-08-18
+
+### Corregido
+
+- **El panel del acordeon imponia su tipografia a lo que contenia.** El cuerpo
+  fijaba `color` y `font-size`, y eso lo hereda todo lo que se meta dentro: la
+  misma tabla se dibujaba mas pequeña y mas apagada por el solo hecho de estar
+  dentro de un acordeon, y quien la comparaba con la de otra pantalla veia dos
+  tablas distintas sin que nada lo explicara. El panel se queda con el hueco, que
+  es lo suyo.
+
+### Anadido
+
+- **Dos reglas mas en el capitulo 15.** Que un contenedor de disposicion decide
+  donde van las cosas y no de que color son; y que el mismo acto lleva el mismo
+  icono en toda la aplicacion —medido: de 19 botones de alta, uno solo lo
+  llevaba—.
+
+## 5.20.0 - 2026-08-18
+
+### Anadido
+
+- **Capitulo 15 de la doctrina: «Se pliega lo que compite, no lo unico que hay».**
+  Un contenedor tiene un presupuesto —el alto de la pantalla, el ancho de una
+  fila— y cuando VARIAS cosas compiten por ese sitio se pliegan; cuando hay una
+  sola, no. Plegar lo unico que hay esconde tras un clic la razon por la que
+  alguien entro.
+
+  Sale de una decision real: seis pantallas de catalogo medidas, dos con varias
+  secciones —una con seis catalogos, otra con tres— que si piden acordeon, y
+  cuatro con una sola tabla, a las que darselo «por uniformidad» habria escondido
+  lo unico que muestran.
+
+  El capitulo recoge tambien el mismo presupuesto en horizontal: las acciones de
+  una fila comparten ancho con las columnas, asi que van como iconos con nombre
+  accesible. Medido: tres botones etiquetados ocupaban mas que las seis columnas
+  de datos juntas, se solapaban y tapaban la columna de estado.
+
+## 5.19.0 - 2026-08-18
+
+### Corregido
+
+- **El aviso quedaba pegado a lo de arriba y flotando sobre lo de abajo.** El
+  margen de flujo era solo `margin-block-end`, y casi todas las pantallas que
+  consumen el componente disponen su contenido con `display: grid` y un `gap`
+  —22 de 27 medidas—. En una rejilla los margenes NO se colapsan con el hueco:
+  se suman. Medido en una cola real: 1rem de separacion con lo que hay ENCIMA y
+  3,25rem con lo que hay DEBAJO.
+
+  Lo que se lee como descuido es esa asimetria. El margen se reparte ahora a los
+  dos lados: en rejilla el aviso queda centrado en su hueco, y en flujo de bloque
+  los margenes contiguos se colapsan, asi que la separacion total no crece.
+
+## 5.18.0 - 2026-08-17
+
+### Cambiado
+
+- **Los 48 pesos que quedaban a mano, migrados. El trinquete llega a cero.** Ya
+  no es un trinquete: es una prohibicion, y cualquier peso escrito a mano falla el
+  gate.
+
+- **La escala pasa a cuatro pasos: se añade `--font-weight-display` (800).**
+
+### Corregido
+
+- **La doctrina afirmaba que «800 y 900 no aportan trazo». Era falso.** Contado en
+  `C:\Windows\Fonts`, Segoe UI tiene cara propia en 400 (`segoeui`), 600
+  (`seguisb`), 700 (`segoeuib`) y **900 (`seguibl`, Segoe UI Black, que se instala
+  con Windows)**. Lo que no tiene cara es 500, 650 y 750, que el navegador
+  resuelve a su vecino sin decirlo.
+
+  La correccion queda escrita dentro del capitulo 13, no borrada: la doctrina se
+  sostiene sobre mediciones, y una medicion mal hecha se corrige donde se hizo.
+
+  Con las caras reales delante, la migracion de los 48 tampoco cambia lo que se
+  ve: 500 va a `body` porque ya se dibujaba como 400; 650 va a `title` porque ya
+  se dibujaba como 700; y 750, 800 y 900 van a `display` porque los tres aterrizan
+  en la misma cara Black.
+
+## 5.17.0 - 2026-08-17
+
+### Cambiado
+
+- **99 pesos tipograficos migrados a la escala, y el trinquete baja de 147 a 48.**
+  Solo los EXACTOS: 400, 600 y 700 coinciden con `--font-weight-body`, `-emphasis`
+  y `-title`, asi que el dibujo no cambia ni un pixel. Los 48 que quedan —500, 650,
+  800 y 900— si alteran el trazo y van componente a componente, mirando el
+  resultado.
+
+- **Los 31 cortes `@media` en pixeles pasan a `rem`** (capitulo 11). `rem` sigue
+  el tamaño de letra del navegador: quien lo aumenta recibe la vista compacta
+  ANTES, no en el mismo ancho fisico.
+
+  De paso se cierra la franja que la doctrina describia: `layout-shell` tenia
+  `min-width: 769px` y `max-width: 768px` en el mismo fichero, asi que a 768,5px
+  —que ocurre con zoom o escalado fraccionario— no se aplicaba ninguna de las dos.
+  Los dos cortes comparten ahora frontera en `48rem`: solapan en un unico ancho,
+  donde gana la ultima regla, en vez de dejar un hueco.
+
+  Una prueba de `table` afirmaba el corte en `768px`; describia el defecto y se
+  reescribio.
+
+- **`--space-11` deja de usarse.** Los cuatro sitios que lo consumian se reparten
+  segun lo que de verdad pedian: `action-group` y `stepper` querian el objetivo
+  tactil y pasan a `--touch-target-min`; el relleno de `select2`, que si era un
+  espacio, pasa a `--space-7`, un paso real de la escala. El token se conserva
+  publicado por compatibilidad, con su aviso al lado.
+
+## 5.16.0 - 2026-08-17
+
+### Corregido
+
+- **Los paneles del acordeon no aparecian en el indice de encabezados.** El
+  disparador era un `<button>` suelto, sin envolver en nada con rol de
+  encabezado. Quien recorre una pantalla saltando por titulos —que es como se
+  navega con lector de pantalla— pasaba del titulo de la pagina a lo que hubiera
+  DENTRO del primer panel abierto, sin enterarse de que existian los demas ni de
+  como se llamaban.
+
+  Salio midiendo el capitulo 13 recien escrito: una pantalla parecia saltar de
+  `<h1>` a `<h3>`, y el `<h2>` que faltaba era precisamente el nombre de cada
+  panel, que no se anunciaba como titulo de nada. La regla encontro el defecto el
+  mismo dia que se enuncio.
+
+  El boton va ahora envuelto en `role="heading"` con `aria-level`, como piden las
+  practicas de ARIA para acordeon. El nivel lo decide quien monta la pantalla
+  —`headingLevel`, 3 por omision— porque solo alli se sabe que hay por encima.
+
+## 5.15.0 - 2026-08-17
+
+### Anadido
+
+- **La doctrina se termina: capitulos 13 y 14, y su seccion de huecos queda
+  vacia.** Eran los dos que quedaban declarados —jerarquia tipografica e idioma—
+  y se escribieron midiendo, como los cinco anteriores.
+
+  El 13 encontro que el tamaño de letra esta resuelto (279 usos de `var(--text-*)`
+  frente a 8 valores sueltos) y el **peso no tenia escala ninguna**: seis valores
+  compitiendo en el consumidor —400, 600, 650, 700, 750, 800— y ocho en el ADN,
+  hasta 900. La mitad de esas distinciones **no se dibujan**: la familia declarada
+  es `'Open Sans', system-ui, …` pero no hay ningun `@font-face`, no se sirve
+  ningun fichero de fuente y la CSP del consumidor dice `font-src 'self'`, asi que
+  Open Sans no se carga nunca y se cae a `system-ui` —Segoe UI en Windows,
+  estatica—, donde 650 y 700 son el mismo trazo.
+
+  Ademas: `login` y `change-password` empiezan en `<h2>` y **no tienen `<h1>`**,
+  de modo que su indice de encabezados arranca sin titulo de pagina; el catalogo
+  de clientes salta de `<h1>` a `<h3>`. Las pantallas que si cumplen son las que
+  usan `page-header`, que emite el `<h1>` por su cuenta.
+
+  El 14 midio 221 mensajes de error de los que **207 se detienen en lo que fallo**
+  y nunca dicen que hacer; y dos nombres para el mismo objeto —«credito» 78 veces,
+  «prestamo» 38—, con «Alta del prestamo» y «Alta de credito» conviviendo como el
+  mismo acto.
+
+- **Escala de peso tipografico publicada**: `--font-weight-body` (400),
+  `--font-weight-emphasis` (600) y `--font-weight-title` (700). Tres pasos y no
+  seis, porque la familia que de verdad se carga no dibuja mas.
+
+- **`--touch-target-min`**, el objetivo tactil de WCAG 2.5.5, con su propio nombre
+  en vez de vivir como `--space-11` al final de la escala de espaciado siendo mas
+  pequeño que el 8, el 9 y el 10 (capitulo 10). `--space-11` se conserva por
+  compatibilidad, ahora con el aviso escrito al lado.
+
+- **`npm run check:typography`**, trinquete de la escala: cuenta los pesos
+  escritos a mano —hoy 147— y falla si suben. No se barren de golpe a proposito;
+  cambiar 500 por 600 engorda el trazo y 900 por 700 lo adelgaza, asi que la
+  migracion va componente a componente. El trinquete solo impide que la deuda
+  crezca mientras se paga.
+
+## 5.14.0 - 2026-08-17
+
+### Anadido
+
+- **La doctrina cierra sus tres huecos declarados: capitulos 10, 11 y 12.** La
+  seccion «lo que esta doctrina no cubre» anunciaba tres desde la auditoria
+  —espaciado, tabla-a-tarjetas en movil y cuando hace falta confirmar—; se
+  escribieron midiendo el codigo, no proponiendo criterios.
+
+  El 10 encontro un defecto en el propio ADN: `--space-11: 2.75rem` esta al final
+  de una escala ascendente y es **mas pequeño que el 8, el 9 y el 10**. Quien pide
+  el 11 esperando «mas que el 10» recibe menos que el 8. Su comentario delata como
+  llego ahi —«44px, tamaños de componente»—: no es un espacio, es el objetivo
+  tactil minimo de WCAG 2.5.5, una medida de otra cosa metida en la escala de
+  espaciado porque no habia donde ponerla.
+
+  El 11 fija el corte en `rem` y no en `px`, porque `rem` sigue el tamaño de letra
+  del navegador: quien lo aumenta necesita las tarjetas ANTES, no en el mismo
+  ancho fisico. Medido: quince cortes en `768px` conviven con cuatro en `48rem`,
+  que son el mismo ancho solo si nadie tocó el tamaño de letra. Hay ademas un
+  `769px` y un `639px`, que es como aparece una franja de un pixel sin ninguna
+  regla aplicada.
+
+  El 12 separa tres clases donde antes se decia «confirma lo destructivo»: lo que
+  se deshace desde la pantalla no se confirma; lo que se juega en una cifra no se
+  confirma, se REVISA con las cifras delante; y lo que no se puede deshacer se
+  confirma, con el motivo si habra que explicarlo meses despues. Medido en un
+  consumidor: las dieciocho llamadas a `dialogs.confirm` estan en catalogos y
+  bajas, y ninguna en caja.
+
+## 5.13.0 - 2026-08-16
+
+### Cambiado
+
+- **`app-select` devuelve el desplegable al valor del padre aunque ese valor no
+  cambie.** Cuando el padre rechaza lo elegido y repone lo que ya tenia, llega un
+  `writeValue` con un valor identico al anterior: el binding `[value]` compara,
+  ve que no cambio y no toca el DOM, mientras el navegador ya movio el `<select>`
+  con el clic de la persona. A partir de ahi lo que se ve deja de ser lo que se
+  envia, y el consumidor no tiene forma de arreglarlo desde fuera. Ahora el
+  atomo reconcilia el elemento nativo en cada `writeValue`. Es la mitad olvidada
+  del capitulo 4: rechazar una entrada incluye retirarla de la pantalla.
+
+- **`form-select` reconcilia el `<select>` gobernado.** Es el gemelo con signals
+  del mismo defecto: en modo gobernado —`[selected]` mas `(selectionChange)`— si
+  el padre rechaza lo elegido y deja su señal como estaba, las expresiones
+  `[selected]` de las `<option>` no cambian y el desplegable se queda en lo que
+  marco el navegador. Un `afterRenderEffect` devuelve el elemento nativo al valor
+  del padre; se vuelve a ejecutar aunque `selected()` no cambie porque
+  `handleChange` escribe `formValue` en cada interaccion.
+
+- **`app-number-input` deja de recortar en silencio.** `[value]` solo reescribe
+  cuando el numero CAMBIA, asi que teclear una segunda cantidad por encima del
+  maximo dejaba el campo enseñando lo tecleado mientras el modelo contaba otra
+  cosa —en el contador de billetes, una fila que suma distinto de lo que muestra.
+  Ademas, en un `type=number` el texto invalido (`1o0`) llega como cadena vacia
+  mientras el campo lo sigue enseñando: se detecta con `validity.badInput`, se
+  limpia y se repone la cantidad contada. Todo ajuste se anuncia en un
+  `role="status"`; antes el recorte era mudo.
+
+- **`PopupService.confirm` se alinea con el capitulo 7.** `confirmLabel` pasa a
+  ser obligatorio —un boton que dice «Confirmar» obliga a leer el titulo, y quien
+  lleva cuarenta dialogos al dia ya no lo lee—, se añade `tone: 'danger'` para lo
+  que no se puede deshacer e `initialFocus`, que por defecto pone el foco en la
+  salida segura. El contenedor mueve el foco al abrir y **se retira `onEnter`**:
+  ejecutaba el boton primario desde el fondo del dialogo, de modo que un Intro
+  por inercia confirmaba. Escape ejecuta ahora la cancelacion del llamador en vez
+  de cerrar en silencio y dejarlo esperando una respuesta que no llega.
+
+## 5.12.0 - 2026-08-15
+
+### Anadido
+
+- **`icon-only`: un boton de solo icono que no se sale de su propio borde.** El
+  consumidor puede darle al host un tamaño cuadrado, pero el control de dentro
+  conserva su relleno horizontal y su ancho minimo, asi que desborda y pisa lo
+  que tenga al lado. Ocurrio literalmente: el boton de tema de la barra superior
+  se solapaba con el menu de usuario. No se puede arreglar desde el consumidor
+  —sus estilos no alcanzan al interior del componente—, tiene que vivir aqui.
+
+  El atributo `dialog-close` ya resolvia exactamente esto para el aspa de cerrar.
+  En vez de añadir un segundo caso especial se generalizo.
+
+## 5.11.0 - 2026-08-15
+
+### Corregido
+
+- **La tabla afirmaba «0 registro(s)» sin haber preguntado.** El resumen y el
+  paginador se pintaban FUERA de toda comprobacion de estado, asi que escribian
+  «Mostrando 0 - 0 de 0 registro(s)» encima del indicador de carga y tambien
+  junto al panel de error. Ese cero es exactamente lo que alguien lee para
+  decidir si su busqueda dio resultado: decia que no hay nada cuando lo que
+  pasaba es que no se pudo preguntar. Con un resultado confirmado se dice la
+  cifra; sin el, una raya.
+
+## 5.10.0 - 2026-08-15
+
+### Corregido
+
+- **`focusFirst` daba por bueno un foco que no habia ocurrido.** Bastaba con que
+  `querySelector` devolviera algo para devolver `true`, y el primer selector de
+  la lista de errores es `[role="alert"]`: un `<div>`, que no es enfocable.
+  `focus()` no hacia nada, `focusError()` cancelaba su reintento convencido de
+  haber avisado, y el foco se quedaba en el boton que acababa de fallar. Ahora
+  se comprueba `activeElement`, y si el elemento no puede recibir el foco por si
+  mismo se le pone `tabindex="-1"` —enfocable POR PROGRAMA, fuera del recorrido
+  del tabulador—, que es la tecnica estandar para llevar la atencion a un aviso.
+
+  La prueba que lo cubria se ponia `tabIndex = -1` a si misma; por eso pasaba
+  mientras el aviso real no recibia el foco. Ahora hay una que usa el aviso tal
+  y como existe en el producto.
+
+- **El paginador de `data-table` dejaba el foco en el `<body>`.** Los dos botones
+  se deshabilitan al llegar al extremo y durante cada carga; con el foco encima,
+  el navegador lo descarta y el siguiente Tab empieza desde el principio del
+  documento. Con tres paginas eso pasa SIEMPRE al llegar a la ultima. Ahora el
+  foco se traslada al resumen antes de emitir el cambio.
+
+### Cambiado
+
+- **Un boton en carga ya no se pone `disabled`.** Se quitaba el foco a si mismo
+  justo al pulsarlo, y `disabled` ademas lo saca del arbol de accesibilidad, con
+  lo que el `aria-busy` que anuncia el progreso no le llegaba a nadie. Ahora la
+  carga se comunica con `aria-disabled` y `aria-busy`, y la segunda activacion
+  la sigue bloqueando la guarda de `onButtonClick`. El `disabled` real se
+  reserva para el deshabilitado de verdad, que si debe salir del recorrido.
+
+  Dos pruebas del propio ADN fijaban el contrato viejo (`expect(button.disabled)
+  .toBeTrue()` durante la carga) y se han reescrito: describian el defecto.
+
+## 5.9.0 - 2026-08-15
+
+### Corregido
+
+- **El texto no se pinta con el token de RELLENO. 49 sitios en 19 componentes.**
+  `color: var(--danger-color)` y sus tres hermanos son el color de relleno del
+  tono; para texto e iconos existe `--TONO-color-text`, con el contraste ya
+  calculado. Medido sobre tema claro: info 3,69 · success 2,12 · warning 2,13 ·
+  danger 3,24, todos por debajo de 4,5:1. Afectaba al mensaje de error de todos
+  los campos, al asterisco de obligatorio, al aviso flotante, a los botones de
+  accion de tabla —que son solo icono, con liston de 3:1— y al menu de usuario.
+
+- **Un estado deshabilitado ya no se comunica con `opacity`. 28 reglas.**
+  La transparencia atenua texto Y fondo contra la pagina, asi que anula el
+  contraste que el token traia calculado —medido: 4,09:1 con ella, 6,99:1 sin
+  ella— y el icono que acompana al control la recibe por partida doble. Ahora lo
+  dicen `--input-disabled-text`, `--input-disabled-bg` y el cursor. Alcanza a
+  botones, campos, casillas, radios, interruptor, paginador, acordeon, pestanas,
+  pasos, menus y desplegables.
+
+### Anadido
+
+- **La compuerta de contraste busca PATRONES, no una lista.** Es el cambio que
+  de verdad importa. `scripts/check-theme-contrast.mjs` enumeraba pares de
+  tokens; se le anadieron las alertas tras un fallo y aun asi todo lo anterior
+  paso en verde, porque ningun par de los enumerados los cubria. Ahora recorre
+  todos los ficheros de estilo buscando dos formas concretas: texto pintado con
+  `--TONO-color`, y `opacity` dentro de una regla cuyo selector habla de
+  deshabilitado. Encuentra tambien lo que nadie ha escrito todavia.
+
+### Notas
+
+Cambio visible en pantalla: los estados apagados dejan de verse translucidos y
+pasan a verse en gris con contraste verificado. Es el aspecto correcto, no un
+efecto secundario.
 
 ## [5.8.4] - 2026-08-14
 

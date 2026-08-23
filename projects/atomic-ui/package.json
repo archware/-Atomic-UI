@@ -1,6 +1,6 @@
 {
   "name": "@hra/atomic-ui",
-  "version": "5.8.4",
+  "version": "5.22.0",
   "description": "Biblioteca de componentes visuales Atomic UI del ecosistema HRA, empaquetada en Angular Package Format.",
   "author": "COTAHA",
   "license": "UNLICENSED",

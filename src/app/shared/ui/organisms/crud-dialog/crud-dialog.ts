@@ -131,16 +131,46 @@ export class CrudDialog {
     return false;
   }
 
+  /**
+   * Recorre los selectores en orden y enfoca el primero que de verdad reciba el
+   * foco.
+   *
+   * ENCONTRAR EL ELEMENTO NO ES HABERLO ENFOCADO. Antes bastaba con que
+   * `querySelector` devolviera algo para dar la operacion por buena, y el primer
+   * selector de la lista de errores es `[role="alert"]`: un `<div>`, que no es
+   * enfocable. `focus()` no hacia nada, esto devolvia `true`, y `focusError()`
+   * cancelaba su reintento convencido de haber avisado. El foco se quedaba en el
+   * boton que acababa de fallar y quien navega con teclado o con lector de
+   * pantalla no se enteraba de nada.
+   *
+   * Cuando el elemento no puede recibir foco por si mismo se le pone
+   * `tabindex="-1"`, que lo hace enfocable POR PROGRAMA sin meterlo en el
+   * recorrido del tabulador. Es la tecnica estandar para llevar la atencion a un
+   * aviso. Y si aun asi no lo recibe, se sigue con el siguiente selector en vez
+   * de mentir.
+   */
   private focusFirst(root: ParentNode, selectors: string | readonly string[]): boolean {
     const selectorList = typeof selectors === 'string' ? [selectors] : selectors;
     for (const selector of selectorList) {
       const target = root.querySelector<HTMLElement>(selector);
       if (target) {
-        target.focus({ preventScroll: true });
-        return true;
+        if (this.tryFocus(target)) {
+          return true;
+        }
+        if (!target.hasAttribute('tabindex')) {
+          target.setAttribute('tabindex', '-1');
+          if (this.tryFocus(target)) {
+            return true;
+          }
+        }
       }
     }
     return false;
+  }
+
+  private tryFocus(target: HTMLElement): boolean {
+    target.focus({ preventScroll: true });
+    return target.ownerDocument.activeElement === target;
   }
 
   protected handleCancel(event: Event): void {

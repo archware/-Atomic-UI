@@ -143,7 +143,7 @@ export type KpiTone = 'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'da
         margin: 0;
         color: var(--text-color-secondary);
         font-size: var(--text-xs);
-        font-weight: 700;
+        font-weight: var(--font-weight-title);
         letter-spacing: 0.04em;
         overflow-wrap: anywhere;
         text-transform: uppercase;
@@ -176,7 +176,7 @@ export type KpiTone = 'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'da
         color: var(--text-color);
         font-size: 1.35rem;
         font-variant-numeric: tabular-nums;
-        font-weight: 700;
+        font-weight: var(--font-weight-title);
         letter-spacing: -0.02em;
         line-height: 1.2;
         overflow-wrap: anywhere;
@@ -198,7 +198,7 @@ export type KpiTone = 'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'da
         border: 1px solid transparent;
         border-radius: var(--radius-full);
         font-size: var(--text-xs);
-        font-weight: 700;
+        font-weight: var(--font-weight-title);
       }
 
       .kpi-card__comparison {

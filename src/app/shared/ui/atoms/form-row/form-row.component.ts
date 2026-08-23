@@ -41,7 +41,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
       align-items: start;
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 40rem) {
       .form-row-grid {
         grid-template-columns: 1fr !important;
         gap: var(--space-5) !important; /* 24px vertical on mobile */

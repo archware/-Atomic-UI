@@ -172,13 +172,13 @@ import { ChartComponent } from '../../../../shared/ui/organisms/chart/chart.comp
   `,
   styles: [`
     .showcase-section { margin-bottom: 2rem; display: block; }
-    .section-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-color); }
-    .subsection-title { font-size: 1rem; font-weight: 500; margin: 1rem 0 0.5rem; color: var(--text-color-secondary); }
+    .section-title { font-size: 1.25rem; font-weight: var(--font-weight-emphasis); margin-bottom: 1rem; color: var(--text-color); }
+    .subsection-title { font-size: 1rem; font-weight: var(--font-weight-body); margin: 1rem 0 0.5rem; color: var(--text-color-secondary); }
     .avatar-grid, .chip-grid { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
 
     /* Badges styles */
     .badge-container { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .badge { padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; background: var(--surface-hover); color: var(--text-color); }
+    .badge { padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: var(--font-weight-emphasis); background: var(--surface-hover); color: var(--text-color); }
     .badge-primary { background: var(--primary-color); color: white; }
     .badge-secondary { background: var(--secondary-color); color: white; }
     .badge-success { background: var(--success-color); color: white; }
@@ -192,7 +192,7 @@ import { ChartComponent } from '../../../../shared/ui/organisms/chart/chart.comp
     .variant-label { color: var(--text-color-secondary); font-size: 0.875rem; min-width: 80px; flex-shrink: 0; }
 
     /* Mobile: actions cell no muestra label, usa toda la fila */
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 48rem) {
       .actions-cell {
         justify-content: flex-end;
         border-bottom: none !important;

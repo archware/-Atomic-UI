@@ -59,7 +59,7 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
 
     .form-label {
       font-size: var(--text-sm);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       color: var(--text-color);
     }
 
@@ -108,7 +108,7 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
     .form-input:disabled {
       background-color: var(--input-disabled-bg);
       cursor: not-allowed;
-      opacity: 0.7;
+      color: var(--input-disabled-text);
     }
 
     .has-error .form-input {
@@ -121,7 +121,7 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
 
     .input-error {
       font-size: var(--text-xs);
-      color: var(--danger-color);
+      color: var(--danger-color-text);
     }
   `]
 })

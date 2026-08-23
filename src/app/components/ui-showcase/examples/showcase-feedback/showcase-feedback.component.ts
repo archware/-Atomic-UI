@@ -60,7 +60,7 @@ import { ModalService } from '../../../../shared/ui/services/modal.service';
         <button class="btn btn-danger" (click)="showConfirmPopup()">Popup Confirmación</button>
       </div>
     </section>
-    
+
     <!-- TOOLTIP DEMO -->
     <section class="showcase-section">
       <h3 class="section-title">Tooltips</h3>
@@ -84,9 +84,9 @@ import { ModalService } from '../../../../shared/ui/services/modal.service';
   `,
   styles: [`
     .showcase-section { margin-bottom: 2rem; display: block; }
-    .section-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-color); }
+    .section-title { font-size: 1.25rem; font-weight: var(--font-weight-emphasis); margin-bottom: 1rem; color: var(--text-color); }
     .button-grid { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    
+
     /* Alerts styles reuse */
     .alert { padding: 1rem; border-radius: var(--radius-md); border-left: 4px solid transparent; display: flex; gap: 0.75rem; margin-bottom: 1rem; background: var(--surface-elevated); }
     .alert-icon { font-size: 1.25rem; }
@@ -94,7 +94,7 @@ import { ModalService } from '../../../../shared/ui/services/modal.service';
     .alert-success { border-color: var(--success-color); background: color-mix(in srgb, var(--success-color), transparent 90%); }
     .alert-warning { border-color: var(--warning-color); background: color-mix(in srgb, var(--warning-color), transparent 90%); }
     .alert-danger { border-color: var(--danger-color); background: color-mix(in srgb, var(--danger-color), transparent 90%); }
-    
+
     .btn { padding: 0.5rem 1rem; border-radius: 0.375rem; border: none; cursor: pointer; }
     .btn-primary { background: var(--primary-color); color: white; }
     .btn-secondary { background: var(--secondary-color); color: white; }
@@ -103,7 +103,7 @@ import { ModalService } from '../../../../shared/ui/services/modal.service';
     .btn-danger { background: var(--danger-color); color: white; }
     .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); }
     .btn-ghost { background: transparent; color: var(--text-color); }
-    
+
     /* Simple Tooltip impl for demo */
     .tooltip-trigger { position: relative; }
     .tooltip-trigger:hover::after {
@@ -160,11 +160,13 @@ export class ShowcaseFeedbackComponent {
   }
 
   showConfirmPopup() {
+    // El ejemplo tambien es doctrina: dice QUE pasa y el boton lleva el verbo.
     this.popup.confirm({
-      title: '¿Eliminar elemento?',
-      message: 'Esta acción no se puede deshacer. ¿Estás seguro de continuar?',
-      confirmLabel: 'Sí, eliminar',
+      title: 'Eliminar el elemento seleccionado',
+      message: 'Se retira de la lista y de los reportes que lo incluyen. No se puede deshacer.',
+      confirmLabel: 'Eliminar el elemento',
       cancelLabel: 'Cancelar',
+      tone: 'danger',
       onConfirm: () => this.toast.success('Elemento eliminado'),
       onCancel: () => this.toast.info('Operación cancelada')
     });

@@ -37,7 +37,7 @@ export const WithOtherElements: Story = {
   render: () => ({
     template: `
       <div style="display: flex; gap: 1rem; align-items: center; padding: 1rem; background: var(--surface-background); border: 1px solid var(--border-color); border-radius: 0.5rem;">
-        <span style="flex: 1; font-weight: 600;">Mi Aplicación</span>
+        <span style="flex: 1; font-weight: var(--font-weight-emphasis);">Mi Aplicación</span>
         <app-language-switcher></app-language-switcher>
         <span>👤</span>
       </div>

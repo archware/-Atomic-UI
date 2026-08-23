@@ -83,7 +83,7 @@ export interface AvatarGroupItem {
       border-radius: 50%;
       background: var(--color-neutral-200, #e5e7eb);
       color: var(--text-color-secondary, #6b7280);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       font-size: var(--text-xs, var(--space-3));
       user-select: none;
     }

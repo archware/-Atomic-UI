@@ -71,7 +71,7 @@ import { ToastService } from '../app/shared/ui/services/toast.service';
 
     .async-story__error {
       margin: var(--space-4) 0 0;
-      color: var(--danger-color);
+      color: var(--danger-color-text);
       font-size: var(--text-sm);
     }
   `],

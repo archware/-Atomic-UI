@@ -40,7 +40,7 @@ prest-receipt-panel {
 .receipt-panel__heading p {
   color: var(--primary-color);
   font-size: var(--text-xs);
-  font-weight: 700;
+  font-weight: var(--font-weight-title);
   letter-spacing: var(--letter-spacing-wide);
   text-transform: uppercase;
 }
@@ -86,7 +86,7 @@ prest-receipt-panel [receipt-actions] {
 .receipt-panel__details dd {
   margin: 0;
   overflow-wrap: anywhere;
-  font-weight: 600;
+  font-weight: var(--font-weight-emphasis);
 }
 
 .receipt-panel__detail--emphasis dd {

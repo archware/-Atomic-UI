@@ -2,12 +2,30 @@
 title: "Lecciones aprendidas de Atomic UI"
 document_type: "registro técnico"
 status: "en revisión"
-last_updated: "2026-08-21"
+last_updated: "2026-08-23"
 owners:
   - "Hospital Regional de Ayacucho"
 ---
 
 # Lecciones aprendidas de Atomic UI
+
+## [2026-08-23] - La versión local no define por sí sola una fuente reproducible
+
+**Contexto.** La rama local declaraba Atomic UI 5.8.4 y contenía tres mejoras
+de gobierno, mientras `origin/main` había avanzado dieciocho commits hasta
+5.22.0. El commit local no estaba contenido en una referencia remota.
+
+**Problema.** Actualizar la procedencia de los consumidores al `HEAD` local
+habría producido gates correctos en una sola estación, pero CI no habría podido
+obtener ese OID. Adoptar directamente la rama remota también habría descartado
+la consolidación de `.agents`, la guía 5.8 y los controles documentales locales.
+
+**Lección aprendida.** Antes de propagar se actualizan las referencias remotas,
+se calcula el ancestro común y se comprueba que el OID objetivo sea recuperable.
+Cuando las líneas divergen, primero se reconcilia la fuente de verdad y se
+validan sus manifiestos; solo el commit reconciliado puede convertirse en la
+referencia de los consumidores. Una versión semántica coincidente no sustituye
+la identidad Git ni la disponibilidad remota.
 
 ## [2026-08-21] - La documentación se organiza por autoridad y audiencia
 

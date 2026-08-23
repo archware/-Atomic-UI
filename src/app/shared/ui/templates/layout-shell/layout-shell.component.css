@@ -32,7 +32,7 @@
 }
 
 /* Sidebar hidden state - desktop only */
-@media (min-width: 769px) {
+@media (min-width: 48rem) {
   .layout-shell.sidebar-hidden {
     grid-template-columns: 0 1fr;
   }
@@ -86,7 +86,7 @@
   box-sizing: border-box;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 64rem) {
   .content-wrapper {
     padding: var(--space-4);
   }
@@ -99,7 +99,7 @@
  */
 
 /* Responsive - Mobile/Tablet */
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .layout-shell {
     grid-template-columns: 1fr;
     grid-template-rows: 64px minmax(0, 1fr) auto;

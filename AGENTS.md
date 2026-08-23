@@ -6,8 +6,8 @@ Este repositorio es la única fuente de verdad visual del ecosistema. Antes de
 trabajar, leer `governance/consumer/ATOMIC_GOVERNANCE.md`,
 `ECOSYSTEM_WORKFLOW.md` y la guía aplicable de `.agents/workflows/`.
 
-**Para subir un consumidor a la línea 5.8 y a la política 1.2.2, se empieza por
-`governance/consumer/MIGRAR_A_5.8.md`.** No describe cada paso —esos se deducen
+**Para subir un consumidor a la línea 5.22 y a la política 1.2.2, se empieza por
+`governance/consumer/MIGRAR_A_5.22.md`.** No describe cada paso —esos se deducen
 leyendo el gate— sino las trampas, que son las que cuestan una tarde cada una:
 que el código y la política van soldados, que los `.spec.ts` no pueden ser
 `exact` entre Karma y Vitest, y que propagar sin mirar sobrescribe la cobertura
@@ -31,7 +31,7 @@ al ADN visual y debe permanecer en cada aplicación consumidora.
 ## Cómo se hace una pantalla, no solo con qué
 
 **Antes de construir o modificar cualquier pantalla, lee
-`DOCTRINA_DE_INTERFAZ.md`.** Son ocho reglas con el daño que evita cada una,
+`DOCTRINA_DE_INTERFAZ.md`.** Son quince reglas con el daño que evita cada una,
 sacadas de auditar un producto de cobranzas en producción y contrastadas contra
 su código: solo entraron las que ese front ya cumple **en parte**, porque una
 regla que nadie cumple suele ser una invención.

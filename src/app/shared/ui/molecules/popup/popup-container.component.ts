@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ElementRef, afterRenderEffect, inject } from '@angular/core';
 
 import { PopupService, PopupItem } from '../../services/popup.service';
 
@@ -25,7 +25,6 @@ import { PopupService, PopupItem } from '../../services/popup.service';
         [class.popup-closing]="popup.closing"
         (click)="onBackdropClick(popup)"
         (keydown.escape)="onEscape(popup)"
-        (keydown.enter)="onEnter(popup)"
         tabindex="0"
         role="dialog"
         aria-modal="true"
@@ -70,6 +69,7 @@ import { PopupService, PopupItem } from '../../services/popup.service';
                   type="button"
                   class="popup-btn"
                   [class]="'popup-btn-' + (button.variant || 'primary')"
+                  [attr.data-autofocus]="button.autofocus ? '' : null"
                   (click)="button.action()"
                 >
                   {{ button.label }}
@@ -168,7 +168,7 @@ import { PopupService, PopupItem } from '../../services/popup.service';
       flex: 1;
       margin: 0;
       font-size: var(--text-lg);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       color: var(--text-color);
     }
 
@@ -217,7 +217,7 @@ import { PopupService, PopupItem } from '../../services/popup.service';
     .popup-btn {
       padding: var(--space-2) var(--space-4);
       font-size: var(--text-sm);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       border: none;
       border-radius: var(--radius-md);
       cursor: pointer;
@@ -264,6 +264,41 @@ import { PopupService, PopupItem } from '../../services/popup.service';
 })
 export class PopupContainerComponent {
   protected readonly popupService = inject(PopupService);
+  private readonly host = inject(ElementRef<HTMLElement>);
+  private focused = new Set<number>();
+
+  constructor() {
+    /*
+    EL FOCO EMPIEZA EN LA SALIDA SEGURA.
+
+    Sin esto el foco se queda donde estaba —o en el fondo del dialogo, que lleva
+    `tabindex="0"`—, y quien navega con teclado tiene que adivinar donde esta.
+    Se mueve al boton marcado `autofocus`, que en un `confirm` es «Cancelar».
+
+    Una sola vez por popup: repetirlo en cada repintado arrancaria el foco de
+    donde lo haya puesto la persona.
+    */
+    afterRenderEffect(() => {
+      const abiertos = this.popupService.popups();
+      const vivos = new Set(abiertos.map(popup => popup.id));
+      this.focused = new Set([...this.focused].filter(id => vivos.has(id)));
+
+      const ultimo = abiertos[abiertos.length - 1];
+      if (!ultimo || ultimo.closing || this.focused.has(ultimo.id)) {
+        return;
+      }
+      const root = this.host.nativeElement as HTMLElement;
+      const overlays = root.querySelectorAll('.popup-overlay');
+      const overlay = overlays[overlays.length - 1];
+      const objetivo =
+        overlay?.querySelector<HTMLElement>('[data-autofocus]') ??
+        overlay?.querySelector<HTMLElement>('.popup-btn');
+      if (objetivo) {
+        objetivo.focus();
+        this.focused.add(ultimo.id);
+      }
+    });
+  }
 
   onBackdropClick(popup: PopupItem): void {
     if (popup.closeOnBackdrop) {
@@ -271,18 +306,35 @@ export class PopupContainerComponent {
     }
   }
 
+  /*
+  ESCAPE NO ES UN CIERRE MUDO.
+
+  Se cerraba el popup sin ejecutar nada. Quien lo abrio se queda esperando una
+  respuesta que no va a llegar: el boton sigue en «Anulando…», la fila sigue
+  bloqueada, y no hay forma de saber que la persona dijo que no.
+
+  Si hay un boton que cancela, Escape hace exactamente lo que ese boton.
+  */
   onEscape(popup: PopupItem): void {
+    const cancelButton = popup.buttons?.find(button => button.cancels);
+    if (cancelButton) {
+      cancelButton.action();
+      return;
+    }
     if (popup.closable) {
       this.popupService.close(popup.id);
     }
   }
-
-  onEnter(popup: PopupItem): void {
-    if (popup.buttons && popup.buttons.length > 0) {
-      const primaryBtn = popup.buttons.find(b => b.variant === 'primary' || !b.variant) || popup.buttons[0];
-      if (primaryBtn && primaryBtn.action) {
-        primaryBtn.action();
-      }
-    }
-  }
 }
+
+/*
+NOTA SOBRE LO QUE SE QUITO: `onEnter`.
+
+Ejecutaba el boton primario —el que hace la cosa— desde el fondo del dialogo,
+que es lo que tenia el foco. Un Intro por inercia, arrastrado del formulario
+anterior, confirmaba. La doctrina lo nombra como contraejemplo.
+
+Ahora el foco arranca en el boton marcado `autofocus` (por defecto el de
+cancelar) y el Intro lo pulsa el navegador, sobre el boton que la persona ve
+enfocado.
+*/

@@ -100,7 +100,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
     .divider-text {
       padding: 0 var(--space-3);
       font-size: var(--text-xs);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       color: var(--text-color-secondary);
       text-transform: uppercase;
       letter-spacing: 0.05em;

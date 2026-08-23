@@ -40,7 +40,7 @@ import { SkeletonComponent } from '../../../../shared/ui/atoms/skeleton/skeleton
           <span class="loader-label">Orbit</span>
         </div>
       </div>
-      
+
       <h4 class="subsection-title">Tamaños</h4>
       <div class="loader-sizes">
         <div class="loader-size-item">
@@ -88,16 +88,16 @@ import { SkeletonComponent } from '../../../../shared/ui/atoms/skeleton/skeleton
   `,
   styles: [`
     .showcase-section { margin-bottom: 2rem; display: block; }
-    .section-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-color); }
-    .subsection-title { font-size: 1rem; font-weight: 500; margin: 1rem 0 0.5rem; color: var(--text-color-secondary); }
-    
+    .section-title { font-size: 1.25rem; font-weight: var(--font-weight-emphasis); margin-bottom: 1rem; color: var(--text-color); }
+    .subsection-title { font-size: 1rem; font-weight: var(--font-weight-body); margin: 1rem 0 0.5rem; color: var(--text-color-secondary); }
+
     .loader-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
     .loader-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1rem; background: var(--surface-elevated); border-radius: 0.5rem; }
     .loader-sizes { display: flex; gap: 2rem; align-items: flex-end; }
     .loader-size-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
-    
+
     .loading-container { display: flex; flex-direction: column; gap: 1rem; padding: 1rem; background: var(--surface-elevated); border-radius: 0.5rem; border: 1px solid var(--border-color); }
-    
+
     /* Progress bar styles */
     .progress-container { margin-bottom: 1rem; }
     .progress-bar { height: 0.5rem; background: var(--surface-hover); border-radius: 999px; overflow: hidden; margin-bottom: 0.25rem; }

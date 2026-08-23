@@ -50,7 +50,6 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
     }
 
     .icon-btn:disabled {
-      opacity: 0.5;
       cursor: not-allowed;
       background: transparent;
       color: var(--text-color-secondary);
@@ -94,7 +93,7 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
       height: var(--space-2);
       padding: 0 4px;
       font-size: 0.625rem;
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       color: var(--text-color-on-primary);
       background: var(--danger-color);
       border-radius: var(--radius-full);

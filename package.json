@@ -1,6 +1,6 @@
 {
   "name": "atomic-ui",
-  "version": "5.8.4",
+  "version": "5.22.0",
   "type": "module",
   "author": "COTAHA",
   "scripts": {
@@ -48,7 +48,8 @@
     "governance:check": "npm run governance:test && npm run governance:smoke && node tools/check-atomic-blueprints.js && npm run catalog:check && npm run check:catalog-api && npm run tokens:check && npm run tooling:test && npm run check:selectors && npm run check:css-values && npm run package:check && npm run check:contrast && npm run check:focus",
     "check:contrast": "node scripts/check-theme-contrast.mjs",
     "check:focus": "node scripts/check-focus-selectors.mjs",
-    "check:catalog-api": "node tools/check-catalog-api.cjs"
+    "check:catalog-api": "node tools/check-catalog-api.cjs",
+    "check:typography": "node scripts/check-typography-scale.mjs"
   },
   "prettier": {
     "printWidth": 100,

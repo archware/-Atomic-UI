@@ -26,7 +26,7 @@ interface DashboardStats { totalUsers: number; activeProjects: number; pendingTa
   templateUrl: './dashboard-page.component.html',
   styles: [`
     .mb-6 { margin-bottom: 1.5rem; }
-    
+
     /* Bento Grid System */
     .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: minmax(min-content, max-content); gap: 1.5rem; }
     .bento-item { display: flex; flex-direction: column; height: 100%; position: relative; }
@@ -35,11 +35,11 @@ interface DashboardStats { totalUsers: number; activeProjects: number; pendingTa
     .bento-half { grid-column: span 6; }
     .bento-small { grid-column: span 4; }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 64rem) {
       .bento-large { grid-column: span 12; }
       .bento-medium, .bento-half, .bento-small { grid-column: span 6; }
     }
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {
       .bento-large, .bento-medium, .bento-half, .bento-small { grid-column: span 12; }
     }
 
@@ -59,7 +59,7 @@ interface DashboardStats { totalUsers: number; activeProjects: number; pendingTa
       box-shadow: 0 12px 24px -10px rgba(var(--primary-color-rgb), 0.15);
       border: none;
     }
-    
+
     .chart-wrapper { position: relative; height: 100%; min-height: 250px; width: 100%; display: flex; flex-direction: column; justify-content: center; }
 
     /* Table Container */

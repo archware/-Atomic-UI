@@ -263,7 +263,7 @@
    --receipt-print-color: #000000;
    --receipt-print-font-family: 'Courier New', Courier, monospace;
    --receipt-print-font-size: 7pt;
-   --receipt-print-font-weight: 700;
+   --receipt-print-font-weight: var(--font-weight-title);
    --receipt-print-letter-spacing: 0;
    --receipt-print-line-height: 1.25;
 

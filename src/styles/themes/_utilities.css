@@ -23,15 +23,15 @@
 .text-right { text-align: right !important; }
 
 .font-bold { font-weight: bold !important; }
-.font-medium { font-weight: 500 !important; }
+.font-medium { font-weight: var(--font-weight-body) !important; }
 .font-normal { font-weight: normal !important; }
 
 .text-muted { color: var(--text-color-muted) !important; }
 .text-secondary { color: var(--text-color-secondary) !important; }
 .text-primary { color: var(--primary-color) !important; }
-.text-success { color: var(--success-color) !important; }
-.text-warning { color: var(--warning-color) !important; }
-.text-danger { color: var(--danger-color) !important; }
+.text-success { color: var(--success-color-text) !important; }
+.text-warning { color: var(--warning-color-text) !important; }
+.text-danger { color: var(--danger-color-text) !important; }
 .text-white { color: var(--gray-0) !important; }
 
 /* Font Sizes */
@@ -95,7 +95,7 @@
 .grid-cols-350 { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important; }
 .chart-grid-compact { grid-auto-rows: 430px !important; }
 
-@media (max-width: 900px) {
+@media (max-width: 56.25rem) {
   .chart-grid-compact { grid-auto-rows: auto !important; }
 }
 

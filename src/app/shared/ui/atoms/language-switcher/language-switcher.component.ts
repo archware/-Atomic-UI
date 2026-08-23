@@ -36,7 +36,7 @@ export interface Language {
         <span class="language-code">{{ currentLanguage().code.toUpperCase() }}</span>
         <i class="fa-solid fa-chevron-down chevron"></i>
       </button>
-      
+
       @if (isOpen()) {
         <div class="language-dropdown" role="listbox">
           @for (lang of languages; track lang.code) {
@@ -72,7 +72,7 @@ export interface Language {
       border-radius: var(--radius-md);
       color: var(--text-color);
       font-size: var(--text-sm);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       cursor: pointer;
       transition: all 150ms ease;
     }
@@ -87,7 +87,7 @@ export interface Language {
     }
 
     .language-code {
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
     }
 
     .chevron {
@@ -141,7 +141,7 @@ export interface Language {
     .language-option.active {
       background: var(--primary-color-lighter);
       color: var(--primary-color);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
     }
 
     .language-name {

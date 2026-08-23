@@ -70,7 +70,7 @@ export type ChipSize = 'sm' | 'md' | 'lg';
       padding: var(--space-1) var(--space-2);
       border-radius: var(--radius-full);
       font-size: var(--text-xs);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       line-height: 1.1;
       transition: all 150ms ease;
       border: 1px solid transparent;

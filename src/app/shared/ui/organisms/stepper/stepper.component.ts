@@ -85,13 +85,13 @@ export interface Step {
 
     .step.disabled {
       cursor: not-allowed;
-      opacity: 0.6;
+      color: var(--input-disabled-text);
     }
 
     /* STEP INDICATOR (CIRCLE) */
     .step-indicator {
-      width: var(--space-11);
-      height: var(--space-11);
+      width: var(--touch-target-min);
+      height: var(--touch-target-min);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -99,7 +99,7 @@ export interface Step {
       background: var(--surface-background);
       color: var(--text-color-secondary);
       font-size: var(--text-md);
-      font-weight: 700;
+      font-weight: var(--font-weight-title);
       border: var(--space-1) solid var(--border-color);
       transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
       flex-shrink: 0;
@@ -124,7 +124,7 @@ export interface Step {
 
     .step-check {
       font-size: var(--text-md);
-      font-weight: 800;
+      font-weight: var(--font-weight-display);
     }
 
     /* TEXT CONTENT */
@@ -132,7 +132,7 @@ export interface Step {
       display: flex;
       flex-direction: column;
       gap: var(--space-1);
-      min-height: var(--space-11);
+      min-height: var(--touch-target-min);
       justify-content: center;
       min-width: 0;
       flex: 1 1 0;
@@ -140,7 +140,7 @@ export interface Step {
 
     .step-label {
       font-size: var(--text-md);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       color: var(--text-color-secondary);
       transition: color 200ms ease;
       word-break: break-word;
@@ -175,7 +175,7 @@ export interface Step {
 
     .step.active .step-label {
       color: var(--primary-color);
-      font-weight: 700;
+      font-weight: var(--font-weight-title);
     }
 
     .step.completed .step-label {
@@ -229,7 +229,7 @@ export interface Step {
      */
 
     /* RESPONSIVE: Compact mobile layout */
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {
       .stepper {
         flex-direction: column;
         align-items: stretch;

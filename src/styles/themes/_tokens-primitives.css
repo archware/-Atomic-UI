@@ -195,6 +195,36 @@
    /* 64px - Large section spacing */
    --space-11: 2.75rem;
    /* 44px - Component sizes (buttons, menu items) */
+   /* AVISO: este valor NO respeta el orden de la escala —es menor que el 8, el 9
+      y el 10— porque no es un espacio: es el objetivo tactil minimo de WCAG
+      2.5.5, que entro aqui por no haber donde ponerlo. Se conserva por
+      compatibilidad; lo nuevo usa --touch-target-min. Capitulo 10. */
+   --touch-target-min: 2.75rem;
+   /* 44px - Objetivo tactil minimo (WCAG 2.5.5). Es un TAMAÑO, no un espacio. */
+
+   /* ─────────────────────────────────────────────────────────────────────────
+     ESCALA DE PESO TIPOGRAFICO
+
+     Cuatro pasos, y son los que la familia sabe dibujar. `'Open Sans'` no se
+     carga nunca —no hay @font-face, no se sirve ningun fichero y la CSP del
+     consumidor dice font-src 'self'—, asi que manda `system-ui`: en Windows,
+     Segoe UI, con caras reales en 400 (segoeui), 600 (seguisb), 700 (segoeuib) y
+     900 (seguibl). Comprobado en C:\Windows\Fonts.
+
+     Lo que NO tiene cara propia es 500, 650 y 750: el navegador los resuelve a
+     su vecino sin decirlo. Por eso la escala tiene cuatro pasos y no seis.
+     Capitulo 13.
+     ───────────────────────────────────────────────────────────────────────── */
+   --font-weight-body: 400;
+   /* Texto corrido. */
+   --font-weight-emphasis: 600;
+   /* Etiquetas, cabeceras de tabla, cifras que hay que leer primero. */
+   --font-weight-title: 700;
+   /* Titulos. */
+   --font-weight-display: 800;
+   /* Lo que grita: cifras de cabecera, etiquetas en mayusculas. Se declara 800 y
+      no 900 porque la cara que dibuja es la misma —Black— y 800 deja sitio por
+      arriba si algun dia se carga una familia con mas grados. */
 
    /* ─────────────────────────────────────────────────────────────────────────
      ESCALA DE TAMAÑOS DE FUENTE

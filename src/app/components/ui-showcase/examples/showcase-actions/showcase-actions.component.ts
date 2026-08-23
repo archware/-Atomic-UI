@@ -25,13 +25,13 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
         <button class="btn btn-ghost">Ghost</button>
         <button class="btn btn-primary" disabled>Disabled</button>
       </div>
-      
+
       <div class="button-sizes">
         <button class="btn btn-primary btn-sm">Small</button>
         <button class="btn btn-primary">Medium</button>
         <button class="btn btn-primary btn-lg">Large</button>
       </div>
-      
+
       <div style="margin-top: 1rem;">
         <app-text variant="caption" color="muted">Componente Button con iconos:</app-text>
         <div class="button-grid" style="margin-top: 0.5rem;">
@@ -67,7 +67,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
     .btn {
       padding: 0.5rem 1rem;
       border-radius: 0.375rem;
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       cursor: pointer;
       display: inline-flex;
       align-items: center;

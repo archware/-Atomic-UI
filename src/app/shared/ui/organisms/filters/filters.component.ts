@@ -69,7 +69,7 @@ import { ButtonComponent } from '../../atoms/button/button.component';
     }
 
     /* Móvil: stack vertical completo */
-    @media (max-width: 639px) {
+    @media (max-width: 40rem) {
       .filter-bar > ::ng-deep * {
         flex: 1 1 100%;
       }

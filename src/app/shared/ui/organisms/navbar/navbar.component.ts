@@ -279,7 +279,7 @@ export interface NavBarBrand {
     }
 
     /* Responsive */
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {
       .navbar__nav { display: none; }
       .navbar__actions { display: none; }
       .navbar__mobile-toggle { display: flex; }

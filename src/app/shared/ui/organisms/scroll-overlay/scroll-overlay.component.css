@@ -20,7 +20,7 @@
   border-radius: var(--table-border-radius, var(--space-2));
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 48rem) {
   .so-root[data-so-table] {
     border: none;
     border-radius: 0;

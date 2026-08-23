@@ -96,7 +96,7 @@ export const Default: Story = {
         ></app-topbar>
 
         <div style="display:flex; flex-direction:column; gap:1.5rem;">
-          <h2 style="margin:0; font-size:1.5rem; font-weight:600; color:var(--text-color);">
+          <h2 style="margin:0; font-size:1.5rem; font-weight:var(--font-weight-emphasis); color:var(--text-color);">
             Bienvenido, Juan
           </h2>
           <p style="color:var(--text-color-secondary); margin:0;">

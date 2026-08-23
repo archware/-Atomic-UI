@@ -26,6 +26,47 @@ describe('Select', () => {
     expect(element.value).toBe('A');
   });
 
+  it('returns the governed select to the parent value even when that value does not change', async () => {
+    const fixture = TestBed.createComponent(Select);
+    fixture.componentRef.setInput('options', [
+      { value: 'A', label: 'Activo' },
+      { value: 'I', label: 'Inactivo' },
+    ]);
+    fixture.componentRef.setInput('selected', 'A');
+    await fixture.whenStable();
+    const element = fixture.nativeElement.querySelector('select') as HTMLSelectElement;
+
+    // La persona elige otra opcion; el padre la rechaza y deja su señal igual.
+    element.value = 'I';
+    element.dispatchEvent(new Event('change'));
+    await fixture.whenStable();
+
+    /*
+      Sin reconciliacion, `[selected]` no cambia —el padre sigue en 'A'—, Angular
+      no escribe nada y el desplegable se queda en 'I'. Desde ahi, lo que se ve y
+      lo que se envia son cosas distintas, y el consumidor no puede arreglarlo.
+    */
+    expect(element.value).toBe('A');
+  });
+
+  it('does not undo an accepted choice', async () => {
+    const fixture = TestBed.createComponent(Select);
+    fixture.componentRef.setInput('options', [
+      { value: 'A', label: 'Activo' },
+      { value: 'I', label: 'Inactivo' },
+    ]);
+    fixture.componentRef.setInput('selected', 'A');
+    await fixture.whenStable();
+    const element = fixture.nativeElement.querySelector('select') as HTMLSelectElement;
+
+    element.value = 'I';
+    element.dispatchEvent(new Event('change'));
+    fixture.componentRef.setInput('selected', 'I');
+    await fixture.whenStable();
+
+    expect(element.value).toBe('I');
+  });
+
   it('emits a selected value and preserves an unknown legacy value', async () => {
     const fixture = TestBed.createComponent(Select);
     fixture.componentRef.setInput('options', [{ value: 'A', label: 'Activo' }]);

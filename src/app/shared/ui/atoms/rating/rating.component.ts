@@ -85,7 +85,7 @@ import { Component, Input, Output, EventEmitter, signal } from '@angular/core';
     .rating-value {
       margin-left: var(--space-2);
       font-size: var(--text-sm);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       color: var(--text-color-secondary);
     }
 

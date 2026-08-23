@@ -2,6 +2,98 @@ import { TestBed } from '@angular/core/testing';
 import { NumberInputComponent } from './number-input.component';
 
 describe('NumberInputComponent', () => {
+  /*
+  Capitulo 4, la mitad que se olvida: rechazar una entrada tiene que retirarla
+  tambien del campo. Un recorte mudo deja la pantalla contando una cifra y el
+  total sumando otra, que en un arqueo de caja es dinero que no cuadra.
+  */
+  async function montar(max: number): Promise<{
+    readonly input: HTMLInputElement;
+    readonly host: HTMLElement;
+    readonly cambios: number[];
+    readonly refrescar: () => void;
+  }> {
+    await TestBed.configureTestingModule({ imports: [NumberInputComponent] }).compileComponents();
+    const fixture = TestBed.createComponent(NumberInputComponent);
+    fixture.componentRef.setInput('min', 0);
+    fixture.componentRef.setInput('max', max);
+    const cambios: number[] = [];
+    fixture.componentInstance.registerOnChange((value) => cambios.push(value));
+    fixture.detectChanges();
+    return {
+      input: fixture.nativeElement.querySelector('input') as HTMLInputElement,
+      host: fixture.nativeElement as HTMLElement,
+      cambios,
+      refrescar: () => fixture.detectChanges(),
+    };
+  }
+
+  function teclear(input: HTMLInputElement, texto: string): void {
+    input.value = texto;
+    input.dispatchEvent(new Event('input'));
+  }
+
+  it('devuelve el campo a la cantidad contada cuando el recorte no cambia el numero', async () => {
+    const { input, cambios, refrescar } = await montar(100);
+
+    teclear(input, '500');
+    refrescar();
+    // Segunda vez por encima del maximo: el modelo ya vale 100 y no cambia, asi
+    // que el binding no reescribe nada. Ahi es donde el campo se quedaba en 900.
+    teclear(input, '900');
+    refrescar();
+
+    expect(cambios[cambios.length - 1]).toBe(100);
+    expect(input.value).toBe('100');
+  });
+
+  it('dice que ajusto lo tecleado en vez de recortarlo en silencio', async () => {
+    const { input, host, refrescar } = await montar(100);
+
+    teclear(input, '500');
+    refrescar();
+
+    const aviso = host.querySelector('.number-input__adjustment');
+    expect(aviso?.textContent).toContain('100');
+    expect(aviso?.getAttribute('role')).toBe('status');
+  });
+
+  it('no deja el campo enseñando texto que no es un numero', async () => {
+    const { input, cambios, refrescar } = await montar(100);
+
+    teclear(input, '10');
+    refrescar();
+    /*
+      En un `type=number`, teclear `1o0` deja el campo ENSEÑANDO `1o0` mientras
+      `value` vale cadena vacia; solo `validity.badInput` los distingue. Ese
+      estado no se puede producir asignando `value` desde el guion —el navegador
+      lo normaliza—, asi que se sustituye la propiedad que lo delata.
+    */
+    Object.defineProperty(input, 'validity', {
+      configurable: true,
+      value: { badInput: true },
+    });
+    teclear(input, '');
+    refrescar();
+
+    // El modelo se queda en lo ultimo contado y el campo vuelve a ensenarlo.
+    expect(cambios[cambios.length - 1]).toBe(10);
+    expect(input.value).toBe('10');
+  });
+
+  it('deja vaciar el campo para volver a teclear, contando cero', async () => {
+    const { input, cambios, refrescar } = await montar(100);
+
+    teclear(input, '25');
+    refrescar();
+    teclear(input, '');
+    refrescar();
+
+    expect(cambios[cambios.length - 1]).toBe(0);
+    // Lo que se ve y lo que se cuenta dicen lo mismo: cero.
+    expect(input.value).toBe('0');
+  });
+
   it('relaciona ayuda y error con el campo y expone el estado invalido', async () => {
     await TestBed.configureTestingModule({ imports: [NumberInputComponent] }).compileComponents();
     const fixture = TestBed.createComponent(NumberInputComponent);

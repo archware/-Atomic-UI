@@ -48,7 +48,8 @@ export type IconPosition = 'left' | 'right' | 'none';
     <button
       #control
       [type]="type"
-      [disabled]="isDisabled"
+      [disabled]="disabled"
+      [attr.aria-disabled]="loading ? 'true' : null"
       [attr.aria-label]="ariaLabel || null"
       [attr.aria-controls]="ariaControls || null"
       [attr.aria-expanded]="expandedAttribute"
@@ -122,14 +123,31 @@ export type IconPosition = 'left' | 'right' | 'none';
         width: 100%;
       }
 
-      /* Canonical FormDialog close: square, centered and icon-only. */
-      :host([dialog-close]) {
+      /*
+      UN BOTON DE SOLO ICONO ES CUADRADO, Y ESO NO SE PUEDE PEDIR DESDE FUERA.
+
+      El consumidor puede darle al HOST un tamaño cuadrado, pero el control de
+      dentro conserva su relleno horizontal y su ancho minimo, asi que se sale de
+      su propio borde y pisa lo que tenga al lado. Ocurrio literalmente: el boton
+      de tema de la barra superior desbordaba su marco y se solapaba con el menu
+      de usuario.
+
+      No se puede arreglar desde el consumidor: sus estilos no alcanzan al
+      interior de este componente. Tiene que vivir aqui.
+
+      El atributo dialog-close ya resolvia exactamente esto para el aspa de
+      cerrar. En vez de añadir un segundo caso especial se generaliza: icon-only
+      hace lo mismo y se puede pedir desde cualquier sitio.
+      */
+      :host([dialog-close]),
+      :host([icon-only]) {
         display: inline-flex;
         width: var(--control-height);
         height: var(--control-height);
       }
 
-      :host([dialog-close]) .btn {
+      :host([dialog-close]) .btn,
+      :host([icon-only]) .btn {
         width: 100%;
         min-width: 100%;
         height: 100%;
@@ -281,6 +299,21 @@ export class ButtonComponent {
    */
   @Output() buttonClick = new EventEmitter<MouseEvent>();
 
+  /*
+  MIENTRAS CARGA, EL BOTON SIGUE ENFOCABLE.
+
+  Antes se ponia `disabled` tambien durante la carga. El navegador descarta el
+  foco de un elemento que se deshabilita, asi que el boton se quitaba el foco a
+  si mismo justo al pulsarlo: quien confirma un cobro con el teclado pierde el
+  punto de partida y el siguiente Tab empieza desde el principio del documento.
+  Y con `disabled` el lector de pantalla deja de anunciar el elemento, asi que
+  tampoco llegaba el `aria-busy` que decia que la operacion seguia en curso.
+
+  Ahora la carga se comunica con `aria-disabled` y `aria-busy` —que se anuncian
+  y no roban el foco— y la activacion la bloquea `onButtonClick`, que ya
+  comprobaba `loading` antes de emitir. El `disabled` real se reserva para el
+  deshabilitado de verdad, que es el que si debe salir del recorrido.
+  */
   /** Native interaction is unavailable while disabled or loading. */
   get isDisabled(): boolean {
     return this.disabled || this.loading;

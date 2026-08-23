@@ -41,7 +41,7 @@ que detecte componentes sin fuente, copias divergentes, estilos inline y colores
 fijos.
 
 El recorrido concreto para subir un consumidor —con sus trampas medidas— está
-en [`governance/consumer/MIGRAR_A_5.8.md`](governance/consumer/MIGRAR_A_5.8.md).
+en [`governance/consumer/MIGRAR_A_5.22.md`](governance/consumer/MIGRAR_A_5.22.md).
 
 Esta regla es ejecutable: `governance/consumer` contiene la política canónica,
 el manifiesto base, el gate y CI. `npm run create:project` los instala en toda

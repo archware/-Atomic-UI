@@ -69,7 +69,7 @@ export type SortDirection = 'asc' | 'desc' | null;
       opacity: 0.8;
       transform: scale(1.1);
     }
-    
+
     th[app-table-header-cell].sortable-cell:hover .sort-indicator.active {
       opacity: 1;
     }
@@ -87,7 +87,7 @@ export class TableHeaderCellComponent {
   @HostListener('click')
   onClick() {
     if (!this.sortable) return;
-    
+
     let newDirection: SortDirection = 'asc';
     if (this.sortDirection === 'asc') {
       newDirection = 'desc';

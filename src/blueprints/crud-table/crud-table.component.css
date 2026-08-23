@@ -96,7 +96,7 @@
   text-align: center;
 }
 
-.text-danger { color: var(--danger-color); }
+.text-danger { color: var(--danger-color-text); }
 .text-muted { color: var(--text-color-secondary); }
 .text-2xl { font-size: 1.5rem; }
 .text-3xl { font-size: 1.875rem; }

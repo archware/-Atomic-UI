@@ -150,8 +150,8 @@
    RESPONSIVE STYLES (Mobile - CARDS)
    Alta especificidad para evitar !important
    ============================================ */
-@media screen and (max-width: 768px) {
-    
+@media screen and (max-width: 48rem) {
+
     /* Hide header on mobile */
     .so-root[data-so-table][data-so-sync-columns] .rtc-header,
     .so-root[data-so-table] .rtc-header,
@@ -275,7 +275,7 @@
     display: none;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 48rem) {
     .so-root[data-so-table] .rtc-mobile-only,
     .rtc-mobile-only {
         display: flex;
@@ -287,7 +287,7 @@
     display: table-cell;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 48rem) {
     .so-root[data-so-table] .rtc-desktop-only,
     .rtc-desktop-only {
         display: none;

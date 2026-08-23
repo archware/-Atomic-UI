@@ -2,9 +2,11 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   TemplateRef,
   computed,
   contentChild,
+  inject,
   input,
   linkedSignal,
   output,
@@ -75,6 +77,7 @@ function trackByIdentity<T extends object>(_index: number, row: T): T {
   styleUrl: './data-table.scss',
 })
 export class DataTable<T extends object = Record<string, unknown>> {
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   readonly columns = input.required<readonly DataTableColumn<T>[]>();
   readonly rows = input.required<readonly T[]>();
   readonly caption = input.required<string>();
@@ -210,7 +213,20 @@ export class DataTable<T extends object = Record<string, unknown>> {
     }
   }
 
+  /*
+  EL BOTON QUE SE DESHABILITA BAJO LOS DEDOS SE LLEVA EL FOCO AL <body>.
+
+  Los dos botones se deshabilitan al llegar al extremo Y durante cada carga.
+  Cuando eso pasa con el foco encima, el navegador lo descarta y quien paginaba
+  con el teclado se queda sin punto de partida: el siguiente Tab empieza desde
+  el principio del documento. Con tres paginas eso ocurre siempre en la ultima.
+
+  Se traslada ANTES de emitir, porque despues el boton ya no puede recibirlo.
+  Va al resumen —la barra que dice cuantos registros hay—, que es lo que la
+  persona necesita leer justo despues de cambiar de pagina.
+  */
   protected onPageChange(page: number): void {
+    this.rescueFocusFromPager();
     if (this.usesClientPagination()) {
       this.clientPage.set(
         Math.min(Math.max(page, 1), this.effectiveTotalPages()),
@@ -218,6 +234,22 @@ export class DataTable<T extends object = Record<string, unknown>> {
       return;
     }
     this.pageChange.emit(page);
+  }
+
+  private rescueFocusFromPager(): void {
+    const host = this.host.nativeElement;
+    const active = host.ownerDocument.activeElement;
+    if (!(active instanceof HTMLElement) || !active.classList.contains('data-table__page-btn')) {
+      return;
+    }
+    const summary = host.querySelector<HTMLElement>('.data-table__summary');
+    if (!summary) {
+      return;
+    }
+    if (!summary.hasAttribute('tabindex')) {
+      summary.setAttribute('tabindex', '-1');
+    }
+    summary.focus({ preventScroll: true });
   }
 
   protected readonly effectiveStatus = computed<DataTableStatus>(() => {

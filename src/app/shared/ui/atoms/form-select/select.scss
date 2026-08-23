@@ -13,12 +13,12 @@
 .field__label {
   color: var(--text-color);
   font-size: var(--text-sm);
-  font-weight: 650;
+  font-weight: var(--font-weight-title);
   text-transform: uppercase;
 }
 
 .field__required {
-  color: var(--danger-color);
+  color: var(--danger-color-text);
 }
 
 .field__control {
@@ -105,5 +105,5 @@
 }
 
 .field__message--error {
-  color: var(--danger-color);
+  color: var(--danger-color-text);
 }

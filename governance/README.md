@@ -124,4 +124,6 @@ dominio se implementa exclusivamente en el consumidor.
 
 Las referencias complementarias son `docs/ATOMIC_UI_AGENT_RUNTIME.md` para el
 runtime de agentes, `distribution/README.md` para empaquetado y
-`governance/consumer/MIGRAR_A_5.8.md` para adopciones vigentes.
+`governance/consumer/MIGRAR_A_5.22.md` para adopciones vigentes. La guía 5.8 se
+conserva únicamente como antecedente de consumidores que todavía declaran esa
+línea.

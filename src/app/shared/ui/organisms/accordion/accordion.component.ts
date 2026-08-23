@@ -121,6 +121,21 @@ export class AccordionComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="accordion-item" [class.open]="isOpen()" [class.disabled]="disabled">
+      <!--
+        EL TITULO DE UN PANEL ES UN ENCABEZADO, Y AQUI NO LO ERA.
+
+        El disparador era un <button> suelto, asi que los paneles NO aparecian en
+        el indice de encabezados. Quien navega saltando por titulos —que es como
+        se recorre una pantalla con lector de pantalla— pasaba del titulo de la
+        pagina directamente a lo que hubiera DENTRO del primer panel abierto, sin
+        enterarse de que existian los demas ni de como se llamaban.
+
+        Es lo que dicen las practicas de ARIA para acordeon: el boton va envuelto
+        en un elemento con rol de encabezado. El nivel lo decide quien monta la
+        pantalla, porque solo alli se sabe que hay por encima; 3 es el valor
+        sensato bajo un <h1> de pagina y un <h2> de seccion.
+      -->
+      <div role="heading" [attr.aria-level]="headingLevel">
       <button
         #header
         type="button"
@@ -142,6 +157,7 @@ export class AccordionComponent {
           <i class="fa-solid fa-chevron-down"></i>
         </span>
       </button>
+      </div>
       <div
         class="accordion-content"
         [id]="contentId"
@@ -195,7 +211,7 @@ export class AccordionComponent {
 
       .accordion-header:disabled {
         cursor: not-allowed;
-        opacity: 0.65;
+        color: var(--input-disabled-text);
       }
 
       .accordion-heading {
@@ -206,13 +222,13 @@ export class AccordionComponent {
 
       .accordion-title {
         font-size: var(--text-md);
-        font-weight: 600;
+        font-weight: var(--font-weight-emphasis);
       }
 
       .accordion-description {
         color: var(--text-color-secondary);
         font-size: var(--text-xs);
-        font-weight: 400;
+        font-weight: var(--font-weight-body);
       }
 
       .accordion-item.open .accordion-header {
@@ -246,12 +262,23 @@ export class AccordionComponent {
         grid-template-rows: 1fr;
       }
 
+      /*
+      UN CONTENEDOR DE DISPOSICION NO DECIDE LA TIPOGRAFIA DE LO QUE CONTIENE.
+
+      El cuerpo del panel fijaba el color y el tamaño de letra, y eso lo hereda todo lo
+      que se meta dentro: una tabla, un formulario, una tarjeta. La misma tabla se
+      dibujaba mas pequeña y mas apagada por el solo hecho de estar dentro de un
+      acordeon, y quien la comparaba con la de otra pantalla veia dos tablas
+      distintas sin que nada lo explicara.
+
+      El panel se queda con lo suyo —el hueco— y cada componente sigue trayendo su
+      propia tipografia. El texto suelto que antes se apoyaba en esto la hereda
+      ahora del contenedor de la pagina, que es de donde debe venir.
+      */
       .accordion-body {
         min-height: 0;
         overflow: hidden;
         padding-inline: var(--space-4);
-        color: var(--text-color-secondary);
-        font-size: var(--text-sm);
         line-height: 1.6;
       }
 
@@ -278,6 +305,8 @@ export class AccordionItemComponent implements OnInit, OnDestroy {
   @Input() id = `accordion-${++AccordionItemComponent.nextId}`;
   @Input() title = '';
   @Input() description = '';
+  /** Nivel del encabezado que anuncia este panel. Ver el comentario de arriba. */
+  @Input() headingLevel = 3;
   @Input() disabled = false;
   @Input() set open(value: boolean) {
     this.setOpen(value, false);

@@ -7,6 +7,32 @@ export interface PopupButton {
   label: string;
   variant?: 'primary' | 'secondary' | 'danger' | 'ghost';
   action: () => void;
+  /** Recibe el foco al abrirse el popup. Solo uno por popup. */
+  autofocus?: boolean;
+  /** Lo que hay que ejecutar si el popup se cierra por Escape o por la aspa. */
+  cancels?: boolean;
+}
+
+/**
+ * Lo que hace falta para preguntar por un acto que se va a ejecutar.
+ *
+ * `confirmLabel` NO tiene valor por defecto a proposito. Un boton que dice
+ * «Confirmar» obliga a leer el titulo para saber que se confirma, y quien lleva
+ * cuarenta dialogos al dia ya no lee el titulo. El verbo del acto va en el
+ * boton: «Anular la solicitud», «Eliminar el gasto».
+ */
+export interface PopupConfirmOptions {
+  title: string;
+  message: string;
+  /** El verbo del acto. Obligatorio. */
+  confirmLabel: string;
+  cancelLabel?: string;
+  /** `danger` para lo que no se puede deshacer. */
+  tone?: 'default' | 'danger';
+  /** Por defecto `cancel`: la salida segura es la que recibe el foco. */
+  initialFocus?: 'cancel' | 'confirm';
+  onConfirm: () => void;
+  onCancel?: () => void;
 }
 
 export interface PopupConfig {
@@ -42,9 +68,12 @@ export interface PopupItem extends PopupConfig {
  *   }
  * 
  *   showConfirm() {
+ *     // Una confirmación dice QUÉ va a pasar, no pregunta si se está seguro.
  *     this.popup.confirm({
- *       title: '¿Eliminar?',
- *       message: '¿Estás seguro de eliminar este elemento?',
+ *       title: 'Eliminar el gasto del 12/03',
+ *       message: 'Se retira del arqueo del día y del reporte de caja. No se puede deshacer.',
+ *       confirmLabel: 'Eliminar el gasto',
+ *       tone: 'danger',
  *       onConfirm: () => this.delete(),
  *       onCancel: () => {}
  *     });
@@ -131,15 +160,19 @@ export class PopupService {
     return id;
   }
 
-  /** Popup de confirmación con acciones */
-  confirm(options: {
-    title: string;
-    message: string;
-    confirmLabel?: string;
-    cancelLabel?: string;
-    onConfirm: () => void;
-    onCancel?: () => void;
-  }): number {
+  /**
+   * Popup de confirmación con acciones.
+   *
+   * CAPITULO 7: EL FOCO EMPIEZA EN LA SALIDA SEGURA.
+   *
+   * Antes el foco se quedaba en el fondo del dialogo y un Intro por inercia
+   * ejecutaba el boton primario, que es el que hace la cosa. Ahora el foco
+   * arranca en «Cancelar» salvo que se pida lo contrario, y Escape ejecuta la
+   * misma cancelacion que el boton —no un cierre mudo que deja al llamador
+   * esperando una respuesta que no llega.
+   */
+  confirm(options: PopupConfirmOptions): number {
+    const initialFocus = options.initialFocus ?? 'cancel';
     let id = 0;
     id = this.show({
       title: options.title,
@@ -151,11 +184,14 @@ export class PopupService {
         {
           label: options.cancelLabel ?? 'Cancelar',
           variant: 'ghost',
+          autofocus: initialFocus === 'cancel',
+          cancels: true,
           action: () => { options.onCancel?.(); this.close(id); }
         },
         {
-          label: options.confirmLabel ?? 'Confirmar',
-          variant: 'primary',
+          label: options.confirmLabel,
+          variant: options.tone === 'danger' ? 'danger' : 'primary',
+          autofocus: initialFocus === 'confirm',
           action: () => { options.onConfirm(); this.close(id); }
         }
       ]

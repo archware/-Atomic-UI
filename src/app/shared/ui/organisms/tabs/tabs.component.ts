@@ -91,15 +91,15 @@ export class TabComponent {
     .tab-button {
       flex: 1;
       padding: var(--space-4) var(--space-5);
-      
+
       /* Base Style (Inactive) */
       background: var(--surface-ground);
       border: 1px solid var(--border-color-strong);
       border-bottom: none;
-      
+
       margin-bottom: -1px;
       font-size: var(--text-md);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       color: var(--text-color-secondary);
       cursor: pointer;
       transition: all 200ms ease;
@@ -125,9 +125,9 @@ export class TabComponent {
 
     .tab-button.active {
       color: var(--text-color);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
       background: var(--surface-background);
-      
+
       /* Active: Thick Top Border + Sides matching content border */
       border-top: var(--space-1) solid var(--primary-color);
       border-left: 1px solid var(--border-color);
@@ -140,7 +140,6 @@ export class TabComponent {
       background: var(--surface-section);
       border: 1px solid var(--border-color);
       border-bottom: none;
-      opacity: 0.7;
       color: var(--text-color-muted);
     }
 
@@ -163,7 +162,7 @@ export class TabComponent {
      */
 
     /* RESPONSIVE: Compact scrollable tabs on mobile */
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {
       .tabs-header {
         overflow-x: auto;
         overflow-y: hidden;

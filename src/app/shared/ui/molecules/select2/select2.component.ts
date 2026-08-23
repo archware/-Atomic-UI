@@ -165,8 +165,8 @@ export interface Select2Option {
     }
 
     .select2-wrapper.disabled {
-      opacity: 0.6;
       pointer-events: none;
+      color: var(--input-disabled-text);
     }
 
     .select2-wrapper.disabled .select2-trigger,
@@ -185,7 +185,10 @@ export interface Select2Option {
       align-items: center;
       height: var(--control-height);
       padding: var(--space-1) var(--space-3);
-      padding-right: var(--space-11);
+      /* Deja sitio al icono: es un ESPACIO, asi que le toca un paso de la
+         escala. Estaba en --space-11, que no es un espacio sino el objetivo
+         tactil minimo colado en la escala. Capitulo 10. */
+      padding-right: var(--space-7);
       background: var(--input-bg);
       border: var(--input-border-width, 1.5px) solid var(--input-border);
       border-radius: var(--radius-md);
@@ -222,8 +225,8 @@ export interface Select2Option {
       top: -0.625rem;
       transform: translateY(0);
       font-size: var(--text-xs);
-      font-weight: 500;
-      color: var(--info-color);
+      font-weight: var(--font-weight-body);
+      color: var(--info-color-text);
     }
 
     /* === MULTI-SELECT FIX === */
@@ -231,7 +234,10 @@ export interface Select2Option {
       min-height: var(--control-height);
       height: auto;
       padding: var(--space-1) var(--space-3);
-      padding-right: var(--space-11);
+      /* Deja sitio al icono: es un ESPACIO, asi que le toca un paso de la
+         escala. Estaba en --space-11, que no es un espacio sino el objetivo
+         tactil minimo colado en la escala. Capitulo 10. */
+      padding-right: var(--space-7);
       align-items: center;
     }
 
@@ -296,7 +302,7 @@ export interface Select2Option {
       color: var(--info-color-text);
       border-radius: var(--radius-full);
       font-size: var(--text-xs);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
     }
 
     .tag-remove {
@@ -310,7 +316,7 @@ export interface Select2Option {
       border: none;
       border-radius: 50%;
       font-size: var(--text-sm);
-      color: var(--info-color);
+      color: var(--info-color-text);
       cursor: pointer;
       transition: all 150ms ease;
     }
@@ -414,7 +420,7 @@ export interface Select2Option {
       cursor: pointer;
       transition: background 100ms ease;
     }
-    
+
 
 
     .select2-option:hover:not(.disabled),
@@ -424,13 +430,13 @@ export interface Select2Option {
 
     .select2-option.selected {
       background: var(--dropdown-item-selected);
-      color: var(--info-color);
-      font-weight: 500;
+      color: var(--info-color-text);
+      font-weight: var(--font-weight-body);
     }
 
     .select2-option.disabled {
-      opacity: 0.5;
       cursor: not-allowed;
+      color: var(--input-disabled-text);
     }
 
     .option-icon {
@@ -442,7 +448,7 @@ export interface Select2Option {
     }
 
     .check-icon {
-      color: var(--info-color);
+      color: var(--info-color-text);
       font-weight: bold;
     }
 
@@ -534,7 +540,7 @@ export class Select2Component implements ControlValueAccessor {
       this.isOpen.update(v => !v);
       if (this.isOpen()) {
         this.ensureEnabledHighlight();
-        
+
         // Focus search input if searchable
         if (this.searchable) {
           setTimeout(() => {
@@ -637,7 +643,7 @@ export class Select2Component implements ControlValueAccessor {
       this.selectedOption.set(option);
       this.onChange(option.value);
       this.valueChange.emit(option.value);
-      
+
       this.isOpen.set(false);
       this.searchTerm.set('');
       this.highlightedIndex.set(-1);

@@ -95,7 +95,7 @@ const PRINT_DOCUMENT_STYLES = `
   .eyebrow {
     margin: 0 0 2mm;
     font-size: 8pt;
-    font-weight: 700;
+    font-weight: var(--font-weight-title);
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
@@ -130,14 +130,14 @@ const PRINT_DOCUMENT_STYLES = `
   dt {
     color: var(--print-document-muted-color);
     font-size: 8pt;
-    font-weight: 700;
+    font-weight: var(--font-weight-title);
     text-transform: uppercase;
   }
 
   dd {
     margin: 1mm 0 0;
     overflow-wrap: anywhere;
-    font-weight: 600;
+    font-weight: var(--font-weight-emphasis);
   }
 
   p {
@@ -154,7 +154,7 @@ const PRINT_DOCUMENT_STYLES = `
 
   caption {
     margin-bottom: 2mm;
-    font-weight: 700;
+    font-weight: var(--font-weight-title);
     text-align: left;
   }
 

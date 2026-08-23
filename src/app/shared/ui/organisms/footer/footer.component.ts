@@ -198,7 +198,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
       gap: var(--space-2);
       color: var(--text-color-secondary);
       font-size: var(--text-xs);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       line-height: 1.4;
     }
 
@@ -271,7 +271,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
     .atomic-footer__logo {
       color: var(--text-color);
       font-size: var(--text-xl);
-      font-weight: 700;
+      font-weight: var(--font-weight-title);
     }
 
     .atomic-footer__description {
@@ -285,7 +285,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
       margin-bottom: var(--space-3);
       color: var(--text-color);
       font-size: var(--text-sm);
-      font-weight: 600;
+      font-weight: var(--font-weight-emphasis);
     }
 
     .atomic-footer__social--vertical,

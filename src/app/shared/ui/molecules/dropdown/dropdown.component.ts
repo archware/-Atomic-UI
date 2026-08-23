@@ -82,8 +82,8 @@ export interface DropdownOption {
     }
 
     .dropdown.disabled {
-      opacity: 0.6;
       pointer-events: none;
+      color: var(--input-disabled-text);
     }
 
     .dropdown-trigger {
@@ -165,13 +165,13 @@ export interface DropdownOption {
 
     .dropdown-option.selected {
       color: var(--primary-color);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
       background: var(--primary-color-lighter);
     }
 
     .dropdown-option.disabled {
-      opacity: 0.5;
       cursor: not-allowed;
+      color: var(--input-disabled-text);
     }
 
     .option-icon {

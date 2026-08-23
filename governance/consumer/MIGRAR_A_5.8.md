@@ -1,15 +1,20 @@
 ---
 title: "Migración de un consumidor a Atomic UI 5.8"
 document_type: "guía técnica"
-status: "vigente"
+status: "histórica"
 date: "2026-08-20"
 updated: "2026-08-21"
 version: "5.8.4"
 policy_version: "1.2.2"
+superseded_by: "MIGRAR_A_5.22.md"
 owner: "Hospital Regional de Ayacucho"
 ---
 
 # Migración de un consumidor a Atomic UI 5.8
+
+> Esta guía conserva la evidencia de la línea 5.8. Las nuevas adopciones se
+> rigen por `MIGRAR_A_5.22.md`, que incorpora el cambio incompatible de tokens
+> introducido en 5.9 y las correcciones acumuladas hasta 5.22.
 
 La migración adopta conjuntamente el código visual y la política 1.2.2. No se
 copian directorios, tokens, gates ni hashes a mano.

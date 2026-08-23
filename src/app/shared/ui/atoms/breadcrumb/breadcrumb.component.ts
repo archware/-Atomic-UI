@@ -88,7 +88,7 @@ export interface BreadcrumbItem {
 
     .breadcrumb-item--active .breadcrumb-text {
       color: var(--text-color);
-      font-weight: 500;
+      font-weight: var(--font-weight-body);
     }
 
     .breadcrumb-separator {

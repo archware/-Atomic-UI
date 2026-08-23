@@ -1,8 +1,11 @@
 import {
+  AfterViewInit,
   Component,
+  ElementRef,
   Input,
   Output,
   EventEmitter,
+  ViewChild,
   forwardRef,
   ChangeDetectionStrategy,
   signal,
@@ -48,6 +51,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
         </button>
 
         <input
+          #nativeInput
           [id]="inputId"
           type="number"
           class="number-input__field"
@@ -78,6 +82,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       }
       @if (error) {
         <span class="number-input__error" [id]="inputId + '-error'" role="alert">{{ error }}</span>
+      }
+      <!--
+        Un recorte mudo es lo mismo que un dato falso: el campo enseña una cifra
+        y el total suma otra. Si se ajusta lo tecleado, se dice.
+      -->
+      @if (adjustment(); as adjusted) {
+        <span class="number-input__adjustment" role="status">{{ adjusted }}</span>
       }
     </div>
   `,
@@ -120,8 +131,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       color: var(--text-color-on-primary);
     }
     .number-input__btn:disabled {
-      opacity: 0.4;
       cursor: not-allowed;
+      color: var(--input-disabled-text);
     }
 
     .number-input__field {
@@ -142,8 +153,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     .number-input__field::-webkit-outer-spin-button { -webkit-appearance: none; }
 
     .number-input--disabled .number-input__control {
-      opacity: 0.6;
       pointer-events: none;
+      color: var(--input-disabled-text);
     }
 
     .number-input__hint {
@@ -153,15 +164,22 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       color: var(--text-color-muted);
     }
 
+    .number-input__adjustment {
+      display: block;
+      margin-top: var(--space-1);
+      font-size: var(--text-xs);
+      color: var(--warning-color-text);
+    }
+
     .number-input__error {
       display: block;
       margin-top: var(--space-1);
       font-size: var(--text-xs);
-      color: var(--danger-color);
+      color: var(--danger-color-text);
     }
   `],
 })
-export class NumberInputComponent implements ControlValueAccessor {
+export class NumberInputComponent implements ControlValueAccessor, AfterViewInit {
   private static nextId = 0;
 
   @Input() label = '';
@@ -176,6 +194,10 @@ export class NumberInputComponent implements ControlValueAccessor {
   @Output() valueChange = new EventEmitter<number>();
 
   protected value = signal<number>(0);
+  /** Lo que se ajusto de lo tecleado, para poder decirlo. */
+  protected readonly adjustment = signal<string | null>(null);
+
+  @ViewChild('nativeInput') private nativeInput?: ElementRef<HTMLInputElement>;
 
   private onChange: (value: number) => void = () => {};
   protected onTouched: () => void = () => {};
@@ -185,8 +207,23 @@ export class NumberInputComponent implements ControlValueAccessor {
     return ids.length > 0 ? ids.join(' ') : null;
   }
 
+  ngAfterViewInit(): void {
+    this.syncNative();
+  }
+
   writeValue(value: number): void {
     this.value.set(value ?? 0);
+    this.adjustment.set(null);
+    /*
+    RECHAZAR UNA ENTRADA TAMBIEN TIENE QUE RETIRARLA DEL CAMPO.
+
+    `[value]` solo reescribe el `<input>` cuando el numero CAMBIA. Si el padre
+    repone el mismo valor que ya tenia —que es exactamente lo que hace un
+    rechazo— el binding no toca el DOM y el campo se queda con lo que tecleo la
+    persona. A partir de ahi, lo que se ve y lo que se cuenta son dos cifras
+    distintas y nada lo delata.
+    */
+    this.syncNative();
   }
 
   registerOnChange(fn: (value: number) => void): void {
@@ -203,26 +240,84 @@ export class NumberInputComponent implements ControlValueAccessor {
 
   increment(): void {
     const next = Math.min(this.value() + this.step, this.max);
+    this.adjustment.set(null);
     this.setValue(next);
     this.onTouched();
   }
 
   decrement(): void {
     const next = Math.max(this.value() - this.step, this.min);
+    this.adjustment.set(null);
     this.setValue(next);
     this.onTouched();
   }
 
   onInput(event: Event): void {
-    const val = parseFloat((event.target as HTMLInputElement).value);
-    if (!isNaN(val)) {
-      this.setValue(Math.min(Math.max(val, this.min), this.max));
+    const element = event.target as HTMLInputElement;
+    const raw = element.value;
+
+    if (raw.trim() === '') {
+      /*
+      UN CAMPO `type=number` MIENTE CUANDO LO TECLEADO NO ES UN NUMERO.
+
+      Si se escribe `1o0`, el navegador ENSEÑA `1o0` y a la vez nos entrega
+      cadena vacia; solo `validity.badInput` distingue eso de un campo borrado.
+      Antes esto caia en `isNaN` y se ignoraba sin mas: el modelo conservaba la
+      cantidad anterior mientras la fila seguia mostrando `1o0`. En un arqueo de
+      caja, esa fila cuenta una cosa y enseña otra.
+
+      Se limpia el estado invalido —solo asi el navegador suelta el texto— y se
+      repone la cantidad contada.
+      */
+      if (element.validity?.badInput) {
+        this.adjustment.set('Solo se admiten números: se repuso la cantidad contada.');
+        element.value = '';
+        this.syncNative();
+        return;
+      }
+
+      // Vacio de verdad: cuenta cero, que es lo que significa, y deja seguir
+      // tecleando sin pelear con quien escribe.
+      this.adjustment.set(null);
+      this.setValue(0);
+      return;
     }
+
+    const parsed = parseFloat(raw);
+    if (isNaN(parsed)) {
+      this.adjustment.set('Solo se admiten números: se repuso la cantidad contada.');
+      this.syncNative();
+      return;
+    }
+
+    const bounded = Math.min(Math.max(parsed, this.min), this.max);
+    this.adjustment.set(
+      bounded === parsed
+        ? null
+        : `Se ajustó a ${bounded} (permitido de ${this.min} a ${this.max}).`,
+    );
+    this.setValue(bounded);
   }
 
-  private setValue(val: number): void {
+  private setValue(val: number, options: { readonly sync?: boolean } = {}): void {
     this.value.set(val);
     this.onChange(val);
     this.valueChange.emit(val);
+    if (options.sync !== false) {
+      // Aunque el numero no haya cambiado: es justo el caso en que el binding
+      // no reescribe y el campo se queda con lo tecleado.
+      this.syncNative();
+    }
+  }
+
+  private syncNative(): void {
+    const element = this.nativeInput?.nativeElement;
+    if (!element) {
+      return;
+    }
+    const expected = String(this.value());
+    if (element.value !== expected) {
+      element.value = expected;
+    }
   }
 }
