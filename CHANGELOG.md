@@ -15,6 +15,12 @@ archivo. El formato se basa en
 
 ## [Sin publicar]
 
+### Corregido
+
+- El instalador de gobierno conserva `tokens.required` y la justificación con
+  su `decisionRecord` cuando una adaptación mantiene exactamente la misma
+  huella. Una diferencia nueva continúa exigiendo una decisión nueva.
+
 ### Documentación
 
 - Se reconciliaron la línea funcional 5.22.0 y las mejoras locales de gobierno

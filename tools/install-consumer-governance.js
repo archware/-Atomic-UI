@@ -478,6 +478,7 @@ function main() {
       : normalize(path.dirname(uiRoot))) || '.';
   let packagePath;
   let absoluteUiRoot;
+  let manifestPath;
   try {
     packagePath = confinedPath(
       consumerRoot,
@@ -485,6 +486,11 @@ function main() {
       'package.json consumidor',
     ).absolute;
     absoluteUiRoot = confinedPath(consumerRoot, uiRoot, 'raíz UI consumidora').absolute;
+    manifestPath = confinedPath(
+      consumerRoot,
+      'docs/atomic-provenance.json',
+      'manifiesto consumidor',
+    ).absolute;
   } catch (error) {
     console.error(error.message);
     process.exit(1);
@@ -528,10 +534,44 @@ function main() {
   }
 
   let packageJson;
+  let existingManifest = null;
   let attributes;
   try {
     packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
     attributes = attributePlan(consumerRoot);
+    if (fs.existsSync(manifestPath)) {
+      const manifestStat = fs.lstatSync(manifestPath);
+      if (!manifestStat.isFile() || manifestStat.isSymbolicLink()) {
+        throw new Error('El manifiesto consumidor debe ser un archivo regular.');
+      }
+      existingManifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+      if (
+        existingManifest.components !== undefined &&
+        !Array.isArray(existingManifest.components)
+      ) {
+        throw new Error('components debe ser un arreglo en el manifiesto consumidor.');
+      }
+      if (
+        existingManifest.tokens !== undefined &&
+        (existingManifest.tokens === null ||
+          typeof existingManifest.tokens !== 'object' ||
+          Array.isArray(existingManifest.tokens))
+      ) {
+        throw new Error('tokens debe ser un objeto en el manifiesto consumidor.');
+      }
+      const requiredTokens = existingManifest.tokens?.required;
+      if (
+        requiredTokens !== undefined &&
+        (!Array.isArray(requiredTokens) ||
+          requiredTokens.some(
+            (token) => typeof token !== 'string' || !/^--[a-z0-9-]+$/.test(token),
+          ))
+      ) {
+        throw new Error(
+          'tokens.required debe ser un arreglo de nombres de propiedades personalizadas CSS.',
+        );
+      }
+    }
   } catch (error) {
     console.error(`No se pudo prevalidar el consumidor: ${error.message}`);
     process.exit(1);
@@ -647,6 +687,11 @@ function main() {
   }
   plannedFiles.set('AGENTS.md', agentPolicyContent(consumerRoot));
 
+  const existingComponentsByLocal = new Map(
+    (existingManifest?.components || [])
+      .filter((component) => component && typeof component.local === 'string')
+      .map((component) => [component.local, component]),
+  );
   const components = auditedComponents.map((component) => {
     if (component.classification === 'exact') {
       return {
@@ -657,14 +702,44 @@ function main() {
       };
     }
     const kinds = [...new Set(component.differences.map((difference) => difference.kind))].sort();
+    const existingComponent = existingComponentsByLocal.get(component.local);
+    let preservedAdaptation = false;
+    if (
+      existingComponent?.mode === 'adapted' &&
+      existingComponent.atomic === component.atomic &&
+      typeof existingComponent.justification === 'string' &&
+      existingComponent.justification.trim() &&
+      typeof existingComponent.decisionRecord === 'string' &&
+      existingComponent.decisionRecord.trim() &&
+      JSON.stringify(existingComponent.adaptationSnapshot) === JSON.stringify(component.snapshot)
+    ) {
+      try {
+        const existingDecisionPath = confinedPath(
+          consumerRoot,
+          existingComponent.decisionRecord,
+          `decisionRecord de ${component.local}`,
+        ).absolute;
+        const decisionStat = fs.existsSync(existingDecisionPath)
+          ? fs.lstatSync(existingDecisionPath)
+          : null;
+        preservedAdaptation = Boolean(
+          decisionStat && decisionStat.isFile() && !decisionStat.isSymbolicLink(),
+        );
+      } catch {
+        preservedAdaptation = false;
+      }
+    }
     return {
       local: component.local,
       atomic: component.atomic,
       mode: 'adapted',
-      justification:
-        `Línea base auditada: ${component.differences.length} diferencia(s) ` +
-        `de tipo ${kinds.join(', ')}. La adaptación se conserva hasta su migración funcional.`,
-      decisionRecord: adaptationDecision,
+      justification: preservedAdaptation
+        ? existingComponent.justification
+        : `Línea base auditada: ${component.differences.length} diferencia(s) ` +
+          `de tipo ${kinds.join(', ')}. La adaptación se conserva hasta su migración funcional.`,
+      decisionRecord: preservedAdaptation
+        ? existingComponent.decisionRecord
+        : adaptationDecision,
       adaptationSnapshot: component.snapshot,
     };
   });
@@ -744,14 +819,9 @@ function main() {
     tokens: {
       atomic: 'src/styles/themes/_tokens-components.css',
       consumer: `${packagePrefix}src/styles/themes/_tokens-components.css`,
-      required: [],
+      required: [...(existingManifest?.tokens?.required || [])],
     },
   };
-  const manifestPath = confinedPath(
-    consumerRoot,
-    'docs/atomic-provenance.json',
-    'manifiesto consumidor',
-  ).absolute;
   plannedFiles.set(
     normalize(path.relative(consumerRoot, manifestPath)),
     `${JSON.stringify(manifest, null, 2)}\n`,

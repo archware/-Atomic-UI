@@ -996,9 +996,48 @@ try {
   if (adaptedGate.status !== 0) {
     throw new Error(`La adaptación aprobada no supera el gate:\n${adaptedGate.stderr}`);
   }
-  const lfManifest = JSON.parse(
-    fs.readFileSync(path.join(divergentConsumer, 'docs/atomic-provenance.json'), 'utf8'),
+  const divergentManifestPath = path.join(
+    divergentConsumer,
+    'docs/atomic-provenance.json',
   );
+  const initialLfManifest = JSON.parse(fs.readFileSync(divergentManifestPath, 'utf8'));
+  const initialAdaptation = initialLfManifest.components.find((component) =>
+    component.local.endsWith('/atoms/choice-control'),
+  );
+  initialLfManifest.tokens.required = ['--size-panel-scroll-max'];
+  write(divergentManifestPath, `${JSON.stringify(initialLfManifest, null, 2)}\n`);
+  write(
+    path.join(divergentConsumer, 'docs/decisions/ADR-atomic-renovacion.md'),
+    '---\ntitle: "Renovación Atomic"\nauthor: "QA"\ndate: "2026-08-23"\n---\n',
+  );
+  execFileSync(
+    process.execPath,
+    [
+      path.join(atomicRoot, 'tools/install-consumer-governance.js'),
+      divergentConsumer,
+      '--adaptation-decision=docs/decisions/ADR-atomic-renovacion.md',
+      '--change-id=ATOMIC-ADAPTATION-REINSTALL-TEST',
+    ],
+    { stdio: 'pipe', env: { ...process.env, ATOMIC_UI_ROOT: sourceRoot } },
+  );
+  const lfManifest = JSON.parse(fs.readFileSync(divergentManifestPath, 'utf8'));
+  const reinstalledAdaptation = lfManifest.components.find((component) =>
+    component.local.endsWith('/atoms/choice-control'),
+  );
+  if (
+    JSON.stringify(lfManifest.tokens.required) !==
+    JSON.stringify(['--size-panel-scroll-max'])
+  ) {
+    throw new Error('La reinstalación eliminó los tokens requeridos por el consumidor.');
+  }
+  if (
+    reinstalledAdaptation.justification !== initialAdaptation.justification ||
+    reinstalledAdaptation.decisionRecord !== initialAdaptation.decisionRecord
+  ) {
+    throw new Error(
+      'La reinstalación sustituyó la decisión de una adaptación cuyo snapshot no cambió.',
+    );
+  }
 
   const crlfConsumer = path.join(tempRoot, 'divergent-consumer-crlf');
   initializeRepository(crlfConsumer);

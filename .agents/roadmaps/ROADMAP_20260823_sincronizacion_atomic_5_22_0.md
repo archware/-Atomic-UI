@@ -43,12 +43,13 @@ como destino de instalación.
 
 - [x] Ejecutar la auditoría inicial de Atomic UI 5.8.4 y de los cinco consumidores sin escritura.
 - [x] Actualizar las referencias remotas y detectar la divergencia 3/18 de la rama local.
-- [ ] Reconciliar Atomic UI 5.22.0 con las mejoras locales de gobierno sin recuperar `.agent` ni degradar la guía 5.8.
-- [ ] Regenerar y verificar el manifiesto de fuentes sobre la referencia reconciliada.
-- [ ] Ejecutar las compuertas, pruebas y compilaciones de Atomic UI antes de propagar.
+- [x] Reconciliar Atomic UI 5.22.0 con las mejoras locales de gobierno sin recuperar `.agent` ni degradar la guía 5.8.
+- [x] Regenerar y verificar el manifiesto de fuentes sobre la referencia reconciliada.
+- [x] Ejecutar las compuertas, pruebas y compilaciones de Atomic UI antes de propagar.
+- [x] Corregir el instalador para conservar tokens y decisiones de adaptaciones sin deriva.
 - [ ] Preservar anexos y metadatos locales que ocupan rutas de gobierno canónicas en los consumidores.
-- [ ] Ejecutar `governance:install --audit-only` contra la referencia reconciliada.
-- [ ] Clasificar cambios exactos, adaptaciones, servicios, tokens y cambios incompatibles desde 5.5/5.8.
+- [x] Ejecutar `governance:install --audit-only` contra la referencia reconciliada.
+- [x] Clasificar cambios exactos, adaptaciones, servicios, tokens y cambios incompatibles desde 5.5/5.8.
 - [ ] Crear una decisión de adopción por consumidor sin eliminar el historial ADR anterior.
 - [ ] Propagar solo componentes y tokens autorizados, con pruebas compatibles con el runner real.
 - [ ] Instalar la política y recalcular snapshots mediante el instalador canónico.

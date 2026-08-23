@@ -9,6 +9,22 @@ owners:
 
 # Lecciones aprendidas de Atomic UI
 
+## [2026-08-23] - La regeneración debe ser monótona para los metadatos del consumidor
+
+**Contexto.** El instalador canónico regenera la procedencia a partir de una
+auditoría actual, pero el manifiesto también contiene tokens requeridos y
+decisiones que pertenecen al consumidor.
+
+**Problema.** Reiniciar `tokens.required` o reemplazar el `decisionRecord` de
+una adaptación sin cambios produce una pérdida silenciosa de contrato e
+historia, aunque la huella técnica siga siendo válida.
+
+**Lección aprendida.** Una reinstalación conserva los metadatos del consumidor
+cuando la ruta Atomic y el snapshot de adaptación coinciden byte a byte. Si la
+fuente o la adaptación cambian, se exige una decisión nueva. La regeneración
+automatizada puede ampliar o actualizar el contrato, pero no debe reducir
+información válida que no administra.
+
 ## [2026-08-23] - La versión local no define por sí sola una fuente reproducible
 
 **Contexto.** La rama local declaraba Atomic UI 5.8.4 y contenía tres mejoras
