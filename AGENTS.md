@@ -1,6 +1,40 @@
+---
+title: "Reglas obligatorias del repositorio Atomic UI"
+author: "Ing. Havel CONTRERAS TAPAHUASCO"
+date: "2026-08-23"
+last_updated: "2026-08-23"
+document_type: "instrucción para agentes"
+status: "vigente"
+version: "1.0.0"
+canonical_doctrine: "C:\\Users\\cotaha\\Documents\\Repos2\\DOCTRINA_MAESTRA_UNIFICADA.md"
+document_standard: "C:\\Users\\cotaha\\Documents\\Repos2\\ESTANDAR_DOCUMENTAL_AGENTES.md"
+continuity_document: "docs/CONTINUIDAD_AGENTES.md"
+---
+
 # Reglas obligatorias del repositorio Atomic UI
 
 > `ATOMIC_GOVERNANCE_REQUIRED`
+
+## Jerarquía documental y continuidad
+
+Antes de cualquier auditoría o modificación se deben leer, en este orden:
+
+1. las restricciones de sistema, seguridad y autorización de la sesión;
+2. la [doctrina maestra unificada](C:/Users/cotaha/Documents/Repos2/DOCTRINA_MAESTRA_UNIFICADA.md),
+   ubicada en
+   `C:\Users\cotaha\Documents\Repos2\DOCTRINA_MAESTRA_UNIFICADA.md`;
+3. el [estándar documental para continuidad de agentes](C:/Users/cotaha/Documents/Repos2/ESTANDAR_DOCUMENTAL_AGENTES.md),
+   ubicado en
+   `C:\Users\cotaha\Documents\Repos2\ESTANDAR_DOCUMENTAL_AGENTES.md`;
+4. los `AGENTS.md` de la raíz y del presente repositorio;
+5. [Continuidad para agentes](./docs/CONTINUIDAD_AGENTES.md);
+6. el gobierno, el flujo del ecosistema, la doctrina de interfaz, la guía o
+   habilidad aplicable y el roadmap activo.
+
+La doctrina maestra prevalece y la política Atomic puede añadir compuertas más
+estrictas. La línea 6.0.0 permanece en desarrollo: los cortes completados de
+Signals y estilos externos no autorizan a declarar cerradas las medidas
+rígidas, Tailwind, aliases `prest-*`, colisiones, generador o versión.
 
 Este repositorio es la única fuente de verdad visual del ecosistema. Antes de
 trabajar, leer `governance/consumer/ATOMIC_GOVERNANCE.md`,
@@ -58,3 +92,21 @@ sitio, por qué rechazar una entrada obliga a borrar la anterior, y por qué
   salida debe ser `ui-only` y no puede simular una integración real.
 - La arquitectura, los límites y la definición de terminado están en
   `docs/ATOMIC_UI_AGENT_RUNTIME.md`.
+
+## Ciclo documental obligatorio
+
+1. Antes de editar se crea o actualiza una hoja de ruta bajo
+   `.agents/roadmaps/` con identificador, baseline, alcance, exclusiones,
+   aceptación, validación y rollback.
+2. La unidad se implementa primero en esta fuente, se cataloga, prueba y valida;
+   después se propaga con procedencia exacta o adaptación decidida.
+3. Al cerrar se actualizan `CHANGELOG.md`,
+   [LESSONS_LEARNED.md](./LESSONS_LEARNED.md), el manifiesto y la documentación
+   que realmente haya cambiado.
+4. Se ejecutan las compuertas de
+   [Continuidad para agentes](./docs/CONTINUIDAD_AGENTES.md), se revisa el diff
+   completo y se registra el estado Git exacto.
+
+No se declara una versión, publicación o propagación terminada con tareas
+abiertas, manifiestos divergentes, compuertas omitidas o consumidores sin
+validación.

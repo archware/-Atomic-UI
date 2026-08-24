@@ -1,13 +1,63 @@
 ---
 title: "Lecciones aprendidas de Atomic UI"
+author: "Ing. Havel CONTRERAS TAPAHUASCO"
+date: "2026-08-23"
 document_type: "registro técnico"
 status: "en revisión"
 last_updated: "2026-08-23"
+version: "1.0.0"
+last_change_id: "ECO-20260823-003"
 owners:
   - "Hospital Regional de Ayacucho"
 ---
 
 # Lecciones aprendidas de Atomic UI
+
+## Índice superior de aprendizajes
+
+Este archivo es la fuente canónica de lecciones reutilizables de Atomic UI; las
+entradas existentes se preservan en orden cronológico y no se copian a otra
+autoridad. El contexto complementario se consulta en:
+
+- [`DOCTRINA_DE_INTERFAZ.md`](./DOCTRINA_DE_INTERFAZ.md), que convierte daños
+  observados y medidos en reglas de interfaz;
+- [`ECOSYSTEM_WORKFLOW.md`](./ECOSYSTEM_WORKFLOW.md), que documenta el flujo de
+  fuente, propagación y consumidor;
+- [`.agents/roadmaps/`](./.agents/roadmaps/), que conserva decisiones y
+  evidencia por corte;
+- [`CHANGELOG.md`](./CHANGELOG.md), que registra compatibilidad, validación y
+  rollback de cada versión;
+- [`docs/CONTINUIDAD_AGENTES.md`](./docs/CONTINUIDAD_AGENTES.md), que define el
+  orden de lectura y la reanudación segura.
+
+Una lección nueva requiere evidencia, decisión generalizable, mecanismo
+preventivo y límite de aplicación. Una incidencia exclusiva de un ticket se
+mantiene en su roadmap hasta demostrar que merece una regla común.
+
+## [2026-08-23] - La separación de estilos requiere semántica Angular y un canal dinámico limitado
+
+**Contexto.** La biblioteca combinaba hojas externas con bloques `styles`,
+bindings `[style.*]`, propiedades personalizadas enlazadas y estilos declarados
+en el host. Algunos componentes aceptan anchos, colores o cuadrículas
+arbitrarios como parte de su API pública.
+
+**Problema.** Una búsqueda textual confunde comentarios y variables locales con
+estilos Angular, pero tampoco detecta de forma completa plantillas literales,
+aliases de `HostBinding` ni metadatos de host. Convertir valores públicos
+arbitrarios en clases finitas habría cambiado el contrato; trasladar la
+propiedad visual a CSS sin transportar el valor dinámico la habría perdido.
+
+**Lección aprendida.** La compuerta recorre el AST de TypeScript y el AST de
+plantillas Angular, por lo que rechaza solo construcciones visuales ejecutables.
+Las clases representan estados finitos. Los valores dinámicos se transportan
+exclusivamente como propiedades personalizadas mediante una directiva que
+rechaza nombres ajenos al prefijo `--`; ancho, color, cuadrícula y posición se
+resuelven después en la hoja externa. Así se conserva la API sin reintroducir
+propiedades visuales en el marcado. Esta directiva no constituye una excepción
+permanente a la doctrina: sus nombres quedan fijados por cada componente y solo
+adapta entradas públicas que todavía admiten CSS arbitrario. Cada uso deberá
+retirarse cuando el contrato pueda expresarse mediante tokens gobernados o un
+conjunto cerrado de clases tipadas.
 
 ## [2026-08-23] - Un estado deshabilitado debe dominar la cascada y la acción nativa
 

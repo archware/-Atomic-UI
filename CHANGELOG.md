@@ -1,5 +1,8 @@
 ---
 title: 'Registro de cambios de Atomic UI'
+author: 'Ing. Havel CONTRERAS TAPAHUASCO'
+date: '2026-08-23'
+last_updated: '2026-08-23'
 document_type: 'changelog'
 version: '5.22.0'
 status: 'vigente'
@@ -14,6 +17,27 @@ archivo. El formato se basa en
 [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
 ## [Sin publicar]
+
+### Cambiado
+
+- Se trasladó la presentación embebida de 61 archivos TypeScript a 63 hojas
+  CSS externas. Los componentes con dos decoradores conservan una hoja por
+  componente y `filters` mantiene separada la hoja previamente versionada.
+- Se sustituyeron 33 bindings de plantilla y tres estilos de host por clases o
+  propiedades personalizadas transportadas mediante `appVariablesCss`; las
+  propiedades visuales reales permanecen declaradas en hojas externas. El
+  adaptador es transitorio y se retirará al tipar esas entradas con tokens o
+  clases cerradas.
+- La guía de diseño y el ejemplo de contribución describen `input()`,
+  `output()`, `styleUrl` y la separación obligatoria entre plantilla y
+  presentación (`ATOMIC-20260823-600`).
+
+### Añadido
+
+- La compuerta `check:external-styles` analiza el AST de TypeScript y de las
+  plantillas Angular para rechazar `Component.styles`, atributos `style`,
+  bindings de estilo y `HostBinding` visuales. Su prueba negativa cubre
+  plantillas internas, plantillas externas y alias de importación.
 
 ### Corregido
 
@@ -35,6 +59,16 @@ archivo. El formato se basa en
   propagable cumpla `git diff --check` sin obligar a divergir a los consumidores.
 
 ### Documentación
+
+- `ECO-20260823-003` añadió el paquete de continuidad para agentes.
+  `AGENTS.md` declara doctrina, estándar documental y ciclo de cierre;
+  `docs/CONTINUIDAD_AGENTES.md` registra arquitectura, fuentes, compuertas y
+  las seis familias todavía abiertas para 6.0.0; `LESSONS_LEARNED.md` funciona
+  además como índice superior sin eliminar sus entradas históricas.
+  Compatibilidad: solo cambia Markdown y la versión permanece en 5.22.0. La
+  validación comprueba enlaces, YAML, terminología, delimitación documental y
+  `git diff --check`. El rollback retira exclusivamente esas secciones y el
+  manual nuevo.
 
 - Se reconciliaron la línea funcional 5.22.0 y las mejoras locales de gobierno
   posteriores a 5.8.4. La fuente conserva `.agents`, la guía consolidada de

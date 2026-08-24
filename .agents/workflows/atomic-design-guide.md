@@ -5,7 +5,8 @@ author: "Hospital Regional de Ayacucho"
 document_type: "guía técnica"
 status: "vigente"
 date: "2026-08-20"
-version: "5.8.4"
+last_updated: "2026-08-23"
+version: "6.0.0-borrador.2"
 owner: "Hospital Regional de Ayacucho"
 ---
 
@@ -93,52 +94,51 @@ font-size: var(--text-xl);   /* 1.25rem */
 
 ---
 
-## Estructura de un Átomo
+## Estructura de un átomo
 
 ```typescript
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-[nombre]',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `...`,
-  styles: [`
-    /* 1. Estilos base con tokens */
-    .elemento {
-      padding: var(--space-2) var(--space-4);
-      border-radius: var(--radius-md);
-      font-size: var(--text-sm);
-      color: var(--text-color);
-      background: var(--surface-background);
-      border: 1px solid var(--border-color);
-      transition: all 200ms ease;
-    }
-
-    /* 2. Estados interactivos */
-    .elemento:hover {
-      background: var(--hover-background-subtle);
-      border-color: var(--primary-color);
-    }
-
-    .elemento:focus {
-      outline: none;
-      box-shadow: var(--focus-ring);
-    }
-
-    /* 3. Variantes de color */
-    .elemento-primary { background: var(--primary-color-lighter); color: var(--primary-color); }
-    .elemento-success { background: var(--success-color-lighter); color: var(--success-color); }
-
-    /* 4. Variantes de tamaño */
-    .elemento-sm { padding: var(--space-1) var(--space-2); font-size: var(--text-xs); }
-    .elemento-lg { padding: var(--space-3) var(--space-5); font-size: var(--text-lg); }
-  `]
+  templateUrl: './nombre.component.html',
+  styleUrl: './nombre.component.css',
 })
 export class NombreComponent {
-  @Input() variant: 'default' | 'primary' | 'success' = 'default';
-  @Input() size: 'sm' | 'md' | 'lg' = 'md';
+  readonly variant = input<'default' | 'primary' | 'success'>('default');
+  readonly size = input<'sm' | 'md' | 'lg'>('md');
 }
+```
+
+La hoja `nombre.component.css` conserva toda la presentación:
+
+```css
+.elemento {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--text-color);
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  transition: all 200ms ease;
+}
+
+.elemento:hover {
+  background: var(--hover-background-subtle);
+  border-color: var(--primary-color);
+}
+
+.elemento:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.elemento-primary { background: var(--primary-color-lighter); color: var(--primary-color); }
+.elemento-success { background: var(--success-color-lighter); color: var(--success-color); }
+.elemento-sm { padding: var(--space-1) var(--space-2); font-size: var(--text-xs); }
+.elemento-lg { padding: var(--space-3) var(--space-5); font-size: var(--text-lg); }
 ```
 
 ---
@@ -199,6 +199,9 @@ height: var(--checkbox-size, 1.5rem);
 ## Checklist para Nuevos Componentes
 
 - [ ] Usar `ChangeDetectionStrategy.OnPush`
+- [ ] Declarar entradas y salidas mediante `input()` y `output()`
+- [ ] Referenciar una hoja externa mediante `styleUrl` o `styleUrls`
+- [ ] Mantener las propiedades visuales fuera de plantillas y metadatos Angular
 - [ ] Todos los colores usan tokens `var(--*)`
 - [ ] Espaciado usa `var(--space-*)`
 - [ ] Border radius usa `var(--radius-*)`
