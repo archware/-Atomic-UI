@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, signal, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild, HostBinding } from '@angular/core';
+import { Component, signal, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild, HostBinding, input, output } from '@angular/core';
 
 
 /**
@@ -9,17 +9,17 @@ import { Component, Input, Output, EventEmitter, signal, ContentChildren, QueryL
   selector: 'app-tab',
   standalone: true,
   template: `<ng-content></ng-content>`,
-  styles: [`:host { display: none; } :host(.active) { display: block; }`]
+  styleUrl: './tab.component.css'
 })
 export class TabComponent {
   /** Tab label displayed in the header */
-  @Input() label = '';
+  readonly label = input('');
   /** Emoji icon (optional) */
-  @Input() icon?: string;
+  readonly icon = input<string>();
   /** CSS icon class (e.g., FontAwesome) */
-  @Input() iconClass?: string;
+  readonly iconClass = input<string>();
   /** Whether this tab is disabled */
-  @Input() disabled = false;
+  readonly disabled = input(false);
 
   @HostBinding('class.active') active = false;
 }
@@ -43,7 +43,7 @@ export class TabComponent {
   template: `
     <div class="tabs-container">
       <div class="tabs-header" #tabsHeader role="tablist" aria-label="Tabs">
-        @for (tab of tabs; track tab.label; let i = $index) {
+        @for (tab of tabs; track tab.label(); let i = $index) {
           <button 
             type="button"
             class="tab-button"
@@ -53,15 +53,15 @@ export class TabComponent {
             [attr.aria-controls]="'tabpanel-' + i"
             [attr.tabindex]="activeIndex() === i ? 0 : -1"
             [class.active]="activeIndex() === i"
-            [class.disabled]="tab.disabled"
-            (click)="!tab.disabled && selectTab(i, $event)"
+            [class.disabled]="tab.disabled()"
+            (click)="!tab.disabled() && selectTab(i, $event)"
           >
-            @if (tab.iconClass) {
-              <i [class]="tab.iconClass" class="tab-icon" aria-hidden="true"></i>
-            } @else if (tab.icon) {
-              <span class="tab-icon" aria-hidden="true">{{ tab.icon }}</span>
+            @if (tab.iconClass()) {
+              <i [class]="tab.iconClass()" class="tab-icon" aria-hidden="true"></i>
+            } @else if (tab.icon()) {
+              <span class="tab-icon" aria-hidden="true">{{ tab.icon() }}</span>
             }
-            {{ tab.label }}
+            {{ tab.label() }}
           </button>
         }
       </div>
@@ -75,134 +75,12 @@ export class TabComponent {
       </div>
     </div>
   `,
-  styles: [`
-    .tabs-container {
-      width: 100%;
-    }
-
-    .tabs-header {
-      display: flex;
-      position: relative;
-      border-bottom: 1px solid var(--border-color);
-      margin-bottom: 0;
-      gap: var(--space-2);
-    }
-
-    .tab-button {
-      flex: 1;
-      padding: var(--space-4) var(--space-5);
-
-      /* Base Style (Inactive) */
-      background: var(--surface-ground);
-      border: 1px solid var(--border-color-strong);
-      border-bottom: none;
-
-      margin-bottom: -1px;
-      font-size: var(--text-md);
-      font-weight: var(--font-weight-body);
-      color: var(--text-color-secondary);
-      cursor: pointer;
-      transition: all 200ms ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-2);
-      border-radius: var(--radius-md) var(--radius-md) 0 0;
-    }
-
-    /* Hover state */
-    .tab-button:not(.disabled):not(.active):hover {
-      color: var(--primary-color);
-      background: var(--hover-background-subtle);
-      border-color: var(--primary-color);
-    }
-
-    /* Pressed state effects */
-    .tab-button:active {
-      box-shadow: inset 0 1px 0 color-mix(in srgb, var(--primary-color), transparent 30%), 
-                  0 1px var(--space-1) rgba(0, 0, 0, 0.2);
-    }
-
-    .tab-button.active {
-      color: var(--text-color);
-      font-weight: var(--font-weight-emphasis);
-      background: var(--surface-background);
-
-      /* Active: Thick Top Border + Sides matching content border */
-      border-top: var(--space-1) solid var(--primary-color);
-      border-left: 1px solid var(--border-color);
-      border-right: 1px solid var(--border-color);
-      border-bottom: 1px solid var(--surface-background);
-    }
-
-    .tab-button.disabled {
-      cursor: not-allowed;
-      background: var(--surface-section);
-      border: 1px solid var(--border-color);
-      border-bottom: none;
-      color: var(--text-color-muted);
-    }
-
-    .tab-icon {
-      font-size: var(--text-lg);
-    }
-
-    .tabs-content {
-      padding: var(--space-4);
-      background: var(--surface-background);
-      border-radius: 0 0 var(--radius-md) var(--radius-md);
-      border: 1px solid var(--border-color);
-      border-top: none;
-    }
-
-    /* 
-     * Dark mode se maneja automáticamente via tokens semánticos.
-     * --surface-ground, --surface-background, --border-color, --primary-color
-     * ya tienen valores apropiados para temas oscuros.
-     */
-
-    /* RESPONSIVE: Compact scrollable tabs on mobile */
-    @media (max-width: 48rem) {
-      .tabs-header {
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
-        gap: var(--space-1);
-        padding-bottom: 0;
-      }
-
-      .tabs-header::-webkit-scrollbar {
-        height: var(--space-1);
-      }
-
-      .tabs-header::-webkit-scrollbar-thumb {
-        background: var(--border-color);
-        border-radius: var(--radius-sm);
-      }
-
-      .tab-button {
-        flex: 0 0 auto;
-        min-width: max-content;
-        padding: var(--space-2) var(--space-3);
-        font-size: var(--text-sm);
-        white-space: nowrap;
-      }
-
-      .tab-icon {
-        font-size: var(--text-md);
-      }
-
-      .tabs-content {
-        padding: var(--space-3);
-      }
-    }
-  `]
+  styleUrl: './tabs.component.css'
 })
 export class TabsComponent implements AfterContentInit {
   @ContentChildren(TabComponent) tabComponents!: QueryList<TabComponent>;
-  @Input() defaultIndex = 0;
-  @Output() tabChange = new EventEmitter<number>();
+  readonly defaultIndex = input(0);
+  readonly tabChange = output<number>();
 
   activeIndex = signal(0);
   tabs: TabComponent[] = [];
@@ -211,7 +89,7 @@ export class TabsComponent implements AfterContentInit {
 
   ngAfterContentInit() {
     this.tabs = this.tabComponents.toArray();
-    this.activeIndex.set(this.defaultIndex);
+    this.activeIndex.set(this.defaultIndex());
     this.updateTabs();
   }
 
@@ -239,7 +117,3 @@ export class TabsComponent implements AfterContentInit {
     }
   }
 }
-
-
-
-

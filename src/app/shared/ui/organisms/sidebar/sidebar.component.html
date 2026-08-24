@@ -1,8 +1,8 @@
-<div class="sidebar-container" [class.collapsed]="collapsed">
+<div class="sidebar-container" [class.collapsed]="collapsed()">
   <div class="sidebar-logo">
-    <i [class]="logoIcon + ' logo-icon'"></i>
-    @if (!collapsed) {
-      <span class="logo-text">{{ logoText }}</span>
+    <i [class]="logoIcon() + ' logo-icon'"></i>
+    @if (!collapsed()) {
+      <span class="logo-text">{{ logoText() }}</span>
     }
   </div>
 
@@ -37,10 +37,12 @@
             >
               <i
                 [class]="item.icon + ' nav-icon'"
-                [style.color]="item.active ? null : item.iconColor || null"
+                [appVariablesCss]="{
+                  '--sidebar-icon-color': item.active ? null : item.iconColor || null
+                }"
                 aria-hidden="true"
               ></i>
-              @if (!collapsed) {
+              @if (!collapsed()) {
                 <span class="nav-label">
                   <span class="nav-label-text">{{ item.label }}</span>
                   @if (item.badge) {
@@ -57,7 +59,7 @@
               }
             </button>
 
-            @if (!collapsed && hasChildren(item) && isExpanded(item)) {
+            @if (!collapsed() && hasChildren(item) && isExpanded(item)) {
               <ul class="nav-list nav-list--children" role="menu">
                 <ng-container
                   [ngTemplateOutlet]="menuTree"
@@ -72,25 +74,25 @@
       <ul class="nav-list" role="menu">
         <ng-container
           [ngTemplateOutlet]="menuTree"
-          [ngTemplateOutletContext]="{ $implicit: menuItems, level: 0 }"
+          [ngTemplateOutletContext]="{ $implicit: menuItems(), level: 0 }"
         ></ng-container>
       </ul>
     </nav>
   </app-scroll-overlay>
 
-  @if (user) {
+  @if (user(); as currentUser) {
     <div class="sidebar-footer">
       <div class="user-profile">
         <app-avatar
-          [name]="user.name || 'User'"
-          [initials]="user.initials"
-          [src]="user.photo"
+          [name]="currentUser.name || 'User'"
+          [initials]="currentUser.initials"
+          [src]="currentUser.photo"
           [size]="'md'"
         ></app-avatar>
-        @if (!collapsed && user) {
+        @if (!collapsed()) {
           <div class="user-info">
-            <span class="user-name">{{ user.name }}</span>
-            <span class="user-role">{{ user.role }}</span>
+            <span class="user-name">{{ currentUser.name }}</span>
+            <span class="user-role">{{ currentUser.role }}</span>
           </div>
         }
       </div>

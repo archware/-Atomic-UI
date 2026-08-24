@@ -1,0 +1,74 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+/* Form variant: add margin-bottom for form spacing */
+:host:has(.row--variant-form) {
+  margin-bottom: var(--space-5); /* 24px vertical */
+}
+
+.row {
+  display: grid;
+  width: 100%;
+  box-sizing: border-box;
+  align-items: stretch;
+  grid-template-columns: var(--row-columns, 1fr);
+  gap: var(--row-gap, var(--space-7));
+}
+
+/* === Form Variant === */
+.row--variant-form {
+  align-items: start; /* Align fields to top for validation messages */
+}
+
+/* === Responsive Mode === */
+.row--responsive {
+  /* Handled via computedColumns with auto-fit */
+}
+
+/* === Wrap Mode (Flexbox) === */
+.row--wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row--wrap > * {
+  flex: 1 1 auto;
+}
+
+/* === Horizontal Alignment (justify-items) === */
+.row--align-left { justify-items: start; }
+.row--align-center { justify-items: center; }
+.row--align-right { justify-items: end; }
+.row--align-stretch { justify-items: stretch; }
+
+/* === Justify (justify-content) === */
+.row--justify-start { justify-content: start; }
+.row--justify-center { justify-content: center; }
+.row--justify-end { justify-content: end; }
+.row--justify-between { justify-content: space-between; }
+.row--justify-around { justify-content: space-around; }
+
+/* === Vertical Alignment (align-items) === */
+.row--valign-top { align-items: start; }
+.row--valign-center { align-items: center; }
+.row--valign-bottom { align-items: end; }
+.row--valign-stretch { align-items: stretch; }
+.row--valign-baseline { align-items: baseline; }
+
+/* === Individual Column Alignment (utility classes) === */
+::ng-deep .justify-start { justify-self: start !important; }
+::ng-deep .justify-center { justify-self: center !important; }
+::ng-deep .justify-end { justify-self: end !important; }
+::ng-deep .align-self-start { align-self: start !important; }
+::ng-deep .align-self-center { align-self: center !important; }
+::ng-deep .align-self-end { align-self: end !important; }
+
+/* === Responsive: Stack on mobile === */
+@media (max-width: 40rem) {
+  .row:not(.row--responsive) {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-5) !important; /* 24px vertical on mobile */
+  }
+}

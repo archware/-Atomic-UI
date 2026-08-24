@@ -1,0 +1,45 @@
+:host { display: inline-flex; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-emphasis);
+  line-height: 1;
+  border-radius: var(--radius-full, 9999px);
+  white-space: nowrap;
+  font-size: var(--text-xs);
+  min-width: var(--space-5);
+  height: var(--space-5);
+  padding: 0 var(--space-1-5, var(--space-2));
+}
+
+/* Sizes */
+.badge--sm { font-size: 0.625rem; min-width: var(--space-4); height: var(--space-4); padding: 0 var(--space-1); }
+.badge--md { font-size: var(--text-xs); min-width: var(--space-5); height: var(--space-5); }
+.badge--lg { font-size: var(--text-sm); min-width: var(--space-5); height: var(--space-5); padding: 0 var(--space-2); }
+
+/* Dot variant */
+.badge--dot { min-width: var(--space-2); height: var(--space-2); padding: 0; border-radius: 50%; }
+.badge--dot.badge--sm { min-width: var(--space-2); height: var(--space-2); }
+.badge--dot.badge--lg { min-width: var(--space-3); height: var(--space-3); }
+
+/* Overlay positioning */
+.badge--overlay {
+  position: absolute;
+  z-index: 1;
+  border: var(--space-1) solid var(--surface-background, white);
+}
+.badge--top-right  { top: calc(-1 * var(--space-1)); right: calc(-1 * var(--space-1)); transform: translate(25%, -25%); }
+.badge--top-left   { top: calc(-1 * var(--space-1)); left: calc(-1 * var(--space-1));  transform: translate(-25%, -25%); }
+.badge--bottom-right { bottom: calc(-1 * var(--space-1)); right: calc(-1 * var(--space-1)); transform: translate(25%, 25%); }
+.badge--bottom-left  { bottom: calc(-1 * var(--space-1)); left: calc(-1 * var(--space-1));  transform: translate(-25%, 25%); }
+
+/* Variants */
+.badge--default   { background: var(--surface-section); color: var(--text-color-secondary); }
+.badge--primary   { background: var(--primary-color); color: white; }
+.badge--secondary { background: var(--secondary-color); color: white; }
+.badge--success   { background: var(--success-color); color: white; }
+.badge--warning   { background: var(--warning-color); color: white; }
+.badge--danger    { background: var(--danger-color); color: white; }
+.badge--info      { background: var(--info-color, #3b82f6); color: white; }

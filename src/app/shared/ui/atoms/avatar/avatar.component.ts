@@ -1,5 +1,6 @@
-import { Component, Input, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed, signal, input } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Important for NgClass
+import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 /** Avatar size options */
 export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -13,19 +14,19 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, VariablesCssDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
       class="avatar"
-      [ngClass]="['avatar-' + size, 'avatar-' + variant, rounded ? 'avatar-rounded' : '']"
-      [style.background-color]="color ?? (!src && !icon && variant === 'default' ? colorFromName() : null)"
+      [ngClass]="['avatar-' + size(), 'avatar-' + variant(), rounded() ? 'avatar-rounded' : '']"
+      [appVariablesCss]="{ '--avatar-background-color': colorFondo() }"
     >
-      @if (src && !imageFailed()) {
-        <img [src]="src" [alt]="name" (error)="onImageError()">
-      } @else if (icon) {
-        <i [class]="icon"></i>
-      } @else if (initials || name) {
+      @if (src() && !imageFailed()) {
+        <img [src]="src()" [alt]="name()" (error)="onImageError()">
+      } @else if (icon()) {
+        <i [class]="icon()"></i>
+      } @else if (initials() || name()) {
         <span class="avatar-initials">{{ computedInitials() }}</span>
       } @else {
         <span class="avatar-placeholder">
@@ -35,121 +36,35 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
           </svg>
         </span>
       }
-      @if (status) {
-        <span class="avatar-status" [class]="'status-' + status" [attr.aria-label]="status"></span>
+      @if (status()) {
+        <span class="avatar-status" [class]="'status-' + status()" [attr.aria-label]="status()"></span>
       }
     </div>
   `,
-  styles: [`
-    .avatar {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: var(--surface-elevated);
-      color: var(--text-color);
-      overflow: hidden;
-      flex-shrink: 0;
-      aspect-ratio: 1;
-    }
-
-    .avatar-rounded {
-      border-radius: var(--radius-md);
-    }
-
-    /* Variants */
-    .avatar-primary { background-color: var(--primary-color-lighter); color: var(--primary-color); }
-    .avatar-secondary { background-color: var(--secondary-color-lighter); color: var(--secondary-color); }
-    .avatar-success { background-color: var(--success-color-lighter); color: var(--success-color-text); }
-    .avatar-warning { background-color: var(--warning-color-lighter); color: var(--warning-color-text); }
-    .avatar-danger { background-color: var(--danger-color-lighter); color: var(--danger-color-text); }
-    .avatar-info { background-color: var(--info-color-lighter); color: var(--info-color-text); }
-
-    .avatar-xs { width: var(--avatar-size-xs, var(--space-5)); height: var(--avatar-size-xs, var(--space-5)); font-size: var(--text-xs); }
-    .avatar-sm { width: var(--avatar-size-sm, var(--space-6)); height: var(--avatar-size-sm, var(--space-6)); font-size: var(--text-xs); }
-    .avatar-md { width: var(--avatar-size-md, 2.5rem); height: var(--avatar-size-md, 2.5rem); font-size: var(--text-sm); }
-    .avatar-lg { width: var(--avatar-size-lg, var(--space-8)); height: var(--avatar-size-lg, var(--space-8)); font-size: var(--text-lg); }
-    .avatar-xl { width: var(--avatar-size-xl, 4rem); height: var(--avatar-size-xl, 4rem); font-size: var(--text-xl); }
-
-    .avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .avatar i {
-      font-size: 1.2em;
-    }
-
-    .avatar-initials {
-      font-weight: var(--font-weight-emphasis);
-      text-transform: uppercase;
-      color: white;
-    }
-
-    /* Ensure initials in colored variants contrast well (usually dark on light bg or vice versa) */
-    .avatar:not(.avatar-default) .avatar-initials {
-       color: currentColor;
-    }
-
-    .avatar-placeholder {
-      width: 60%;
-      height: 60%;
-      color: var(--text-color-muted);
-    }
-
-    .avatar-placeholder svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .avatar-status {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 25%;
-      height: 25%;
-      min-width: var(--space-2);
-      min-height: var(--space-2);
-      border-radius: var(--radius-full);
-      border: var(--space-1) solid var(--surface-background);
-    }
-
-    .status-online { background: var(--success-color); }
-    .status-offline { background: var(--text-color-secondary); }
-    .status-busy { background: var(--danger-color); }
-    .status-away { background: var(--warning-color); }
-
-    /* Dark mode */
-    :host-context(html.dark) .avatar-default,
-    :host-context([data-theme="dark"]) .avatar-default {
-      background: var(--surface-section);
-    }
-
-    :host-context(html.dark) .avatar-status,
-    :host-context([data-theme="dark"]) .avatar-status {
-      border-color: var(--surface-section);
-    }
-  `]
+  styleUrl: './avatar.component.css'
 })
 export class AvatarComponent {
-  @Input() src?: string;
-  @Input() name = '';
-  @Input() initials?: string;
-  @Input() color?: string;
-  @Input() size: AvatarSize = 'md';
-  @Input() rounded = false;
-  @Input() status?: AvatarStatus;
-  @Input() icon?: string; // New: Icon class support
-  @Input() variant: AvatarVariant = 'default'; // New: Color variant
+  readonly src = input<string>();
+  readonly name = input('');
+  readonly initials = input<string>();
+  readonly color = input<string>();
+  readonly size = input<AvatarSize>('md');
+  readonly rounded = input(false);
+  readonly status = input<AvatarStatus>();
+  readonly icon = input<string>(); // New: Icon class support
+  readonly variant = input<AvatarVariant>('default'); // New: Color variant
+  readonly colorFondo = computed(() =>
+    this.color() ?? (!this.src() && !this.icon() && this.variant() === 'default' ? this.colorFromName() : null)
+  );
 
   imageFailed = signal(false);
 
   computedInitials(): string {
-    if (this.initials) return this.initials.slice(0, 2);
-    if (!this.name) return '';
-    return this.name
+    const initials = this.initials();
+    if (initials) return initials.slice(0, 2);
+    const name = this.name();
+    if (!name) return '';
+    return name
       .split(' ')
       .map(n => n[0])
       .join('')
@@ -169,10 +84,11 @@ export class AvatarComponent {
   ];
 
   colorFromName(): string {
-    if (!this.name) return 'var(--gray-500)';
+    const name = this.name();
+    if (!name) return 'var(--gray-500)';
     let hash = 0;
-    for (let i = 0; i < this.name.length; i++) {
-      hash = this.name.charCodeAt(i) + ((hash << 5) - hash);
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
     }
     return this.colors[Math.abs(hash) % this.colors.length];
   }

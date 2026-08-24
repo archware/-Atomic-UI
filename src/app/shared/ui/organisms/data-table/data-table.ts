@@ -18,6 +18,7 @@ import {
   StatusBadgeStatus,
 } from '../../atoms/status-badge/status-badge.component';
 import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
+import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 export type DataTableAlignment = 'start' | 'center' | 'end';
 export type DataTableDensity = 'comfortable' | 'compact';
@@ -71,7 +72,13 @@ function trackByIdentity<T extends object>(_index: number, row: T): T {
 
 @Component({
   selector: 'app-data-table, prest-data-table',
-  imports: [Alert, NgTemplateOutlet, ScrollOverlayComponent, StatusBadgeComponent],
+  imports: [
+    Alert,
+    NgTemplateOutlet,
+    ScrollOverlayComponent,
+    StatusBadgeComponent,
+    VariablesCssDirective,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './data-table.html',
   styleUrl: './data-table.scss',

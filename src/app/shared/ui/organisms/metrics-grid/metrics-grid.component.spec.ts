@@ -36,8 +36,8 @@ describe('MetricsGridComponent', () => {
   });
 
   it('renders the supplied metrics and exposes an accessible section name', () => {
-    component.metrics = metrics;
-    component.ariaLabel = 'Indicadores financieros';
+    fixture.componentRef.setInput('metrics', metrics);
+    fixture.componentRef.setInput('ariaLabel', 'Indicadores financieros');
     fixture.detectChanges();
 
     const grid = fixture.nativeElement.querySelector('.metrics-grid') as HTMLElement;
@@ -54,8 +54,8 @@ describe('MetricsGridComponent', () => {
   });
 
   it('uses the supplied minimum width without reserving empty metric columns', () => {
-    component.metrics = [...metrics, { id: 'balance', title: 'Saldo', value: 80 }];
-    component.minCardWidth = '11rem';
+    fixture.componentRef.setInput('metrics', [...metrics, { id: 'balance', title: 'Saldo', value: 80 }]);
+    fixture.componentRef.setInput('minCardWidth', '11rem');
     fixture.detectChanges();
 
     const grid = fixture.nativeElement.querySelector('.metrics-grid') as HTMLElement;
@@ -69,11 +69,11 @@ describe('MetricsGridComponent', () => {
   });
 
   it('caps columns at four on desktop, two on tablet, and one on mobile', () => {
-    component.metrics = Array.from({ length: 6 }, (_, index) => ({
+    fixture.componentRef.setInput('metrics', Array.from({ length: 6 }, (_, index) => ({
       id: `metric-${index}`,
       title: `Métrica ${index + 1}`,
       value: index + 1,
-    }));
+    })));
     fixture.detectChanges();
 
     const grid = fixture.nativeElement.querySelector('.metrics-grid') as HTMLElement;

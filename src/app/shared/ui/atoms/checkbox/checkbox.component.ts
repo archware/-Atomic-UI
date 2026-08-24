@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, forwardRef, input, signal } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -14,12 +14,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ],
   template: `
-    <label class="checkbox-wrapper" [class.disabled]="disabled">
+    <label class="checkbox-wrapper" [class.disabled]="isDisabled()">
       <input
         type="checkbox"
         class="checkbox-input"
         [checked]="checked"
-        [disabled]="disabled"
+        [disabled]="isDisabled()"
         (change)="onCheckChange($event)"
       />
       <span class="checkbox-box">
@@ -27,111 +27,19 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
           <path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </span>
-      <span class="checkbox-label">{{ label }}<ng-content></ng-content></span>
+      <span class="checkbox-label">{{ label() }}<ng-content></ng-content></span>
     </label>
   `,
-  styles: [`
-    :host {
-      display: inline-block;
-    }
-
-    .checkbox-wrapper {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .checkbox-wrapper.disabled {
-      cursor: not-allowed;
-      color: var(--input-disabled-text);
-    }
-
-    .checkbox-input {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .checkbox-box {
-      width: var(--checkbox-size, var(--space-5));
-      height: var(--checkbox-size, var(--space-5));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: var(--space-1) solid var(--border-color);
-      border-radius: var(--radius-md);
-      background: var(--surface-background);
-      transition: all 200ms ease;
-      flex-shrink: 0;
-    }
-
-    .checkbox-check {
-      width: var(--checkbox-icon-size, 0.875rem);
-      height: var(--checkbox-icon-size, 0.875rem);
-      color: var(--text-color-on-primary);
-      opacity: 0;
-      transform: scale(0.5);
-      transition: all 200ms ease;
-    }
-
-    /* Hover */
-    .checkbox-wrapper:hover:not(.disabled) .checkbox-box {
-      border-color: var(--primary-color);
-    }
-
-    /* Checked */
-    .checkbox-input:checked + .checkbox-box {
-      background: var(--primary-color);
-      border-color: var(--primary-color);
-    }
-
-    .checkbox-input:checked + .checkbox-box .checkbox-check {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    /* Focus */
-    .checkbox-input:focus-visible + .checkbox-box {
-      box-shadow: var(--input-shadow-focus);
-    }
-
-    .checkbox-label {
-      font-size: var(--text-sm);
-      color: var(--text-color);
-      line-height: 1.4;
-    }
-
-    .checkbox-wrapper.disabled .checkbox-label {
-      color: var(--input-disabled-text);
-    }
-
-    .checkbox-wrapper.disabled .checkbox-box {
-      background: var(--input-disabled-bg);
-      border-color: var(--input-disabled-text);
-    }
-
-    .checkbox-wrapper.disabled .checkbox-input:checked + .checkbox-box {
-      background: var(--input-disabled-text);
-      border-color: var(--input-disabled-text);
-    }
-
-    .checkbox-wrapper.disabled .checkbox-check {
-      color: var(--input-disabled-bg);
-    }
-
-    /*
-     * Dark mode se maneja automáticamente via tokens semánticos.
-     * --surface-background, --border-color, --primary-color, --shadow-focus-primary
-     * ya tienen valores apropiados para temas oscuros.
-     */
-  `]
+  styleUrl: './checkbox.component.css'
 })
 export class CheckboxComponent implements ControlValueAccessor {
-  @Input() label = '';
-  @Input() disabled = false;
+  readonly label = input('');
+  readonly disabled = input(false);
+  private readonly disabledByForm = signal(false);
+
+  isDisabled(): boolean {
+    return this.disabled() || this.disabledByForm();
+  }
 
   checked = false;
   onChange: (value: boolean) => void = () => { /* noop */ };
@@ -157,6 +65,6 @@ export class CheckboxComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.disabledByForm.set(isDisabled);
   }
 }

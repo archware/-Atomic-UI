@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SkeletonComponent } from './skeleton.component';
 
 describe('SkeletonComponent', () => {
-  let component: SkeletonComponent;
   let fixture: ComponentFixture<SkeletonComponent>;
 
   beforeEach(async () => {
@@ -13,11 +12,10 @@ describe('SkeletonComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(SkeletonComponent);
-    component = fixture.componentInstance;
   });
 
   it('renders the card preset without static inline styles', () => {
-    component.variant = 'card';
+    fixture.componentRef.setInput('variant', 'card');
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
@@ -27,7 +25,7 @@ describe('SkeletonComponent', () => {
   });
 
   it('renders the avatar preset with token-driven semantic classes', () => {
-    component.variant = 'avatar-text';
+    fixture.componentRef.setInput('variant', 'avatar-text');
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;

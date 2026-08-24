@@ -1,4 +1,4 @@
-import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, input } from '@angular/core';
 
 import { AbstractControl } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
@@ -28,60 +28,37 @@ import { ValidationService } from '../../services/validation.service';
       </div>
     }
   `,
-  styles: [`
-    .form-error {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-2);
-      margin-top: var(--space-1);
-      font-size: 0.8125rem;
-      color: var(--danger-color, #ef4444);
-      animation: error-in 150ms ease;
-    }
-
-    @keyframes error-in {
-      from { opacity: 0; transform: translateY(-4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .error-icon {
-      font-size: var(--space-3);
-      margin-top: var(--space-1);
-      flex-shrink: 0;
-    }
-
-    .error-message {
-      line-height: 1.4;
-    }
-  `]
+  styleUrl: './form-error.component.css'
 })
 export class FormErrorComponent {
   private readonly validationService = inject(ValidationService);
 
   /** The form control to validate */
-  @Input() control: AbstractControl | null = null;
+  readonly control = input<AbstractControl | null>(null);
 
   /** Custom error message (overrides automatic message) */
-  @Input() customMessage?: string;
+  readonly customMessage = input<string>();
 
   /** Whether to show error only when touched (default: true) */
-  @Input() showOnTouched = true;
+  readonly showOnTouched = input(true);
 
   get showError(): boolean {
-    if (this.customMessage) return true;
-    if (!this.control) return false;
+    if (this.customMessage()) return true;
+    const control = this.control();
+    if (!control) return false;
 
-    if (this.showOnTouched) {
-      return this.control.invalid && this.control.touched;
+    if (this.showOnTouched()) {
+      return control.invalid && control.touched;
     }
 
-    return this.control.invalid;
+    return control.invalid;
   }
 
   get errorMessage(): string {
-    if (this.customMessage) {
-      return this.customMessage;
+    const customMessage = this.customMessage();
+    if (customMessage) {
+      return customMessage;
     }
-    return this.validationService.getErrorMessage(this.control);
+    return this.validationService.getErrorMessage(this.control());
   }
 }

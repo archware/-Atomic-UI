@@ -1,8 +1,20 @@
-import { Component, Input, ViewChild, ElementRef, OnInit, OnDestroy, PLATFORM_ID, inject, signal } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  OnInit,
+  OnDestroy,
+  PLATFORM_ID,
+  inject,
+  signal,
+  input,
+  type InputSignal,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import type { Chart as ChartInstance, ChartConfiguration, ChartType, Plugin } from 'chart.js';
 import type { Context as DataLabelsContext } from 'chartjs-plugin-datalabels';
+import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 function getChartType(chart: ChartInstance): ChartType | undefined {
   return 'type' in chart.config ? chart.config.type : undefined;
@@ -11,43 +23,30 @@ function getChartType(chart: ChartInstance): ChartType | undefined {
 @Component({
   selector: 'app-chart',
   standalone: true,
-  imports: [BaseChartDirective],
+  imports: [BaseChartDirective, VariablesCssDirective],
   template: `
-    <div #chartContainer class="chart-container" [style.height]="height">
+    <div
+      #chartContainer
+      class="chart-container"
+      [appVariablesCss]="{ '--chart-container-height': height() }"
+    >
       @if (isChartReady()) {
         <canvas baseChart
-          [data]="data"
-          [options]="options"
-          [type]="type">
+          [data]="data()"
+          [options]="options()"
+          [type]="type()">
         </canvas>
       }
     </div>
   `,
-  styles: [`
-    :host {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      min-height: 0;
-    }
-    .chart-container {
-      position: relative;
-      width: 100%;
-      min-height: 0;
-      flex: 1 1 auto;
-    }
-    canvas {
-      display: block;
-      width: 100% !important;
-      height: 100% !important;
-    }
-  `]
+  styleUrl: './chart.component.css'
 })
 export class ChartComponent implements OnInit, OnDestroy {
-  @Input() type: ChartType = 'line';
-  @Input() data!: ChartConfiguration['data'];
-  @Input() options!: ChartConfiguration['options'];
-  @Input() height = '300px';
+  readonly type = input<ChartType>('line');
+  readonly data = input.required<ChartConfiguration['data']>();
+  readonly options: InputSignal<ChartConfiguration['options']> =
+    input.required<ChartConfiguration['options']>();
+  readonly height = input('300px');
   @ViewChild('chartContainer') private chartContainer?: ElementRef<HTMLDivElement>;
   @ViewChild(BaseChartDirective) private chart?: BaseChartDirective;
 

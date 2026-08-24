@@ -167,7 +167,7 @@ describe('TableComponent unified viewport', () => {
     expect(overlay.disableVertical).toBe(false);
     expect(overlay.disableHorizontal).toBe(false);
     expect(overlay.nativeScrollbars).toBe(true);
-    expect(overlay.verticalSelector).toBeNull();
+    expect(overlay.verticalSelector()).toBeNull();
     expect(viewport.getAttribute('role')).toBe('region');
     expect(viewport.getAttribute('aria-label')).toBe('Vista previa de movimientos');
     expect(viewport.tabIndex).toBe(0);
@@ -194,7 +194,7 @@ describe('TableComponent unified viewport', () => {
     expect(overlay.disableVertical).toBe(false);
     expect(overlay.disableHorizontal).toBe(false);
     expect(overlay.nativeScrollbars).toBe(false);
-    expect(overlay.verticalSelector).toBeNull();
+    expect(overlay.verticalSelector()).toBeNull();
     expect(root.classList).toContain('atomic-table-bounded-scroll');
     expect(root.classList).not.toContain('so-no-vertical');
     expect(root.classList).not.toContain('so-no-horizontal');
@@ -216,7 +216,7 @@ describe('TableComponent unified viewport', () => {
     const root = overlayDebug.nativeElement as HTMLElement;
     const viewport = fixture.nativeElement.querySelector('.so-scroll-area') as HTMLElement;
 
-    expect(overlay.verticalSelector).toBeNull();
+    expect(overlay.verticalSelector()).toBeNull();
     expect(root.classList).toContain('so-native-scrollbars');
     expect(viewport.getAttribute('data-so-native-scrollbar')).toBe('true');
 
@@ -224,7 +224,7 @@ describe('TableComponent unified viewport', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(overlay.verticalSelector).toBeNull();
+    expect(overlay.verticalSelector()).toBeNull();
     expect(overlay.nativeScrollbars).toBe(false);
     expect(root.classList).not.toContain('so-native-scrollbars');
     expect(viewport.hasAttribute('data-so-native-scrollbar')).toBe(false);
@@ -301,7 +301,7 @@ describe('TableComponent unified viewport', () => {
 
     expect(root.classList).toContain('atomic-table-mobile-scroll-bounded');
     expect(overlay.maxBodyHeight).toBe(240);
-    expect(overlay.verticalSelector).toBeNull();
+    expect(overlay.verticalSelector()).toBeNull();
     expect(viewport.getAttribute('data-so-vertical')).toBe('true');
     expect(viewport.getAttribute('data-so-managed-scrollbar')).toBe('true');
     expect(viewport.getAttribute('role')).toBe('region');

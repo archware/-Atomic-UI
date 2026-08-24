@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 export type KpiTrend = 'up' | 'down' | 'neutral' | null;
 export type KpiFormat = 'number' | 'currency' | 'percent' | 'compact' | 'duration';
@@ -12,19 +12,19 @@ export type KpiTone = 'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'da
   template: `
     <article
       class="kpi-card"
-      [class]="'kpi-card kpi-card--' + tone"
+      [class]="'kpi-card kpi-card--' + tone()"
       [attr.aria-label]="accessibleLabel"
     >
       <header class="kpi-card__header">
         <div class="kpi-card__heading">
-          <p class="kpi-card__title">{{ title }}</p>
-          @if (subtitle) {
-            <p class="kpi-card__subtitle">{{ subtitle }}</p>
+          <p class="kpi-card__title">{{ title() }}</p>
+          @if (subtitle()) {
+            <p class="kpi-card__subtitle">{{ subtitle() }}</p>
           }
         </div>
-        @if (iconClass) {
+        @if (iconClass()) {
           <span class="kpi-card__icon" aria-hidden="true">
-            <i [class]="iconClass"></i>
+            <i [class]="iconClass()"></i>
           </span>
         }
       </header>
@@ -32,11 +32,11 @@ export type KpiTone = 'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'da
       <div class="kpi-card__content">
         <p class="kpi-card__value">{{ formattedValue }}</p>
 
-        @if (trend || comparisonLabel) {
+        @if (trend() || comparisonLabel()) {
           <div class="kpi-card__meta">
-            @if (trend) {
-              <span class="kpi-card__trend" [class]="'kpi-card__trend--' + trend">
-                @switch (trend) {
+            @if (trend()) {
+              <span class="kpi-card__trend" [class]="'kpi-card__trend--' + trend()">
+                @switch (trend()) {
                   @case ('up') {
                     <i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i>
                   }
@@ -50,8 +50,8 @@ export type KpiTone = 'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'da
                 {{ trendLabel }}
               </span>
             }
-            @if (comparisonLabel) {
-              <span class="kpi-card__comparison">{{ comparisonLabel }}</span>
+            @if (comparisonLabel()) {
+              <span class="kpi-card__comparison">{{ comparisonLabel() }}</span>
             }
           </div>
         }
@@ -72,255 +72,82 @@ export type KpiTone = 'neutral' | 'brand' | 'info' | 'success' | 'warning' | 'da
       }
     </article>
   `,
-  styles: [
-    `
-      :host {
-        display: block;
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
-      }
-
-      .kpi-card {
-        --kpi-accent: var(--text-color-secondary);
-        --kpi-accent-background: var(--surface-section);
-        width: 100%;
-        min-width: 0;
-        min-height: 6.5rem;
-        display: grid;
-        box-sizing: border-box;
-        gap: var(--space-2);
-        padding: var(--space-3) var(--space-4);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-lg);
-        background: var(--surface-background);
-        box-shadow: var(--shadow-sm);
-      }
-
-      .kpi-card--brand {
-        --kpi-accent: var(--primary-color);
-        --kpi-accent-background: var(--primary-color-lighter);
-      }
-
-      .kpi-card--info {
-        --kpi-accent: var(--info-color-text);
-        --kpi-accent-background: var(--info-color-lighter);
-      }
-
-      .kpi-card--success {
-        --kpi-accent: var(--success-color-text);
-        --kpi-accent-background: var(--success-color-lighter);
-      }
-
-      .kpi-card--warning {
-        --kpi-accent: var(--warning-color-text);
-        --kpi-accent-background: var(--warning-color-lighter);
-      }
-
-      .kpi-card--danger {
-        --kpi-accent: var(--danger-color-text);
-        --kpi-accent-background: var(--danger-color-lighter);
-      }
-
-      .kpi-card__header {
-        min-width: 0;
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: var(--space-3);
-      }
-
-      .kpi-card__heading,
-      .kpi-card__content {
-        min-width: 0;
-      }
-
-      .kpi-card__heading {
-        flex: 1;
-      }
-
-      .kpi-card__title {
-        margin: 0;
-        color: var(--text-color-secondary);
-        font-size: var(--text-xs);
-        font-weight: var(--font-weight-title);
-        letter-spacing: 0.04em;
-        overflow-wrap: anywhere;
-        text-transform: uppercase;
-      }
-
-      .kpi-card__subtitle {
-        margin: var(--space-1) 0 0;
-        color: var(--text-color-muted);
-        font-size: var(--text-xs);
-        line-height: 1.4;
-        overflow-wrap: anywhere;
-      }
-
-      .kpi-card__icon {
-        width: 2rem;
-        height: 2rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        flex: 0 0 auto;
-        border: 1px solid color-mix(in srgb, var(--kpi-accent) 28%, transparent);
-        border-radius: var(--radius-md);
-        background: var(--kpi-accent-background);
-        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--surface-background) 42%, transparent);
-        color: var(--kpi-accent);
-      }
-
-      .kpi-card__value {
-        margin: 0;
-        color: var(--text-color);
-        font-size: 1.35rem;
-        font-variant-numeric: tabular-nums;
-        font-weight: var(--font-weight-title);
-        letter-spacing: -0.02em;
-        line-height: 1.2;
-        overflow-wrap: anywhere;
-      }
-
-      .kpi-card__meta {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: var(--space-2);
-        margin-top: var(--space-2);
-      }
-
-      .kpi-card__trend {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-2);
-        padding: var(--space-1) var(--space-2);
-        border: 1px solid transparent;
-        border-radius: var(--radius-full);
-        font-size: var(--text-xs);
-        font-weight: var(--font-weight-title);
-      }
-
-      .kpi-card__comparison {
-        max-width: 100%;
-        color: var(--text-color-muted);
-        font-size: var(--text-xs);
-        overflow-wrap: anywhere;
-      }
-
-      .kpi-card__trend--up {
-        border-color: var(--success-color-light);
-        background: var(--success-color-lighter);
-        color: var(--success-color-text, var(--success-color-dark));
-      }
-
-      .kpi-card__trend--down {
-        border-color: var(--danger-color-light);
-        background: var(--danger-color-lighter);
-        color: var(--danger-color-text, var(--danger-color-dark));
-      }
-
-      .kpi-card__trend--neutral {
-        border-color: var(--border-color);
-        background: var(--surface-section);
-        color: var(--text-color-secondary);
-      }
-
-      .kpi-card__chart {
-        height: 2rem;
-        display: flex;
-        align-items: flex-end;
-        color: var(--kpi-accent);
-        opacity: 0.85;
-      }
-
-      .kpi-card__chart svg {
-        width: 100%;
-        height: 100%;
-      }
-
-      @media (max-width: 40rem) {
-        .kpi-card {
-          min-height: 5.5rem;
-          padding: var(--space-3);
-        }
-      }
-    `,
-  ],
+  styleUrl: './kpi-card.component.css',
 })
 export class KpiCardComponent {
   /** Visible KPI label. */
-  @Input() title = 'Métrica';
+  readonly title = input('Métrica');
 
   /** Optional context shown under the label. */
-  @Input() subtitle = '';
+  readonly subtitle = input('');
 
   /** Raw value used only when displayValue is not supplied. */
-  @Input() value: string | number = 0;
+  readonly value = input<string | number>(0);
 
   /** Preformatted value. Prefer this for authoritative financial presentation. */
-  @Input() displayValue = '';
+  readonly displayValue = input('');
 
-  @Input() format: KpiFormat = 'number';
-  @Input() currency = 'PEN';
-  @Input() locale = 'es-PE';
+  readonly format = input<KpiFormat>('number');
+  readonly currency = input('PEN');
+  readonly locale = input('es-PE');
 
   /** Decimal places for number/currency/percent. Null keeps each format default. */
-  @Input() fractionDigits: number | null = null;
+  readonly fractionDigits = input<number | null>(null);
 
   /** Semantic emphasis. Neutral avoids turning every metric into a brand action. */
-  @Input() tone: KpiTone = 'neutral';
+  readonly tone = input<KpiTone>('neutral');
 
   /** Null intentionally means that no comparison trend is available. */
-  @Input() trend: KpiTrend = null;
-  @Input() trendValue = '';
-  @Input() iconClass = '';
-  @Input() series: readonly number[] = [];
-  @Input() comparisonLabel = '';
+  readonly trend = input<KpiTrend>(null);
+  readonly trendValue = input('');
+  readonly iconClass = input('');
+  readonly series = input<readonly number[]>([]);
+  readonly comparisonLabel = input('');
 
   get formattedValue(): string {
-    const authoritativeDisplay = this.displayValue.trim();
+    const authoritativeDisplay = this.displayValue().trim();
     if (authoritativeDisplay) {
       return authoritativeDisplay;
     }
 
-    const number = Number(this.value);
+    const number = Number(this.value());
     if (!Number.isFinite(number)) {
-      return String(this.value);
+      return String(this.value());
     }
 
-    if (this.format === 'currency') {
+    const format = this.format();
+    if (format === 'currency') {
       const digits = this.normalizedFractionDigits(2);
-      return new Intl.NumberFormat(this.locale, {
+      return new Intl.NumberFormat(this.locale(), {
         style: 'currency',
-        currency: this.currency,
+        currency: this.currency(),
         minimumFractionDigits: digits,
         maximumFractionDigits: digits,
       }).format(number);
     }
 
-    if (this.format === 'percent') {
+    if (format === 'percent') {
       return `${number.toFixed(this.normalizedFractionDigits(1))}%`;
     }
 
-    if (this.format === 'compact') {
-      return new Intl.NumberFormat(this.locale, {
+    if (format === 'compact') {
+      return new Intl.NumberFormat(this.locale(), {
         notation: 'compact',
         compactDisplay: 'short',
         maximumFractionDigits: this.normalizedFractionDigits(1),
       }).format(number);
     }
 
-    if (this.format === 'duration') {
+    if (format === 'duration') {
       const totalMinutes = Math.max(0, Math.round(number));
       const hours = Math.floor(totalMinutes / 60);
       const minutes = totalMinutes % 60;
       return hours > 0 ? `${hours}h ${minutes.toString().padStart(2, '0')}m` : `${minutes}m`;
     }
 
-    const digits = this.fractionDigits;
+    const digits = this.fractionDigits();
     return new Intl.NumberFormat(
-      this.locale,
+      this.locale(),
       digits === null
         ? undefined
         : {
@@ -331,17 +158,19 @@ export class KpiCardComponent {
   }
 
   get trendLabel(): string {
-    if (!this.trend) {
+    const trend = this.trend();
+    if (!trend) {
       return '';
     }
-    if (this.trendValue) {
-      return this.trendValue;
+    const trendValue = this.trendValue();
+    if (trendValue) {
+      return trendValue;
     }
-    return this.trend === 'up' ? 'Sube' : this.trend === 'down' ? 'Baja' : 'Estable';
+    return trend === 'up' ? 'Sube' : trend === 'down' ? 'Baja' : 'Estable';
   }
 
   get sparklinePoints(): string {
-    const finiteSeries = this.series.filter((point) => Number.isFinite(point));
+    const finiteSeries = this.series().filter((point) => Number.isFinite(point));
     if (finiteSeries.length < 2) {
       return '';
     }
@@ -361,19 +190,20 @@ export class KpiCardComponent {
 
   get accessibleLabel(): string {
     return [
-      `${this.title}: ${this.formattedValue}`,
-      this.subtitle,
-      this.trend ? this.trendLabel : '',
-      this.comparisonLabel,
+      `${this.title()}: ${this.formattedValue}`,
+      this.subtitle(),
+      this.trend() ? this.trendLabel : '',
+      this.comparisonLabel(),
     ]
       .filter(Boolean)
       .join('. ');
   }
 
   private normalizedFractionDigits(fallback: number): number {
-    if (this.fractionDigits === null || !Number.isFinite(this.fractionDigits)) {
+    const fractionDigits = this.fractionDigits();
+    if (fractionDigits === null || !Number.isFinite(fractionDigits)) {
       return fallback;
     }
-    return Math.min(6, Math.max(0, Math.trunc(this.fractionDigits)));
+    return Math.min(6, Math.max(0, Math.trunc(fractionDigits)));
   }
 }

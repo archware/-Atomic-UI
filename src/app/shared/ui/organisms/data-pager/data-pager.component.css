@@ -1,0 +1,64 @@
+.data-pager-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-background);
+  border: var(--border-width-thin) solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.pager-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.pager-page-size-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.page-size-select-wrapper {
+  width: 4.375rem;
+  --select2-min-width: 3.75rem;
+}
+
+.pager-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Modificamos el Select2 para que se vea más pequeño / compacto */
+::ng-deep .page-size-select-wrapper app-select2 {
+  width: 100%;
+}
+::ng-deep .page-size-select-wrapper .select2-trigger {
+  min-height: var(--control-height-sm) !important;
+  height: var(--control-height-sm) !important;
+  padding: 0 var(--space-2) !important;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-emphasis);
+}
+::ng-deep .page-size-select-wrapper .select2-value {
+  line-height: var(--control-height-sm);
+  margin: 0;
+}
+
+/* En pantallas móviles se apila */
+@media (max-width: 40rem) {
+  .data-pager-container {
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+  .pager-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

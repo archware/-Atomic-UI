@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild, forwardRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, forwardRef, input, signal } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -19,69 +19,49 @@ export interface SelectOption {
     }
   ],
   template: `
-    <div class="form-group" [class.has-error]="error" [class.disabled]="disabled">
-      @if (label) {
-        <label class="form-label" [attr.for]="selectId">{{ label }}</label>
+    <div class="form-group" [class.has-error]="error()" [class.disabled]="isDisabled()">
+      @if (label()) {
+        <label class="form-label" [attr.for]="selectId">{{ label() }}</label>
       }
       <div class="select-container">
         <select
           #nativeSelect
           [id]="selectId"
           class="form-select"
-          [disabled]="disabled"
+          [disabled]="isDisabled()"
           [value]="value"
           (change)="onSelectChange($event)"
           (blur)="onTouched()"
         >
-          @if (placeholder) {
-            <option value="" disabled [selected]="!value">{{ placeholder }}</option>
+          @if (placeholder()) {
+            <option value="" disabled [selected]="!value">{{ placeholder() }}</option>
           }
-          @for (option of options; track option.value) {
+          @for (option of options(); track option.value) {
             <option [value]="option.value">{{ option.label }}</option>
           }
         </select>
         <!-- Arrow handled by form-select background-image -->
       </div>
-      @if (error) {
-        <span class="select-error">{{ error }}</span>
+      @if (error()) {
+        <span class="select-error">{{ error() }}</span>
       }
     </div>
   `,
-  styles: [`
-    :host {
-      display: block;
-      width: 100%;
-    }
-
-    .select-container {
-      position: relative;
-      display: flex;
-      align-items: center;
-      width: 100%;
-    }
-
-    .select-arrow {
-      position: absolute;
-      right: var(--space-3);
-      color: var(--text-color-muted);
-      pointer-events: none;
-      transition: transform 200ms ease;
-    }
-
-    .select-error {
-      font-size: var(--text-xs);
-      color: var(--danger-color-text);
-    }
-  `]
+  styleUrl: './select.component.css'
 })
 export class SelectComponent implements ControlValueAccessor, AfterViewInit {
-  @Input() options: SelectOption[] = [];
-  @Input() label = '';
-  @Input() placeholder = '';
-  @Input() error = '';
-  @Input() disabled = false;
+  readonly options = input<SelectOption[]>([]);
+  readonly label = input('');
+  readonly placeholder = input('');
+  readonly error = input('');
+  readonly disabled = input(false);
+  private readonly disabledByForm = signal(false);
   private static idCounter = 0;
   readonly selectId = `app-select-${++SelectComponent.idCounter}`;
+
+  isDisabled(): boolean {
+    return this.disabled() || this.disabledByForm();
+  }
 
   @ViewChild('nativeSelect') private nativeSelect?: ElementRef<HTMLSelectElement>;
 
@@ -139,6 +119,6 @@ export class SelectComponent implements ControlValueAccessor, AfterViewInit {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.disabledByForm.set(isDisabled);
   }
 }

@@ -21,8 +21,8 @@ describe('TopbarComponent', () => {
   });
 
   it('can hide optional language and notification controls', () => {
-    component.showLanguageSwitcher = false;
-    component.showNotifications = false;
+    fixture.componentRef.setInput('showLanguageSwitcher', false);
+    fixture.componentRef.setInput('showNotifications', false);
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelector('app-language-switcher')).toBeNull();
@@ -31,8 +31,8 @@ describe('TopbarComponent', () => {
   });
 
   it('renders action icons without static inline styles', () => {
-    component.showLanguageSwitcher = false;
-    component.showNotifications = true;
+    fixture.componentRef.setInput('showLanguageSwitcher', false);
+    fixture.componentRef.setInput('showNotifications', true);
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
@@ -44,8 +44,8 @@ describe('TopbarComponent', () => {
   });
 
   it('passes the user role to the session menu', () => {
-    component.showLanguageSwitcher = false;
-    component.userRole = 'Administrador';
+    fixture.componentRef.setInput('showLanguageSwitcher', false);
+    fixture.componentRef.setInput('userRole', 'Administrador');
     fixture.detectChanges();
 
     (fixture.nativeElement.querySelector('.user-menu__trigger') as HTMLButtonElement).click();
@@ -57,8 +57,8 @@ describe('TopbarComponent', () => {
   });
 
   it('emits notification clicks', () => {
-    component.showLanguageSwitcher = false;
-    component.showNotifications = true;
+    fixture.componentRef.setInput('showLanguageSwitcher', false);
+    fixture.componentRef.setInput('showNotifications', true);
     const notificationClick = jasmine.createSpy('notificationClick');
     component.notificationClick.subscribe(notificationClick);
     fixture.detectChanges();

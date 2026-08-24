@@ -4,8 +4,8 @@
   <!-- Trigger Input -->
   <div class="datepicker-trigger" (click)="toggle()" (keydown)="onKeyDown($event)" tabindex="0" role="button"
     aria-haspopup="grid" [attr.aria-expanded]="isOpen()" aria-label="Abrir calendario">
-    <app-floating-input [label]="label" [value]="formattedValue()" [variant]="variant" [disabled]="disabled"
-      [readonly]="true" [error]="error" class="pointer-events-none"></app-floating-input>
+    <app-floating-input [label]="label()" [value]="formattedValue()" [variant]="variant()" [disabled]="disabled()"
+      [readonly]="true" [error]="error()" class="pointer-events-none"></app-floating-input>
 
     <!-- Custom Trigger Icon -->
     <button type="button" class="calendar-icon-btn" tabindex="-1">

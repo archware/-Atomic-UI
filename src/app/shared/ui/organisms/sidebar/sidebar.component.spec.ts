@@ -23,7 +23,7 @@ describe('SidebarComponent', () => {
       icon: 'fa-solid fa-house',
       route: '/home',
     };
-    component.menuItems = [item];
+    fixture.componentRef.setInput('menuItems', [item]);
     const navigate = jasmine.createSpy('navigate');
     component.navigate.subscribe(navigate);
     fixture.detectChanges();
@@ -37,11 +37,11 @@ describe('SidebarComponent', () => {
   });
 
   it('delega la navegacion extensa a un unico ScrollOverlay', async () => {
-    component.menuItems = Array.from({ length: 20 }, (_, index) => ({
+    fixture.componentRef.setInput('menuItems', Array.from({ length: 20 }, (_, index) => ({
       id: `item-${index}`,
       label: `Opcion ${index + 1}`,
       icon: 'fa-solid fa-circle',
-    }));
+    })));
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -63,14 +63,14 @@ describe('SidebarComponent', () => {
       icon: 'fa-solid fa-percent',
       route: '/interest',
     };
-    component.menuItems = [
+    fixture.componentRef.setInput('menuItems', [
       {
         id: 'maintenance',
         label: 'Mantenimiento',
         icon: 'fa-solid fa-screwdriver-wrench',
         children: [child],
       },
-    ];
+    ]);
     const navigate = jasmine.createSpy('navigate');
     component.navigate.subscribe(navigate);
     fixture.detectChanges();
@@ -93,7 +93,7 @@ describe('SidebarComponent', () => {
   });
 
   it('expands the ancestor of an active descendant and forwards the profile photo', () => {
-    component.menuItems = [
+    fixture.componentRef.setInput('menuItems', [
       {
         id: 'security',
         label: 'Seguridad',
@@ -107,12 +107,12 @@ describe('SidebarComponent', () => {
           },
         ],
       },
-    ];
-    component.user = {
+    ]);
+    fixture.componentRef.setInput('user', {
       name: 'Usuario Demo',
       role: 'Administrador',
       photo: '/avatar.png',
-    };
+    });
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelectorAll('.nav-link').length).toBe(2);
@@ -122,10 +122,10 @@ describe('SidebarComponent', () => {
   });
 
   it('moves focus between the actual menu buttons with the arrow keys', () => {
-    component.menuItems = [
+    fixture.componentRef.setInput('menuItems', [
       { id: 'home', label: 'Inicio', icon: 'fa-solid fa-house', route: '/home' },
       { id: 'users', label: 'Usuarios', icon: 'fa-solid fa-users', route: '/users' },
-    ];
+    ]);
     fixture.detectChanges();
 
     const links = fixture.nativeElement.querySelectorAll(

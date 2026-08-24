@@ -306,7 +306,7 @@ Estrategia de Angular para **optimizar rendimiento**.
 // Con OnPush:
 changeDetection: ChangeDetectionStrategy.OnPush;
 // Angular SOLO revisa cuando:
-// 1. Un @Input() cambia
+// 1. Una señal input() cambia
 // 2. Se dispara un evento del componente
 // 3. Se usa async pipe
 ```
@@ -773,7 +773,7 @@ ng g c shared/ui/organisms/mi-componente --standalone
 ### Paso 2: Estructura base del componente
 
 ````typescript
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
@@ -794,64 +794,71 @@ export type MiComponenteSize = 'sm' | 'md' | 'lg';
   standalone: true,
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div class="mi-componente" [class]="variantClass()" [class.mi-componente--disabled]="disabled">
-      <ng-content></ng-content>
-    </div>
-  `,
-  styles: [
-    `
-      :host {
-        display: inline-block;
-      }
-
-      .mi-componente {
-        /* Usar SIEMPRE tokens CSS del sistema */
-        background: var(--surface-background);
-        color: var(--text-color);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md, 0.5rem);
-        padding: var(--spacing-md, 1rem);
-        transition: all 200ms ease;
-      }
-
-      /* Variantes */
-      .mi-componente--primary {
-        background: var(--primary-color);
-        color: var(--text-color-on-primary);
-      }
-
-      .mi-componente--secondary {
-        background: var(--secondary-color);
-        color: var(--text-color-on-secondary);
-      }
-
-      /* Estados */
-      .mi-componente--disabled {
-        opacity: 0.6;
-        pointer-events: none;
-      }
-    `,
-  ],
+  templateUrl: './mi-componente.component.html',
+  styleUrl: './mi-componente.component.css',
 })
 export class MiComponenteComponent {
   /** Variante visual del componente */
-  @Input() variant: MiComponenteVariant = 'primary';
+  readonly variant = input<MiComponenteVariant>('primary');
 
   /** Tamaño del componente */
-  @Input() size: MiComponenteSize = 'md';
+  readonly size = input<MiComponenteSize>('md');
 
   /** Estado deshabilitado */
-  @Input() disabled = false;
+  readonly disabled = input(false);
 
   /** Evento emitido al hacer clic */
-  @Output() clicked = new EventEmitter<void>();
+  readonly clicked = output<void>();
 
   variantClass(): string {
-    return `mi-componente--${this.variant} mi-componente--${this.size}`;
+    return `mi-componente--${this.variant()} mi-componente--${this.size()}`;
   }
 }
 ````
+
+La plantilla se mantiene en `mi-componente.component.html`:
+
+```html
+<div
+  class="mi-componente"
+  [class]="variantClass()"
+  [class.mi-componente--disabled]="disabled()"
+>
+  <ng-content></ng-content>
+</div>
+```
+
+La presentación se mantiene en `mi-componente.component.css`:
+
+```css
+:host {
+  display: inline-block;
+}
+
+.mi-componente {
+  background: var(--surface-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 0.5rem);
+  padding: var(--spacing-md, 1rem);
+  transition: all 200ms ease;
+}
+
+.mi-componente--primary {
+  background: var(--primary-color);
+  color: var(--text-color-on-primary);
+}
+
+.mi-componente--secondary {
+  background: var(--secondary-color);
+  color: var(--text-color-on-secondary);
+}
+
+.mi-componente--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+```
 
 ### Paso 3: exportar en el barrel
 
@@ -907,6 +914,8 @@ export * from './atoms/mi-componente/mi-componente.component';
 
 - [ ] Componente standalone (`standalone: true`)
 - [ ] ChangeDetectionStrategy.OnPush aplicada
+- [ ] Contratos públicos con `input()` y `output()`
+- [ ] Presentación en una hoja indicada por `styleUrl`
 - [ ] Tipos exportados (Variant, Size, etc.)
 - [ ] JSDoc con @description y @example
 - [ ] Usa SOLO tokens CSS (no colores hex)

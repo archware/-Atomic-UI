@@ -3,18 +3,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
   HostListener,
-  Input,
   OnChanges,
   OnDestroy,
   OnInit,
-  Output,
   SimpleChanges,
   ViewChild,
   inject,
   signal,
+  input,
+  output
 } from '@angular/core';
+import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 export type ContextMenuAction = 'cut' | 'copy' | 'paste' | 'select-all';
 export type ContextMenuFailureReason =
@@ -88,6 +88,7 @@ let nextContextMenuId = 0;
 @Component({
   selector: 'app-context-menu',
   standalone: true,
+  imports: [VariablesCssDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (isOpen()) {
@@ -99,8 +100,10 @@ let nextContextMenuId = 0;
         aria-label="Opciones de edición"
         aria-orientation="vertical"
         tabindex="-1"
-        [style.left.px]="position().left"
-        [style.top.px]="position().top"
+        [appVariablesCss]="{
+          '--context-menu-left': position().left + 'px',
+          '--context-menu-top': position().top + 'px'
+        }"
         (contextmenu)="suppressNestedContextMenu($event)"
       >
         @for (item of menuItems; track item.action) {
@@ -130,111 +133,22 @@ let nextContextMenuId = 0;
       {{ feedback() }}
     </span>
   `,
-  styles: [
-    `
-      :host {
-        display: contents;
-      }
-
-      .context-menu {
-        position: fixed;
-        z-index: 100000;
-        display: flex;
-        flex-direction: column;
-        min-width: calc(var(--space-10) + var(--space-10) + var(--space-10));
-        max-width: calc(100vw - var(--space-4));
-        max-height: calc(100vh - var(--space-4));
-        padding: var(--space-1);
-        overflow: auto;
-        color: var(--text-color);
-        background: var(--dropdown-bg);
-        border: var(--border-width-thin) solid var(--dropdown-border);
-        border-radius: var(--radius-md);
-        box-shadow: var(--dropdown-shadow);
-      }
-
-      .context-menu__item {
-        display: grid;
-        grid-template-columns: var(--space-5) minmax(0, 1fr) auto;
-        align-items: center;
-        gap: var(--space-2);
-        width: 100%;
-        min-height: var(--control-height-sm);
-        padding: var(--space-2) var(--space-3);
-        color: var(--text-color);
-        font: inherit;
-        font-size: var(--text-sm);
-        text-align: left;
-        white-space: nowrap;
-        background: transparent;
-        border: 0;
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-      }
-
-      .context-menu__item:hover:not(:disabled),
-      .context-menu__item:focus-visible,
-      .context-menu__item--active:not(:disabled) {
-        color: var(--text-color);
-        background: var(--dropdown-item-hover);
-        outline: none;
-      }
-
-      .context-menu__item:focus-visible {
-        box-shadow: var(--focus-ring);
-      }
-
-      .context-menu__item:disabled {
-        color: var(--input-disabled-text);
-        cursor: not-allowed;
-      }
-
-      .context-menu__icon {
-        width: var(--space-5);
-        color: currentColor;
-        text-align: center;
-      }
-
-      .context-menu__label {
-        min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .context-menu__shortcut {
-        margin-left: var(--space-3);
-        color: var(--text-color-muted);
-        font-size: var(--text-xs);
-      }
-
-      .context-menu__feedback {
-        position: absolute;
-        inline-size: var(--border-width-thin);
-        block-size: var(--border-width-thin);
-        padding: 0;
-        margin: calc(-1 * var(--border-width-thin));
-        overflow: hidden;
-        white-space: nowrap;
-        border: 0;
-        clip-path: inset(50%);
-      }
-    `,
-  ],
+  styleUrl: './context-menu.component.css',
 })
 export class ContextMenuComponent implements OnChanges, OnInit, OnDestroy {
   private static readonly documentInstances = new WeakMap<Document, ContextMenuComponent[]>();
 
   /** Desactiva la sustitución del menú nativo. */
-  @Input() disabled = false;
+  readonly disabled = input(false);
 
   /** Permite bloquear acciones concretas por reglas del consumidor. */
-  @Input() disabledActions: readonly ContextMenuAction[] = [];
+  readonly disabledActions = input<readonly ContextMenuAction[]>([]);
 
   /** Se emite después de completar una acción. */
-  @Output() readonly actionSelected = new EventEmitter<ContextMenuAction>();
+  readonly actionSelected = output<ContextMenuAction>();
 
   /** Se emite sin incluir el contenido del portapapeles cuando una acción falla. */
-  @Output() readonly actionError = new EventEmitter<ContextMenuActionError>();
+  readonly actionError = output<ContextMenuActionError>();
 
   @ViewChild('menu') private menuRef?: ElementRef<HTMLElement>;
 
@@ -309,7 +223,7 @@ export class ContextMenuComponent implements OnChanges, OnInit, OnDestroy {
   private readonly capturedFocusInListener = (event: FocusEvent) => this.onDocumentFocusIn(event);
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['disabled'] && this.disabled && this.isOpen()) {
+    if (changes['disabled'] && this.disabled() && this.isOpen()) {
       this.closeMenu();
       return;
     }
@@ -401,7 +315,7 @@ export class ContextMenuComponent implements OnChanges, OnInit, OnDestroy {
       return;
     }
 
-    if (this.disabled) {
+    if (this.disabled()) {
       this.closeMenu();
       return;
     }
@@ -446,7 +360,7 @@ export class ContextMenuComponent implements OnChanges, OnInit, OnDestroy {
 
     const isContextMenuKey = event.key === 'ContextMenu';
     const isShiftF10 = event.shiftKey && event.key === 'F10';
-    if (this.disabled || (!isContextMenuKey && !isShiftF10)) {
+    if (this.disabled() || (!isContextMenuKey && !isShiftF10)) {
       return;
     }
 
@@ -553,7 +467,7 @@ export class ContextMenuComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   isActionDisabled(action: ContextMenuAction): boolean {
-    if (this.disabled || this.disabledActions.includes(action) || !this.target || !this.selection) {
+    if (this.disabled() || this.disabledActions().includes(action) || !this.target || !this.selection) {
       return true;
     }
 

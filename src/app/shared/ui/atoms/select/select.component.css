@@ -1,0 +1,24 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.select-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.select-arrow {
+  position: absolute;
+  right: var(--space-3);
+  color: var(--text-color-muted);
+  pointer-events: none;
+  transition: transform 200ms ease;
+}
+
+.select-error {
+  font-size: var(--text-xs);
+  color: var(--danger-color-text);
+}

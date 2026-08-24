@@ -1,0 +1,269 @@
+app-action-group,
+prest-action-group {
+  display: inline-flex;
+}
+
+.action-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ============================================ */
+/* ACTION BUTTONS                              */
+/* ============================================ */
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--action-btn-size);
+  height: var(--action-btn-size);
+  padding: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: calc(var(--action-btn-size) * 0.55);
+  cursor: pointer;
+  transition: all 150ms ease;
+  color: var(--text-color-secondary);
+}
+
+.action-btn i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65%;
+  height: 65%;
+  font-size: inherit;
+  line-height: 1;
+}
+
+.action-more-icon {
+  transition: transform 150ms ease;
+}
+
+.more-wrapper.open .action-more-icon {
+  transform: rotate(180deg);
+}
+
+.action-spinner {
+  width: 45%;
+  height: 45%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--radius-full);
+  animation: actionSpin 700ms linear infinite;
+}
+
+@keyframes actionSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Size variants */
+.action-group--sm { --action-btn-size: 1.75rem; }  /* 2var(--space-2) */
+.action-group--md { --action-btn-size: var(--space-7); }  /* 3var(--space-2) */
+.action-group--lg { --action-btn-size: var(--touch-target-min); }  /* 44px */
+
+.action-btn:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--text-color);
+}
+
+.action-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.action-btn.disabled,
+.action-btn:disabled {
+  cursor: not-allowed;
+  color: var(--input-disabled-text);
+}
+
+/* Variants */
+.action-btn--primary { color: var(--primary-color); }
+.action-btn--primary:hover:not(:disabled) { 
+  background: var(--primary-color-lighter); 
+  color: var(--primary-color);
+}
+
+.action-btn--secondary { color: var(--secondary-color); }
+.action-btn--secondary:hover:not(:disabled) { 
+  background: var(--secondary-color-lighter); 
+  color: var(--secondary-color);
+}
+
+.action-btn--danger { color: var(--danger-color-text); }
+.action-btn--danger:hover:not(:disabled) { 
+  background: var(--danger-color-lighter); 
+  color: var(--danger-color-text);
+}
+
+.action-btn--warning { color: var(--warning-color-text); }
+.action-btn--warning:hover:not(:disabled) { 
+  background: var(--warning-color-lighter); 
+  color: var(--warning-color-text);
+}
+
+.action-btn--success { color: var(--success-color-text); }
+.action-btn--success:hover:not(:disabled) { 
+  background: var(--success-color-lighter); 
+  color: var(--success-color-text);
+}
+
+.action-btn--info { color: var(--info-color-text); }
+.action-btn--info:hover:not(:disabled) { 
+  background: var(--info-color-lighter); 
+  color: var(--info-color-text);
+}
+
+.action-btn--more {
+  color: var(--text-color-muted);
+}
+
+.action-btn--more {
+  background: var(--surface-hover);
+  color: var(--primary-color);
+}
+
+.more-wrapper.open .action-btn--more {
+  background: var(--primary-color-lighter);
+  color: var(--primary-color);
+}
+
+/* ============================================ */
+/* DROPDOWN MENU                               */
+/* ============================================ */
+.more-wrapper {
+  position: relative;
+}
+
+.action-menu {
+  position: fixed;
+  z-index: 9999;
+  min-width: max-content;
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-dropdown);
+  padding: var(--space-1);
+  animation: menuFadeIn 150ms ease;
+}
+
+/* Portal: menú creado en document.body */
+.action-menu-portal {
+  position: fixed;
+  z-index: 99999;
+  min-width: max-content;
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-dropdown);
+  padding: var(--space-1);
+  animation: menuFadeIn 150ms ease;
+}
+
+.action-menu-portal.horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-1);
+}
+
+/* Horizontal layout */
+.action-menu.horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-1);
+}
+
+.action-menu.horizontal .menu-item {
+  padding: var(--space-2);
+}
+
+.action-menu.horizontal .menu-item-label {
+  display: none;
+}
+
+@keyframes menuFadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(-4px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* ============================================ */
+/* MENU ITEMS                                  */
+/* ============================================ */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 100ms ease;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.menu-item:hover:not(:disabled) {
+  background: var(--surface-hover);
+}
+
+.menu-item:focus-visible {
+  outline: none;
+  background: var(--surface-hover);
+}
+
+.menu-item.disabled,
+.menu-item:disabled {
+  cursor: not-allowed;
+  color: var(--input-disabled-text);
+}
+
+.menu-item i {
+  width: var(--space-4);
+  text-align: center;
+}
+
+/* Menu item variants */
+.menu-item--primary { color: var(--primary-color); }
+.menu-item--primary:hover:not(:disabled) { background: var(--primary-color-lighter); }
+
+.menu-item--secondary { color: var(--secondary-color); }  
+.menu-item--secondary:hover:not(:disabled) { background: var(--secondary-color-lighter); }
+
+.menu-item--danger { color: var(--danger-color-text); }
+.menu-item--danger:hover:not(:disabled) { background: var(--danger-color-lighter); }
+
+.menu-item--warning { color: var(--warning-color-text); }
+.menu-item--warning:hover:not(:disabled) { background: var(--warning-color-lighter); }
+
+.menu-item--success { color: var(--success-color-text); }
+.menu-item--success:hover:not(:disabled) { background: var(--success-color-lighter); }
+
+.menu-item--info { color: var(--info-color-text); }
+.menu-item--info:hover:not(:disabled) { background: var(--info-color-lighter); }
+
+.menu-item-label {
+  flex: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .action-more-icon {
+    transition: none;
+  }
+
+  .action-spinner {
+    animation-duration: 1.4s;
+  }
+}

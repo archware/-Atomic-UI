@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy, input } from '@angular/core';
 
 
 /**
@@ -14,41 +14,11 @@ import { Component, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@a
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<ng-content></ng-content>`,
   host: {
-    '[class.selected]': 'selected'
+    '[class.selected]': 'selected()'
   },
-  styles: [`
-    tr[app-table-row] {
-      border-bottom: 1px solid var(--table-color-border-light);
-      transition: 
-        background-color var(--table-transition-duration) var(--table-transition-timing),
-        box-shadow var(--table-transition-duration) var(--table-transition-timing),
-        transform var(--table-transition-duration) var(--table-transition-timing);
-      position: relative;
-    }
-
-    tr[app-table-row]:last-child {
-      border-bottom: none;
-    }
-
-    /* Hover elevado */
-    tr[app-table-row]:hover {
-      background-color: var(--table-color-hover);
-      box-shadow: var(--table-row-hover-shadow);
-      transform: var(--table-row-hover-transform);
-      z-index: 1;
-    }
-
-    tr[app-table-row].selected {
-      background-color: var(--primary-50, var(--table-color-hover));
-    }
-
-    /* Asegurar que las celdas mantengan el efecto visual */
-    tr[app-table-row]:hover td {
-      position: relative;
-    }
-  `]
+  styleUrl: './table-row.component.css'
 })
 export class TableRowComponent {
   /** Indica si la fila está seleccionada */
-  @Input() selected = false;
+  readonly selected = input(false);
 }

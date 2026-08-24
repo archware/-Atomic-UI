@@ -1,0 +1,84 @@
+:host { display: block; }
+
+.number-input__label {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium, 500);
+  color: var(--text-color-secondary);
+}
+
+.number-input__control {
+  display: flex;        /* Cambiado de inline-flex a flex para ocupar ancho del contenedor */
+  align-items: stretch;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface-background);
+  width: 100%;
+}
+
+.number-input__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-7);
+  flex-shrink: 0;
+  background: var(--surface-section);
+  border: none;
+  cursor: pointer;
+  color: var(--text-color-secondary);
+  transition: background 150ms ease, color 150ms ease;
+  font-size: var(--text-sm);
+}
+.number-input__btn:hover:not(:disabled) {
+  background: var(--surface-hover, var(--primary-color));
+  color: var(--text-color-on-primary);
+}
+.number-input__btn:disabled {
+  cursor: not-allowed;
+  color: var(--input-disabled-text);
+}
+
+.number-input__field {
+  flex: 1;
+  min-width: var(--space-8);
+  border: none;
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  background: transparent;
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--text-color);
+  padding: var(--space-2) var(--space-1);
+  outline: none;
+  -moz-appearance: textfield;
+}
+.number-input__field::-webkit-inner-spin-button,
+.number-input__field::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+.number-input--disabled .number-input__control {
+  pointer-events: none;
+  color: var(--input-disabled-text);
+}
+
+.number-input__hint {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--text-color-muted);
+}
+
+.number-input__adjustment {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--warning-color-text);
+}
+
+.number-input__error {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--danger-color-text);
+}

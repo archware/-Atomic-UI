@@ -1,7 +1,9 @@
 import {
-  Component, Input, Output, EventEmitter, signal, HostListener,
+  Component, signal, HostListener,
   ElementRef, ChangeDetectionStrategy, inject,
-  ViewEncapsulation, OnInit, OnDestroy, Renderer2
+  ViewEncapsulation, OnInit, OnDestroy, Renderer2,
+  input,
+  output
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import {
@@ -63,9 +65,9 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <div class="action-group" [class.compact]="compact" [class]="'action-group--' + size">
+    <div class="action-group" [class.compact]="compact()" [class]="'action-group--' + size()">
       <!-- Visible Actions -->
-      @if (!compact) {
+      @if (!compact()) {
         @for (action of visibleActions(); track action.id) {
           <button
             type="button"
@@ -88,13 +90,13 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
       }
 
       <!-- More Button (if there are overflow actions or compact mode) -->
-      @if ((hasOverflow() || compact) && menuActions().length > 0) {
+      @if ((hasOverflow() || compact()) && menuActions().length > 0) {
         <div class="more-wrapper" [class.open]="isOpen()">
           <button
             type="button"
             class="action-btn action-btn--more"
-            [title]="compact ? 'Acciones' : 'Más acciones'"
-            [attr.aria-label]="compact ? 'Acciones' : 'Más acciones'"
+            [title]="compact() ? 'Acciones' : 'Más acciones'"
+            [attr.aria-label]="compact() ? 'Acciones' : 'Más acciones'"
             (click)="toggleMenu($event)"
             [attr.aria-expanded]="isOpen()"
             [attr.aria-controls]="menuId"
@@ -108,299 +110,29 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
       }
     </div>
   `,
-  styles: [`
-    app-action-group,
-    prest-action-group {
-      display: inline-flex;
-    }
-
-    .action-group {
-      display: flex;
-      align-items: center;
-      gap: var(--space-1);
-    }
-
-    /* ============================================ */
-    /* ACTION BUTTONS                              */
-    /* ============================================ */
-    .action-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: var(--action-btn-size);
-      height: var(--action-btn-size);
-      padding: 0;
-      background: transparent;
-      border: 1px solid transparent;
-      border-radius: var(--radius-md);
-      font-size: calc(var(--action-btn-size) * 0.55);
-      cursor: pointer;
-      transition: all 150ms ease;
-      color: var(--text-color-secondary);
-    }
-
-    .action-btn i {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 65%;
-      height: 65%;
-      font-size: inherit;
-      line-height: 1;
-    }
-
-    .action-more-icon {
-      transition: transform 150ms ease;
-    }
-
-    .more-wrapper.open .action-more-icon {
-      transform: rotate(180deg);
-    }
-
-    .action-spinner {
-      width: 45%;
-      height: 45%;
-      border: 2px solid currentColor;
-      border-right-color: transparent;
-      border-radius: var(--radius-full);
-      animation: actionSpin 700ms linear infinite;
-    }
-
-    @keyframes actionSpin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Size variants */
-    .action-group--sm { --action-btn-size: 1.75rem; }  /* 2var(--space-2) */
-    .action-group--md { --action-btn-size: var(--space-7); }  /* 3var(--space-2) */
-    .action-group--lg { --action-btn-size: var(--touch-target-min); }  /* 44px */
-
-    .action-btn:hover:not(:disabled) {
-      background: var(--surface-hover);
-      color: var(--text-color);
-    }
-
-    .action-btn:focus-visible {
-      outline: none;
-      box-shadow: var(--focus-ring);
-    }
-
-    .action-btn.disabled,
-    .action-btn:disabled {
-      cursor: not-allowed;
-      color: var(--input-disabled-text);
-    }
-
-    /* Variants */
-    .action-btn--primary { color: var(--primary-color); }
-    .action-btn--primary:hover:not(:disabled) { 
-      background: var(--primary-color-lighter); 
-      color: var(--primary-color);
-    }
-
-    .action-btn--secondary { color: var(--secondary-color); }
-    .action-btn--secondary:hover:not(:disabled) { 
-      background: var(--secondary-color-lighter); 
-      color: var(--secondary-color);
-    }
-
-    .action-btn--danger { color: var(--danger-color-text); }
-    .action-btn--danger:hover:not(:disabled) { 
-      background: var(--danger-color-lighter); 
-      color: var(--danger-color-text);
-    }
-
-    .action-btn--warning { color: var(--warning-color-text); }
-    .action-btn--warning:hover:not(:disabled) { 
-      background: var(--warning-color-lighter); 
-      color: var(--warning-color-text);
-    }
-
-    .action-btn--success { color: var(--success-color-text); }
-    .action-btn--success:hover:not(:disabled) { 
-      background: var(--success-color-lighter); 
-      color: var(--success-color-text);
-    }
-
-    .action-btn--info { color: var(--info-color-text); }
-    .action-btn--info:hover:not(:disabled) { 
-      background: var(--info-color-lighter); 
-      color: var(--info-color-text);
-    }
-
-    .action-btn--more {
-      color: var(--text-color-muted);
-    }
-
-    .action-btn--more {
-      background: var(--surface-hover);
-      color: var(--primary-color);
-    }
-
-    .more-wrapper.open .action-btn--more {
-      background: var(--primary-color-lighter);
-      color: var(--primary-color);
-    }
-
-    /* ============================================ */
-    /* DROPDOWN MENU                               */
-    /* ============================================ */
-    .more-wrapper {
-      position: relative;
-    }
-
-    .action-menu {
-      position: fixed;
-      z-index: 9999;
-      min-width: max-content;
-      background: var(--surface-background);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-dropdown);
-      padding: var(--space-1);
-      animation: menuFadeIn 150ms ease;
-    }
-
-    /* Portal: menú creado en document.body */
-    .action-menu-portal {
-      position: fixed;
-      z-index: 99999;
-      min-width: max-content;
-      background: var(--surface-background);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-dropdown);
-      padding: var(--space-1);
-      animation: menuFadeIn 150ms ease;
-    }
-
-    .action-menu-portal.horizontal {
-      display: flex;
-      flex-direction: row;
-      gap: var(--space-1);
-    }
-
-    /* Horizontal layout */
-    .action-menu.horizontal {
-      display: flex;
-      flex-direction: row;
-      gap: var(--space-1);
-    }
-
-    .action-menu.horizontal .menu-item {
-      padding: var(--space-2);
-    }
-
-    .action-menu.horizontal .menu-item-label {
-      display: none;
-    }
-
-    @keyframes menuFadeIn {
-      from { 
-        opacity: 0; 
-        transform: translateY(-4px); 
-      }
-      to { 
-        opacity: 1; 
-        transform: translateY(0); 
-      }
-    }
-
-    /* ============================================ */
-    /* MENU ITEMS                                  */
-    /* ============================================ */
-    .menu-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      width: 100%;
-      padding: var(--space-2) var(--space-3);
-      background: transparent;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: var(--text-sm);
-      color: var(--text-color);
-      cursor: pointer;
-      transition: all 100ms ease;
-      text-align: left;
-      white-space: nowrap;
-    }
-
-    .menu-item:hover:not(:disabled) {
-      background: var(--surface-hover);
-    }
-
-    .menu-item:focus-visible {
-      outline: none;
-      background: var(--surface-hover);
-    }
-
-    .menu-item.disabled,
-    .menu-item:disabled {
-      cursor: not-allowed;
-      color: var(--input-disabled-text);
-    }
-
-    .menu-item i {
-      width: var(--space-4);
-      text-align: center;
-    }
-
-    /* Menu item variants */
-    .menu-item--primary { color: var(--primary-color); }
-    .menu-item--primary:hover:not(:disabled) { background: var(--primary-color-lighter); }
-
-    .menu-item--secondary { color: var(--secondary-color); }  
-    .menu-item--secondary:hover:not(:disabled) { background: var(--secondary-color-lighter); }
-
-    .menu-item--danger { color: var(--danger-color-text); }
-    .menu-item--danger:hover:not(:disabled) { background: var(--danger-color-lighter); }
-
-    .menu-item--warning { color: var(--warning-color-text); }
-    .menu-item--warning:hover:not(:disabled) { background: var(--warning-color-lighter); }
-
-    .menu-item--success { color: var(--success-color-text); }
-    .menu-item--success:hover:not(:disabled) { background: var(--success-color-lighter); }
-
-    .menu-item--info { color: var(--info-color-text); }
-    .menu-item--info:hover:not(:disabled) { background: var(--info-color-lighter); }
-
-    .menu-item-label {
-      flex: 1;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .action-more-icon {
-        transition: none;
-      }
-
-      .action-spinner {
-        animation-duration: 1.4s;
-      }
-    }
-  `]
+  styleUrl: './action-group.component.css'
 })
 export class ActionGroupComponent implements OnInit, OnDestroy {
   /** Lista de acciones a mostrar */
-  @Input() actions: ActionItem[] = [];
+  readonly actions = input<ActionItem[]>([]);
 
   /** Número máximo de acciones visibles antes de overflow */
-  @Input() maxVisible = 3;
+  readonly maxVisible = input(3);
 
   /** Dirección del menú desplegable: vertical (con labels) u horizontal (solo iconos) */
-  @Input() direction: 'vertical' | 'horizontal' = 'vertical';
+  readonly direction = input<'vertical' | 'horizontal'>('vertical');
 
   /** Posición preferida del menú (auto = calcula automáticamente) */
-  @Input() menuPosition: MenuPosition = 'auto';
+  readonly menuPosition = input<MenuPosition>('auto');
 
   /** Modo compacto: oculta todas las acciones en el menú */
-  @Input() compact = false;
+  readonly compact = input(false);
 
   /** Tamaño de los botones: sm (2var(--space-2)), md (3var(--space-2)), lg (44px) */
-  @Input() size: 'sm' | 'md' | 'lg' = 'md';
+  readonly size = input<'sm' | 'md' | 'lg'>('md');
 
   /** Emitido cuando se hace clic en una acción */
-  @Output() actionClick = new EventEmitter<string>();
+  readonly actionClick = output<string>();
 
   /** Estado del menú */
   isOpen = signal(false);
@@ -456,19 +188,19 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
 
   /** Acciones visibles (primeras N) */
   visibleActions(): ActionItem[] {
-    if (this.compact) return [];
-    return this.actions.slice(0, this.visibleLimit());
+    if (this.compact()) return [];
+    return this.actions().slice(0, this.visibleLimit());
   }
 
   /** Acciones en el menú overflow */
   menuActions(): ActionItem[] {
-    if (this.compact) return this.actions;
-    return this.actions.slice(this.visibleLimit());
+    if (this.compact()) return this.actions();
+    return this.actions().slice(this.visibleLimit());
   }
 
   /** ¿Hay acciones en overflow? */
   hasOverflow(): boolean {
-    return this.actions.length > this.visibleLimit();
+    return this.actions().length > this.visibleLimit();
   }
 
   actionIconClass(action: ActionItem): string {
@@ -480,7 +212,8 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
   }
 
   private visibleLimit(): number {
-    return Number.isFinite(this.maxVisible) ? Math.max(0, Math.floor(this.maxVisible)) : 3;
+    const maxVisible = this.maxVisible();
+    return Number.isFinite(maxVisible) ? Math.max(0, Math.floor(maxVisible)) : 3;
   }
 
   /** Toggle del menú */
@@ -533,8 +266,9 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
     this.renderer.setAttribute(this.menuElement, 'id', this.menuId);
     this.renderer.setAttribute(this.menuElement, 'role', 'menu');
     this.renderer.setAttribute(this.menuElement, 'aria-label', 'Acciones adicionales');
-    this.renderer.setAttribute(this.menuElement, 'aria-orientation', this.direction);
-    if (this.direction === 'horizontal') {
+    const direction = this.direction();
+    this.renderer.setAttribute(this.menuElement, 'aria-orientation', direction);
+    if (direction === 'horizontal') {
       this.renderer.addClass(this.menuElement, 'horizontal');
     }
 
@@ -571,7 +305,7 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
       }
 
       // Label (para vertical o compact)
-      if (this.direction === 'vertical' || this.compact) {
+      if (this.direction() === 'vertical' || this.compact()) {
         const label = this.renderer.createElement('span');
         this.renderer.addClass(label, 'menu-item-label');
         const text = this.renderer.createText(action.label);
@@ -681,7 +415,7 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
     const spaceBelow = window.innerHeight - rect.bottom;
     const spaceRight = window.innerWidth - rect.right;
 
-    const preferredPosition = this.menuPosition;
+    const preferredPosition = this.menuPosition();
     const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max));
 
     const computeAutoVertical = () => spaceBelow >= menuHeight ? 'bottom' : 'top';
@@ -729,5 +463,3 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
     this.renderer.setStyle(this.menuElement, 'left', `${left}px`);
   }
 }
-
-

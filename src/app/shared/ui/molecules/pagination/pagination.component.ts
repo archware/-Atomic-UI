@@ -1,11 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
-  Output,
-  EventEmitter,
+  OnChanges,
+  SimpleChanges,
   signal,
   computed,
+  input,
+  output
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Select2Component } from '../select2/select2.component';
@@ -36,7 +37,7 @@ import { Select2Component } from '../select2/select2.component';
           Mostrando <strong>{{ ((currentPage() - 1) * _pageSize()) + 1 }}</strong> - <strong>{{ min(currentPage() * _pageSize(), _total()) }}</strong> de <strong>{{ _total() }}</strong> registros
         </span>
         <div class="page-size-selector">
-          <label [for]="'pageSize' + variant">Mostrar:</label>
+          <label [for]="'pageSize' + variant()">Mostrar:</label>
           <app-select2
             class="page-size-control"
             [options]="pageSizeOptions()"
@@ -46,8 +47,8 @@ import { Select2Component } from '../select2/select2.component';
           </app-select2>
         </div>
       </div>
-      <nav class="pagination" [class]="'pagination-' + size + ' pagination-' + variant" aria-label="Paginación">
-        @if (variant === 'minimal') {
+      <nav class="pagination" [class]="'pagination-' + size() + ' pagination-' + variant()" aria-label="Paginación">
+        @if (variant() === 'minimal') {
           <button type="button"
             class="page-btn page-text-btn"
             [disabled]="currentPage() === 1"
@@ -107,263 +108,43 @@ import { Select2Component } from '../select2/select2.component';
       </nav>
     </div>
   `,
-  styles: [`
-    .pagination-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-      width: 100%;
-    }
-
-    .pagination-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: var(--space-3);
-      padding-bottom: var(--space-2);
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .info-text {
-      font-size: var(--text-sm);
-      color: var(--text-color-secondary);
-    }
-
-    .info-text strong {
-      color: var(--text-color);
-      font-weight: var(--font-weight-emphasis);
-    }
-
-    .page-size-selector {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-    }
-
-    .page-size-control {
-      --select2-min-width: var(--pagination-page-size-inline-size);
-      inline-size: var(--pagination-page-size-inline-size);
-      flex: 0 0 var(--pagination-page-size-inline-size);
-    }
-
-    .page-size-selector label {
-      font-size: var(--text-sm);
-      color: var(--text-color-secondary);
-    }
-
-    .page-size-select {
-      height: var(--control-height-sm);
-      padding: 0 var(--space-2);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-sm);
-      background-color: var(--surface-background);
-      color: var(--text-color);
-      font-size: var(--text-sm);
-      cursor: pointer;
-      outline: none;
-      transition: all 150ms ease;
-    }
-
-    .page-size-select:focus,
-    .page-size-select:hover {
-      border-color: var(--primary-color);
-    }
-
-    .pagination {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-1);
-    }
-
-    /* En móvil con muchas páginas, el nav hace scroll horizontal */
-    @media (max-width: 40rem) {
-      :host {
-        display: block;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: var(--space-1); /* Espacio para la barra de scroll */
-      }
-
-      .pagination {
-        width: max-content; /* Evita que el flex container comprima los botones */
-        min-width: 100%;
-      }
-
-      .page-btn,
-      .page-ellipsis {
-        flex-shrink: 0;
-      }
-
-      .pagination-info {
-        align-items: stretch;
-      }
-
-      .page-size-selector {
-        inline-size: 100%;
-        justify-content: space-between;
-      }
-
-      .page-minimal-text {
-        white-space: nowrap;
-      }
-    }
-
-    .page-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: var(--control-height-sm);
-      height: var(--control-height-sm);
-      padding: 0 var(--space-2);
-      background: var(--pagination-bg);
-      border: 1px solid var(--pagination-border);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-sm);
-      font-size: var(--text-sm);
-      color: var(--pagination-text);
-      cursor: pointer;
-      transition: all 150ms ease;
-    }
-
-    .pagination-sm .page-btn {
-      min-width: 1.75rem;
-      height: 1.75rem;
-      font-size: var(--text-xs);
-    }
-
-    .pagination-lg .page-btn {
-      min-width: 2.5rem;
-      height: 2.5rem;
-      font-size: var(--text-md);
-    }
-
-    .page-btn:hover:not(:disabled):not(.active) {
-      background: var(--pagination-hover-bg);
-      border-color: var(--primary-color);
-    }
-
-    .page-btn:focus-visible {
-      outline: none;
-      box-shadow: var(--shadow-focus-primary);
-    }
-
-    .page-btn:disabled {
-      color: var(--pagination-disabled-text);
-      cursor: not-allowed;
-    }
-
-    .page-btn.active {
-      background: var(--pagination-active-bg);
-      border-color: var(--pagination-active-bg);
-      color: var(--pagination-active-text);
-    }
-
-    .page-ellipsis {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: var(--control-height-sm);
-      color: var(--text-color-muted);
-      font-size: var(--text-sm);
-    }
-
-    /* Minimal Variant */
-    .pagination-minimal {
-      justify-content: space-between;
-      width: 100%;
-      gap: var(--space-4);
-    }
-
-    .page-text-btn {
-      padding: 0 var(--space-4);
-      background: transparent;
-      border: 1px solid var(--pagination-border);
-      min-width: auto;
-    }
-
-    .page-icon--start {
-      margin-inline-end: var(--space-2);
-    }
-
-    .page-icon--end {
-      margin-inline-start: var(--space-2);
-    }
-
-    .page-minimal-text {
-      font-size: var(--text-sm);
-      color: var(--text-color-secondary);
-    }
-
-    .page-minimal-text strong {
-      color: var(--text-color);
-      font-weight: var(--font-weight-emphasis);
-    }
-
-    /* Rounded Variant */
-    .pagination-rounded .page-btn {
-      border-radius: var(--radius-full); /* Fully rounded */
-      border: none;
-      background: transparent;
-    }
-
-    .pagination-rounded .page-btn:hover:not(:disabled):not(.active) {
-      background: var(--pagination-hover-bg);
-    }
-
-    .pagination-rounded .page-btn.active {
-      background: var(--pagination-active-bg);
-      color: var(--pagination-active-text);
-      box-shadow: var(--shadow-focus-primary);
-    }
-
-    /* Cards Variant */
-    .pagination-cards .page-btn {
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--pagination-border);
-      box-shadow: var(--shadow-sm);
-      background: var(--pagination-bg);
-      margin: 0 var(--space-1);
-    }
-
-    .pagination-cards .page-btn.active {
-      border-color: var(--pagination-active-bg);
-      box-shadow: var(--shadow-focus-primary);
-      background: var(--pagination-active-bg);
-      color: var(--pagination-active-text);
-    }
-
-    /*
-     * Dark mode se maneja automáticamente via tokens semánticos.
-     */
-  `]
+  styleUrl: './pagination.component.css'
 })
-export class PaginationComponent {
-  @Input() variant: 'standard' | 'minimal' | 'rounded' | 'cards' = 'standard';
-  @Input() size: 'sm' | 'md' | 'lg' = 'md';
-  @Input() maxVisible = 5;
+export class PaginationComponent implements OnChanges {
+  readonly variant = input<'standard' | 'minimal' | 'rounded' | 'cards'>('standard');
+  readonly size = input<'sm' | 'md' | 'lg'>('md');
+  readonly maxVisible = input(5);
 
   _total = signal(0);
-  @Input() set total(val: number) { this._total.set(val); }
+  readonly total = input(0);
 
   _pageSize = signal(10);
-  @Input() set pageSize(val: number) { this._pageSize.set(val); }
+  readonly pageSize = input(10);
 
-  @Input() set page(value: number) {
-    this.currentPage.set(value);
-  }
-  @Output() pageChange = new EventEmitter<number>();
-  @Output() pageSizeChange = new EventEmitter<number>();
+  readonly page = input(1);
+  readonly pageChange = output<number>();
+  readonly pageSizeChange = output<number>();
 
   currentPage = signal(1);
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['total']) {
+      this._total.set(this.total());
+    }
+    if (changes['pageSize']) {
+      this._pageSize.set(this.pageSize());
+    }
+    if (changes['page']) {
+      this.currentPage.set(this.page());
+    }
+  }
 
   totalPages = computed(() => Math.ceil(this._total() / this._pageSize()) || 1);
 
   visiblePages = computed(() => {
     const total = this.totalPages();
     const current = this.currentPage();
-    const max = this.maxVisible;
+    const max = this.maxVisible();
     const pages: (number | string)[] = [];
 
     if (total <= max) {
@@ -412,7 +193,7 @@ export class PaginationComponent {
 
   onPageSizeChange(newSize: number | string) {
     const size = typeof newSize === 'string' ? parseInt(newSize, 10) : newSize;
-    this.pageSize = size;
+    this._pageSize.set(size);
     this.pageSizeChange.emit(size);
   }
 

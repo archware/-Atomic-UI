@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import {
   KpiCardComponent,
   KpiFormat,
   KpiTone,
   KpiTrend,
 } from '../../molecules/kpi-card/kpi-card.component';
+import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 export interface KpiMetric {
   /** Stable identity. New consumers should always provide it. */
@@ -28,19 +29,21 @@ export interface KpiMetric {
 @Component({
   selector: 'app-metrics-grid',
   standalone: true,
-  imports: [KpiCardComponent],
+  imports: [KpiCardComponent, VariablesCssDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section
       class="metrics-grid"
-      [class.metrics-grid--empty]="metrics.length === 0"
-      [style.--min-col-width]="minCardWidth"
-      [style.--metric-columns-desktop]="columnCount(4)"
-      [style.--metric-columns-tablet]="columnCount(2)"
-      [style.--metric-columns-mobile]="columnCount(1)"
-      [attr.aria-label]="ariaLabel"
+      [class.metrics-grid--empty]="metrics().length === 0"
+      [appVariablesCss]="{
+        '--min-col-width': minCardWidth(),
+        '--metric-columns-desktop': columnCount(4),
+        '--metric-columns-tablet': columnCount(2),
+        '--metric-columns-mobile': columnCount(1)
+      }"
+      [attr.aria-label]="ariaLabel()"
     >
-      @for (metric of metrics; track metric.id ?? metric) {
+      @for (metric of metrics(); track metric.id ?? metric) {
         <app-kpi-card
           [title]="metric.title"
           [subtitle]="metric.subtitle ?? ''"
@@ -60,55 +63,14 @@ export interface KpiMetric {
       }
     </section>
   `,
-  styles: [
-    `
-      :host {
-        display: block;
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
-      }
-
-      .metrics-grid {
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
-        display: grid;
-        grid-template-columns:
-          repeat(var(--metric-columns-desktop), minmax(min(100%, var(--min-col-width)), 1fr));
-        gap: var(--space-3);
-      }
-
-      .metrics-grid > * {
-        min-width: 0;
-      }
-
-      @media (max-width: 72rem) {
-        .metrics-grid {
-          grid-template-columns:
-            repeat(var(--metric-columns-tablet), minmax(min(100%, var(--min-col-width)), 1fr));
-        }
-      }
-
-      @media (max-width: 36rem) {
-        .metrics-grid {
-          grid-template-columns:
-            repeat(var(--metric-columns-mobile), minmax(min(100%, var(--min-col-width)), 1fr));
-        }
-      }
-
-      .metrics-grid--empty {
-        grid-template-columns: none;
-      }
-    `,
-  ],
+  styleUrl: './metrics-grid.component.css',
 })
 export class MetricsGridComponent {
-  @Input() metrics: readonly KpiMetric[] = [];
-  @Input() minCardWidth = '13.75rem';
-  @Input() ariaLabel = 'Resumen de indicadores';
+  readonly metrics = input<readonly KpiMetric[]>([]);
+  readonly minCardWidth = input('13.75rem');
+  readonly ariaLabel = input('Resumen de indicadores');
 
   columnCount(capacity: number): number {
-    return Math.min(this.metrics.length, capacity);
+    return Math.min(this.metrics().length, capacity);
   }
 }

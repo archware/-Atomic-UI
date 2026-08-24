@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  Output,
+  OnChanges,
+  SimpleChanges,
   computed,
   forwardRef,
   signal,
+  input,
+  output,
 } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ButtonComponent } from '../../atoms/button/button.component';
@@ -62,20 +63,20 @@ export interface DenominationCounterRow extends DenominationDefinition {
   template: `
     <app-accordion>
       <app-accordion-item
-        [title]="title"
+        [title]="title()"
         [description]="accordionDescription()"
         [open]="open"
-        [disabled]="disabled"
+        [disabled]="isDisabled()"
         (openChange)="setExpanded($event)"
       >
-        @if (optional && !expanded()) {
+        @if (optional() && !expanded()) {
           <span aria-hidden="true"></span>
         } @else if (rows().length === 0) {
-          <p class="denomination-counter__empty">{{ emptyMessage }}</p>
+          <p class="denomination-counter__empty">{{ emptyMessage() }}</p>
         } @else {
-          <div class="denomination-counter__status" [attr.data-state]="state" aria-live="polite">
+          <div class="denomination-counter__status" [attr.data-state]="state()" aria-live="polite">
             <span>{{ stateLabel() }}</span>
-            @if (state === 'suggested' && total() > 0 && !disabled) {
+            @if (state() === 'suggested' && total() > 0 && !isDisabled()) {
               <app-button
                 type="button"
                 variant="outline"
@@ -83,7 +84,7 @@ export interface DenominationCounterRow extends DenominationDefinition {
                 iconClass="check"
                 (buttonClick)="confirmCurrentValue()"
               >
-                {{ suggestionActionLabel }}
+                {{ suggestionActionLabel() }}
               </app-button>
             }
           </div>
@@ -102,12 +103,12 @@ export interface DenominationCounterRow extends DenominationDefinition {
                   }
                 </div>
                 <app-number-input
-                  [inputId]="id + '-' + row.code"
+                  [inputId]="id() + '-' + row.code"
                   [label]="'Cantidad de ' + row.label"
                   [min]="0"
                   [max]="maxQuantity"
                   [step]="1"
-                  [disabled]="disabled"
+                  [disabled]="isDisabled()"
                   [ngModel]="row.quantity"
                   [ngModelOptions]="{ standalone: true }"
                   (ngModelChange)="setQuantity(row.code, $event)"
@@ -122,165 +123,43 @@ export interface DenominationCounterRow extends DenominationDefinition {
             }
           </div>
           <div class="denomination-counter__total" aria-live="polite">
-            <span>{{ totalLabel }}</span>
+            <span>{{ totalLabel() }}</span>
             <strong>{{ formatMoney(total()) }}</strong>
           </div>
-          @if (calculationNotice) {
-            <p class="denomination-counter__notice">{{ calculationNotice }}</p>
+          @if (calculationNotice()) {
+            <p class="denomination-counter__notice">{{ calculationNotice() }}</p>
           }
         }
       </app-accordion-item>
     </app-accordion>
   `,
-  styles: [
-    `
-      :host {
-        display: block;
-        min-width: 0;
-      }
-
-      .denomination-counter__status {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: var(--space-3);
-        padding-block-end: var(--space-3);
-        color: var(--text-color-muted);
-        font-size: var(--text-sm);
-      }
-
-      .denomination-counter__status[data-state='suggested'] {
-        color: var(--warning-color-text);
-      }
-
-      .denomination-counter__status[data-state='confirmed'] {
-        color: var(--success-color-text);
-      }
-
-      .denomination-counter__head,
-      .denomination-counter__row {
-        display: grid;
-        grid-template-columns: minmax(7rem, 1fr) minmax(10rem, 1fr) minmax(7rem, auto);
-        align-items: center;
-        gap: var(--space-4);
-      }
-
-      .denomination-counter__head {
-        padding-block-end: var(--space-2);
-        border-bottom: thin solid var(--border-color);
-        color: var(--text-color-muted);
-        font-size: var(--text-xs);
-        font-weight: var(--font-weight-emphasis);
-      }
-
-      .denomination-counter__head span:last-child {
-        text-align: end;
-      }
-
-      .denomination-counter__rows {
-        display: grid;
-      }
-
-      .denomination-counter__row {
-        padding-block: var(--space-3);
-        border-bottom: thin solid var(--border-color);
-      }
-
-      .denomination-counter__denomination {
-        min-width: 0;
-        display: grid;
-        gap: var(--space-1);
-        color: var(--text-color);
-      }
-
-      .denomination-counter__denomination span {
-        color: var(--text-color-muted);
-        font-size: var(--text-xs);
-      }
-
-      .denomination-counter__row app-number-input ::ng-deep .number-input__label {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
-
-      .denomination-counter__subtotal {
-        color: var(--text-color);
-        font-variant-numeric: tabular-nums;
-        font-weight: var(--font-weight-emphasis);
-        text-align: end;
-      }
-
-      .denomination-counter__total {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: var(--space-4);
-        padding-block-start: var(--space-4);
-        color: var(--text-color);
-        font-size: var(--text-md);
-      }
-
-      .denomination-counter__total strong {
-        color: var(--primary-color);
-        font-variant-numeric: tabular-nums;
-      }
-
-      .denomination-counter__empty {
-        margin: 0;
-        color: var(--text-color-muted);
-      }
-
-      .denomination-counter__notice {
-        margin: var(--space-2) 0 0;
-        color: var(--text-color-muted);
-        font-size: var(--text-xs);
-      }
-
-      @media (max-width: 40rem) {
-        .denomination-counter__head {
-          display: none;
-        }
-
-        .denomination-counter__row {
-          grid-template-columns: minmax(0, 1fr) minmax(8rem, 1fr);
-        }
-
-        .denomination-counter__subtotal {
-          grid-column: 1 / -1;
-          text-align: start;
-        }
-      }
-    `,
-  ],
+  styleUrl: './denomination-counter.css',
 })
-export class DenominationCounter implements ControlValueAccessor {
+export class DenominationCounter implements ControlValueAccessor, OnChanges {
   private static nextId = 0;
 
-  @Input() id = `denomination-counter-${++DenominationCounter.nextId}`;
-  @Input() title = 'Desglose de efectivo';
-  @Input() description = 'Registre la cantidad por denominación.';
-  @Input() totalLabel = 'Total contado';
-  @Input() calculationNotice =
-    'Total referencial. El backend conserva la autoridad sobre el monto definitivo.';
-  @Input() emptyMessage = 'No hay denominaciones disponibles.';
-  @Input() optional = false;
-  @Input() state: DenominationCounterState = 'empty';
-  @Input() suggestionActionLabel = 'Confirmar desglose sugerido';
-  @Input() set open(value: boolean) {
+  readonly id = input(`denomination-counter-${++DenominationCounter.nextId}`);
+  readonly title = input('Desglose de efectivo');
+  readonly description = input('Registre la cantidad por denominación.');
+  readonly totalLabel = input('Total contado');
+  readonly calculationNotice = input('Total referencial. El backend conserva la autoridad sobre el monto definitivo.');
+  readonly emptyMessage = input('No hay denominaciones disponibles.');
+  readonly optional = input(false);
+  readonly state = input<DenominationCounterState>('empty');
+  readonly suggestionActionLabel = input('Confirmar desglose sugerido');
+  // Cada alias conserva la API pública y delega en setters con normalización o efectos de dominio.
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly entradaAbierto = input(false, { alias: 'open' });
+  set open(value: boolean) {
     this.openState = value;
     this.expanded.set(value);
   }
   get open(): boolean {
     return this.openState;
   }
-  @Input() set maxQuantity(value: number) {
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly entradaCantidadMaxima = input(9999, { alias: 'maxQuantity' });
+  set maxQuantity(value: number) {
     const normalized = this.normalizeMaximumQuantity(value);
     if (normalized === this.maximumQuantity) {
       return;
@@ -294,14 +173,29 @@ export class DenominationCounter implements ControlValueAccessor {
   get maxQuantity(): number {
     return this.maximumQuantity;
   }
-  @Input() locale = 'es-PE';
-  @Input() currency = 'PEN';
-  @Input() disabled = false;
-  @Input() set value(value: readonly DenominationCount[] | null | undefined) {
+  readonly locale = input('es-PE');
+  readonly currency = input('PEN');
+  readonly disabled = input(false);
+  private readonly disabledByForm = signal(false);
+
+  isDisabled(): boolean {
+    return this.disabled() || this.disabledByForm();
+  }
+  /* eslint-disable @angular-eslint/no-input-rename */
+  readonly entradaValor = input<readonly DenominationCount[] | null | undefined>(undefined, {
+    alias: 'value',
+  });
+  /* eslint-enable @angular-eslint/no-input-rename */
+  set value(value: readonly DenominationCount[] | null | undefined) {
     this.writeValue(value);
   }
 
-  @Input() set denominations(value: readonly DenominationDefinition[] | null | undefined) {
+  /* eslint-disable @angular-eslint/no-input-rename */
+  readonly entradaDenominaciones = input<
+    readonly DenominationDefinition[] | null | undefined
+  >([], { alias: 'denominations' });
+  /* eslint-enable @angular-eslint/no-input-rename */
+  set denominations(value: readonly DenominationDefinition[] | null | undefined) {
     const definitions = this.normalizeDefinitions(value ?? []);
     this.definitions.set(definitions);
     const wasAwaitingDefinitions = this.awaitingDefinitionsForExternalValue;
@@ -314,9 +208,9 @@ export class DenominationCounter implements ControlValueAccessor {
     }
   }
 
-  @Output() readonly valueChange = new EventEmitter<readonly DenominationCount[]>();
-  @Output() readonly totalChange = new EventEmitter<number>();
-  @Output() readonly openChange = new EventEmitter<boolean>();
+  readonly valueChange = output<readonly DenominationCount[]>();
+  readonly totalChange = output<number>();
+  readonly openChange = output<boolean>();
 
   private readonly definitions = signal<readonly DenominationDefinition[]>([]);
   private readonly quantities = signal<ReadonlyMap<string, number>>(new Map());
@@ -324,6 +218,21 @@ export class DenominationCounter implements ControlValueAccessor {
   private awaitingDefinitionsForExternalValue = false;
   private openState = false;
   readonly expanded = signal(false);
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['entradaAbierto']) {
+      this.open = this.entradaAbierto();
+    }
+    if (changes['entradaCantidadMaxima']) {
+      this.maxQuantity = this.entradaCantidadMaxima();
+    }
+    if (changes['entradaValor']) {
+      this.value = this.entradaValor();
+    }
+    if (changes['entradaDenominaciones']) {
+      this.denominations = this.entradaDenominaciones();
+    }
+  }
 
   readonly rows = computed<readonly DenominationCounterRow[]>(() =>
     this.definitions().map((definition) => {
@@ -343,17 +252,17 @@ export class DenominationCounter implements ControlValueAccessor {
   accordionDescription(): string {
     const formattedTotal = this.formatMoney(this.total());
     const description =
-      this.description.trim().length > 0
-        ? `${this.description} Total: ${formattedTotal}.`
+      this.description().trim().length > 0
+        ? `${this.description()} Total: ${formattedTotal}.`
         : `Total: ${formattedTotal}.`;
     const state = this.stateLabel();
-    return this.optional
+    return this.optional()
       ? `Opcional para auditoría. ${state}. ${description}`
       : `${state}. ${description}`;
   }
 
   stateLabel(): string {
-    switch (this.state) {
+    switch (this.state()) {
       case 'suggested':
         return 'Sugerido, pendiente de confirmar';
       case 'confirmed':
@@ -391,7 +300,7 @@ export class DenominationCounter implements ControlValueAccessor {
   }
 
   setDisabledState(disabled: boolean): void {
-    this.disabled = disabled;
+    this.disabledByForm.set(disabled);
   }
 
   setExpanded(open: boolean): void {
@@ -404,7 +313,7 @@ export class DenominationCounter implements ControlValueAccessor {
   }
 
   setQuantity(code: string, value: number): void {
-    if (this.disabled) {
+    if (this.isDisabled()) {
       return;
     }
 
@@ -416,7 +325,7 @@ export class DenominationCounter implements ControlValueAccessor {
   }
 
   confirmCurrentValue(): void {
-    if (this.disabled || this.state !== 'suggested' || this.total() <= 0) {
+    if (this.isDisabled() || this.state() !== 'suggested' || this.total() <= 0) {
       return;
     }
 
@@ -425,9 +334,9 @@ export class DenominationCounter implements ControlValueAccessor {
   }
 
   formatMoney(value: number): string {
-    return new Intl.NumberFormat(this.locale, {
+    return new Intl.NumberFormat(this.locale(), {
       style: 'currency',
-      currency: this.currency,
+      currency: this.currency(),
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(value);

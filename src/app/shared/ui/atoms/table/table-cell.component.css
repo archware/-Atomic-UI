@@ -1,0 +1,31 @@
+td[app-table-cell] {
+  /* Usando tokens --table-* */
+  padding: var(--table-cell-padding);
+  vertical-align: middle;
+  color: var(--table-color-text);
+  font-size: var(--table-font-size);
+}
+
+th[app-table-header-cell] {
+  text-align: left;
+  font-weight: var(--table-font-weight-header);
+}
+
+/* Clases de alineación */
+td[app-table-cell].align-center,
+th[app-table-header-cell].align-center,
+.text-center {
+  text-align: center;
+}
+
+td[app-table-cell].align-right,
+th[app-table-header-cell].align-right,
+.text-right {
+  text-align: right;
+}
+
+td[app-table-cell].align-left,
+th[app-table-header-cell].align-left,
+.text-left {
+  text-align: left;
+}

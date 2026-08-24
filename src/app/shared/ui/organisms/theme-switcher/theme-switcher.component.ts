@@ -23,39 +23,7 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
       </app-icon-button>
     </div>
   `,
-  styles: [`
-    .theme-switcher {
-      position: relative;
-      display: inline-block;
-    }
-
-    /* ========== ICONOS ========== */
-    .icon {
-      font-size: var(--text-xl);
-      width: auto;
-      height: auto;
-      transition: color 200ms ease, transform 200ms ease;
-    }
-
-    .icon-sun {
-      color: var(--icon-sun-color);
-      filter: drop-shadow(0 0 var(--space-1) var(--shadow-glow-primary));
-    }
-
-    .icon-moon {
-      color: var(--icon-moon-color);
-      filter: drop-shadow(0 0 var(--space-1) var(--shadow-glow-primary));
-    }
-
-    .icon.hidden {
-      display: none;
-    }
-
-    /* Hover effect */
-    :host:hover .icon-sun { transform: rotate(45deg) scale(1.15); filter: drop-shadow(0 0 6px var(--warning-color)); }
-
-    :host:hover .icon-moon { transform: rotate(-15deg) scale(1.15); filter: drop-shadow(0 0 6px var(--primary-color)); }
-  `],
+  styleUrl: './theme-switcher.component.css',
   host: {
     '[attr.data-theme-switcher]': 'true'
   }
@@ -78,4 +46,3 @@ export class ThemeSwitcherComponent {
     }
   }
 }
-

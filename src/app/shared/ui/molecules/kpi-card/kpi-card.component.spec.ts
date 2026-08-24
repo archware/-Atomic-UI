@@ -17,9 +17,9 @@ describe('KpiCardComponent', () => {
   });
 
   it('prefers an authoritative display value and does not invent a trend', () => {
-    component.title = 'Saldo reportado';
-    component.value = 999999;
-    component.displayValue = 'S/ 1,234.56';
+    fixture.componentRef.setInput('title', 'Saldo reportado');
+    fixture.componentRef.setInput('value', 999999);
+    fixture.componentRef.setInput('displayValue', 'S/ 1,234.56');
     fixture.detectChanges();
 
     const card = fixture.nativeElement.querySelector('.kpi-card') as HTMLElement;
@@ -31,21 +31,21 @@ describe('KpiCardComponent', () => {
   });
 
   it('keeps two currency decimals by default and allows an explicit precision', () => {
-    component.value = 1234.5;
-    component.format = 'currency';
-    component.currency = 'PEN';
+    fixture.componentRef.setInput('value', 1234.5);
+    fixture.componentRef.setInput('format', 'currency');
+    fixture.componentRef.setInput('currency', 'PEN');
     fixture.detectChanges();
 
     expect(component.formattedValue).toContain('1,234.50');
 
-    component.fractionDigits = 3;
+    fixture.componentRef.setInput('fractionDigits', 3);
     fixture.detectChanges();
     expect(component.formattedValue).toContain('1,234.500');
   });
 
   it('renders a lightweight finite SVG sparkline and restores intended dimensions', () => {
-    component.iconClass = 'fa-solid fa-wallet';
-    component.series = [10, Number.NaN, 12, Number.POSITIVE_INFINITY, 15];
+    fixture.componentRef.setInput('iconClass', 'fa-solid fa-wallet');
+    fixture.componentRef.setInput('series', [10, Number.NaN, 12, Number.POSITIVE_INFINITY, 15]);
     fixture.detectChanges();
 
     const icon = fixture.nativeElement.querySelector('.kpi-card__icon') as HTMLElement;
@@ -60,9 +60,9 @@ describe('KpiCardComponent', () => {
   });
 
   it('renders comparison metadata only when it was explicitly supplied', () => {
-    component.trend = 'up';
-    component.trendValue = '+4.2%';
-    component.comparisonLabel = 'frente al periodo anterior';
+    fixture.componentRef.setInput('trend', 'up');
+    fixture.componentRef.setInput('trendValue', '+4.2%');
+    fixture.componentRef.setInput('comparisonLabel', 'frente al periodo anterior');
     fixture.detectChanges();
 
     const meta = fixture.nativeElement.querySelector('.kpi-card__meta') as HTMLElement;
@@ -80,7 +80,7 @@ describe('KpiCardComponent', () => {
   });
 
   it('uses neutral emphasis by default and exposes semantic tones explicitly', () => {
-    component.iconClass = 'fa-solid fa-wallet';
+    fixture.componentRef.setInput('iconClass', 'fa-solid fa-wallet');
     fixture.detectChanges();
 
     const card = fixture.nativeElement.querySelector('.kpi-card') as HTMLElement;

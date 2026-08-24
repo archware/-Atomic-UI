@@ -1,5 +1,5 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-
+import { Component, ChangeDetectionStrategy, input } from '@angular/core';
+import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 /**
  * @deprecated Use `<app-row variant="form">` instead.
@@ -17,42 +17,25 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 @Component({
   selector: 'app-form-row',
   standalone: true,
-  imports: [],
+  imports: [VariablesCssDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div 
       class="form-row-grid"
-      [style.grid-template-columns]="columns"
-      [style.gap]="gap"
+      [appVariablesCss]="{
+        '--form-row-columns': columns(),
+        '--form-row-gap': gap()
+      }"
     >
       <ng-content></ng-content>
     </div>
   `,
-  styles: [`
-    :host {
-      display: block;
-      width: 100%;
-      margin-bottom: var(--space-5); /* 24px vertical */
-    }
-
-    .form-row-grid {
-      display: grid;
-      width: 100%;
-      align-items: start;
-    }
-
-    @media (max-width: 40rem) {
-      .form-row-grid {
-        grid-template-columns: 1fr !important;
-        gap: var(--space-5) !important; /* 24px vertical on mobile */
-      }
-    }
-  `]
+  styleUrl: './form-row.component.css'
 })
 export class FormRowComponent {
   /** @deprecated Use app-row variant="form" instead */
-  @Input() columns = '1fr 1fr';
+  readonly columns = input('1fr 1fr');
 
   /** @deprecated Use app-row variant="form" instead */
-  @Input() gap = 'var(--space-7)'; /* 3var(--space-2) horizontal */
+  readonly gap = input('var(--space-7)'); /* 3var(--space-2) horizontal */
 }

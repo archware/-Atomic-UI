@@ -6,12 +6,12 @@
     </app-icon-button>
 
     <!-- Page Title -->
-    <h1 class="page-title">{{ title }}</h1>
+    <h1 class="page-title">{{ title() }}</h1>
   </div>
 
   <div class="topbar-right">
     <!-- 0. Language Switcher -->
-    @if (showLanguageSwitcher) {
+    @if (showLanguageSwitcher()) {
       <app-language-switcher></app-language-switcher>
     }
 
@@ -19,10 +19,10 @@
     <ng-content></ng-content>
 
     <!-- 2. Notifications (usando IconButton con badge) -->
-    @if (showNotifications) {
+    @if (showNotifications()) {
       <app-icon-button
         tooltip="Notificaciones"
-        [badge]="notificationCount"
+        [badge]="notificationCount()"
         (clicked)="notificationClick.emit()"
       >
         <i class="fa-regular fa-bell topbar-icon" aria-hidden="true"></i>
@@ -31,10 +31,10 @@
 
     <!-- 3. User Menu (con dropdown) -->
     <app-user-menu
-      [initials]="userInitials"
-      [userName]="userName"
-      [userEmail]="userEmail"
-      [userRole]="userRole"
+      [initials]="userInitials()"
+      [userName]="userName()"
+      [userEmail]="userEmail()"
+      [userRole]="userRole()"
       (actionSelected)="onUserAction($event)"
       (logout)="onLogout()"
     >

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
 
 import { PanelComponent } from '../../surfaces/panel/panel.component';
 import { ButtonComponent } from '../../atoms/button/button.component';
@@ -24,79 +24,43 @@ import { ButtonComponent } from '../../atoms/button/button.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [PanelComponent, ButtonComponent],
   template: `
-    <app-panel [title]="title" icon="🔍" variant="default" padding="md">
+    <app-panel [title]="title()" icon="🔍" variant="default" padding="md">
       <div class="filter-bar">
         <ng-content></ng-content>
         <div class="filter-actions">
           <app-button variant="primary" (buttonClick)="onFilter()">
             <i icon-left class="fa-solid fa-magnifying-glass"></i>
-            {{ filterLabel }}
+            {{ filterLabel() }}
           </app-button>
-          @if (showClear) {
+          @if (showClear()) {
             <app-button variant="ghost" (buttonClick)="onClear()">
-              {{ clearLabel }}
+              {{ clearLabel() }}
             </app-button>
           }
         </div>
       </div>
     </app-panel>
   `,
-  styles: [`
-    :host { display: block; }
-
-    .filter-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-end;
-      gap: 1rem;
-      /* Anula min-width interno de componentes para permitir flex shrinking */
-      --select2-min-width: 0;
-      --fi-min-width: 0;
-    }
-
-    /* Cada campo proyectado crece pero no baja de 160px */
-    .filter-bar > ::ng-deep * {
-      flex: 1 1 160px;
-      min-width: 0;
-    }
-
-    /* El botón no crece: tamaño fijo */
-    .filter-actions {
-      flex: 0 0 auto;
-      display: flex;
-      gap: var(--space-2);
-      align-items: center;
-    }
-
-    /* Móvil: stack vertical completo */
-    @media (max-width: 40rem) {
-      .filter-bar > ::ng-deep * {
-        flex: 1 1 100%;
-      }
-      .filter-actions {
-        width: 100%;
-      }
-    }
-  `]
+  styleUrl: './filters.component.styles.css'
 })
 export class FiltersComponent {
   /** Título del panel de filtros */
-  @Input() title = 'Filtros';
+  readonly title = input('Filtros');
 
   /** Texto del botón principal */
-  @Input() filterLabel = 'Filtrar';
+  readonly filterLabel = input('Filtrar');
 
   /** Texto del botón limpiar */
-  @Input() clearLabel = 'Limpiar';
+  readonly clearLabel = input('Limpiar');
 
   /** Mostrar botón de limpiar */
-  @Input() showClear = false;
+  readonly showClear = input(false);
 
   /** Emitido al hacer clic en Filtrar */
-  @Output() filter = new EventEmitter<void>();
+  readonly filter = output<void>();
 
   /** Emitido al hacer clic en Limpiar */
-  @Output() clear = new EventEmitter<void>();
+  readonly clear = output<void>();
 
   onFilter() { this.filter.emit(); }
   onClear() { this.clear.emit(); }

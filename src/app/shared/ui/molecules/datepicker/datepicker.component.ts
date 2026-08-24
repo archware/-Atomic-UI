@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, signal, computed, ElementRef, HostListener, inject } from '@angular/core';
+import { Component, forwardRef, signal, computed, ElementRef, HostListener, inject, input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FloatingInputComponent, FloatingInputVariant } from '../../atoms/floating-input/floating-input.component';
@@ -19,10 +19,15 @@ import { FloatingInputComponent, FloatingInputVariant } from '../../atoms/floati
   styleUrls: ['./datepicker.component.css']
 })
 export class DatepickerComponent implements ControlValueAccessor {
-  @Input() label = '';
-  @Input() variant: FloatingInputVariant = 'floating';
-  @Input() error = '';
-  @Input() disabled = false;
+  readonly label = input('');
+  readonly variant = input<FloatingInputVariant>('floating');
+  readonly error = input('');
+  readonly disabled = input(false);
+  private readonly disabledByForm = signal(false);
+
+  isDisabled(): boolean {
+    return this.disabled() || this.disabledByForm();
+  }
 
   // State
   isOpen = signal(false);
@@ -83,7 +88,7 @@ export class DatepickerComponent implements ControlValueAccessor {
 
   // Methods
   toggle() {
-    if (this.disabled) return;
+    if (this.isDisabled()) return;
     this.isOpen.update(v => !v);
     if (this.isOpen()) {
       // If we have a value, jump view to that value's month
@@ -170,7 +175,7 @@ export class DatepickerComponent implements ControlValueAccessor {
   }
 
   onKeyDown(event: KeyboardEvent, day?: Date): void {
-    if (this.disabled) return;
+    if (this.isDisabled()) return;
 
     if (!this.isOpen()) {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -309,7 +314,7 @@ export class DatepickerComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.disabledByForm.set(isDisabled);
   }
 }
 

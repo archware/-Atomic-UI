@@ -12,8 +12,8 @@ describe('FileInputComponent', () => {
 
     fixture = TestBed.createComponent(FileInputComponent);
     component = fixture.componentInstance;
-    component.accept = '.pdf,application/pdf';
-    component.maxSizeMB = 1;
+    fixture.componentRef.setInput('accept', '.pdf,application/pdf');
+    fixture.componentRef.setInput('maxSizeMB', 1);
     fixture.detectChanges();
   });
 
@@ -141,7 +141,7 @@ describe('FileInputComponent', () => {
   });
 
   it('mantiene archivos homónimos como filas independientes en modo múltiple', () => {
-    component.multiple = true;
+    fixture.componentRef.setInput('multiple', true);
     const first = new File(['%PDF-1.7-a'], 'contrato.pdf', {
       type: 'application/pdf',
     });
@@ -160,10 +160,10 @@ describe('FileInputComponent', () => {
   });
 
   it('limits image preview generation to the configured memory budget', () => {
-    component.multiple = true;
-    component.accept = 'image/*';
-    component.maxPreviewFiles = 1;
-    component.maxPreviewSizeMB = 1;
+    fixture.componentRef.setInput('multiple', true);
+    fixture.componentRef.setInput('accept', 'image/*');
+    fixture.componentRef.setInput('maxPreviewFiles', 1);
+    fixture.componentRef.setInput('maxPreviewSizeMB', 1);
     const readAsDataUrl = spyOn(FileReader.prototype, 'readAsDataURL');
     const first = new File(['image-a'], 'a.png', { type: 'image/png' });
     const second = new File(['image-b'], 'b.png', { type: 'image/png' });

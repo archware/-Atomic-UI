@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StatusBadgeComponent, StatusBadgeStatus } from './status-badge.component';
 
 describe('StatusBadgeComponent', () => {
-  let component: StatusBadgeComponent;
   let fixture: ComponentFixture<StatusBadgeComponent>;
 
   beforeEach(async () => {
@@ -13,7 +12,6 @@ describe('StatusBadgeComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(StatusBadgeComponent);
-    component = fixture.componentInstance;
   });
 
   it('renders every state with visible text in addition to color', () => {
@@ -62,8 +60,8 @@ describe('StatusBadgeComponent', () => {
   });
 
   it('adds an accessible, secret-free visual identity for Telegram', () => {
-    component.channel = 'telegram';
-    component.status = 'active';
+    fixture.componentRef.setInput('channel', 'telegram');
+    fixture.componentRef.setInput('status', 'active');
     fixture.detectChanges();
 
     const badge = fixture.nativeElement.querySelector('.status-badge') as HTMLElement;
@@ -93,9 +91,9 @@ describe('StatusBadgeComponent', () => {
   });
 
   it('allows an explicit visible label and accessible name', () => {
-    component.status = 'degraded';
-    component.label = 'Entrega parcial';
-    component.ariaLabel = 'Canal SMS con entrega parcial';
+    fixture.componentRef.setInput('status', 'degraded');
+    fixture.componentRef.setInput('label', 'Entrega parcial');
+    fixture.componentRef.setInput('ariaLabel', 'Canal SMS con entrega parcial');
     fixture.detectChanges();
 
     const badge = fixture.nativeElement.querySelector('.status-badge') as HTMLElement;

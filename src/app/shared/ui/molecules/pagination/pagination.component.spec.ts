@@ -14,8 +14,8 @@ describe('PaginationComponent', () => {
 
     fixture = TestBed.createComponent(PaginationComponent);
     component = fixture.componentInstance;
-    component.total = 50;
-    component.pageSize = 10;
+    fixture.componentRef.setInput('total', 50);
+    fixture.componentRef.setInput('pageSize', 10);
     fixture.detectChanges();
   });
 
@@ -24,7 +24,7 @@ describe('PaginationComponent', () => {
   });
 
   it('keeps the shared button contract in the minimal variant', () => {
-    component.variant = 'minimal';
+    fixture.componentRef.setInput('variant', 'minimal');
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
@@ -37,7 +37,7 @@ describe('PaginationComponent', () => {
   });
 
   it('uses classes instead of static inline styles for layout and icons', () => {
-    component.variant = 'minimal';
+    fixture.componentRef.setInput('variant', 'minimal');
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
@@ -54,19 +54,22 @@ describe('PaginationComponent', () => {
     });
 
     it('should return 1 when total is 0', () => {
-      component.total = 0;
+      fixture.componentRef.setInput('total', 0);
+      fixture.detectChanges();
       expect(component.totalPages()).toBe(1);
     });
 
     it('should round up for partial last page', () => {
-      component.total = 11;
-      component.pageSize = 10;
+      fixture.componentRef.setInput('total', 11);
+      fixture.componentRef.setInput('pageSize', 10);
+      fixture.detectChanges();
       expect(component.totalPages()).toBe(2);
     });
 
     it('should handle pageSize > total', () => {
-      component.total = 5;
-      component.pageSize = 10;
+      fixture.componentRef.setInput('total', 5);
+      fixture.componentRef.setInput('pageSize', 10);
+      fixture.detectChanges();
       expect(component.totalPages()).toBe(1);
     });
   });
@@ -74,28 +77,28 @@ describe('PaginationComponent', () => {
   // ── Navigation buttons ────────────────────────────────────────────────────
   describe('navigation buttons', () => {
     it('should disable prev button on page 1', () => {
-      component.page = 1;
+      fixture.componentRef.setInput('page', 1);
       fixture.detectChanges();
       const prevBtn: HTMLButtonElement = fixture.nativeElement.querySelector('.page-prev');
       expect(prevBtn.disabled).toBeTrue();
     });
 
     it('should enable prev button on page > 1', () => {
-      component.page = 2;
+      fixture.componentRef.setInput('page', 2);
       fixture.detectChanges();
       const prevBtn: HTMLButtonElement = fixture.nativeElement.querySelector('.page-prev');
       expect(prevBtn.disabled).toBeFalse();
     });
 
     it('should disable next button on last page', () => {
-      component.page = 5;
+      fixture.componentRef.setInput('page', 5);
       fixture.detectChanges();
       const nextBtn: HTMLButtonElement = fixture.nativeElement.querySelector('.page-next');
       expect(nextBtn.disabled).toBeTrue();
     });
 
     it('should enable next button when not on last page', () => {
-      component.page = 3;
+      fixture.componentRef.setInput('page', 3);
       fixture.detectChanges();
       const nextBtn: HTMLButtonElement = fixture.nativeElement.querySelector('.page-next');
       expect(nextBtn.disabled).toBeFalse();
@@ -115,7 +118,8 @@ describe('PaginationComponent', () => {
     });
 
     it('should NOT emit pageChange for the current page', () => {
-      component.page = 2;
+      fixture.componentRef.setInput('page', 2);
+      fixture.detectChanges();
       let emittedCount = 0;
       component.pageChange.subscribe(() => { emittedCount++; });
 
@@ -146,9 +150,9 @@ describe('PaginationComponent', () => {
   // ── visiblePages ──────────────────────────────────────────────────────────
   describe('visiblePages', () => {
     it('should show all pages when total pages <= maxVisible', () => {
-      component.total = 30;
-      component.pageSize = 10;
-      component.maxVisible = 5;
+      fixture.componentRef.setInput('total', 30);
+      fixture.componentRef.setInput('pageSize', 10);
+      fixture.componentRef.setInput('maxVisible', 5);
       fixture.detectChanges();
 
       const pages = component.visiblePages().filter((p) => p !== '...');
@@ -156,20 +160,20 @@ describe('PaginationComponent', () => {
     });
 
     it('should include ellipsis when pages exceed maxVisible', () => {
-      component.total = 100;
-      component.pageSize = 10;
-      component.maxVisible = 5;
-      component.page = 1;
+      fixture.componentRef.setInput('total', 100);
+      fixture.componentRef.setInput('pageSize', 10);
+      fixture.componentRef.setInput('maxVisible', 5);
+      fixture.componentRef.setInput('page', 1);
       fixture.detectChanges();
 
       expect(component.visiblePages()).toContain('...');
     });
 
     it('should always include page 1 and last page', () => {
-      component.total = 100;
-      component.pageSize = 10;
-      component.maxVisible = 5;
-      component.page = 5;
+      fixture.componentRef.setInput('total', 100);
+      fixture.componentRef.setInput('pageSize', 10);
+      fixture.componentRef.setInput('maxVisible', 5);
+      fixture.componentRef.setInput('page', 5);
       fixture.detectChanges();
 
       const pages = component.visiblePages();
@@ -186,7 +190,7 @@ describe('PaginationComponent', () => {
     });
 
     it('should mark active page button with aria-current="page"', () => {
-      component.page = 2;
+      fixture.componentRef.setInput('page', 2);
       fixture.detectChanges();
       const activeBtn = fixture.nativeElement.querySelector('[aria-current="page"]');
       expect(activeBtn).not.toBeNull();

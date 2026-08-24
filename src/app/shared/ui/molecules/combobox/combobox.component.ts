@@ -1,6 +1,8 @@
 import {
-  Component, Input, Output, EventEmitter, signal, computed,
-  forwardRef, ChangeDetectionStrategy, ElementRef, ViewChild, inject, PLATFORM_ID
+  Component, signal, computed, effect, untracked,
+  forwardRef, ChangeDetectionStrategy, ElementRef, ViewChild, inject, PLATFORM_ID,
+  input,
+  output
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -61,8 +63,8 @@ function normalizeSearch(value: string): string {
   ],
   template: `
     <div class="combobox" [class.combobox-open]="isOpen()" [class.combobox-disabled]="disabled">
-      @if (label) {
-        <label class="combobox-label" [for]="inputId">{{ label }}</label>
+      @if (label()) {
+        <label class="combobox-label" [for]="inputId">{{ label() }}</label>
       }
       <div class="combobox-control" #controlRef>
         <input
@@ -70,7 +72,7 @@ function normalizeSearch(value: string): string {
           [id]="inputId"
           class="combobox-input"
           type="text"
-          [placeholder]="placeholder"
+          [placeholder]="placeholder()"
           [disabled]="disabled"
           [value]="inputValue()"
           (input)="onInput($event)"
@@ -83,18 +85,18 @@ function normalizeSearch(value: string): string {
           aria-autocomplete="list"
           [attr.aria-controls]="listboxId"
           [attr.aria-activedescendant]="activeOptionId()"
-          [attr.aria-label]="label ? null : ariaLabel || placeholder"
-          [attr.aria-invalid]="error ? 'true' : 'false'"
-          [attr.aria-errormessage]="error ? errorId : null"
+          [attr.aria-label]="label() ? null : ariaLabel() || placeholder()"
+          [attr.aria-invalid]="error() ? 'true' : 'false'"
+          [attr.aria-errormessage]="error() ? errorId : null"
           aria-haspopup="listbox"
         />
-        @if (inputValue() && !disabled && clearable) {
+        @if (inputValue() && !disabled && clearable()) {
           <button
             type="button"
             class="combobox-clear"
             (mousedown)="$event.preventDefault()"
             (click)="clear()"
-            [attr.aria-label]="'Limpiar ' + (label || placeholder)">
+            [attr.aria-label]="'Limpiar ' + (label() || placeholder())">
             <i class="fa-solid fa-xmark" aria-hidden="true"></i>
           </button>
         } @else {
@@ -131,129 +133,12 @@ function normalizeSearch(value: string): string {
         </ul>
       }
 
-      @if (error) {
-        <span class="combobox-error" [id]="errorId" role="alert">{{ error }}</span>
+      @if (error()) {
+        <span class="combobox-error" [id]="errorId" role="alert">{{ error() }}</span>
       }
     </div>
   `,
-  styles: [`
-    .combobox { position: relative; width: 100%; }
-    .combobox.combobox-open { z-index: 1000; }
-
-    .combobox-label {
-      display: block;
-      font-size: var(--text-sm);
-      font-weight: var(--font-weight-body);
-      color: var(--text-color-secondary);
-      margin-bottom: var(--space-1);
-    }
-
-    .combobox-control {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .combobox-input {
-      width: 100%;
-      padding: var(--space-2) var(--space-8) var(--space-2) var(--space-3);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      background: var(--input-bg);
-      color: var(--text-color);
-      font-size: var(--text-sm);
-      line-height: 1.5;
-      outline: none;
-      transition: border-color 150ms ease, box-shadow 150ms ease;
-    }
-
-    .combobox-input:focus {
-      border-color: var(--input-border-focus);
-      box-shadow: var(--input-shadow-focus);
-    }
-
-    .combobox-input:disabled {
-      background: var(--input-disabled-bg);
-      cursor: not-allowed;
-      color: var(--input-disabled-text);
-    }
-
-    .combobox-icon, .combobox-clear {
-      position: absolute;
-      right: var(--space-3);
-      color: var(--text-color-muted);
-      font-size: var(--text-sm);
-      pointer-events: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      display: flex;
-      align-items: center;
-    }
-
-    .combobox-clear { pointer-events: all; }
-    .combobox-clear:hover { color: var(--text-color); }
-
-    .combobox-dropdown {
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      max-height: 240px;
-      overflow-y: auto;
-      background: var(--surface-background);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-lg);
-      list-style: none;
-      margin: 0;
-      padding: var(--space-1) 0;
-    }
-
-    .combobox-option {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: var(--space-2) var(--space-3);
-      cursor: pointer;
-      font-size: var(--text-sm);
-      color: var(--text-color);
-      transition: background 100ms ease;
-    }
-
-    .combobox-option:hover,
-    .combobox-option-highlighted { background: var(--surface-hover); }
-    .combobox-option-selected { color: var(--primary-color); font-weight: var(--font-weight-body); }
-    .combobox-option-disabled {
-      background: var(--input-disabled-bg);
-      color: var(--input-disabled-text);
-      cursor: not-allowed;
-    }
-
-    .combobox-option-disabled .combobox-check {
-      color: var(--input-disabled-text);
-    }
-
-    .combobox-check { color: var(--primary-color); font-size: var(--text-xs); }
-
-    .combobox-empty {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      padding: var(--space-3);
-      color: var(--text-color-muted);
-      font-size: var(--text-sm);
-    }
-
-    .combobox-error {
-      display: block;
-      font-size: var(--text-xs);
-      color: var(--danger-color-text);
-      margin-top: var(--space-1);
-    }
-  `]
+  styleUrl: './combobox.component.css'
 })
 export class ComboboxComponent implements ControlValueAccessor {
   private readonly platformId = inject(PLATFORM_ID);
@@ -261,7 +146,10 @@ export class ComboboxComponent implements ControlValueAccessor {
   readonly listboxId = 'combobox-list-' + Math.random().toString(36).slice(2, 8);
   readonly errorId = 'combobox-error-' + Math.random().toString(36).slice(2, 8);
 
-  @Input()
+  // La señal interna conserva el contrato público histórico `options` mientras se adapta su setter.
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly entradaOpciones = input<ComboboxOption[]>([], { alias: 'options' });
+
   set options(value: ComboboxOption[]) {
     this._options = [...(value || [])];
     this.optionsState.set(this._options);
@@ -270,10 +158,13 @@ export class ComboboxComponent implements ControlValueAccessor {
   get options(): ComboboxOption[] {
     return this._options;
   }
-  @Input() label = '';
-  @Input() ariaLabel = '';
-  @Input() placeholder = 'Buscar...';
-  @Input()
+  readonly label = input('');
+  readonly ariaLabel = input('');
+  readonly placeholder = input('Buscar...');
+  // El alias permite combinar el estado del binding con el estado entregado por ControlValueAccessor.
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly entradaDeshabilitado = input(false, { alias: 'disabled' });
+
   set disabled(value: boolean) {
     this.disabledState.set(value);
     if (value) this.closeOptions();
@@ -281,11 +172,11 @@ export class ComboboxComponent implements ControlValueAccessor {
   get disabled(): boolean {
     return this.disabledState();
   }
-  @Input() clearable = true;
-  @Input() error = '';
+  readonly clearable = input(true);
+  readonly error = input('');
 
-  @Output() optionSelected = new EventEmitter<ComboboxOption>();
-  @Output() inputChange = new EventEmitter<string>();
+  readonly optionSelected = output<ComboboxOption>();
+  readonly inputChange = output<string>();
 
   @ViewChild('inputRef') inputRef?: ElementRef<HTMLInputElement>;
 
@@ -296,6 +187,18 @@ export class ComboboxComponent implements ControlValueAccessor {
   private _options: ComboboxOption[] = [];
   private readonly disabledState = signal(false);
   private readonly optionsState = signal<readonly ComboboxOption[]>([]);
+  private readonly sincronizarOpciones = effect(() => {
+    const opciones = this.entradaOpciones();
+    untracked(() => {
+      this.options = opciones;
+    });
+  });
+  private readonly sincronizarDeshabilitado = effect(() => {
+    const deshabilitado = this.entradaDeshabilitado();
+    untracked(() => {
+      this.disabled = deshabilitado;
+    });
+  });
 
   /*
     La búsqueda IGNORA LAS TILDES, y no es un adorno.

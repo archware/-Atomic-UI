@@ -56,9 +56,9 @@ describe('ToggleComponent', () => {
 
     it('should set disabled via setDisabledState', () => {
       component.setDisabledState(true);
-      expect(component.disabled).toBeTrue();
+      expect(component.isDisabled()).toBeTrue();
       component.setDisabledState(false);
-      expect(component.disabled).toBeFalse();
+      expect(component.isDisabled()).toBeFalse();
     });
   });
 

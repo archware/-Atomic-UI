@@ -1,15 +1,15 @@
 ﻿import {
   Component,
-  Input,
-  Output,
-  EventEmitter,
   ElementRef,
   inject,
   PLATFORM_ID,
+  input,
+  output
 } from '@angular/core';
 import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import { AvatarComponent } from '../../atoms/avatar/avatar.component';
 import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
+import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 export interface SidebarMenuItem {
   id?: string;
@@ -33,7 +33,7 @@ export interface SidebarUser {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [AvatarComponent, NgTemplateOutlet, ScrollOverlayComponent],
+  imports: [AvatarComponent, NgTemplateOutlet, ScrollOverlayComponent, VariablesCssDirective],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
@@ -42,22 +42,22 @@ export class SidebarComponent {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   /** Menu items to display */
-  @Input() menuItems: SidebarMenuItem[] = [];
+  readonly menuItems = input<SidebarMenuItem[]>([]);
 
   /** Current user information */
-  @Input() user?: SidebarUser | null;
+  readonly user = input<SidebarUser | null>();
 
   /** Check if the sidebar is expanded (visual mode) */
-  @Input() collapsed = false;
+  readonly collapsed = input(false);
 
   /** Logo text */
-  @Input() logoText = 'Atomic UI';
+  readonly logoText = input('Atomic UI');
 
   /** Logo icon */
-  @Input() logoIcon = 'fa-solid fa-atom';
+  readonly logoIcon = input('fa-solid fa-atom');
 
   /** Event emitted when a menu item is clicked */
-  @Output() navigate = new EventEmitter<SidebarMenuItem>();
+  readonly navigate = output<SidebarMenuItem>();
 
   private readonly expansionOverrides = new Map<string, boolean>();
 

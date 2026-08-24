@@ -1,0 +1,35 @@
+:host { display: block; }
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  /* Anula min-width interno de componentes para permitir flex shrinking */
+  --select2-min-width: 0;
+  --fi-min-width: 0;
+}
+
+/* Cada campo proyectado crece pero no baja de 160px */
+.filter-bar > ::ng-deep * {
+  flex: 1 1 160px;
+  min-width: 0;
+}
+
+/* El botón no crece: tamaño fijo */
+.filter-actions {
+  flex: 0 0 auto;
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+/* Móvil: stack vertical completo */
+@media (max-width: 40rem) {
+  .filter-bar > ::ng-deep * {
+    flex: 1 1 100%;
+  }
+  .filter-actions {
+    width: 100%;
+  }
+}

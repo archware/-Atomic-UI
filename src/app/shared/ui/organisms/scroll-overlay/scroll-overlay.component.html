@@ -1,9 +1,9 @@
 <div
   class="so-scroll-area"
   #scrollArea
-  [attr.role]="scrollAreaAriaLabel ? 'region' : null"
-  [attr.aria-label]="scrollAreaAriaLabel"
-  [attr.tabindex]="scrollAreaAriaLabel ? 0 : null"
+  [attr.role]="scrollAreaAriaLabel() ? 'region' : null"
+  [attr.aria-label]="scrollAreaAriaLabel()"
+  [attr.tabindex]="scrollAreaAriaLabel() ? 0 : null"
 >
   <ng-content></ng-content>
 </div>

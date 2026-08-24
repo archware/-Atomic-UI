@@ -1,5 +1,6 @@
 import {
-  Component, Input, ChangeDetectionStrategy
+  Component, ChangeDetectionStrategy,
+  input
 } from '@angular/core';
 
 
@@ -29,8 +30,8 @@ export interface TimelineItem {
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="timeline" [class.timeline-horizontal]="orientation === 'horizontal'">
-      @for (item of items; track item.id ?? item.title; let last = $last) {
+    <div class="timeline" [class.timeline-horizontal]="orientation() === 'horizontal'">
+      @for (item of items(); track item.id ?? item.title; let last = $last) {
         <div class="timeline-item" [class]="'timeline-' + (item.status ?? 'pending')">
           <!-- Connector line -->
           @if (!last) {
@@ -69,190 +70,12 @@ export interface TimelineItem {
       }
     </div>
   `,
-  styles: [`
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .timeline-horizontal {
-      flex-direction: row;
-      align-items: flex-start;
-    }
-
-    .timeline-item {
-      display: grid;
-      grid-template-columns: var(--space-6) 1fr;
-      grid-template-rows: auto;
-      column-gap: var(--space-3);
-      position: relative;
-    }
-
-    .timeline-horizontal .timeline-item {
-      grid-template-columns: 1fr;
-      grid-template-rows: var(--space-6) auto;
-      align-items: center;
-      flex: 1;
-    }
-
-    /* Connector */
-    .timeline-connector {
-      position: absolute;
-      left: calc(var(--space-6) / 2);
-      top: var(--space-6);
-      bottom: 0;
-      width: var(--space-1);
-      background: var(--border-color);
-      z-index: 0;
-    }
-
-    .timeline-horizontal .timeline-connector {
-      left: 50%;
-      top: calc(var(--space-6) / 2);
-      bottom: auto;
-      right: -50%;
-      width: auto;
-      height: var(--space-1);
-    }
-
-    /* Dot */
-    .timeline-dot {
-      width: var(--space-6);
-      height: var(--space-6);
-      border-radius: var(--radius-full);
-      background: var(--surface-section);
-      border: var(--space-1) solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: var(--text-xs);
-      color: var(--text-color-muted);
-      z-index: 1;
-      position: relative;
-      flex-shrink: 0;
-    }
-
-    /* Status variants */
-    .timeline-completed .timeline-dot {
-      background: var(--success-color);
-      border-color: var(--success-color);
-      color: var(--text-color-on-primary);
-    }
-
-    .timeline-completed .timeline-connector {
-      background: var(--success-color);
-    }
-
-    .timeline-active .timeline-dot {
-      background: var(--primary-color);
-      border-color: var(--primary-color);
-      color: var(--text-color-on-primary);
-    }
-
-    .timeline-error .timeline-dot {
-      background: var(--danger-color);
-      border-color: var(--danger-color);
-      color: var(--text-color-on-primary);
-    }
-
-    /* Pulse animation for active */
-    .timeline-dot-pulse {
-      width: var(--space-2);
-      height: var(--space-2);
-      border-radius: var(--radius-full);
-      background: var(--text-color-on-primary);
-      animation: timeline-pulse 1.5s infinite ease-in-out;
-    }
-
-    @keyframes timeline-pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.3); opacity: 0.7; }
-    }
-
-    /* Content */
-    .timeline-content {
-      padding-bottom: var(--space-5);
-      padding-top: var(--space-1);
-    }
-
-    .timeline-horizontal .timeline-content {
-      padding-top: var(--space-3);
-      padding-bottom: 0;
-      text-align: center;
-    }
-
-    .timeline-header {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      flex-wrap: wrap;
-    }
-
-    .timeline-title {
-      font-size: var(--text-sm);
-      font-weight: var(--font-weight-emphasis);
-      color: var(--text-color);
-    }
-
-    .timeline-badge {
-      font-size: var(--text-xs);
-      padding: var(--space-1) var(--space-2);
-      border-radius: var(--radius-full);
-      background: var(--primary-color-lighter);
-      color: var(--primary-color);
-      font-weight: var(--font-weight-body);
-    }
-
-    .timeline-description {
-      margin: var(--space-1) 0 0;
-      font-size: var(--text-sm);
-      color: var(--text-color-secondary);
-      line-height: 1.5;
-    }
-
-    .timeline-date {
-      display: block;
-      margin-top: var(--space-1);
-      font-size: var(--text-xs);
-      color: var(--text-color-muted);
-    }
-
-    /* En móvil el timeline horizontal colapsa a vertical para evitar
-       que el contenido se comprima o desborde en pantallas pequeñas */
-    @media (max-width: 40rem) {
-      .timeline-horizontal {
-        flex-direction: column;
-      }
-
-      .timeline-horizontal .timeline-item {
-        grid-template-columns: var(--space-6) 1fr;
-        grid-template-rows: auto;
-        align-items: start;
-        flex: unset;
-      }
-
-      .timeline-horizontal .timeline-connector {
-        left: calc(var(--space-6) / 2);
-        top: var(--space-6);
-        bottom: 0;
-        right: auto;
-        width: var(--space-1);
-        height: auto;
-      }
-
-      .timeline-horizontal .timeline-content {
-        padding-top: var(--space-1);
-        padding-bottom: var(--space-5);
-        text-align: left;
-      }
-    }
-  `]
+  styleUrl: './timeline.component.css'
 })
 export class TimelineComponent {
   /** Items to display in the timeline */
-  @Input() items: TimelineItem[] = [];
+  readonly items = input<TimelineItem[]>([]);
 
   /** Layout orientation */
-  @Input() orientation: 'vertical' | 'horizontal' = 'vertical';
+  readonly orientation = input<'vertical' | 'horizontal'>('vertical');
 }

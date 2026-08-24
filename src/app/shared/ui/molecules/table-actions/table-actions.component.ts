@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -10,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './table-actions.component.css'
 })
 export class TableActionsComponent {
-  @Output() view = new EventEmitter<void>();
-  @Output() edit = new EventEmitter<void>();
-  @Output() delete = new EventEmitter<void>();
+  readonly view = output<void>();
+  readonly edit = output<void>();
+  readonly delete = output<void>();
 }

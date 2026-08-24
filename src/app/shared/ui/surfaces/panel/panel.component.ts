@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 
 
 /** Available panel visual styles */
@@ -26,29 +26,29 @@ export type PanelTitleAlign = 'left' | 'center' | 'right';
 })
 export class PanelComponent {
   /** Panel variant style */
-  @Input() variant: PanelVariant = 'default';
+  readonly variant = input<PanelVariant>('default');
 
   /** Padding size */
-  @Input() padding: PanelPadding = 'md';
+  readonly padding = input<PanelPadding>('md');
 
   /** Optional title displayed in header */
-  @Input() title = '';
+  readonly title = input('');
 
   /** Optional icon displayed before title */
-  @Input() icon = '';
+  readonly icon = input('');
 
   /** Whether to show the header section */
-  @Input() showHeader = true;
+  readonly showHeader = input(true);
 
   /** Whether the panel should take full width (default: true) */
-  @Input() fullWidth = true;
+  readonly fullWidth = input(true);
 
   /** Title font size */
-  @Input() titleSize: PanelTitleSize = 'md';
+  readonly titleSize = input<PanelTitleSize>('md');
 
   /** Title font weight */
-  @Input() titleWeight: PanelTitleWeight = 'semibold';
+  readonly titleWeight = input<PanelTitleWeight>('semibold');
 
   /** Title text alignment */
-  @Input() titleAlign: PanelTitleAlign = 'left';
+  readonly titleAlign = input<PanelTitleAlign>('left');
 }

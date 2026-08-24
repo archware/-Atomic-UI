@@ -1,11 +1,10 @@
 import {
   Component,
-  Input,
-  Output,
-  EventEmitter,
   forwardRef,
   signal,
   ChangeDetectionStrategy,
+  input,
+  output
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
@@ -43,9 +42,9 @@ export interface TagInputOption {
     },
   ],
   template: `
-    <div class="tag-input-wrapper" [class.tag-input--disabled]="disabled" [class.tag-input--focused]="focused()">
-      @if (label) {
-        <label class="tag-input__label" [for]="inputId">{{ label }}</label>
+    <div class="tag-input-wrapper" [class.tag-input--disabled]="isDisabled()" [class.tag-input--focused]="focused()">
+      @if (label()) {
+        <label class="tag-input__label" [for]="inputId">{{ label() }}</label>
       }
       <div class="tag-input__field">
         <!-- Tags -->
@@ -53,112 +52,57 @@ export interface TagInputOption {
           <app-chip
             size="sm"
             variant="primary"
-            [removable]="!disabled"
+            [removable]="!isDisabled()"
             (remove)="removeTag(tag)"
           >{{ tag }}</app-chip>
         }
 
         <!-- Input -->
-        @if (!maxTags || tags().length < maxTags) {
+        @if (maxTags() === null || tags().length < (maxTags() ?? 0)) {
           <input
             #inputEl
             [id]="inputId"
             class="tag-input__input"
-            [placeholder]="tags().length === 0 ? placeholder : ''"
-            [disabled]="disabled"
+            [placeholder]="tags().length === 0 ? placeholder() : ''"
+            [disabled]="isDisabled()"
             [(ngModel)]="inputValue"
             (keydown)="onKeydown($event)"
             (focus)="focused.set(true)"
             (blur)="onBlur()"
-            [attr.aria-label]="label || placeholder"
+            [attr.aria-label]="label() || placeholder()"
           />
         }
       </div>
 
-      @if (hint) {
-        <span class="tag-input__hint">{{ hint }}</span>
+      @if (hint()) {
+        <span class="tag-input__hint">{{ hint() }}</span>
       }
-      @if (error) {
-        <span class="tag-input__error">{{ error }}</span>
+      @if (error()) {
+        <span class="tag-input__error">{{ error() }}</span>
       }
     </div>
   `,
-  styles: [`
-    :host { display: block; width: 100%; }
-
-    .tag-input__label {
-      display: block;
-      margin-bottom: var(--space-1);
-      font-size: var(--text-sm);
-      font-weight: var(--font-medium, 500);
-      color: var(--text-color-secondary);
-    }
-
-    .tag-input__field {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--space-1);
-      min-height: var(--space-7);
-      padding: var(--space-2) var(--space-3);
-      border: var(--border-width-thin) solid var(--border-color);
-      border-radius: var(--radius-md);
-      background: var(--input-background, var(--surface-background));
-      cursor: text;
-      transition: border-color 150ms ease, box-shadow 150ms ease;
-    }
-
-    .tag-input--focused .tag-input__field {
-      border-color: var(--input-border-focus);
-      box-shadow: var(--input-shadow-focus);
-    }
-
-    .tag-input--disabled .tag-input__field {
-      cursor: not-allowed;
-      background: var(--surface-section);
-      color: var(--input-disabled-text);
-    }
-
-    .tag-input__input {
-      flex: 1;
-      min-width: 5rem;
-      border: none;
-      outline: none;
-      background: transparent;
-      font-size: var(--text-sm);
-      color: var(--text-color);
-      padding: var(--space-1) 0;
-    }
-
-    .tag-input__hint {
-      display: block;
-      margin-top: var(--space-1);
-      font-size: var(--text-xs);
-      color: var(--text-color-muted);
-    }
-
-    .tag-input__error {
-      display: block;
-      margin-top: var(--space-1);
-      font-size: var(--text-xs);
-      color: var(--danger-color-text);
-    }
-  `],
+  styleUrl: './tag-input.component.css',
 })
 export class TagInputComponent implements ControlValueAccessor {
   readonly inputId = 'tag-input-' + Math.random().toString(36).slice(2, 8);
 
-  @Input() label = '';
-  @Input() placeholder = 'Agregar etiqueta…';
-  @Input() hint = '';
-  @Input() error = '';
-  @Input() maxTags: number | null = null;
-  @Input() allowDuplicates = false;
-  @Input() disabled = false;
-  @Input() separator: string[] = ['Enter', ','];
+  readonly label = input('');
+  readonly placeholder = input('Agregar etiqueta…');
+  readonly hint = input('');
+  readonly error = input('');
+  readonly maxTags = input<number | null>(null);
+  readonly allowDuplicates = input(false);
+  readonly disabled = input(false);
+  private readonly disabledByForm = signal(false);
 
-  @Output() tagAdded = new EventEmitter<string>();
-  @Output() tagRemoved = new EventEmitter<string>();
+  isDisabled(): boolean {
+    return this.disabled() || this.disabledByForm();
+  }
+  readonly separator = input<string[]>(['Enter', ',']);
+
+  readonly tagAdded = output<string>();
+  readonly tagRemoved = output<string>();
 
   protected tags = signal<string[]>([]);
   protected focused = signal(false);
@@ -180,11 +124,11 @@ export class TagInputComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    this.disabledByForm.set(isDisabled);
   }
 
   onKeydown(event: KeyboardEvent): void {
-    if (this.separator.includes(event.key)) {
+    if (this.separator().includes(event.key)) {
       event.preventDefault();
       this.addTag();
     } else if (event.key === 'Backspace' && !this.inputValue && this.tags().length) {
@@ -204,11 +148,12 @@ export class TagInputComponent implements ControlValueAccessor {
   private addTag(): void {
     const value = this.inputValue.trim().replace(/,$/, '');
     if (!value) return;
-    if (!this.allowDuplicates && this.tags().includes(value)) {
+    if (!this.allowDuplicates() && this.tags().includes(value)) {
       this.inputValue = '';
       return;
     }
-    if (this.maxTags && this.tags().length >= this.maxTags) return;
+    const maxTags = this.maxTags();
+    if (maxTags && this.tags().length >= maxTags) return;
 
     const newTags = [...this.tags(), value];
     this.tags.set(newTags);

@@ -90,6 +90,7 @@
   flex-shrink: 0;
   font-size: var(--text-xl);
   text-align: center;
+  color: var(--sidebar-icon-color, currentColor);
 }
 
 .nav-label {

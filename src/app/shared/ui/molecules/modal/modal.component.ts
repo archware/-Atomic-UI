@@ -5,13 +5,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
   inject,
   Injector,
-  Input,
   OnDestroy,
-  Output,
   ViewChild,
+  input,
+  output
 } from '@angular/core';
 
 /* orden-dom: es un CONJUNTO de tipos de control equivalentes, no una lista de
@@ -56,20 +55,20 @@ const MODAL_ERROR_SELECTORS = [
         aria-modal="true"
         tabindex="-1"
         [attr.aria-labelledby]="titleId"
-        [attr.aria-busy]="busy ? 'true' : null"
-        [class.modal-sm]="size === 'sm'"
-        [class.modal-md]="size === 'md'"
-        [class.modal-lg]="size === 'lg'"
+        [attr.aria-busy]="busy() ? 'true' : null"
+        [class.modal-sm]="size() === 'sm'"
+        [class.modal-md]="size() === 'md'"
+        [class.modal-lg]="size() === 'lg'"
       >
         <!-- Header -->
         <div class="modal-header">
-          <h3 class="modal-title" [id]="titleId">{{ title }}</h3>
+          <h3 class="modal-title" [id]="titleId">{{ title() }}</h3>
           <button
             class="modal-close"
             (click)="requestClose()"
             type="button"
             aria-label="Cerrar"
-            [disabled]="busy"
+            [disabled]="busy()"
           >
             <i class="fa-solid fa-xmark" aria-hidden="true"></i>
           </button>
@@ -81,7 +80,7 @@ const MODAL_ERROR_SELECTORS = [
         </div>
 
         <!-- Footer -->
-        @if (hasFooter) {
+        @if (hasFooter()) {
         <div class="modal-footer">
           <ng-content select="[slot=footer]"></ng-content>
         </div>
@@ -89,151 +88,7 @@ const MODAL_ERROR_SELECTORS = [
       </div>
     </div>
   `,
-  styles: [`
-      .modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: var(--overlay-backdrop);
-        backdrop-filter: blur(4px);
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-        z-index: 1000;
-        animation: fadeIn 150ms ease;
-        overflow-y: auto;
-        padding: var(--space-6) var(--space-4);
-      }
-
-      @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
-
-      .modal {
-        background: var(--surface-background);
-        border-radius: var(--radius-lg);
-        width: 90%;
-        box-shadow: var(--shadow-xl);
-        animation: slideUp 200ms ease;
-        display: flex;
-        flex-direction: column;
-        margin: auto;
-        position: relative;
-        max-height: calc(100dvh - var(--space-8));
-        overflow: hidden;
-      }
-
-    /* Sizes */
-    .modal-sm { max-width: 400px; }
-    .modal-md { max-width: 550px; }
-    .modal-lg { max-width: 800px; }
-
-    /* En móvil el modal ocupa casi todo el ancho y se ancla al fondo */
-      @media (max-width: 30rem) {
-        .modal-overlay {
-          align-items: flex-end;
-          padding: 0;
-        }
-
-        .modal {
-          width: 100%;
-          border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-          margin: 0;
-          margin-top: auto;
-          max-height: calc(100dvh - var(--space-4));
-        }
-
-        .modal-body {
-          padding-bottom: max(var(--space-5), env(safe-area-inset-bottom));
-        }
-
-        .modal-footer {
-          padding-bottom: max(var(--space-5), env(safe-area-inset-bottom));
-        }
-
-      .modal-sm,
-      .modal-md,
-      .modal-lg {
-        max-width: 100%;
-      }
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: var(--space-4) var(--space-5);
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .modal-title {
-      font-size: var(--text-lg);
-      font-weight: var(--font-weight-emphasis);
-      color: var(--text-color);
-      margin: 0;
-    }
-
-    .modal-close {
-      width: var(--control-height-sm);
-      height: var(--control-height-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: var(--text-2xl);
-      color: var(--text-color-secondary);
-      background: transparent;
-      border: none;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      transition: all 150ms ease;
-    }
-
-    .modal-close:hover {
-      background: var(--surface-hover);
-      color: var(--text-color);
-    }
-
-      .modal-body {
-        padding: var(--space-5);
-        overflow-y: auto;
-      }
-
-    .modal-footer {
-      display: flex;
-      justify-content: flex-end;
-      gap: var(--space-3);
-      padding: var(--space-4) var(--space-5);
-      border-top: 1px solid var(--border-color);
-    }
-
-    .modal-close:disabled {
-      color: var(--text-color-muted);
-      cursor: not-allowed;
-    }
-
-    .modal-close:focus-visible {
-      outline: none;
-      box-shadow: var(--focus-ring);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .modal-overlay,
-      .modal {
-        animation: none;
-      }
-    }
-
-    /*
-     * Dark mode se maneja automáticamente via tokens semánticos.
-     * --surface-background, --overlay-backdrop, --surface-hover
-     * ya tienen valores apropiados para temas oscuros.
-     */
-  `]
+  styleUrl: './modal.component.css'
 })
 export class ModalComponent implements AfterViewInit, OnDestroy {
   private static instanceCounter = 0;
@@ -246,13 +101,13 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
   private previouslyFocused: HTMLElement | null = null;
   private pendingErrorFocus?: AfterRenderRef;
 
-  @Input() title = '';
-  @Input() size: 'sm' | 'md' | 'lg' = 'md';
-  @Input() closeOnBackdrop = true;
-  @Input() hasFooter = true;
-  @Input() busy = false;
+  readonly title = input('');
+  readonly size = input<'sm' | 'md' | 'lg'>('md');
+  readonly closeOnBackdrop = input(true);
+  readonly hasFooter = input(true);
+  readonly busy = input(false);
 
-  @Output() closed = new EventEmitter<void>();
+  readonly closed = output<void>();
 
   ngAfterViewInit(): void {
     if (typeof document === 'undefined') return;
@@ -271,20 +126,20 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
 
   onBackdropClick(event?: Event): void {
     if (event && event.target !== event.currentTarget) return;
-    if (!this.busy && this.closeOnBackdrop) {
+    if (!this.busy() && this.closeOnBackdrop()) {
       this.requestClose();
     }
   }
 
   onEscape(): void {
-    if (!this.busy && this.closeOnBackdrop) {
+    if (!this.busy() && this.closeOnBackdrop()) {
       this.closed.emit();
     }
   }
 
   /** Requests closure only when the dialog is not processing an action. */
   requestClose(): void {
-    if (!this.busy) {
+    if (!this.busy()) {
       this.closed.emit();
     }
   }

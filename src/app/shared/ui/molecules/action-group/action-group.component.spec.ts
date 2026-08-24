@@ -14,10 +14,10 @@ describe('ActionGroupComponent', () => {
 
     fixture = TestBed.createComponent(ActionGroupComponent);
     component = fixture.componentInstance;
-    component.actions = [
+    fixture.componentRef.setInput('actions', [
       { id: 'view', icon: 'fa-solid fa-eye', label: 'Ver detalle' },
       { id: 'edit', icon: 'fa-solid fa-pen', label: 'Editar', variant: 'primary' },
-    ];
+    ]);
   });
 
   afterEach(() => {
@@ -25,7 +25,7 @@ describe('ActionGroupComponent', () => {
   });
 
   it('renders accessible labels and preserves the 28px small variant', () => {
-    component.size = 'sm';
+    fixture.componentRef.setInput('size', 'sm');
     fixture.detectChanges();
 
     const group = fixture.nativeElement.querySelector('.action-group') as HTMLElement;
@@ -50,11 +50,11 @@ describe('ActionGroupComponent', () => {
   });
 
   it('shows up to three actions without an overflow trigger', () => {
-    component.actions = [
+    fixture.componentRef.setInput('actions', [
       { id: 'view', action: 'view', label: 'Ver' },
       { id: 'edit', action: 'edit', label: 'Editar' },
       { id: 'print', action: 'print', label: 'Imprimir' },
-    ];
+    ]);
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelectorAll('.action-btn')).toHaveSize(3);
@@ -64,12 +64,12 @@ describe('ActionGroupComponent', () => {
   it('keeps three actions visible and moves the fourth behind a caret menu', () => {
     const actionClick = jasmine.createSpy('actionClick');
     component.actionClick.subscribe(actionClick);
-    component.actions = [
+    fixture.componentRef.setInput('actions', [
       { id: 'view', action: 'view', label: 'Ver' },
       { id: 'edit', action: 'edit', label: 'Editar' },
       { id: 'print', action: 'print', label: 'Imprimir' },
       { id: 'reverse', action: 'reverse', label: 'Revertir' },
-    ];
+    ]);
     fixture.detectChanges();
 
     const trigger = fixture.nativeElement.querySelector('.action-btn--more') as HTMLButtonElement;
@@ -93,13 +93,13 @@ describe('ActionGroupComponent', () => {
   });
 
   it('filters disabled menu items from keyboard focus and restores the trigger on Escape', () => {
-    component.actions = [
+    fixture.componentRef.setInput('actions', [
       { id: 'view', action: 'view', label: 'Ver' },
       { id: 'edit', action: 'edit', label: 'Editar' },
       { id: 'print', action: 'print', label: 'Imprimir' },
       { id: 'reverse', action: 'reverse', label: 'Revertir', disabled: true },
       { id: 'channels', action: 'channels', label: 'Canales' },
-    ];
+    ]);
     fixture.detectChanges();
 
     const trigger = fixture.nativeElement.querySelector('.action-btn--more') as HTMLButtonElement;

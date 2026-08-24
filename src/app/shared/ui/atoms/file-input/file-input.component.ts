@@ -1,8 +1,5 @@
 import {
   Component,
-  Input,
-  Output,
-  EventEmitter,
   ChangeDetectionStrategy,
   signal,
   inject,
@@ -10,6 +7,8 @@ import {
   ViewChild,
   ElementRef,
   ChangeDetectorRef,
+  input,
+  output
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -49,16 +48,16 @@ export type FileInputDensity = 'comfortable' | 'compact';
   template: `
     <div
       class="file-input-wrapper"
-      [class.disabled]="disabled"
+      [class.disabled]="isDisabled()"
       [class.drag-over]="isDragging()"
       [class.invalid]="visibleError"
-      [class.compact]="density === 'compact'"
+      [class.compact]="density() === 'compact'"
     >
-      @if (label) {
-        <label class="file-label" [for]="inputId">{{ label }}</label>
+      @if (label()) {
+        <label class="file-label" [for]="inputId">{{ label() }}</label>
       }
-      @if (hint) {
-        <p class="file-hint" [id]="inputId + '-hint'">{{ hint }}</p>
+      @if (hint()) {
+        <p class="file-hint" [id]="inputId + '-hint'">{{ hint() }}</p>
       }
       <div
         class="drop-zone"
@@ -69,23 +68,23 @@ export type FileInputDensity = 'comfortable' | 'compact';
         (blur)="onTouched()"
         (keydown.enter)="openFileDialog()"
         (keydown.space)="openFileDialog(); $event.preventDefault()"
-        [attr.tabindex]="disabled ? -1 : 0"
+        [attr.tabindex]="isDisabled() ? -1 : 0"
         role="button"
-        [attr.aria-disabled]="disabled"
+        [attr.aria-disabled]="isDisabled()"
         [attr.aria-invalid]="visibleError ? 'true' : null"
         [attr.aria-describedby]="
-          visibleError ? inputId + '-error' : hint ? inputId + '-hint' : null
+          visibleError ? inputId + '-error' : hint() ? inputId + '-hint' : null
         "
         aria-label="Seleccionar archivo"
       >
         <i class="fa-solid fa-cloud-arrow-up drop-icon" aria-hidden="true"></i>
         <div class="drop-copy">
           <p class="drop-text"><strong>Haz clic</strong> o arrastra archivos aquí</p>
-          @if (accept) {
-            <p class="drop-hint">Formatos: {{ accept }}</p>
+          @if (accept()) {
+            <p class="drop-hint">Formatos: {{ accept() }}</p>
           }
-          @if (maxSizeMB) {
-            <p class="drop-hint">Máximo {{ maxSizeMB }} MB por archivo</p>
+          @if (maxSizeMB()) {
+            <p class="drop-hint">Máximo {{ maxSizeMB() }} MB por archivo</p>
           }
         </div>
       </div>
@@ -95,15 +94,15 @@ export type FileInputDensity = 'comfortable' | 'compact';
         [id]="inputId"
         type="file"
         class="file-hidden"
-        [accept]="accept"
-        [multiple]="multiple"
-        [disabled]="disabled"
+        [accept]="accept()"
+        [multiple]="multiple()"
+        [disabled]="isDisabled()"
         (change)="onFileChange($event)"
         (blur)="onTouched()"
         [attr.aria-invalid]="visibleError ? 'true' : null"
-        [attr.aria-label]="label || 'Seleccionar archivo'"
+        [attr.aria-label]="label() || 'Seleccionar archivo'"
         [attr.aria-describedby]="
-          visibleError ? inputId + '-error' : hint ? inputId + '-hint' : null
+          visibleError ? inputId + '-error' : hint() ? inputId + '-hint' : null
         "
       />
 
@@ -124,7 +123,7 @@ export type FileInputDensity = 'comfortable' | 'compact';
               }
               <span class="file-name" [title]="f.name">{{ f.name }}</span>
               <span class="file-size">{{ formatSize(f.size) }}</span>
-              @if (!disabled) {
+              @if (!isDisabled()) {
                 <button
                   type="button"
                   class="file-remove"
@@ -140,177 +139,7 @@ export type FileInputDensity = 'comfortable' | 'compact';
       }
     </div>
   `,
-  styles: [
-    `
-      :host {
-        display: block;
-      }
-
-      .file-label {
-        display: block;
-        margin-bottom: var(--space-2);
-        font-size: var(--text-sm);
-        font-weight: var(--font-weight-body);
-        color: var(--text-color);
-      }
-
-      .drop-zone {
-        border: var(--space-1) dashed var(--border-color);
-        border-radius: var(--radius-md);
-        padding: var(--space-6) var(--space-5);
-        text-align: center;
-        cursor: pointer;
-        transition:
-          border-color var(--table-transition-duration),
-          background var(--table-transition-duration);
-        background: var(--surface-background);
-        outline: none;
-      }
-      .drop-zone:hover,
-      .drop-zone:focus-visible {
-        border-color: var(--input-border-focus);
-        background: var(--surface-hover);
-      }
-
-      .drag-over .drop-zone {
-        border-color: var(--input-border-focus);
-        background: var(--surface-hover);
-      }
-      .invalid .drop-zone {
-        border-color: var(--danger-color);
-      }
-      .disabled .drop-zone {
-        pointer-events: none;
-        cursor: not-allowed;
-        color: var(--input-disabled-text);
-      }
-
-      .compact .drop-zone {
-        display: flex;
-        min-height: var(--control-height);
-        align-items: center;
-        gap: var(--space-3);
-        padding: var(--space-3) var(--space-4);
-        text-align: left;
-      }
-
-      .compact .drop-icon {
-        display: grid;
-        flex: 0 0 auto;
-        width: var(--space-10);
-        height: var(--space-10);
-        margin: 0;
-        place-items: center;
-        border-radius: var(--radius-md);
-        background: var(--surface-section);
-        font-size: var(--text-lg);
-      }
-
-      .compact .drop-text,
-      .compact .drop-hint {
-        margin: 0;
-      }
-
-      .drop-icon {
-        font-size: var(--space-6);
-        color: var(--text-color-muted);
-        display: block;
-        margin-bottom: var(--space-2);
-      }
-      .drop-copy {
-        min-width: 0;
-      }
-      .drop-text {
-        margin: var(--space-1) 0;
-        font-size: var(--text-sm);
-        color: var(--text-color-secondary);
-      }
-      .drop-hint {
-        margin: var(--space-1) 0 0;
-        font-size: var(--text-xs);
-        color: var(--text-color-muted);
-      }
-
-      .file-hidden {
-        display: none;
-      }
-
-      .file-hint {
-        margin: 0 0 var(--space-2);
-        font-size: var(--text-xs);
-        color: var(--text-color-muted);
-      }
-
-      .file-error {
-        display: flex;
-        align-items: center;
-        gap: var(--space-2);
-        margin: var(--space-2) 0 0;
-        font-size: var(--text-sm);
-        color: var(--danger-color-text);
-      }
-
-      .file-list {
-        list-style: none;
-        margin: var(--space-3) 0 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-2);
-      }
-
-      .file-item {
-        display: flex;
-        align-items: center;
-        gap: var(--space-3);
-        padding: var(--space-2) var(--space-3);
-        background: var(--surface-section);
-        border-radius: var(--radius-sm);
-        border: 1px solid var(--border-color);
-      }
-
-      .file-preview {
-        width: var(--space-6);
-        height: var(--space-6);
-        object-fit: cover;
-        border-radius: var(--radius-sm);
-        flex-shrink: 0;
-      }
-      .file-icon {
-        color: var(--text-color-muted);
-        flex-shrink: 0;
-      }
-      .file-name {
-        flex: 1;
-        font-size: var(--text-sm);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      .file-size {
-        font-size: var(--text-xs);
-        color: var(--text-color-muted);
-        white-space: nowrap;
-      }
-
-      .file-remove {
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: var(--space-1) var(--space-2);
-        color: var(--text-color-muted);
-        border-radius: var(--radius-sm);
-        transition:
-          color var(--table-transition-duration),
-          background var(--table-transition-duration);
-        flex-shrink: 0;
-      }
-      .file-remove:hover {
-        color: var(--danger-color-text);
-        background: var(--surface-hover);
-      }
-    `,
-  ],
+  styleUrl: './file-input.component.css',
 })
 export class FileInputComponent implements ControlValueAccessor {
   private readonly platformId = inject(PLATFORM_ID);
@@ -319,41 +148,46 @@ export class FileInputComponent implements ControlValueAccessor {
 
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
-  @Input() label = '';
-  @Input() hint = '';
-  @Input() accept = '';
-  @Input() multiple = false;
-  @Input() maxSizeMB?: number;
-  @Input() maxPreviewSizeMB = 2;
-  @Input() maxPreviewFiles = 4;
-  @Input() disabled = false;
-  @Input() error = '';
+  readonly label = input('');
+  readonly hint = input('');
+  readonly accept = input('');
+  readonly multiple = input(false);
+  readonly maxSizeMB = input<number>();
+  readonly maxPreviewSizeMB = input(2);
+  readonly maxPreviewFiles = input(4);
+  readonly disabled = input(false);
+  private readonly disabledByForm = signal(false);
+  readonly error = input('');
 
-  @Output() filesChange = new EventEmitter<FileInputFile[]>();
+  readonly filesChange = output<FileInputFile[]>();
 
   /** Densidad visual. `compact` conserva el mismo contrato dentro de formularios modales. */
-  @Input() density: FileInputDensity = 'comfortable';
+  readonly density = input<FileInputDensity>('comfortable');
 
   readonly files = signal<FileInputFile[]>([]);
   readonly isDragging = signal(false);
   readonly validationError = signal('');
 
+  isDisabled(): boolean {
+    return this.disabled() || this.disabledByForm();
+  }
+
   get visibleError(): string {
-    return this.error || this.validationError();
+    return this.error() || this.validationError();
   }
 
   private onChange: (v: FileInputFile[]) => void = () => {};
   protected onTouched: () => void = () => {};
 
   openFileDialog() {
-    if (!this.disabled) {
+    if (!this.isDisabled()) {
       this.onTouched();
       this.fileInputRef.nativeElement.click();
     }
   }
 
   onFileChange(event: Event) {
-    if (this.disabled) return;
+    if (this.isDisabled()) return;
     const input = event.target as HTMLInputElement;
     if (input.files) this.processFiles(Array.from(input.files));
     input.value = '';
@@ -361,7 +195,7 @@ export class FileInputComponent implements ControlValueAccessor {
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
-    if (!this.disabled) {
+    if (!this.isDisabled()) {
       this.isDragging.set(true);
     }
   }
@@ -369,7 +203,7 @@ export class FileInputComponent implements ControlValueAccessor {
   onDrop(event: DragEvent) {
     event.preventDefault();
     this.isDragging.set(false);
-    if (this.disabled) return;
+    if (this.isDisabled()) return;
     const dropped = event.dataTransfer?.files;
     if (dropped) this.processFiles(Array.from(dropped));
   }
@@ -377,7 +211,7 @@ export class FileInputComponent implements ControlValueAccessor {
   private processFiles(rawFiles: File[]) {
     this.onTouched();
     this.validationError.set('');
-    const selectedFiles = this.multiple ? rawFiles : rawFiles.slice(0, 1);
+    const selectedFiles = this.multiple() ? rawFiles : rawFiles.slice(0, 1);
     // Un archivo rechazado DESCARTA la seleccion anterior.
     //
     // Antes se ponia el mensaje de error y se salia sin tocar `files`, asi que lo
@@ -389,12 +223,13 @@ export class FileInputComponent implements ControlValueAccessor {
     //
     // Vaciar es la unica lectura en la que lo que se ve y lo que se envia
     // coinciden. Se notifica tambien al formulario, no solo al evento.
+    const maxSizeMB = this.maxSizeMB();
     const invalidSize = selectedFiles.find(
-      (file) => this.maxSizeMB && file.size > this.maxSizeMB * 1024 * 1024,
+      (file) => maxSizeMB !== undefined && file.size > maxSizeMB * 1024 * 1024,
     );
     if (invalidSize) {
       this.rejectSelection(
-        `${invalidSize.name} supera el máximo de ${this.maxSizeMB} MB.`,
+        `${invalidSize.name} supera el máximo de ${this.maxSizeMB()} MB.`,
       );
       return;
     }
@@ -416,7 +251,7 @@ export class FileInputComponent implements ControlValueAccessor {
 
     this.generateImagePreviews(processed);
 
-    const newFiles = this.multiple ? [...this.files(), ...processed] : processed;
+    const newFiles = this.multiple() ? [...this.files(), ...processed] : processed;
     this.files.set(newFiles);
     this.onChange(newFiles);
     this.filesChange.emit(newFiles);
@@ -435,14 +270,16 @@ export class FileInputComponent implements ControlValueAccessor {
       return;
     }
 
-    const maxFiles = Number.isFinite(this.maxPreviewFiles)
-      ? Math.max(0, Math.trunc(this.maxPreviewFiles))
+    const maxPreviewFiles = this.maxPreviewFiles();
+    const maxFiles = Number.isFinite(maxPreviewFiles)
+      ? Math.max(0, Math.trunc(maxPreviewFiles))
       : 0;
-    const maxSize = Number.isFinite(this.maxPreviewSizeMB)
-      ? Math.max(0, this.maxPreviewSizeMB)
+    const maxPreviewSizeMB = this.maxPreviewSizeMB();
+    const maxSize = Number.isFinite(maxPreviewSizeMB)
+      ? Math.max(0, maxPreviewSizeMB)
       : 0;
     const maxBytes = maxSize * 1024 * 1024;
-    const existingPreviewCount = this.multiple
+    const existingPreviewCount = this.multiple()
       ? this.files().filter((file) => file.preview).length
       : 0;
     let remaining = Math.max(0, maxFiles - existingPreviewCount);
@@ -469,7 +306,7 @@ export class FileInputComponent implements ControlValueAccessor {
   }
 
   private isAccepted(file: File): boolean {
-    const rules = this.accept
+    const rules = this.accept()
       .split(',')
       .map((rule) => rule.trim().toLowerCase())
       .filter(Boolean);
@@ -514,7 +351,7 @@ export class FileInputComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
   setDisabledState(d: boolean): void {
-    this.disabled = d;
+    this.disabledByForm.set(d);
     this.changeDetectorRef.markForCheck();
   }
 }

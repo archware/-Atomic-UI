@@ -193,12 +193,12 @@ describe('FloatingInputComponent', () => {
   describe('ControlValueAccessor', () => {
     it('should write value', () => {
       component.writeValue('test value');
-      expect(component.value).toBe('test value');
+      expect(component.value()).toBe('test value');
     });
 
     it('should handle null value', () => {
       component.writeValue(null as unknown as string);
-      expect(component.value).toBe('');
+      expect(component.value()).toBe('');
     });
 
     it('should register onChange callback', () => {
@@ -221,7 +221,7 @@ describe('FloatingInputComponent', () => {
 
     it('should set disabled state', () => {
       component.setDisabledState(true);
-      expect(component.disabled).toBeTrue();
+      expect(component.isDisabled()).toBeTrue();
     });
   });
 
@@ -229,8 +229,10 @@ describe('FloatingInputComponent', () => {
     it('should apply custom width', () => {
       setInput('width', '200px');
 
-      const wrapper = fixture.nativeElement.querySelector('.floating-input-wrapper');
-      expect(wrapper.style.width).toBe('200px');
+      const wrapper = fixture.nativeElement.querySelector('.floating-input-wrapper') as HTMLElement;
+      expect(wrapper.style.width).toBe('');
+      expect(wrapper.style.getPropertyValue('--floating-input-width')).toBe('200px');
+      expect(getComputedStyle(wrapper).width).toBe('200px');
     });
   });
 });

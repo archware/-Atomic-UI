@@ -1,0 +1,66 @@
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.rating-sm .star { width: var(--space-4); height: var(--space-4); }
+.rating-md .star { width: var(--space-5); height: var(--space-5); }
+.rating-lg .star { width: var(--space-6); height: var(--space-6); }
+
+.star {
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--rating-star-empty);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.star:hover:not(:disabled) {
+  transform: scale(1.1);
+  color: var(--rating-star-hover);
+}
+
+.star.filled {
+  color: var(--rating-star-filled);
+}
+
+.star.half {
+  position: relative;
+  color: var(--rating-star-empty);
+}
+
+.star.half::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  color: var(--rating-star-filled);
+}
+
+.star svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.readonly .star {
+  cursor: default;
+}
+
+.rating-value {
+  margin-left: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-body);
+  color: var(--text-color-secondary);
+}
+
+/* 
+ * Dark mode se maneja automáticamente via tokens semánticos.
+ * --rating-star-empty/filled/hover ya tienen valores apropiados
+ * para temas oscuros.
+ */

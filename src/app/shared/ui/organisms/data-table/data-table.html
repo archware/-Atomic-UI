@@ -85,7 +85,7 @@
               scope="col"
               data-column="rowNumber"
               class="data-table__cell--end"
-              [style.--data-table-column-width]="rowNumberWidth()"
+              [appVariablesCss]="{ '--data-table-column-width': rowNumberWidth() }"
             >
               <span class="data-table__heading">{{ rowNumberHeader() }}</span>
             </th>
@@ -96,7 +96,7 @@
               scope="col"
               [attr.data-column]="column.key"
               [attr.aria-sort]="ariaSort(column)"
-              [style.--data-table-column-width]="column.width ?? null"
+              [appVariablesCss]="{ '--data-table-column-width': column.width ?? null }"
               [class.data-table__cell--center]="column.align === 'center'"
               [class.data-table__cell--end]="column.align === 'end'"
             >
@@ -123,7 +123,7 @@
             <th
               scope="col"
               class="data-table__actions-heading"
-              [style.--data-table-actions-width]="actionsWidth()"
+              [appVariablesCss]="{ '--data-table-actions-width': actionsWidth() }"
             >
               {{ actionsHeader() }}
             </th>
@@ -179,7 +179,7 @@
                     data-column="rowNumber"
                     [attr.data-label]="rowNumberHeader()"
                     class="data-table__cell--end"
-                    [style.--data-table-column-width]="rowNumberWidth()"
+                    [appVariablesCss]="{ '--data-table-column-width': rowNumberWidth() }"
                   >
                     {{ rowNumber(rowIndex) }}
                   </td>
@@ -189,7 +189,7 @@
                   <td
                     [attr.data-column]="column.key"
                     [attr.data-label]="column.header"
-                    [style.--data-table-column-width]="column.width ?? null"
+                    [appVariablesCss]="{ '--data-table-column-width': column.width ?? null }"
                     [class.data-table__cell--center]="column.align === 'center'"
                     [class.data-table__cell--end]="column.align === 'end'"
                   >
@@ -213,7 +213,7 @@
                   <td
                     class="data-table__actions"
                     [attr.data-label]="actionsHeader()"
-                    [style.--data-table-actions-width]="actionsWidth()"
+                    [appVariablesCss]="{ '--data-table-actions-width': actionsWidth() }"
                   >
                     <div class="data-table__action-list">
                       <ng-container

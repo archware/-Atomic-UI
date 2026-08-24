@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 import { UserMenuComponent, UserMenuAction } from '../../molecules/user-menu/user-menu.component';
@@ -14,40 +14,40 @@ import { LanguageSwitcherComponent } from '../../atoms/language-switcher/languag
 })
 export class TopbarComponent {
   /** Page title displayed in the topbar */
-  @Input() title = '';
+  readonly title = input('');
 
   /** User initials for avatar */
-  @Input() userInitials = 'U';
+  readonly userInitials = input('U');
 
   /** User display name */
-  @Input() userName = 'Usuario';
+  readonly userName = input('Usuario');
 
   /** User email */
-  @Input() userEmail = 'usuario@email.com';
+  readonly userEmail = input('usuario@email.com');
 
   /** User role displayed in the session menu */
-  @Input() userRole = '';
+  readonly userRole = input('');
 
   /** Number of unread notifications */
-  @Input() notificationCount = 0;
+  readonly notificationCount = input(0);
 
   /** Whether the language control is rendered */
-  @Input() showLanguageSwitcher = true;
+  readonly showLanguageSwitcher = input(true);
 
   /** Whether the notifications control is rendered */
-  @Input() showNotifications = true;
+  readonly showNotifications = input(true);
 
   /** Event emitted when sidebar toggle is clicked */
-  @Output() toggleSidebar = new EventEmitter<void>();
+  readonly toggleSidebar = output<void>();
 
   /** Event emitted when logout is clicked */
-  @Output() logout = new EventEmitter<void>();
+  readonly logout = output<void>();
 
   /** Event emitted when notifications are clicked */
-  @Output() notificationClick = new EventEmitter<void>();
+  readonly notificationClick = output<void>();
 
   /** Event emitted when any user menu action is clicked */
-  @Output() userAction = new EventEmitter<UserMenuAction>();
+  readonly userAction = output<UserMenuAction>();
 
   onUserAction(action: UserMenuAction): void {
     this.userAction.emit(action);

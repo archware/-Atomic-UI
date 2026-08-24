@@ -2,10 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
-  Output,
   viewChild,
+  input,
+  output
 } from '@angular/core';
 import { SpinnerComponent } from '../spinner/spinner.component';
 
@@ -42,22 +41,22 @@ export type IconPosition = 'left' | 'right' | 'none';
   imports: [SpinnerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.atomic-button--full-width]': 'fullWidth'
+    '[class.atomic-button--full-width]': 'fullWidth()'
   },
   template: `
     <button
       #control
-      [type]="type"
-      [disabled]="disabled"
-      [attr.aria-disabled]="loading ? 'true' : null"
-      [attr.aria-label]="ariaLabel || null"
-      [attr.aria-controls]="ariaControls || null"
+      [type]="type()"
+      [disabled]="disabled()"
+      [attr.aria-disabled]="loading() ? 'true' : null"
+      [attr.aria-label]="ariaLabel() || null"
+      [attr.aria-controls]="ariaControls() || null"
       [attr.aria-expanded]="expandedAttribute"
-      [attr.aria-busy]="loading ? 'true' : null"
+      [attr.aria-busy]="loading() ? 'true' : null"
       [class]="buttonClasses"
       (click)="onButtonClick($event)"
     >
-      @if (loading) {
+      @if (loading()) {
         <app-spinner
           class="btn-spinner"
           size="sm"
@@ -72,9 +71,9 @@ export type IconPosition = 'left' | 'right' | 'none';
       </span>
 
       <!-- Configurable Icon (Left) -->
-      @if (iconPosition === 'left') {
-        @if (icon) {
-          <span class="btn-icon-wrapper btn-icon-wrapper--left btn-icon--emoji" aria-hidden="true">{{ icon }}</span>
+      @if (iconPosition() === 'left') {
+        @if (icon()) {
+          <span class="btn-icon-wrapper btn-icon-wrapper--left btn-icon--emoji" aria-hidden="true">{{ icon() }}</span>
         } @else if (resolvedIconClass) {
           <span class="btn-icon-wrapper btn-icon-wrapper--left" aria-hidden="true"
             ><i [class]="resolvedIconClass"></i
@@ -86,9 +85,9 @@ export type IconPosition = 'left' | 'right' | 'none';
       <ng-content></ng-content>
 
       <!-- Configurable Icon (Right) -->
-      @if (iconPosition === 'right') {
-        @if (icon) {
-          <span class="btn-icon-wrapper btn-icon-wrapper--right btn-icon--emoji" aria-hidden="true">{{ icon }}</span>
+      @if (iconPosition() === 'right') {
+        @if (icon()) {
+          <span class="btn-icon-wrapper btn-icon-wrapper--right btn-icon--emoji" aria-hidden="true">{{ icon() }}</span>
         } @else if (resolvedIconClass) {
           <span class="btn-icon-wrapper btn-icon-wrapper--right" aria-hidden="true"
             ><i [class]="resolvedIconClass"></i
@@ -102,151 +101,63 @@ export type IconPosition = 'left' | 'right' | 'none';
       </span>
     </button>
   `,
-  styles: [
-    `
-      :host {
-        display: block;
-      }
-
-      /* Use inline-block when explicitly needed */
-      :host(.inline) {
-        display: inline-block;
-      }
-
-      /* Allow button to control its own dimensions when in grid */
-      :host(.auto-size) {
-        display: contents;
-      }
-
-      :host(.atomic-button--full-width),
-      :host(.atomic-button--full-width) .btn {
-        width: 100%;
-      }
-
-      /*
-      UN BOTON DE SOLO ICONO ES CUADRADO, Y ESO NO SE PUEDE PEDIR DESDE FUERA.
-
-      El consumidor puede darle al HOST un tamaño cuadrado, pero el control de
-      dentro conserva su relleno horizontal y su ancho minimo, asi que se sale de
-      su propio borde y pisa lo que tenga al lado. Ocurrio literalmente: el boton
-      de tema de la barra superior desbordaba su marco y se solapaba con el menu
-      de usuario.
-
-      No se puede arreglar desde el consumidor: sus estilos no alcanzan al
-      interior de este componente. Tiene que vivir aqui.
-
-      El atributo dialog-close ya resolvia exactamente esto para el aspa de
-      cerrar. En vez de añadir un segundo caso especial se generaliza: icon-only
-      hace lo mismo y se puede pedir desde cualquier sitio.
-      */
-      :host([dialog-close]),
-      :host([icon-only]) {
-        display: inline-flex;
-        width: var(--control-height);
-        height: var(--control-height);
-      }
-
-      :host([dialog-close]) .btn,
-      :host([icon-only]) .btn {
-        width: 100%;
-        min-width: 100%;
-        height: 100%;
-        min-height: 100%;
-        padding: 0;
-      }
-
-      .btn-icon-wrapper {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: var(--icon-sm); /* 1var(--space-2) */
-      }
-
-      .btn-spinner {
-        display: inline-flex;
-        flex: 0 0 auto;
-      }
-
-      /* Hide empty slot containers */
-      .btn-icon-wrapper:not(:has(*)) {
-        display: none;
-      }
-
-      /* Apply margin only when slot has content */
-      .btn-icon-wrapper--left:has(*) {
-        margin-right: var(--space-2);
-      }
-
-      .btn-icon-wrapper--right:has(*) {
-        margin-left: var(--space-2);
-      }
-
-      /* Size-specific icon adjustments */
-      :host-context(.btn-sm) .btn-icon-wrapper {
-        font-size: var(--icon-xs); /* 1var(--space-1) */
-      }
-
-      :host-context(.btn-lg) .btn-icon-wrapper {
-        font-size: var(--icon-md); /* 24px */
-      }
-    `,
-  ],
+  styleUrl: './button.component.css',
 })
 export class ButtonComponent {
   /**
    * HTML button type attribute.
    * @default 'button'
    */
-  @Input() type: 'button' | 'submit' | 'reset' = 'button';
+  readonly type = input<'button' | 'submit' | 'reset'>('button');
 
   /**
    * Visual style variant of the button.
    * @default 'primary'
    */
-  @Input() variant: ButtonVariant = 'primary';
+  readonly variant = input<ButtonVariant>('primary');
 
   /**
    * Semantic emphasis for subtle and outlined actions.
    * It does not replace the variant or communicate meaning without a label.
    * @default 'neutral'
    */
-  @Input() tone: ButtonTone = 'neutral';
+  readonly tone = input<ButtonTone>('neutral');
 
   /**
    * Size of the button.
    * @default 'md'
    */
-  @Input() size: ButtonSize = 'md';
+  readonly size = input<ButtonSize>('md');
 
   /**
    * Emoji or text icon to display.
    * For custom icons (SVG, FontAwesome), use content projection with `icon-left` or `icon-right` attribute.
    */
-  @Input() icon = '';
+  readonly icon = input('');
 
   /**
    * Font Awesome icon token or complete CSS class.
    * Accepts `save`, `fa-save` and `fa-solid fa-save` without producing
    * duplicated classes such as `fa-fa-save`.
    */
-  @Input() iconClass = '';
+  readonly iconClass = input('');
 
   /** Normalized Font Awesome classes used by the template. */
   get resolvedIconClass(): string {
-    return normalizeFontAwesomeIconClass(this.iconClass);
+    return normalizeFontAwesomeIconClass(this.iconClass());
   }
 
   /**
    * Position of the emoji/text icon.
    * @default 'left'
    */
-  @Input() iconPosition: IconPosition = 'left';
+  readonly iconPosition = input<IconPosition>('left');
 
   /**
    * Whether the button is disabled.
    * @default false
    */
-  @Input() disabled = false;
+  readonly disabled = input(false);
 
   /**
    * Indicates that the action is pending.
@@ -254,10 +165,10 @@ export class ButtonComponent {
    * repeated activations and native form actions while preserving the projected label.
    * @default false
    */
-  @Input() loading = false;
+  readonly loading = input(false);
 
   /** Expands both the host and the native button to the available width. */
-  @Input() fullWidth = false;
+  readonly fullWidth = input(false);
 
   /*
   ARIA DEL CONTROL, NO DEL ENVOLTORIO. Sin estas entradas, quien necesita un
@@ -285,19 +196,20 @@ export class ButtonComponent {
     this.control()?.nativeElement.focus(options);
   }
 
-  @Input() ariaLabel = '';
-  @Input() ariaControls = '';
-  @Input() ariaExpanded: boolean | null = null;
+  readonly ariaLabel = input('');
+  readonly ariaControls = input('');
+  readonly ariaExpanded = input<boolean | null>(null);
 
   protected get expandedAttribute(): string | null {
-    return this.ariaExpanded === null ? null : this.ariaExpanded ? 'true' : 'false';
+    const ariaExpanded = this.ariaExpanded();
+    return ariaExpanded === null ? null : ariaExpanded ? 'true' : 'false';
   }
 
   /**
    * Emits when the button is clicked.
    * Does not emit when disabled.
    */
-  @Output() buttonClick = new EventEmitter<MouseEvent>();
+  readonly buttonClick = output<MouseEvent>();
 
   /*
   MIENTRAS CARGA, EL BOTON SIGUE ENFOCABLE.
@@ -316,7 +228,7 @@ export class ButtonComponent {
   */
   /** Native interaction is unavailable while disabled or loading. */
   get isDisabled(): boolean {
-    return this.disabled || this.loading;
+    return this.disabled() || this.loading();
   }
 
   onButtonClick(event: MouseEvent): void {
@@ -336,13 +248,14 @@ export class ButtonComponent {
 
   /** @internal */
   get buttonClasses(): string {
-    const classes = ['btn', `btn-${this.variant}`, `btn-tone-${this.tone}`];
+    const classes = ['btn', `btn-${this.variant()}`, `btn-tone-${this.tone()}`];
 
-    if (this.size !== 'md') {
-      classes.push(`btn-${this.size}`);
+    const size = this.size();
+    if (size !== 'md') {
+      classes.push(`btn-${size}`);
     }
 
-    if (this.loading) {
+    if (this.loading()) {
       classes.push('btn-loading');
     }
 

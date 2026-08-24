@@ -2,11 +2,13 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  Input,
   OnDestroy,
   ViewChild,
   ViewEncapsulation,
   inject,
+  input,
+  effect,
+  untracked
 } from '@angular/core';
 
 type ListenerUnsubscriber = () => void;
@@ -26,28 +28,31 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
    * CSS selector used to locate the element that controls the vertical scroll.
    * Defaults to content marked explicitly with `data-scroll-overlay-vertical`.
    */
-  @Input() verticalSelector: string | null = '[data-scroll-overlay-vertical]';
+  readonly verticalSelector = input<string | null>('[data-scroll-overlay-vertical]');
 
   /**
    * CSS selector used to locate the element that controls horizontal scroll.
    * Defaults to the internal scroll area wrapper.
    */
-  @Input() horizontalSelector: string | null = '[data-scroll-overlay-horizontal]';
+  readonly horizontalSelector = input<string | null>('[data-scroll-overlay-horizontal]');
 
   /** Minimum size (in px) for the scrollbar thumbs. */
-  @Input() minThumbSize = 28;
+  readonly minThumbSize = input(28);
 
   /** Thickness (in px) of the overlay tracks. */
-  @Input() trackSize = 7;
+  readonly trackSize = input(7);
 
   /** Delay (in ms) before auto-hiding the scrollbars after interaction. */
-  @Input() autoHideDelay = 800;
+  readonly autoHideDelay = input(800);
 
   /**
    * Uses the browser scrollbars on the resolved owners and suppresses the decorative overlay rails.
    * The scrollbar palette is provided by the canonical theme tokens.
    */
-  @Input()
+  // Los alias siguientes conservan la API pública y delegan en setters con efectos sobre el DOM.
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly entradaBarrasNativas = input(false, { alias: 'nativeScrollbars' });
+
   set nativeScrollbars(value: boolean) {
     this._nativeScrollbars = !!value;
     if (this.hostEl) {
@@ -61,10 +66,12 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   /** Accessible name for the internal viewport when it is the real scroll owner. */
-  @Input() scrollAreaAriaLabel: string | null = null;
+  readonly scrollAreaAriaLabel = input<string | null>(null);
 
   /** Resets both axes of every resolved owner whenever its identity changes. */
-  @Input()
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly entradaClaveReinicio = input<unknown>(undefined, { alias: 'resetKey' });
+
   set resetKey(value: unknown) {
     const changed = !Object.is(this._resetKey, value);
     this._resetKey = value;
@@ -85,7 +92,9 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
    * When true, the component will keep any user-provided column template intact and will not
    * attempt to measure and override column widths automatically.
    */
-  @Input()
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly entradaBloqueoPlantilla = input(false, { alias: 'lockColumnTemplate' });
+
   set lockColumnTemplate(value: boolean) {
     const coerced = !!value;
     this._lockColumnTemplate = coerced;
@@ -104,7 +113,12 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   /** Custom grid template columns definition applied when locking the template. */
-  @Input()
+  /* eslint-disable @angular-eslint/no-input-rename */
+  readonly entradaPlantillaColumnas = input<string | null | undefined>(null, {
+    alias: 'columnTemplate',
+  });
+  /* eslint-enable @angular-eslint/no-input-rename */
+
   set columnTemplate(value: string | null | undefined) {
     const normalized = typeof value === 'string' ? value.trim() : '';
     const template = normalized ? normalized : null;
@@ -124,16 +138,18 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   /**
    * When true the component will measure table columns (thead/tbody) to keep header and body aligned.
    */
-  @Input() syncTableColumns = true;
+  readonly syncTableColumns = input(true);
 
   /**
    * When true, skip auto-detection of tbody and use the internal scroll area directly.
    * Useful for layout containers that should NOT control nested table scrolls.
    */
-  @Input() skipTableDetection = false;
+  readonly skipTableDetection = input(false);
 
   /** Minimum width (in px) applied when syncing table columns. */
-  @Input()
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly entradaAnchoMinimoColumna = input(140, { alias: 'minColumnWidth' });
+
   set minColumnWidth(value: number) {
     const parsed = Number(value);
     this._minColumnWidth = Number.isFinite(parsed) && parsed > 0 ? parsed : 140;
@@ -147,7 +163,12 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   /** Provide a max height for the vertical scroller (number in px or any CSS size). */
-  @Input()
+  /* eslint-disable @angular-eslint/no-input-rename */
+  readonly entradaAlturaMaximaCuerpo = input<number | string | null | undefined>(undefined, {
+    alias: 'maxBodyHeight',
+  });
+  /* eslint-enable @angular-eslint/no-input-rename */
+
   set maxBodyHeight(value: number | string | null | undefined) {
     const parsed = typeof value === 'string' ? value.trim() : value;
     this._maxBodyHeight =
@@ -162,7 +183,9 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   /** Disable the custom vertical overlay. */
-  @Input()
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly entradaDesactivarVertical = input(false, { alias: 'disableVertical' });
+
   set disableVertical(value: boolean) {
     this._disableVertical = value;
     if (this.hostEl) {
@@ -179,7 +202,9 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   /** Disable the custom horizontal overlay. */
-  @Input()
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly entradaDesactivarHorizontal = input(false, { alias: 'disableHorizontal' });
+
   set disableHorizontal(value: boolean) {
     this._disableHorizontal = value;
     if (this.hostEl) {
@@ -211,8 +236,8 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   private tableHead?: HTMLElement | null;
   private headerRow?: HTMLElement | null;
   private hideTimer?: ReturnType<typeof setTimeout>;
-  private verticalThumbSize = this.minThumbSize;
-  private horizontalThumbSize = this.minThumbSize;
+  private verticalThumbSize = this.minThumbSize();
+  private horizontalThumbSize = this.minThumbSize();
   private verticalBarHeight = 0;
   private horizontalBarWidth = 0;
   private resizeObserver?: ResizeObserver;
@@ -234,6 +259,54 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   private _disableHorizontal = false;
   private _nativeScrollbars = false;
   private _resetKey: unknown;
+  private readonly sincronizarBarrasNativas = effect(() => {
+    const valor = this.entradaBarrasNativas();
+    untracked(() => {
+      this.nativeScrollbars = valor;
+    });
+  });
+  private readonly sincronizarClaveReinicio = effect(() => {
+    const valor = this.entradaClaveReinicio();
+    untracked(() => {
+      this.resetKey = valor;
+    });
+  });
+  private readonly sincronizarBloqueoPlantilla = effect(() => {
+    const valor = this.entradaBloqueoPlantilla();
+    untracked(() => {
+      this.lockColumnTemplate = valor;
+    });
+  });
+  private readonly sincronizarPlantillaColumnas = effect(() => {
+    const valor = this.entradaPlantillaColumnas();
+    untracked(() => {
+      this.columnTemplate = valor;
+    });
+  });
+  private readonly sincronizarAnchoMinimoColumna = effect(() => {
+    const valor = this.entradaAnchoMinimoColumna();
+    untracked(() => {
+      this.minColumnWidth = valor;
+    });
+  });
+  private readonly sincronizarAlturaMaximaCuerpo = effect(() => {
+    const valor = this.entradaAlturaMaximaCuerpo();
+    untracked(() => {
+      this.maxBodyHeight = valor;
+    });
+  });
+  private readonly sincronizarDesactivarVertical = effect(() => {
+    const valor = this.entradaDesactivarVertical();
+    untracked(() => {
+      this.disableVertical = valor;
+    });
+  });
+  private readonly sincronizarDesactivarHorizontal = effect(() => {
+    const valor = this.entradaDesactivarHorizontal();
+    untracked(() => {
+      this.disableHorizontal = valor;
+    });
+  });
 
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
@@ -243,7 +316,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     }
 
     this.hostEl = this.elementRef.nativeElement;
-    this.hostEl.style.setProperty('--so-track-size', `${this.trackSize}px`);
+    this.hostEl.style.setProperty('--so-track-size', `${this.trackSize()}px`);
     this.hostEl.classList.toggle('so-lock-template', this._lockColumnTemplate);
     this.hostEl.classList.toggle('so-native-scrollbars', this._nativeScrollbars);
     this.applyMinColumnWidth();
@@ -422,7 +495,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     const scrollArea = this.scrollAreaRef.nativeElement;
     scrollArea.setAttribute('data-so-horizontal', 'true');
 
-    const resolvedHorizontal = searchDirect(this.horizontalSelector);
+    const resolvedHorizontal = searchDirect(this.horizontalSelector());
     this.horizontalScroller = resolvedHorizontal ?? scrollArea;
     if (this.horizontalScroller !== scrollArea) {
       this.horizontalScroller.setAttribute('data-so-horizontal', 'true');
@@ -432,7 +505,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     }
     this.markManagedScrollbar(this.horizontalScroller);
 
-    const vertical = searchDirect(this.verticalSelector);
+    const vertical = searchDirect(this.verticalSelector());
     // If vertical is explicitly set via selector, use it. Otherwise, always use scrollArea.
     // We intentionally DO NOT default to tbody anymore, to avoid browser bugs with table height limits.
     this.verticalScroller = vertical ?? scrollArea;
@@ -449,7 +522,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
     // Find table that is a DIRECT descendant (not inside nested scroll-overlay)
     // Skip table detection if explicitly disabled
-    if (!this.skipTableDetection) {
+    if (!this.skipTableDetection()) {
       const allTables = Array.from(host.querySelectorAll('table')) as HTMLElement[];
       const directTable = allTables.find((t) => !isInsideNestedScrollOverlay(t));
       this.tableHead = directTable?.querySelector('thead') as HTMLElement | null;
@@ -461,7 +534,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
     if (this.tableHead) {
       host.setAttribute('data-so-table', 'true');
-      if (this.syncTableColumns) {
+      if (this.syncTableColumns()) {
         host.setAttribute('data-so-sync-columns', 'true');
       } else {
         host.removeAttribute('data-so-sync-columns');
@@ -735,7 +808,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     this.hideTimer = setTimeout(() => {
       this.hostEl.classList.remove('so-scrolling');
       this.hideTimer = undefined;
-    }, this.autoHideDelay);
+    }, this.autoHideDelay());
   }
 
   private hideBar(): void {
@@ -780,7 +853,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     bar.style.pointerEvents = 'auto';
 
     const trackHeight = this.getVerticalTrackHeight(clientHeight);
-    const thumbHeight = Math.max(this.minThumbSize, (trackHeight * clientHeight) / scrollHeight);
+    const thumbHeight = Math.max(this.minThumbSize(), (trackHeight * clientHeight) / scrollHeight);
     this.verticalThumbSize = thumbHeight;
     thumb.style.height = `${thumbHeight}px`;
 
@@ -820,7 +893,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     bar.style.pointerEvents = 'auto';
 
     const trackWidth = this.getHorizontalTrackWidth(clientWidth);
-    const thumbWidth = Math.max(this.minThumbSize, (trackWidth * clientWidth) / scrollWidth);
+    const thumbWidth = Math.max(this.minThumbSize(), (trackWidth * clientWidth) / scrollWidth);
     this.horizontalThumbSize = thumbWidth;
     thumb.style.width = `${thumbWidth}px`;
 
@@ -840,7 +913,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     }
 
     if (this.hasVerticalScrollOverflow() && !this.disableVertical) {
-      return Math.max(0, clientWidth - this.trackSize - this.horizontalBarGap);
+      return Math.max(0, clientWidth - this.trackSize() - this.horizontalBarGap);
     }
 
     return clientWidth;
@@ -881,7 +954,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     let horizontalBarTop: number | null = null;
     if (this.horizontalScroller && !this.disableHorizontal) {
       horizontalRect = this.getSafeRect(this.horizontalScroller);
-      horizontalBarTop = horizontalRect.top - hostRect.top + horizontalRect.height - this.trackSize;
+      horizontalBarTop = horizontalRect.top - hostRect.top + horizontalRect.height - this.trackSize();
     }
 
     if (this.verticalScroller && !this.disableVertical) {
@@ -913,14 +986,14 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       barX.style.left = `${leftPosition}px`;
       const horizontalBarVisualTop =
         horizontalBarTop ??
-        horizontalRect.top - hostRect.top + horizontalRect.height - this.trackSize;
+        horizontalRect.top - hostRect.top + horizontalRect.height - this.trackSize();
       barX.style.top = `${horizontalBarVisualTop}px`;
 
       // Calcular ancho disponible desde la posición left hasta el borde derecho del host
       let barWidth = hostRect.width - leftPosition;
 
       if (hasVerticalOverflow && !this.disableVertical) {
-        const horizontalInset = this.trackSize + this.horizontalBarGap;
+        const horizontalInset = this.trackSize() + this.horizontalBarGap;
         barWidth = Math.max(0, barWidth - horizontalInset);
       }
       this.horizontalBarWidth = barWidth;
@@ -1165,7 +1238,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
   private syncColumnTemplate(): void {
     if (
-      !this.syncTableColumns ||
+      !this.syncTableColumns() ||
       this._lockColumnTemplate ||
       !this.headerRow ||
       !this.verticalScroller ||

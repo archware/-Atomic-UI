@@ -69,7 +69,7 @@ const meta: Meta<TableComponent> = {
 export default meta;
 type Story = StoryObj<TableComponent>;
 
-const renderTable = (args: Partial<TableComponent>) => ({
+const renderTable: NonNullable<Story['render']> = (args) => ({
   props: { ...args, data: SAMPLE_DATA },
   template: `
     <app-table

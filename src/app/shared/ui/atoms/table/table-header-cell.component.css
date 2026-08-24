@@ -1,0 +1,47 @@
+th[app-table-header-cell] {
+  /* Estilos base heredados de table-head.component.ts */
+}
+
+th[app-table-header-cell].sortable-cell {
+  cursor: pointer;
+  user-select: none;
+  transition: filter 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  --hover-brightness: 0.96; /* Oscurece 4% en modo claro */
+}
+
+[data-theme="dark"] th[app-table-header-cell].sortable-cell,
+.theme-dark th[app-table-header-cell].sortable-cell,
+html.dark th[app-table-header-cell].sortable-cell {
+  --hover-brightness: 1.2; /* Ilumina 20% en modo oscuro */
+}
+
+th[app-table-header-cell].sortable-cell:hover {
+  filter: brightness(var(--hover-brightness));
+}
+
+.th-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.sort-indicator {
+  font-size: 0.85em;
+  opacity: 0.3;
+  transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  color: var(--text-color-muted, #9ca3af);
+}
+
+.sort-indicator.active {
+  opacity: 1;
+  color: var(--primary-color, #3b82f6);
+}
+
+th[app-table-header-cell].sortable-cell:hover .sort-indicator {
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+
+th[app-table-header-cell].sortable-cell:hover .sort-indicator.active {
+  opacity: 1;
+}

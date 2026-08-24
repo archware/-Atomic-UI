@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 
 export type BadgeVariant = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
@@ -16,7 +16,7 @@ export type BadgePosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-
  *
  * @example — Overlay sobre ícono
  * ```html
- * <div style="position:relative; display:inline-block;">
+ * <div class="badge-anchor">
  *   <i class="fa-solid fa-bell"></i>
  *   <app-badge [count]="12" variant="danger" [overlay]="true"></app-badge>
  * </div>
@@ -33,109 +33,64 @@ export type BadgePosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-
   imports: [CommonModule, NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    @if (visible) {
+    @if (visible()) {
       <span
         class="badge"
         [ngClass]="badgeClasses"
-        [attr.aria-label]="ariaLabel || (count ? count + ' notificaciones' : null)"
+        [attr.aria-label]="ariaLabel() || (count() ? count() + ' notificaciones' : null)"
       >
-        @if (!dot) {
+        @if (!dot()) {
           {{ displayCount }}
         }
       </span>
     }
-    @if (!visible && overlay) {
+    @if (!visible() && overlay()) {
       <ng-content></ng-content>
     }
   `,
-  styles: [`
-    :host { display: inline-flex; }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: var(--font-weight-emphasis);
-      line-height: 1;
-      border-radius: var(--radius-full, 9999px);
-      white-space: nowrap;
-      font-size: var(--text-xs);
-      min-width: var(--space-5);
-      height: var(--space-5);
-      padding: 0 var(--space-1-5, var(--space-2));
-    }
-
-    /* Sizes */
-    .badge--sm { font-size: 0.625rem; min-width: var(--space-4); height: var(--space-4); padding: 0 var(--space-1); }
-    .badge--md { font-size: var(--text-xs); min-width: var(--space-5); height: var(--space-5); }
-    .badge--lg { font-size: var(--text-sm); min-width: var(--space-5); height: var(--space-5); padding: 0 var(--space-2); }
-
-    /* Dot variant */
-    .badge--dot { min-width: var(--space-2); height: var(--space-2); padding: 0; border-radius: 50%; }
-    .badge--dot.badge--sm { min-width: var(--space-2); height: var(--space-2); }
-    .badge--dot.badge--lg { min-width: var(--space-3); height: var(--space-3); }
-
-    /* Overlay positioning */
-    .badge--overlay {
-      position: absolute;
-      z-index: 1;
-      border: var(--space-1) solid var(--surface-background, white);
-    }
-    .badge--top-right  { top: calc(-1 * var(--space-1)); right: calc(-1 * var(--space-1)); transform: translate(25%, -25%); }
-    .badge--top-left   { top: calc(-1 * var(--space-1)); left: calc(-1 * var(--space-1));  transform: translate(-25%, -25%); }
-    .badge--bottom-right { bottom: calc(-1 * var(--space-1)); right: calc(-1 * var(--space-1)); transform: translate(25%, 25%); }
-    .badge--bottom-left  { bottom: calc(-1 * var(--space-1)); left: calc(-1 * var(--space-1));  transform: translate(-25%, 25%); }
-
-    /* Variants */
-    .badge--default   { background: var(--surface-section); color: var(--text-color-secondary); }
-    .badge--primary   { background: var(--primary-color); color: white; }
-    .badge--secondary { background: var(--secondary-color); color: white; }
-    .badge--success   { background: var(--success-color); color: white; }
-    .badge--warning   { background: var(--warning-color); color: white; }
-    .badge--danger    { background: var(--danger-color); color: white; }
-    .badge--info      { background: var(--info-color, #3b82f6); color: white; }
-  `]
+  styleUrl: './badge.component.css'
 })
 export class BadgeComponent {
   /** Number to display. Set to 0 to hide. */
-  @Input() count: number | null = null;
+  readonly count = input<number | null>(null);
 
   /** Maximum count to display before showing "max+" */
-  @Input() max = 99;
+  readonly max = input(99);
 
   /** Color variant */
-  @Input() variant: BadgeVariant = 'danger';
+  readonly variant = input<BadgeVariant>('danger');
 
   /** Size variant */
-  @Input() size: BadgeSize = 'md';
+  readonly size = input<BadgeSize>('md');
 
   /** Show as a small dot without number */
-  @Input() dot = false;
+  readonly dot = input(false);
 
   /** Position absolute over parent (parent needs position:relative) */
-  @Input() overlay = false;
+  readonly overlay = input(false);
 
   /** Corner position when overlay is true */
-  @Input() position: BadgePosition = 'top-right';
+  readonly position = input<BadgePosition>('top-right');
 
   /** Show or hide the badge */
-  @Input() visible = true;
+  readonly visible = input(true);
 
   /** Custom aria-label */
-  @Input() ariaLabel = '';
+  readonly ariaLabel = input('');
 
   get displayCount(): string {
-    if (this.count === null) return '';
-    return this.count > this.max ? `${this.max}+` : `${this.count}`;
+    const count = this.count();
+    if (count === null) return '';
+    return count > this.max() ? `${this.max()}+` : `${count}`;
   }
 
   get badgeClasses(): Record<string, boolean> {
     return {
-      [`badge--${this.variant}`]: true,
-      [`badge--${this.size}`]: true,
-      'badge--dot': this.dot,
-      'badge--overlay': this.overlay,
-      [`badge--${this.position}`]: this.overlay,
+      [`badge--${this.variant()}`]: true,
+      [`badge--${this.size()}`]: true,
+      'badge--dot': this.dot(),
+      'badge--overlay': this.overlay(),
+      [`badge--${this.position()}`]: this.overlay(),
     };
   }
 }

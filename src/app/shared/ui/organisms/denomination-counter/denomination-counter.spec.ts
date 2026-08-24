@@ -17,12 +17,14 @@ import {
       [open]="true"
       [state]="state"
       [denominations]="denominations"
+      [value]="valorControlado"
       [formControl]="control"
     />
   `,
 })
 class TestHost {
   state: 'empty' | 'suggested' | 'confirmed' = 'confirmed';
+  valorControlado: readonly DenominationCount[] | undefined;
   readonly denominations: readonly DenominationDefinition[] = [
     { code: 'PEN_200', value: 200, label: 'S/ 200', description: 'Billete' },
     { code: 'PEN_050_COIN', value: 0.5, label: 'S/ 0.50', description: 'Moneda' },
@@ -67,9 +69,7 @@ describe('DenominationCounter', () => {
   });
 
   it('refreshes the total when a controlled value is supplied programmatically', () => {
-    const component = fixture.debugElement.children[0].componentInstance as DenominationCounter;
-
-    component.value = [{ code: 'PEN_050_COIN', quantity: 3 }];
+    fixture.componentInstance.valorControlado = [{ code: 'PEN_050_COIN', quantity: 3 }];
     fixture.detectChanges();
 
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('S/ 1.50');

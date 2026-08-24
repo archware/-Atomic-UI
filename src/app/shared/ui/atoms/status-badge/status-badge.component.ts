@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 export type StatusBadgeStatus =
   'active' | 'inactive' | 'degraded' | 'unconfigured' | 'info' | 'success' | 'warning' | 'danger';
@@ -32,10 +32,10 @@ const CHANNELS: Readonly<
   template: `
     <span
       class="status-badge"
-      [class]="'status-badge--' + status + ' status-badge--' + size"
+      [class]="'status-badge--' + status() + ' status-badge--' + size()"
       [attr.aria-label]="computedAriaLabel"
-      [attr.role]="announce ? 'status' : null"
-      [attr.aria-live]="announce ? 'polite' : null"
+      [attr.role]="announce() ? 'status' : null"
+      [attr.aria-live]="announce() ? 'polite' : null"
     >
       @if (channelDefinition; as channelInfo) {
         <span class="status-badge__channel">
@@ -48,139 +48,29 @@ const CHANNELS: Readonly<
       <span class="status-badge__label">{{ statusLabel }}</span>
     </span>
   `,
-  styles: [
-    `
-      :host {
-        display: inline-flex;
-        min-width: 0;
-        max-width: 100%;
-      }
-
-      .status-badge {
-        min-width: 0;
-        max-width: 100%;
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-1);
-        box-sizing: border-box;
-        border: 1px solid transparent;
-        border-radius: var(--radius-full);
-        font-weight: var(--font-weight-title);
-        line-height: 1.2;
-      }
-
-      .status-badge--sm {
-        min-height: 1.5rem;
-        padding: var(--space-1) var(--space-2);
-        font-size: var(--text-2xs, 0.6875rem);
-      }
-
-      .status-badge--md {
-        min-height: 1.75rem;
-        padding: var(--space-1) var(--space-3);
-        font-size: var(--text-xs);
-      }
-
-      .status-badge__channel,
-      .status-badge__label {
-        min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .status-badge__channel {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-1);
-        letter-spacing: 0.03em;
-      }
-
-      .status-badge__separator {
-        width: 1px;
-        height: 0.875rem;
-        flex: 0 0 auto;
-        background: currentColor;
-        opacity: 0.35;
-      }
-
-      .status-badge__dot {
-        width: 0.5rem;
-        height: 0.5rem;
-        flex: 0 0 auto;
-        border-radius: var(--radius-full);
-        background: currentColor;
-      }
-
-      .status-badge--active {
-        border-color: var(--success-color-light);
-        background: var(--success-color-lighter);
-        color: var(--success-color-text, var(--success-color-dark));
-      }
-
-      .status-badge--inactive {
-        border-color: var(--border-color);
-        background: var(--surface-section);
-        color: var(--text-color-secondary);
-      }
-
-      .status-badge--degraded {
-        border-color: var(--warning-color-light);
-        background: var(--warning-color-lighter);
-        color: var(--warning-color-text, var(--warning-color-dark));
-      }
-
-      .status-badge--unconfigured {
-        border-color: var(--info-color-light);
-        background: var(--info-color-lighter);
-        color: var(--info-color-text, var(--info-color-dark));
-      }
-
-      .status-badge--info {
-        border-color: var(--info-color-light);
-        background: var(--info-color-lighter);
-        color: var(--info-color-text, var(--info-color-dark));
-      }
-
-      .status-badge--success {
-        border-color: var(--success-color-light);
-        background: var(--success-color-lighter);
-        color: var(--success-color-text, var(--success-color-dark));
-      }
-
-      .status-badge--warning {
-        border-color: var(--warning-color-light);
-        background: var(--warning-color-lighter);
-        color: var(--warning-color-text, var(--warning-color-dark));
-      }
-
-      .status-badge--danger {
-        border-color: var(--danger-color-light);
-        background: var(--danger-color-lighter);
-        color: var(--danger-color-text, var(--danger-color-dark));
-      }
-    `,
-  ],
+  styleUrl: './status-badge.component.css',
 })
 export class StatusBadgeComponent {
-  @Input() status: StatusBadgeStatus = 'unconfigured';
-  @Input() channel: StatusBadgeChannel | null = null;
-  @Input() size: StatusBadgeSize = 'md';
-  @Input() label = '';
-  @Input() ariaLabel = '';
-  @Input() announce = false;
+  readonly status = input<StatusBadgeStatus>('unconfigured');
+  readonly channel = input<StatusBadgeChannel | null>(null);
+  readonly size = input<StatusBadgeSize>('md');
+  readonly label = input('');
+  readonly ariaLabel = input('');
+  readonly announce = input(false);
 
   get statusLabel(): string {
-    return this.label.trim() || STATUS_LABELS[this.status];
+    return this.label().trim() || STATUS_LABELS[this.status()];
   }
 
   get channelDefinition(): (typeof CHANNELS)[StatusBadgeChannel] | null {
-    return this.channel ? CHANNELS[this.channel] : null;
+    const channel = this.channel();
+    return channel ? CHANNELS[channel] : null;
   }
 
   get computedAriaLabel(): string {
-    if (this.ariaLabel.trim()) {
-      return this.ariaLabel.trim();
+    const ariaLabel = this.ariaLabel();
+    if (ariaLabel.trim()) {
+      return ariaLabel.trim();
     }
     return this.channelDefinition
       ? `${this.channelDefinition.label}: ${this.statusLabel}`

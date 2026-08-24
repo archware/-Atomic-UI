@@ -2,20 +2,20 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  EventEmitter,
-  Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
   inject,
   signal,
   viewChild,
+  input,
+  output
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-overlay.component';
 import { FooterComponent } from '../../organisms/footer/footer.component';
+import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 /** Ancho a partir del cual el cajón deja de convivir con el contenido y lo tapa. */
 const COMPACT_VIEWPORT = '(max-width: 768px)';
@@ -23,31 +23,31 @@ const COMPACT_VIEWPORT = '(max-width: 768px)';
 @Component({
   selector: 'app-layout-shell',
   standalone: true,
-  imports: [ScrollOverlayComponent, FooterComponent],
+  imports: [ScrollOverlayComponent, FooterComponent, VariablesCssDirective],
   templateUrl: './layout-shell.component.html',
   styleUrl: './layout-shell.component.css'
 })
 export class LayoutShellComponent implements OnInit, OnChanges {
   /** Whether the sidebar is visible */
-  @Input() sidebarVisible = true;
+  readonly sidebarVisible = input(true);
 
   /** Sidebar width (default: 260px). Supports any CSS value: '260px', '25%', 'clamp(200px, 20%, 300px)' */
-  @Input() sidebarWidth = '260px';
+  readonly sidebarWidth = input('260px');
 
   /** Controls the canonical footer row outside the scroll viewport. */
-  @Input() footerVisible = true;
-  @Input() footerCompanyName = 'Company';
-  @Input() footerYear = new Date().getFullYear();
-  @Input() footerCopyrightText = 'Todos los derechos reservados.';
-  @Input() footerShowVersion = true;
-  @Input() footerVersion = 'v1.0.0';
-  @Input() footerEnvironment = 'BETA';
+  readonly footerVisible = input(true);
+  readonly footerCompanyName = input('Company');
+  readonly footerYear = input(new Date().getFullYear());
+  readonly footerCopyrightText = input('Todos los derechos reservados.');
+  readonly footerShowVersion = input(true);
+  readonly footerVersion = input('v1.0.0');
+  readonly footerEnvironment = input('BETA');
 
   /** Texto del enlace de salto al contenido. */
-  @Input() skipLinkLabel = 'Saltar al contenido principal';
+  readonly skipLinkLabel = input('Saltar al contenido principal');
 
   /** Nombre accesible de la región de navegación lateral. */
-  @Input() sidebarLabel = 'Navegación principal';
+  readonly sidebarLabel = input('Navegación principal');
 
   /**
    * Consulta de medios que decide cuándo el cajón deja de convivir con el
@@ -56,10 +56,10 @@ export class LayoutShellComponent implements OnInit, OnChanges {
    * comprobable el comportamiento modal sin depender del ancho real de la
    * ventana de pruebas.
    */
-  @Input() compactViewportQuery = COMPACT_VIEWPORT;
+  readonly compactViewportQuery = input(COMPACT_VIEWPORT);
 
   /** Event emitted when sidebar backdrop is clicked */
-  @Output() closeSidebar = new EventEmitter<void>();
+  readonly closeSidebar = output<void>();
 
   private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
@@ -77,7 +77,7 @@ export class LayoutShellComponent implements OnInit, OnChanges {
     this.desconectarMedia?.();
     this.desconectarMedia = null;
 
-    const mediaQuery = this.document.defaultView?.matchMedia(this.compactViewportQuery);
+    const mediaQuery = this.document.defaultView?.matchMedia(this.compactViewportQuery());
     if (!mediaQuery) {
       return;
     }
@@ -101,11 +101,11 @@ export class LayoutShellComponent implements OnInit, OnChanges {
     velo—.
   */
   protected get sidebarInert(): '' | null {
-    return this.sidebarVisible ? null : '';
+    return this.sidebarVisible() ? null : '';
   }
 
   protected get contentInert(): '' | null {
-    return this.compactViewport() && this.sidebarVisible ? '' : null;
+    return this.compactViewport() && this.sidebarVisible() ? '' : null;
   }
 
   /*
