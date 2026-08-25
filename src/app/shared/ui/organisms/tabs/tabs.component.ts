@@ -46,7 +46,8 @@ export class TabComponent {
         class="tabs-header"
         #tabsHeader
         role="tablist"
-        aria-label="Tabs"
+        [attr.aria-label]="ariaLabel()"
+        [attr.aria-orientation]="orientation()"
         (keydown)="onHeaderKeydown($event)"
       >
         @for (tab of tabs; track tab.label(); let i = $index) {
@@ -86,6 +87,10 @@ export class TabComponent {
 export class TabsComponent implements AfterContentInit {
   @ContentChildren(TabComponent) tabComponents!: QueryList<TabComponent>;
   readonly defaultIndex = input(0);
+  /** Accessible name of the tablist; translate it per application. */
+  readonly ariaLabel = input('Tabs');
+  /** Tablist orientation; decides which arrow pair traverses the tabs. */
+  readonly orientation = input<'horizontal' | 'vertical'>('horizontal');
   readonly tabChange = output<number>();
 
   activeIndex = signal(0);
@@ -113,16 +118,26 @@ export class TabsComponent implements AfterContentInit {
       return;
     }
 
+    // A shortcut belongs to the browser or the OS, never to the tablist:
+    // Alt+Arrow navigates history and Ctrl+Home reaches the top of the page.
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+      return;
+    }
+
+    // APG assigns Left/Right to a horizontal tablist and Up/Down to a vertical
+    // one. Claiming the other pair would cancel the page's own scrolling.
+    const vertical = this.orientation() === 'vertical';
+    const nextKey = vertical ? 'ArrowDown' : 'ArrowRight';
+    const previousKey = vertical ? 'ArrowUp' : 'ArrowLeft';
+
     const current = this.activeIndex();
     let target: number | null = null;
 
     switch (event.key) {
-      case 'ArrowRight':
-      case 'ArrowDown':
+      case nextKey:
         target = this.findEnabled(current + 1, 1);
         break;
-      case 'ArrowLeft':
-      case 'ArrowUp':
+      case previousKey:
         target = this.findEnabled(current - 1, -1);
         break;
       case 'Home':

@@ -12,6 +12,29 @@ owner: 'Hospital Regional de Ayacucho'
 
 # Registro de cambios
 
+## fix(tabs): las flechas siguen la orientacion y respetan los modificadores
+
+Correccion sobre `feat(tabs)` del mismo dia, detectada en revision adversarial
+antes de publicar. La primera version mapeaba los cuatro cursores a la vez y no
+miraba los modificadores, con dos consecuencias medidas en navegador:
+
+- `ArrowUp` y `ArrowDown` cancelaban el desplazamiento vertical de la pagina.
+  El tablist es horizontal —`display: flex` sin `flex-direction`, y el valor por
+  defecto de `role="tablist"` es `horizontal`— y el APG reserva ese par para
+  `aria-orientation="vertical"`. Un usuario de teclado perdia el scroll mientras
+  el foco estuviera en la cabecera, y encima cambiaba de pestana.
+- `Alt+Flecha`, `Ctrl+Home`, `Ctrl+End` y `Shift+Flecha` quedaban secuestrados:
+  `event.key` vale igual con modificadores, asi que entraban por el mismo
+  `switch` y llegaban a `preventDefault()`, anulando la navegacion de historial
+  y el salto al inicio o al final del documento.
+
+El contenedor pasa a declarar su orientacion con `aria-orientation` y elige el
+par de flechas segun ella; con cualquier modificador activo el manejador sale
+sin tocar el evento. Se anade tambien la entrada `ariaLabel`: el nombre
+accesible del tablist estaba fijado a "Tabs" en ingles y ninguna aplicacion
+podia traducirlo. Ambas entradas tienen valor por defecto, de modo que ningun
+consumidor necesita adaptarse.
+
 ## feat(tabs): navegacion WAI-ARIA completa por teclado
 
 El organismo `tabs` publicaba un `tablist` con el contrato ARIA correcto —roles,

@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "2d9d2779727e64103798b81174972ce926edaec04f1d38c3d75a5441db291a5d",
+  "sourceTreeSha256": "9f3d4d8ed27664302c3f484677c76e52864f42d96bf9e0ba0226469d85296e35",
   "fileCount": 222,
   "files": [
     {
@@ -930,8 +930,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/tabs/tabs.component.ts",
-      "bytes": 5431,
-      "sha256": "72a447b4c0775ffe8ec676307141942c51ba55436b4931aca6e93c2a848d0b0d"
+      "bytes": 6279,
+      "sha256": "89e257dbdaae388537bce796a57a69e2d017d7e85e6e371f7095b8942f897336"
     },
     {
       "path": "src/app/shared/ui/organisms/theme-switcher/theme-switcher.component.css",
