@@ -1,0 +1,15 @@
+name: atomic_tokens
+description: >-
+  Tokens de Atomic UI emitidos hacia Dart. Generado por
+  scripts/emit-dart-tokens.mjs. No se edita a mano.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=3.10.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter: {}

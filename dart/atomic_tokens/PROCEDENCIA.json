@@ -1,0 +1,78 @@
+{
+  "contrato": "atomic.dart-tokens.v1",
+  "canonizacionDeContenido": "git-clean-eol-v1",
+  "changeId": "F3-DART-BRIDGE-20260825",
+  "identificadorTransversal": "ECO-20260825-001",
+  "emisor": "scripts/emit-dart-tokens.mjs",
+  "baseRemEnPixelesLogicos": 16,
+  "pisoObjetivoTactil": 48,
+  "temas": [
+    {
+      "css": "light",
+      "dart": "claro"
+    },
+    {
+      "css": "dark",
+      "dart": "oscuro"
+    },
+    {
+      "css": "brand-dark",
+      "dart": "marcaOscuro"
+    }
+  ],
+  "recuento": {
+    "colores": 419,
+    "espacios": 11,
+    "radios": 5,
+    "tamanosDeTexto": 9,
+    "puntosDeCorte": 0
+  },
+  "fuente": [
+    {
+      "archivo": "src/styles/themes/_tokens-primitives.css",
+      "sha256": "d706f898332b4e2be7b6298e5fcf915ffefa4782f472128300903cdf6fee3203"
+    },
+    {
+      "archivo": "src/styles/themes/_tokens-brand.css",
+      "sha256": "a6218a3a5c8e28c124798bef87f32d6cc654842491a354f27d60cc85bf2c08d9"
+    },
+    {
+      "archivo": "src/styles/themes/_tokens-semantic.css",
+      "sha256": "436b257a2adc3e0baa3027040ae39caf45296e8dd353928b8f6d248cb1664c72"
+    },
+    {
+      "archivo": "src/styles/themes/_tokens-components.css",
+      "sha256": "8f27798b86cd5121e537ce57e6909fc1054c9caef4aba503e3c84737f0e7560c"
+    }
+  ],
+  "emitido": [
+    {
+      "archivo": "lib/src/atomic_colores.g.dart",
+      "sha256": "bf34fede9771aa651948f87bc2798a79d11d85fbb08e541997a2e1f6a2f3ff70"
+    },
+    {
+      "archivo": "lib/src/atomic_dimensiones.g.dart",
+      "sha256": "78d5b27bec2324a446c245906d5244afe5619367754d0bbe5cf09bc6937620aa"
+    },
+    {
+      "archivo": "lib/src/atomic_tipografia.g.dart",
+      "sha256": "51e7fc9134a8f46784a8b188974e876ac22e2202295109e98dcf7c13d7710a2d"
+    },
+    {
+      "archivo": "lib/src/atomic_escala.g.dart",
+      "sha256": "1afdff8aef5b81ece0669d3ef82763fafa9d4aa2db57515977f3d35789e365a1"
+    },
+    {
+      "archivo": "lib/src/atomic_tema.g.dart",
+      "sha256": "db63459056e63a1712fede976e8b5e534326b97ad646a22790c0d9237fd765ed"
+    },
+    {
+      "archivo": "lib/atomic_tokens.dart",
+      "sha256": "16b00a6ba5f45826dd882e341e9388c286d004b832298ace09c774c40ea50047"
+    },
+    {
+      "archivo": "pubspec.yaml",
+      "sha256": "44d569d0fe2e96cc47072370a6ab8af2e0be8afb1d282dd248d13ae6cb07eb98"
+    }
+  ]
+}

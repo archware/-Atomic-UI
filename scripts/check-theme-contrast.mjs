@@ -2,6 +2,19 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// El analizador de bloques y la cascada de temas viven ahora en un modulo
+// compartido: el emisor de tokens de Dart necesita exactamente el mismo modelo
+// y duplicarlo habria creado dos lecturas divergentes de la misma fuente.
+// F3-DART-BRIDGE-20260825.
+import {
+  THEME_FILES,
+  flatten,
+  resolveToken,
+  themeDir,
+  tokensForTheme,
+  topLevelBlocks,
+} from './lib/atomic-tokens.mjs';
+
 // Dos fallos reales que ninguna prueba podia ver, porque nada en la suite mira
 // estilos calculados:
 //
@@ -17,10 +30,8 @@ import { fileURLToPath } from 'node:url';
 // no producir ruido que acabe con alguien desactivandolo.
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const themeDir = resolve(projectRoot, 'src/styles/themes');
 const sourceRoot = resolve(projectRoot, 'src');
 
-const THEME_FILES = ['_tokens-primitives.css', '_tokens-semantic.css', '_tokens-components.css'];
 
 // El switcher alterna light/dark, pero ThemeService mantiene brand-dark como
 // selección pública explícita. Los tres temas son alcanzables por contrato.
@@ -64,26 +75,6 @@ const CONTRAST_PAIRS = [
 const failures = [];
 
 /** Devuelve [{selector, body}] de los bloques de primer nivel del fichero. */
-function topLevelBlocks(text) {
-  const blocks = [];
-  let index = 0;
-  while (index < text.length) {
-    const open = text.indexOf('{', index);
-    if (open < 0) break;
-    const previousClose = text.lastIndexOf('}', open);
-    const selector = text.slice(previousClose + 1, open).replace(/\s+/g, ' ').trim();
-    let depth = 1;
-    let cursor = open + 1;
-    while (cursor < text.length && depth > 0) {
-      if (text[cursor] === '{') depth += 1;
-      else if (text[cursor] === '}') depth -= 1;
-      cursor += 1;
-    }
-    blocks.push({ selector, body: text.slice(open + 1, cursor - 1) });
-    index = cursor;
-  }
-  return blocks;
-}
 
 /*
  * Los componentes Angular pueden declarar CSS dentro de styles: [`...`].
@@ -144,68 +135,6 @@ function styleSources(file, source) {
   return [];
 }
 
-/**
- * Tokens visibles para un tema. El bloque claro esta anclado a `:root`, asi que
- * cualquier tema hereda lo que el no redeclare: exactamente el mecanismo del
- * fallo 1. Se modela igual que el navegador para poder detectarlo.
- */
-function tokensForTheme(theme) {
-  const values = new Map();
-  for (const file of THEME_FILES) {
-    const css = readFileSync(join(themeDir, file), 'utf8');
-    for (const { selector, body } of topLevelBlocks(css)) {
-      const lower = selector.toLowerCase();
-      // `:root` casa con <html> SIEMPRE, tambien cuando el selector lista ademas
-      // [data-theme="light"]. Por eso los valores del bloque claro se filtran a
-      // cualquier tema que no los redeclare: ese fue el fallo. El modelo tiene
-      // que replicarlo o el gate diagnosticaria mal.
-      const isRootDefault = lower.includes(':root');
-      const isThisTheme = lower.includes(`[data-theme="${theme}"]`);
-      if (!isRootDefault && !isThisTheme) continue;
-      for (const match of body.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)) {
-        values.set(match[1], match[2].trim());
-      }
-    }
-  }
-  return values;
-}
-
-/**
- * Compone un color translucido sobre su fondo y devuelve el hex resultante.
- *
- * Los fondos de alerta de los temas oscuros son `rgba(r, g, b, .1)`: lo que el
- * ojo ve no es ese color sino su mezcla con la superficie de debajo. Sin
- * componer, el par no se podia evaluar y la comprobacion se saltaba justo los
- * temas donde no habia forma de mirarlo.
- */
-function flatten(rgba, backdropHex) {
-  const parts = /^rgba?\(([^)]+)\)$/i.exec(rgba.trim());
-  if (!parts) return null;
-  const [r, g, b, a = '1'] = parts[1].split(/[,/]/).map((piece) => piece.trim());
-  const alpha = Number(a);
-  if ([r, g, b].some((piece) => piece === '' || Number.isNaN(Number(piece))) || Number.isNaN(alpha)) {
-    return null;
-  }
-  const backdrop = backdropHex.replace('#', '');
-  const mix = [0, 2, 4].map((offset, index) => {
-    const under = parseInt(backdrop.slice(offset, offset + 2), 16);
-    const over = Number([r, g, b][index]);
-    return Math.round(over * alpha + under * (1 - alpha));
-  });
-  return `#${mix.map((value) => value.toString(16).padStart(2, '0')).join('')}`;
-}
-
-function resolveToken(values, name, seen = new Set(), backdrop = null) {
-  if (seen.has(name)) return null;
-  seen.add(name);
-  const raw = values.get(name);
-  if (!raw) return null;
-  const alias = /^var\((--[\w-]+)\)$/.exec(raw.trim());
-  if (alias) return resolveToken(values, alias[1], seen, backdrop);
-  if (/^#[0-9a-f]{6}$/i.test(raw.trim())) return raw.trim();
-  if (backdrop && /^rgba?\(/i.test(raw.trim())) return flatten(raw.trim(), backdrop);
-  return null;
-}
 
 function channel(value) {
   const c = value / 255;

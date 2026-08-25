@@ -2,15 +2,73 @@
 title: 'Registro de cambios de Atomic UI'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-08-23'
-last_updated: '2026-08-23'
+last_updated: '2026-08-25'
 document_type: 'changelog'
 version: '5.22.0'
 status: 'vigente'
-updated: '2026-08-23'
+updated: '2026-08-25'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
 # Registro de cambios
+
+## F3-ATOMIC-ADR-20260825 y F3-DART-BRIDGE-20260825: el ADN cruza a Flutter
+
+Dentro de `ECO-20260825-001`, fase F3. Dos cambios con identificador propio.
+
+### Objetivo tactil elevado a 48px (`F3-ATOMIC-ADR-20260825`)
+
+`--touch-target-min` pasa de `2.75rem` a `3rem`. WCAG 2.5.5 pide 44 y la guia de
+Apple 44pt, pero Material Design exige 48dp y la Ley E (apartado 8.6) prohibe
+que un objetivo tactil quede por debajo de `kMinInteractiveDimension`, que vale
+48.0. Subir cumple los tres listones; 44 solo cumplia dos.
+
+El capitulo 10 ya dejo escrito el procedimiento para este caso exacto: sube el
+objetivo tactil y no se mueve ni un margen. Se cumple al pie: solo cambia ese
+token. `--space-11` conserva `2.75rem` para quien dependa del valor anterior.
+
+Cuatro declaraciones lo consumen y crecen 4px: la variante grande de
+`action-group` y tres medidas de `stepper`. Razonamiento completo, alternativas
+descartadas y consecuencias en
+`docs/adr/ADR-F3-ATOMIC-ADR-20260825_objetivo_tactil_minimo.md`.
+
+### Puente de tokens hacia Dart (`F3-DART-BRIDGE-20260825`)
+
+- **`scripts/lib/atomic-tokens.mjs`**: el analizador de bloques CSS y el modelo
+  de cascada de temas que vivian dentro de `check-theme-contrast.mjs` se
+  promueven a modulo compartido. `check-theme-contrast.mjs` pasa a importarlos y
+  no conserva copia: dos lecturas de la misma fuente divergen en cuanto alguien
+  corrige una sola.
+- **`_tokens-brand.css` entra en la lista de ficheros de tema.** Faltaba. La
+  compuerta de contraste declaraba verificados «3 temas alcanzables» sin haber
+  leido nunca el fichero que define la paleta de marca, de modo que cualquier
+  regresion alli era invisible. Con el incorporado, la compuerta sigue en verde.
+- **`scripts/emit-dart-tokens.mjs`**: emite `dart/atomic_tokens` desde los
+  ficheros de tema, con 419 colores por tema, la escala de espaciado, radios,
+  bordes, tipografia y el objetivo tactil. Acompana `PROCEDENCIA.json` con la
+  huella SHA-256 de cada CSS de origen y de cada archivo emitido.
+- **`npm run tokens:dart:check`** reejecuta el emisor y compara bytes; queda
+  cableado dentro de `governance:check`. Si el CSS cambia y el Dart no se
+  regenera, la compuerta rompe la compilacion nombrando los archivos
+  divergentes.
+- **El emisor no corrige un token fuera de norma: falla.** Si
+  `--touch-target-min` bajara del piso de 48, se niega a emitir y remite la
+  correccion a la fuente canonica. Corregirlo en el generador crearia en el
+  consumidor un valor distinto del que declara el ADN, que es la bifurcacion que
+  el apartado 6.1 prohibe.
+
+Ambas compuertas se demostraron rompiendolas antes de darlas por instaladas.
+
+### Tratamiento del escalado
+
+La tipografia se emite **sin escalar**: `Text` y `RichText` aplican por si solos
+`MediaQuery.textScalerOf` sobre `fontSize`, y aplicarlo tambien en el emisor
+produciria un doble escalado —con escala 2.0, texto a 4x—. Los espaciados que
+acompanan al texto se escalan con la formula proporcional documentada por
+Flutter, expuesta en `AtomicEscala.espacio`. El objetivo tactil no se escala con
+el texto: es un piso fisico que puede crecer pero nunca encoger. Los puntos de
+corte se resuelven con el tamano de la ventana y jamas con `textScaler`.
+
 
 Todas las modificaciones importantes de este proyecto se documentan en este
 archivo. El formato se basa en

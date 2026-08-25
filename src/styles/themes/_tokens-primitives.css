@@ -199,8 +199,15 @@
       y el 10— porque no es un espacio: es el objetivo tactil minimo de WCAG
       2.5.5, que entro aqui por no haber donde ponerlo. Se conserva por
       compatibilidad; lo nuevo usa --touch-target-min. Capitulo 10. */
-   --touch-target-min: 2.75rem;
-   /* 44px - Objetivo tactil minimo (WCAG 2.5.5). Es un TAMAÑO, no un espacio. */
+   --touch-target-min: 3rem;
+   /* 48px - Objetivo tactil minimo. Es un TAMAÑO, no un espacio.
+      Elevado de 2.75rem (44px) a 3rem (48px) por F3-ATOMIC-ADR-20260825. WCAG
+      2.5.5 pide 44 y la guia de Apple 44pt, pero Material Design exige 48dp y
+      la Ley E (apartado 8.6) prohibe que un objetivo tactil quede por debajo de
+      kMinInteractiveDimension, que vale 48.0. Subir cumple los tres listones;
+      44 solo cumplia dos. El capitulo 10 dejo escrito este procedimiento: sube
+      el objetivo tactil y no se mueve ni un margen. --space-11 conserva 2.75rem
+      para quien dependa del valor anterior. */
 
    /* ─────────────────────────────────────────────────────────────────────────
      ESCALA DE PESO TIPOGRAFICO

@@ -34,6 +34,39 @@ Una lección nueva requiere evidencia, decisión generalizable, mecanismo
 preventivo y límite de aplicación. Una incidencia exclusiva de un ticket se
 mantiene en su roadmap hasta demostrar que merece una regla común.
 
+## [2026-08-25] - Cambiar un token obliga a regenerar el manifiesto de procedencia
+
+**Contexto.** `F3-ATOMIC-ADR-20260825` elevó `--touch-target-min` de `2.75rem` a
+`3rem`. El cambio es de una línea y las cuatro compuertas de estilo —contraste,
+tipografía, foco y valores CSS— salieron en verde de inmediato. `governance:check`
+falló después, en `governance:smoke`, con un error que no menciona tokens:
+«El manifiesto Atomic no coincide con el inventario canónico real».
+
+**Qué pasaba.** `distribution/atomic-source-manifest.json` inventaría 222 fuentes
+con su SHA-256 y una huella agregada del árbol. Editar cualquiera de esas 222
+invalida el manifiesto, y el instalador de gobierno del consumidor se niega a
+correr. El generador de proyectos lo invoca, así que el síntoma aparece a tres
+saltos de la causa: el fallo se lee como si el generador estuviera roto.
+
+**Lección.** El manifiesto no es documentación: es la compuerta de procedencia
+que exige el apartado 6.1, y comprueba bytes. Cualquier cambio en la fuente
+inventariada se completa con `node tools/check-package-distribution.js manifest`
+y, solo entonces, con la verificación. Las compuertas de estilo no lo cubren
+porque miran significado, no bytes.
+
+**Cómo aplicarla.** El orden correcto es: cambiar la fuente, ejecutar las
+compuertas de estilo, terminar TODAS las ediciones sobre archivos inventariados,
+regenerar el manifiesto una sola vez al final, y recién entonces ejecutar
+`governance:check`. Regenerarlo a mitad de camino obliga a repetirlo.
+
+**Corolario sobre las huellas.** Una huella tomada sobre bytes crudos cambia con
+los finales de línea, no solo con el diseño: un `git stash` o un clon con otra
+configuración de `autocrlf` la mueve sin que nadie toque una declaración. El
+repositorio ya lo tenía resuelto con `git-clean-eol-v1`, que normaliza CRLF a LF
+antes de medir. El emisor de tokens de Dart nació calculando la huella sobre
+bytes crudos y divergió por esa causa en su primera ejecución real; se corrigió
+reutilizando la canonización de la casa en lugar de inventar una segunda.
+
 ## [2026-08-23] - La separación de estilos requiere semántica Angular y un canal dinámico limitado
 
 **Contexto.** La biblioteca combinaba hojas externas con bloques `styles`,
