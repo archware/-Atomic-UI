@@ -268,6 +268,17 @@
    /* 12px */
    --radius-xl: 1rem;
    /* 16px */
+
+   /* Elevaciones (profundidad de sombra), en px logicos. No son una medida de
+      texto: no escalan con la preferencia tipografica. Un elemento interactivo
+      primario descansa un peldano por encima de la superficie; una tarjeta,
+      medio. Consumidas en Flutter como AtomicElevaciones (F3-DART-BRIDGE). */
+   --elevation-tarjeta: 1px;
+   /* 1px - reposo de una tarjeta sobre la superficie */
+   --elevation-boton: 2px;
+   /* 2px - accion primaria, un peldano por encima */
+   --elevation-boton-activo: 4px;
+   /* 4px - accion primaria mientras se pulsa */
     --radius-full: 9999px;
     --border-width-thin: 0.0625rem;
     --border-width-medium: 0.125rem;

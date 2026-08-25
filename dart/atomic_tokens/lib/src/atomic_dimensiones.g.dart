@@ -69,6 +69,20 @@ class AtomicBordes {
   static const double borderWidthThin = 1.0;
 }
 
+/// Elevaciones: profundidad de sombra en pixeles logicos.
+///
+/// No se escalan con la preferencia de tamano de texto: son profundidad, no tipografia; van directas a la propiedad elevation de un widget Material.
+class AtomicElevaciones {
+  const AtomicElevaciones._();
+
+  /// `--elevation-boton`
+  static const double elevationBoton = 2.0;
+  /// `--elevation-boton-activo`
+  static const double elevationBotonActivo = 4.0;
+  /// `--elevation-tarjeta`
+  static const double elevationTarjeta = 1.0;
+}
+
 /// Objetivo tactil minimo.
 ///
 /// PISO FISICO. No se escala con la preferencia de tamano de texto y jamas

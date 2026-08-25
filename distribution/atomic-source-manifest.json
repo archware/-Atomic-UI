@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "9f3d4d8ed27664302c3f484677c76e52864f42d96bf9e0ba0226469d85296e35",
+  "sourceTreeSha256": "e970edfed3fd4160abc2e0aa7b95fb8eae3aee904009640cbffaf83f7cd022f1",
   "fileCount": 222,
   "files": [
     {
@@ -1100,8 +1100,8 @@
     },
     {
       "path": "src/styles/themes/_tokens-primitives.css",
-      "bytes": 13079,
-      "sha256": "d706f898332b4e2be7b6298e5fcf915ffefa4782f472128300903cdf6fee3203"
+      "bytes": 13645,
+      "sha256": "6024858e8eb3ee734cb8d9172aeda0112b79cafa069d44e213ce61356131a372"
     },
     {
       "path": "src/styles/themes/_tokens-semantic.css",

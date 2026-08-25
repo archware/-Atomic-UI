@@ -94,11 +94,20 @@ function aColorDart(bruto) {
   return null;
 }
 
-/** `--surface-background` -> `surfaceBackground`. */
+/**
+ * `--surface-background` -> `surfaceBackground`.
+ *
+ * El guion se consume ante CUALQUIER caracter, no solo ante minuscula o digito.
+ * La primera version usaba `/-([a-z0-9])/` y dejaba intacto el guion de
+ * `--brand-primary-A400`, emitiendo `brandPrimary-A400`: un identificador que
+ * Dart no acepta. `flutter analyze` no lo veia porque no analiza el codigo de una
+ * dependencia por ruta; lo descubrio `flutter test`, que si lo compila.
+ */
 function aNombreDart(token) {
   const limpio = token.replace(/^--/, '');
-  const camel = limpio.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase());
-  return /^[0-9]/.test(camel) ? `t${camel}` : camel;
+  const camel = limpio.replace(/-+([a-zA-Z0-9])/g, (_, c) => c.toUpperCase());
+  const saneado = camel.replace(/[^A-Za-z0-9_$]/g, '');
+  return /^[0-9]/.test(saneado) ? `t${saneado}` : saneado;
 }
 
 // ---------------------------------------------------------------------------
@@ -113,6 +122,7 @@ const ES_INTERLETRA = /^--letter-spacing-/;
 const ES_ESPACIO = /^--space-\d+$/;
 const ES_RADIO = /^--radius-/;
 const ES_ANCHO_BORDE = /^--border-width-/;
+const ES_ELEVACION = /^--elevation-/;
 const ES_PUNTO_CORTE = /^--breakpoint-/;
 
 function clasificar(token) {
@@ -124,6 +134,7 @@ function clasificar(token) {
   if (ES_ESPACIO.test(token)) return 'espacio';
   if (ES_RADIO.test(token)) return 'radio';
   if (ES_ANCHO_BORDE.test(token)) return 'anchoBorde';
+  if (ES_ELEVACION.test(token)) return 'elevacion';
   if (ES_PUNTO_CORTE.test(token)) return 'puntoCorte';
   if (token === '--touch-target-min') return 'objetivoTactil';
   return null;
@@ -259,6 +270,12 @@ const archivoDimensiones = `${CABECERA}
 ${bloqueMedidas('espacio', 'Escala de espaciado.', 'AtomicEspacios')}
 ${bloqueMedidas('radio', 'Radios de borde.', 'AtomicRadios')}
 ${bloqueMedidas('anchoBorde', 'Anchos de borde.', 'AtomicBordes')}
+${bloqueMedidas(
+  'elevacion',
+  'Elevaciones: profundidad de sombra en pixeles logicos.',
+  'AtomicElevaciones',
+  'No se escalan con la preferencia de tamano de texto: son profundidad, no tipografia; van directas a la propiedad elevation de un widget Material.',
+)}
 ${bloqueMedidas(
   'objetivoTactil',
   'Objetivo tactil minimo.',

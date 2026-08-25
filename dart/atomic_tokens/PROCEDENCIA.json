@@ -30,7 +30,7 @@
   "fuente": [
     {
       "archivo": "src/styles/themes/_tokens-primitives.css",
-      "sha256": "d706f898332b4e2be7b6298e5fcf915ffefa4782f472128300903cdf6fee3203"
+      "sha256": "6024858e8eb3ee734cb8d9172aeda0112b79cafa069d44e213ce61356131a372"
     },
     {
       "archivo": "src/styles/themes/_tokens-brand.css",
@@ -48,11 +48,11 @@
   "emitido": [
     {
       "archivo": "lib/src/atomic_colores.g.dart",
-      "sha256": "bf34fede9771aa651948f87bc2798a79d11d85fbb08e541997a2e1f6a2f3ff70"
+      "sha256": "dd22906eebcc0766a2d46f82c93b67ea8c9e8ac328031d3756e47f27b23cde2b"
     },
     {
       "archivo": "lib/src/atomic_dimensiones.g.dart",
-      "sha256": "78d5b27bec2324a446c245906d5244afe5619367754d0bbe5cf09bc6937620aa"
+      "sha256": "474b692bdc7545b2fb464d630a10e3da6c3c45ed6939fc17bc0ce83b7d7aa5b4"
     },
     {
       "archivo": "lib/src/atomic_tipografia.g.dart",

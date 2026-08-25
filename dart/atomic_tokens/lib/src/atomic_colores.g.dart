@@ -76,10 +76,6 @@ class AtomicColoresClaro {
   static const Color brandAccent700 = Color(0xFFB50F55);
   static const Color brandAccent800 = Color(0xFF961148);
   static const Color brandAccent900 = Color(0xFF7D133F);
-  static const Color brandPrimary-A100 = Color(0xFFE0AAFF);
-  static const Color brandPrimary-A200 = Color(0xFFC77DFF);
-  static const Color brandPrimary-A400 = Color(0xFF9D4EDD);
-  static const Color brandPrimary-A700 = Color(0xFF7B2CBF);
   static const Color brandPrimary100 = Color(0xFFF5E6F6);
   static const Color brandPrimary200 = Color(0xFFECCCEC);
   static const Color brandPrimary300 = Color(0xFFDFA6DF);
@@ -90,6 +86,10 @@ class AtomicColoresClaro {
   static const Color brandPrimary700 = Color(0xFF381836);
   static const Color brandPrimary800 = Color(0xFF261024);
   static const Color brandPrimary900 = Color(0xFF1A0818);
+  static const Color brandPrimaryA100 = Color(0xFFE0AAFF);
+  static const Color brandPrimaryA200 = Color(0xFFC77DFF);
+  static const Color brandPrimaryA400 = Color(0xFF9D4EDD);
+  static const Color brandPrimaryA700 = Color(0xFF7B2CBF);
   static const Color brandSecondary100 = Color(0xFFFFF5D6);
   static const Color brandSecondary200 = Color(0xFFFFE6AD);
   static const Color brandSecondary300 = Color(0xFFFFD275);
@@ -501,10 +501,6 @@ class AtomicColoresOscuro {
   static const Color brandAccent700 = Color(0xFFB50F55);
   static const Color brandAccent800 = Color(0xFF961148);
   static const Color brandAccent900 = Color(0xFF7D133F);
-  static const Color brandPrimary-A100 = Color(0xFFE0AAFF);
-  static const Color brandPrimary-A200 = Color(0xFFC77DFF);
-  static const Color brandPrimary-A400 = Color(0xFF9D4EDD);
-  static const Color brandPrimary-A700 = Color(0xFF7B2CBF);
   static const Color brandPrimary100 = Color(0xFFF5E6F6);
   static const Color brandPrimary200 = Color(0xFFECCCEC);
   static const Color brandPrimary300 = Color(0xFFDFA6DF);
@@ -515,6 +511,10 @@ class AtomicColoresOscuro {
   static const Color brandPrimary700 = Color(0xFF381836);
   static const Color brandPrimary800 = Color(0xFF261024);
   static const Color brandPrimary900 = Color(0xFF1A0818);
+  static const Color brandPrimaryA100 = Color(0xFFE0AAFF);
+  static const Color brandPrimaryA200 = Color(0xFFC77DFF);
+  static const Color brandPrimaryA400 = Color(0xFF9D4EDD);
+  static const Color brandPrimaryA700 = Color(0xFF7B2CBF);
   static const Color brandSecondary100 = Color(0xFFFFF5D6);
   static const Color brandSecondary200 = Color(0xFFFFE6AD);
   static const Color brandSecondary300 = Color(0xFFFFD275);
@@ -926,10 +926,6 @@ class AtomicColoresMarcaOscuro {
   static const Color brandAccent700 = Color(0xFFB50F55);
   static const Color brandAccent800 = Color(0xFF961148);
   static const Color brandAccent900 = Color(0xFF7D133F);
-  static const Color brandPrimary-A100 = Color(0xFFE0AAFF);
-  static const Color brandPrimary-A200 = Color(0xFFC77DFF);
-  static const Color brandPrimary-A400 = Color(0xFF9D4EDD);
-  static const Color brandPrimary-A700 = Color(0xFF7B2CBF);
   static const Color brandPrimary100 = Color(0xFFF5E6F6);
   static const Color brandPrimary200 = Color(0xFFECCCEC);
   static const Color brandPrimary300 = Color(0xFFDFA6DF);
@@ -940,6 +936,10 @@ class AtomicColoresMarcaOscuro {
   static const Color brandPrimary700 = Color(0xFF381836);
   static const Color brandPrimary800 = Color(0xFF261024);
   static const Color brandPrimary900 = Color(0xFF1A0818);
+  static const Color brandPrimaryA100 = Color(0xFFE0AAFF);
+  static const Color brandPrimaryA200 = Color(0xFFC77DFF);
+  static const Color brandPrimaryA400 = Color(0xFF9D4EDD);
+  static const Color brandPrimaryA700 = Color(0xFF7B2CBF);
   static const Color brandSecondary100 = Color(0xFFFFF5D6);
   static const Color brandSecondary200 = Color(0xFFFFE6AD);
   static const Color brandSecondary300 = Color(0xFFFFD275);
