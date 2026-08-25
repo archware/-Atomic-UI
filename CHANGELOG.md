@@ -12,6 +12,35 @@ owner: 'Hospital Regional de Ayacucho'
 
 # Registro de cambios
 
+## feat(tabs): navegacion WAI-ARIA completa por teclado
+
+El organismo `tabs` publicaba un `tablist` con el contrato ARIA correcto —roles,
+`aria-selected`, `aria-controls` y roving `tabindex`— pero solo respondia a
+`click`. Quien navegaba con teclado alcanzaba la pestana activa y ahi se
+quedaba: las flechas no movian nada, porque las pestanas inactivas llevan
+`tabindex="-1"` y el patron APG delega el recorrido en el contenedor.
+
+Se incorpora ese recorrido en la fuente, no en un consumidor:
+
+- `ArrowRight` y `ArrowDown` avanzan; `ArrowLeft` y `ArrowUp` retroceden.
+- `Home` y `End` saltan a la primera y a la ultima pestana.
+- Las pestanas deshabilitadas se omiten y el recorrido es circular.
+- La activacion es automatica, como recomienda el APG cuando el panel se
+  muestra sin coste: seleccionar y mostrar ocurren en el mismo gesto.
+- El foco real acompana a la pestana activa, de modo que la siguiente pulsacion
+  sigue viva. Sin ese traslado el recorrido se corta tras el primer salto.
+
+`selectTab` no cambia su firma: el argumento del evento sigue siendo opcional y
+el desplazamiento horizontal automatico solo actua cuando el gesto viene del
+raton. Ningun consumidor necesita adaptarse.
+
+El cambio nace de `ATOMIC-SYNC-CXC-20260825`, donde el consumidor de cuentas por
+cobrar sustituyo tres `button` nativos por este organismo y habria perdido la
+navegacion por teclado que ya ofrecia. La mejora se resolvio primero como
+divergencia declarada del consumidor y ahora sube a la fuente, que es donde
+corresponde: el ecosistema entero la recibe.
+
+
 ## F3-ATOMIC-ADR-20260825 y F3-DART-BRIDGE-20260825: el ADN cruza a Flutter
 
 Dentro de `ECO-20260825-001`, fase F3. Dos cambios con identificador propio.

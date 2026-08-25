@@ -42,7 +42,13 @@ export class TabComponent {
   imports: [],
   template: `
     <div class="tabs-container">
-      <div class="tabs-header" #tabsHeader role="tablist" aria-label="Tabs">
+      <div
+        class="tabs-header"
+        #tabsHeader
+        role="tablist"
+        aria-label="Tabs"
+        (keydown)="onHeaderKeydown($event)"
+      >
         @for (tab of tabs; track tab.label(); let i = $index) {
           <button 
             type="button"
@@ -95,6 +101,65 @@ export class TabsComponent implements AfterContentInit {
 
   private updateTabs() {
     this.tabs.forEach((tab, i) => tab.active = i === this.activeIndex());
+  }
+
+  /**
+   * Keyboard navigation for the tablist, per WAI-ARIA APG: arrows move between
+   * tabs with automatic activation, Home and End jump to the ends. Disabled
+   * tabs are skipped and the traversal wraps around.
+   */
+  onHeaderKeydown(event: KeyboardEvent) {
+    if (this.tabs.length === 0) {
+      return;
+    }
+
+    const current = this.activeIndex();
+    let target: number | null = null;
+
+    switch (event.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+        target = this.findEnabled(current + 1, 1);
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        target = this.findEnabled(current - 1, -1);
+        break;
+      case 'Home':
+        target = this.findEnabled(0, 1);
+        break;
+      case 'End':
+        target = this.findEnabled(this.tabs.length - 1, -1);
+        break;
+      default:
+        return;
+    }
+
+    if (target === null || target === current) {
+      return;
+    }
+
+    event.preventDefault();
+    this.selectTab(target);
+    this.focusTab(target);
+  }
+
+  /** First enabled tab from `start` in the given direction, wrapping around. */
+  private findEnabled(start: number, direction: 1 | -1): number | null {
+    const total = this.tabs.length;
+    for (let step = 0; step < total; step++) {
+      const index = (((start + step * direction) % total) + total) % total;
+      if (!this.tabs[index].disabled()) {
+        return index;
+      }
+    }
+    return null;
+  }
+
+  /** Moves real focus to the tab button so keyboard traversal stays alive. */
+  private focusTab(index: number) {
+    const button = this.tabsHeader?.nativeElement.querySelectorAll<HTMLElement>('[role="tab"]')[index];
+    button?.focus();
   }
 
   selectTab(index: number, event?: MouseEvent) {
