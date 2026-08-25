@@ -52,6 +52,17 @@ function auditarArbol(raiz) {
   return listarArchivosTypeScript(raiz).flatMap(auditarArchivo);
 }
 
+/*
+LA AUDITORIA SE EXPORTA PARA QUE EL CONSUMIDOR NO LA REESCRIBA.
+
+`governance/consumer/check-atomic-rules.mjs` importa `auditarArbol` y la corre
+contra el arbol del consumidor. Si el consumidor tuviera su propia copia de esta
+regla, las dos versiones divergirian el dia que una se afine, y la del consumidor
+seria la que nadie recuerda actualizar. Una sola implementacion, dos invocaciones.
+
+El bloque CLI de abajo solo corre cuando se ejecuta el archivo directamente, de
+modo que importarlo no dispara `process.exitCode`.
+*/
 function ejecutar() {
   const raiz = path.resolve(process.argv[2] || path.join(__dirname, '../src/app/shared/ui'));
   const hallazgos = auditarArbol(raiz);

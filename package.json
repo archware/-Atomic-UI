@@ -49,11 +49,12 @@
     "package:manifest": "node tools/check-package-distribution.js manifest",
     "package:dry-run": "node tools/check-package-distribution.js dry-run",
     "package:check": "npm run package:test && node tools/check-package-distribution.js check",
-    "governance:check": "npm run governance:test && npm run governance:smoke && node tools/check-atomic-blueprints.js && npm run catalog:check && npm run check:catalog-api && npm run tokens:check && npm run tooling:test && npm run test:signals-gate && npm run check:signals && npm run check:external-styles && npm run check:selectors && npm run check:css-values && npm run package:check && npm run check:contrast && npm run check:focus",
+    "governance:check": "npm run governance:test && npm run governance:smoke && node tools/check-atomic-blueprints.js && npm run catalog:check && npm run check:catalog-api && npm run tokens:check && npm run tooling:test && npm run test:signals-gate && npm run check:signals && npm run check:external-styles && npm run check:selectors && npm run check:css-values && npm run check:typography && npm run package:check && npm run check:contrast && npm run check:focus",
     "check:contrast": "node scripts/check-theme-contrast.mjs",
     "check:focus": "node scripts/check-focus-selectors.mjs",
     "check:catalog-api": "node tools/check-catalog-api.cjs",
-    "check:typography": "node scripts/check-typography-scale.mjs"
+    "check:typography": "node scripts/check-typography-scale.mjs",
+    "check": "npm run governance:check && npm run lint && npm run test -- --watch=false --browsers=ChromeHeadless && npm run build"
   },
   "prettier": {
     "printWidth": 100,

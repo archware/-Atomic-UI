@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { dirname, extname, join, relative, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 /*
 TRINQUETE DE LA ESCALA TIPOGRAFICA — capitulo 13 de la doctrina.
@@ -58,51 +58,79 @@ function recolectar(directorio) {
   return encontrados;
 }
 
-const hallazgos = [];
-for (const ruta of recolectar(origen)) {
-  // El fichero que PUBLICA la escala es el unico que puede escribir los numeros.
-  if (ruta.endsWith('_tokens-primitives.css')) {
-    continue;
+/*
+LA AUDITORIA SE EXPORTA PARA QUE EL CONSUMIDOR NO LA REESCRIBA.
+
+El trinquete de arriba es del ADN: su numero llego a cero y ya no admite ni uno.
+Un consumidor arranca con la deuda que tenga, y su trinquete es la linea base de
+`governance/consumer/check-atomic-rules.mjs`. La REGLA -que un peso escrito a
+mano es deuda, y cual ni siquiera tiene destino en la escala- es la misma.
+*/
+export function auditarPesos(origenRuta, raizRelativa = origenRuta) {
+  const encontrados = [];
+  for (const ruta of recolectar(origenRuta)) {
+    // El fichero que PUBLICA la escala es el unico que puede escribir los numeros.
+    if (ruta.endsWith('_tokens-primitives.css')) {
+      continue;
+    }
+    const contenido = readFileSync(ruta, 'utf8');
+    for (const coincidencia of contenido.matchAll(PESO_A_MANO)) {
+      const peso = coincidencia[1];
+      encontrados.push({
+        archivo: relative(raizRelativa, ruta).replaceAll('\\', '/'),
+        linea: contenido.slice(0, coincidencia.index).split(/\r?\n/u).length,
+        peso,
+        // Los que ni siquiera tienen destino en la escala son los urgentes: no es
+        // que esten sin migrar, es que piden un trazo que la fuente no dibuja.
+        fueraDeEscala: !ESCALA.has(peso),
+      });
+    }
   }
-  const contenido = readFileSync(ruta, 'utf8');
-  for (const coincidencia of contenido.matchAll(PESO_A_MANO)) {
-    const peso = coincidencia[1];
-    hallazgos.push({
-      archivo: relative(raiz, ruta).replaceAll('\\', '/'),
-      peso,
-      // Los que ni siquiera tienen destino en la escala son los urgentes: no es
-      // que esten sin migrar, es que piden un trazo que la fuente no dibuja.
-      fueraDeEscala: !ESCALA.has(peso),
-    });
-  }
+  return encontrados;
 }
 
-const fallos = [];
-if (hallazgos.length > MAXIMO_PESOS_A_MANO) {
-  const nuevos = hallazgos.length - MAXIMO_PESOS_A_MANO;
-  fallos.push(
-    `Pesos tipograficos escritos a mano: ${hallazgos.length}, ` +
-      `${nuevos} mas que el trinquete (${MAXIMO_PESOS_A_MANO}). ` +
-      'Use var(--font-weight-body|emphasis|title). Capitulo 13.',
+/*
+EL BLOQUE CLI VA GUARDADO, O IMPORTARLO TERMINARIA EL PROCESO.
+
+Este archivo es un modulo ESM: importarlo ejecuta su cuerpo entero. Sin la
+guarda, el `process.exit(1)` de aqui abajo se dispararia dentro del consumidor
+que solo queria reutilizar `auditarPesos`, y la compuerta del consumidor moriria
+antes de informar de nada.
+*/
+function ejecutar() {
+  const hallazgos = auditarPesos(origen, raiz);
+
+  const fallos = [];
+  if (hallazgos.length > MAXIMO_PESOS_A_MANO) {
+    const nuevos = hallazgos.length - MAXIMO_PESOS_A_MANO;
+    fallos.push(
+      `Pesos tipograficos escritos a mano: ${hallazgos.length}, ` +
+        `${nuevos} mas que el trinquete (${MAXIMO_PESOS_A_MANO}). ` +
+        'Use var(--font-weight-body|emphasis|title). Capitulo 13.',
+    );
+  }
+
+  if (fallos.length > 0) {
+    for (const fallo of fallos) {
+      console.error(`- ${fallo}`);
+    }
+    const sinDestino = hallazgos.filter((hallazgo) => hallazgo.fueraDeEscala);
+    if (sinDestino.length > 0) {
+      console.error(
+        `  Sin destino en la escala (${sinDestino.length}): ` +
+          [...new Set(sinDestino.map((hallazgo) => hallazgo.peso))].sort().join(', '),
+      );
+    }
+    process.exit(1);
+  }
+
+  const fuera = hallazgos.filter((hallazgo) => hallazgo.fueraDeEscala).length;
+  console.log(
+    `Escala tipografica verificada: ${hallazgos.length}/${MAXIMO_PESOS_A_MANO} pesos a mano ` +
+      `(${fuera} sin destino en la escala). El numero solo puede bajar.`,
   );
 }
 
-if (fallos.length > 0) {
-  for (const fallo of fallos) {
-    console.error(`- ${fallo}`);
-  }
-  const fuera = hallazgos.filter((hallazgo) => hallazgo.fueraDeEscala);
-  if (fuera.length > 0) {
-    console.error(
-      `  Sin destino en la escala (${fuera.length}): ` +
-        [...new Set(fuera.map((hallazgo) => hallazgo.peso))].sort().join(', '),
-    );
-  }
-  process.exit(1);
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  ejecutar();
 }
-
-const fuera = hallazgos.filter((hallazgo) => hallazgo.fueraDeEscala).length;
-console.log(
-  `Escala tipografica verificada: ${hallazgos.length}/${MAXIMO_PESOS_A_MANO} pesos a mano ` +
-    `(${fuera} sin destino en la escala). El numero solo puede bajar.`,
-);
