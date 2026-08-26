@@ -21,7 +21,23 @@ export class TabComponent {
   /** Whether this tab is disabled */
   readonly disabled = input(false);
 
-  @HostBinding('class.active') active = false;
+  /**
+   * Estado de activación gobernado por el contenedor `app-tabs`.
+   *
+   * ES UN SIGNAL, NO UNA PROPIEDAD PLANA, A PROPÓSITO: el panel se muestra u
+   * oculta con la clase `active` del host, y un host binding solo se
+   * re-evalúa cuando Angular tiene un motivo para repintar. Con Zone.js el
+   * motivo lo daba cualquier evento; en una aplicación zoneless la mutación
+   * imperativa de una propiedad plana no notifica a nadie y el panel queda
+   * muerto. Leer el signal dentro del host binding registra la dependencia y
+   * programa el repintado en ambos mundos.
+   */
+  readonly active = signal(false);
+
+  @HostBinding('class.active')
+  get isActive(): boolean {
+    return this.active();
+  }
 }
 
 /**
@@ -105,7 +121,7 @@ export class TabsComponent implements AfterContentInit {
   }
 
   private updateTabs() {
-    this.tabs.forEach((tab, i) => tab.active = i === this.activeIndex());
+    this.tabs.forEach((tab, i) => tab.active.set(i === this.activeIndex()));
   }
 
   /**

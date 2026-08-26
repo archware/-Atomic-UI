@@ -4,10 +4,15 @@
     min-width: 0;
     flex-direction: column;
     height: 100%;
-    background: var(--surface-background);
-    border: 1px solid var(--border-color);
+    /* La superficie de la card consume sus TOKENS DE COMPONENTE
+       (--card-bg/--card-border/--card-shadow, _tokens-components.css): son el
+       contrato del ADN y resuelven shadow-md en claro y shadow-lg en oscuro.
+       Escribir aquí los tokens genéricos dejaba la elevación por debajo del
+       contrato y sin respuesta al tema. */
+    background: var(--card-bg, var(--surface-background));
+    border: 1px solid var(--card-border, var(--border-color));
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--card-shadow, var(--shadow-md));
     /* overflow: visible para que tooltips y dropdowns dentro de la card no queden cortados.
        La imagen se clips con overflow: hidden en .card__image directamente. */
     overflow: visible;
@@ -40,8 +45,10 @@
   }
 
   /* === Variants === */
+  /* La variante por omisión respeta el contrato --card-shadow del ADN: antes
+     degradaba a shadow-sm y la card "flotaba" menos que en la referencia. */
   .card--default {
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--card-shadow, var(--shadow-md));
   }
 
   .card--elevated {

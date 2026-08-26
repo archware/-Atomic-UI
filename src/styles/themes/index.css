@@ -105,11 +105,15 @@ html.theme-transitioning [class*="topbar"] {
     color 200ms ease-out !important;
 }
 
-/* Aplicar colores base al body */
+/* Aplicar colores base al body.
+   SIN !important A PROPÓSITO: este archivo es la base del sistema de temas y
+   debe poder ser afinado por la hoja global de cada consumidor (por ejemplo,
+   body → var(--surface-section) como pinta la referencia). Un !important aquí
+   convertía la base en un candado que ninguna capa posterior podía gobernar. */
 html,
 body {
-  background-color: var(--surface-ground) !important;
-  color: var(--text-color) !important;
+  background-color: var(--surface-ground);
+  color: var(--text-color);
 }
 
 html {
