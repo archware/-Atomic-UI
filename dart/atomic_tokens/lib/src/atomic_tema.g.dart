@@ -29,7 +29,11 @@ class AtomicTema {
         fondo: AtomicColoresClaro.surfaceBackground,
         superficie: AtomicColoresClaro.surfaceSection,
         texto: AtomicColoresClaro.textColor,
-        primario: AtomicColoresClaro.primaryColor,
+        primario: AtomicColoresClaro.buttonPrimaryBg,
+        primarioTexto: AtomicColoresClaro.buttonPrimaryText,
+        secundario: AtomicColoresClaro.buttonSecondaryBg,
+        secundarioTexto: AtomicColoresClaro.buttonSecondaryText,
+        borde: AtomicColoresClaro.borderColor,
       );
 
   /// ThemeData del tema oscuro.
@@ -38,7 +42,11 @@ class AtomicTema {
         fondo: AtomicColoresOscuro.surfaceBackground,
         superficie: AtomicColoresOscuro.surfaceSection,
         texto: AtomicColoresOscuro.textColor,
-        primario: AtomicColoresOscuro.primaryColor,
+        primario: AtomicColoresOscuro.buttonPrimaryBg,
+        primarioTexto: AtomicColoresOscuro.buttonPrimaryText,
+        secundario: AtomicColoresOscuro.buttonSecondaryBg,
+        secundarioTexto: AtomicColoresOscuro.buttonSecondaryText,
+        borde: AtomicColoresOscuro.borderColor,
       );
 
   /// ThemeData del tema oscuro de marca.
@@ -47,7 +55,11 @@ class AtomicTema {
         fondo: AtomicColoresMarcaOscuro.surfaceBackground,
         superficie: AtomicColoresMarcaOscuro.surfaceSection,
         texto: AtomicColoresMarcaOscuro.textColor,
-        primario: AtomicColoresMarcaOscuro.primaryColor,
+        primario: AtomicColoresMarcaOscuro.buttonPrimaryBg,
+        primarioTexto: AtomicColoresMarcaOscuro.buttonPrimaryText,
+        secundario: AtomicColoresMarcaOscuro.buttonSecondaryBg,
+        secundarioTexto: AtomicColoresMarcaOscuro.buttonSecondaryText,
+        borde: AtomicColoresMarcaOscuro.borderColor,
       );
 
   static ThemeData _construir({
@@ -56,11 +68,26 @@ class AtomicTema {
     required Color superficie,
     required Color texto,
     required Color primario,
+    required Color primarioTexto,
+    required Color secundario,
+    required Color secundarioTexto,
+    required Color borde,
   }) {
-    final ColorScheme esquema = ColorScheme.fromSeed(
-      seedColor: primario,
-      brightness: brillo,
-    ).copyWith(surface: superficie, onSurface: texto);
+    // El esquema NO se deriva de una semilla: eso producia el tinte rosado de
+    // Material sobre la marca. Se toma la paleta DISENADA de cada tema en el ADN
+    // -superficies, texto, botones y borde- para un aspecto sobrio y coherente.
+    final ColorScheme base = brillo == Brightness.dark
+        ? const ColorScheme.dark()
+        : const ColorScheme.light();
+    final ColorScheme esquema = base.copyWith(
+      primary: primario,
+      onPrimary: primarioTexto,
+      secondary: secundario,
+      onSecondary: secundarioTexto,
+      surface: superficie,
+      onSurface: texto,
+      outline: borde,
+    );
 
     return ThemeData(
       useMaterial3: true,

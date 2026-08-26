@@ -413,7 +413,11 @@ function bloqueTema() {
     lineas.push(`        fondo: ${clase}.surfaceBackground,`);
     lineas.push(`        superficie: ${clase}.surfaceSection,`);
     lineas.push(`        texto: ${clase}.textColor,`);
-    lineas.push(`        primario: ${clase}.primaryColor,`);
+    lineas.push(`        primario: ${clase}.buttonPrimaryBg,`);
+    lineas.push(`        primarioTexto: ${clase}.buttonPrimaryText,`);
+    lineas.push(`        secundario: ${clase}.buttonSecondaryBg,`);
+    lineas.push(`        secundarioTexto: ${clase}.buttonSecondaryText,`);
+    lineas.push(`        borde: ${clase}.borderColor,`);
     lineas.push('      );');
     lineas.push('');
   }
@@ -424,11 +428,26 @@ function bloqueTema() {
     '    required Color superficie,',
     '    required Color texto,',
     '    required Color primario,',
+    '    required Color primarioTexto,',
+    '    required Color secundario,',
+    '    required Color secundarioTexto,',
+    '    required Color borde,',
     '  }) {',
-    '    final ColorScheme esquema = ColorScheme.fromSeed(',
-    '      seedColor: primario,',
-    '      brightness: brillo,',
-    '    ).copyWith(surface: superficie, onSurface: texto);',
+    '    // El esquema NO se deriva de una semilla: eso producia el tinte rosado de',
+    '    // Material sobre la marca. Se toma la paleta DISENADA de cada tema en el ADN',
+    '    // -superficies, texto, botones y borde- para un aspecto sobrio y coherente.',
+    '    final ColorScheme base = brillo == Brightness.dark',
+    '        ? const ColorScheme.dark()',
+    '        : const ColorScheme.light();',
+    '    final ColorScheme esquema = base.copyWith(',
+    '      primary: primario,',
+    '      onPrimary: primarioTexto,',
+    '      secondary: secundario,',
+    '      onSecondary: secundarioTexto,',
+    '      surface: superficie,',
+    '      onSurface: texto,',
+    '      outline: borde,',
+    '    );',
     '',
     '    return ThemeData(',
     '      useMaterial3: true,',
