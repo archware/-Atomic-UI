@@ -18,7 +18,14 @@
   background: var(--dropdown-bg);
   border: var(--border-width-thin) solid var(--dropdown-border);
   border-radius: var(--radius-md);
-  box-shadow: var(--dropdown-shadow);
+  /*
+    `--dropdown-shadow` era un alias puro de `--shadow-dropdown` en los tres
+    temas -sin una sola divergencia-, asi que resolverlo no pierde ningun gancho
+    de tema y si gana la escala: `--shadow-lg` es el peldano de menu y popover, y
+    en oscuro trae el anillo de 1px sin el que este panel no se despegaba del
+    fondo.
+  */
+  box-shadow: var(--shadow-lg);
 }
 
 .context-menu__item {

@@ -107,6 +107,27 @@ En el template HTML, modifica el `<thead>` y `<tbody>`:
 <td class="col-phone">{{ item.phone }}</td>
 ```
 
+### Columnas numéricas e importes
+
+Una columna de cifras solo se compara de un vistazo si todos los dígitos ocupan
+lo mismo. Marca la celda con la clase `numeric` —la que este blueprint declara
+con `font-variant-numeric: tabular-nums`— y no la pongas en la fila entera: en
+`Nombre` o `Email` las cifras tabulares no aportan y estropean el espaciado.
+
+Cuando el contenido es un **importe**, alinéalo además al final con el `align`
+que ya publica `app-table-cell`. Un número se compara por su última cifra, y
+alineado a la derecha las unidades, las decenas y las centenas caen en la misma
+columna; la cabecera se alinea igual que su columna, o el título deja de señalar
+a lo que nombra.
+
+```html
+<th app-table-cell align="right">Importe</th>
+...
+<td app-table-cell [dataLabel]="'Importe:'" align="right" class="numeric">
+  {{ item.amount }}
+</td>
+```
+
 ### Agregar más filtros
 
 1. En el componente, agregar opciones:

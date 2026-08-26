@@ -419,6 +419,10 @@ class AtomicColoresClaro {
   static const Color textSecondary = Color(0xFF4B5563);
   static const Color tooltipBg = Color(0xFF111827);
   static const Color tooltipText = Color(0xFFFFFFFF);
+  static const Color versionQaBorder = Color(0xFFE9D5FF);
+  static const Color versionQaFill = Color(0xFFA855F7);
+  static const Color versionQaSurface = Color(0xFFFAF5FF);
+  static const Color versionQaText = Color(0xFF6B21A8);
   static const Color warningColor = Color(0xFFFF9500);
   static const Color warningColorDark = Color(0xFFCA8A04);
   static const Color warningColorHover = Color(0xFFEA580C);
@@ -844,6 +848,10 @@ class AtomicColoresOscuro {
   static const Color textSecondary = Color(0xFFD1D5DB);
   static const Color tooltipBg = Color(0xFF252525);
   static const Color tooltipText = Color(0xFFF9FAFB);
+  static const Color versionQaBorder = Color(0xFF6B21A8);
+  static const Color versionQaFill = Color(0xFFC084FC);
+  static const Color versionQaSurface = Color(0xFF581C87);
+  static const Color versionQaText = Color(0xFFD8B4FE);
   static const Color warningColor = Color(0xFFFF9F0A);
   static const Color warningColorDark = Color(0xFFCC7A00);
   static const Color warningColorHover = Color(0xFFFB923C);
@@ -1269,6 +1277,10 @@ class AtomicColoresMarcaOscuro {
   static const Color textSecondary = Color(0xFFD1D5DB);
   static const Color tooltipBg = Color(0xFF252525);
   static const Color tooltipText = Color(0xFFF9FAFB);
+  static const Color versionQaBorder = Color(0xFF6B21A8);
+  static const Color versionQaFill = Color(0xFFC084FC);
+  static const Color versionQaSurface = Color(0xFF581C87);
+  static const Color versionQaText = Color(0xFFD8B4FE);
   static const Color warningColor = Color(0xFFFF9F0A);
   static const Color warningColorDark = Color(0xFFCC7A00);
   static const Color warningColorHover = Color(0xFFFB923C);

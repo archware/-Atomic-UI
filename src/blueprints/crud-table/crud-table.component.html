@@ -77,7 +77,7 @@
   @if (hasSelection()) {
   <app-panel class="bulk-actions-bar mb-4">
     <app-row justify="between" verticalAlign="center">
-      <app-text variant="body" weight="medium" color="primary">
+      <app-text variant="body" weight="medium" color="primary" class="numeric">
         {{ selectedCount() }} seleccionado(s)
       </app-text>
       <app-row wrap="wrap" gap="0.5rem">
@@ -175,7 +175,7 @@
                 <td app-table-cell [dataLabel]="'Estado:'" align="center">
                   <app-chip [variant]="getStatusVariant(item.status)" size="sm">{{ getStatusLabel(item.status) }}</app-chip>
                 </td>
-                <td app-table-cell [dataLabel]="'Creado:'">{{ formatDate(item.createdAt) }}</td>
+                <td app-table-cell [dataLabel]="'Creado:'" class="numeric">{{ formatDate(item.createdAt) }}</td>
                 <td app-table-cell [dataLabel]="'Acciones:'" align="center" class="actions-cell">
                   <app-action-group
                     [actions]="tableActions"
@@ -202,7 +202,7 @@
       <div>
         <app-text variant="label" color="muted" class="mb-2 pagination-label">Variante Minimal:</app-text>
         <div class="pagination-demo-row">
-          <app-text variant="body-sm" color="muted" weight="semibold">Total de registros: {{ meta().total }}</app-text>
+          <app-text variant="body-sm" color="muted" weight="semibold" class="numeric">Total de registros: {{ meta().total }}</app-text>
           <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="pageSize()" variant="minimal" (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)"></app-pagination>
         </div>
       </div>
@@ -210,7 +210,7 @@
       <div>
         <app-text variant="label" color="muted" class="mb-2 pagination-label">Variante Rounded:</app-text>
         <div class="pagination-demo-row">
-          <app-text variant="body-sm" color="muted" weight="semibold">Total de registros: {{ meta().total }}</app-text>
+          <app-text variant="body-sm" color="muted" weight="semibold" class="numeric">Total de registros: {{ meta().total }}</app-text>
           <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="pageSize()" variant="rounded" (pageChange)="onPageChange($event)"></app-pagination>
         </div>
       </div>
@@ -218,7 +218,7 @@
       <div>
         <app-text variant="label" color="muted" class="mb-2 pagination-label">Variante Cards:</app-text>
         <div class="pagination-demo-row">
-          <app-text variant="body-sm" color="muted" weight="semibold">Total de registros: {{ meta().total }}</app-text>
+          <app-text variant="body-sm" color="muted" weight="semibold" class="numeric">Total de registros: {{ meta().total }}</app-text>
           <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="pageSize()" variant="cards" (pageChange)="onPageChange($event)"></app-pagination>
         </div>
       </div>

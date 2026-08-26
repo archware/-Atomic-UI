@@ -1,8 +1,23 @@
+/*
+UN PANEL DE ACORDEON ES SUPERFICIE, Y LA SUPERFICIE SE DESPEGA.
+
+Agrupa contenido y trae fondo y borde propios, asi que le toca elevacion; la
+escala reserva `--shadow-sm` al contenedor en reposo, apenas despegado del
+lienzo. No sube mas a proposito: los menus (`lg`) y los dialogos (`xl`) que se
+abren DENTRO de un panel tienen que seguir pesando mas que el, y la pila de
+paneles no puede competir con lo que flota sobre ella.
+
+El radio se queda en `md` y no sube a `lg`: son piezas apiladas con un hueco de
+`--space-2`, y un radio grande en una pila hace que cada pieza parezca suelta.
+La variante `flush` retira la sombra en `accordion.component.css`, donde ya
+retira borde y radio: alli las costuras se borran queriendo.
+*/
 .accordion-item {
   overflow: hidden;
   border: thin solid var(--border-color);
   border-radius: var(--radius-md);
   background: var(--surface-background);
+  box-shadow: var(--shadow-sm);
 }
 
 .accordion-header {

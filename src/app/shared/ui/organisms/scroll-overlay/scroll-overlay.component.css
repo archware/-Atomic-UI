@@ -3,11 +3,15 @@
   display: inline-block;
   max-width: 100%;
   overflow: hidden;
-  /* Colores plomo (gris) sutiles semi-transparentes */
-  --so-thumb-color-start: rgba(0, 0, 0, 0.3);
-  --so-thumb-color-end: rgba(0, 0, 0, 0.3);
-  --so-thumb-color-hover: rgba(0, 0, 0, 0.45);
-  --so-thumb-color-active: rgba(0, 0, 0, 0.6);
+  /* El pulgar es un velo del color del texto sobre el contenido que tapa. Escrito
+     asi ya no hace falta invertirlo a mano: --text-color es casi negro en tema claro
+     y casi blanco en oscuro, que es la inversion que antes se copiaba a mano en un
+     bloque [data-theme] con dos juegos de literales. Los tres pesos -reposo, hover,
+     arrastre- son los mismos que habia. */
+  --so-thumb-color-start: color-mix(in srgb, var(--text-color) 30%, transparent);
+  --so-thumb-color-end: color-mix(in srgb, var(--text-color) 30%, transparent);
+  --so-thumb-color-hover: color-mix(in srgb, var(--text-color) 45%, transparent);
+  --so-thumb-color-active: color-mix(in srgb, var(--text-color) 60%, transparent);
   --so-track-size: 7px;
   --so-thumb-blur: var(--space-1);
   --so-min-column-width: 140px;
@@ -27,16 +31,10 @@
   }
 }
 
-/* Colores para tema oscuro - blanco sutil */
-:host-context(.dark) .so-root,
-:host-context([data-theme='dark']) .so-root,
-html.dark .so-root,
-[data-theme='dark'] .so-root {
-  --so-thumb-color-start: rgba(255, 255, 255, 0.3);
-  --so-thumb-color-end: rgba(255, 255, 255, 0.3);
-  --so-thumb-color-hover: rgba(255, 255, 255, 0.45);
-  --so-thumb-color-active: rgba(255, 255, 255, 0.6);
-}
+/* Aqui vivia el juego oscuro de los cuatro colores del pulgar. Ya no hace falta:
+   una vez que el pulgar se deriva de --text-color, la inversion la hace el tema.
+   Ademas el bloque solo cubria [data-theme='dark'] y .dark, asi que brand-dark se
+   quedaba con el velo negro del tema claro sobre fondo azul profundo. */
 
 .so-root.so-block {
   display: block;
@@ -166,7 +164,14 @@ html.dark .so-root,
   right: 0;
   bottom: 0;
   height: var(--so-track-size);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.12));
+  /* Brillo de borde sobre el area desplazable: es el mismo recurso que usan las
+     sombras del tema oscuro, un anillo blanco muy diluido. --gray-0 vale #FFFFFF en
+     los tres temas, asi que el efecto es identico al literal que sustituye. */
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--gray-0) 12%, transparent)
+  );
   pointer-events: none;
   opacity: 0;
   transition: opacity 180ms ease;

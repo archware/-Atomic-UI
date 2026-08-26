@@ -28,18 +28,28 @@
 .badge--overlay {
   position: absolute;
   z-index: 1;
-  border: var(--space-1) solid var(--surface-background, white);
+  /* El anillo separa la pildora del icono que hay debajo: debe ser la superficie
+     sobre la que se apoya, no un blanco fijo que en tema oscuro recorta el badge. */
+  border: var(--space-1) solid var(--surface-background);
 }
 .badge--top-right  { top: calc(-1 * var(--space-1)); right: calc(-1 * var(--space-1)); transform: translate(25%, -25%); }
 .badge--top-left   { top: calc(-1 * var(--space-1)); left: calc(-1 * var(--space-1));  transform: translate(-25%, -25%); }
 .badge--bottom-right { bottom: calc(-1 * var(--space-1)); right: calc(-1 * var(--space-1)); transform: translate(25%, 25%); }
 .badge--bottom-left  { bottom: calc(-1 * var(--space-1)); left: calc(-1 * var(--space-1));  transform: translate(-25%, 25%); }
 
-/* Variants */
+/* Variantes de estado.
+   El tono se queda donde estaba: --TONO-color es el token de RELLENO y aqui rellena,
+   que es su uso correcto (capitulo 8). Cambiarlo por la pareja atenuada --badge-*-bg
+   habria conservado el tono pero no el significado: la variante `dot` no tiene texto
+   y un punto de 8px en verde palido deja de avisar de nada.
+   Lo que se va es el `white` quemado. Sobre un relleno saturado el token es
+   --text-color-on-primary, blanco en los tres temas; --text-color-inverse habria
+   parecido equivalente y no lo es: se invierte con el tema y en oscuro pondria texto
+   casi negro sobre el mismo relleno saturado. */
 .badge--default   { background: var(--surface-section); color: var(--text-color-secondary); }
-.badge--primary   { background: var(--primary-color); color: white; }
-.badge--secondary { background: var(--secondary-color); color: white; }
-.badge--success   { background: var(--success-color); color: white; }
-.badge--warning   { background: var(--warning-color); color: white; }
-.badge--danger    { background: var(--danger-color); color: white; }
-.badge--info      { background: var(--info-color, #3b82f6); color: white; }
+.badge--primary   { background: var(--primary-color); color: var(--text-color-on-primary); }
+.badge--secondary { background: var(--secondary-color); color: var(--text-color-on-primary); }
+.badge--success   { background: var(--success-color); color: var(--text-color-on-primary); }
+.badge--warning   { background: var(--warning-color); color: var(--text-color-on-primary); }
+.badge--danger    { background: var(--danger-color); color: var(--text-color-on-primary); }
+.badge--info      { background: var(--info-color); color: var(--text-color-on-primary); }

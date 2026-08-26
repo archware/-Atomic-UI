@@ -8,9 +8,16 @@
   gap: 0;
 }
 
+/*
+`flush` significa sin costuras: el acordeon se funde con lo que lo contiene. Por
+eso, junto al radio y a los bordes laterales, retira tambien la elevacion que
+`accordion-item` lleva por ser superficie. Una pila de paneles con sombra pero
+sin borde ni radio se lee como un error de pintado, no como una variante.
+*/
 .accordion-flush ::ng-deep .accordion-item {
   border-radius: 0;
   border-inline: none;
+  box-shadow: none;
 }
 
 .accordion-flush ::ng-deep app-accordion-item:first-child .accordion-item {

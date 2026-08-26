@@ -37,7 +37,13 @@
   background: var(--surface-background);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-dropdown);
+  /*
+    Menu de usuario: flota sobre toda la pagina, y por eso sube al peldano `lg`
+    de la escala. `--shadow-dropdown` pesa alfa 0,1 en claro y en los temas
+    oscuros no lleva el anillo de 1px que separa una superficie del fondo casi
+    negro, asi que el panel se fundia con lo que tenia debajo.
+  */
+  box-shadow: var(--shadow-lg);
   opacity: 0;
   visibility: hidden;
   transform: translateY(calc(-1 * var(--space-2)));
@@ -139,6 +145,6 @@
 
 /*
  * Dark mode se maneja automáticamente via tokens semánticos.
- * --surface-background, --border-color, --shadow-dropdown, --surface-hover
+ * --surface-background, --border-color, --shadow-lg, --surface-hover
  * ya tienen valores apropiados para temas oscuros.
  */

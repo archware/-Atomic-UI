@@ -4,7 +4,11 @@
   gap: var(--space-2);
   margin-top: var(--space-1);
   font-size: 0.8125rem;
-  color: var(--danger-color, #ef4444);
+  /* --danger-color es el token de RELLENO y no pinta texto: sobre la superficie
+     clara del formulario se queda en 3,24:1. --danger-color-text es el que trae el
+     contraste calculado. El respaldo #ef4444 tampoco era respaldo de nada, porque
+     el token esta definido en los tres temas. */
+  color: var(--danger-color-text);
   animation: error-in 150ms ease;
 }
 

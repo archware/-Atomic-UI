@@ -19,8 +19,12 @@ tr[app-table-row]:hover {
   z-index: 1;
 }
 
+/* --primary-50 no existe en ningun tema, asi que la fila seleccionada se pintaba
+   siempre con el token de hover: seleccionar y pasar el raton decian lo mismo sin
+   que nadie lo hubiera decidido. --selected-background resuelve al mismo color en
+   los tres temas -no cambia un pixel- pero ya nombra el estado que representa. */
 tr[app-table-row].selected {
-  background-color: var(--primary-50, var(--table-color-hover));
+  background-color: var(--selected-background);
 }
 
 /* Asegurar que las celdas mantengan el efecto visual */

@@ -13,6 +13,16 @@
 :root,
 [data-theme="light"],
 .theme-light {
+
+  /* === CHAPA DE ENTORNO (atoms/version) ===
+     QA y STAGING no tienen tono en la paleta semantica, y con razon: exito,
+     aviso, peligro e informacion nombran VEREDICTOS, no entornos. El violeta
+     vive aqui, con el resto de tokens de componente, y no en el CSS del propio
+     componente: el tema se resuelve en un solo sitio. */
+  --version-qa-fill: var(--purple-500);
+  --version-qa-surface: var(--purple-50);
+  --version-qa-border: var(--purple-200);
+  --version-qa-text: var(--purple-800);
    /* === NAVEGACIÓN === */
    --nav-bg: var(--surface-background);
    --nav-text: var(--text-color);
@@ -366,6 +376,16 @@
 [data-theme="dark"],
 .theme-dark,
 html.dark {
+
+  /* === CHAPA DE ENTORNO (atoms/version) ===
+     QA y STAGING no tienen tono en la paleta semantica, y con razon: exito,
+     aviso, peligro e informacion nombran VEREDICTOS, no entornos. El violeta
+     vive aqui, con el resto de tokens de componente, y no en el CSS del propio
+     componente: el tema se resuelve en un solo sitio. */
+  --version-qa-fill: var(--purple-400);
+  --version-qa-surface: var(--purple-900);
+  --version-qa-border: var(--purple-800);
+  --version-qa-text: var(--purple-300);
    /* === NAVEGACIÓN === */
    --nav-bg: var(--surface-section);
    /* Sub BG: #2a3556 */
@@ -618,6 +638,16 @@ html.dark {
    🌙 TEMA OSCURO CORPORATIVO - Componentes
    ───────────────────────────────────────────────────────────────────────────── */
 [data-theme="brand-dark"] {
+
+  /* === CHAPA DE ENTORNO (atoms/version) ===
+     QA y STAGING no tienen tono en la paleta semantica, y con razon: exito,
+     aviso, peligro e informacion nombran VEREDICTOS, no entornos. El violeta
+     vive aqui, con el resto de tokens de componente, y no en el CSS del propio
+     componente: el tema se resuelve en un solo sitio. */
+  --version-qa-fill: var(--purple-400);
+  --version-qa-surface: var(--purple-900);
+  --version-qa-border: var(--purple-800);
+  --version-qa-text: var(--purple-300);
    /* === NAVEGACIÓN === */
    --nav-bg: var(--surface-section);
    --nav-text: var(--text-color);

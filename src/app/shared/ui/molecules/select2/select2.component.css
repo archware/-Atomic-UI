@@ -189,7 +189,13 @@
   background: var(--dropdown-bg);
   border: 1px solid var(--dropdown-border);
   border-radius: var(--radius-md);
-  box-shadow: var(--dropdown-shadow);
+  /*
+    Misma escala que el resto de menus del ADN: `--shadow-lg`. El alias
+    `--dropdown-shadow` resolvia a `--shadow-dropdown` en los tres temas, con
+    alfa 0,1 en claro y sin el anillo de 1px que en oscuro separa la superficie
+    del fondo; la lista quedaba mas plana que el campo que la abre.
+  */
+  box-shadow: var(--shadow-lg);
   z-index: 10000;
   animation: dropdownSlide 200ms ease;
   overflow: hidden;

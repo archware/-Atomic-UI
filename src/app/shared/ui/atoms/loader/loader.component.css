@@ -36,7 +36,7 @@
 
 .spinner-track {
   fill: none;
-  stroke: var(--border-color, #e5e7eb);
+  stroke: var(--border-color);
   stroke-width: 4;
   opacity: 0.2; /* Más sutil */
 }
@@ -193,10 +193,8 @@
   box-shadow: 0 0 10px var(--gradient-5);
 }
 
-/* ========== DARK MODE ========== */
-:host-context(html.dark),
-:host-context([data-theme="dark"]) {
-  .spinner-track {
-    stroke: var(--border-color, #374151);
-  }
-}
+/* Aqui habia un bloque de tema oscuro que redeclaraba .spinner-track con el MISMO
+   token, --border-color, cambiando solo el respaldo literal. Como --border-color ya
+   se redefine por tema y los degradados vienen de --loader-gradient-*, el bloque no
+   pintaba nada distinto: era una copia con dos colores quemados dentro. El tema
+   oscuro de este componente lo resuelven los tokens, no un selector propio. */

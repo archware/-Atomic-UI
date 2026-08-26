@@ -25,16 +25,19 @@ th[app-table-header-cell].sortable-cell:hover {
   gap: var(--space-2);
 }
 
+/* Los respaldos literales que habia aqui nunca llegaban a usarse -ambos tokens
+   estan definidos en los tres temas- y ademas mentian: #3b82f6 es un azul que no
+   pertenece a la marca. Se quitan para que el color venga de un unico sitio. */
 .sort-indicator {
   font-size: 0.85em;
   opacity: 0.3;
   transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
-  color: var(--text-color-muted, #9ca3af);
+  color: var(--text-color-muted);
 }
 
 .sort-indicator.active {
   opacity: 1;
-  color: var(--primary-color, #3b82f6);
+  color: var(--primary-color);
 }
 
 th[app-table-header-cell].sortable-cell:hover .sort-indicator {

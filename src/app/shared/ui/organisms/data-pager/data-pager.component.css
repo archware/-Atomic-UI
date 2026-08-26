@@ -1,3 +1,15 @@
+/*
+EL PAGINADOR ACOMPANA A LA TABLA; NO FLOTA SOBRE ELLA.
+
+El radio sube a `lg` porque este contenedor se apila bajo
+`data-table__region`, que mide lo mismo de ancho y redondea con `--radius-lg`.
+Dos cajas del mismo ancho, pegadas, con radios distintos se leen como dos
+sistemas de diseno superpuestos.
+
+La sombra, en cambio, se queda en `--shadow-sm` por la misma razon: subirla a
+`md` pondria el paginador un peldano por encima de la tabla que pagina, y lo
+que manda no puede parecer que flota sobre lo que muestra.
+*/
 .data-pager-container {
   display: flex;
   justify-content: space-between;
@@ -6,7 +18,7 @@
   padding: var(--space-3) var(--space-4);
   background: var(--surface-background);
   border: var(--border-width-thin) solid var(--border-color);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
 }
 

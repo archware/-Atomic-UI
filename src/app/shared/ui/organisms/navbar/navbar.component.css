@@ -1,4 +1,20 @@
-:host { display: block; }
+:host {
+  display: block;
+
+  /* CHROME INVERTIDO: tokens locales, y sin pareja de tema a proposito.
+     Los variantes «dark» y «primary» prometen una barra oscura o de marca en
+     CUALQUIER tema, asi que su texto no puede salir de los tokens de superficie
+     -que se invierten con el tema y dejarian letra oscura sobre chrome oscuro-.
+     El lavado de hover tampoco: «--hover-background-subtle» es gris casi blanco
+     en tema claro, y con el la barra primaria pintaba texto blanco sobre blanco
+     al pasar el raton. Un lavado de blanco funciona sobre cualquiera de las dos
+     bases y no depende del tema. */
+  --navbar-dark-surface: var(--gray-800);
+  --navbar-primary-surface: var(--brand-primary-500);
+  --navbar-inverse-text: var(--text-color-on-primary);
+  --navbar-inverse-hover: rgba(255, 255, 255, 0.14);
+  --navbar-inverse-active: rgba(255, 255, 255, 0.22);
+}
 
 /* ======= NAVBAR ======= */
 .navbar {
@@ -9,35 +25,54 @@
   padding: 0 var(--space-6);
   background: var(--surface-background);
   border-bottom: 1px solid var(--border-color);
+  /* La barra flota sobre el contenido que hace scroll bajo ella: la sombra dice
+     cual de las dos superficies esta arriba, cosa que un borde de 1px no dice. */
   position: relative;
   z-index: 100;
 }
 
-.navbar--sticky { position: sticky; top: 0; }
+/* La sombra es de la barra que FLOTA, no de la que esta en reposo: la base
+   es position: relative y no hay nada por debajo que separar. */
+.navbar--sticky {
+  position: sticky;
+  top: 0;
+  box-shadow: var(--shadow-md);
+}
 
 .navbar--dark {
-  background: var(--surface-dark, #1f2937);
+  background: var(--navbar-dark-surface);
   border-color: transparent;
 }
 .navbar--dark .navbar__brand-name,
-.navbar--dark .navbar__link { color: rgba(255,255,255,.9); }
-.navbar--dark .navbar__link:hover { background: var(--hover-background-subtle); color: var(--gray-0); }
-.navbar--dark .navbar__link--active { background: var(--hover-background-subtle); color: var(--gray-0); }
-.navbar--dark .navbar__mobile-toggle { color: rgba(255,255,255,.9); }
+.navbar--dark .navbar__link { color: var(--navbar-inverse-text); }
+.navbar--dark .navbar__link:hover { background: var(--navbar-inverse-hover); color: var(--navbar-inverse-text); }
+.navbar--dark .navbar__link--active { background: var(--navbar-inverse-active); color: var(--navbar-inverse-text); }
+.navbar--dark .navbar__mobile-toggle { color: var(--navbar-inverse-text); }
 
+/* El fondo era «--primary-color», que en tema oscuro resuelve al malva claro
+   (#bb6bbb): letra blanca sobre el da 3,54:1, por debajo del 4,5:1 que pide un
+   texto pequeno. Anclado al 500 de marca -que no cambia con el tema, igual que
+   el gris del variante oscuro- son 10,7:1 en los tres temas, y la barra de
+   marca deja de aclararse justo cuando la pagina se oscurece. */
 .navbar--primary {
-  background: var(--primary-color);
+  background: var(--navbar-primary-surface);
   border-color: transparent;
 }
 .navbar--primary .navbar__brand-name,
-.navbar--primary .navbar__link { color: rgba(255,255,255,.9); }
-.navbar--primary .navbar__link:hover { background: var(--hover-background-subtle); color: var(--gray-0); }
-.navbar--primary .navbar__link--active { background: var(--button-primary-bg-hover); color: var(--gray-0); }
-.navbar--primary .navbar__mobile-toggle { color: rgba(255,255,255,.9); }
+.navbar--primary .navbar__link { color: var(--navbar-inverse-text); }
+.navbar--primary .navbar__link:hover { background: var(--navbar-inverse-hover); color: var(--navbar-inverse-text); }
+/* El activo llevaba «--button-primary-bg-hover», que en tema oscuro resuelve al
+   malva claro y devolvia el mismo 3,54:1 con letra blanca que se acaba de
+   quitar del fondo. Hover y activo comparten ahora una sola escala -14% y 22%
+   de blanco-, que es lo que hace legible «este pesa mas que aquel». */
+.navbar--primary .navbar__link--active { background: var(--navbar-inverse-active); color: var(--navbar-inverse-text); }
+.navbar--primary .navbar__mobile-toggle { color: var(--navbar-inverse-text); }
 
 .navbar--transparent {
   background: transparent;
   border-color: transparent;
+  /* Sin superficie que elevar, la sombra seria un borron flotando en el aire. */
+  box-shadow: none;
 }
 
 /* Brand */
@@ -51,7 +86,7 @@
 .navbar__logo { height: 28px; width: auto; }
 .navbar__brand-name {
   font-size: var(--text-md);
-  font-weight: var(--font-semibold, 600);
+  font-weight: var(--font-weight-emphasis);
   color: var(--text-color);
   white-space: nowrap;
 }
@@ -77,19 +112,25 @@
   background: transparent;
   color: var(--text-color-secondary);
   font-size: var(--text-sm);
-  font-weight: var(--font-medium, 500);
+  /* Era «var(--font-medium, 500)», y ni el token existia ni el 500 se dibuja:
+     la familia es estatica y lo redondea al mismo trazo que el 400. El peso de
+     cuerpo es lo que ya se estaba pintando, escrito con su nombre. */
+  font-weight: var(--font-weight-body);
   cursor: pointer;
   white-space: nowrap;
   transition: background 150ms ease, color 150ms ease;
   position: relative;
 }
 .navbar__link:hover {
-  background: var(--surface-hover, rgba(0,0,0,.05));
+  background: var(--surface-hover);
   color: var(--text-color);
 }
+/* Fondo tenue del tono + texto del tono. Pintar el texto con «--primary-color»
+   -que es el color de RELLENO- sobre su propio relleno claro es el par que el
+   capitulo 8 prohibe. */
 .navbar__link--active {
-  background: var(--primary-color-light, rgba(59,130,246,.1));
-  color: var(--primary-color);
+  background: var(--primary-color-light);
+  color: var(--primary-color-text);
 }
 
 .navbar__icon { font-size: var(--text-sm); }
@@ -144,8 +185,8 @@
 }
 .navbar__mobile-link:hover,
 .navbar__mobile-link--active {
-  background: var(--primary-color-light, rgba(59,130,246,.1));
-  color: var(--primary-color);
+  background: var(--primary-color-light);
+  color: var(--primary-color-text);
 }
 
 /* Responsive */

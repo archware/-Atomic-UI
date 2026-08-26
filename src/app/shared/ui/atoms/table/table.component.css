@@ -32,7 +32,10 @@
 .atomic-table td {
   padding: var(--table-cell-padding, var(--space-3) var(--space-4));
   vertical-align: middle;
-  border-bottom: 1px solid var(--table-color-border-light, rgba(0, 0, 0, 0.05));
+  /* --table-color-border-light esta definido en table-tokens.css y cambia con el
+     tema; el respaldo negro translucido nunca se aplicaba y solo servia para hacer
+     creer que la linea era negra. */
+  border-bottom: 1px solid var(--table-color-border-light);
 }
 
 .so-root.atomic-table-truncate-cells[data-so-table] .atomic-table th,
@@ -68,12 +71,14 @@
     box-shadow var(--table-transition-duration, 0.2s) var(--table-transition-timing, ease);
 }
 
+/* --table-row-hover no se define en ningun tema: el respaldo NO era respaldo, era
+   el valor. Por eso el resaltado de fila era un velo negro fijo, invisible sobre la
+   superficie oscura. El token real es --table-color-hover, que es el que ya usa la
+   variante rayada de mas abajo. --table-row-hover-shadow si esta declarado, en claro
+   y en oscuro, asi que su respaldo literal tambien sobraba. */
 .atomic-table tbody tr:hover {
-  background-color: var(--table-row-hover, rgba(0, 0, 0, 0.02));
-  box-shadow: var(
-    --table-row-hover-shadow,
-    0 var(--space-1) var(--space-3) rgba(0, 0, 0, 0.08)
-  );
+  background-color: var(--table-color-hover);
+  box-shadow: var(--table-row-hover-shadow);
   transform: var(--table-row-hover-transform, translateY(calc(-1 * var(--space-1))));
   z-index: 1;
   position: relative;

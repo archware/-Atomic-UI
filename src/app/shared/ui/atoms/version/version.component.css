@@ -1,6 +1,12 @@
 :host {
   display: inline-block !important;
   vertical-align: middle !important;
+
+  /* QA y STAGING no tienen tono en la paleta semantica, y con razon: exito,
+     aviso, peligro e informacion nombran VEREDICTOS, no entornos. Antes de
+     inventar un tono global que ningun otro componente consumiria, el violeta
+     se declara LOCAL aqui, con los mismos tres papeles que usa status-badge
+     -relleno, fondo y texto- para que se comporte como un tono mas. */
 }
 
 .atomic-version {
@@ -10,26 +16,31 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
   font-size: 0.75rem !important;
   line-height: 1 !important;
-  color: #94a3b8 !important;
+  color: var(--text-color-secondary) !important;
   user-select: none !important;
   visibility: visible !important;
   opacity: 1 !important;
 }
 
+/* Pildora y placa comparten superficie y borde a proposito: lo unico que
+   distingue a estos dos variantes es la FORMA, que es lo que sus nombres
+   prometen. El slate-800 y el slate-900 que llevaban antes no codificaban
+   ninguna diferencia; eran dos elecciones a mano que se parecian. */
+
 /* === PILL VARIANT === */
 .atomic-version--pill {
   padding: 3px 10px !important;
-  background: rgba(30, 41, 59, 0.7) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  border-radius: 9999px !important;
+  background: var(--surface-background) !important;
+  border: var(--border-width-thin) solid var(--border-color) !important;
+  border-radius: var(--radius-full) !important;
 }
 
 /* === BADGE VARIANT === */
 .atomic-version--badge {
   padding: 3px 8px !important;
-  background: rgba(15, 23, 42, 0.75) !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  border-radius: 4px !important;
+  background: var(--surface-background) !important;
+  border: var(--border-width-thin) solid var(--border-color) !important;
+  border-radius: var(--radius-sm) !important;
 }
 
 /* === TEXT VARIANT === */
@@ -46,72 +57,93 @@
 }
 
 /* Elements */
+
+/* El punto es relleno, no texto: su color y su halo son el mismo valor, asi que
+   van por un token local y cada entorno redefine solo ese token. Escribirlo dos
+   veces por variante era la via por la que el halo se quedaba en verde cuando
+   el punto ya era ambar. */
 .atomic-version__dot {
+  --version-dot: var(--success-color);
   width: 7px !important;
   height: 7px !important;
   border-radius: 50% !important;
-  background-color: #10b981 !important;
-  box-shadow: 0 0 6px #10b981 !important;
+  background-color: var(--version-dot) !important;
+  box-shadow: 0 0 6px var(--version-dot) !important;
   display: inline-block !important;
 }
 
 .atomic-version__dot--dev {
-  background-color: #f59e0b !important;
-  box-shadow: 0 0 6px #f59e0b !important;
+  --version-dot: var(--warning-color);
 }
 
 .atomic-version__dot--beta {
-  background-color: #3b82f6 !important;
-  box-shadow: 0 0 6px #3b82f6 !important;
+  --version-dot: var(--info-color);
 }
 
 .atomic-version__dot--qa, .atomic-version__dot--staging {
-  background-color: #8b5cf6 !important;
-  box-shadow: 0 0 6px #8b5cf6 !important;
+  --version-dot: var(--version-qa-fill);
 }
 
 .atomic-version__name {
   font-weight: var(--font-weight-body) !important;
-  color: #94a3b8 !important;
+  color: var(--text-color-secondary) !important;
 }
 
+/* El numero es el dato que se viene a leer: se lleva el color de texto pleno,
+   que es lo que antes intentaba decir el blanco puro. */
 .atomic-version__number {
   font-weight: var(--font-weight-title) !important;
   letter-spacing: 0.03em !important;
-  color: #ffffff !important;
+  color: var(--text-color) !important;
 }
 
+/* La chapa de entorno pasa a fondo tonal suave + texto del tono. Antes pintaba
+   blanco sobre el RELLENO del tono: eso es lo que el capitulo 8 mide en 2,12:1
+   para exito y 2,13:1 para aviso, y por debajo de 4,5:1 la palabra PROD deja de
+   leerse justo en la pantalla que la lleva.
+
+   El texto va con «--alert-TONO-text» y no con «--TONO-color-text» porque el
+   par (--alert-TONO-text sobre --TONO-color-lighter) es EL QUE MIDE LA
+   COMPUERTA en los tres temas. La diferencia no es cosmetica: en oscuro,
+   --info-color-text (#0A84FF) sobre ese mismo fondo da 4,15:1, y por eso el
+   tema redefine --alert-info-text a --blue-300. Elegir el token que ya esta
+   medido evita repetir a mano una cuenta que alguien ya cerro. */
 .atomic-version__env {
   padding: 2px 6px !important;
-  border-radius: 4px !important;
+  border-radius: var(--radius-sm) !important;
   font-size: 0.65rem !important;
   font-weight: var(--font-weight-title) !important;
   text-transform: uppercase !important;
-  background: #3b82f6 !important;
-  color: #ffffff !important;
+  background: var(--info-color-lighter) !important;
+  color: var(--alert-info-text) !important;
+  border: var(--border-width-thin) solid var(--info-color-light) !important;
 }
 
 .atomic-version__env--prod {
-  background: #10b981 !important;
-  color: #ffffff !important;
+  background: var(--success-color-lighter) !important;
+  color: var(--alert-success-text) !important;
+  border-color: var(--success-color-light) !important;
 }
 
 .atomic-version__env--dev {
-  background: #f59e0b !important;
-  color: #000000 !important;
+  background: var(--warning-color-lighter) !important;
+  color: var(--alert-warning-text) !important;
+  border-color: var(--warning-color-light) !important;
 }
 
 .atomic-version__env--beta {
-  background: #3b82f6 !important;
-  color: #ffffff !important;
+  background: var(--info-color-lighter) !important;
+  color: var(--alert-info-text) !important;
+  border-color: var(--info-color-light) !important;
 }
 
 .atomic-version__env--qa, .atomic-version__env--staging {
-  background: #8b5cf6 !important;
-  color: #ffffff !important;
+  background: var(--version-qa-surface) !important;
+  color: var(--version-qa-text) !important;
+  border-color: var(--version-qa-border) !important;
 }
 
 .atomic-version__date {
-  color: #64748b !important;
+  color: var(--text-color-muted) !important;
   font-size: 0.65rem !important;
 }

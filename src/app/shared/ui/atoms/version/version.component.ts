@@ -4,7 +4,13 @@ export type VersionVariant = 'pill' | 'badge' | 'text' | 'compact';
 
 /**
  * Reusable version indicator component for footers, topbars, and application info panels.
- * Guaranteed 100% visible across all themes with solid fallback colors.
+ *
+ * La visibilidad la dan los tokens del tema, no colores fijos. La promesa
+ * anterior -«visible en todos los temas gracias a colores solidos de respaldo»-
+ * era exactamente al reves: el slate oscuro y el texto blanco estaban escritos a
+ * mano, asi que la chapa se pintaba oscura sobre el pie claro donde de verdad
+ * se usa. Un color quemado no sobrevive al cambio de tema; lo unico que lo
+ * sobrevive es el token.
  */
 @Component({
   selector: 'app-version',

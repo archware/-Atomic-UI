@@ -8,7 +8,9 @@
   margin-inline-start: calc(-1 * var(--space-2));
   position: relative;
   border-radius: 50%;
-  border: var(--space-1) solid var(--surface-background, var(--gray-0));
+  /* El anillo que separa un avatar del siguiente es la superficie de detras, no un
+     blanco: --surface-background ya se redefine por tema y el respaldo nunca corria. */
+  border: var(--space-1) solid var(--surface-background);
   transition: transform 150ms ease, z-index 0ms;
   z-index: var(--avatar-stack-order, auto);
 }
@@ -30,8 +32,13 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--color-neutral-200, #e5e7eb);
-  color: var(--text-color-secondary, #6b7280);
+  /* --color-neutral-200 no se define en ningun tema: el respaldo era el valor, y
+     por eso el contador de sobrantes se quedaba en gris claro sobre pagina oscura,
+     con su propio texto encima. --surface-section es la superficie neutra del tema
+     y es la misma pareja que usa la variante `default` del badge, que es lo que
+     este contador es. */
+  background: var(--surface-section);
+  color: var(--text-color-secondary);
   font-weight: var(--font-weight-emphasis);
   font-size: var(--text-xs, var(--space-3));
   user-select: none;

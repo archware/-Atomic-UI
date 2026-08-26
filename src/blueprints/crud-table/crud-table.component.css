@@ -81,6 +81,23 @@
   text-align: center;
 }
 
+/*
+ * Cifras que no bailan.
+ *
+ * Con dígitos de ancho variable una columna de fechas o de importes deja de
+ * estar alineada por unidades y hay que leerla número a número; y un contador
+ * que cambia en vivo empuja al texto que lleva detrás cada vez que pasa de 9 a
+ * 10. `tabular-nums` fija el ancho del dígito y las dos cosas se acaban.
+ *
+ * Se marca el dato numérico, nunca la fila entera: en la columna de nombres las
+ * cifras tabulares no aportan y estropean el espaciado. El ADN lo resuelve así
+ * donde el número es suyo —`data-table__cell--end`, `kpi-card__value`—; aquí,
+ * que es marcado del blueprint, la marca la pone quien escribe la celda.
+ */
+.numeric {
+  font-variant-numeric: tabular-nums;
+}
+
 .pagination-demos {
   display: flex;
   flex-direction: column;

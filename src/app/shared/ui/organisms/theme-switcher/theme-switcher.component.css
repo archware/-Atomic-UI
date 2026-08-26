@@ -11,14 +11,27 @@
   transition: color 200ms ease, transform 200ms ease;
 }
 
+/*
+`--shadow-glow-primary` ES UNA SOMBRA ENTERA, NO UN COLOR.
+
+`drop-shadow()` espera desplazamiento, difuminado y COLOR. Al sustituir el token
+quedaba `drop-shadow(0 0 0.25rem 0 4px 12px rgba(95, 41, 92, 0.4))`: tres valores
+de mas. Eso es invalido en tiempo de computo, y la regla no se degrada sola -el
+navegador descarta el `filter` COMPLETO-, asi que el halo no se veia en ninguno
+de los tres temas. El token no estaba mal elegido: estaba usado en el hueco
+equivocado de la funcion.
+
+`currentColor` lo cierra sin inventar token: el halo toma el color que el icono
+ya tiene declarado encima, y con ello sigue al tema sin un bloque propio.
+*/
 .icon-sun {
   color: var(--icon-sun-color);
-  filter: drop-shadow(0 0 var(--space-1) var(--shadow-glow-primary));
+  filter: drop-shadow(0 0 var(--space-1) currentColor);
 }
 
 .icon-moon {
   color: var(--icon-moon-color);
-  filter: drop-shadow(0 0 var(--space-1) var(--shadow-glow-primary));
+  filter: drop-shadow(0 0 var(--space-1) currentColor);
 }
 
 .icon.hidden {
@@ -26,6 +39,11 @@
 }
 
 /* Hover effect */
-:host:hover .icon-sun { transform: rotate(45deg) scale(1.15); filter: drop-shadow(0 0 6px var(--warning-color)); }
+/*
+   El halo crece al pasar por encima: `--space-1` en reposo, `--space-2` al
+   apuntar. Antes eran 6px a mano, un valor que no esta en ninguna escala y que
+   por tanto nadie puede ajustar sin adivinar de donde salio.
+*/
+:host:hover .icon-sun { transform: rotate(45deg) scale(1.15); filter: drop-shadow(0 0 var(--space-2) var(--warning-color)); }
 
-:host:hover .icon-moon { transform: rotate(-15deg) scale(1.15); filter: drop-shadow(0 0 6px var(--primary-color)); }
+:host:hover .icon-moon { transform: rotate(-15deg) scale(1.15); filter: drop-shadow(0 0 var(--space-2) var(--primary-color)); }

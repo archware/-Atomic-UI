@@ -46,7 +46,13 @@
   background: var(--surface-elevated);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-dropdown);
+  /*
+    El calendario es un popover: flota sobre la pagina y sobre las tarjetas que
+    hay debajo. `--shadow-dropdown` pesa alfa 0,1 en tema claro y en los oscuros
+    no trae el anillo de 1px con el que la escala separa una superficie del
+    fondo, asi que el panel quedaba mas plano que aquello sobre lo que se abre.
+  */
+  box-shadow: var(--shadow-lg);
   padding: var(--space-4);
   width: 320px;
   box-sizing: border-box;
