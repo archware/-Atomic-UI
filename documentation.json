@@ -17351,7 +17351,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "  /* === Base Structure === */\n  .card {\n    display: flex;\n    min-width: 0;\n    flex-direction: column;\n    height: 100%;\n    background: var(--surface-background);\n    border: 1px solid var(--border-color);\n    border-radius: var(--radius-lg);\n    box-shadow: var(--shadow-md);\n    /* overflow: visible para que tooltips y dropdowns dentro de la card no queden cortados.\n       La imagen se clips con overflow: hidden en .card__image directamente. */\n    overflow: visible;\n    transition: all 200ms ease;\n  /* Container query: la card es su propio contexto de contenedor.\n     Los hijos pueden adaptar su layout basándose en el ancho de la card,\n     no en el viewport (@container en lugar de @media). */\n  container-type: inline-size;\n  container-name: card;\n}\n\n.card:focus-within {\n  z-index: 50;\n  position: relative;\n}\n\n:host {\n  display: block;\n  width: 100%;\n  min-width: 0;\n}\n\n  /* Footer se apila verticalmente cuando la card es muy angosta (< 280px) */\n  @container card (max-width: 280px) {\n    .card__footer {\n      flex-direction: column;\n      align-items: stretch;\n      gap: var(--space-2);\n    }\n  }\n\n  /* === Variants === */\n  .card--default {\n    box-shadow: var(--shadow-sm);\n  }\n\n  .card--elevated {\n    background: var(--surface-elevated);\n    border: 1px solid var(--border-color); /* keeping border for depth as requested by user */\n    box-shadow: var(--shadow-md);\n  }\n\n  .card--elevated:hover {\n    box-shadow: var(--shadow-lg);\n    transform: translateY(calc(-1 * var(--space-1)));\n  }\n\n  .card--outlined {\n    background: transparent;\n    box-shadow: none;\n  }\n\n  .card--filled {\n    background: var(--surface-section);\n    border: none;\n    box-shadow: none;\n  }\n\n  .card--interactive {\n    cursor: pointer;\n    box-shadow: var(--shadow-sm);\n  }\n\n  .card--interactive:hover {\n    box-shadow: var(--shadow-md);\n    transform: translateY(calc(-1 * var(--space-1)));\n    border-color: var(--primary-color);\n  }\n\n  .card--interactive:focus-visible,\n  .card--clickable:focus-visible {\n    outline: none;\n    box-shadow: var(--shadow-focus-primary);\n  }\n\n  .card--clickable {\n    cursor: pointer;\n  }\n\n  /* === Sizes === */\n  .card--sm .card__header,\n  .card--sm .card__body,\n  .card--sm .card__footer:not(:empty) {\n    padding: var(--space-3);\n  }\n\n  .card--md .card__header,\n  .card--md .card__body,\n  .card--md .card__footer:not(:empty) {\n    padding: var(--space-4);\n  }\n\n  .card--lg .card__header,\n  .card--lg .card__body,\n  .card--lg .card__footer:not(:empty) {\n    padding: var(--space-5);\n  }\n\n  /* === Image === */\n  .card__image {\n    width: 100%;\n    overflow: hidden;\n    /* Clip la imagen a las esquinas redondeadas de la card (necesario por overflow: visible en .card) */\n    border-radius: var(--radius-lg) var(--radius-lg) 0 0;\n  }\n\n  .card__image:empty {\n    display: none;\n  }\n\n  .card__image ::ng-deep img {\n    width: 100%;\n    height: auto;\n    display: block;\n    object-fit: cover;\n  }\n\n  /* === Header === */\n  .card__header {\n    display: flex;\n    align-items: flex-start;\n    gap: var(--space-3);\n  }\n\n  .card__icon {\n    font-size: var(--text-2xl);\n    color: var(--primary-color);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: var(--space-10);\n    height: var(--space-10);\n    background: var(--primary-color-lighter);\n    border-radius: var(--radius-md);\n    flex-shrink: 0;\n  }\n\n  .card__header-text {\n    flex: 1;\n    min-width: 0;\n  }\n\n  .card__title {\n    margin: 0;\n    font-size: var(--text-lg);\n    font-weight: var(--font-weight-emphasis);\n    color: var(--text-color);\n    line-height: 1.3;\n  }\n\n  .card__subtitle {\n    margin: var(--space-1) 0 0;\n    font-size: var(--text-sm);\n    color: var(--text-color-secondary);\n    line-height: 1.4;\n  }\n\n  /* === Body === */\n  .card__body {\n    flex: 1;\n    min-width: 0;\n    font-size: var(--text-md);\n    color: var(--text-color);\n    line-height: 1.6;\n  }\n\n  .card__body:empty {\n    display: none;\n  }\n\n  /* === Footer === */\n  .card__footer {\n    display: flex;\n    align-items: center;\n    justify-content: flex-end;\n    gap: var(--space-3);\n    border-top: 1px solid var(--border-color);\n  }\n\n  .card__footer:empty {\n    display: none;\n    border-top: none;\n  }\n\n  /* === Horizontal Layout === */\n  .card--horizontal {\n    flex-direction: row;\n  }\n\n  .card--horizontal .card__image {\n    width: 40%;\n    max-width: 200px;\n    flex-shrink: 0;\n  }\n\n  .card--horizontal .card__image ::ng-deep img {\n    height: 100%;\n    object-fit: cover;\n  }\n\n  /* === Responsive === */\n  @media (max-width: 48rem) {\n    .card--horizontal {\n      flex-direction: column;\n    }\n\n    .card--horizontal .card__image {\n      width: 100%;\n      max-width: none;\n    }\n  }\n",
+                    "data": "  /* === Base Structure === */\n  .card {\n    display: flex;\n    min-width: 0;\n    flex-direction: column;\n    height: 100%;\n    /* La superficie de la card consume sus TOKENS DE COMPONENTE\n       (--card-bg/--card-border/--card-shadow, _tokens-components.css): son el\n       contrato del ADN y resuelven shadow-md en claro y shadow-lg en oscuro.\n       Escribir aquí los tokens genéricos dejaba la elevación por debajo del\n       contrato y sin respuesta al tema. */\n    background: var(--card-bg, var(--surface-background));\n    border: 1px solid var(--card-border, var(--border-color));\n    border-radius: var(--radius-lg);\n    box-shadow: var(--card-shadow, var(--shadow-md));\n    /* overflow: visible para que tooltips y dropdowns dentro de la card no queden cortados.\n       La imagen se clips con overflow: hidden en .card__image directamente. */\n    overflow: visible;\n    transition: all 200ms ease;\n  /* Container query: la card es su propio contexto de contenedor.\n     Los hijos pueden adaptar su layout basándose en el ancho de la card,\n     no en el viewport (@container en lugar de @media). */\n  container-type: inline-size;\n  container-name: card;\n}\n\n.card:focus-within {\n  z-index: 50;\n  position: relative;\n}\n\n:host {\n  display: block;\n  width: 100%;\n  min-width: 0;\n}\n\n  /* Footer se apila verticalmente cuando la card es muy angosta (< 280px) */\n  @container card (max-width: 280px) {\n    .card__footer {\n      flex-direction: column;\n      align-items: stretch;\n      gap: var(--space-2);\n    }\n  }\n\n  /* === Variants === */\n  /* La variante por omisión respeta el contrato --card-shadow del ADN: antes\n     degradaba a shadow-sm y la card \"flotaba\" menos que en la referencia. */\n  .card--default {\n    box-shadow: var(--card-shadow, var(--shadow-md));\n  }\n\n  .card--elevated {\n    background: var(--surface-elevated);\n    border: 1px solid var(--border-color); /* keeping border for depth as requested by user */\n    box-shadow: var(--shadow-md);\n  }\n\n  .card--elevated:hover {\n    box-shadow: var(--shadow-lg);\n    transform: translateY(calc(-1 * var(--space-1)));\n  }\n\n  .card--outlined {\n    background: transparent;\n    box-shadow: none;\n  }\n\n  .card--filled {\n    background: var(--surface-section);\n    border: none;\n    box-shadow: none;\n  }\n\n  .card--interactive {\n    cursor: pointer;\n    box-shadow: var(--shadow-sm);\n  }\n\n  .card--interactive:hover {\n    box-shadow: var(--shadow-md);\n    transform: translateY(calc(-1 * var(--space-1)));\n    border-color: var(--primary-color);\n  }\n\n  .card--interactive:focus-visible,\n  .card--clickable:focus-visible {\n    outline: none;\n    box-shadow: var(--shadow-focus-primary);\n  }\n\n  .card--clickable {\n    cursor: pointer;\n  }\n\n  /* === Sizes === */\n  .card--sm .card__header,\n  .card--sm .card__body,\n  .card--sm .card__footer:not(:empty) {\n    padding: var(--space-3);\n  }\n\n  .card--md .card__header,\n  .card--md .card__body,\n  .card--md .card__footer:not(:empty) {\n    padding: var(--space-4);\n  }\n\n  .card--lg .card__header,\n  .card--lg .card__body,\n  .card--lg .card__footer:not(:empty) {\n    padding: var(--space-5);\n  }\n\n  /* === Image === */\n  .card__image {\n    width: 100%;\n    overflow: hidden;\n    /* Clip la imagen a las esquinas redondeadas de la card (necesario por overflow: visible en .card) */\n    border-radius: var(--radius-lg) var(--radius-lg) 0 0;\n  }\n\n  .card__image:empty {\n    display: none;\n  }\n\n  .card__image ::ng-deep img {\n    width: 100%;\n    height: auto;\n    display: block;\n    object-fit: cover;\n  }\n\n  /* === Header === */\n  .card__header {\n    display: flex;\n    align-items: flex-start;\n    gap: var(--space-3);\n  }\n\n  .card__icon {\n    font-size: var(--text-2xl);\n    color: var(--primary-color);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: var(--space-10);\n    height: var(--space-10);\n    background: var(--primary-color-lighter);\n    border-radius: var(--radius-md);\n    flex-shrink: 0;\n  }\n\n  .card__header-text {\n    flex: 1;\n    min-width: 0;\n  }\n\n  .card__title {\n    margin: 0;\n    font-size: var(--text-lg);\n    font-weight: var(--font-weight-emphasis);\n    color: var(--text-color);\n    line-height: 1.3;\n  }\n\n  .card__subtitle {\n    margin: var(--space-1) 0 0;\n    font-size: var(--text-sm);\n    color: var(--text-color-secondary);\n    line-height: 1.4;\n  }\n\n  /* === Body === */\n  .card__body {\n    flex: 1;\n    min-width: 0;\n    font-size: var(--text-md);\n    color: var(--text-color);\n    line-height: 1.6;\n  }\n\n  .card__body:empty {\n    display: none;\n  }\n\n  /* === Footer === */\n  .card__footer {\n    display: flex;\n    align-items: center;\n    justify-content: flex-end;\n    gap: var(--space-3);\n    border-top: 1px solid var(--border-color);\n  }\n\n  .card__footer:empty {\n    display: none;\n    border-top: none;\n  }\n\n  /* === Horizontal Layout === */\n  .card--horizontal {\n    flex-direction: row;\n  }\n\n  .card--horizontal .card__image {\n    width: 40%;\n    max-width: 200px;\n    flex-shrink: 0;\n  }\n\n  .card--horizontal .card__image ::ng-deep img {\n    height: 100%;\n    object-fit: cover;\n  }\n\n  /* === Responsive === */\n  @media (max-width: 48rem) {\n    .card--horizontal {\n      flex-direction: column;\n    }\n\n    .card--horizontal .card__image {\n      width: 100%;\n      max-width: none;\n    }\n  }\n",
                     "styleUrl": "./card.component.css"
                 }
             ],
@@ -56908,7 +56908,7 @@
         },
         {
             "name": "TabComponent",
-            "id": "component-TabComponent-d7f037184c3ef514847a2d72a5228d2f549507599fddf52c8dc6227e14aa4a0457e3ed861851b4d38d25ef929461f16992d1e15d02906176426698d864b2019f",
+            "id": "component-TabComponent-8c091180e07f27432f68d067462876a6b77b6efa2b08a8437f25fe58b3b21df9f1eeefc1cc9c249a9c37c3ca705e0498129de1468ebd8daa0cc4fcd78c884155",
             "file": "src/app/shared/ui/organisms/tabs/tabs.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
@@ -56999,23 +56999,17 @@
                 {
                     "name": "active",
                     "coverageIgnore": false,
-                    "defaultValue": "false",
+                    "defaultValue": "signal(false)",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "unknown",
                     "indexKey": "",
                     "optional": false,
-                    "description": "",
-                    "line": 24,
-                    "rawdescription": "\n",
-                    "decorators": [
-                        {
-                            "name": "HostBinding",
-                            "stringifiedArguments": "'class.active'"
-                        }
-                    ],
+                    "description": "<p>Estado de activación gobernado por el contenedor <code>app-tabs</code>.</p>\n<p>ES UN SIGNAL, NO UNA PROPIEDAD PLANA, A PROPÓSITO: el panel se muestra u\noculta con la clase <code>active</code> del host, y un host binding solo se\nre-evalúa cuando Angular tiene un motivo para repintar. Con Zone.js el\nmotivo lo daba cualquier evento; en una aplicación zoneless la mutación\nimperativa de una propiedad plana no notifica a nadie y el panel queda\nmuerto. Leer el signal dentro del host binding registra la dependencia y\nprograma el repintado en ambos mundos.</p>\n",
+                    "line": 35,
+                    "rawdescription": "\n\nEstado de activación gobernado por el contenedor `app-tabs`.\n\nES UN SIGNAL, NO UNA PROPIEDAD PLANA, A PROPÓSITO: el panel se muestra u\noculta con la clase `active` del host, y un host binding solo se\nre-evalúa cuando Angular tiene un motivo para repintar. Con Zone.js el\nmotivo lo daba cualquier evento; en una aplicación zoneless la mutación\nimperativa de una propiedad plana no notifica a nadie y el panel queda\nmuerto. Leer el signal dentro del host binding registra la dependencia y\nprograma el repintado en ambos mundos.\n",
                     "modifierKind": [
-                        171
+                        148
                     ]
                 }
             ],
@@ -57027,13 +57021,12 @@
                 {
                     "coverageIgnore": false,
                     "name": "class.active",
-                    "actualName": "active",
-                    "defaultValue": "false",
+                    "actualName": "isActive",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\n",
                     "description": "",
-                    "line": 24,
+                    "line": 38,
                     "type": "boolean",
                     "decorators": []
                 }
@@ -57044,7 +57037,7 @@
             "description": "<p>Individual tab content panel.\nMust be used as child of <code>app-tabs</code>.</p>\n",
             "rawdescription": "\n\nIndividual tab content panel.\nMust be used as child of `app-tabs`.\n",
             "type": "component",
-            "sourceCode": "import { Component, signal, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild, HostBinding, input, output } from '@angular/core';\n\n\n/**\n * Individual tab content panel.\n * Must be used as child of `app-tabs`.\n */\n@Component({\n  selector: 'app-tab',\n  standalone: true,\n  template: `<ng-content></ng-content>`,\n  styleUrl: './tab.component.css'\n})\nexport class TabComponent {\n  /** Tab label displayed in the header */\n  readonly label = input('');\n  /** Emoji icon (optional) */\n  readonly icon = input<string>();\n  /** CSS icon class (e.g., FontAwesome) */\n  readonly iconClass = input<string>();\n  /** Whether this tab is disabled */\n  readonly disabled = input(false);\n\n  @HostBinding('class.active') active = false;\n}\n\n/**\n * Tab container component for organizing content into tabbed sections.\n * \n * @example\n * ```html\n * <app-tabs (tabChange)=\"onTabChange($event)\">\n *   <app-tab label=\"General\" icon=\"⚙️\">Content 1</app-tab>\n *   <app-tab label=\"Profile\" icon=\"👤\">Content 2</app-tab>\n *   <app-tab label=\"Disabled\" [disabled]=\"true\">Disabled content</app-tab>\n * </app-tabs>\n * ```\n */\n@Component({\n  selector: 'app-tabs',\n  standalone: true,\n  imports: [],\n  template: `\n    <div class=\"tabs-container\">\n      <div\n        class=\"tabs-header\"\n        #tabsHeader\n        role=\"tablist\"\n        [attr.aria-label]=\"ariaLabel()\"\n        [attr.aria-orientation]=\"orientation()\"\n        (keydown)=\"onHeaderKeydown($event)\"\n      >\n        @for (tab of tabs; track tab.label(); let i = $index) {\n          <button \n            type=\"button\"\n            class=\"tab-button\"\n            role=\"tab\"\n            [id]=\"'tab-' + i\"\n            [attr.aria-selected]=\"activeIndex() === i\"\n            [attr.aria-controls]=\"'tabpanel-' + i\"\n            [attr.tabindex]=\"activeIndex() === i ? 0 : -1\"\n            [class.active]=\"activeIndex() === i\"\n            [class.disabled]=\"tab.disabled()\"\n            (click)=\"!tab.disabled() && selectTab(i, $event)\"\n          >\n            @if (tab.iconClass()) {\n              <i [class]=\"tab.iconClass()\" class=\"tab-icon\" aria-hidden=\"true\"></i>\n            } @else if (tab.icon()) {\n              <span class=\"tab-icon\" aria-hidden=\"true\">{{ tab.icon() }}</span>\n            }\n            {{ tab.label() }}\n          </button>\n        }\n      </div>\n      <div \n        class=\"tabs-content\"\n        role=\"tabpanel\"\n        [id]=\"'tabpanel-' + activeIndex()\"\n        [attr.aria-labelledby]=\"'tab-' + activeIndex()\"\n      >\n        <ng-content></ng-content>\n      </div>\n    </div>\n  `,\n  styleUrl: './tabs.component.css'\n})\nexport class TabsComponent implements AfterContentInit {\n  @ContentChildren(TabComponent) tabComponents!: QueryList<TabComponent>;\n  readonly defaultIndex = input(0);\n  /** Accessible name of the tablist; translate it per application. */\n  readonly ariaLabel = input('Tabs');\n  /** Tablist orientation; decides which arrow pair traverses the tabs. */\n  readonly orientation = input<'horizontal' | 'vertical'>('horizontal');\n  readonly tabChange = output<number>();\n\n  activeIndex = signal(0);\n  tabs: TabComponent[] = [];\n\n  @ViewChild('tabsHeader', { static: false }) tabsHeader!: ElementRef<HTMLElement>;\n\n  ngAfterContentInit() {\n    this.tabs = this.tabComponents.toArray();\n    this.activeIndex.set(this.defaultIndex());\n    this.updateTabs();\n  }\n\n  private updateTabs() {\n    this.tabs.forEach((tab, i) => tab.active = i === this.activeIndex());\n  }\n\n  /**\n   * Keyboard navigation for the tablist, per WAI-ARIA APG: arrows move between\n   * tabs with automatic activation, Home and End jump to the ends. Disabled\n   * tabs are skipped and the traversal wraps around.\n   */\n  onHeaderKeydown(event: KeyboardEvent) {\n    if (this.tabs.length === 0) {\n      return;\n    }\n\n    // A shortcut belongs to the browser or the OS, never to the tablist:\n    // Alt+Arrow navigates history and Ctrl+Home reaches the top of the page.\n    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {\n      return;\n    }\n\n    // APG assigns Left/Right to a horizontal tablist and Up/Down to a vertical\n    // one. Claiming the other pair would cancel the page's own scrolling.\n    const vertical = this.orientation() === 'vertical';\n    const nextKey = vertical ? 'ArrowDown' : 'ArrowRight';\n    const previousKey = vertical ? 'ArrowUp' : 'ArrowLeft';\n\n    const current = this.activeIndex();\n    let target: number | null = null;\n\n    switch (event.key) {\n      case nextKey:\n        target = this.findEnabled(current + 1, 1);\n        break;\n      case previousKey:\n        target = this.findEnabled(current - 1, -1);\n        break;\n      case 'Home':\n        target = this.findEnabled(0, 1);\n        break;\n      case 'End':\n        target = this.findEnabled(this.tabs.length - 1, -1);\n        break;\n      default:\n        return;\n    }\n\n    if (target === null || target === current) {\n      return;\n    }\n\n    event.preventDefault();\n    this.selectTab(target);\n    this.focusTab(target);\n  }\n\n  /** First enabled tab from `start` in the given direction, wrapping around. */\n  private findEnabled(start: number, direction: 1 | -1): number | null {\n    const total = this.tabs.length;\n    for (let step = 0; step < total; step++) {\n      const index = (((start + step * direction) % total) + total) % total;\n      if (!this.tabs[index].disabled()) {\n        return index;\n      }\n    }\n    return null;\n  }\n\n  /** Moves real focus to the tab button so keyboard traversal stays alive. */\n  private focusTab(index: number) {\n    const button = this.tabsHeader?.nativeElement.querySelectorAll<HTMLElement>('[role=\"tab\"]')[index];\n    button?.focus();\n  }\n\n  selectTab(index: number, event?: MouseEvent) {\n    this.activeIndex.set(index);\n    this.updateTabs();\n    this.tabChange.emit(index);\n\n    // Auto-scroll horizontalmente (sin afectar scroll vertical del padre)\n    if (event?.target && this.tabsHeader) {\n      const button = event.target as HTMLElement;\n      const container = this.tabsHeader.nativeElement;\n\n      // Calcular posición para centrar el botón\n      const scrollLeft = button.offsetLeft - (container.clientWidth / 2) + (button.clientWidth / 2);\n\n      container.scrollTo({\n        left: Math.max(0, scrollLeft),\n        behavior: 'smooth'\n      });\n    }\n  }\n}\n",
+            "sourceCode": "import { Component, signal, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild, HostBinding, input, output } from '@angular/core';\n\n\n/**\n * Individual tab content panel.\n * Must be used as child of `app-tabs`.\n */\n@Component({\n  selector: 'app-tab',\n  standalone: true,\n  template: `<ng-content></ng-content>`,\n  styleUrl: './tab.component.css'\n})\nexport class TabComponent {\n  /** Tab label displayed in the header */\n  readonly label = input('');\n  /** Emoji icon (optional) */\n  readonly icon = input<string>();\n  /** CSS icon class (e.g., FontAwesome) */\n  readonly iconClass = input<string>();\n  /** Whether this tab is disabled */\n  readonly disabled = input(false);\n\n  /**\n   * Estado de activación gobernado por el contenedor `app-tabs`.\n   *\n   * ES UN SIGNAL, NO UNA PROPIEDAD PLANA, A PROPÓSITO: el panel se muestra u\n   * oculta con la clase `active` del host, y un host binding solo se\n   * re-evalúa cuando Angular tiene un motivo para repintar. Con Zone.js el\n   * motivo lo daba cualquier evento; en una aplicación zoneless la mutación\n   * imperativa de una propiedad plana no notifica a nadie y el panel queda\n   * muerto. Leer el signal dentro del host binding registra la dependencia y\n   * programa el repintado en ambos mundos.\n   */\n  readonly active = signal(false);\n\n  @HostBinding('class.active')\n  get isActive(): boolean {\n    return this.active();\n  }\n}\n\n/**\n * Tab container component for organizing content into tabbed sections.\n * \n * @example\n * ```html\n * <app-tabs (tabChange)=\"onTabChange($event)\">\n *   <app-tab label=\"General\" icon=\"⚙️\">Content 1</app-tab>\n *   <app-tab label=\"Profile\" icon=\"👤\">Content 2</app-tab>\n *   <app-tab label=\"Disabled\" [disabled]=\"true\">Disabled content</app-tab>\n * </app-tabs>\n * ```\n */\n@Component({\n  selector: 'app-tabs',\n  standalone: true,\n  imports: [],\n  template: `\n    <div class=\"tabs-container\">\n      <div\n        class=\"tabs-header\"\n        #tabsHeader\n        role=\"tablist\"\n        [attr.aria-label]=\"ariaLabel()\"\n        [attr.aria-orientation]=\"orientation()\"\n        (keydown)=\"onHeaderKeydown($event)\"\n      >\n        @for (tab of tabs; track tab.label(); let i = $index) {\n          <button \n            type=\"button\"\n            class=\"tab-button\"\n            role=\"tab\"\n            [id]=\"'tab-' + i\"\n            [attr.aria-selected]=\"activeIndex() === i\"\n            [attr.aria-controls]=\"'tabpanel-' + i\"\n            [attr.tabindex]=\"activeIndex() === i ? 0 : -1\"\n            [class.active]=\"activeIndex() === i\"\n            [class.disabled]=\"tab.disabled()\"\n            (click)=\"!tab.disabled() && selectTab(i, $event)\"\n          >\n            @if (tab.iconClass()) {\n              <i [class]=\"tab.iconClass()\" class=\"tab-icon\" aria-hidden=\"true\"></i>\n            } @else if (tab.icon()) {\n              <span class=\"tab-icon\" aria-hidden=\"true\">{{ tab.icon() }}</span>\n            }\n            {{ tab.label() }}\n          </button>\n        }\n      </div>\n      <div \n        class=\"tabs-content\"\n        role=\"tabpanel\"\n        [id]=\"'tabpanel-' + activeIndex()\"\n        [attr.aria-labelledby]=\"'tab-' + activeIndex()\"\n      >\n        <ng-content></ng-content>\n      </div>\n    </div>\n  `,\n  styleUrl: './tabs.component.css'\n})\nexport class TabsComponent implements AfterContentInit {\n  @ContentChildren(TabComponent) tabComponents!: QueryList<TabComponent>;\n  readonly defaultIndex = input(0);\n  /** Accessible name of the tablist; translate it per application. */\n  readonly ariaLabel = input('Tabs');\n  /** Tablist orientation; decides which arrow pair traverses the tabs. */\n  readonly orientation = input<'horizontal' | 'vertical'>('horizontal');\n  readonly tabChange = output<number>();\n\n  activeIndex = signal(0);\n  tabs: TabComponent[] = [];\n\n  @ViewChild('tabsHeader', { static: false }) tabsHeader!: ElementRef<HTMLElement>;\n\n  ngAfterContentInit() {\n    this.tabs = this.tabComponents.toArray();\n    this.activeIndex.set(this.defaultIndex());\n    this.updateTabs();\n  }\n\n  private updateTabs() {\n    this.tabs.forEach((tab, i) => tab.active.set(i === this.activeIndex()));\n  }\n\n  /**\n   * Keyboard navigation for the tablist, per WAI-ARIA APG: arrows move between\n   * tabs with automatic activation, Home and End jump to the ends. Disabled\n   * tabs are skipped and the traversal wraps around.\n   */\n  onHeaderKeydown(event: KeyboardEvent) {\n    if (this.tabs.length === 0) {\n      return;\n    }\n\n    // A shortcut belongs to the browser or the OS, never to the tablist:\n    // Alt+Arrow navigates history and Ctrl+Home reaches the top of the page.\n    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {\n      return;\n    }\n\n    // APG assigns Left/Right to a horizontal tablist and Up/Down to a vertical\n    // one. Claiming the other pair would cancel the page's own scrolling.\n    const vertical = this.orientation() === 'vertical';\n    const nextKey = vertical ? 'ArrowDown' : 'ArrowRight';\n    const previousKey = vertical ? 'ArrowUp' : 'ArrowLeft';\n\n    const current = this.activeIndex();\n    let target: number | null = null;\n\n    switch (event.key) {\n      case nextKey:\n        target = this.findEnabled(current + 1, 1);\n        break;\n      case previousKey:\n        target = this.findEnabled(current - 1, -1);\n        break;\n      case 'Home':\n        target = this.findEnabled(0, 1);\n        break;\n      case 'End':\n        target = this.findEnabled(this.tabs.length - 1, -1);\n        break;\n      default:\n        return;\n    }\n\n    if (target === null || target === current) {\n      return;\n    }\n\n    event.preventDefault();\n    this.selectTab(target);\n    this.focusTab(target);\n  }\n\n  /** First enabled tab from `start` in the given direction, wrapping around. */\n  private findEnabled(start: number, direction: 1 | -1): number | null {\n    const total = this.tabs.length;\n    for (let step = 0; step < total; step++) {\n      const index = (((start + step * direction) % total) + total) % total;\n      if (!this.tabs[index].disabled()) {\n        return index;\n      }\n    }\n    return null;\n  }\n\n  /** Moves real focus to the tab button so keyboard traversal stays alive. */\n  private focusTab(index: number) {\n    const button = this.tabsHeader?.nativeElement.querySelectorAll<HTMLElement>('[role=\"tab\"]')[index];\n    button?.focus();\n  }\n\n  selectTab(index: number, event?: MouseEvent) {\n    this.activeIndex.set(index);\n    this.updateTabs();\n    this.tabChange.emit(index);\n\n    // Auto-scroll horizontalmente (sin afectar scroll vertical del padre)\n    if (event?.target && this.tabsHeader) {\n      const button = event.target as HTMLElement;\n      const container = this.tabsHeader.nativeElement;\n\n      // Calcular posición para centrar el botón\n      const scrollLeft = button.offsetLeft - (container.clientWidth / 2) + (button.clientWidth / 2);\n\n      container.scrollTo({\n        left: Math.max(0, scrollLeft),\n        behavior: 'smooth'\n      });\n    }\n  }\n}\n",
             "styleUrl": "./tab.component.css",
             "assetsDirs": [],
             "styleUrlsData": [
@@ -57067,6 +57060,19 @@
                 }
             ],
             "extends": [],
+            "accessors": {
+                "isActive": {
+                    "name": "isActive",
+                    "getSignature": {
+                        "name": "isActive",
+                        "type": "boolean",
+                        "returnType": "boolean",
+                        "line": 38,
+                        "rawdescription": "\n",
+                        "description": ""
+                    }
+                }
+            },
             "relationships": {
                 "incoming": [
                     {
@@ -58375,7 +58381,7 @@
         },
         {
             "name": "TabsComponent",
-            "id": "component-TabsComponent-d7f037184c3ef514847a2d72a5228d2f549507599fddf52c8dc6227e14aa4a0457e3ed861851b4d38d25ef929461f16992d1e15d02906176426698d864b2019f",
+            "id": "component-TabsComponent-8c091180e07f27432f68d067462876a6b77b6efa2b08a8437f25fe58b3b21df9f1eeefc1cc9c249a9c37c3ca705e0498129de1468ebd8daa0cc4fcd78c884155",
             "file": "src/app/shared/ui/organisms/tabs/tabs.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
@@ -58404,7 +58410,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "<p>Accessible name of the tablist; translate it per application.</p>\n",
-                    "line": 91,
+                    "line": 107,
                     "rawdescription": "\nAccessible name of the tablist; translate it per application.",
                     "modifierKind": [
                         148
@@ -58421,7 +58427,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 89,
+                    "line": 105,
                     "rawdescription": "\n",
                     "modifierKind": [
                         148
@@ -58438,7 +58444,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "<p>Tablist orientation; decides which arrow pair traverses the tabs.</p>\n",
-                    "line": 93,
+                    "line": 109,
                     "rawdescription": "\nTablist orientation; decides which arrow pair traverses the tabs.",
                     "modifierKind": [
                         148
@@ -58456,7 +58462,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 94,
+                    "line": 110,
                     "rawdescription": "\n",
                     "modifierKind": [
                         148
@@ -58475,7 +58481,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 96,
+                    "line": 112,
                     "rawdescription": "\n"
                 },
                 {
@@ -58487,7 +58493,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 88,
+                    "line": 104,
                     "rawdescription": "\n",
                     "decorators": [
                         {
@@ -58509,7 +58515,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 97,
+                    "line": 113,
                     "rawdescription": "\n"
                 },
                 {
@@ -58521,7 +58527,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 99,
+                    "line": 115,
                     "rawdescription": "\n",
                     "decorators": [
                         {
@@ -58559,7 +58565,7 @@
                     "optional": false,
                     "returnType": "number | null",
                     "typeParameters": [],
-                    "line": 163,
+                    "line": 179,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\nFirst enabled tab from `start` in the given direction, wrapping around.",
@@ -58608,7 +58614,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 175,
+                    "line": 191,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\nMoves real focus to the tab button so keyboard traversal stays alive.",
@@ -58637,7 +58643,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 101,
+                    "line": 117,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\n",
@@ -58659,7 +58665,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 116,
+                    "line": 132,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\n\nKeyboard navigation for the tablist, per WAI-ARIA APG: arrows move between\ntabs with automatic activation, Home and End jump to the ends. Disabled\ntabs are skipped and the traversal wraps around.\n",
@@ -58702,7 +58708,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 180,
+                    "line": 196,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\n",
@@ -58739,7 +58745,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 107,
+                    "line": 123,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "rawdescription": "\n",
@@ -58759,7 +58765,7 @@
             "description": "<p>Tab container component for organizing content into tabbed sections.</p>\n<b>Example :</b><div><pre class=\"line-numbers\"><code class=\"language-html\">&lt;app-tabs (tabChange)=&quot;onTabChange($event)&quot;&gt;\n  &lt;app-tab label=&quot;General&quot; icon=&quot;⚙️&quot;&gt;Content 1&lt;/app-tab&gt;\n  &lt;app-tab label=&quot;Profile&quot; icon=&quot;👤&quot;&gt;Content 2&lt;/app-tab&gt;\n  &lt;app-tab label=&quot;Disabled&quot; [disabled]=&quot;true&quot;&gt;Disabled content&lt;/app-tab&gt;\n&lt;/app-tabs&gt;</code></pre></div>",
             "rawdescription": "\n\nTab container component for organizing content into tabbed sections.\n\n```html\n<app-tabs (tabChange)=\"onTabChange($event)\">\n  <app-tab label=\"General\" icon=\"⚙️\">Content 1</app-tab>\n  <app-tab label=\"Profile\" icon=\"👤\">Content 2</app-tab>\n  <app-tab label=\"Disabled\" [disabled]=\"true\">Disabled content</app-tab>\n</app-tabs>\n```",
             "type": "component",
-            "sourceCode": "import { Component, signal, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild, HostBinding, input, output } from '@angular/core';\n\n\n/**\n * Individual tab content panel.\n * Must be used as child of `app-tabs`.\n */\n@Component({\n  selector: 'app-tab',\n  standalone: true,\n  template: `<ng-content></ng-content>`,\n  styleUrl: './tab.component.css'\n})\nexport class TabComponent {\n  /** Tab label displayed in the header */\n  readonly label = input('');\n  /** Emoji icon (optional) */\n  readonly icon = input<string>();\n  /** CSS icon class (e.g., FontAwesome) */\n  readonly iconClass = input<string>();\n  /** Whether this tab is disabled */\n  readonly disabled = input(false);\n\n  @HostBinding('class.active') active = false;\n}\n\n/**\n * Tab container component for organizing content into tabbed sections.\n * \n * @example\n * ```html\n * <app-tabs (tabChange)=\"onTabChange($event)\">\n *   <app-tab label=\"General\" icon=\"⚙️\">Content 1</app-tab>\n *   <app-tab label=\"Profile\" icon=\"👤\">Content 2</app-tab>\n *   <app-tab label=\"Disabled\" [disabled]=\"true\">Disabled content</app-tab>\n * </app-tabs>\n * ```\n */\n@Component({\n  selector: 'app-tabs',\n  standalone: true,\n  imports: [],\n  template: `\n    <div class=\"tabs-container\">\n      <div\n        class=\"tabs-header\"\n        #tabsHeader\n        role=\"tablist\"\n        [attr.aria-label]=\"ariaLabel()\"\n        [attr.aria-orientation]=\"orientation()\"\n        (keydown)=\"onHeaderKeydown($event)\"\n      >\n        @for (tab of tabs; track tab.label(); let i = $index) {\n          <button \n            type=\"button\"\n            class=\"tab-button\"\n            role=\"tab\"\n            [id]=\"'tab-' + i\"\n            [attr.aria-selected]=\"activeIndex() === i\"\n            [attr.aria-controls]=\"'tabpanel-' + i\"\n            [attr.tabindex]=\"activeIndex() === i ? 0 : -1\"\n            [class.active]=\"activeIndex() === i\"\n            [class.disabled]=\"tab.disabled()\"\n            (click)=\"!tab.disabled() && selectTab(i, $event)\"\n          >\n            @if (tab.iconClass()) {\n              <i [class]=\"tab.iconClass()\" class=\"tab-icon\" aria-hidden=\"true\"></i>\n            } @else if (tab.icon()) {\n              <span class=\"tab-icon\" aria-hidden=\"true\">{{ tab.icon() }}</span>\n            }\n            {{ tab.label() }}\n          </button>\n        }\n      </div>\n      <div \n        class=\"tabs-content\"\n        role=\"tabpanel\"\n        [id]=\"'tabpanel-' + activeIndex()\"\n        [attr.aria-labelledby]=\"'tab-' + activeIndex()\"\n      >\n        <ng-content></ng-content>\n      </div>\n    </div>\n  `,\n  styleUrl: './tabs.component.css'\n})\nexport class TabsComponent implements AfterContentInit {\n  @ContentChildren(TabComponent) tabComponents!: QueryList<TabComponent>;\n  readonly defaultIndex = input(0);\n  /** Accessible name of the tablist; translate it per application. */\n  readonly ariaLabel = input('Tabs');\n  /** Tablist orientation; decides which arrow pair traverses the tabs. */\n  readonly orientation = input<'horizontal' | 'vertical'>('horizontal');\n  readonly tabChange = output<number>();\n\n  activeIndex = signal(0);\n  tabs: TabComponent[] = [];\n\n  @ViewChild('tabsHeader', { static: false }) tabsHeader!: ElementRef<HTMLElement>;\n\n  ngAfterContentInit() {\n    this.tabs = this.tabComponents.toArray();\n    this.activeIndex.set(this.defaultIndex());\n    this.updateTabs();\n  }\n\n  private updateTabs() {\n    this.tabs.forEach((tab, i) => tab.active = i === this.activeIndex());\n  }\n\n  /**\n   * Keyboard navigation for the tablist, per WAI-ARIA APG: arrows move between\n   * tabs with automatic activation, Home and End jump to the ends. Disabled\n   * tabs are skipped and the traversal wraps around.\n   */\n  onHeaderKeydown(event: KeyboardEvent) {\n    if (this.tabs.length === 0) {\n      return;\n    }\n\n    // A shortcut belongs to the browser or the OS, never to the tablist:\n    // Alt+Arrow navigates history and Ctrl+Home reaches the top of the page.\n    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {\n      return;\n    }\n\n    // APG assigns Left/Right to a horizontal tablist and Up/Down to a vertical\n    // one. Claiming the other pair would cancel the page's own scrolling.\n    const vertical = this.orientation() === 'vertical';\n    const nextKey = vertical ? 'ArrowDown' : 'ArrowRight';\n    const previousKey = vertical ? 'ArrowUp' : 'ArrowLeft';\n\n    const current = this.activeIndex();\n    let target: number | null = null;\n\n    switch (event.key) {\n      case nextKey:\n        target = this.findEnabled(current + 1, 1);\n        break;\n      case previousKey:\n        target = this.findEnabled(current - 1, -1);\n        break;\n      case 'Home':\n        target = this.findEnabled(0, 1);\n        break;\n      case 'End':\n        target = this.findEnabled(this.tabs.length - 1, -1);\n        break;\n      default:\n        return;\n    }\n\n    if (target === null || target === current) {\n      return;\n    }\n\n    event.preventDefault();\n    this.selectTab(target);\n    this.focusTab(target);\n  }\n\n  /** First enabled tab from `start` in the given direction, wrapping around. */\n  private findEnabled(start: number, direction: 1 | -1): number | null {\n    const total = this.tabs.length;\n    for (let step = 0; step < total; step++) {\n      const index = (((start + step * direction) % total) + total) % total;\n      if (!this.tabs[index].disabled()) {\n        return index;\n      }\n    }\n    return null;\n  }\n\n  /** Moves real focus to the tab button so keyboard traversal stays alive. */\n  private focusTab(index: number) {\n    const button = this.tabsHeader?.nativeElement.querySelectorAll<HTMLElement>('[role=\"tab\"]')[index];\n    button?.focus();\n  }\n\n  selectTab(index: number, event?: MouseEvent) {\n    this.activeIndex.set(index);\n    this.updateTabs();\n    this.tabChange.emit(index);\n\n    // Auto-scroll horizontalmente (sin afectar scroll vertical del padre)\n    if (event?.target && this.tabsHeader) {\n      const button = event.target as HTMLElement;\n      const container = this.tabsHeader.nativeElement;\n\n      // Calcular posición para centrar el botón\n      const scrollLeft = button.offsetLeft - (container.clientWidth / 2) + (button.clientWidth / 2);\n\n      container.scrollTo({\n        left: Math.max(0, scrollLeft),\n        behavior: 'smooth'\n      });\n    }\n  }\n}\n",
+            "sourceCode": "import { Component, signal, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild, HostBinding, input, output } from '@angular/core';\n\n\n/**\n * Individual tab content panel.\n * Must be used as child of `app-tabs`.\n */\n@Component({\n  selector: 'app-tab',\n  standalone: true,\n  template: `<ng-content></ng-content>`,\n  styleUrl: './tab.component.css'\n})\nexport class TabComponent {\n  /** Tab label displayed in the header */\n  readonly label = input('');\n  /** Emoji icon (optional) */\n  readonly icon = input<string>();\n  /** CSS icon class (e.g., FontAwesome) */\n  readonly iconClass = input<string>();\n  /** Whether this tab is disabled */\n  readonly disabled = input(false);\n\n  /**\n   * Estado de activación gobernado por el contenedor `app-tabs`.\n   *\n   * ES UN SIGNAL, NO UNA PROPIEDAD PLANA, A PROPÓSITO: el panel se muestra u\n   * oculta con la clase `active` del host, y un host binding solo se\n   * re-evalúa cuando Angular tiene un motivo para repintar. Con Zone.js el\n   * motivo lo daba cualquier evento; en una aplicación zoneless la mutación\n   * imperativa de una propiedad plana no notifica a nadie y el panel queda\n   * muerto. Leer el signal dentro del host binding registra la dependencia y\n   * programa el repintado en ambos mundos.\n   */\n  readonly active = signal(false);\n\n  @HostBinding('class.active')\n  get isActive(): boolean {\n    return this.active();\n  }\n}\n\n/**\n * Tab container component for organizing content into tabbed sections.\n * \n * @example\n * ```html\n * <app-tabs (tabChange)=\"onTabChange($event)\">\n *   <app-tab label=\"General\" icon=\"⚙️\">Content 1</app-tab>\n *   <app-tab label=\"Profile\" icon=\"👤\">Content 2</app-tab>\n *   <app-tab label=\"Disabled\" [disabled]=\"true\">Disabled content</app-tab>\n * </app-tabs>\n * ```\n */\n@Component({\n  selector: 'app-tabs',\n  standalone: true,\n  imports: [],\n  template: `\n    <div class=\"tabs-container\">\n      <div\n        class=\"tabs-header\"\n        #tabsHeader\n        role=\"tablist\"\n        [attr.aria-label]=\"ariaLabel()\"\n        [attr.aria-orientation]=\"orientation()\"\n        (keydown)=\"onHeaderKeydown($event)\"\n      >\n        @for (tab of tabs; track tab.label(); let i = $index) {\n          <button \n            type=\"button\"\n            class=\"tab-button\"\n            role=\"tab\"\n            [id]=\"'tab-' + i\"\n            [attr.aria-selected]=\"activeIndex() === i\"\n            [attr.aria-controls]=\"'tabpanel-' + i\"\n            [attr.tabindex]=\"activeIndex() === i ? 0 : -1\"\n            [class.active]=\"activeIndex() === i\"\n            [class.disabled]=\"tab.disabled()\"\n            (click)=\"!tab.disabled() && selectTab(i, $event)\"\n          >\n            @if (tab.iconClass()) {\n              <i [class]=\"tab.iconClass()\" class=\"tab-icon\" aria-hidden=\"true\"></i>\n            } @else if (tab.icon()) {\n              <span class=\"tab-icon\" aria-hidden=\"true\">{{ tab.icon() }}</span>\n            }\n            {{ tab.label() }}\n          </button>\n        }\n      </div>\n      <div \n        class=\"tabs-content\"\n        role=\"tabpanel\"\n        [id]=\"'tabpanel-' + activeIndex()\"\n        [attr.aria-labelledby]=\"'tab-' + activeIndex()\"\n      >\n        <ng-content></ng-content>\n      </div>\n    </div>\n  `,\n  styleUrl: './tabs.component.css'\n})\nexport class TabsComponent implements AfterContentInit {\n  @ContentChildren(TabComponent) tabComponents!: QueryList<TabComponent>;\n  readonly defaultIndex = input(0);\n  /** Accessible name of the tablist; translate it per application. */\n  readonly ariaLabel = input('Tabs');\n  /** Tablist orientation; decides which arrow pair traverses the tabs. */\n  readonly orientation = input<'horizontal' | 'vertical'>('horizontal');\n  readonly tabChange = output<number>();\n\n  activeIndex = signal(0);\n  tabs: TabComponent[] = [];\n\n  @ViewChild('tabsHeader', { static: false }) tabsHeader!: ElementRef<HTMLElement>;\n\n  ngAfterContentInit() {\n    this.tabs = this.tabComponents.toArray();\n    this.activeIndex.set(this.defaultIndex());\n    this.updateTabs();\n  }\n\n  private updateTabs() {\n    this.tabs.forEach((tab, i) => tab.active.set(i === this.activeIndex()));\n  }\n\n  /**\n   * Keyboard navigation for the tablist, per WAI-ARIA APG: arrows move between\n   * tabs with automatic activation, Home and End jump to the ends. Disabled\n   * tabs are skipped and the traversal wraps around.\n   */\n  onHeaderKeydown(event: KeyboardEvent) {\n    if (this.tabs.length === 0) {\n      return;\n    }\n\n    // A shortcut belongs to the browser or the OS, never to the tablist:\n    // Alt+Arrow navigates history and Ctrl+Home reaches the top of the page.\n    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {\n      return;\n    }\n\n    // APG assigns Left/Right to a horizontal tablist and Up/Down to a vertical\n    // one. Claiming the other pair would cancel the page's own scrolling.\n    const vertical = this.orientation() === 'vertical';\n    const nextKey = vertical ? 'ArrowDown' : 'ArrowRight';\n    const previousKey = vertical ? 'ArrowUp' : 'ArrowLeft';\n\n    const current = this.activeIndex();\n    let target: number | null = null;\n\n    switch (event.key) {\n      case nextKey:\n        target = this.findEnabled(current + 1, 1);\n        break;\n      case previousKey:\n        target = this.findEnabled(current - 1, -1);\n        break;\n      case 'Home':\n        target = this.findEnabled(0, 1);\n        break;\n      case 'End':\n        target = this.findEnabled(this.tabs.length - 1, -1);\n        break;\n      default:\n        return;\n    }\n\n    if (target === null || target === current) {\n      return;\n    }\n\n    event.preventDefault();\n    this.selectTab(target);\n    this.focusTab(target);\n  }\n\n  /** First enabled tab from `start` in the given direction, wrapping around. */\n  private findEnabled(start: number, direction: 1 | -1): number | null {\n    const total = this.tabs.length;\n    for (let step = 0; step < total; step++) {\n      const index = (((start + step * direction) % total) + total) % total;\n      if (!this.tabs[index].disabled()) {\n        return index;\n      }\n    }\n    return null;\n  }\n\n  /** Moves real focus to the tab button so keyboard traversal stays alive. */\n  private focusTab(index: number) {\n    const button = this.tabsHeader?.nativeElement.querySelectorAll<HTMLElement>('[role=\"tab\"]')[index];\n    button?.focus();\n  }\n\n  selectTab(index: number, event?: MouseEvent) {\n    this.activeIndex.set(index);\n    this.updateTabs();\n    this.tabChange.emit(index);\n\n    // Auto-scroll horizontalmente (sin afectar scroll vertical del padre)\n    if (event?.target && this.tabsHeader) {\n      const button = event.target as HTMLElement;\n      const container = this.tabsHeader.nativeElement;\n\n      // Calcular posición para centrar el botón\n      const scrollLeft = button.offsetLeft - (container.clientWidth / 2) + (button.clientWidth / 2);\n\n      container.scrollTo({\n        left: Math.max(0, scrollLeft),\n        behavior: 'smooth'\n      });\n    }\n  }\n}\n",
             "styleUrl": "./tabs.component.css",
             "assetsDirs": [],
             "styleUrlsData": [
@@ -58771,16 +58777,16 @@
             "stylesData": "",
             "jsdoctags": [
                 {
-                    "pos": 824,
-                    "end": 1111,
+                    "pos": 1484,
+                    "end": 1771,
                     "kind": 328,
                     "id": 0,
                     "flags": 16777216,
                     "modifierFlagsCache": 0,
                     "transformFlags": 0,
                     "tagName": {
-                        "pos": 825,
-                        "end": 832,
+                        "pos": 1485,
+                        "end": 1492,
                         "kind": 80,
                         "id": 0,
                         "flags": 16777216,
@@ -70312,9 +70318,9 @@
                 "type": "component",
                 "linktype": "component",
                 "name": "TabComponent",
-                "coveragePercent": 71,
-                "coverageCount": "5/7",
-                "status": "good"
+                "coveragePercent": 85,
+                "coverageCount": "6/7",
+                "status": "very-good"
             },
             {
                 "filePath": "src/app/shared/ui/organisms/tabs/tabs.component.ts",

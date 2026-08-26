@@ -11,6 +11,30 @@ document_standard: "C:\\Users\\cotaha\\Documents\\Repos2\\ESTANDAR_DOCUMENTAL_AG
 continuity_document: "docs/CONTINUIDAD_AGENTES.md"
 ---
 
+## CONGELAMIENTO DE PUBLICACION — vigente desde 2026-08-26
+
+**Ningun agente puede ejecutar `git commit`, `git push`, `git reset` ni
+`git checkout` sobre este repositorio.** Deja los cambios en el arbol de
+trabajo y reportalos; quien confirma y publica es el Guardian del Repositorio,
+que revisa antes.
+
+POR QUE EXISTE ESTA TRABA, con nombres y fechas. El historial de este repositorio
+se reescribio para erradicar la credencial de administrador de un servidor Azure
+SQL que vivia en 48 commits ya publicados. **Dos veces** un agente confirmo y
+publico por su cuenta mientras la reescritura estaba en curso, y **las dos veces
+devolvio la credencial al remoto**: el recuento paso de 146 commits limpios a
+226 con la fuga viva. Tambien se confirmaron 110 026 lineas de artefactos `obj/`
+y `bin/`, y un bloque entero de codigo de produccion que nadie habia encargado.
+
+Ninguno de esos agentes actuo de mala fe. El problema no es el criterio, es la
+concurrencia: varios agentes escribiendo y publicando sobre la misma rama
+mientras se reescribe el historial debajo produce un estado que nadie eligio y
+que solo se detecta clonando el remoto y contando secretos a mano.
+
+QUE SI PUEDES HACER: leer, compilar, ejecutar pruebas, y escribir en el arbol de
+trabajo. Si tu tarea parece exigir un commit, no lo hagas: describe en tu informe
+que confirmarias y por que, y deja los ficheros donde estan.
+
 # Reglas obligatorias del repositorio Atomic UI
 
 > `ATOMIC_GOVERNANCE_REQUIRED`

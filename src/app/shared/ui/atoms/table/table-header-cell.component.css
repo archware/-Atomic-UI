@@ -19,6 +19,25 @@ th[app-table-header-cell].sortable-cell:hover {
   filter: brightness(var(--hover-brightness));
 }
 
+/*
+EL FOCO SE VE, Y ESO ES LA MITAD DEL ARREGLO.
+
+La celda ya se alcanza con el tabulador, pero un foco que no se dibuja deja a
+quien navega con teclado sin saber donde esta: puede ordenar, y no sabe que
+columna va a ordenar. Se usa `:focus-visible` y no `:focus` para no pintar el
+anillo cuando se llega con el raton, que es ruido.
+
+El `outline-offset` negativo mete el anillo DENTRO de la celda: en una cabecera
+pegada al borde de la tabla, un anillo por fuera queda recortado por el
+desbordamiento del contenedor y se pierde justo en la primera y la ultima
+columna, que son las que mas se ordenan.
+*/
+th[app-table-header-cell].sortable-cell:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: -2px;
+  filter: brightness(var(--hover-brightness));
+}
+
 .th-content {
   display: flex;
   align-items: center;
