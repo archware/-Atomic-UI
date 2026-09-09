@@ -213,7 +213,7 @@ export class LoginPageComponent {
     const request = new Observable<LoginResponse>(observer => {
         setTimeout(() => {
           observer.next({
-            token: 'mock-jwt-token-123456',
+            token: 'DEMO_TOKEN_EJEMPLO',
             user: {
               id: '1',
               name: 'Usuario de demostración',
