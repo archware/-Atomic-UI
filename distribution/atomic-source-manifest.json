@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "f244717a4efd21c5e5e6b99b60b4040fe5ba15eed8efb1a6abe6c5c52283114d",
+  "sourceTreeSha256": "cd3e03cd088b5cf4c2a5fd64ce768d83f7120115dba414bb5bec926bfbbf4048",
   "fileCount": 222,
   "files": [
     {
@@ -570,8 +570,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/modal/modal-container.component.css",
-      "bytes": 3197,
-      "sha256": "46b6d0c3f157951867598dca81dfc5af6fa68fbe8042937febc5005beac65fc3"
+      "bytes": 3187,
+      "sha256": "d3eb3d479dd6fc848a3d33aca765136088f34fd3778d36b84bb1b6fae8ebfd2b"
     },
     {
       "path": "src/app/shared/ui/molecules/modal/modal-container.component.ts",
@@ -580,8 +580,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/modal/modal.component.css",
-      "bytes": 3052,
-      "sha256": "5973d94b07f048aab34632ac8b86d88328757186bb4e8d99273d5966d06698e7"
+      "bytes": 3042,
+      "sha256": "c7e97e5bd0c05f73d46ee373143613e9c171e5d13908f2c7f8951b0cd5c483b8"
     },
     {
       "path": "src/app/shared/ui/molecules/modal/modal.component.ts",
@@ -1085,8 +1085,8 @@
     },
     {
       "path": "src/styles/themes/_forms.css",
-      "bytes": 10343,
-      "sha256": "7f4cf9e6aa4033ed8b6d61db8c080d1c4b2f54f86e9d188670603b5296ca08ab"
+      "bytes": 10491,
+      "sha256": "b50b720f433a87988fb2abf2761459daddfa07d27e79d393cc251971a8365b64"
     },
     {
       "path": "src/styles/themes/_tokens-brand.css",
