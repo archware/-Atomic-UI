@@ -233,3 +233,7 @@ html.dark .form-select {
   flex-direction: column;
   gap: var(--space-4); /* 16px entre cada checkbox */
 }
+
+/* Contenedor estandar de formulario inyectado canónicamente */
+.formulario { display: flex; flex-direction: column; gap: var(--space-6, 24px); }
+
