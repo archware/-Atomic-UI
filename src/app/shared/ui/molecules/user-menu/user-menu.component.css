@@ -148,3 +148,38 @@
  * --surface-background, --border-color, --shadow-lg, --surface-hover
  * ya tienen valores apropiados para temas oscuros.
  */
+
+
+.user-menu__trigger--extended {
+  width: auto;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+  gap: var(--space-3);
+  text-align: left;
+}
+.user-menu__trigger--extended:hover {
+  background: var(--surface-hover);
+  transform: none;
+}
+.user-menu__trigger-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.user-menu__trigger-name {
+  font-size: var(--text-sm);
+  font-weight: bold;
+  color: var(--text-color);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.user-menu__trigger-role {
+  font-size: var(--text-xs);
+  color: var(--text-color-secondary);
+  line-height: 1.2;
+}
+.user-menu__trigger-chevron {
+  font-size: var(--icon-sm);
+  color: var(--text-color-secondary);
+  margin-left: var(--space-1);
+}

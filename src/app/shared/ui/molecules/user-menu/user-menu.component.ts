@@ -1,4 +1,4 @@
-import { Component, signal, HostListener, input, output } from '@angular/core';
+﻿import { Component, signal, HostListener, input, output } from '@angular/core';
 
 
 export interface UserMenuAction {
@@ -17,16 +17,24 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
   template: `
     <div class="user-menu" [class.open]="isOpen()">
       <!-- Avatar Button -->
-      <button type="button" class="user-menu__trigger" (click)="toggle()"
-        [attr.aria-expanded]="isOpen()" aria-haspopup="menu" [attr.title]="'Menú de usuario'">
-        <app-avatar [initials]="initials()" [name]="userName()" size="md"></app-avatar>
+      <button type="button" class="user-menu__trigger" [class.user-menu__trigger--extended]="showUserInfo()" (click)="toggle()"
+        [attr.aria-expanded]="isOpen()" aria-haspopup="menu" title="Menú de usuario">
+        <app-avatar [initials]="initials()" [name]="userName()" size="md" [color]="avatarColor()"></app-avatar>
+        @if (showUserInfo()) {
+          <div class="user-menu__trigger-info">
+            <span class="user-menu__trigger-name">{{ userName() }}</span>
+            @if (userRole()) {
+              <span class="user-menu__trigger-role">{{ userRole() }}</span>
+            }
+          </div>
+          <i class="fa-solid fa-chevron-down user-menu__trigger-chevron"></i>
+        }
       </button>
 
       <!-- Dropdown Menu -->
       <div class="user-menu__dropdown" role="menu">
-        <!-- User Info Header -->
         <div class="user-menu__header">
-          <app-avatar [initials]="initials()" [name]="userName()" size="lg"></app-avatar>
+          <app-avatar [initials]="initials()" [name]="userName()" size="lg" [color]="avatarColor()"></app-avatar>
           <div class="user-menu__info">
             <span class="user-menu__name">{{ userName() }}</span>
             @if (userRole()) {
@@ -37,11 +45,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
             }
           </div>
         </div>
-
-        <!-- Divider -->
         <div class="user-menu__divider"></div>
-
-        <!-- Menu Items -->
         @for (action of menuActions(); track action.id) {
           <button type="button"
             class="user-menu__item"
@@ -54,7 +58,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
         }
       </div>
     </div>
-  `,
+`,
   styleUrl: './user-menu.component.css'
 })
 export class UserMenuComponent {
@@ -70,12 +74,18 @@ export class UserMenuComponent {
   /** User role displayed as session metadata */
   readonly userRole = input('');
 
+  /** Color of the avatar */
+  readonly avatarColor = input<string>();
+
+  /** Show full user info (name, role) in the trigger */
+  readonly showUserInfo = input(false);
+
   /** Menu actions */
   readonly menuActions = input<UserMenuAction[]>([
     { id: 'profile', label: 'Mi Perfil', icon: 'fa-solid fa-user' },
-    { id: 'settings', label: 'Configuración', icon: 'fa-solid fa-gear' },
-    { id: 'password', label: 'Cambiar Contraseña', icon: 'fa-solid fa-key' },
-    { id: 'logout', label: 'Cerrar Sesión', icon: 'fa-solid fa-arrow-right-from-bracket', danger: true }
+    { id: 'settings', label: 'ConfiguraciÃ³n', icon: 'fa-solid fa-gear' },
+    { id: 'password', label: 'Cambiar ContraseÃ±a', icon: 'fa-solid fa-key' },
+    { id: 'logout', label: 'Cerrar SesiÃ³n', icon: 'fa-solid fa-arrow-right-from-bracket', danger: true }
 ]);
 
   /** Action selected event */
@@ -106,3 +116,4 @@ export class UserMenuComponent {
     }
   }
 }
+

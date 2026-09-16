@@ -1,13 +1,14 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+﻿import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 import { UserMenuComponent, UserMenuAction } from '../../molecules/user-menu/user-menu.component';
 import { LanguageSwitcherComponent } from '../../atoms/language-switcher/language-switcher.component';
+import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 @Component({
   selector: 'app-topbar',
   standalone: true,
-  imports: [IconButtonComponent, UserMenuComponent, LanguageSwitcherComponent],
+  imports: [IconButtonComponent, UserMenuComponent, LanguageSwitcherComponent, VariablesCssDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.css',
@@ -15,6 +16,14 @@ import { LanguageSwitcherComponent } from '../../atoms/language-switcher/languag
 export class TopbarComponent {
   /** Page title displayed in the topbar */
   readonly title = input('');
+  readonly subtitle = input('');
+  readonly apiStatus = input('');
+  readonly apiStatusColor = input<'success' | 'warning' | 'danger'>('success');
+  readonly showHomeButton = input(false);
+  readonly showUserInfo = input(false);
+
+  /** Background color for the topbar */
+  readonly bgColor = input<string>();
 
   /** User initials for avatar */
   readonly userInitials = input('U');
@@ -27,6 +36,9 @@ export class TopbarComponent {
 
   /** User role displayed in the session menu */
   readonly userRole = input('');
+
+  /** User avatar color */
+  readonly avatarColor = input<string>();
 
   /** Number of unread notifications */
   readonly notificationCount = input(0);
@@ -48,6 +60,7 @@ export class TopbarComponent {
 
   /** Event emitted when any user menu action is clicked */
   readonly userAction = output<UserMenuAction>();
+  readonly homeClick = output<void>();
 
   onUserAction(action: UserMenuAction): void {
     this.userAction.emit(action);
@@ -57,3 +70,6 @@ export class TopbarComponent {
     this.logout.emit();
   }
 }
+
+
+

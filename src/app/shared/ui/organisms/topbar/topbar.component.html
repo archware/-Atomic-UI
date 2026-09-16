@@ -1,43 +1,51 @@
-<div class="topbar-container">
+<div class="topbar-container" [appVariablesCss]="{'--surface-background': bgColor() || null}">
   <div class="topbar-left">
-    <!-- Sidebar Toggle Button (usando IconButton) -->
     <app-icon-button tooltip="Toggle Sidebar" (clicked)="toggleSidebar.emit()">
       <i class="fa-solid fa-bars topbar-icon" aria-hidden="true"></i>
     </app-icon-button>
 
-    <!-- Page Title -->
-    <h1 class="page-title">{{ title() }}</h1>
-  </div>
-
-  <div class="topbar-right">
-    <!-- 0. Language Switcher -->
-    @if (showLanguageSwitcher()) {
-      <app-language-switcher></app-language-switcher>
-    }
-
-    <!-- 1. Theme Switcher (slot) -->
-    <ng-content></ng-content>
-
-    <!-- 2. Notifications (usando IconButton con badge) -->
-    @if (showNotifications()) {
-      <app-icon-button
-        tooltip="Notificaciones"
-        [badge]="notificationCount()"
-        (clicked)="notificationClick.emit()"
-      >
-        <i class="fa-regular fa-bell topbar-icon" aria-hidden="true"></i>
+    @if (showHomeButton()) {
+      <app-icon-button tooltip="Inicio" (clicked)="homeClick.emit()">
+        <i class="fa-solid fa-house topbar-icon" aria-hidden="true"></i>
       </app-icon-button>
     }
 
-    <!-- 3. User Menu (con dropdown) -->
+    <div class="topbar-title-area">
+      <h1 class="page-title">{{ title() }}</h1>
+      @if (subtitle() || apiStatus()) {
+        <div class="topbar-subtitle-row">
+          @if (subtitle()) {
+            <span class="page-subtitle">{{ subtitle() }}</span>
+          }
+          @if (apiStatus()) {
+            <span class="api-status-badge" [class]="'badge-' + apiStatusColor()">
+              <i class="fa-solid fa-circle status-dot"></i> {{ apiStatus() }}
+            </span>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="topbar-right">
+    @if (showLanguageSwitcher()) {
+      <app-language-switcher></app-language-switcher>
+    }
+    <ng-content></ng-content>
+    @if (showNotifications()) {
+      <app-icon-button tooltip="Notificaciones" [badge]="notificationCount()" (clicked)="notificationClick.emit()">
+        <i class="fa-regular fa-bell topbar-icon" aria-hidden="true"></i>
+      </app-icon-button>
+    }
     <app-user-menu
       [initials]="userInitials()"
       [userName]="userName()"
       [userEmail]="userEmail()"
       [userRole]="userRole()"
+      [avatarColor]="avatarColor()"
+      [showUserInfo]="showUserInfo()"
       (actionSelected)="onUserAction($event)"
       (logout)="onLogout()"
-    >
-    </app-user-menu>
+    ></app-user-menu>
   </div>
 </div>
