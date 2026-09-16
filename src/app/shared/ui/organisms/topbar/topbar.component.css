@@ -33,7 +33,7 @@
 }
 
 .topbar-icon {
-  font-size: var(--topbar-action-icon-size);
+  font-size: var(--text-xl, 1.25rem);
 }
 
 /* Sidebar Toggle Button */

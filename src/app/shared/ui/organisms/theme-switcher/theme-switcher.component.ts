@@ -11,7 +11,7 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
   template: `
     <div class="theme-switcher">
       <!-- Botón de alternancia simple Light/Dark -->
-      <app-icon-button
+      <app-icon-button variant="ghost"
         (clicked)="toggleTheme($event)"
         [tooltip]="themeService.isDarkMode() ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
       >

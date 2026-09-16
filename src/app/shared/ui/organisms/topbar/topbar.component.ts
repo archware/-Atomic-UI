@@ -19,6 +19,7 @@ export class TopbarComponent {
   readonly subtitle = input('');
   readonly apiStatus = input('');
   readonly apiStatusColor = input<'success' | 'warning' | 'danger'>('success');
+  readonly showSidebarToggle = input(true);
   readonly showHomeButton = input(false);
   readonly showUserInfo = input(false);
 

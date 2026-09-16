@@ -1,11 +1,13 @@
 <div class="topbar-container" [appVariablesCss]="{'--surface-background': bgColor() || null}">
   <div class="topbar-left">
-    <app-icon-button tooltip="Toggle Sidebar" (clicked)="toggleSidebar.emit()">
-      <i class="fa-solid fa-bars topbar-icon" aria-hidden="true"></i>
-    </app-icon-button>
+    @if (showSidebarToggle()) {
+      <app-icon-button variant="ghost" tooltip="Menú" (clicked)="toggleSidebar.emit()">
+        <i class="fa-solid fa-bars topbar-icon" aria-hidden="true"></i>
+      </app-icon-button>
+    }
 
     @if (showHomeButton()) {
-      <app-icon-button tooltip="Inicio" (clicked)="homeClick.emit()">
+      <app-icon-button variant="ghost" tooltip="Inicio" (clicked)="homeClick.emit()">
         <i class="fa-solid fa-house topbar-icon" aria-hidden="true"></i>
       </app-icon-button>
     }
@@ -33,7 +35,7 @@
     }
     <ng-content></ng-content>
     @if (showNotifications()) {
-      <app-icon-button tooltip="Notificaciones" [badge]="notificationCount()" (clicked)="notificationClick.emit()">
+      <app-icon-button variant="ghost" tooltip="Notificaciones" [badge]="notificationCount()" (clicked)="notificationClick.emit()">
         <i class="fa-regular fa-bell topbar-icon" aria-hidden="true"></i>
       </app-icon-button>
     }
