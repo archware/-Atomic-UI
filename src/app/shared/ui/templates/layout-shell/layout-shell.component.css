@@ -1,50 +1,57 @@
+
 /* CSS Grid Layout */
 .layout-shell {
   display: grid;
-  height: 100vh; /* Fallback para navegadores sin soporte dvh */
-  height: 100dvh; /* Dynamic viewport height: corrige iOS Safari (barra inferior del navegador) */
-  /* Use CSS variable for sidebar width (default 260px) */
+  height: 100vh;
+  height: 100dvh;
   --sidebar-width: 260px;
-  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-columns: 1fr; /* No column for sidebar, it floats */
   grid-template-rows: auto minmax(0, 1fr) auto;
   grid-template-areas:
-    'sidebar header'
-    'sidebar content'
-    'sidebar footer';
+    'header'
+    'content'
+    'footer';
   background-color: var(--surface-section);
   color: var(--text-color);
 }
 
-/* Sidebar Area */
+/* Sidebar Area - Floats globally */
 .layout-sidebar {
-  grid-area: sidebar;
+  position: fixed;
+  top: 64px; /* Below header */
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
   background-color: var(--sidebar-bg);
   border-right: 1px solid var(--border-color);
   overflow: hidden;
-  z-index: 10;
-  width: var(--sidebar-width);
-  min-width: var(--sidebar-width);
-  transition:
-    width 0.3s ease,
-    min-width 0.3s ease,
-    transform 0.3s ease,
-    opacity 0.3s ease;
+  z-index: 50;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-xl);
 }
 
-/* Sidebar hidden state - desktop only */
-@media (min-width: 48rem) {
-  .layout-shell.sidebar-hidden {
-    grid-template-columns: 0 1fr;
-  }
+.layout-sidebar.active {
+  transform: translateX(0);
+}
 
-  .layout-shell.sidebar-hidden .layout-sidebar {
-    width: 0;
-    min-width: 0;
-    overflow: hidden;
-    border-right: none;
-    opacity: 0;
-    pointer-events: none;
-  }
+/* Overlay backdrop */
+.layout-overlay {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--overlay-backdrop);
+  z-index: 40;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.layout-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* Header Area */
@@ -52,7 +59,7 @@
   grid-area: header;
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 60; /* Above sidebar */
   padding: 0;
   display: flex;
   align-items: center;
@@ -92,69 +99,12 @@
   }
 }
 
-/*
- * Dark mode se maneja automáticamente via tokens semánticos.
- * --surface-section, --surface-background, --border-color, etc.
- * ya tienen valores apropiados para temas oscuros.
- */
-
-/* Responsive - Mobile/Tablet */
 @media (max-width: 48rem) {
-  .layout-shell {
-    grid-template-columns: 1fr;
-    grid-template-rows: 64px minmax(0, 1fr) auto;
-    grid-template-areas:
-      'header'
-      'content'
-      'footer';
-  }
-
-  .layout-sidebar {
-    position: fixed;
-    top: 64px;
-    left: 0;
-    bottom: 0;
-    width: 260px;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    box-shadow: var(--shadow-xl);
-    z-index: 50;
-  }
-
-  /* Cuando se activa el sidebar en móvil (clase toggleada) */
-  .layout-sidebar.active {
-    transform: translateX(0);
-  }
-
-  /* Overlay backdrop for mobile */
-  .layout-overlay {
-    position: fixed;
-    inset: 0;
-    background-color: var(--overlay-backdrop);
-    z-index: 40;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  .layout-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
   .content-wrapper {
     padding: var(--space-3);
   }
 }
 
-/*
-  Enlace de salto: fuera de la vista hasta que recibe el foco.
-
-  No se usa `display: none` ni `visibility: hidden` a proposito: las dos lo
-  sacarian tambien del orden de tabulacion, que es justo lo contrario de lo que
-  este enlace necesita. La tecnica es reducirlo a un pixel recortado, que lo
-  mantiene enfocable y anunciable.
-*/
 .layout-skip-link {
   position: absolute;
   inline-size: 1px;
