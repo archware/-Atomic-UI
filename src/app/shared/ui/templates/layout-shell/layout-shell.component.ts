@@ -36,12 +36,12 @@ export class LayoutShellComponent implements OnInit, OnChanges {
 
   /** Controls the canonical footer row outside the scroll viewport. */
   readonly footerVisible = input(true);
-  readonly footerCompanyName = input('Company');
+  readonly footerCompanyName = input('Suite Barracuda');
   readonly footerYear = input(new Date().getFullYear());
   readonly footerCopyrightText = input('Todos los derechos reservados.');
   readonly footerShowVersion = input(true);
   readonly footerVersion = input('v1.0.0');
-  readonly footerEnvironment = input('BETA');
+  readonly footerEnvironment = input('PROD');
 
   /** Texto del enlace de salto al contenido. */
   readonly skipLinkLabel = input('Saltar al contenido principal');

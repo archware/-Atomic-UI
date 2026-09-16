@@ -154,19 +154,19 @@ export class FooterComponent {
 
   readonly variant = input<FooterVariant>('inline');
   readonly accessibleLabel = input('Pie de página');
-  readonly companyName = input('Hospital Regional Ayacucho');
+  readonly companyName = input('Suite Barracuda');
   readonly year = input(new Date().getFullYear());
   readonly copyrightText = input('Todos los derechos reservados.');
   readonly copyrightSeparator = input(' - ');
-  readonly supportText = input('Soporte: Sistemas de Información');
+  readonly supportText = input('');
   readonly supportSeparator = input('|');
   readonly description = input('');
   readonly legalTitle = input('Enlaces legales');
   readonly socialTitle = input('Redes sociales');
   readonly showVersion = input(true);
   readonly showBuildDate = input(false);
-  readonly version = input('Beta');
-  readonly environment = input('BETA');
+  readonly version = input('v1.0.0');
+  readonly environment = input('PROD');
   readonly buildDate = input('');
   readonly socialLinks = input<SocialLink[]>([]);
   readonly legalLinks = input<LegalLink[]>([]);
