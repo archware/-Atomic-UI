@@ -93,11 +93,35 @@
   transition: color 200ms ease, transform 200ms ease;
 }
 
-.icon-btn:hover ::ng-deep i.icon,
-.icon-btn:hover ::ng-deep i.configuration-icon,
-.icon-btn:hover ::ng-deep i.fa-solid,
-.icon-btn:hover ::ng-deep i.fa-regular,
-.icon-btn:hover ::ng-deep i.fa-brands {
+
+/* Rotate Animation (Default) */
+.icon-anim-rotate:hover ::ng-deep i.icon,
+.icon-anim-rotate:hover ::ng-deep i.configuration-icon,
+.icon-anim-rotate:hover ::ng-deep i.fa-solid,
+.icon-anim-rotate:hover ::ng-deep i.fa-regular,
+.icon-anim-rotate:hover ::ng-deep i.fa-brands {
   transform: rotate(45deg) scale(1.15);
   color: var(--primary-color);
 }
+
+/* Grow Animation */
+.icon-anim-grow:hover ::ng-deep i.icon,
+.icon-anim-grow:hover ::ng-deep i.configuration-icon,
+.icon-anim-grow:hover ::ng-deep i.fa-solid,
+.icon-anim-grow:hover ::ng-deep i.fa-regular,
+.icon-anim-grow:hover ::ng-deep i.fa-brands {
+  transform: scale(1.15);
+  color: var(--primary-color);
+}
+
+/* None Animation */
+.icon-anim-none:hover ::ng-deep i.icon,
+.icon-anim-none:hover ::ng-deep i.configuration-icon,
+.icon-anim-none:hover ::ng-deep i.fa-solid,
+.icon-anim-none:hover ::ng-deep i.fa-regular,
+.icon-anim-none:hover ::ng-deep i.fa-brands {
+  transform: none;
+  /* Still allow color change for interactive feedback */
+  color: var(--primary-color);
+}
+

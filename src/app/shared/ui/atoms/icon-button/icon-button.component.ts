@@ -1,6 +1,7 @@
 import { Component, input, output } from '@angular/core';
 
 export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
+export type IconButtonAnimation = 'rotate' | 'grow' | 'none';
 
 @Component({
   selector: 'app-icon-button',
@@ -9,6 +10,9 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
   template: `
     <button 
       class="icon-btn"
+      [class.icon-anim-rotate]="animation() === 'rotate'"
+      [class.icon-anim-grow]="animation() === 'grow'"
+      [class.icon-anim-none]="animation() === 'none'"
       [class.icon-btn--ghost]="variant() === 'ghost'"
       [class.icon-btn--avatar]="variant() === 'avatar'"
       [attr.title]="tooltip()"
@@ -26,6 +30,9 @@ export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
 export class IconButtonComponent {
   /** Button variant */
   readonly variant = input<IconButtonVariant>('default');
+
+  /** Hover animation for the icon */
+  readonly animation = input<IconButtonAnimation>('rotate');
 
   /** Tooltip text */
   readonly tooltip = input('');
