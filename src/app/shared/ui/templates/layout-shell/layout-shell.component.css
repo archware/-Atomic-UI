@@ -5,68 +5,37 @@
   height: 100vh;
   height: 100dvh;
   --sidebar-width: 260px;
-  grid-template-columns: 1fr; /* No column for sidebar, it floats */
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
   grid-template-rows: auto minmax(0, 1fr) auto;
   grid-template-areas:
-    'header'
-    'content'
-    'footer';
+    'sidebar header'
+    'sidebar content'
+    'sidebar footer';
   background-color: var(--surface-section);
   color: var(--text-color);
 }
 
-/* Sidebar Area - Floats globally */
 .layout-sidebar {
-  position: fixed;
-  top: 64px; /* Below header */
-  left: 0;
-  bottom: 0;
-  width: var(--sidebar-width);
+  grid-area: sidebar;
   background-color: var(--sidebar-bg);
   border-right: 1px solid var(--border-color);
   overflow: hidden;
-  z-index: 50;
-  transform: translateX(-100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-xl);
+  z-index: 30;
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
 }
 
-.layout-sidebar.active {
-  transform: translateX(0);
-}
-
-/* Overlay backdrop */
-.layout-overlay {
-  position: fixed;
-  top: 64px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--overlay-backdrop);
-  z-index: 40;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.layout-overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Header Area */
 .layout-header {
   grid-area: header;
   position: sticky;
   top: 0;
-  z-index: 60; /* Above sidebar */
+  z-index: 20;
   padding: 0;
   display: flex;
   align-items: center;
   height: 64px;
 }
 
-/* Content Area */
 .layout-content {
   grid-area: content;
   overflow: hidden;
@@ -80,7 +49,6 @@
   min-width: 0;
 }
 
-/* Ensure ScrollOverlay takes full space */
 .layout-content ::ng-deep app-scroll-overlay {
   flex: 1;
   height: 100%;
@@ -93,9 +61,56 @@
   box-sizing: border-box;
 }
 
+.layout-overlay {
+  display: none;
+}
+
+/* RESPONSIVE MOBILE/TABLET (matches max-width: 64rem of Prestamos) */
 @media (max-width: 64rem) {
+  .layout-shell {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 64px minmax(0, 1fr) auto;
+    grid-template-areas:
+      'header'
+      'content'
+      'footer';
+  }
+
   .content-wrapper {
     padding: var(--space-4);
+  }
+
+  .layout-sidebar {
+    position: fixed;
+    inset-block: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    width: min(var(--sidebar-width), calc(100vw - 3rem));
+    transform: translateX(-102%);
+    transition: transform 180ms ease;
+    z-index: 50;
+  }
+
+  /* When sidebar is visible on mobile */
+  .layout-shell.sidebar-visible .layout-sidebar {
+    transform: translateX(0);
+  }
+
+  .layout-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background-color: var(--overlay-backdrop);
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+
+  .layout-shell.sidebar-visible .layout-overlay {
+    opacity: 1;
+    pointer-events: auto;
   }
 }
 
@@ -120,19 +135,18 @@
 .layout-skip-link:focus-visible,
 .layout-skip-link:focus {
   position: fixed;
-  inset-block-start: var(--space-2, 0.5rem);
-  inset-inline-start: var(--space-2, 0.5rem);
+  inset-block-start: var(--space-2);
+  inset-inline-start: var(--space-2);
   z-index: 1100;
   inline-size: auto;
   block-size: auto;
   margin: 0;
-  padding: var(--space-2, 0.5rem) var(--space-3, 0.75rem);
+  padding: var(--space-2) var(--space-3);
   overflow: visible;
   clip-path: none;
-  border-radius: var(--radius-md, 0.5rem);
-  background-color: var(--surface-card, #fff);
-  color: var(--text-color, #111);
-  box-shadow: var(--shadow-lg, 0 10px 25px rgb(0 0 0 / 25%));
-  outline: 2px solid var(--brand-primary-500, #5f295c);
-  outline-offset: 2px;
+  border-radius: var(--radius-md);
+  background-color: var(--surface-card);
+  color: var(--text-color);
+  box-shadow: var(--shadow-lg);
+  outline: 2px solid var(--brand-primary-500);
 }

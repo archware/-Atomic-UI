@@ -101,7 +101,7 @@ export class LayoutShellComponent implements OnInit, OnChanges {
     velo—.
   */
   protected get sidebarInert(): '' | null {
-    return this.sidebarVisible() ? null : '';
+    return this.compactViewport() && !this.sidebarVisible() ? '' : null;
   }
 
   protected get contentInert(): '' | null {
