@@ -1,0 +1,61 @@
+﻿<!--
+  Chasis C â€” PÃ¡gina de detalle con pestaÃ±as.
+
+  ComposiciÃ³n:
+    PageHeader (con botÃ³n Volver) â†’ Resumen (opcional) â†’ Tabs â†’ Contenido
+-->
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     CABECERA DE PÃGINA CON ACCIÃ“N DE RETORNO
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<app-page-header
+  [title]="titulo()"
+  [subtitle]="subtitulo()"
+  [eyebrow]="eyebrow()"
+>
+  @if (mostrarBotonVolver()) {
+    <div page-header-actions>
+      <app-button
+        variant="outline"
+        [icon]="iconoVolver()"
+        (buttonClick)="alVolver.emit()"
+      >
+        {{ etiquetaVolver() }}
+      </app-button>
+    </div>
+  }
+</app-page-header>
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     RESUMEN SUPERIOR (KPIs, mÃ©tricas clave)
+     Proyectado opcionalmente por el consumidor.
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+@for (tpl of resumen(); track $index) {
+  <section class="pagina-detalle__resumen">
+    <ng-container [ngTemplateOutlet]="tpl" />
+  </section>
+}
+
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     PESTAÃ‘AS
+     Cada pestaÃ±a se genera desde la configuraciÃ³n PestanaDetalle[].
+     El contenido se proyecta usando <ng-template #pestana>.
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<app-tabs [defaultIndex]="defaultTabIndex()" (tabChange)="alSeleccionarPestana($event)">
+  @for (p of pestanas(); track p.clave) {
+    <app-tab
+      [label]="p.titulo"
+      [iconClass]="p.icono ?? ''"
+      [disabled]="p.deshabilitada ?? false"
+    >
+      <!-- El contenido de la pestaÃ±a se proyecta desde el consumidor -->
+      @for (tpl of contenidoPestana(); track $index) {
+        <ng-container
+          [ngTemplateOutlet]="tpl"
+          [ngTemplateOutletContext]="contextoPestana(p.clave)"
+        />
+      }
+    </app-tab>
+  }
+</app-tabs>
+
