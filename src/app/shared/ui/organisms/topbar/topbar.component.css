@@ -1,4 +1,4 @@
-
+﻿
 :host {
   display: block;
   width: 100%;
@@ -21,7 +21,7 @@
 .topbar-left {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-2);
   flex-shrink: 1;
   min-width: 0;
 }
@@ -134,3 +134,9 @@
     display: block;
   }
 }
+
+.sidebar-toggle-wrapper ::ng-deep button, .sidebar-toggle-wrapper ::ng-deep app-icon-button { transform: none !important; }
+
+
+.home-icon { color: var(--primary-color); }
+

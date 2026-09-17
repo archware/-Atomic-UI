@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+﻿import { Routes } from '@angular/router';
 import { guestGuard } from './shared/ui/guards/auth.guard';
 
 /**
@@ -64,11 +64,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('../blueprints/crud-table/crud-table.component').then(m => m.CrudTableComponent),
     // canActivate: [authGuard], // Disabled for UI Demo
-  },
-  {
-    path: 'crud-base',
-    loadComponent: () =>
-      import('../blueprints/crud-base/crud-base.component').then(m => m.CrudBaseComponent),
   },
 
   // ===================================================

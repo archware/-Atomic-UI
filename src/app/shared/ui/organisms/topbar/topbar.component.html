@@ -1,8 +1,8 @@
-<div class="topbar-container" [appVariablesCss]="{'--surface-background': bgColor() || null}">
+﻿<div class="topbar-container" [appVariablesCss]="{'--surface-background': bgColor() || null}">
   <div class="topbar-left">
     <div class="sidebar-toggle-wrapper">
       @if (showSidebarToggle()) {
-        <app-icon-button variant="ghost" animation="none" tooltip="Menú" (clicked)="toggleSidebar.emit()">
+        <app-icon-button variant="ghost" animation="none" tooltip="MenÃº" (clicked)="toggleSidebar.emit()">
           <i class="fa-solid fa-bars topbar-icon" aria-hidden="true"></i>
         </app-icon-button>
       }
@@ -10,7 +10,7 @@
 
     @if (showHomeButton()) {
       <app-icon-button variant="ghost" animation="grow" tooltip="Inicio" (clicked)="homeClick.emit()">
-        <i class="fa-solid fa-house topbar-icon" style="color: var(--primary-color);" aria-hidden="true"></i>
+        <i class="fa-solid fa-house topbar-icon" class="home-icon" aria-hidden="true"></i>
       </app-icon-button>
     }
 
