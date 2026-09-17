@@ -1,4 +1,4 @@
-﻿import {
+import {
   ChangeDetectionStrategy,
   Component,
   contentChild,
@@ -20,6 +20,7 @@ import { Input } from '../../atoms/form-input/input';
 import { Select, type SelectOption } from '../../atoms/form-select/select';
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 import { NgTemplateOutlet } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Alert } from '../../molecules/alert/alert.component';
 import {
   type AccionesCrud,
@@ -32,19 +33,19 @@ import {
 } from '../modelos-crud';
 
 /**
- * Chasis A â€” PÃ¡gina CRUD canÃ³nica de entidad Ãºnica.
+ * Chasis A — Página CRUD canónica de entidad única.
  *
  * Compone los organismos Atomic (PageHeader, QueryToolbar, DataTable,
- * CrudDialog) en el patrÃ³n estÃ¡ndar definido por ADR-007:
- *   Vista principal = cabecera + barra de bÃºsqueda + grilla + acciones
- *   Operaciones CRUD = diÃ¡logo modal con modos crear/editar/ver
+ * CrudDialog) en el patrón estándar definido por ADR-007:
+ *   Vista principal = cabecera + barra de búsqueda + grilla + acciones
+ *   Operaciones CRUD = diálogo modal con modos crear/editar/ver
  *
  * El agente consumidor NO escribe HTML ni CSS. Solo:
  *   1. Declara columnas (DataTableColumn[])
  *   2. Proyecta el formulario con `<ng-template #formularioCrud>`
- *   3. Conecta las seÃ±ales de datos y los eventos
+ *   3. Conecta las señales de datos y los eventos
  *
- * @ejemplo Uso mÃ­nimo por un agente:
+ * @ejemplo Uso mínimo por un agente:
  * ```html
  * <app-pagina-crud
  *   titulo="Clientes"
@@ -64,7 +65,7 @@ import {
  *   (alCerrarDialogo)="facade.cerrarDialogo()"
  * >
  *   <ng-template #formularioCrud let-ctx>
- *     <!-- Campos del formulario segÃºn ctx.modo -->
+ *     <!-- Campos del formulario según ctx.modo -->
  *   </ng-template>
  * </app-pagina-crud>
  * ```
@@ -79,7 +80,7 @@ export interface FiltroBusqueda {
 @Component({
   selector: 'app-pagina-crud',
   standalone: true,
-  imports: [
+  imports: [ FormsModule,
     PageHeader,
     QueryToolbar,
     DataTable,
@@ -97,24 +98,24 @@ export interface FiltroBusqueda {
   styleUrl: './pagina-crud.scss',
 })
 export class PaginaCrud<T extends object = any> {
-  // â”€â”€â”€ ConfiguraciÃ³n de la pÃ¡gina â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─── Configuración de la página ──────────────────────────────
   readonly titulo = input.required<string>();
   readonly subtitulo = input<string | null>(null);
   readonly etiquetaNuevo = input('Crear Nuevo');
   readonly embedded = input(false);
   readonly iconoNuevo = input('fa-solid fa-plus');
 
-  // Opciones para bÃºsqueda en cascada
+  // Opciones para búsqueda en cascada
   readonly opcionesBusqueda = input<readonly FiltroBusqueda[]>([]);
   readonly tipoBusqueda = input<string | null>(null);
   readonly alCambiarTipoBusqueda = output<string>();
-  readonly placeholderBusqueda = input('Buscarâ€¦');
+  readonly placeholderBusqueda = input('Buscar…');
   readonly captionTabla = input('');
 
-  // Estado UI interno para la cascada â€” signal puro.
+  // Estado UI interno para la cascada — signal puro.
   readonly tipoBusquedaInterno = signal<string | null>(null);
 
-  /** Devuelve 'select' o 'texto' segÃºn la opciÃ³n elegida. */
+  /** Devuelve 'select' o 'texto' según la opción elegida. */
   protected getTipoFiltro(tipo: string): 'select' | 'texto' {
     const filtro = this.opcionesBusqueda().find(o => o.value === tipo);
     return filtro?.tipo === 'select' ? 'select' : 'texto';
@@ -126,7 +127,7 @@ export class PaginaCrud<T extends object = any> {
     return filtro?.opcionesSelect ?? [];
   }
 
-  // â”€â”€â”€ Datos de la grilla â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─── Datos de la grilla ──────────────────────────────────────
   readonly columnas = input.required<readonly DataTableColumn<T>[]>();
   readonly filas = input.required<readonly T[]>();
   readonly estado = input<DataTableStatus>('idle');
@@ -138,38 +139,38 @@ export class PaginaCrud<T extends object = any> {
   readonly tienePaginaSiguiente = input(false);
   readonly incluirInactivos = input(false);
 
-  // â”€â”€â”€ ConfiguraciÃ³n de acciones â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─── Configuración de acciones ───────────────────────────────
   readonly acciones = input<AccionesCrud>(ACCIONES_CRUD_DEFECTO);
   readonly confirmacionBaja = input<ConfiguracionConfirmacion>(CONFIRMACION_BAJA_DEFECTO);
 
-  // â”€â”€â”€ Estado del diÃ¡logo CRUD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─── Estado del diálogo CRUD ─────────────────────────────────
   readonly modoCrud = input<ModoCrud>('crear');
   readonly entidadActiva = input<T | null>(null);
   readonly guardando = input(false);
   readonly errorOperacion = input<string | null>(null);
 
-  // â”€â”€â”€ ConfiguraciÃ³n del diÃ¡logo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─── Configuración del diálogo ───────────────────────────────
   readonly tamanoDialogo = input<'sm' | 'md' | 'lg' | 'xl'>('md');
 
-  // â”€â”€â”€ Eventos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  /** Se emite cuando la tabla necesita datos (cambio de pÃ¡gina, bÃºsqueda). */
+  // ─── Eventos ─────────────────────────────────────────────────
+  /** Se emite cuando la tabla necesita datos (cambio de página, búsqueda). */
   readonly alSolicitarPagina = output<SolicitudPagina>();
-  /** Se emite al pulsar el botÃ³n "Nuevo". */
+  /** Se emite al pulsar el botón "Nuevo". */
   readonly alCrear = output<void>();
-  /** Se emite al pulsar el botÃ³n "Ver" en una fila. */
+  /** Se emite al pulsar el botón "Ver" en una fila. */
   readonly alVer = output<T>();
-  /** Se emite al pulsar el botÃ³n "Editar" en una fila. */
+  /** Se emite al pulsar el botón "Editar" en una fila. */
   readonly alEditar = output<T>();
-  /** Se emite al confirmar la baja lÃ³gica de una fila. */
+  /** Se emite al confirmar la baja lógica de una fila. */
   readonly alEliminar = output<T>();
-  /** Se emite al pulsar "Guardar" en el diÃ¡logo CRUD. */
+  /** Se emite al pulsar "Guardar" en el diálogo CRUD. */
   readonly alGuardar = output<void>();
-  /** Se emite al cerrar el diÃ¡logo CRUD (cancelar o escape). */
+  /** Se emite al cerrar el diálogo CRUD (cancelar o escape). */
   readonly alCerrarDialogo = output<void>();
   /** Se emite al pulsar "Reintentar" en la grilla. */
   readonly alReintentar = output<void>();
 
-  // â”€â”€â”€ Referencias internas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─── Referencias internas ────────────────────────────────────
   /** Referencia al CrudDialog nativo para showModal/close. */
   protected readonly dialogoCrud = viewChild<CrudDialog>('dialogoCrud');
 
@@ -177,16 +178,16 @@ export class PaginaCrud<T extends object = any> {
   protected readonly formularioCrud =
     contentChild<TemplateRef<ContextoFormularioCrud<T>>>('formularioCrud');
 
-  // â”€â”€â”€ Estado local â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─── Estado local ────────────────────────────────────────────
   protected readonly busqueda = signal('');
   protected readonly mostrarConfirmacion = signal(false);
   protected readonly entidadAEliminar = signal<T | null>(null);
 
   private static contadorInstancias = 0;
-  /** ID para aria-labelledby del diÃ¡logo. */
+  /** ID para aria-labelledby del diálogo. */
   protected readonly idTituloDialogo = `pagina-crud-dialogo-${++PaginaCrud.contadorInstancias}`;
 
-  // â”€â”€â”€ TÃ­tulo dinÃ¡mico del diÃ¡logo segÃºn el modo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─── Título dinámico del diálogo según el modo ───────────────
   protected tituloDialogo(): string {
     const base = this.titulo();
     switch (this.modoCrud()) {
@@ -196,7 +197,7 @@ export class PaginaCrud<T extends object = any> {
     }
   }
 
-  // â”€â”€â”€ Contexto del formulario proyectado â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─── Contexto del formulario proyectado ──────────────────────
   protected contextoFormulario(): ContextoFormularioCrud<T> {
     const entidad = this.entidadActiva();
     return {
@@ -207,7 +208,7 @@ export class PaginaCrud<T extends object = any> {
     };
   }
 
-  // â”€â”€â”€ Acciones de la grilla â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─── Acciones de la grilla ───────────────────────────────────
   /** Actualiza la cascada de UI internamente y notifica al padre. */
   protected onTipoBusquedaCambiado(valor: string): void {
     console.log('[CASCADA] onTipoBusquedaCambiado llamado con:', valor);
@@ -247,13 +248,13 @@ export class PaginaCrud<T extends object = any> {
     });
   }
 
-  // â”€â”€â”€ GestiÃ³n del diÃ¡logo CRUD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  /** Abre el diÃ¡logo con foco en el primer campo habilitado. */
+  // ─── Gestión del diálogo CRUD ────────────────────────────────
+  /** Abre el diálogo con foco en el primer campo habilitado. */
   abrirDialogo(): void {
     this.dialogoCrud()?.showModal();
   }
 
-  /** Cierra el diÃ¡logo y devuelve el foco al origen. */
+  /** Cierra el diálogo y devuelve el foco al origen. */
   cerrarDialogo(): void {
     this.dialogoCrud()?.close();
     this.alCerrarDialogo.emit();
@@ -264,7 +265,7 @@ export class PaginaCrud<T extends object = any> {
     this.dialogoCrud()?.focusError();
   }
 
-  // â”€â”€â”€ Baja lÃ³gica con confirmaciÃ³n (Doctrina Â§7 y Â§12) â”€â”€â”€â”€â”€â”€â”€
+  // ─── Baja lógica con confirmación (Doctrina §7 y §12) ───────
   protected solicitarBaja(entidad: T): void {
     this.entidadAEliminar.set(entidad);
     this.mostrarConfirmacion.set(true);
@@ -283,7 +284,7 @@ export class PaginaCrud<T extends object = any> {
     this.entidadAEliminar.set(null);
   }
 
-  // â”€â”€â”€ Utilidades para el template â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ─── Utilidades para el template ─────────────────────────────
   protected get accionesResueltas(): Required<AccionesCrud> {
     return { ...ACCIONES_CRUD_DEFECTO, ...this.acciones() };
   }

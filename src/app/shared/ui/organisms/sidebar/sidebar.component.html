@@ -1,5 +1,5 @@
-﻿<div class="sidebar-container" [class.collapsed]="collapsed()">
-  <div class="sidebar-logo" [appVariablesCss]="{'--logo-icon-color': logoIconColor() || null, '--logo-text-color': logoTextColor() || null, '--sidebar-header-bg': headerBgColor() || null}">
+<div class="sidebar-container" [class.collapsed]="collapsed()">
+  <div class="sidebar-logo">
     <i [class]="logoIcon() + ' logo-icon'"></i>
     @if (!collapsed()) {
       <span class="logo-text">{{ logoText() }}</span>
@@ -17,7 +17,7 @@
       class="sidebar-nav"
       (keydown)="handleKeydown($event)"
       tabindex="-1"
-      aria-label="NavegaciÃ³n principal"
+      aria-label="Navegación principal"
       data-sidebar-scroll-surface
     >
       <ng-template #menuTree let-items let-level="level">
@@ -81,12 +81,12 @@
   </app-scroll-overlay>
 
   @if (user(); as currentUser) {
-    <div class="sidebar-footer" [appVariablesCss]="{'--sidebar-footer-bg': footerBgColor() || null}">
+    <div class="sidebar-footer">
       <div class="user-profile">
         <app-avatar
           [name]="currentUser.name || 'User'"
           [initials]="currentUser.initials"
-          [src]="currentUser.photo"`r`n          [color]="currentUser.avatarColor"
+          [src]="currentUser.photo"
           [size]="'md'"
         ></app-avatar>
         @if (!collapsed()) {
@@ -99,5 +99,3 @@
     </div>
   }
 </div>
-
-

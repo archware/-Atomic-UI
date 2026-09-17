@@ -8,321 +8,57 @@
     <app-theme-switcher></app-theme-switcher>
   </app-topbar>
 
-<app-panel class="crud-container">  <!-- ============================================ -->
-  <!-- HEADER & FILTERS -->
-  <!-- ============================================ -->
-  <div class="mb-6">
-    <app-text variant="h2" weight="bold" align="center" class="mb-6 crud-title">
-      LISTADO DE PERSONAL
-    </app-text>
-    
-    <div class="filter-toolbar">
-      
-      <div class="filter-fields">
-        <!-- Tipo de búsqueda Combo -->
-        <div class="filter-control filter-control--type">
-          <app-select2 
-            [options]="searchTypeOptions" 
-            [ngModel]="selectedSearchType()"
-            (ngModelChange)="onSearchTypeChange($event)"
-            label="Tipo de búsqueda">
-          </app-select2>
-        </div>
-        
-        <!-- Second Control Dynamic -->
-        <div class="filter-control filter-control--value">
-          @if (selectedSearchType() === 'name') {
-            <app-floating-input 
-              label="Nombre del personal" 
-              placeholder="Ingrese el nombre" 
-              [ngModel]="searchValue()"
-              (ngModelChange)="onSearchValueChange($event)">
-            </app-floating-input>
-          } @else if (selectedSearchType() === 'document') {
-            <app-floating-input 
-              label="Número de documento" 
-              placeholder="Ingrese el documento" 
-              [ngModel]="searchValue()"
-              (ngModelChange)="onSearchValueChange($event)">
-            </app-floating-input>
-          } @else if (selectedSearchType() === 'regimen') {
-            <app-select2 
-              [options]="regimenOptions" 
-              [ngModel]="searchValue()"
-              (ngModelChange)="onSearchValueChange($event)"
-              label="Regimen laboral">
-            </app-select2>
-          } @else if (selectedSearchType() === 'status') {
-            <app-select2 
-              [options]="statusOptions" 
-              [ngModel]="searchValue()"
-              (ngModelChange)="onSearchValueChange($event)"
-              label="Estado">
-            </app-select2>
-          }
-        </div>
-      </div>
+  <app-pagina-crud
+    titulo="Usuarios"
+    [columnas]="columnas"
+    [filas]="filas()"
+    [estado]="estadoGrilla()"
+    [totalRegistros]="totalRegistros()"
+    [paginaActual]="paginaActual()"
+    [guardando]="saveApi.loading()"
+    [errorOperacion]="saveApi.error()?.message ?? null"
+    [opcionesBusqueda]="opcionesBusqueda"
+    [modoCrud]="modoCrud()"
+    [entidadActiva]="entidadActiva()"
+    [acciones]="{ ver: true, editar: true, eliminar: true }"
+    (alSolicitarPagina)="cargarPagina($event)"
+    (alCrear)="abrirCrear()"
+    (alEditar)="abrirEditar($event)"
+    (alVer)="abrirVer($event)"
+    (alEliminar)="eliminar($event)"
+    (alGuardar)="guardar()"
+    (alCerrarDialogo)="cerrarDialogo()"
+    (alReintentar)="cargarPagina({ pagina: 1, tamano: 10, busqueda: '' })"
+  >
+    <ng-template #formularioCrud let-ctx>
+      <form [formGroup]="entityForm" style="display: flex; flex-direction: column; gap: 1rem;">
+        <app-floating-input 
+          label="Nombre" 
+          formControlName="name" 
+          iconClass="fa-solid fa-user" 
+          [error]="getFieldError('name')">
+        </app-floating-input>
 
-      <app-button variant="primary" iconClass="fa-solid fa-plus" iconPosition="left" (buttonClick)="openCreateModal()">
-        Agregar
-      </app-button>
-    </div>
-  </div>
+        <app-floating-input 
+          label="Email" 
+          type="email" 
+          formControlName="email" 
+          iconClass="fa-solid fa-envelope"
+          [error]="getFieldError('email')">
+        </app-floating-input>
 
-  <!-- ============================================ -->
-  <!-- BULK ACTIONS BAR -->
-  <!-- ============================================ -->
-  <!-- BULK ACTIONS BAR -->
-  <!-- ============================================ -->
-  @if (hasSelection()) {
-  <app-panel class="bulk-actions-bar mb-4">
-    <app-row justify="between" verticalAlign="center">
-      <app-text variant="body" weight="medium" color="primary" class="numeric">
-        {{ selectedCount() }} seleccionado(s)
-      </app-text>
-      <app-row wrap="wrap" gap="0.5rem">
-        <app-button variant="danger" size="sm" (buttonClick)="bulkDelete()">
-          <i class="fa-solid fa-trash"></i>
-          Eliminar
-        </app-button>
-        <app-button variant="outline" size="sm" (buttonClick)="bulkExport()">
-          <i class="fa-solid fa-download"></i>
-          Exportar
-        </app-button>
-        <app-button variant="ghost" size="sm" (buttonClick)="clearSelection()">
-          Cancelar
-        </app-button>
-      </app-row>
-    </app-row>
-  </app-panel>
-  }
+        <app-select2 
+          label="Rol" 
+          [options]="roleOptions" 
+          formControlName="role">
+        </app-select2>
 
-  <!-- ============================================ -->
-  <!-- TABLE -->
-  <!-- ============================================ -->
-  <div class="mt-4 pt-4 border-t">
-    <app-data-pager 
-      [page]="currentPage()" 
-      [total]="meta().total" 
-      [pageSize]="pageSize()"
-      (pageChange)="onPageChange($event)"
-      (pageSizeChange)="onPageSizeChange($event)">
-    </app-data-pager>
-  </div>
-  
-  <div class="table-wrapper mt-4">
-    @if (listApi.loading()) {
-    <app-row justify="center" verticalAlign="center" class="p-5">
-      <app-loader variant="spinner" size="lg"></app-loader>
-      <app-text color="muted">Cargando datos...</app-text>
-    </app-row>
-    }
-
-    @if (listApi.hasError()) {
-    <app-row justify="center" verticalAlign="center" direction="column" class="p-5 text-center">
-      <i class="fa-solid fa-circle-exclamation text-danger text-2xl mb-2"></i>
-      <app-text weight="bold">Error al cargar los datos</app-text>
-      <app-text color="muted">{{ listApi.error()?.message }}</app-text>
-      <app-button variant="primary" (buttonClick)="loadData()" class="mt-2">
-        Reintentar
-      </app-button>
-    </app-row>
-    } @else {
-        <app-table
-          [maxHeight]="450"
-          [columnTemplate]="'50px minmax(200px, 1.5fr) minmax(200px, 1fr) 120px 100px 120px 100px'">
-          <app-table-head>
-            <th app-table-cell class="selection-column">
-              <app-choice-control
-                ariaLabel="Seleccionar todos"
-                [checked]="allSelected()"
-                (changed)="toggleSelectAll()"
-              />
-            </th>
-            <th app-table-cell>Nombre</th>
-            <th app-table-cell>Email</th>
-            <th app-table-cell>Rol</th>
-            <th app-table-cell class="rtc-text-center">Estado</th>
-            <th app-table-cell>Creado</th>
-            <th app-table-cell class="rtc-text-center actions-column">Acciones</th>
-          </app-table-head>
-          <tbody>
-            @if (items().length === 0 && !listApi.loading()) {
-              <tr app-table-row>
-                <td app-table-cell colspan="7" class="empty-cell">
-                  <i class="fa-solid fa-inbox text-muted text-3xl mb-2"></i>
-                  <app-text color="muted">No se encontraron registros</app-text>
-                </td>
-              </tr>
-            }
-            @for (item of items(); track item.id) {
-              <tr app-table-row [selected]="isSelected(item)">
-                <td app-table-cell [dataLabel]="'Sel:'" align="center">
-                  <app-choice-control
-                    [ariaLabel]="'Seleccionar ' + item.name"
-                    [checked]="isSelected(item)"
-                    (changed)="toggleSelect(item)"
-                  />
-                </td>
-                <td app-table-cell [dataLabel]="'Nombre:'">
-                  <app-row verticalAlign="center" gap="0.75rem">
-                    <app-avatar [name]="item.name" size="sm" />
-                    <app-text>{{ item.name }}</app-text>
-                  </app-row>
-                </td>
-                <td app-table-cell [dataLabel]="'Email:'">{{ item.email }}</td>
-                <td app-table-cell [dataLabel]="'Rol:'"><app-chip variant="default" size="sm">{{ item.role }}</app-chip></td>
-                <td app-table-cell [dataLabel]="'Estado:'" align="center">
-                  <app-chip [variant]="getStatusVariant(item.status)" size="sm">{{ getStatusLabel(item.status) }}</app-chip>
-                </td>
-                <td app-table-cell [dataLabel]="'Creado:'" class="numeric">{{ formatDate(item.createdAt) }}</td>
-                <td app-table-cell [dataLabel]="'Acciones:'" align="center" class="actions-cell">
-                  <app-action-group
-                    [actions]="tableActions"
-                    [maxVisible]="2"
-                    size="md"
-                    (actionClick)="onRowAction($event, item)">
-                  </app-action-group>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </app-table>
-    }
-  </div>
-
-  <!-- ============================================ -->
-  <!-- DEMO PAGINATIONS (BOTTOM) -->
-  <!-- ============================================ -->
-  @if (meta().totalPages > 1) {
-  <div class="mt-6 pt-6 border-t">
-    <app-text variant="h4" weight="semibold" class="mb-4">Otras opciones de paginación (Molecules):</app-text>
-    
-    <div class="pagination-demos">
-      <div>
-        <app-text variant="label" color="muted" class="mb-2 pagination-label">Variante Minimal:</app-text>
-        <div class="pagination-demo-row">
-          <app-text variant="body-sm" color="muted" weight="semibold" class="numeric">Total de registros: {{ meta().total }}</app-text>
-          <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="pageSize()" variant="minimal" (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)"></app-pagination>
-        </div>
-      </div>
-
-      <div>
-        <app-text variant="label" color="muted" class="mb-2 pagination-label">Variante Rounded:</app-text>
-        <div class="pagination-demo-row">
-          <app-text variant="body-sm" color="muted" weight="semibold" class="numeric">Total de registros: {{ meta().total }}</app-text>
-          <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="pageSize()" variant="rounded" (pageChange)="onPageChange($event)"></app-pagination>
-        </div>
-      </div>
-
-      <div>
-        <app-text variant="label" color="muted" class="mb-2 pagination-label">Variante Cards:</app-text>
-        <div class="pagination-demo-row">
-          <app-text variant="body-sm" color="muted" weight="semibold" class="numeric">Total de registros: {{ meta().total }}</app-text>
-          <app-pagination [page]="currentPage()" [total]="meta().total" [pageSize]="pageSize()" variant="cards" (pageChange)="onPageChange($event)"></app-pagination>
-        </div>
-      </div>
-    </div>
-  </div>
-  }
-</app-panel>
+        <app-select2 
+          label="Estado" 
+          [options]="statusOptions" 
+          formControlName="status">
+        </app-select2>
+      </form>
+    </ng-template>
+  </app-pagina-crud>
 </app-layout-shell>
-
-<!-- ============================================ -->
-<!-- CREATE/EDIT MODAL -->
-<!-- ============================================ -->
-@if (showModal()) {
-<app-modal [title]="isEditMode() ? 'Editar ' + ENTITY_NAME : 'Nuevo ' + ENTITY_NAME" (close)="closeModal()">
-
-  <form [formGroup]="entityForm" (ngSubmit)="onSave()" class="flex flex-col gap-4">
-    <app-floating-input label="Nombre" formControlName="name" iconClass="fa-solid fa-user" [error]="getFieldError('name')">
-    </app-floating-input>
-
-    <app-floating-input label="Email" type="email" formControlName="email" iconClass="fa-solid fa-envelope"
-      [error]="getFieldError('email')">
-    </app-floating-input>
-
-    <app-select2 label="Rol" [options]="roleOptions.slice(1)" formControlName="role">
-    </app-select2>
-
-    <app-select2 label="Estado" [options]="statusOptions.slice(1)" formControlName="status">
-    </app-select2>
-
-    @if (saveApi.hasError()) {
-    <app-row verticalAlign="center" gap="0.5rem" class="p-3 bg-danger-50 border-danger-200 text-danger rounded-md">
-      <i class="fa-solid fa-circle-exclamation"></i>
-      <app-text color="danger">{{ saveApi.error()?.message }}</app-text>
-    </app-row>
-    }
-
-    <app-row wrap="wrap" justify="end" gap="0.75rem" class="mt-4 pt-4 border-t">
-      <app-button variant="ghost" type="button" (buttonClick)="closeModal()">
-        Cancelar
-      </app-button>
-      <app-button variant="primary" type="submit" [disabled]="saveApi.loading()">
-        @if (saveApi.loading()) {
-        <i class="fa-solid fa-spinner fa-spin"></i>
-        Guardando...
-        } @else {
-        {{ isEditMode() ? 'Actualizar' : 'Crear' }}
-        }
-      </app-button>
-    </app-row>
-  </form>
-</app-modal>
-}
-
-<!-- ============================================ -->
-<!-- DELETE CONFIRMATION MODAL -->
-<!-- ============================================ -->
-@if (showDeleteModal()) {
-<app-modal title="Confirmar Eliminación" (close)="closeDeleteModal()">
-
-  <app-row dir="column" verticalAlign="center" class="text-center py-4">
-    <div class="w-16 h-16 rounded-full bg-danger-50 flex items-center justify-center mb-4 text-danger">
-      <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
-    </div>
-
-    <app-text variant="body" weight="medium" class="mb-2">
-      ¿Estás seguro de eliminar a <strong>{{ itemToDelete()?.name }}</strong>?
-    </app-text>
-    <app-text variant="body-sm" color="muted" class="mb-4">
-      Esta acción no se puede deshacer.
-    </app-text>
-
-    @if (deleteApi.hasError()) {
-    <app-row verticalAlign="center" gap="0.5rem"
-      class="p-3 bg-danger-50 border-danger-200 text-danger rounded-md w-full mb-4">
-      <i class="fa-solid fa-circle-exclamation"></i>
-      <app-text color="danger">{{ deleteApi.error()?.message }}</app-text>
-    </app-row>
-    }
-
-    <app-row wrap="wrap" justify="end" gap="0.75rem" class="w-full">
-      <app-button variant="ghost" (buttonClick)="closeDeleteModal()">
-        Cancelar
-      </app-button>
-      <app-button variant="danger" [disabled]="deleteApi.loading()" (buttonClick)="confirmDelete()">
-        @if (deleteApi.loading()) {
-        <i class="fa-solid fa-spinner fa-spin"></i>
-        Eliminando...
-        } @else {
-        Eliminar
-        }
-      </app-button>
-    </app-row>
-  </app-row>
-</app-modal>
-}
-
-
-
-
-
-
-
-
-
-
-
-

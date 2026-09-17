@@ -7,130 +7,30 @@
     <app-theme-switcher></app-theme-switcher>
   </app-topbar>
 
-  <!-- Page Header -->
-  <app-row columns="1fr auto" justify="between" verticalAlign="center" class="mb-6 dashboard-header">
-    <div class="header-text">
-      <app-text variant="h2" weight="bold">
-        Bienvenido de nuevo, {{ (currentUser()?.name ?? 'Usuario').split(' ')[0] }} 👋
-      </app-text>
-      <app-text variant="body" color="muted">
-        Aquí tienes el resumen ejecutivo de hoy. Todo funcionando al 100%.
-      </app-text>
-    </div>
-    <app-row gap="1rem">
-      <app-button variant="outline" iconClass="fa-solid fa-download">Reporte Mensual</app-button>
-      <app-button variant="primary" iconClass="fa-solid fa-plus">Nuevo Proyecto</app-button>
-    </app-row>
-  </app-row>
-
-  <!-- Stats Grid (Top Level Metrics) -->
-  @if (statsApi.loading()) {
-  <app-row columns="repeat(auto-fit, minmax(240px, 1fr))" gap="1.5rem" class="mb-6">
-    @for (i of [1, 2, 3, 4]; track i) {
-    <app-panel class="stat-card bento-card"><app-skeleton variant="avatar-text"></app-skeleton></app-panel>
-    }
-  </app-row>
-  } @else {
-  <app-metrics-grid [metrics]="metrics()" minCardWidth="240px" class="mb-6 bento-metrics-grid"></app-metrics-grid>
-  }
-
-  <!-- Premium Bento Box Layout -->
-  <div class="bento-grid mb-6">
+  <app-pagina-dashboard
+    [titulo]="'Bienvenido de nuevo, ' + ((currentUser()?.name ?? 'Usuario').split(' ')[0]) + ' 👋'"
+    subtitulo="Aquí tienes el resumen ejecutivo de hoy. Todo funcionando al 100%."
+    [metricas]="metrics()"
+    [cargando]="statsApi.loading()"
+    [error]="statsApi.error()">
     
-    <!-- Main Chart: Revenue (Span 8) -->
-    <app-panel class="bento-item bento-card bento-large" title="Evolución de Ingresos (Mensual)">
-      <div class="trend-chip">
-        <app-chip variant="success" size="sm">+15% vs Mes Anterior</app-chip>
-      </div>
-      <div class="chart-wrapper">
-        <app-chart type="line" [data]="revenueData" [options]="revenueOptions" height="300px"></app-chart>
-      </div>
-    </app-panel>
+    <ng-container dashboard-acciones>
+      <app-row gap="1rem">
+        <app-button variant="outline" iconClass="fa-solid fa-download">Reporte Mensual</app-button>
+        <app-button variant="primary" iconClass="fa-solid fa-plus">Nuevo Proyecto</app-button>
+      </app-row>
+    </ng-container>
 
-    <!-- Goal Widget (Span 4) -->
-    <app-panel class="bento-item bento-card bento-medium premium-gradient-bg" title="Meta de Ventas">
-      <div class="goal-content">
-        <div class="radial-progress">
-          <svg viewBox="0 0 36 36" class="circular-chart primary">
-            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-            <path class="circle" stroke-dasharray="85, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-            <text x="18" y="20.35" class="percentage">85%</text>
-          </svg>
-        </div>
-        <div class="goal-amount">$125k / $150k</div>
-        <app-text variant="body-sm" color="muted">Faltan 15 días para el cierre</app-text>
-      </div>
-    </app-panel>
+    <ng-container dashboard-contenido>
+      <app-row columns="1fr 1fr" gap="1.5rem">
+        <app-panel title="Últimas Transacciones">
+          <app-summary-list [items]="recentTransactions"></app-summary-list>
+        </app-panel>
+        <app-panel title="Actividad Reciente">
+          <app-summary-list [items]="activityFeed"></app-summary-list>
+        </app-panel>
+      </app-row>
+    </ng-container>
 
-    <!-- Project Performance (Span 6) -->
-    <app-panel class="bento-item bento-card bento-half" title="Rendimiento de Departamentos">
-       <div class="chart-wrapper">
-         <app-chart type="bar" [data]="performanceData" [options]="performanceOptions" height="280px"></app-chart>
-       </div>
-    </app-panel>
-
-    <!-- Users Donut (Span 6) -->
-    <app-panel class="bento-item bento-card bento-half" title="Distribución de Usuarios">
-      <div class="chart-wrapper">
-        <app-chart type="doughnut" [data]="roleData" [options]="donutOptions" height="280px"></app-chart>
-      </div>
-    </app-panel>
-
-  </div>
-
-  <!-- Bottom Section: Table & Timeline -->
-  <div class="bento-grid mb-6">
-    <!-- Mini Table (Span 8) -->
-    <app-panel class="bento-item bento-card bento-large" title="Últimas Transacciones">
-      <div class="table-container">
-        <app-table [columnTemplate]="'minmax(180px, 1.5fr) minmax(100px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr)'">
-          <app-table-head>
-            <tr>
-              <th app-table-cell header>Cliente</th>
-              <th app-table-cell header>Monto</th>
-              <th app-table-cell header>Estado</th>
-              <th app-table-cell header>Fecha</th>
-            </tr>
-          </app-table-head>
-          <tbody>
-            @for (tx of recentTransactions; track tx.id) {
-            <tr app-table-row>
-              <td app-table-cell>
-                <div class="transaction-client">
-                  <app-avatar [name]="tx.client" size="sm"></app-avatar>
-                  <app-text variant="body" weight="semibold">{{ tx.client }}</app-text>
-                </div>
-              </td>
-              <td app-table-cell><app-text weight="bold">{{ tx.amount }}</app-text></td>
-              <td app-table-cell><app-chip [variant]="tx.status === 'Completado' ? 'success' : tx.status === 'Pendiente' ? 'warning' : 'error'" size="sm">{{ tx.status }}</app-chip></td>
-              <td app-table-cell><app-text color="muted">{{ tx.date }}</app-text></td>
-            </tr>
-            }
-          </tbody>
-        </app-table>
-      </div>
-      <div class="table-footer mt-4">
-        <app-button variant="ghost" iconClass="fa-solid fa-arrow-right">Ver todas las transacciones</app-button>
-      </div>
-    </app-panel>
-
-    <!-- Activity Timeline (Span 4) -->
-    <app-panel class="bento-item bento-card bento-medium" title="Actividad Reciente">
-      <div class="timeline">
-        @for (act of activityFeed; track act.id) {
-          <div class="timeline-item">
-            <div class="timeline-icon" [style.background]="act.color">
-              <i [class]="act.icon"></i>
-            </div>
-            <div class="timeline-content">
-              <app-text variant="body-sm" weight="semibold">{{ act.title }}</app-text>
-              <app-text variant="caption" color="muted">{{ act.desc }}</app-text>
-              <app-text variant="caption" color="muted" class="timeline-time">{{ act.time }}</app-text>
-            </div>
-          </div>
-        }
-      </div>
-    </app-panel>
-  </div>
-
+  </app-pagina-dashboard>
 </app-layout-shell>

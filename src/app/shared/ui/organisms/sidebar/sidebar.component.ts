@@ -28,7 +28,6 @@ export interface SidebarUser {
   role: string;
   initials?: string;
   photo?: string;
-  avatarColor?: string;
 }
 
 @Component({
@@ -56,18 +55,6 @@ export class SidebarComponent {
 
   /** Logo icon */
   readonly logoIcon = input('fa-solid fa-atom');
-
-  /** Logo icon color */
-  readonly logoIconColor = input<string>();
-
-  /** Logo text color */
-  readonly logoTextColor = input<string>();
-
-  /** Background color for the header (logo area) */
-  readonly headerBgColor = input<string>();
-
-  /** Background color for the footer (user area) */
-  readonly footerBgColor = input<string>();
 
   /** Event emitted when a menu item is clicked */
   readonly navigate = output<SidebarMenuItem>();
@@ -137,5 +124,3 @@ export class SidebarComponent {
     return !!item.active || !!item.children?.some((child) => this.containsActiveItem(child));
   }
 }
-
-

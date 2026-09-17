@@ -7,11 +7,11 @@ import {
   SidebarComponent,
   SidebarMenuItem,
   PanelComponent,
-  RowComponent,
-  TextComponent,
   ButtonComponent,
   ChartComponent,
-  ThemeSwitcherComponent
+  ThemeSwitcherComponent,
+  PaginaDashboardComponent,
+  ComparisonChartComponent
 } from '@shared/ui';
 
 @Component({
@@ -22,11 +22,11 @@ import {
     TopbarComponent,
     SidebarComponent,
     PanelComponent,
-    RowComponent,
-    TextComponent,
     ButtonComponent,
     ChartComponent,
-    ThemeSwitcherComponent
+    ThemeSwitcherComponent,
+    PaginaDashboardComponent,
+    ComparisonChartComponent
   ],
   template: `
     <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
@@ -35,33 +35,31 @@ import {
         <app-theme-switcher></app-theme-switcher>
       </app-topbar>
 
-      <!-- Content -->
-      <app-row justify="between" align="center" class="mb-6">
-        <div>
-          <app-text variant="h2" weight="bold">Centro de Analíticas</app-text>
-          <app-text variant="body" color="muted">Explora tus datos en profundidad</app-text>
-        </div>
-        <app-button variant="outline" iconClass="fa-solid fa-download">Exportar CSV</app-button>
-      </app-row>
+      <app-pagina-dashboard
+        titulo="Centro de Analíticas"
+        subtitulo="Explora tus datos en profundidad">
+        
+        <ng-container dashboard-acciones>
+          <app-button variant="outline" iconClass="fa-solid fa-download">Exportar CSV</app-button>
+        </ng-container>
 
-      <app-row columns="1fr 1fr" gap="1.5rem" class="mb-6" [responsive]="true">
-        <app-panel title="Tráfico Mensual">
-          <app-chart type="line" [data]="trafficData" [options]="chartOptions" height="300px"></app-chart>
-        </app-panel>
+        <ng-container dashboard-contenido>
+          <app-panel title="Comparativa Financiera">
+            <app-comparison-chart [items]="comparisonData"></app-comparison-chart>
+          </app-panel>
 
-        <app-panel title="Distribución por Dispositivo">
-          <app-chart type="doughnut" [data]="deviceData" [options]="donutOptions" height="300px"></app-chart>
-        </app-panel>
-      </app-row>
+          <app-panel title="Distribución por Dispositivo">
+            <app-chart type="doughnut" [data]="deviceData" [options]="donutOptions" height="300px"></app-chart>
+          </app-panel>
 
-      <app-panel title="Tendencia de Conversiones">
-         <app-chart type="bar" [data]="conversionData" [options]="chartOptions" height="350px"></app-chart>
-      </app-panel>
+          <app-panel title="Tendencia de Conversiones">
+             <app-chart type="bar" [data]="conversionData" [options]="chartOptions" height="350px"></app-chart>
+          </app-panel>
+        </ng-container>
+      </app-pagina-dashboard>
     </app-layout-shell>
   `,
-  styles: [`
-    .mb-6 { margin-bottom: 1.5rem; }
-  `]
+  styles: []
 })
 export class AnalyticsPageComponent {
   sidebarVisible = signal(true);
@@ -77,6 +75,12 @@ export class AnalyticsPageComponent {
   ];
 
   sidebarUser = computed(() => ({ name: 'Usuario', role: 'Admin', initials: 'US', photo: '' }));
+
+  comparisonData = [
+    { label: 'Ene', seriesA: 5000, seriesB: 3000, seriesAWidth: 50, seriesBWidth: 30 },
+    { label: 'Feb', seriesA: 7000, seriesB: 4000, seriesAWidth: 70, seriesBWidth: 40 },
+    { label: 'Mar', seriesA: 6000, seriesB: 6000, seriesAWidth: 60, seriesBWidth: 60 }
+  ];
 
   onNavigate(item: SidebarMenuItem): void {
     if (item.route) this.router.navigate([item.route]);
@@ -108,14 +112,6 @@ export class AnalyticsPageComponent {
     responsive: true,
     maintainAspectRatio: false,
     plugins: { legend: { position: 'right' } }
-  };
-
-  trafficData = {
-    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
-    datasets: [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Visitas demo', borderColor: this.chartColor(2, '#3b82f6'), tension: 0.4 },
-      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Visitantes demo', borderColor: this.chartColor(6, '#14b8a6'), tension: 0.4 }
-    ]
   };
 
   deviceData = {

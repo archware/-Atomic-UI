@@ -26,7 +26,7 @@
         <div query-filters>
           <app-input
             type="search"
-            [placeholder]="ent.placeholderBusqueda ?? 'Buscarâ€¦'"
+            [placeholder]="ent.placeholderBusqueda ?? 'Buscar...'"
             [ngModel]="busquedaDeEntidad(ent.clave)"
             (ngModelChange)="alBuscarEntidad(ent.clave, $event)"
             label="Buscar"

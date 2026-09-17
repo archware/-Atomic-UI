@@ -335,3 +335,5 @@ export type { ValidationMessage } from './services/validation.service';
 export { DataStateComponent } from './molecules/data-state/data-state.component';
 
 export * from './organisms/chart/chart.component';
+export { PaginaDashboardComponent } from './templates/pagina-dashboard/pagina-dashboard';
+export { PaginaCrud } from './templates/pagina-crud/pagina-crud';
