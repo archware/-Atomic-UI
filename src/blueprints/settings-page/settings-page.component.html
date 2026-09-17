@@ -4,7 +4,7 @@
 
   <app-topbar
     slot="topbar"
-    title="Configuracin"
+    title="Configuración"
     userInitials="AD"
     userName="Admin Usuario"
     userEmail="admin@empresa.com"
@@ -16,7 +16,7 @@
   <app-pagina-ajustes>
 
     <div ajustes-aside>
-      <app-text variant="h3" weight="semibold">Configuracin</app-text>
+      <app-text variant="h3" weight="semibold">Configuración</app-text>
       <app-text variant="body-sm" color="muted">Administra tus preferencias de cuenta.</app-text>
     </div>
 
@@ -34,7 +34,7 @@
         <!-- PESTAA: PERFIL -->
         <app-tab label="Perfil" iconClass="fa-regular fa-id-badge">
           <div >
-            <app-text variant="h4" class="mb-2">Informacin del perfil</app-text>
+            <app-text variant="h4" class="mb-2">Información del perfil</app-text>
             <app-text variant="body-sm" color="muted" class="mb-6">Actualiza tu foto y tus datos personales.</app-text>
 
             <div class="d-flex items-center gap-4 mb-4">
@@ -66,18 +66,18 @@
         <!-- PESTAA: SEGURIDAD -->
         <app-tab label="Seguridad" iconClass="fa-solid fa-shield-halved">
           <div >
-            <app-text variant="h4" class="mb-2">Cambiar contrasea</app-text>
-            <app-text variant="body-sm" color="muted" class="mb-6">Te recomendamos usar una contrasea fuerte que no uses en otros sitios.</app-text>
+            <app-text variant="h4" class="mb-2">Cambiar contraseña</app-text>
+            <app-text variant="body-sm" color="muted" class="mb-6">Te recomendamos usar una contraseña fuerte que no uses en otros sitios.</app-text>
 
             <form [formGroup]="passwordForm" (ngSubmit)="savePassword()">
               <div class="d-flex flex-col gap-3 mb-4" class="w-full">
                 <app-floating-input formControlName="currentPassword" type="password" label="Contrasea actual" variant="outline"></app-floating-input>
-                <app-floating-input formControlName="newPassword" type="password" label="Nueva contrasea" variant="outline"></app-floating-input>
-                <app-floating-input formControlName="confirmPassword" type="password" label="Confirmar nueva contrasea" variant="outline"></app-floating-input>
+                <app-floating-input formControlName="newPassword" type="password" label="Nueva contraseña" variant="outline"></app-floating-input>
+                <app-floating-input formControlName="confirmPassword" type="password" label="Confirmar nueva contraseña" variant="outline"></app-floating-input>
               </div>
 
               <app-form-actions>
-                <app-button type="submit" variant="primary" [disabled]="saving()">Actualizar contrasea</app-button>
+                <app-button type="submit" variant="primary" [disabled]="saving()">Actualizar contraseña</app-button>
               </app-form-actions>
             </form>
           </div>
