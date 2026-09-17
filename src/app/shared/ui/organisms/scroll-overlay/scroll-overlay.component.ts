@@ -1,4 +1,4 @@
-import {
+﻿import {
   AfterViewInit,
   Component,
   ElementRef,
@@ -49,7 +49,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
    * Uses the browser scrollbars on the resolved owners and suppresses the decorative overlay rails.
    * The scrollbar palette is provided by the canonical theme tokens.
    */
-  // Los alias siguientes conservan la API pública y delegan en setters con efectos sobre el DOM.
+  // Los alias siguientes conservan la API pÃºblica y delegan en setters con efectos sobre el DOM.
   // eslint-disable-next-line @angular-eslint/no-input-rename
   readonly entradaBarrasNativas = input(false, { alias: 'nativeScrollbars' });
 
@@ -606,6 +606,8 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     }
 
     if (!this.disableVertical) {
+      addListener(this.barYRef.nativeElement, 'pointerdown', (event) => this.trackClickY(event as PointerEvent));
+      addListener(_barY, 'pointerdown', (event) => this.trackClickY(event as PointerEvent));
       addListener(thumbY, 'pointerdown', (event) => this.startDragY(event as PointerEvent));
       addListener(thumbY, 'pointermove', (event) => this.moveDragY(event as PointerEvent));
       addListener(thumbY, 'pointerup', (event) => this.endDragY(event as PointerEvent));
@@ -613,6 +615,8 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     }
 
     if (!this.disableHorizontal) {
+      addListener(this.barXRef.nativeElement, 'pointerdown', (event) => this.trackClickX(event as PointerEvent));
+      addListener(_barX, 'pointerdown', (event) => this.trackClickX(event as PointerEvent));
       addListener(thumbX, 'pointerdown', (event) => this.startDragX(event as PointerEvent));
       addListener(thumbX, 'pointermove', (event) => this.moveDragX(event as PointerEvent));
       addListener(thumbX, 'pointerup', (event) => this.endDragX(event as PointerEvent));
@@ -970,7 +974,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       const barTop = verticalRect.top - hostRect.top + headerOffset;
       barY.style.top = `${barTop}px`;
 
-      // Ajustar altura si hay overflow horizontal para evitar colisión
+      // Ajustar altura si hay overflow horizontal para evitar colisiÃ³n
       let barHeight = verticalRect.height - headerOffset;
       if (hasHorizontalOverflow && horizontalBarTop !== null) {
         barHeight = Math.max(0, horizontalBarTop - barTop - this.verticalBarGap);
@@ -989,7 +993,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
         horizontalRect.top - hostRect.top + horizontalRect.height - this.trackSize();
       barX.style.top = `${horizontalBarVisualTop}px`;
 
-      // Calcular ancho disponible desde la posición left hasta el borde derecho del host
+      // Calcular ancho disponible desde la posiciÃ³n left hasta el borde derecho del host
       let barWidth = hostRect.width - leftPosition;
 
       if (hasVerticalOverflow && !this.disableVertical) {
@@ -1424,4 +1428,29 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     this.dragPointerIdX = undefined;
     this.showBar();
   }
-}
+
+  private trackClickY(event: PointerEvent): void {
+    if (!this.verticalScroller || this.disableVertical || event.target === this.thumbYRef.nativeElement) {
+      return;
+    }
+    const thumbRect = this.thumbYRef.nativeElement.getBoundingClientRect();
+    if (event.clientY < thumbRect.top) {
+      this.verticalScroller.scrollBy({ top: -this.verticalScroller.clientHeight, behavior: 'smooth' });
+    } else if (event.clientY > thumbRect.bottom) {
+      this.verticalScroller.scrollBy({ top: this.verticalScroller.clientHeight, behavior: 'smooth' });
+    }
+  }
+
+  private trackClickX(event: PointerEvent): void {
+    if (!this.horizontalScroller || this.disableHorizontal || event.target === this.thumbXRef.nativeElement) {
+      return;
+    }
+    const thumbRect = this.thumbXRef.nativeElement.getBoundingClientRect();
+    if (event.clientX < thumbRect.left) {
+      this.horizontalScroller.scrollBy({ left: -this.horizontalScroller.clientWidth, behavior: 'smooth' });
+    } else if (event.clientX > thumbRect.right) {
+      this.horizontalScroller.scrollBy({ left: this.horizontalScroller.clientWidth, behavior: 'smooth' });
+    }
+  }
+
+
