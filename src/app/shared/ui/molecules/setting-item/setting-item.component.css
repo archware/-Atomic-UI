@@ -1,0 +1,21 @@
+:host { display: block; }
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) 0;
+  gap: var(--space-4);
+  flex-wrap: wrap; /* Permite que el control baje en pantallas estrechas */
+}
+
+.setting-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.setting-control {
+  display: flex;
+  align-items: center;
+}

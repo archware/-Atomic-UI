@@ -82,7 +82,8 @@
   width: 100%;
   text-align: left;
   transition: all 200ms ease;
-  font-weight: var(--font-weight-body);
+  font-weight: bold;
+  font-size: var(--text-md, 0.95rem);
   
 }
 
@@ -244,6 +245,7 @@
   justify-content: center;
   padding: var(--space-2);
 }
+
 
 
 

@@ -29,7 +29,7 @@ import { ShowcaseStatusComponent } from './examples/showcase-status/showcase-sta
     ShowcaseStatusComponent
 ],
   template: `
-    <app-panel title="UI Components Showcase (Refactorizado)" icon="🎨" variant="elevated" padding="lg">
+    <app-panel title="UI Components Showcase (Refactorizado)" variant="elevated" padding="lg">
 
       <!-- 1. Navigation & Layout Examples -->
       <app-showcase-navigation></app-showcase-navigation>

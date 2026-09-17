@@ -108,10 +108,12 @@ export class AnalyticsPageComponent {
     }
   };
 
-  donutOptions: ChartConfiguration<'doughnut'>['options'] = {
+  donutOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: { legend: { position: 'right' } }
+    plugins: {
+      legend: { position: 'right' }
+    }
   };
 
   deviceData = {

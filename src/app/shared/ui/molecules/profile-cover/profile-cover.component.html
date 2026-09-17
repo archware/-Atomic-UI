@@ -1,0 +1,19 @@
+<div class="profile-cover"></div>
+<div class="profile-summary">
+  <div class="avatar-section">
+    @if (loading()) {
+      <app-skeleton variant="circular" width="80px" height="80px"></app-skeleton>
+      <app-skeleton variant="text" width="120px"></app-skeleton>
+    } @else {
+      <app-avatar [initials]="initials()" size="xl"></app-avatar>
+      <app-text variant="h3" weight="semibold">
+        {{ firstName() }} {{ lastName() }}
+      </app-text>
+      @if (role()) {
+        <app-chip [variant]="'success'" size="sm">
+          {{ role() }}
+        </app-chip>
+      }
+    }
+  </div>
+</div>

@@ -21,6 +21,9 @@ import {
   ToggleComponent,
   SelectComponent,
   ThemeSwitcherComponent,
+    PaginaAjustesComponent,
+    FormActionsComponent,
+    SettingItemComponent,
 } from '@shared/ui';
 import { ApiService } from '@shared/ui/services/api.service';
 import { useApi } from '@shared/ui/services/use-api.service';
@@ -60,8 +63,11 @@ import { useApi } from '@shared/ui/services/use-api.service';
     TabComponent,
     ToggleComponent,
     SelectComponent,
-    ThemeSwitcherComponent
-],
+    ThemeSwitcherComponent,
+    PaginaAjustesComponent,
+    FormActionsComponent,
+    SettingItemComponent
+  ],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.css',
 })
@@ -192,6 +198,8 @@ export class SettingsPageComponent implements OnInit {
     this.errorMessage.set(null);
   }
 }
+
+
 
 
 

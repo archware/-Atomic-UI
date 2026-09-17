@@ -29,18 +29,6 @@ export const routes: Routes = [
       import('../blueprints/login-page/login-page.component').then(m => m.LoginPageComponent),
     canActivate: [guestGuard],
   },
-  {
-    path: 'register',
-    loadComponent: () =>
-      import('../blueprints/register-page/register-page.component').then(m => m.RegisterPageComponent),
-    canActivate: [guestGuard],
-  },
-  {
-    path: 'forgot-password',
-    loadComponent: () =>
-      import('../blueprints/forgot-password-page/forgot-password-page.component').then(m => m.ForgotPasswordPageComponent),
-    canActivate: [guestGuard],
-  },
 
   // ===================================================
   // Rutas PROTEGIDAS (requieren autenticación)
@@ -108,4 +96,5 @@ export const routes: Routes = [
     data: { code: 404 },
   },
 ];
+
 

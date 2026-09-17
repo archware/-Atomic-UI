@@ -1,0 +1,3561 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head>
+  <script type="module" src="/@vite/client"></script>
+
+  <meta charset="utf-8">
+  <title>Atomic UI</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script>
+    // Aplicar tema antes de que se renderice la página para evitar flash
+    (function () {
+      const stored = localStorage.getItem('app-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored === 'dark' || (stored === 'system' && prefersDark) || (!stored && prefersDark) ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+<link rel="stylesheet" href="styles.css"><style ng-app-id="ng">
+[_nghost-ng-c3177019257] {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/*# sourceMappingURL=/app.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c4285629092] {
+  position: fixed;
+  top: calc(var(--header-height, 64px) + var(--space-4));
+  right: var(--space-4);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 360px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: visible;
+  background: transparent;
+  pointer-events: none;
+}
+@media (max-width: 48rem) {
+  [_nghost-ng-c4285629092] {
+    top: auto;
+    bottom: var(--space-4);
+    left: var(--space-4);
+    right: var(--space-4);
+    max-width: none;
+  }
+}
+.toast[_ngcontent-ng-c4285629092] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  color: var(--text-color);
+  animation: _ngcontent-ng-c4285629092_slideIn 300ms ease;
+  pointer-events: auto;
+}
+.toast-exit[_ngcontent-ng-c4285629092] {
+  animation: _ngcontent-ng-c4285629092_slideOut 300ms ease forwards;
+}
+.toast-icon[_ngcontent-ng-c4285629092] {
+  font-size: var(--text-md);
+  font-weight: bold;
+  width: var(--icon-md);
+  height: var(--icon-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.toast-info[_ngcontent-ng-c4285629092]   .toast-icon[_ngcontent-ng-c4285629092] {
+  background: var(--info-color-light);
+  color: var(--info-color-dark);
+}
+.toast-success[_ngcontent-ng-c4285629092]   .toast-icon[_ngcontent-ng-c4285629092] {
+  background: var(--success-color-light);
+  color: var(--success-color-dark);
+}
+.toast-warning[_ngcontent-ng-c4285629092]   .toast-icon[_ngcontent-ng-c4285629092] {
+  background: var(--warning-color-light);
+  color: var(--warning-color-dark);
+}
+.toast-error[_ngcontent-ng-c4285629092]   .toast-icon[_ngcontent-ng-c4285629092] {
+  background: var(--danger-color-light);
+  color: var(--danger-color-dark);
+}
+.toast-message[_ngcontent-ng-c4285629092] {
+  flex: 1;
+  font-size: var(--text-sm);
+}
+.toast-close[_ngcontent-ng-c4285629092] {
+  background: none;
+  border: none;
+  font-size: var(--text-xl);
+  color: var(--text-color-secondary);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.toast-close[_ngcontent-ng-c4285629092]:hover {
+  color: var(--text-color);
+}
+@keyframes _ngcontent-ng-c4285629092_slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes _ngcontent-ng-c4285629092_slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+/*# sourceMappingURL=/toast.component.css.map */</style><style ng-app-id="ng">
+.popup-overlay[_ngcontent-ng-c3557959365] {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: _ngcontent-ng-c3557959365_popupFadeIn 150ms ease;
+}
+.popup-overlay.popup-closing[_ngcontent-ng-c3557959365] {
+  animation: _ngcontent-ng-c3557959365_popupFadeOut 200ms ease forwards;
+}
+@keyframes _ngcontent-ng-c3557959365_popupFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes _ngcontent-ng-c3557959365_popupFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.popup[_ngcontent-ng-c3557959365] {
+  background: var(--surface-background);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  box-shadow: var(--shadow-xl);
+  animation: _ngcontent-ng-c3557959365_popupSlideUp 200ms ease;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+}
+.popup-closing[_ngcontent-ng-c3557959365]   .popup[_ngcontent-ng-c3557959365] {
+  animation: _ngcontent-ng-c3557959365_popupSlideDown 200ms ease forwards;
+}
+@keyframes _ngcontent-ng-c3557959365_popupSlideUp {
+  from {
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+@keyframes _ngcontent-ng-c3557959365_popupSlideDown {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+  }
+}
+.popup-sm[_ngcontent-ng-c3557959365] {
+  max-width: 360px;
+}
+.popup-md[_ngcontent-ng-c3557959365] {
+  max-width: 450px;
+}
+.popup-lg[_ngcontent-ng-c3557959365] {
+  max-width: 600px;
+}
+.popup-header[_ngcontent-ng-c3557959365] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-bottom: 1px solid var(--border-color);
+}
+.popup-icon[_ngcontent-ng-c3557959365] {
+  font-size: var(--text-2xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-10);
+  height: var(--space-10);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+.popup-icon-info[_ngcontent-ng-c3557959365] {
+  background: var(--info-color-light);
+  color: var(--info-color-dark);
+}
+.popup-icon-success[_ngcontent-ng-c3557959365] {
+  background: var(--success-color-light);
+  color: var(--success-color-dark);
+}
+.popup-icon-warning[_ngcontent-ng-c3557959365] {
+  background: var(--warning-color-light);
+  color: var(--warning-color-dark);
+}
+.popup-icon-error[_ngcontent-ng-c3557959365] {
+  background: var(--danger-color-light);
+  color: var(--danger-color-dark);
+}
+.popup-icon-confirm[_ngcontent-ng-c3557959365] {
+  background: var(--primary-color-lighter);
+  color: var(--primary-color);
+}
+.popup-title[_ngcontent-ng-c3557959365] {
+  flex: 1;
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-emphasis);
+  color: var(--text-color);
+}
+.popup-close[_ngcontent-ng-c3557959365] {
+  width: var(--control-height-sm);
+  height: var(--control-height-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xl);
+  color: var(--text-color-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.popup-close[_ngcontent-ng-c3557959365]:hover {
+  background: var(--surface-hover);
+  color: var(--text-color);
+}
+.popup-body[_ngcontent-ng-c3557959365] {
+  padding: var(--space-5);
+  overflow-y: auto;
+}
+.popup-message[_ngcontent-ng-c3557959365] {
+  margin: 0;
+  font-size: var(--text-md);
+  color: var(--text-color-secondary);
+  line-height: 1.6;
+}
+.popup-footer[_ngcontent-ng-c3557959365] {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--border-color);
+}
+.popup-btn[_ngcontent-ng-c3557959365] {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-body);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.popup-btn-primary[_ngcontent-ng-c3557959365] {
+  background: var(--primary-color);
+  color: var(--text-color-on-primary);
+}
+.popup-btn-primary[_ngcontent-ng-c3557959365]:hover {
+  background: var(--primary-color-dark);
+}
+.popup-btn-secondary[_ngcontent-ng-c3557959365] {
+  background: var(--surface-hover);
+  color: var(--text-color);
+}
+.popup-btn-secondary[_ngcontent-ng-c3557959365]:hover {
+  background: var(--border-color);
+}
+.popup-btn-danger[_ngcontent-ng-c3557959365] {
+  background: var(--danger-color);
+  color: var(--gray-0);
+}
+.popup-btn-danger[_ngcontent-ng-c3557959365]:hover {
+  background: var(--danger-color-dark);
+}
+.popup-btn-ghost[_ngcontent-ng-c3557959365] {
+  background: transparent;
+  color: var(--text-color-secondary);
+}
+.popup-btn-ghost[_ngcontent-ng-c3557959365]:hover {
+  background: var(--surface-hover);
+  color: var(--text-color);
+}
+/*# sourceMappingURL=/popup-container.component.css.map */</style><style ng-app-id="ng">
+.modal-overlay[_ngcontent-ng-c3845118800] {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: _ngcontent-ng-c3845118800_modalFadeIn 150ms ease;
+}
+.modal-overlay.modal-closing[_ngcontent-ng-c3845118800] {
+  animation: _ngcontent-ng-c3845118800_modalFadeOut 200ms ease forwards;
+}
+@keyframes _ngcontent-ng-c3845118800_modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes _ngcontent-ng-c3845118800_modalFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.modal[_ngcontent-ng-c3845118800] {
+  background: var(--surface-background);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  box-shadow: var(--shadow-xl);
+  animation: _ngcontent-ng-c3845118800_modalSlideUp 200ms ease;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+}
+.modal.modal-exit[_ngcontent-ng-c3845118800] {
+  animation: _ngcontent-ng-c3845118800_modalSlideDown 200ms ease forwards;
+}
+@keyframes _ngcontent-ng-c3845118800_modalSlideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes _ngcontent-ng-c3845118800_modalSlideDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+.modal-sm[_ngcontent-ng-c3845118800] {
+  max-width: 400px;
+}
+.modal-md[_ngcontent-ng-c3845118800] {
+  max-width: 550px;
+}
+.modal-lg[_ngcontent-ng-c3845118800] {
+  max-width: 800px;
+}
+.modal-xl[_ngcontent-ng-c3845118800] {
+  max-width: 1000px;
+}
+.modal-header[_ngcontent-ng-c3845118800] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border-color);
+}
+.modal-title[_ngcontent-ng-c3845118800] {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-emphasis);
+  color: var(--text-color);
+}
+.modal-close[_ngcontent-ng-c3845118800] {
+  width: var(--control-height-sm);
+  height: var(--control-height-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xl);
+  color: var(--text-color-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.modal-close[_ngcontent-ng-c3845118800]:hover {
+  background: var(--surface-hover);
+  color: var(--text-color);
+}
+.modal-body[_ngcontent-ng-c3845118800] {
+  padding: var(--space-5);
+  overflow-y: auto;
+}
+.modal-message[_ngcontent-ng-c3845118800] {
+  margin: 0;
+  font-size: var(--text-md);
+  color: var(--text-color-secondary);
+  line-height: 1.6;
+}
+.modal-footer[_ngcontent-ng-c3845118800] {
+  display: flex;
+  justify-content: flex-end;
+  gap: 36px;
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--border-color);
+}
+.modal-btn[_ngcontent-ng-c3845118800] {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-body);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.modal-btn-primary[_ngcontent-ng-c3845118800] {
+  background: var(--primary-color);
+  color: var(--text-color-on-primary);
+}
+.modal-btn-primary[_ngcontent-ng-c3845118800]:hover {
+  background: var(--primary-color-dark);
+}
+.modal-btn-secondary[_ngcontent-ng-c3845118800] {
+  background: var(--surface-hover);
+  color: var(--text-color);
+}
+.modal-btn-secondary[_ngcontent-ng-c3845118800]:hover {
+  background: var(--border-color);
+}
+.modal-btn-danger[_ngcontent-ng-c3845118800] {
+  background: var(--danger-color);
+  color: var(--gray-0);
+}
+.modal-btn-danger[_ngcontent-ng-c3845118800]:hover {
+  background: var(--danger-color-dark);
+}
+.modal-btn-ghost[_ngcontent-ng-c3845118800] {
+  background: transparent;
+  color: var(--text-color-secondary);
+}
+.modal-btn-ghost[_ngcontent-ng-c3845118800]:hover {
+  background: var(--surface-hover);
+  color: var(--text-color);
+}
+/*# sourceMappingURL=/modal-container.component.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c4077748502] {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.content-sections[_ngcontent-ng-c4077748502] {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+.content-sections[_ngcontent-ng-c4077748502]    > *[_ngcontent-ng-c4077748502] {
+  margin: 0;
+}
+.loading-placeholder[_ngcontent-ng-c4077748502] {
+  padding: 2rem;
+  text-align: center;
+}
+.info-row[_ngcontent-ng-c4077748502] {
+  margin-top: 0;
+}
+/*# sourceMappingURL=/showcase-page.component.css.map */</style><style ng-app-id="ng">
+.layout-shell[_ngcontent-ng-c2721538490] {
+  display: grid;
+  height: 100vh;
+  height: 100dvh;
+  --sidebar-width: 260px;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas: "sidebar header" "sidebar content" "sidebar footer";
+  background-color: var(--surface-section);
+  color: var(--text-color);
+}
+.layout-sidebar[_ngcontent-ng-c2721538490] {
+  grid-area: sidebar;
+  background-color: var(--sidebar-bg);
+  border-right: 1px solid var(--border-color);
+  overflow: hidden;
+  z-index: 30;
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+}
+.layout-header[_ngcontent-ng-c2721538490] {
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  height: 64px;
+}
+.layout-content[_ngcontent-ng-c2721538490] {
+  grid-area: content;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.layout-footer[_ngcontent-ng-c2721538490] {
+  grid-area: footer;
+  min-width: 0;
+}
+.layout-content[_ngcontent-ng-c2721538490]     app-scroll-overlay {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+}
+.content-wrapper[_ngcontent-ng-c2721538490] {
+  width: 100%;
+  padding: 24px 36px;
+  box-sizing: border-box;
+}
+.layout-overlay[_ngcontent-ng-c2721538490] {
+  display: none;
+}
+@media (max-width: 64rem) {
+  .layout-shell[_ngcontent-ng-c2721538490] {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 64px minmax(0, 1fr) auto;
+    grid-template-areas: "header" "content" "footer";
+  }
+  .content-wrapper[_ngcontent-ng-c2721538490] {
+    padding: var(--space-4);
+  }
+  .layout-sidebar[_ngcontent-ng-c2721538490] {
+    position: fixed;
+    inset-block: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    width: min(var(--sidebar-width), calc(100vw - 3rem));
+    transform: translateX(-102%);
+    transition: transform 180ms ease;
+    z-index: 50;
+  }
+  .layout-shell.sidebar-visible[_ngcontent-ng-c2721538490]   .layout-sidebar[_ngcontent-ng-c2721538490] {
+    transform: translateX(0);
+  }
+  .layout-overlay[_ngcontent-ng-c2721538490] {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background-color: var(--overlay-backdrop);
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+  .layout-shell.sidebar-visible[_ngcontent-ng-c2721538490]   .layout-overlay[_ngcontent-ng-c2721538490] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+.layout-skip-link[_ngcontent-ng-c2721538490] {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.layout-skip-link[_ngcontent-ng-c2721538490]:focus-visible, 
+.layout-skip-link[_ngcontent-ng-c2721538490]:focus {
+  position: fixed;
+  inset-block-start: var(--space-2);
+  inset-inline-start: var(--space-2);
+  z-index: 1100;
+  inline-size: auto;
+  block-size: auto;
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  overflow: visible;
+  clip-path: none;
+  border-radius: var(--radius-md);
+  background-color: var(--surface-card);
+  color: var(--text-color);
+  box-shadow: var(--shadow-lg);
+  outline: 2px solid var(--brand-primary-500);
+}
+/*# sourceMappingURL=/layout-shell.component.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c1196991883] {
+  display: block;
+  height: 100%;
+}
+.sidebar-container[_ngcontent-ng-c1196991883] {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--sidebar-bg);
+}
+.sidebar-logo[_ngcontent-ng-c1196991883] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-6) var(--space-6) var(--space-6);
+  font-size: var(--icon-md);
+  font-weight: var(--font-weight-emphasis);
+  background-color: var(--sidebar-header-bg, transparent);
+  border-bottom: var(--sidebar-header-border, none);
+}
+.logo-icon[_ngcontent-ng-c1196991883] {
+  color: var(--logo-icon-color, var(--primary-color));
+}
+.logo-text[_ngcontent-ng-c1196991883] {
+  color: var(--logo-text-color, currentColor);
+}
+.logo-emoji[_ngcontent-ng-c1196991883] {
+  font-size: var(--text-2xl);
+}
+.font-bold[_ngcontent-ng-c1196991883] {
+  font-weight: var(--font-weight-title);
+}
+.sidebar-nav-overlay[_ngcontent-ng-c1196991883] {
+  display: block;
+  flex: 1;
+  min-height: 0;
+  padding: var(--space-4) var(--space-4);
+}
+.sidebar-nav[_ngcontent-ng-c1196991883] {
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+.nav-list[_ngcontent-ng-c1196991883] {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.nav-list--children[_ngcontent-ng-c1196991883] {
+  padding-inline-start: var(--space-4);
+  margin-top: var(--space-1);
+}
+.nav-link[_ngcontent-ng-c1196991883] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  color: var(--text-color-secondary);
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  transition: all 200ms ease;
+  font-weight: bold;
+  font-size: var(--text-md, 0.95rem);
+}
+.nav-link[_ngcontent-ng-c1196991883]:hover {
+  background-color: var(--hover-background-subtle);
+  color: var(--text-color);
+}
+.nav-link.active[_ngcontent-ng-c1196991883] {
+  background-color: var(--primary-color-lighter);
+  color: var(--primary-color-dark);
+}
+.nav-icon[_ngcontent-ng-c1196991883] {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.25rem;
+  color: var(--sidebar-icon-color, currentColor);
+}
+.nav-label[_ngcontent-ng-c1196991883] {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nav-label-text[_ngcontent-ng-c1196991883] {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.nav-chevron[_ngcontent-ng-c1196991883] {
+  flex-shrink: 0;
+  margin-left: auto;
+  font-size: var(--text-xs);
+  transition: transform 200ms ease;
+}
+.nav-chevron.expanded[_ngcontent-ng-c1196991883] {
+  transform: rotate(180deg);
+}
+.nav-link--child[_ngcontent-ng-c1196991883] {
+  padding-block: var(--space-2);
+  font-size: var(--text-md, 0.95rem);
+}
+.nav-link--child[_ngcontent-ng-c1196991883]   .nav-icon[_ngcontent-ng-c1196991883] {
+  font-size: 1rem;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.nav-badge[_ngcontent-ng-c1196991883] {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-emphasis);
+  background-color: var(--danger-color);
+  color: var(--text-color-on-primary);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+.sidebar-footer[_ngcontent-ng-c1196991883] {
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--sidebar-footer-bg, transparent);
+  border-top: var(--sidebar-footer-border, 1px solid var(--border-color));
+}
+.user-profile[_ngcontent-ng-c1196991883] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 200ms ease;
+}
+.user-profile[_ngcontent-ng-c1196991883]:hover {
+  background-color: var(--hover-background-subtle);
+}
+.avatar[_ngcontent-ng-c1196991883] {
+  width: var(--avatar-size-md, 2.5rem);
+  height: var(--avatar-size-md, 2.5rem);
+  background-color: var(--primary-color-light);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-xl);
+}
+.user-info[_ngcontent-ng-c1196991883] {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.user-name[_ngcontent-ng-c1196991883] {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-emphasis);
+  color: var(--text-color);
+}
+.user-role[_ngcontent-ng-c1196991883] {
+  font-size: var(--text-xs);
+  color: var(--text-color-secondary);
+}
+.sidebar-container.collapsed[_ngcontent-ng-c1196991883] {
+  padding: var(--space-6) var(--space-2);
+  align-items: center;
+}
+.sidebar-container.collapsed[_ngcontent-ng-c1196991883]   .sidebar-logo[_ngcontent-ng-c1196991883] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-6) var(--space-6) var(--space-6);
+  font-size: var(--icon-md);
+  font-weight: var(--font-weight-emphasis);
+  background-color: var(--sidebar-header-bg, transparent);
+  border-bottom: var(--sidebar-header-border, none);
+}
+.logo-icon[_ngcontent-ng-c1196991883] {
+  color: var(--logo-icon-color, var(--primary-color));
+}
+.logo-text[_ngcontent-ng-c1196991883] {
+  color: var(--logo-text-color, currentColor);
+}
+.sidebar-container.collapsed[_ngcontent-ng-c1196991883]   .nav-link[_ngcontent-ng-c1196991883] {
+  justify-content: center;
+  padding: var(--space-3);
+}
+.sidebar-container.collapsed[_ngcontent-ng-c1196991883]   .nav-list--children[_ngcontent-ng-c1196991883] {
+  display: none;
+}
+.sidebar-container.collapsed[_ngcontent-ng-c1196991883]   .user-profile[_ngcontent-ng-c1196991883] {
+  justify-content: center;
+  padding: var(--space-2);
+}
+/*# sourceMappingURL=/sidebar.component.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c2407633384] {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--surface-background);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.topbar-container[_ngcontent-ng-c2407633384] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 0 36px;
+  gap: var(--space-4);
+}
+.topbar-left[_ngcontent-ng-c2407633384] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-shrink: 1;
+  min-width: 0;
+}
+.topbar-title-area[_ngcontent-ng-c2407633384] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.page-title[_ngcontent-ng-c2407633384] {
+  margin: 0;
+  font-size: var(--text-lg, 1.125rem);
+  font-weight: bold;
+  color: var(--text-color);
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.topbar-subtitle-row[_ngcontent-ng-c2407633384] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: 2px;
+}
+.page-subtitle[_ngcontent-ng-c2407633384] {
+  font-size: var(--text-xs);
+  color: var(--text-color-secondary);
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.api-status-badge[_ngcontent-ng-c2407633384] {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0 var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.api-status-badge.badge-success[_ngcontent-ng-c2407633384] {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: var(--success-color, #16a34a);
+}
+.api-status-badge.badge-warning[_ngcontent-ng-c2407633384] {
+  background-color: rgba(245, 158, 11, 0.15);
+  color: var(--warning-color, #d97706);
+}
+.api-status-badge.badge-danger[_ngcontent-ng-c2407633384] {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--danger-color, #dc2626);
+}
+.status-dot[_ngcontent-ng-c2407633384] {
+  font-size: 6px;
+}
+.topbar-right[_ngcontent-ng-c2407633384] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+.topbar-icon[_ngcontent-ng-c2407633384] {
+  font-size: var(--text-xl, 1.25rem);
+}
+@media (max-width: 48rem) {
+  .topbar-container[_ngcontent-ng-c2407633384] {
+    padding: 0 36px;
+    gap: var(--space-2);
+  }
+  .topbar-left[_ngcontent-ng-c2407633384] {
+    gap: var(--space-2);
+  }
+  .page-title[_ngcontent-ng-c2407633384] {
+    font-size: var(--text-md);
+  }
+  .topbar-right[_ngcontent-ng-c2407633384] {
+    gap: var(--space-1);
+  }
+  .topbar-right[_ngcontent-ng-c2407633384]     app-icon-button {
+    transform: scale(0.9);
+  }
+}
+@media (max-width: 35rem) {
+  .topbar-right[_ngcontent-ng-c2407633384]     app-language-switcher {
+    display: none;
+  }
+}
+.sidebar-toggle-wrapper[_ngcontent-ng-c2407633384] {
+  display: none;
+}
+@media (max-width: 64rem) {
+  .sidebar-toggle-wrapper[_ngcontent-ng-c2407633384] {
+    display: block;
+  }
+}
+/*# sourceMappingURL=/topbar.component.css.map */</style><style ng-app-id="ng">
+.theme-switcher[_ngcontent-ng-c840921062] {
+  position: relative;
+  display: inline-block;
+}
+.icon[_ngcontent-ng-c840921062] {
+  font-size: var(--text-xl);
+  width: auto;
+  height: auto;
+  transition: color 200ms ease, transform 200ms ease;
+}
+.icon-sun[_ngcontent-ng-c840921062] {
+  color: var(--icon-sun-color);
+  filter: drop-shadow(0 0 var(--space-1) currentColor);
+}
+.icon-moon[_ngcontent-ng-c840921062] {
+  color: var(--icon-moon-color);
+  filter: drop-shadow(0 0 var(--space-1) currentColor);
+}
+.icon.hidden[_ngcontent-ng-c840921062] {
+  display: none;
+}
+[_nghost-ng-c840921062]:hover   .icon-sun[_ngcontent-ng-c840921062] {
+  transform: rotate(45deg) scale(1.15);
+  filter: drop-shadow(0 0 var(--space-2) var(--warning-color));
+}
+[_nghost-ng-c840921062]:hover   .icon-moon[_ngcontent-ng-c840921062] {
+  transform: rotate(-15deg) scale(1.15);
+  filter: drop-shadow(0 0 var(--space-2) var(--primary-color));
+}
+/*# sourceMappingURL=/theme-switcher.component.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c1454432689] {
+  display: block;
+}
+.filter-bar[_ngcontent-ng-c1454432689] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  --select2-min-width: 0;
+  --fi-min-width: 0;
+}
+.filter-bar[_ngcontent-ng-c1454432689]    >   * {
+  flex: 1 1 160px;
+  min-width: 0;
+}
+.filter-actions[_ngcontent-ng-c1454432689] {
+  flex: 0 0 auto;
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+@media (max-width: 40rem) {
+  .filter-bar[_ngcontent-ng-c1454432689]    >   * {
+    flex: 1 1 100%;
+  }
+  .filter-actions[_ngcontent-ng-c1454432689] {
+    width: 100%;
+  }
+}
+/*# sourceMappingURL=/filters.component.styles.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c2382209496] {
+  display: block;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+[_nghost-ng-c2382209496]:has(.select2-wrapper.open) {
+  z-index: 1000;
+}
+.select2-wrapper[_ngcontent-ng-c2382209496] {
+  position: relative;
+  width: var(--select2-width, 100%);
+  min-width: var(--select2-min-width, 15rem);
+}
+.select2-wrapper.open[_ngcontent-ng-c2382209496] {
+  z-index: 1000;
+}
+.select2-wrapper.disabled[_ngcontent-ng-c2382209496] {
+  pointer-events: none;
+  color: var(--input-disabled-text);
+}
+.select2-wrapper.disabled[_ngcontent-ng-c2382209496]   .select2-trigger[_ngcontent-ng-c2382209496], 
+.tag-remove[_ngcontent-ng-c2382209496]:disabled {
+  cursor: not-allowed;
+}
+.select2-wrapper.has-label[_ngcontent-ng-c2382209496] {
+  margin-top: var(--space-3);
+}
+.select2-trigger[_ngcontent-ng-c2382209496] {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--control-height);
+  padding: var(--space-1) var(--space-3);
+  padding-right: var(--space-7);
+  background: var(--input-bg);
+  border: var(--input-border-width, 1.5px) solid var(--input-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 200ms ease;
+  font-size: var(--text-sm);
+  box-sizing: border-box;
+  box-shadow: var(--input-shadow);
+  --wails-draggable: no-drag;
+}
+.select2-wrapper.has-label[_ngcontent-ng-c2382209496]   .select2-trigger[_ngcontent-ng-c2382209496] {
+  padding: var(--space-1) var(--space-3);
+}
+.floating-label[_ngcontent-ng-c2382209496] {
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--text-sm);
+  color: var(--input-placeholder);
+  pointer-events: none;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--input-bg);
+  padding: 0 var(--space-2);
+  white-space: nowrap;
+}
+.select2-wrapper.focused[_ngcontent-ng-c2382209496]   .floating-label[_ngcontent-ng-c2382209496], 
+.select2-wrapper.has-value[_ngcontent-ng-c2382209496]   .floating-label[_ngcontent-ng-c2382209496] {
+  top: -0.625rem;
+  transform: translateY(0);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-body);
+  color: var(--info-color-text);
+}
+.select2-wrapper.multiple[_ngcontent-ng-c2382209496]   .select2-trigger[_ngcontent-ng-c2382209496] {
+  min-height: var(--control-height);
+  height: auto;
+  padding: var(--space-1) var(--space-3);
+  padding-right: var(--space-7);
+  align-items: center;
+}
+.select2-trigger[_ngcontent-ng-c2382209496]:hover {
+  border-color: var(--input-border-focus);
+  box-shadow: var(--input-shadow-hover);
+}
+.select2-wrapper.focused[_ngcontent-ng-c2382209496]   .select2-trigger[_ngcontent-ng-c2382209496] {
+  border-color: var(--input-border-focus);
+  box-shadow: var(--input-shadow-focus);
+}
+.select2-trigger[_ngcontent-ng-c2382209496]:focus-visible {
+  outline: none;
+  border-color: var(--input-border-focus);
+  box-shadow: var(--input-shadow-focus);
+}
+.select2-value[_ngcontent-ng-c2382209496] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  font-size: var(--text-sm);
+  color: var(--input-text);
+  line-height: normal;
+}
+.placeholder[_ngcontent-ng-c2382209496] {
+  color: var(--input-placeholder);
+}
+.select2-arrow[_ngcontent-ng-c2382209496] {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-color-secondary);
+  transition: transform 200ms ease;
+}
+.select2-wrapper.open[_ngcontent-ng-c2382209496]   .select2-arrow[_ngcontent-ng-c2382209496] {
+  transform: translateY(-50%) rotate(180deg);
+}
+.select2-tags[_ngcontent-ng-c2382209496] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  flex: 1;
+  padding: var(--space-1) 0;
+}
+.select2-tag[_ngcontent-ng-c2382209496] {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  background: var(--info-color-lighter);
+  color: var(--info-color-text);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-body);
+}
+.tag-remove[_ngcontent-ng-c2382209496] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-4);
+  height: var(--space-4);
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  font-size: var(--text-sm);
+  color: var(--info-color-text);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.tag-remove[_ngcontent-ng-c2382209496]:hover {
+  background: var(--info-color-lighter);
+}
+.select2-dropdown[_ngcontent-ng-c2382209496] {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--dropdown-bg);
+  border: 1px solid var(--dropdown-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 10000;
+  animation: _ngcontent-ng-c2382209496_dropdownSlide 200ms ease;
+  overflow: hidden;
+  --wails-draggable: no-drag;
+}
+@keyframes _ngcontent-ng-c2382209496_dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--space-2)));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.select2-search[_ngcontent-ng-c2382209496] {
+  position: relative;
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--dropdown-border);
+}
+.search-input[_ngcontent-ng-c2382209496] {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  padding-left: var(--space-7);
+  font-size: var(--text-md);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-sm);
+  background: var(--input-bg);
+  color: var(--input-text);
+  outline: none;
+  box-shadow: var(--shadow-xs);
+  transition: all 150ms ease;
+}
+.search-input[_ngcontent-ng-c2382209496]:hover:not(:focus) {
+  border-color: var(--input-border-hover);
+  box-shadow: var(--shadow-sm);
+}
+.search-input[_ngcontent-ng-c2382209496]:focus {
+  border-color: var(--input-border-focus);
+  background: var(--input-bg);
+  box-shadow: var(--input-shadow-focus);
+}
+.search-icon[_ngcontent-ng-c2382209496] {
+  position: absolute;
+  left: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--text-sm);
+}
+.select2-options[_ngcontent-ng-c2382209496] {
+  max-height: 240px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+.select2-options[_ngcontent-ng-c2382209496]::-webkit-scrollbar {
+  width: 6px;
+}
+.select2-options[_ngcontent-ng-c2382209496]::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+.select2-options[_ngcontent-ng-c2382209496]::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: var(--radius-full);
+}
+.select2-options[_ngcontent-ng-c2382209496]::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+.select2-option[_ngcontent-ng-c2382209496] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-md);
+  color: var(--dropdown-text, var(--text-color));
+  cursor: pointer;
+  transition: background 100ms ease;
+}
+.select2-option[_ngcontent-ng-c2382209496]:hover:not(.disabled), 
+.select2-option.highlighted[_ngcontent-ng-c2382209496]:not(.disabled) {
+  background: var(--dropdown-item-hover);
+}
+.select2-option.selected[_ngcontent-ng-c2382209496] {
+  background: var(--dropdown-item-selected);
+  color: var(--info-color-text);
+  font-weight: var(--font-weight-body);
+}
+.select2-option.disabled[_ngcontent-ng-c2382209496] {
+  cursor: not-allowed;
+  color: var(--input-disabled-text);
+}
+.option-icon[_ngcontent-ng-c2382209496] {
+  font-size: var(--text-md);
+}
+.option-label[_ngcontent-ng-c2382209496] {
+  flex: 1;
+}
+.check-icon[_ngcontent-ng-c2382209496] {
+  color: var(--info-color-text);
+  font-weight: bold;
+}
+.select2-no-results[_ngcontent-ng-c2382209496] {
+  padding: var(--space-4);
+  text-align: center;
+  color: var(--text-color-muted);
+  font-size: var(--text-sm);
+}
+/*# sourceMappingURL=/select2.component.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c2367026826] {
+  display: block;
+  width: 100%;
+}
+.floating-input-wrapper[_ngcontent-ng-c2367026826] {
+  position: relative;
+  width: var(--floating-input-width, 100%);
+  min-width: var(--fi-min-width, 8rem);
+  margin-top: var(--space-3);
+}
+.floating-input[_ngcontent-ng-c2367026826] {
+  width: 100%;
+  height: var(--control-height);
+  padding: 0 0.875rem;
+  line-height: calc(var(--control-height) - var(--space-1));
+  font-size: 0.875rem;
+  color: var(--input-text);
+  background: transparent;
+  border: none;
+  outline: none;
+  transition: all 200ms ease;
+  box-sizing: border-box;
+}
+.floating-input[type=date][_ngcontent-ng-c2367026826], 
+.floating-input[type=number][_ngcontent-ng-c2367026826] {
+  line-height: normal;
+  height: var(--control-height);
+  box-sizing: border-box;
+  margin: 0;
+}
+.floating-input[_ngcontent-ng-c2367026826]::-webkit-calendar-picker-indicator {
+  margin: 0;
+  padding: 0;
+}
+.floating-input-wrapper[_ngcontent-ng-c2367026826]:not(.focused):not(.has-value)   .floating-input[_ngcontent-ng-c2367026826]::-webkit-datetime-edit {
+  color: transparent;
+}
+.has-icon[_ngcontent-ng-c2367026826]   .floating-input[_ngcontent-ng-c2367026826] {
+  padding-right: var(--space-8);
+}
+.floating-input[_ngcontent-ng-c2367026826]::placeholder {
+  color: transparent;
+}
+.floating-input[_ngcontent-ng-c2367026826]::-ms-reveal, 
+.floating-input[_ngcontent-ng-c2367026826]::-ms-clear {
+  display: none;
+}
+.floating-label[_ngcontent-ng-c2367026826] {
+  position: absolute;
+  left: 0.875rem;
+  top: calc(var(--control-height) / 2);
+  transform: translateY(-50%);
+  font-size: 1.0625rem;
+  color: var(--input-placeholder);
+  pointer-events: none;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left center;
+  z-index: 10;
+}
+.focused[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826], 
+.has-value[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826] {
+  top: var(--space-1);
+  transform: translateY(0);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-body);
+  color: var(--info-color-text);
+}
+.input-line[_ngcontent-ng-c2367026826] {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--space-1);
+  background: var(--input-border);
+}
+.input-line[_ngcontent-ng-c2367026826]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: var(--space-1);
+  background: var(--info-color);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-50%);
+}
+.focused[_ngcontent-ng-c2367026826]   .input-line[_ngcontent-ng-c2367026826]::after {
+  width: 100%;
+}
+.variant-floating[_ngcontent-ng-c2367026826]   .floating-input[_ngcontent-ng-c2367026826] {
+  height: var(--control-height);
+  border: var(--input-border-width, 1.5px) solid var(--input-border);
+  border-radius: var(--radius-md);
+  background: var(--input-bg);
+  font-size: 0.875rem;
+  box-shadow: var(--input-shadow);
+}
+.variant-floating[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826] {
+  left: 0.875rem;
+  background: var(--input-bg);
+  padding: 0 var(--space-2);
+  white-space: nowrap;
+}
+.variant-floating.focused[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826], 
+.variant-floating.has-value[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826] {
+  top: -0.625rem;
+  transform: translateY(0);
+}
+.variant-floating.focused[_ngcontent-ng-c2367026826]   .floating-input[_ngcontent-ng-c2367026826] {
+  border-color: var(--input-border-focus);
+  box-shadow: var(--input-shadow-focus);
+}
+.variant-floating[_ngcontent-ng-c2367026826]   .input-line[_ngcontent-ng-c2367026826] {
+  display: none;
+}
+.variant-underline[_ngcontent-ng-c2367026826]   .floating-input[_ngcontent-ng-c2367026826] {
+  height: var(--control-height);
+  padding: 0;
+  padding-top: var(--space-5);
+  line-height: 1.5;
+  font-size: 0.875rem;
+  border-bottom: 1px solid var(--input-border);
+}
+.variant-underline[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826] {
+  left: 0;
+}
+.variant-underline.focused[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826], 
+.variant-underline.has-value[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826] {
+  top: calc(-1 * var(--space-1));
+  font-size: var(--space-3);
+}
+.variant-underline.focused[_ngcontent-ng-c2367026826]   .floating-input[_ngcontent-ng-c2367026826], 
+.variant-underline.has-value[_ngcontent-ng-c2367026826]   .floating-input[_ngcontent-ng-c2367026826] {
+  border-bottom-color: transparent;
+}
+.variant-underline[_ngcontent-ng-c2367026826]   .input-line[_ngcontent-ng-c2367026826] {
+  height: var(--space-1);
+}
+.variant-material[_ngcontent-ng-c2367026826]   .floating-input[_ngcontent-ng-c2367026826] {
+  height: var(--control-height);
+  padding: 0;
+  padding-top: var(--space-5);
+  line-height: 1.5;
+  font-size: 0.875rem;
+}
+.variant-material.has-icon[_ngcontent-ng-c2367026826]   .floating-input[_ngcontent-ng-c2367026826] {
+  padding-right: var(--space-8);
+}
+.variant-material[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826] {
+  left: 0;
+  font-size: 0.875rem;
+}
+.variant-material.focused[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826], 
+.variant-material.has-value[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826] {
+  top: calc(-1 * var(--space-1));
+  font-size: var(--space-3);
+  color: var(--primary-color);
+  font-weight: var(--font-weight-emphasis);
+}
+.variant-outline[_ngcontent-ng-c2367026826]   .floating-input[_ngcontent-ng-c2367026826] {
+  height: var(--control-height);
+  font-size: 0.875rem;
+  background: var(--input-bg);
+  border: var(--input-border-width, 1.5px) solid var(--input-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--input-shadow);
+}
+.variant-outline[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826] {
+  top: 50%;
+  background: var(--input-bg);
+  padding: 0 var(--space-2);
+  font-size: 1.0625rem;
+  white-space: nowrap;
+}
+.variant-outline.focused[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826], 
+.variant-outline.has-value[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826] {
+  top: -0.625rem;
+  font-size: 0.8125rem;
+}
+.variant-outline.focused[_ngcontent-ng-c2367026826]   .floating-input[_ngcontent-ng-c2367026826] {
+  border-color: var(--input-border-focus);
+  box-shadow: var(--input-shadow-focus);
+}
+.variant-outline[_ngcontent-ng-c2367026826]   .input-line[_ngcontent-ng-c2367026826] {
+  display: none;
+}
+.variant-floating[_ngcontent-ng-c2367026826]:not(.focused)   .floating-input[_ngcontent-ng-c2367026826]:hover, 
+.variant-outline[_ngcontent-ng-c2367026826]:not(.focused)   .floating-input[_ngcontent-ng-c2367026826]:hover {
+  border-color: var(--input-border-hover);
+  box-shadow: var(--input-shadow-hover);
+}
+.input-icon[_ngcontent-ng-c2367026826] {
+  position: absolute;
+  right: 0.875rem;
+  top: calc(var(--control-height) / 2);
+  transform: translateY(-50%);
+  color: var(--text-color-muted);
+  font-size: var(--space-4);
+  width: var(--space-5);
+  height: var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.input-icon-btn[_ngcontent-ng-c2367026826] {
+  position: absolute;
+  right: var(--space-2);
+  top: calc(var(--control-height) / 2);
+  transform: translateY(-50%);
+  width: var(--space-7);
+  height: var(--space-7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: var(--text-color-secondary);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.input-icon-btn[_ngcontent-ng-c2367026826]:hover {
+  background: var(--hover-background-subtle);
+  color: var(--primary-color);
+}
+.input-icon-btn[_ngcontent-ng-c2367026826]:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus-primary);
+}
+.input-icon-btn[_ngcontent-ng-c2367026826]:disabled {
+  cursor: not-allowed;
+  color: var(--input-disabled-text);
+}
+.input-icon-btn[_ngcontent-ng-c2367026826]:disabled:hover {
+  background: transparent;
+  color: var(--text-color-secondary);
+}
+.input-icon-btn--static[_ngcontent-ng-c2367026826] {
+  width: 1.75rem;
+  height: 1.75rem;
+  right: var(--space-3);
+  cursor: var(--floating-input-icon-cursor, default);
+}
+.input-icon-btn[_ngcontent-ng-c2367026826]   i[_ngcontent-ng-c2367026826] {
+  font-size: var(--space-4);
+}
+.disabled[_ngcontent-ng-c2367026826]   .floating-input[_ngcontent-ng-c2367026826] {
+  background: var(--input-disabled-bg);
+  cursor: not-allowed;
+  color: var(--input-disabled-text);
+}
+.has-error[_ngcontent-ng-c2367026826]   .floating-input[_ngcontent-ng-c2367026826] {
+  border-color: var(--danger-color) !important;
+}
+.has-error[_ngcontent-ng-c2367026826]   .floating-label[_ngcontent-ng-c2367026826] {
+  color: var(--danger-color-text) !important;
+}
+.has-error[_ngcontent-ng-c2367026826]   .input-line[_ngcontent-ng-c2367026826]::after {
+  background: var(--danger-color);
+}
+.input-error[_ngcontent-ng-c2367026826] {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: 0.8125rem;
+  color: var(--danger-color-text);
+}
+/*# sourceMappingURL=/floating-input.component.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c2411861866] {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+.datepicker-trigger[_ngcontent-ng-c2411861866] {
+  position: relative;
+  cursor: pointer;
+}
+.calendar-icon-btn[_ngcontent-ng-c2411861866] {
+  position: absolute;
+  right: var(--space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-7);
+  height: var(--space-7);
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  z-index: 20;
+}
+.calendar-icon-btn[_ngcontent-ng-c2411861866]:hover {
+  background-color: var(--hover-background-subtle);
+  color: var(--primary-color);
+}
+.datepicker-popup[_ngcontent-ng-c2411861866] {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  margin-top: var(--space-2);
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-4);
+  width: 320px;
+  box-sizing: border-box;
+  animation: _ngcontent-ng-c2411861866_slideDown 0.2s ease-out;
+  transform-origin: top left;
+}
+@keyframes _ngcontent-ng-c2411861866_slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.calendar-header[_ngcontent-ng-c2411861866] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+.current-month[_ngcontent-ng-c2411861866] {
+  font-weight: var(--font-weight-emphasis);
+  color: var(--text-color);
+  font-size: var(--text-md);
+  text-transform: capitalize;
+}
+.nav-btn[_ngcontent-ng-c2411861866] {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  width: var(--space-6);
+  height: var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-color-secondary);
+  transition: all 0.2s;
+}
+.nav-btn[_ngcontent-ng-c2411861866]:hover {
+  background-color: var(--hover-background);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.calendar-grid[_ngcontent-ng-c2411861866] {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-1);
+  text-align: center;
+}
+.weekday-label[_ngcontent-ng-c2411861866] {
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-emphasis);
+  color: var(--text-color-muted);
+  padding-bottom: var(--space-2);
+  text-transform: uppercase;
+}
+.calendar-day[_ngcontent-ng-c2411861866] {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s;
+  color: var(--text-color);
+  -webkit-user-select: none;
+  user-select: none;
+}
+.calendar-day[_ngcontent-ng-c2411861866]:hover:not(.empty):not(.disabled) {
+  background-color: var(--hover-background);
+  color: var(--primary-color);
+}
+.calendar-day.empty[_ngcontent-ng-c2411861866] {
+  cursor: default;
+}
+.calendar-day.today[_ngcontent-ng-c2411861866] {
+  font-weight: var(--font-weight-title);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+.calendar-day.selected[_ngcontent-ng-c2411861866] {
+  background-color: var(--primary-color);
+  color: var(--text-color-on-primary);
+  font-weight: var(--font-weight-emphasis);
+}
+.calendar-day.disabled[_ngcontent-ng-c2411861866] {
+  color: var(--text-color-disabled);
+  cursor: not-allowed;
+}
+.month-grid[_ngcontent-ng-c2411861866], 
+.year-grid[_ngcontent-ng-c2411861866] {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  padding: var(--space-2);
+}
+.calendar-option[_ngcontent-ng-c2411861866] {
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-body);
+  color: var(--text-color);
+  transition: all 0.2s;
+  text-transform: capitalize;
+}
+.calendar-option[_ngcontent-ng-c2411861866]:hover {
+  background-color: var(--hover-background);
+  color: var(--primary-color);
+}
+.calendar-option.selected[_ngcontent-ng-c2411861866] {
+  background-color: var(--primary-color);
+  color: var(--text-color-on-primary);
+  font-weight: var(--font-weight-emphasis);
+}
+.calendar-option.current[_ngcontent-ng-c2411861866] {
+  color: var(--primary-color);
+  background-color: var(--hover-background);
+  font-weight: var(--font-weight-title);
+  border: 1px solid var(--primary-color);
+}
+/*# sourceMappingURL=/datepicker.component.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c3617060973] {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.panel[_ngcontent-ng-c3617060973] {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: visible;
+  box-shadow: var(--shadow-md);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.panel--plain[_ngcontent-ng-c3617060973] {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+.panel--plain[_ngcontent-ng-c3617060973]   .panel__header[_ngcontent-ng-c3617060973] {
+  background: transparent;
+  border-bottom: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+.panel--floating[_ngcontent-ng-c3617060973] {
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+}
+.panel--floating[_ngcontent-ng-c3617060973]   .panel__header[_ngcontent-ng-c3617060973] {
+  background: transparent;
+  border-bottom: none;
+}
+.panel--elevated[_ngcontent-ng-c3617060973], 
+.panel--card[_ngcontent-ng-c3617060973] {
+  border: none;
+  background: var(--surface-background);
+  box-shadow: var(--shadow-md);
+}
+.panel--elevated[_ngcontent-ng-c3617060973]:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(calc(-1 * var(--space-1)));
+}
+.panel--card[_ngcontent-ng-c3617060973] {
+  box-shadow: var(--shadow-sm);
+}
+.panel--card[_ngcontent-ng-c3617060973]:hover {
+  transform: none;
+  box-shadow: var(--shadow-sm);
+}
+.panel--flat[_ngcontent-ng-c3617060973] {
+  border: none;
+  background: var(--surface-section);
+  box-shadow: none;
+}
+.panel--outlined[_ngcontent-ng-c3617060973] {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  box-shadow: none;
+}
+.panel--outlined[_ngcontent-ng-c3617060973]   .panel__header[_ngcontent-ng-c3617060973] {
+  background: var(--surface-section);
+}
+.panel--transparent[_ngcontent-ng-c3617060973] {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+.panel--transparent[_ngcontent-ng-c3617060973]   .panel__header[_ngcontent-ng-c3617060973] {
+  background: transparent;
+  border-bottom-color: var(--border-color-light, var(--border-color));
+}
+.panel--transparent[_ngcontent-ng-c3617060973]   .panel__footer[_ngcontent-ng-c3617060973]:not(:empty) {
+  background: transparent;
+  border-top-color: var(--border-color-light, var(--border-color));
+}
+.panel--padding-none[_ngcontent-ng-c3617060973]   .panel__body[_ngcontent-ng-c3617060973] {
+  padding: 0;
+}
+.panel--padding-sm[_ngcontent-ng-c3617060973]   .panel__body[_ngcontent-ng-c3617060973] {
+  padding: var(--space-3);
+}
+.panel--padding-md[_ngcontent-ng-c3617060973]   .panel__body[_ngcontent-ng-c3617060973] {
+  padding: var(--space-6);
+}
+.panel--padding-lg[_ngcontent-ng-c3617060973]   .panel__body[_ngcontent-ng-c3617060973] {
+  padding: var(--space-6) var(--space-8);
+}
+.panel__header[_ngcontent-ng-c3617060973] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border-color);
+  background: var(--surface-section);
+  border-top-left-radius: calc(var(--radius-lg) - 1px);
+  border-top-right-radius: calc(var(--radius-lg) - 1px);
+}
+.panel__icon[_ngcontent-ng-c3617060973] {
+  font-size: var(--text-xl);
+  line-height: 1;
+}
+.panel__title[_ngcontent-ng-c3617060973] {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-emphasis);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-color-secondary);
+  margin: 0;
+  flex: 1;
+}
+.panel__title--size-sm[_ngcontent-ng-c3617060973] {
+  font-size: var(--text-xs);
+}
+.panel__title--size-md[_ngcontent-ng-c3617060973] {
+  font-size: var(--text-sm);
+}
+.panel__title--size-lg[_ngcontent-ng-c3617060973] {
+  font-size: var(--text-md);
+}
+.panel__title--size-xl[_ngcontent-ng-c3617060973] {
+  font-size: var(--text-lg);
+}
+.panel__title--weight-normal[_ngcontent-ng-c3617060973] {
+  font-weight: var(--font-weight-body);
+}
+.panel__title--weight-medium[_ngcontent-ng-c3617060973] {
+  font-weight: var(--font-weight-body);
+}
+.panel__title--weight-semibold[_ngcontent-ng-c3617060973] {
+  font-weight: var(--font-weight-emphasis);
+}
+.panel__title--weight-bold[_ngcontent-ng-c3617060973] {
+  font-weight: var(--font-weight-title);
+}
+.panel__title--align-left[_ngcontent-ng-c3617060973] {
+  text-align: left;
+}
+.panel__title--align-center[_ngcontent-ng-c3617060973] {
+  text-align: center;
+}
+.panel__title--align-right[_ngcontent-ng-c3617060973] {
+  text-align: right;
+}
+.panel__header-actions[_ngcontent-ng-c3617060973] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.panel__body[_ngcontent-ng-c3617060973] {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.panel__footer[_ngcontent-ng-c3617060973] {
+  padding: 0;
+}
+.panel__footer[_ngcontent-ng-c3617060973]:empty {
+  display: none;
+}
+.panel__footer[_ngcontent-ng-c3617060973]:not(:empty) {
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--border-color);
+  background: var(--surface-section);
+}
+@media (max-width: 48rem) {
+  .panel__header[_ngcontent-ng-c3617060973] {
+    padding: var(--space-3) var(--space-4);
+  }
+  .panel--padding-md[_ngcontent-ng-c3617060973]   .panel__body[_ngcontent-ng-c3617060973] {
+    padding: var(--space-3) var(--space-4);
+  }
+  .panel--padding-lg[_ngcontent-ng-c3617060973]   .panel__body[_ngcontent-ng-c3617060973] {
+    padding: var(--space-4) var(--space-5);
+  }
+}
+/*# sourceMappingURL=/panel.component.css.map */</style><style ng-app-id="ng">/* src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css */
+.so-root {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  --so-thumb-color-start: color-mix(in srgb, var(--text-color) 30%, transparent);
+  --so-thumb-color-end: color-mix(in srgb, var(--text-color) 30%, transparent);
+  --so-thumb-color-hover: color-mix(in srgb, var(--text-color) 45%, transparent);
+  --so-thumb-color-active: color-mix(in srgb, var(--text-color) 60%, transparent);
+  --so-track-size: 7px;
+  --so-thumb-blur: var(--space-1);
+  --so-min-column-width: 140px;
+  --so-scroll-end-space: calc(var(--so-track-size) + var(--space-8));
+}
+.so-root[data-so-table] {
+  border: 1px solid var(--table-color-border, var(--border-color));
+  border-radius: var(--table-border-radius, var(--space-2));
+}
+@media screen and (max-width: 48rem) {
+  .so-root[data-so-table] {
+    border: none;
+    border-radius: 0;
+  }
+}
+.so-root.so-block {
+  display: block;
+  height: 100%;
+}
+.so-scroll-area {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+  box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.so-scroll-area::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.so-scroll-area {
+  padding-bottom: var(--so-scroll-end-space);
+  scroll-padding-bottom: var(--so-scroll-end-space);
+}
+.so-root:not(.so-has-overflow-x) .so-scroll-area {
+  padding-bottom: 0;
+  scroll-padding-bottom: 0;
+}
+.so-root[data-so-table].so-has-overflow-x tbody[data-so-vertical] {
+  padding-bottom: var(--so-scroll-end-space);
+  scroll-padding-bottom: var(--so-scroll-end-space);
+}
+.so-root[data-so-table] .so-scroll-area {
+  overflow-y: auto;
+}
+.so-root [data-so-managed-scrollbar] {
+  overscroll-behavior: contain;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.so-root [data-so-managed-scrollbar]::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.so-root [data-so-native-scrollbar] {
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: auto;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+.so-root [data-so-native-scrollbar]::-webkit-scrollbar {
+  display: block;
+  width: var(--space-3);
+  height: var(--space-3);
+}
+.so-root [data-so-native-scrollbar]::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+.so-root [data-so-native-scrollbar]::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border: var(--space-1) solid var(--scrollbar-track);
+  border-radius: var(--radius-full);
+}
+.so-root [data-so-native-scrollbar]::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+.so-root [data-so-native-scrollbar]::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track);
+}
+.so-root.so-native-scrollbars > .so-scrollbar,
+.so-root.so-native-scrollbars::after {
+  display: none !important;
+}
+.so-scrollbar {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  z-index: 20;
+  display: none;
+}
+.so-root.so-scrolling .so-scrollbar,
+.so-root:hover .so-scrollbar {
+  opacity: 1;
+}
+.so-root.so-scrolling .so-scrollbar,
+.so-root:hover .so-scrollbar,
+.so-scrollbar:focus-within {
+  pointer-events: auto;
+}
+.so-root.so-has-overflow-y .so-scrollbar-y {
+  display: block;
+}
+.so-root.so-has-overflow-x .so-scrollbar-x {
+  display: block;
+}
+.so-root.so-has-overflow-x::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--so-track-size);
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      color-mix(in srgb, var(--gray-0) 12%, transparent));
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+.so-root.so-has-overflow-x.so-scrolling::after,
+.so-root.so-has-overflow-x:hover::after {
+  opacity: 1;
+}
+.so-scrollbar-y {
+  right: var(--space-1);
+  top: 0;
+  width: var(--so-track-size);
+  height: 0;
+}
+.so-scrollbar-x {
+  left: 0;
+  top: 0;
+  height: var(--so-track-size);
+  width: 0;
+  z-index: 20;
+}
+.so-thumb {
+  position: absolute;
+  border-radius: var(--radius-full);
+  -webkit-backdrop-filter: blur(var(--so-thumb-blur));
+  backdrop-filter: blur(var(--so-thumb-blur));
+  will-change:
+    transform,
+    width,
+    height,
+    opacity;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+  background:
+    linear-gradient(
+      90deg,
+      var(--so-thumb-color-start),
+      var(--so-thumb-color-end));
+}
+.so-thumb:active {
+  cursor: grabbing;
+  background: var(--so-thumb-color-active);
+}
+.so-thumb:hover {
+  background: var(--so-thumb-color-hover);
+}
+.so-thumb-y {
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: calc(var(--space-1) * 3);
+  transform: translateY(0);
+  background:
+    linear-gradient(
+      180deg,
+      var(--so-thumb-color-start),
+      var(--so-thumb-color-end));
+}
+.so-thumb-x {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: calc(var(--space-1) * 3);
+  transform: translateX(0);
+}
+.so-root[data-so-max-height] [data-so-vertical] {
+  max-height: var(--so-max-height, 100%);
+  height: var(--so-body-height, auto);
+  min-height: var(--so-body-height, auto);
+}
+.so-root[data-so-max-height]:not([data-so-table]) .so-scroll-area,
+.so-root[data-so-max-height][data-so-table]:not([data-so-sync-columns]) .so-scroll-area {
+  max-height: var(--so-max-height, 100%);
+  height: var(--so-body-height, auto);
+  min-height: var(--so-body-height, auto);
+}
+.so-root.so-no-vertical .so-scrollbar-y,
+.so-root.so-no-horizontal .so-scrollbar-x {
+  display: none !important;
+}
+.so-root[data-so-table][data-so-sync-columns] table {
+  border-collapse: collapse;
+  width: max-content;
+  min-width: 100%;
+  display: block;
+}
+.so-root.so-lock-template[data-so-table][data-so-sync-columns] table {
+  width: 100%;
+  min-width: max-content;
+}
+.so-root[data-so-table][data-so-sync-columns] thead,
+.so-root[data-so-table][data-so-sync-columns] tbody {
+  display: block;
+  width: 100%;
+}
+.so-root[data-so-table][data-so-sync-columns] thead {
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.so-root[data-so-table][data-so-sync-columns] thead tr,
+.so-root[data-so-table][data-so-sync-columns] tbody tr {
+  display: grid;
+  grid-template-columns: var( --so-column-template, repeat(auto-fit, minmax(var(--so-min-column-width, 140px), max-content)) );
+  width: max-content;
+  min-width: 100%;
+}
+.so-root[data-so-table][data-so-sync-columns] tbody[data-so-vertical] {
+  display: block;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+.so-root[data-so-table][data-so-sync-columns] th,
+.so-root[data-so-table][data-so-sync-columns] td {
+  min-width: var(--so-min-column-width, 140px);
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+.so-root[data-so-table]:not([data-so-sync-columns]) table {
+  width: max-content;
+  min-width: 100%;
+}
+.so-root[data-so-table]:not([data-so-sync-columns]) tbody[data-so-vertical] {
+  display: block;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: var(--so-max-height, 100%);
+  height: var(--so-body-height, auto);
+  min-height: var(--so-body-height, auto);
+}
+/*# sourceMappingURL=/scroll-overlay.component.css.map */
+</style><style ng-app-id="ng">
+[_nghost-ng-c2145491401] {
+  display: block;
+}
+h1[_ngcontent-ng-c2145491401], 
+h2[_ngcontent-ng-c2145491401], 
+h3[_ngcontent-ng-c2145491401], 
+h4[_ngcontent-ng-c2145491401], 
+p[_ngcontent-ng-c2145491401] {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+.align-left[_ngcontent-ng-c2145491401] {
+  text-align: left;
+}
+.align-center[_ngcontent-ng-c2145491401] {
+  text-align: center;
+}
+.align-right[_ngcontent-ng-c2145491401] {
+  text-align: right;
+}
+.align-justify[_ngcontent-ng-c2145491401] {
+  text-align: justify;
+}
+.text-h1[_ngcontent-ng-c2145491401] {
+  font-size: var(--text-4xl, var(--space-7));
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin-top: var(--space-9);
+  margin-bottom: var(--space-3);
+}
+.text-h2[_ngcontent-ng-c2145491401] {
+  font-size: var(--text-3xl, 1.875rem);
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  margin-top: var(--space-9);
+  margin-bottom: var(--space-3);
+}
+.text-h3[_ngcontent-ng-c2145491401] {
+  font-size: var(--text-2xl, var(--space-5));
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+  margin-top: var(--space-9);
+  margin-bottom: var(--space-3);
+}
+.text-h4[_ngcontent-ng-c2145491401] {
+  font-size: var(--text-xl, var(--space-5));
+  letter-spacing: -0.015em;
+  line-height: 1.4;
+  margin-top: var(--space-9);
+  margin-bottom: var(--space-3);
+}
+[_nghost-ng-c2145491401]:first-child   .text-h1[_ngcontent-ng-c2145491401], 
+[_nghost-ng-c2145491401]:first-child   .text-h2[_ngcontent-ng-c2145491401], 
+[_nghost-ng-c2145491401]:first-child   .text-h3[_ngcontent-ng-c2145491401], 
+[_nghost-ng-c2145491401]:first-child   .text-h4[_ngcontent-ng-c2145491401] {
+  margin-top: 0;
+}
+.text-body-lg[_ngcontent-ng-c2145491401] {
+  font-size: var(--text-lg);
+}
+.text-body[_ngcontent-ng-c2145491401] {
+  font-size: var(--text-md);
+}
+.text-body-sm[_ngcontent-ng-c2145491401] {
+  font-size: var(--text-sm);
+}
+.text-caption[_ngcontent-ng-c2145491401] {
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+}
+.text-label[_ngcontent-ng-c2145491401] {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.weight-normal[_ngcontent-ng-c2145491401] {
+  font-weight: var(--font-weight-body);
+}
+.weight-medium[_ngcontent-ng-c2145491401] {
+  font-weight: var(--font-weight-body);
+}
+.weight-semibold[_ngcontent-ng-c2145491401] {
+  font-weight: var(--font-weight-emphasis);
+}
+.weight-bold[_ngcontent-ng-c2145491401] {
+  font-weight: var(--font-weight-title);
+}
+.color-default[_ngcontent-ng-c2145491401] {
+  color: var(--text-color);
+}
+.color-primary[_ngcontent-ng-c2145491401] {
+  color: var(--primary-color);
+}
+.color-secondary[_ngcontent-ng-c2145491401] {
+  color: var(--secondary-color);
+}
+.color-muted[_ngcontent-ng-c2145491401] {
+  color: var(--text-color-secondary);
+}
+.color-success[_ngcontent-ng-c2145491401] {
+  color: var(--success-color-text);
+}
+.color-warning[_ngcontent-ng-c2145491401] {
+  color: var(--warning-color-text);
+}
+.color-danger[_ngcontent-ng-c2145491401] {
+  color: var(--danger-color-text);
+}
+.color-white[_ngcontent-ng-c2145491401] {
+  color: var(--white, var(--gray-0));
+}
+/*# sourceMappingURL=/text.component.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c4174804188] {
+  display: block;
+  width: 100%;
+}
+[_nghost-ng-c4174804188]:has(.row--variant-form) {
+  margin-bottom: var(--space-5);
+}
+.row[_ngcontent-ng-c4174804188] {
+  display: grid;
+  width: 100%;
+  box-sizing: border-box;
+  align-items: stretch;
+  grid-template-columns: var(--row-columns, 1fr);
+  gap: var(--row-gap, var(--space-7));
+}
+.row--variant-form[_ngcontent-ng-c4174804188] {
+  align-items: start;
+}
+.row--responsive[_ngcontent-ng-c4174804188] {
+}
+.row--wrap[_ngcontent-ng-c4174804188] {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row--wrap[_ngcontent-ng-c4174804188]    > *[_ngcontent-ng-c4174804188] {
+  flex: 1 1 auto;
+}
+.row--align-left[_ngcontent-ng-c4174804188] {
+  justify-items: start;
+}
+.row--align-center[_ngcontent-ng-c4174804188] {
+  justify-items: center;
+}
+.row--align-right[_ngcontent-ng-c4174804188] {
+  justify-items: end;
+}
+.row--align-stretch[_ngcontent-ng-c4174804188] {
+  justify-items: stretch;
+}
+.row--justify-start[_ngcontent-ng-c4174804188] {
+  justify-content: start;
+}
+.row--justify-center[_ngcontent-ng-c4174804188] {
+  justify-content: center;
+}
+.row--justify-end[_ngcontent-ng-c4174804188] {
+  justify-content: end;
+}
+.row--justify-between[_ngcontent-ng-c4174804188] {
+  justify-content: space-between;
+}
+.row--justify-around[_ngcontent-ng-c4174804188] {
+  justify-content: space-around;
+}
+.row--valign-top[_ngcontent-ng-c4174804188] {
+  align-items: start;
+}
+.row--valign-center[_ngcontent-ng-c4174804188] {
+  align-items: center;
+}
+.row--valign-bottom[_ngcontent-ng-c4174804188] {
+  align-items: end;
+}
+.row--valign-stretch[_ngcontent-ng-c4174804188] {
+  align-items: stretch;
+}
+.row--valign-baseline[_ngcontent-ng-c4174804188] {
+  align-items: baseline;
+}
+  .justify-start {
+  justify-self: start !important;
+}
+  .justify-center {
+  justify-self: center !important;
+}
+  .justify-end {
+  justify-self: end !important;
+}
+  .align-self-start {
+  align-self: start !important;
+}
+  .align-self-center {
+  align-self: center !important;
+}
+  .align-self-end {
+  align-self: end !important;
+}
+@media (max-width: 40rem) {
+  .row[_ngcontent-ng-c4174804188]:not(.row--responsive) {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-5) !important;
+  }
+}
+/*# sourceMappingURL=/row.component.css.map */</style><style ng-app-id="ng">
+.chip[_ngcontent-ng-c235153527] {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-emphasis);
+  line-height: 1.1;
+  transition: all 150ms ease;
+  border: 1px solid transparent;
+}
+.chip-sm[_ngcontent-ng-c235153527] {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-xs);
+}
+.chip-md[_ngcontent-ng-c235153527] {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-xs);
+}
+.chip-lg[_ngcontent-ng-c235153527] {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-sm);
+}
+.chip-default[_ngcontent-ng-c235153527] {
+  background: var(--surface-elevated);
+  color: var(--text-color-secondary);
+}
+.chip-primary[_ngcontent-ng-c235153527] {
+  background: var(--primary-color-lighter);
+  background: color-mix(in srgb, var(--primary-color) 12%, var(--surface-elevated, transparent));
+  border-color: color-mix(in srgb, var(--primary-color) 28%, var(--border-color, transparent));
+  color: color-mix(in srgb, var(--primary-color) 72%, var(--text-color));
+}
+.chip-secondary[_ngcontent-ng-c235153527] {
+  background: var(--secondary-color-light, var(--secondary-color-lighter));
+  color: var(--secondary-color-text, var(--secondary-color));
+}
+.chip-success[_ngcontent-ng-c235153527] {
+  background: var(--success-color-light);
+  color: var(--success-color-text, var(--success-color));
+}
+.chip-warning[_ngcontent-ng-c235153527] {
+  background: var(--warning-color-light);
+  color: var(--warning-color-text, var(--warning-color));
+}
+.chip-error[_ngcontent-ng-c235153527] {
+  background: var(--danger-color-light);
+  color: var(--danger-color-text, var(--danger-color));
+}
+.chip-info[_ngcontent-ng-c235153527] {
+  background: var(--info-color-light);
+  color: var(--info-color-text, var(--info-color));
+}
+.chip-outline[_ngcontent-ng-c235153527] {
+  background: transparent;
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+.chip-interactive[_ngcontent-ng-c235153527] {
+  cursor: pointer;
+}
+.chip-interactive[_ngcontent-ng-c235153527]:hover {
+  filter: brightness(0.95);
+}
+.chip-interactive[_ngcontent-ng-c235153527]:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.chip-selected[_ngcontent-ng-c235153527] {
+  background: var(--primary-color);
+  color: var(--gray-0);
+}
+.chip-icon[_ngcontent-ng-c235153527] {
+  font-size: var(--text-sm);
+}
+.chip-remove[_ngcontent-ng-c235153527] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-4);
+  height: var(--space-4);
+  margin-left: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  color: currentColor;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: all 100ms ease;
+}
+.chip-remove[_ngcontent-ng-c235153527]:hover {
+  opacity: 1;
+  background: var(--hover-background-subtle);
+}
+/*# sourceMappingURL=/chip.component.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c2506274012] {
+  display: inline-block;
+  position: relative;
+}
+.user-menu[_ngcontent-ng-c2506274012] {
+  position: relative;
+}
+.user-menu__trigger[_ngcontent-ng-c2506274012] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--control-height);
+  height: var(--control-height);
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.user-menu__trigger[_ngcontent-ng-c2506274012]:hover {
+  transform: scale(1.05);
+}
+.user-menu__dropdown[_ngcontent-ng-c2506274012] {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  min-width: min(220px, calc(100vw - var(--space-6)));
+  max-width: calc(100vw - var(--space-4));
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(calc(-1 * var(--space-2)));
+  transition: all 200ms ease;
+  z-index: 1000;
+  overflow: hidden;
+}
+.user-menu.open[_ngcontent-ng-c2506274012]   .user-menu__dropdown[_ngcontent-ng-c2506274012] {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.user-menu__header[_ngcontent-ng-c2506274012] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+.user-menu__info[_ngcontent-ng-c2506274012] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+.user-menu__name[_ngcontent-ng-c2506274012] {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-emphasis);
+  color: var(--text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user-menu__email[_ngcontent-ng-c2506274012] {
+  font-size: var(--text-xs);
+  color: var(--text-color-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user-menu__role[_ngcontent-ng-c2506274012] {
+  color: var(--primary-color);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-emphasis);
+  text-transform: uppercase;
+}
+.user-menu__divider[_ngcontent-ng-c2506274012] {
+  height: 1px;
+  background: var(--border-color);
+  margin: 0;
+}
+.user-menu__item[_ngcontent-ng-c2506274012] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  text-align: left;
+}
+.user-menu__item[_ngcontent-ng-c2506274012]:hover {
+  background: var(--surface-hover);
+}
+.user-menu__item--danger[_ngcontent-ng-c2506274012] {
+  color: var(--danger-color-text);
+}
+.user-menu__item--danger[_ngcontent-ng-c2506274012]:hover {
+  background: var(--danger-color-lighter);
+}
+.user-menu__item-icon[_ngcontent-ng-c2506274012] {
+  font-size: var(--text-md);
+  width: var(--space-5);
+  text-align: center;
+}
+.user-menu__item-label[_ngcontent-ng-c2506274012] {
+  flex: 1;
+  text-transform: uppercase;
+}
+.user-menu__trigger--extended[_ngcontent-ng-c2506274012] {
+  width: auto;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+  gap: var(--space-3);
+  text-align: left;
+}
+.user-menu__trigger--extended[_ngcontent-ng-c2506274012]:hover {
+  background: var(--surface-hover);
+  transform: none;
+}
+.user-menu__trigger-info[_ngcontent-ng-c2506274012] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.user-menu__trigger-name[_ngcontent-ng-c2506274012] {
+  font-size: var(--text-sm);
+  font-weight: bold;
+  color: var(--text-color);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.user-menu__trigger-role[_ngcontent-ng-c2506274012] {
+  font-size: var(--text-xs);
+  color: var(--text-color-secondary);
+  line-height: 1.2;
+}
+.user-menu__trigger-chevron[_ngcontent-ng-c2506274012] {
+  font-size: var(--icon-sm);
+  color: var(--text-color-secondary);
+  margin-left: var(--space-1);
+}
+/*# sourceMappingURL=/user-menu.component.css.map */</style><style ng-app-id="ng">
+.avatar[_ngcontent-ng-c1865759971] {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--avatar-background-color, var(--surface-elevated));
+  color: var(--text-color);
+  overflow: hidden;
+  flex-shrink: 0;
+  aspect-ratio: 1;
+}
+.avatar-rounded[_ngcontent-ng-c1865759971] {
+  border-radius: var(--radius-md);
+}
+.avatar-primary[_ngcontent-ng-c1865759971] {
+  background-color: var(--avatar-background-color, var(--primary-color-lighter));
+  color: var(--primary-color);
+}
+.avatar-secondary[_ngcontent-ng-c1865759971] {
+  background-color: var(--avatar-background-color, var(--secondary-color-lighter));
+  color: var(--secondary-color);
+}
+.avatar-success[_ngcontent-ng-c1865759971] {
+  background-color: var(--avatar-background-color, var(--success-color-lighter));
+  color: var(--success-color-text);
+}
+.avatar-warning[_ngcontent-ng-c1865759971] {
+  background-color: var(--avatar-background-color, var(--warning-color-lighter));
+  color: var(--warning-color-text);
+}
+.avatar-danger[_ngcontent-ng-c1865759971] {
+  background-color: var(--avatar-background-color, var(--danger-color-lighter));
+  color: var(--danger-color-text);
+}
+.avatar-info[_ngcontent-ng-c1865759971] {
+  background-color: var(--avatar-background-color, var(--info-color-lighter));
+  color: var(--info-color-text);
+}
+.avatar-xs[_ngcontent-ng-c1865759971] {
+  width: var(--avatar-size-xs, var(--space-5));
+  height: var(--avatar-size-xs, var(--space-5));
+  font-size: var(--text-xs);
+}
+.avatar-sm[_ngcontent-ng-c1865759971] {
+  width: var(--avatar-size-sm, var(--space-6));
+  height: var(--avatar-size-sm, var(--space-6));
+  font-size: var(--text-xs);
+}
+.avatar-md[_ngcontent-ng-c1865759971] {
+  width: var(--avatar-size-md, 2.5rem);
+  height: var(--avatar-size-md, 2.5rem);
+  font-size: var(--text-sm);
+}
+.avatar-lg[_ngcontent-ng-c1865759971] {
+  width: var(--avatar-size-lg, var(--space-8));
+  height: var(--avatar-size-lg, var(--space-8));
+  font-size: var(--text-lg);
+}
+.avatar-xl[_ngcontent-ng-c1865759971] {
+  width: var(--avatar-size-xl, 4rem);
+  height: var(--avatar-size-xl, 4rem);
+  font-size: var(--text-xl);
+}
+.avatar[_ngcontent-ng-c1865759971]   img[_ngcontent-ng-c1865759971] {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.avatar[_ngcontent-ng-c1865759971]   i[_ngcontent-ng-c1865759971] {
+  font-size: 1.2em;
+}
+.avatar-initials[_ngcontent-ng-c1865759971] {
+  font-weight: var(--font-weight-emphasis);
+  text-transform: uppercase;
+  color: white;
+}
+.avatar[_ngcontent-ng-c1865759971]:not(.avatar-default)   .avatar-initials[_ngcontent-ng-c1865759971] {
+  color: currentColor;
+}
+.avatar-placeholder[_ngcontent-ng-c1865759971] {
+  width: 60%;
+  height: 60%;
+  color: var(--text-color-muted);
+}
+.avatar-placeholder[_ngcontent-ng-c1865759971]   svg[_ngcontent-ng-c1865759971] {
+  width: 100%;
+  height: 100%;
+}
+.avatar-status[_ngcontent-ng-c1865759971] {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+  height: 25%;
+  min-width: var(--space-2);
+  min-height: var(--space-2);
+  border-radius: var(--radius-full);
+  border: var(--space-1) solid var(--surface-background);
+}
+.status-online[_ngcontent-ng-c1865759971] {
+  background: var(--success-color);
+}
+.status-offline[_ngcontent-ng-c1865759971] {
+  background: var(--text-color-secondary);
+}
+.status-busy[_ngcontent-ng-c1865759971] {
+  background: var(--danger-color);
+}
+.status-away[_ngcontent-ng-c1865759971] {
+  background: var(--warning-color);
+}
+html.dark[_nghost-ng-c1865759971]   .avatar-default[_ngcontent-ng-c1865759971], html.dark   [_nghost-ng-c1865759971]   .avatar-default[_ngcontent-ng-c1865759971], 
+[data-theme="dark"][_nghost-ng-c1865759971]   .avatar-default[_ngcontent-ng-c1865759971], [data-theme="dark"]   [_nghost-ng-c1865759971]   .avatar-default[_ngcontent-ng-c1865759971] {
+  background: var(--avatar-background-color, var(--surface-section));
+}
+html.dark[_nghost-ng-c1865759971]   .avatar-status[_ngcontent-ng-c1865759971], html.dark   [_nghost-ng-c1865759971]   .avatar-status[_ngcontent-ng-c1865759971], 
+[data-theme="dark"][_nghost-ng-c1865759971]   .avatar-status[_ngcontent-ng-c1865759971], [data-theme="dark"]   [_nghost-ng-c1865759971]   .avatar-status[_ngcontent-ng-c1865759971] {
+  border-color: var(--surface-section);
+}
+/*# sourceMappingURL=/avatar.component.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c1448976233] {
+  display: inline-block;
+}
+.icon-btn[_ngcontent-ng-c1448976233] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--control-height);
+  height: var(--control-height);
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-color-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+.icon-btn[_ngcontent-ng-c1448976233]:hover {
+  background: var(--surface-hover);
+  color: var(--primary-color);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--shadow-md);
+  filter: brightness(1.1);
+}
+.icon-btn[_ngcontent-ng-c1448976233]:active {
+  transform: scale(0.95);
+}
+.icon-btn[_ngcontent-ng-c1448976233]:disabled {
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--text-color-secondary);
+  transform: none !important;
+}
+.icon-btn--ghost[_ngcontent-ng-c1448976233] {
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+.icon-btn--ghost[_ngcontent-ng-c1448976233]:hover {
+  background: transparent;
+  color: var(--primary-color);
+  box-shadow: none;
+  border: 1px solid transparent;
+}
+.icon-btn--avatar[_ngcontent-ng-c1448976233] {
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary-color),
+      var(--primary-color-dark));
+  border-radius: 50%;
+  border: none;
+  box-shadow: none;
+  color: var(--text-color-on-primary);
+}
+.icon-btn--avatar[_ngcontent-ng-c1448976233]:hover {
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary-color-dark),
+      var(--primary-color));
+  transform: scale(1.05);
+  box-shadow: var(--shadow-glow-primary);
+}
+.icon-btn__badge[_ngcontent-ng-c1448976233] {
+  position: absolute;
+  top: var(--space-1);
+  right: var(--space-1);
+  min-width: var(--space-2);
+  height: var(--space-2);
+  padding: 0 4px;
+  font-size: 0.625rem;
+  font-weight: var(--font-weight-emphasis);
+  color: var(--text-color-on-primary);
+  background: var(--danger-color);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  svg {
+  width: 20px;
+  height: 20px;
+}
+  i.icon, 
+  i.configuration-icon, 
+  i.fa-solid, 
+  i.fa-regular, 
+  i.fa-brands {
+  transition: color 200ms ease, transform 200ms ease;
+}
+.icon-anim-rotate[_ngcontent-ng-c1448976233]:hover     i.icon, 
+.icon-anim-rotate[_ngcontent-ng-c1448976233]:hover     i.configuration-icon, 
+.icon-anim-rotate[_ngcontent-ng-c1448976233]:hover     i.fa-solid, 
+.icon-anim-rotate[_ngcontent-ng-c1448976233]:hover     i.fa-regular, 
+.icon-anim-rotate[_ngcontent-ng-c1448976233]:hover     i.fa-brands {
+  transform: rotate(45deg) scale(1.15);
+  color: var(--primary-color);
+}
+.icon-anim-grow[_ngcontent-ng-c1448976233]:hover     i.icon, 
+.icon-anim-grow[_ngcontent-ng-c1448976233]:hover     i.configuration-icon, 
+.icon-anim-grow[_ngcontent-ng-c1448976233]:hover     i.fa-solid, 
+.icon-anim-grow[_ngcontent-ng-c1448976233]:hover     i.fa-regular, 
+.icon-anim-grow[_ngcontent-ng-c1448976233]:hover     i.fa-brands {
+  transform: scale(1.15);
+  color: var(--primary-color);
+}
+.icon-anim-none[_ngcontent-ng-c1448976233]:hover     i.icon, 
+.icon-anim-none[_ngcontent-ng-c1448976233]:hover     i.configuration-icon, 
+.icon-anim-none[_ngcontent-ng-c1448976233]:hover     i.fa-solid, 
+.icon-anim-none[_ngcontent-ng-c1448976233]:hover     i.fa-regular, 
+.icon-anim-none[_ngcontent-ng-c1448976233]:hover     i.fa-brands {
+  transform: none !important;
+  color: var(--primary-color);
+}
+/*# sourceMappingURL=/icon-button.component.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c3937764726] {
+  display: block;
+}
+.inline[_nghost-ng-c3937764726] {
+  display: inline-block;
+}
+.auto-size[_nghost-ng-c3937764726] {
+  display: contents;
+}
+.atomic-button--full-width[_nghost-ng-c3937764726], 
+.atomic-button--full-width[_nghost-ng-c3937764726]   .btn[_ngcontent-ng-c3937764726] {
+  width: 100%;
+}
+[dialog-close][_nghost-ng-c3937764726], 
+[icon-only][_nghost-ng-c3937764726] {
+  display: inline-flex;
+  width: var(--control-height);
+  height: var(--control-height);
+}
+[dialog-close][_nghost-ng-c3937764726]   .btn[_ngcontent-ng-c3937764726], 
+[icon-only][_nghost-ng-c3937764726]   .btn[_ngcontent-ng-c3937764726] {
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  min-height: 100%;
+  padding: 0;
+}
+.btn-icon-wrapper[_ngcontent-ng-c3937764726] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--icon-sm);
+}
+.btn-spinner[_ngcontent-ng-c3937764726] {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+.btn-icon-wrapper[_ngcontent-ng-c3937764726]:not(:has(*)) {
+  display: none;
+}
+.btn-icon-wrapper--left[_ngcontent-ng-c3937764726]:has(*) {
+  margin-right: var(--space-2);
+}
+.btn-icon-wrapper--right[_ngcontent-ng-c3937764726]:has(*) {
+  margin-left: var(--space-2);
+}
+.btn-sm[_nghost-ng-c3937764726]   .btn-icon-wrapper[_ngcontent-ng-c3937764726], .btn-sm   [_nghost-ng-c3937764726]   .btn-icon-wrapper[_ngcontent-ng-c3937764726] {
+  font-size: var(--icon-xs);
+}
+.btn-lg[_nghost-ng-c3937764726]   .btn-icon-wrapper[_ngcontent-ng-c3937764726], .btn-lg   [_nghost-ng-c3937764726]   .btn-icon-wrapper[_ngcontent-ng-c3937764726] {
+  font-size: var(--icon-md);
+}
+/*# sourceMappingURL=/button.component.css.map */</style><style ng-app-id="ng">/* src/app/shared/ui/molecules/action-group/action-group.component.css */
+app-action-group,
+prest-action-group {
+  display: inline-flex;
+}
+.action-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--action-btn-size);
+  height: var(--action-btn-size);
+  padding: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: calc(var(--action-btn-size) * 0.55);
+  cursor: pointer;
+  transition: all 150ms ease;
+  color: var(--text-color-secondary);
+}
+.action-btn i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 65%;
+  height: 65%;
+  font-size: inherit;
+  line-height: 1;
+}
+.action-more-icon {
+  transition: transform 150ms ease;
+}
+.more-wrapper.open .action-more-icon {
+  transform: rotate(180deg);
+}
+.action-spinner {
+  width: 45%;
+  height: 45%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--radius-full);
+  animation: actionSpin 700ms linear infinite;
+}
+@keyframes actionSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.action-group--sm {
+  --action-btn-size: 1.75rem;
+}
+.action-group--md {
+  --action-btn-size: var(--space-7);
+}
+.action-group--lg {
+  --action-btn-size: var(--touch-target-min);
+}
+.action-btn:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--text-color);
+}
+.action-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.action-btn.disabled,
+.action-btn:disabled {
+  cursor: not-allowed;
+  color: var(--input-disabled-text);
+}
+.action-btn--primary {
+  color: var(--primary-color);
+}
+.action-btn--primary:hover:not(:disabled) {
+  background: var(--primary-color-lighter);
+  color: var(--primary-color);
+}
+.action-btn--secondary {
+  color: var(--secondary-color);
+}
+.action-btn--secondary:hover:not(:disabled) {
+  background: var(--secondary-color-lighter);
+  color: var(--secondary-color);
+}
+.action-btn--danger {
+  color: var(--danger-color-text);
+}
+.action-btn--danger:hover:not(:disabled) {
+  background: var(--danger-color-lighter);
+  color: var(--danger-color-text);
+}
+.action-btn--warning {
+  color: var(--warning-color-text);
+}
+.action-btn--warning:hover:not(:disabled) {
+  background: var(--warning-color-lighter);
+  color: var(--warning-color-text);
+}
+.action-btn--success {
+  color: var(--success-color-text);
+}
+.action-btn--success:hover:not(:disabled) {
+  background: var(--success-color-lighter);
+  color: var(--success-color-text);
+}
+.action-btn--info {
+  color: var(--info-color-text);
+}
+.action-btn--info:hover:not(:disabled) {
+  background: var(--info-color-lighter);
+  color: var(--info-color-text);
+}
+.action-btn--more {
+  color: var(--text-color-muted);
+}
+.action-btn--more {
+  background: var(--surface-hover);
+  color: var(--primary-color);
+}
+.more-wrapper.open .action-btn--more {
+  background: var(--primary-color-lighter);
+  color: var(--primary-color);
+}
+.more-wrapper {
+  position: relative;
+}
+.action-menu {
+  position: fixed;
+  z-index: 9999;
+  min-width: max-content;
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-1);
+  animation: menuFadeIn 150ms ease;
+}
+.action-menu-portal {
+  position: fixed;
+  z-index: 99999;
+  min-width: max-content;
+  background: var(--surface-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-1);
+  animation: menuFadeIn 150ms ease;
+}
+.action-menu-portal.horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-1);
+}
+.action-menu.horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-1);
+}
+.action-menu.horizontal .menu-item {
+  padding: var(--space-2);
+}
+.action-menu.horizontal .menu-item-label {
+  display: none;
+}
+@keyframes menuFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 100ms ease;
+  text-align: left;
+  white-space: nowrap;
+}
+.menu-item:hover:not(:disabled) {
+  background: var(--surface-hover);
+}
+.menu-item:focus-visible {
+  outline: none;
+  background: var(--surface-hover);
+}
+.menu-item.disabled,
+.menu-item:disabled {
+  cursor: not-allowed;
+  color: var(--input-disabled-text);
+}
+.menu-item i {
+  width: var(--space-4);
+  text-align: center;
+}
+.menu-item--primary {
+  color: var(--primary-color);
+}
+.menu-item--primary:hover:not(:disabled) {
+  background: var(--primary-color-lighter);
+}
+.menu-item--secondary {
+  color: var(--secondary-color);
+}
+.menu-item--secondary:hover:not(:disabled) {
+  background: var(--secondary-color-lighter);
+}
+.menu-item--danger {
+  color: var(--danger-color-text);
+}
+.menu-item--danger:hover:not(:disabled) {
+  background: var(--danger-color-lighter);
+}
+.menu-item--warning {
+  color: var(--warning-color-text);
+}
+.menu-item--warning:hover:not(:disabled) {
+  background: var(--warning-color-lighter);
+}
+.menu-item--success {
+  color: var(--success-color-text);
+}
+.menu-item--success:hover:not(:disabled) {
+  background: var(--success-color-lighter);
+}
+.menu-item--info {
+  color: var(--info-color-text);
+}
+.menu-item--info:hover:not(:disabled) {
+  background: var(--info-color-lighter);
+}
+.menu-item-label {
+  flex: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .action-more-icon {
+    transition: none;
+  }
+  .action-spinner {
+    animation-duration: 1.4s;
+  }
+}
+/*# sourceMappingURL=/action-group.component.css.map */
+</style><style ng-app-id="ng">
+[_nghost-ng-c288384582] {
+  display: block;
+  width: 100%;
+  flex: 0 0 auto;
+  margin-top: auto;
+  box-sizing: border-box;
+}
+.atomic-footer[_ngcontent-ng-c288384582] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-2) var(--space-6);
+  background: var(--surface-section);
+  color: var(--text-color-secondary);
+  border-top: var(--border-width-thin) solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+.atomic-footer--columns[_ngcontent-ng-c288384582] {
+  padding-block: var(--space-8) var(--space-4);
+}
+.atomic-footer__container[_ngcontent-ng-c288384582] {
+  width: 100%;
+  box-sizing: border-box;
+}
+.atomic-footer__container--stacked[_ngcontent-ng-c288384582] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.atomic-footer__container--bottom[_ngcontent-ng-c288384582], 
+.atomic-footer__bottom-row[_ngcontent-ng-c288384582], 
+.atomic-footer__inline-top[_ngcontent-ng-c288384582] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.atomic-footer__copyright[_ngcontent-ng-c288384582] {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  color: var(--text-color-secondary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-body);
+  line-height: 1.4;
+}
+.atomic-footer__social[_ngcontent-ng-c288384582], 
+.atomic-footer__legal[_ngcontent-ng-c288384582] {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.atomic-footer__social-link[_ngcontent-ng-c288384582] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--control-height-sm);
+  height: var(--control-height-sm);
+  color: var(--text-color-secondary);
+  background: var(--surface-hover);
+  border-radius: var(--radius-full);
+  font-size: var(--text-md);
+  text-decoration: none;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease,
+    transform 150ms ease;
+}
+.atomic-footer__social-link[_ngcontent-ng-c288384582]:hover, 
+.atomic-footer__social-link[_ngcontent-ng-c288384582]:focus-visible, 
+.atomic-footer__legal-link[_ngcontent-ng-c288384582]:hover, 
+.atomic-footer__legal-link[_ngcontent-ng-c288384582]:focus-visible {
+  color: var(--primary-color);
+}
+.atomic-footer__social-link[_ngcontent-ng-c288384582]:hover {
+  transform: translateY(calc(var(--space-1) * -1));
+}
+.atomic-footer__social-link[_ngcontent-ng-c288384582]:focus-visible, 
+.atomic-footer__legal-link[_ngcontent-ng-c288384582]:focus-visible {
+  outline: var(--border-width-medium) solid var(--focus-ring-color);
+  outline-offset: var(--space-1);
+}
+.atomic-footer__legal-link[_ngcontent-ng-c288384582] {
+  color: var(--text-color-secondary);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+.atomic-footer__separator[_ngcontent-ng-c288384582] {
+  color: var(--text-color-muted);
+}
+.atomic-footer__columns[_ngcontent-ng-c288384582] {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-8);
+}
+.atomic-footer__company[_ngcontent-ng-c288384582] {
+  min-width: 0;
+}
+.atomic-footer__logo[_ngcontent-ng-c288384582], 
+.atomic-footer__column-title[_ngcontent-ng-c288384582], 
+.atomic-footer__description[_ngcontent-ng-c288384582] {
+  margin: 0;
+}
+.atomic-footer__logo[_ngcontent-ng-c288384582] {
+  color: var(--text-color);
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-title);
+}
+.atomic-footer__description[_ngcontent-ng-c288384582] {
+  margin-top: var(--space-3);
+  color: var(--text-color-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+.atomic-footer__column-title[_ngcontent-ng-c288384582] {
+  margin-bottom: var(--space-3);
+  color: var(--text-color);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-emphasis);
+}
+.atomic-footer__social--vertical[_ngcontent-ng-c288384582], 
+.atomic-footer__social-link--with-text[_ngcontent-ng-c288384582] {
+  align-items: flex-start;
+}
+.atomic-footer__social--vertical[_ngcontent-ng-c288384582] {
+  flex-direction: column;
+}
+.atomic-footer__social-link--with-text[_ngcontent-ng-c288384582] {
+  width: auto;
+  height: auto;
+  justify-content: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+  background: transparent;
+  border-radius: 0;
+  font-size: var(--text-sm);
+}
+@media (max-width: 48rem) {
+  .atomic-footer[_ngcontent-ng-c288384582] {
+    padding-inline: var(--space-4);
+  }
+  .atomic-footer__container--bottom[_ngcontent-ng-c288384582], 
+   .atomic-footer__bottom-row[_ngcontent-ng-c288384582], 
+   .atomic-footer__inline-top[_ngcontent-ng-c288384582] {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  .atomic-footer__columns[_ngcontent-ng-c288384582] {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+    text-align: center;
+  }
+  .atomic-footer__social[_ngcontent-ng-c288384582], 
+   .atomic-footer__legal[_ngcontent-ng-c288384582], 
+   .atomic-footer__social--vertical[_ngcontent-ng-c288384582], 
+   .atomic-footer__copyright[_ngcontent-ng-c288384582] {
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atomic-footer__social-link[_ngcontent-ng-c288384582], 
+   .atomic-footer__legal-link[_ngcontent-ng-c288384582] {
+    transition: none;
+  }
+  .atomic-footer__social-link[_ngcontent-ng-c288384582]:hover {
+    transform: none;
+  }
+}
+/*# sourceMappingURL=/footer.component.css.map */</style><style ng-app-id="ng">
+[_nghost-ng-c867575059] {
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+.atomic-version[_ngcontent-ng-c867575059] {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif !important;
+  font-size: 0.75rem !important;
+  line-height: 1 !important;
+  color: var(--text-color-secondary) !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.atomic-version--pill[_ngcontent-ng-c867575059] {
+  padding: 3px 10px !important;
+  background: var(--surface-background) !important;
+  border: var(--border-width-thin) solid var(--border-color) !important;
+  border-radius: var(--radius-full) !important;
+}
+.atomic-version--badge[_ngcontent-ng-c867575059] {
+  padding: 3px 8px !important;
+  background: var(--surface-background) !important;
+  border: var(--border-width-thin) solid var(--border-color) !important;
+  border-radius: var(--radius-sm) !important;
+}
+.atomic-version--text[_ngcontent-ng-c867575059] {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+.atomic-version--compact[_ngcontent-ng-c867575059] {
+  gap: 4px !important;
+  font-size: 0.7rem !important;
+}
+.atomic-version__dot[_ngcontent-ng-c867575059] {
+  --version-dot: var(--success-color);
+  width: 7px !important;
+  height: 7px !important;
+  border-radius: 50% !important;
+  background-color: var(--version-dot) !important;
+  box-shadow: 0 0 6px var(--version-dot) !important;
+  display: inline-block !important;
+}
+.atomic-version__dot--dev[_ngcontent-ng-c867575059] {
+  --version-dot: var(--warning-color);
+}
+.atomic-version__dot--beta[_ngcontent-ng-c867575059] {
+  --version-dot: var(--info-color);
+}
+.atomic-version__dot--qa[_ngcontent-ng-c867575059], 
+.atomic-version__dot--staging[_ngcontent-ng-c867575059] {
+  --version-dot: var(--version-qa-fill);
+}
+.atomic-version__name[_ngcontent-ng-c867575059] {
+  font-weight: var(--font-weight-body) !important;
+  color: var(--text-color-secondary) !important;
+}
+.atomic-version__number[_ngcontent-ng-c867575059] {
+  font-weight: var(--font-weight-title) !important;
+  letter-spacing: 0.03em !important;
+  color: var(--text-color) !important;
+}
+.atomic-version__env[_ngcontent-ng-c867575059] {
+  padding: 2px 6px !important;
+  border-radius: var(--radius-sm) !important;
+  font-size: 0.65rem !important;
+  font-weight: var(--font-weight-title) !important;
+  text-transform: uppercase !important;
+  background: var(--info-color-lighter) !important;
+  color: var(--alert-info-text) !important;
+  border: var(--border-width-thin) solid var(--info-color-light) !important;
+}
+.atomic-version__env--prod[_ngcontent-ng-c867575059] {
+  background: var(--success-color-lighter) !important;
+  color: var(--alert-success-text) !important;
+  border-color: var(--success-color-light) !important;
+}
+.atomic-version__env--dev[_ngcontent-ng-c867575059] {
+  background: var(--warning-color-lighter) !important;
+  color: var(--alert-warning-text) !important;
+  border-color: var(--warning-color-light) !important;
+}
+.atomic-version__env--beta[_ngcontent-ng-c867575059] {
+  background: var(--info-color-lighter) !important;
+  color: var(--alert-info-text) !important;
+  border-color: var(--info-color-light) !important;
+}
+.atomic-version__env--qa[_ngcontent-ng-c867575059], 
+.atomic-version__env--staging[_ngcontent-ng-c867575059] {
+  background: var(--version-qa-surface) !important;
+  color: var(--version-qa-text) !important;
+  border-color: var(--version-qa-border) !important;
+}
+.atomic-version__date[_ngcontent-ng-c867575059] {
+  color: var(--text-color-muted) !important;
+  font-size: 0.65rem !important;
+}
+/*# sourceMappingURL=/version.component.css.map */</style><style ng-app-id="ng">
+.language-switcher[_ngcontent-ng-c1402462511] {
+  position: relative;
+  display: inline-block;
+}
+.language-btn[_ngcontent-ng-c1402462511] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-color);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-body);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.language-btn[_ngcontent-ng-c1402462511]:hover {
+  background: var(--hover-background-subtle);
+  border-color: var(--primary-color);
+}
+.language-flag[_ngcontent-ng-c1402462511] {
+  font-size: var(--text-md);
+}
+.language-code[_ngcontent-ng-c1402462511] {
+  font-weight: var(--font-weight-emphasis);
+}
+.chevron[_ngcontent-ng-c1402462511] {
+  font-size: var(--text-xs);
+  color: var(--text-color-muted);
+  transition: transform 200ms ease;
+}
+.language-switcher.open[_ngcontent-ng-c1402462511]   .chevron[_ngcontent-ng-c1402462511] {
+  transform: rotate(180deg);
+}
+.language-dropdown[_ngcontent-ng-c1402462511] {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  min-width: 140px;
+  background: var(--surface-overlay);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  z-index: 100;
+  animation: _ngcontent-ng-c1402462511_dropdown-in 150ms ease;
+}
+@keyframes _ngcontent-ng-c1402462511_dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--space-2)));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.language-option[_ngcontent-ng-c1402462511] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: var(--text-sm);
+  text-align: left;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.language-option[_ngcontent-ng-c1402462511]:hover {
+  background: var(--hover-background-subtle);
+}
+.language-option.active[_ngcontent-ng-c1402462511] {
+  background: var(--primary-color-lighter);
+  color: var(--primary-color);
+  font-weight: var(--font-weight-emphasis);
+}
+.language-name[_ngcontent-ng-c1402462511] {
+  flex: 1;
+}
+html.dark[_nghost-ng-c1402462511]   .language-dropdown[_ngcontent-ng-c1402462511], html.dark   [_nghost-ng-c1402462511]   .language-dropdown[_ngcontent-ng-c1402462511], 
+[data-theme="dark"][_nghost-ng-c1402462511]   .language-dropdown[_ngcontent-ng-c1402462511], [data-theme="dark"]   [_nghost-ng-c1402462511]   .language-dropdown[_ngcontent-ng-c1402462511] {
+  background: var(--surface-section);
+  border-color: var(--border-color);
+}
+/*# sourceMappingURL=/language-switcher.component.css.map */</style></head>
+
+<body><!--nghm--><script type="text/javascript" id="ng-event-dispatch-contract">(()=>{function p(t,n,r,o,e,i,f,m){return{eventType:t,event:n,targetElement:r,eic:o,timeStamp:e,eia:i,eirp:f,eiack:m}}function u(t){let n=[],r=e=>{n.push(e)};return{c:t,q:n,et:[],etc:[],d:r,h:e=>{r(p(e.type,e,e.target,t,Date.now()))}}}function s(t,n,r){for(let o=0;o<n.length;o++){let e=n[o];(r?t.etc:t.et).push(e),t.c.addEventListener(e,t.h,r)}}function c(t,n,r,o,e=window){let i=u(t);e._ejsas||(e._ejsas={}),e._ejsas[n]=i,s(i,r),s(i,o,!0)}window.__jsaction_bootstrap=c;})();
+</script><script>window.__jsaction_bootstrap(document.body,"ng",["click","keydown","input","mousedown"],["focus","blur"]);</script>
+  <app-root ng-version="22.1.1" _nghost-ng-c3177019257="" ngh="29" ng-server-context="ssg"><router-outlet _ngcontent-ng-c3177019257=""></router-outlet><app-showcase-page _nghost-ng-c4077748502="" ngh="25"><app-layout-shell _ngcontent-ng-c4077748502="" _nghost-ng-c2721538490="" ngh="3"><div _ngcontent-ng-c2721538490="" class="layout-shell sidebar-visible" style="--sidebar-width: 260px;"><a _ngcontent-ng-c2721538490="" href="#layout-main-content" class="layout-skip-link">Saltar al contenido principal</a><aside _ngcontent-ng-c2721538490="" class="layout-sidebar active" aria-label="Navegación principal"><app-sidebar _ngcontent-ng-c4077748502="" slot="sidebar" _nghost-ng-c1196991883="" ngh="4"><div _ngcontent-ng-c1196991883="" class="sidebar-container"><div _ngcontent-ng-c1196991883="" class="sidebar-logo"><i _ngcontent-ng-c1196991883="" class="fa-atom fa-solid logo-icon"></i><span _ngcontent-ng-c1196991883="" class="logo-text">Atomic UI</span><!--container--></div><app-scroll-overlay _ngcontent-ng-c1196991883="" verticalselector="[data-sidebar-scroll-surface]" horizontalselector="[data-sidebar-scroll-surface]" class="so-root sidebar-nav-overlay" ngh="0"><div class="so-scroll-area"><nav _ngcontent-ng-c1196991883="" tabindex="-1" aria-label="NavegaciÃ³n principal" data-sidebar-scroll-surface="" class="sidebar-nav" jsaction="keydown:;"><!--container--><ul _ngcontent-ng-c1196991883="" role="menu" class="nav-list"><li _ngcontent-ng-c1196991883="" role="none" class="nav-item"><button _ngcontent-ng-c1196991883="" type="button" role="menuitem" class="nav-link" jsaction="click:;"><i _ngcontent-ng-c1196991883="" aria-hidden="true" class="fa-palette fa-solid nav-icon" style="color: var(--secondary-color); --sidebar-icon-color: var(--secondary-color);"></i><span _ngcontent-ng-c1196991883="" class="nav-label"><span _ngcontent-ng-c1196991883="" class="nav-label-text">Showcase</span><!--container--></span><!--container--><!--container--></button><!--container--></li><li _ngcontent-ng-c1196991883="" role="none" class="nav-item"><button _ngcontent-ng-c1196991883="" type="button" role="menuitem" class="nav-link" jsaction="click:;"><i _ngcontent-ng-c1196991883="" aria-hidden="true" class="fa-chart-pie fa-solid nav-icon" style="color: var(--info-color); --sidebar-icon-color: var(--info-color);"></i><span _ngcontent-ng-c1196991883="" class="nav-label"><span _ngcontent-ng-c1196991883="" class="nav-label-text">Dashboard</span><!--container--></span><!--container--><!--container--></button><!--container--></li><li _ngcontent-ng-c1196991883="" role="none" class="nav-item"><button _ngcontent-ng-c1196991883="" type="button" role="menuitem" class="nav-link" jsaction="click:;"><i _ngcontent-ng-c1196991883="" aria-hidden="true" class="fa-solid fa-table nav-icon" style="color: var(--success-color); --sidebar-icon-color: var(--success-color);"></i><span _ngcontent-ng-c1196991883="" class="nav-label"><span _ngcontent-ng-c1196991883="" class="nav-label-text">CRUD</span><!--container--></span><!--container--><!--container--></button><!--container--></li><li _ngcontent-ng-c1196991883="" role="none" class="nav-item"><button _ngcontent-ng-c1196991883="" type="button" role="menuitem" class="nav-link" jsaction="click:;"><i _ngcontent-ng-c1196991883="" aria-hidden="true" class="fa-solid fa-user nav-icon" style="color: var(--warning-color); --sidebar-icon-color: var(--warning-color);"></i><span _ngcontent-ng-c1196991883="" class="nav-label"><span _ngcontent-ng-c1196991883="" class="nav-label-text">Profile</span><!--container--></span><!--container--><!--container--></button><!--container--></li><li _ngcontent-ng-c1196991883="" role="none" class="nav-item"><button _ngcontent-ng-c1196991883="" type="button" role="menuitem" class="nav-link" jsaction="click:;"><i _ngcontent-ng-c1196991883="" aria-hidden="true" class="fa-gear fa-solid nav-icon" style="color: var(--text-color-secondary); --sidebar-icon-color: var(--text-color-secondary);"></i><span _ngcontent-ng-c1196991883="" class="nav-label"><span _ngcontent-ng-c1196991883="" class="nav-label-text">Settings</span><!--container--></span><!--container--><!--container--></button><!--container--></li><!--container--><!--ng-container--></ul></nav></div><div aria-hidden="true" class="so-scrollbar so-scrollbar-y"><div class="so-thumb so-thumb-y"></div></div><div aria-hidden="true" class="so-scrollbar so-scrollbar-x"><div class="so-thumb so-thumb-x"></div></div></app-scroll-overlay><!--container--></div></app-sidebar></aside><div _ngcontent-ng-c2721538490="" tabindex="-1" role="presentation" class="layout-overlay active" jsaction="click:;"></div><header _ngcontent-ng-c2721538490="" class="layout-header"><app-topbar _ngcontent-ng-c4077748502="" slot="topbar" _nghost-ng-c2407633384="" ngh="10"><div _ngcontent-ng-c2407633384="" class="topbar-container"><div _ngcontent-ng-c2407633384="" class="topbar-left"><div _ngcontent-ng-c2407633384="" class="sidebar-toggle-wrapper"><app-icon-button _ngcontent-ng-c2407633384="" variant="ghost" animation="none" tooltip="Menú" _nghost-ng-c1448976233="" ngh="5"><button _ngcontent-ng-c1448976233="" class="icon-btn icon-anim-none icon-btn--ghost" title="Menú" aria-label="Menú" jsaction="click:;"><i _ngcontent-ng-c2407633384="" aria-hidden="true" class="fa-solid fa-bars topbar-icon"></i><!--container--></button></app-icon-button><!--container--></div><!--container--><div _ngcontent-ng-c2407633384="" class="topbar-title-area"><h1 _ngcontent-ng-c2407633384="" class="page-title">app.title</h1><!--container--></div></div><div _ngcontent-ng-c2407633384="" class="topbar-right"><app-language-switcher _ngcontent-ng-c2407633384="" _nghost-ng-c1402462511="" ngh="6"><div _ngcontent-ng-c1402462511="" class="language-switcher"><button _ngcontent-ng-c1402462511="" type="button" aria-haspopup="listbox" class="language-btn" aria-expanded="false" jsaction="click:;"><span _ngcontent-ng-c1402462511="" class="language-flag"><!--ngetn--></span><span _ngcontent-ng-c1402462511="" class="language-code">ES</span><i _ngcontent-ng-c1402462511="" class="fa-solid fa-chevron-down chevron"></i></button><!--container--></div></app-language-switcher><!--container--><app-theme-switcher _ngcontent-ng-c4077748502="" _nghost-ng-c840921062="" data-theme-switcher="true" ngh="12"><div _ngcontent-ng-c840921062="" class="theme-switcher"><app-icon-button _ngcontent-ng-c840921062="" variant="ghost" _nghost-ng-c1448976233="" ngh="11"><button _ngcontent-ng-c1448976233="" class="icon-btn icon-anim-rotate icon-btn--ghost" title="Cambiar a tema oscuro" aria-label="Cambiar a tema oscuro" jsaction="click:;"><i _ngcontent-ng-c840921062="" class="fa-solid fa-sun icon icon-sun"></i><i _ngcontent-ng-c840921062="" class="fa-solid fa-moon icon icon-moon hidden"></i><!--container--></button></app-icon-button></div></app-theme-switcher><app-icon-button _ngcontent-ng-c2407633384="" variant="ghost" animation="grow" tooltip="Notificaciones" _nghost-ng-c1448976233="" ngh="7"><button _ngcontent-ng-c1448976233="" class="icon-btn icon-anim-grow icon-btn--ghost" title="Notificaciones" aria-label="Notificaciones" jsaction="click:;"><i _ngcontent-ng-c2407633384="" aria-hidden="true" class="fa-regular fa-bell topbar-icon"></i><span _ngcontent-ng-c1448976233="" class="icon-btn__badge">3</span><!--container--></button></app-icon-button><!--container--><app-user-menu _ngcontent-ng-c2407633384="" _nghost-ng-c2506274012="" ngh="9"><div _ngcontent-ng-c2506274012="" class="user-menu"><button _ngcontent-ng-c2506274012="" type="button" aria-haspopup="menu" title="Menú de usuario" class="user-menu__trigger" aria-expanded="false" jsaction="click:;"><app-avatar _ngcontent-ng-c2506274012="" size="md" _nghost-ng-c1865759971="" ngh="8"><div _ngcontent-ng-c1865759971="" class="avatar avatar-md avatar-default" style="--avatar-background-color: var(--green-500);"><!--container--><!--container--><span _ngcontent-ng-c1865759971="" class="avatar-initials">HC</span><!--container--><!--container--><!--container--></div></app-avatar><!--container--></button><div _ngcontent-ng-c2506274012="" role="menu" class="user-menu__dropdown"><div _ngcontent-ng-c2506274012="" class="user-menu__header"><app-avatar _ngcontent-ng-c2506274012="" size="lg" _nghost-ng-c1865759971="" ngh="8"><div _ngcontent-ng-c1865759971="" class="avatar avatar-lg avatar-default" style="--avatar-background-color: var(--green-500);"><!--container--><!--container--><span _ngcontent-ng-c1865759971="" class="avatar-initials">HC</span><!--container--><!--container--><!--container--></div></app-avatar><div _ngcontent-ng-c2506274012="" class="user-menu__info"><span _ngcontent-ng-c2506274012="" class="user-menu__name">COTAHA</span><!--container--><span _ngcontent-ng-c2506274012="" class="user-menu__email">cotaha@email.com</span><!--container--></div></div><div _ngcontent-ng-c2506274012="" class="user-menu__divider"></div><button _ngcontent-ng-c2506274012="" type="button" role="menuitem" class="user-menu__item" jsaction="click:;"><span _ngcontent-ng-c2506274012="" class="user-menu__item-icon"><i _ngcontent-ng-c2506274012="" class="fa-solid fa-user"></i></span><span _ngcontent-ng-c2506274012="" class="user-menu__item-label">Mi Perfil</span></button><button _ngcontent-ng-c2506274012="" type="button" role="menuitem" class="user-menu__item" jsaction="click:;"><span _ngcontent-ng-c2506274012="" class="user-menu__item-icon"><i _ngcontent-ng-c2506274012="" class="fa-gear fa-solid"></i></span><span _ngcontent-ng-c2506274012="" class="user-menu__item-label">ConfiguraciÃ³n</span></button><button _ngcontent-ng-c2506274012="" type="button" role="menuitem" class="user-menu__item" jsaction="click:;"><span _ngcontent-ng-c2506274012="" class="user-menu__item-icon"><i _ngcontent-ng-c2506274012="" class="fa-key fa-solid"></i></span><span _ngcontent-ng-c2506274012="" class="user-menu__item-label">Cambiar ContraseÃ±a</span></button><button _ngcontent-ng-c2506274012="" type="button" role="menuitem" class="user-menu__item user-menu__item--danger" jsaction="click:;"><span _ngcontent-ng-c2506274012="" class="user-menu__item-icon"><i _ngcontent-ng-c2506274012="" class="fa-arrow-right-from-bracket fa-solid"></i></span><span _ngcontent-ng-c2506274012="" class="user-menu__item-label">Cerrar SesiÃ³n</span></button><!--container--></div></div></app-user-menu></div></div></app-topbar></header><main _ngcontent-ng-c2721538490="" id="layout-main-content" tabindex="-1" class="layout-content"><app-scroll-overlay _ngcontent-ng-c2721538490="" class="so-root so-block h-full w-full" ngh="0"><div class="so-scroll-area"><div _ngcontent-ng-c2721538490="" class="content-wrapper"><div _ngcontent-ng-c4077748502="" class="content-sections"><app-filters _ngcontent-ng-c4077748502="" _nghost-ng-c1454432689="" ngh="15"><app-panel _ngcontent-ng-c1454432689="" icon="🔍" variant="default" padding="md" _nghost-ng-c3617060973="" ngh="13"><div _ngcontent-ng-c3617060973="" class="panel panel--padding-md"><header _ngcontent-ng-c3617060973="" class="panel__header"><span _ngcontent-ng-c3617060973="" class="panel__icon">🔍</span><!--container--><h3 _ngcontent-ng-c3617060973="" class="panel__title panel__title--size-md panel__title--weight-semibold panel__title--align-left">filters.title</h3><!--container--><div _ngcontent-ng-c3617060973="" class="panel__header-actions"></div></header><!--container--><div _ngcontent-ng-c3617060973="" class="panel__body"><div _ngcontent-ng-c1454432689="" class="filter-bar"><app-select2 _ngcontent-ng-c4077748502="" _nghost-ng-c2382209496="" class="ng-untouched ng-pristine ng-valid" ngh="16"><div _ngcontent-ng-c2382209496="" class="select2-wrapper has-label has-value"><div _ngcontent-ng-c2382209496="" role="combobox" aria-haspopup="listbox" class="select2-trigger" aria-labelledby="select2-label-1" aria-controls="select2-listbox-1" aria-disabled="false" tabindex="0" aria-expanded="false" jsaction="click:;keydown:;"><span _ngcontent-ng-c2382209496="" class="floating-label" id="select2-label-1">filters.status</span><!--container--><span _ngcontent-ng-c2382209496="" class="select2-value"><!--container--> filters.statusOptions.all <!--container--><!--container--></span><!--container--><!--container--><span _ngcontent-ng-c2382209496="" class="select2-arrow"><svg _ngcontent-ng-c2382209496="" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path _ngcontent-ng-c2382209496="" d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg></span></div><!--container--></div></app-select2><app-floating-input _ngcontent-ng-c4077748502="" variant="outline" type="number" _nghost-ng-c2367026826="" class="ng-untouched ng-pristine ng-valid" ngh="17"><div _ngcontent-ng-c2367026826="" class="floating-input-wrapper variant-outline has-value"><input _ngcontent-ng-c2367026826="" class="floating-input" id="floating-input-1" type="number" value="25" autocomplete="off" placeholder="" jsaction="input:;focus:;blur:;"><label _ngcontent-ng-c2367026826="" class="floating-label" for="floating-input-1">filters.rowCount</label><span _ngcontent-ng-c2367026826="" class="input-line"></span><!--container--><!--container--><!--container--><!--container--></div></app-floating-input><app-datepicker _ngcontent-ng-c4077748502="" variant="outline" _nghost-ng-c2411861866="" class="ng-untouched ng-pristine ng-valid" ngh="18"><div _ngcontent-ng-c2411861866="" class="datepicker-container"><div _ngcontent-ng-c2411861866="" tabindex="0" role="button" aria-haspopup="grid" aria-label="Abrir calendario" class="datepicker-trigger" aria-expanded="false" jsaction="click:;keydown:;"><app-floating-input _ngcontent-ng-c2411861866="" class="pointer-events-none" _nghost-ng-c2367026826="" ngh="17"><div _ngcontent-ng-c2367026826="" class="floating-input-wrapper variant-outline"><input _ngcontent-ng-c2367026826="" class="floating-input" id="floating-input-2" type="text" readonly="" value="" autocomplete="off" placeholder="" jsaction="input:;focus:;blur:;"><label _ngcontent-ng-c2367026826="" class="floating-label" for="floating-input-2">filters.dateStart</label><span _ngcontent-ng-c2367026826="" class="input-line"></span><!--container--><!--container--><!--container--><!--container--></div></app-floating-input><button _ngcontent-ng-c2411861866="" type="button" tabindex="-1" class="calendar-icon-btn"><svg _ngcontent-ng-c2411861866="" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect _ngcontent-ng-c2411861866="" x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line _ngcontent-ng-c2411861866="" x1="16" y1="2" x2="16" y2="6"></line><line _ngcontent-ng-c2411861866="" x1="8" y1="2" x2="8" y2="6"></line><line _ngcontent-ng-c2411861866="" x1="3" y1="10" x2="21" y2="10"></line><path _ngcontent-ng-c2411861866="" d="M8 14h.01"></path><path _ngcontent-ng-c2411861866="" d="M12 14h.01"></path><path _ngcontent-ng-c2411861866="" d="M16 14h.01"></path><path _ngcontent-ng-c2411861866="" d="M8 18h.01"></path><path _ngcontent-ng-c2411861866="" d="M12 18h.01"></path><path _ngcontent-ng-c2411861866="" d="M16 18h.01"></path></svg></button></div><!--container--></div></app-datepicker><div _ngcontent-ng-c1454432689="" class="filter-actions"><app-button _ngcontent-ng-c1454432689="" variant="primary" _nghost-ng-c3937764726="" class="" ngh="14"><button _ngcontent-ng-c3937764726="" class="btn btn-primary btn-tone-neutral" type="button" jsaction="click:;"><!--container--><span _ngcontent-ng-c3937764726="" aria-hidden="true" class="btn-icon-wrapper btn-icon-wrapper--left"><i _ngcontent-ng-c1454432689="" icon-left="" class="fa-solid fa-magnifying-glass"></i></span><!--container--><!--container--><!--container--> Filtrar <!--container--><span _ngcontent-ng-c3937764726="" aria-hidden="true" class="btn-icon-wrapper btn-icon-wrapper--right"></span></button></app-button><!--container--></div></div></div><footer _ngcontent-ng-c3617060973="" class="panel__footer"></footer></div></app-panel></app-filters><app-panel _ngcontent-ng-c4077748502="" icon="📋" variant="default" padding="md" class="table-panel" _nghost-ng-c3617060973="" ngh="19"><div _ngcontent-ng-c3617060973="" class="panel panel--padding-md"><!--container--><div _ngcontent-ng-c3617060973="" class="panel__body"><app-scroll-overlay _ngcontent-ng-c4077748502="" class="so-root so-block w-full max-w-full" ngh="0"><div class="so-scroll-area"><table _ngcontent-ng-c4077748502="" class="rtc-table"><thead _ngcontent-ng-c4077748502="" class="rtc-header"><tr _ngcontent-ng-c4077748502=""><th _ngcontent-ng-c4077748502="" class="rtc-text-center">table.headers.id</th><th _ngcontent-ng-c4077748502="">table.headers.name</th><th _ngcontent-ng-c4077748502="">table.headers.email</th><th _ngcontent-ng-c4077748502="">table.headers.date</th><th _ngcontent-ng-c4077748502="" class="rtc-text-center">table.headers.status</th><th _ngcontent-ng-c4077748502="">table.headers.type</th><th _ngcontent-ng-c4077748502="">table.headers.amount</th><th _ngcontent-ng-c4077748502="" class="rtc-text-center">table.headers.priority</th><th _ngcontent-ng-c4077748502="" class="rtc-text-center">table.headers.actions</th></tr></thead><tbody _ngcontent-ng-c4077748502="" class="rtc-body"><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1001</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Juan Pérez</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">juan.perez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">12/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.active </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.fua</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 426.64</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.high</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1002</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">María García</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">maria.garcia@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">26/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-warning"> data.status.pending </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.prescription</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 142.22</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.medium</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1003</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Carlos López</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">carlos.lopez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">23/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.completed </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.order</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 314.21</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.low</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1004</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Ana Martínez</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">ana.martinez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">13/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-secondary"> data.status.review </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.consultation</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 158.12</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.high</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1005</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Pedro Sánchez</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">pedro.sanchez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">03/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.approved </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.referral</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 184.53</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.medium</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1006</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Laura Torres</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">laura.torres@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">01/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.active </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.fua</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 281.73</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.low</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1007</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Diego Ramírez</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">diego.ramirez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">03/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-warning"> data.status.pending </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.prescription</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 492.46</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.high</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1008</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Sofia Herrera</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">sofia.herrera@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">22/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.completed </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.order</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 529.65</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.medium</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1009</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Juan Pérez</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">juan.perez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">08/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-secondary"> data.status.review </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.consultation</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 167.98</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.low</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1010</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">María García</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">maria.garcia@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">17/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.approved </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.referral</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 503.21</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.high</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1011</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Carlos López</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">carlos.lopez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">15/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.active </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.fua</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 119.77</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.medium</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1012</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Ana Martínez</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">ana.martinez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">26/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-warning"> data.status.pending </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.prescription</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 273.84</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.low</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1013</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Pedro Sánchez</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">pedro.sanchez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">06/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.completed </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.order</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 293.29</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.high</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1014</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Laura Torres</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">laura.torres@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">20/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-secondary"> data.status.review </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.consultation</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 61.87</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.medium</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1015</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Diego Ramírez</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">diego.ramirez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">15/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.approved </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.referral</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 364.83</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.low</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1016</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Sofia Herrera</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">sofia.herrera@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">01/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.active </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.fua</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 142.15</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.high</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1017</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Juan Pérez</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">juan.perez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">06/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-warning"> data.status.pending </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.prescription</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 465.78</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.medium</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1018</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">María García</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">maria.garcia@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">15/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.completed </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.order</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 268.39</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.low</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1019</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Carlos López</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">carlos.lopez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">17/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-secondary"> data.status.review </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.consultation</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 144.58</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.high</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1020</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Ana Martínez</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">ana.martinez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">28/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.approved </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.referral</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 205.13</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.medium</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1021</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Pedro Sánchez</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">pedro.sanchez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">09/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.active </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.fua</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 199.57</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.low</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1022</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Laura Torres</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">laura.torres@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">01/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-warning"> data.status.pending </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.prescription</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 302.31</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.high</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1023</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Diego Ramírez</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">diego.ramirez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">17/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.completed </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.order</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 303.35</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.medium</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1024</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Sofia Herrera</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">sofia.herrera@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">20/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-secondary"> data.status.review </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.consultation</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 408.03</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.low</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><tr _ngcontent-ng-c4077748502="" class="rtc-row"><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.id">1025</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.name">Juan Pérez</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.email">juan.perez@email.com</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.date">19/12/2024</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.status"><span _ngcontent-ng-c4077748502="" class="badge badge-success"> data.status.approved </span></td><td _ngcontent-ng-c4077748502="" data-label="table.headers.type">data.type.referral</td><td _ngcontent-ng-c4077748502="" data-label="table.headers.amount">S/ 150.27</td><td _ngcontent-ng-c4077748502="" class="rtc-text-center" data-label="table.headers.priority">data.priority.high</td><td _ngcontent-ng-c4077748502="" data-label="Acciones:" class="rtc-actions rtc-text-center"><app-action-group _ngcontent-ng-c4077748502="" ngh="20"><div class="action-group action-group--md"><button type="button" class="action-btn action-btn--success" title="Ver" aria-label="Ver" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-eye fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--info" title="Editar" aria-label="Editar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-pencil fa-solid"></i><!--container--></button><button type="button" class="action-btn action-btn--danger" title="Eliminar" aria-label="Eliminar" jsaction="click:;"><!--container--><i aria-hidden="true" class="fa-solid fa-trash-can"></i><!--container--></button><!--container--><!--container--><!--container--></div></app-action-group></td></tr><!--container--></tbody></table></div><div aria-hidden="true" class="so-scrollbar so-scrollbar-y"><div class="so-thumb so-thumb-y"></div></div><div aria-hidden="true" class="so-scrollbar so-scrollbar-x"><div class="so-thumb so-thumb-x"></div></div></app-scroll-overlay></div><footer _ngcontent-ng-c3617060973="" class="panel__footer"></footer></div></app-panel><!--container--><!--container--><div _ngcontent-ng-c4077748502="" class="loading-placeholder"><app-text _ngcontent-ng-c4077748502="" variant="body" color="muted" _nghost-ng-c2145491401="" ngh="21"><!--container--><!--container--><!--container--><!--container--><p _ngcontent-ng-c2145491401="" class="text-body weight-normal color-muted align-left">Cargando ejemplos...<!--container--></p><!--container--><!--container--></app-text></div><!--container--></div><app-row _ngcontent-ng-c4077748502="" columns="repeat(auto-fit, minmax(300px, 1fr))" gap="1rem" class="info-row" _nghost-ng-c4174804188="" ngh="0"><div _ngcontent-ng-c4174804188="" class="row row--align-stretch row--justify-start row--valign-stretch" style="--row-columns: repeat(auto-fit, minmax(300px, 1fr)); --row-gap: 1rem;"><app-panel _ngcontent-ng-c4077748502="" variant="plain" padding="md" titlealign="center" titleweight="bold" _nghost-ng-c3617060973="" ngh="22"><div _ngcontent-ng-c3617060973="" class="panel panel--plain panel--padding-md"><header _ngcontent-ng-c3617060973="" class="panel__header"><!--container--><h3 _ngcontent-ng-c3617060973="" class="panel__title panel__title--size-md panel__title--weight-bold panel__title--align-center">demo.project.title</h3><!--container--><div _ngcontent-ng-c3617060973="" class="panel__header-actions"></div></header><!--container--><div _ngcontent-ng-c3617060973="" class="panel__body"><app-text _ngcontent-ng-c4077748502="" variant="h3" weight="bold" class="mb-sm" _nghost-ng-c2145491401="" ngh="23"><!--container--><!--container--><h3 _ngcontent-ng-c2145491401="" class="text-h3 weight-bold color-default align-left">demo.project.subtitle<!--container--></h3><!--container--><!--container--><!--container--><!--container--></app-text><app-text _ngcontent-ng-c4077748502="" variant="body" class="mb-md" _nghost-ng-c2145491401="" ngh="21"><!--container--><!--container--><!--container--><!--container--><p _ngcontent-ng-c2145491401="" class="text-body weight-normal color-default align-left"> demo.project.description <!--container--></p><!--container--><!--container--></app-text><app-panel _ngcontent-ng-c4077748502="" variant="flat" padding="sm" class="tech-panel" _nghost-ng-c3617060973="" ngh="19"><div _ngcontent-ng-c3617060973="" class="panel panel--flat panel--padding-sm"><!--container--><div _ngcontent-ng-c3617060973="" class="panel__body"><app-text _ngcontent-ng-c4077748502="" variant="caption" color="primary" _nghost-ng-c2145491401="" ngh="21"><!--container--><!--container--><!--container--><!--container--><p _ngcontent-ng-c2145491401="" class="text-caption weight-normal color-primary align-left"> 💡 demo.project.tech <!--container--></p><!--container--><!--container--></app-text></div><footer _ngcontent-ng-c3617060973="" class="panel__footer"></footer></div></app-panel></div><footer _ngcontent-ng-c3617060973="" class="panel__footer"></footer></div></app-panel><app-panel _ngcontent-ng-c4077748502="" variant="floating" padding="md" titlealign="center" titleweight="bold" _nghost-ng-c3617060973="" ngh="22"><div _ngcontent-ng-c3617060973="" class="panel panel--floating panel--padding-md"><header _ngcontent-ng-c3617060973="" class="panel__header"><!--container--><h3 _ngcontent-ng-c3617060973="" class="panel__title panel__title--size-md panel__title--weight-bold panel__title--align-center">demo.components.title</h3><!--container--><div _ngcontent-ng-c3617060973="" class="panel__header-actions"></div></header><!--container--><div _ngcontent-ng-c3617060973="" class="panel__body"><app-text _ngcontent-ng-c4077748502="" variant="h3" weight="bold" class="mb-sm" _nghost-ng-c2145491401="" ngh="23"><!--container--><!--container--><h3 _ngcontent-ng-c2145491401="" class="text-h3 weight-bold color-default align-left">demo.components.subtitle<!--container--></h3><!--container--><!--container--><!--container--><!--container--></app-text><app-text _ngcontent-ng-c4077748502="" variant="body" _nghost-ng-c2145491401="" ngh="21"><!--container--><!--container--><!--container--><!--container--><p _ngcontent-ng-c2145491401="" class="text-body weight-normal color-default align-left"> demo.components.description <!--container--></p><!--container--><!--container--></app-text><app-row _ngcontent-ng-c4077748502="" gap="0.5rem" wrap="wrap" class="mt-md" _nghost-ng-c4174804188="" ngh="0"><div _ngcontent-ng-c4174804188="" class="row row--align-stretch row--justify-start row--valign-stretch row--wrap" style="--row-columns: 1fr; --row-gap: 0.5rem;"><app-chip _ngcontent-ng-c4077748502="" variant="default" size="sm" _nghost-ng-c235153527="" ngh="24"><span _ngcontent-ng-c235153527="" class="chip chip-default chip-sm" jsaction="click:;"><!--container--><span _ngcontent-ng-c235153527="" class="chip-label">Atoms</span><!--container--></span></app-chip><app-chip _ngcontent-ng-c4077748502="" variant="default" size="sm" _nghost-ng-c235153527="" ngh="24"><span _ngcontent-ng-c235153527="" class="chip chip-default chip-sm" jsaction="click:;"><!--container--><span _ngcontent-ng-c235153527="" class="chip-label">Molecules</span><!--container--></span></app-chip><app-chip _ngcontent-ng-c4077748502="" variant="default" size="sm" _nghost-ng-c235153527="" ngh="24"><span _ngcontent-ng-c235153527="" class="chip chip-default chip-sm" jsaction="click:;"><!--container--><span _ngcontent-ng-c235153527="" class="chip-label">Organisms</span><!--container--></span></app-chip></div></app-row></div><footer _ngcontent-ng-c3617060973="" class="panel__footer"></footer></div></app-panel></div></app-row></div></div><div aria-hidden="true" class="so-scrollbar so-scrollbar-y"><div class="so-thumb so-thumb-y"></div></div><div aria-hidden="true" class="so-scrollbar so-scrollbar-x"><div class="so-thumb so-thumb-x"></div></div></app-scroll-overlay></main><div _ngcontent-ng-c2721538490="" class="layout-footer"><app-footer _ngcontent-ng-c2721538490="" variant="inline" _nghost-ng-c288384582="" ngh="2"><footer _ngcontent-ng-c288384582="" class="atomic-footer atomic-footer--inline" aria-label="Pie de página"><!--container--><div _ngcontent-ng-c288384582="" class="atomic-footer__container atomic-footer__container--stacked"><!--container--><div _ngcontent-ng-c288384582="" class="atomic-footer__bottom-row"><span _ngcontent-ng-c288384582="" class="atomic-footer__copyright"><span _ngcontent-ng-c288384582="">© 2026 Suite Barracuda - Todos los derechos reservados.</span><!--container--></span><!--container--><app-version _ngcontent-ng-c288384582="" variant="badge" _nghost-ng-c867575059="" ngh="1"><div _ngcontent-ng-c867575059="" class="atomic-version atomic-version--badge"><span _ngcontent-ng-c867575059="" class="atomic-version__dot atomic-version__dot--beta"></span><!--container--><!--container--><span _ngcontent-ng-c867575059="" class="atomic-version__number">v1.0.0</span><span _ngcontent-ng-c867575059="" class="atomic-version__env atomic-version__env--beta"> BETA </span><!--container--><!--container--></div></app-version><!--container--><!--container--></div></div><!--container--><!--container--></footer><!--container--><!--container--><!--container--><!--container--></app-footer></div><!--container--></div></app-layout-shell></app-showcase-page><!--container--><app-toast _ngcontent-ng-c3177019257="" popover="manual" aria-label="Notificaciones" _nghost-ng-c4285629092="" ngh="26"><!--container--></app-toast><app-popup-container _ngcontent-ng-c3177019257="" _nghost-ng-c3557959365="" ngh="27"><!--container--></app-popup-container><app-modal-container _ngcontent-ng-c3177019257="" _nghost-ng-c3845118800="" ngh="28"><!--container--></app-modal-container></app-root>
+<script src="main.js" type="module"></script>
+<link rel="modulepreload" href="chunk-UFVMC3KM.js">
+<link rel="modulepreload" href="chunk-5L2MNK2O.js">
+<link rel="modulepreload" href="chunk-MLXG7NAN.js">
+
+
+<script id="ng-state" type="application/json">{"__nghData__":[{},{"t":{"1":"t10","2":"t11","5":"t12","6":"t13"},"c":{"1":[{"i":"t10","r":1}],"2":[],"5":[{"i":"t12","r":1}],"6":[]}},{"t":{"1":"t1","2":"t2","3":"t14","4":"t15","6":"t16","8":"t5","10":"t8"},"c":{"1":[],"2":[{"i":"t2","r":1,"t":{"1":"t3","3":"t4","4":"t7"},"c":{"1":[],"3":[{"i":"t5","r":1,"t":{"3":"t6"},"c":{"3":[]}}],"4":[{"i":"t8","r":2,"t":{"0":"t9"},"c":{"0":[{"i":"t9","r":1}]}}]}}],"3":[],"4":[],"6":[],"8":[],"10":[]}},{"n":{"11":"10f2"},"t":{"13":"t0"},"c":{"13":[{"i":"t0","r":1}]}},{"t":{"3":"t17","6":"t18","10":"t24"},"c":{"3":[{"i":"t17","r":1}],"6":[],"9":[{"i":"t18","r":6,"t":{"1":"t19"},"c":{"1":[{"i":"t19","r":1,"t":{"3":"t20","4":"t23"},"c":{"3":[{"i":"t20","r":2,"t":{"3":"t21","4":"t22"},"c":{"3":[],"4":[]}}],"4":[]},"x":5}]}}],"10":[]},"n":{"5":"4f2"}},{"n":{"2":"0fn"},"t":{"2":"t26"},"c":{"2":[]}},{"t":{"7":"t30"},"c":{"7":[]}},{"n":{"2":"0fn"},"t":{"2":"t26"},"c":{"2":[{"i":"t26","r":1}]}},{"t":{"1":"t32","2":"t33","3":"t34","4":"t35","5":"t36"},"c":{"1":[],"2":[],"3":[{"i":"t34","r":1}],"4":[],"5":[]}},{"t":{"3":"t37","10":"t38","11":"t39","14":"t40"},"c":{"3":[],"10":[],"11":[{"i":"t39","r":1}],"14":[{"i":"t40","r":1,"x":4}]}},{"t":{"3":"t25","4":"t27","8":"t28","10":"t29","12":"t31"},"c":{"3":[{"i":"t25","r":1,"n":{"1":"0f2"}}],"4":[],"8":[],"10":[{"i":"t29","r":1}],"12":[{"i":"t31","r":1,"n":{"1":"0f2"}}]},"n":{"12":"9fn3"}},{"n":{"2":"0fn2"},"t":{"2":"t26"},"c":{"2":[]}},{"n":{"2":"1f2"}},{"t":{"1":"t41"},"c":{"1":[{"i":"t41","r":1,"t":{"1":"t42","2":"t43"},"c":{"1":[{"i":"t42","r":1}],"2":[{"i":"t43","r":1}]}}]}},{"t":{"2":"t44","5":"t45","7":"t48"},"c":{"2":[],"5":[{"i":"t45","r":2,"t":{"0":"t46","1":"t47"},"c":{"0":[],"1":[]}}],"7":[]},"n":{"7":"0fn6"}},{"n":{"1":"0f2n2f","3":"1fn3","5":"4f2nf","6":"4f2n5"},"t":{"7":"t49"},"c":{"7":[]}},{"t":{"2":"t50","3":"t51","4":"t55","8":"t56"},"c":{"2":[{"i":"t50","r":1}],"3":[{"i":"t51","r":1,"t":{"1":"t52","2":"t54"},"c":{"1":[{"i":"t52","r":2,"t":{"0":"t53"},"c":{"0":[]}}],"2":[]}}],"4":[],"8":[]}},{"t":{"6":"t57","7":"t58","8":"t59","9":"t60"},"c":{"6":[],"7":[],"8":[],"9":[]}},{"t":{"15":"t61"},"c":{"15":[]}},{"t":{"1":"t41"},"c":{"1":[]}},{"t":{"1":"t63","2":"t67"},"c":{"1":[{"i":"t63","r":4,"t":{"1":"t64"},"c":{"1":[{"i":"t64","r":1,"t":{"1":"t65","2":"t66"},"c":{"1":[],"2":[{"i":"t66","r":1}]},"x":3}]}}],"2":[]}},{"t":{"0":"t71","1":"t72","2":"t73","3":"t74","4":"t75","5":"t77"},"c":{"0":[],"1":[],"2":[],"3":[],"4":[{"i":"t75","r":1,"t":{"1":"t76"},"c":{"1":[{"i":"t77","r":1}]}}],"5":[]}},{"t":{"1":"t41"},"c":{"1":[{"i":"t41","r":1,"t":{"1":"t42","2":"t43"},"c":{"1":[],"2":[{"i":"t43","r":1}]}}]}},{"t":{"0":"t71","1":"t72","2":"t73","3":"t74","4":"t75","5":"t77"},"c":{"0":[],"1":[],"2":[{"i":"t73","r":1,"t":{"1":"t78"},"c":{"1":[{"i":"t77","r":1}]}}],"3":[],"4":[],"5":[]}},{"t":{"1":"t79","4":"t80"},"c":{"1":[],"4":[]}},{"n":{"1":"0f2nf","2":"0f2n3f","4":"2f2nfn2","5":"0f2n4f4","8":"6f3n2f2","16":"14f2nf","17":"16f2","55":"54f2","57":"55f2n2f","58":"57fn2f","61":"60fn4f","64":"63f2nf","65":"64fn4f","69":"67f2n2f","70":"69fn2f","73":"72fn4f","76":"75f2","77":"76f2nf","79":"78f2nf","81":"80f2nf"},"t":{"49":"t62","50":"t68","51":"t69","52":"t70"},"c":{"49":[{"i":"t62","r":1,"x":25}],"50":[],"51":[],"52":[{"i":"t69","r":1,"s":0,"n":{"2":"1fn4f"}}]}},{"t":{"1":"t81"},"c":{"1":[]}},{"t":{"1":"t82"},"c":{"1":[]}},{"t":{"1":"t83"},"c":{"1":[]}},{"c":{"0":[{"i":"c4077748502","r":1}]}}]}</script></body></html>

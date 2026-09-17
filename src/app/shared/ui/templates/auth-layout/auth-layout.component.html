@@ -1,15 +1,8 @@
 <div class="auth-layout-container">
   <!-- Left Side: Decorative / Branding -->
-  <div class="auth-layout-banner">
-    <div class="banner-content">
-      <ng-content select="[slot=banner]"></ng-content>
-    </div>
-    
-    <!-- Abstract Glassmorphism Shapes -->
-    <div class="banner-shape shape-1"></div>
-    <div class="banner-shape shape-2"></div>
-    <div class="banner-overlay"></div>
-  </div>
+  <app-auth-banner>
+    <ng-content select="[slot=banner]"></ng-content>
+  </app-auth-banner>
 
   <!-- Right Side: Forms and Footer -->
   <div class="auth-layout-main">

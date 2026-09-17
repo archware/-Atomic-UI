@@ -19,6 +19,9 @@ import {
   Alert,
   ChipComponent,
   SkeletonComponent,
+    PaginaAjustesComponent,
+    ProfileCoverComponent,
+    FormActionsComponent,
   ThemeSwitcherComponent,
 } from '@shared/ui';
 import { AuthService } from '@shared/ui/services/auth.service';
@@ -80,8 +83,14 @@ const CHANGE_PASSWORD_ENDPOINT = '/Authentication/ChangePassword';
     Alert,
     ChipComponent,
     SkeletonComponent,
-    ThemeSwitcherComponent
-],
+    PaginaAjustesComponent,
+    ProfileCoverComponent,
+    FormActionsComponent,
+    ThemeSwitcherComponent,
+    PaginaAjustesComponent,
+    ProfileCoverComponent,
+    FormActionsComponent
+  ],
   templateUrl: './profile-page.component.html',
   styleUrl:    './profile-page.component.css',
 })
@@ -203,6 +212,8 @@ export class ProfilePageComponent implements OnInit {
   get pf() { return this.passForm.controls; }
   get currentUser() { return this.auth.currentUser(); }
 }
+
+
 
 
 
