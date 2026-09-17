@@ -1,0 +1,19 @@
+.pagina-dashboard__body {
+  padding: var(--space-4) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-height: calc(100vh - 120px);
+}
+
+.pagina-dashboard__metricas {
+  display: block;
+  margin-bottom: var(--space-6);
+}
+
+.pagina-dashboard__widgets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--space-6);
+  align-items: start;
+}

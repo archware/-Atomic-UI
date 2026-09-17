@@ -1,0 +1,17 @@
+:host {
+  display: block;
+}
+
+app-page-header {
+  margin-block-end: var(--space-4);
+}
+
+/* ─── Resumen superior ───────────────────────────────────── */
+.pagina-detalle__resumen {
+  margin-block-end: var(--space-5);
+}
+
+/* ─── Pestañas ───────────────────────────────────────────── */
+app-tabs {
+  margin-block-start: var(--space-3);
+}

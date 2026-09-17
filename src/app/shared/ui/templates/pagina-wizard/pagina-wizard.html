@@ -1,0 +1,69 @@
+<!--
+  Chasis B - Página Wizard (Creación Multi-paso)
+  Orquesta: Header -> Stepper -> Content -> Footer Actions
+-->
+<div class="pagina-wizard">
+  <app-page-header
+    [title]="titulo()"
+    [subtitle]="subtitulo()"
+  />
+
+  <div class="pagina-wizard__body">
+    <!-- Stepper Navigation -->
+    <div class="pagina-wizard__stepper-container">
+      <app-stepper
+        [steps]="steps()"
+        [activeStep]="activeStep()"
+        [allowSkip]="allowSkip()"
+        (stepChange)="handleStepChange($event)"
+      />
+    </div>
+
+    <!-- Contenido del Paso Actual Proyectado -->
+    <div class="pagina-wizard__content" role="region" [attr.aria-label]="steps()[activeStep()]?.label">
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+  <!-- Pie de Acciones -->
+  <footer class="pagina-wizard__footer">
+    <div class="pagina-wizard__footer-start">
+      <app-button
+        variant="ghost"
+        (buttonClick)="handleCancel()"
+      >
+        {{ etiquetaCancelar() }}
+      </app-button>
+    </div>
+
+    <div class="pagina-wizard__footer-end">
+      @if (!isFirstStep) {
+        <app-button
+          variant="outline"
+          (buttonClick)="handleBack()"
+        >
+          {{ etiquetaAtras() }}
+        </app-button>
+      }
+
+      @if (!isLastStep) {
+        <app-button
+          variant="primary"
+          [disabled]="!nextEnabled()"
+          (buttonClick)="handleNext()"
+        >
+          {{ etiquetaSiguiente() }}
+        </app-button>
+      } @else {
+        <app-button
+          variant="primary"
+          [disabled]="!nextEnabled() || loading()"
+          [loading]="loading()"
+          (buttonClick)="handleFinish()"
+        >
+          {{ etiquetaFinalizar() }}
+        </app-button>
+      }
+    </div>
+  </footer>
+</div>

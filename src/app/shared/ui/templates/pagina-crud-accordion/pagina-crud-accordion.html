@@ -1,0 +1,157 @@
+<!--
+  Chasis B â€” PÃ¡gina CRUD multi-entidad con acordeÃ³n.
+
+  PatrÃ³n ADR-007:
+    PageHeader â†’ Accordion â†’ [AccordionItem Ã— N entidades]
+      â†’ QueryToolbar + DataTable + CrudDialog compartido
+
+  Doctrina Â§15: acordeÃ³n solo cuando hay â‰¥2 secciones que compiten.
+  La entidad principal arranca abierta, las secundarias retraÃ­das.
+-->
+
+<app-page-header
+  [title]="titulo()"
+  [subtitle]="subtitulo()"
+/>
+
+<app-accordion>
+  @for (ent of entidades(); track ent.clave) {
+    <app-accordion-item
+      [title]="ent.titulo"
+      [description]="ent.descripcion ?? ''"
+      [open]="ent.abiertoInicial ?? false"
+    >
+      <!-- Barra de bÃºsqueda y acciÃ³n por entidad -->
+      <app-query-toolbar [accessibleLabel]="'BÃºsqueda y acciones de ' + ent.titulo">
+        <div query-filters>
+          <app-input
+            type="search"
+            [placeholder]="ent.placeholderBusqueda ?? 'Buscarâ€¦'"
+            [ngModel]="busquedaDeEntidad(ent.clave)"
+            (ngModelChange)="alBuscarEntidad(ent.clave, $event)"
+            label="Buscar"
+          />
+        </div>
+        <div query-actions>
+          <app-button
+            variant="primary"
+            icon="fa-solid fa-plus"
+            (buttonClick)="alCrear.emit(ent.clave)"
+          >
+            {{ ent.etiquetaNuevo ?? 'Nuevo' }}
+          </app-button>
+        </div>
+      </app-query-toolbar>
+
+      <!-- Grilla de la entidad -->
+      <app-data-table
+        [columns]="columnasDeEntidad(ent.clave)"
+        [rows]="filasDeEntidad(ent.clave)"
+        [caption]="ent.titulo"
+        [status]="estadoDeEntidad(ent.clave)"
+        [pagination]="'server'"
+        [page]="(paginaPorEntidad()[ent.clave]) ?? 1"
+        [totalRecords]="(totalPorEntidad()[ent.clave]) ?? 0"
+        (pageChange)="alCambiarPaginaEntidad(ent.clave, $event)"
+        (retry)="alReintentar.emit(ent.clave)"
+      >
+        <ng-template #actions let-fila>
+          @if (accionesResueltas.ver) {
+            <app-table-action
+              action="view"
+              label="Ver detalle"
+              (triggered)="alVer.emit({ clave: ent.clave, datos: fila })"
+            />
+          }
+          @if (accionesResueltas.editar) {
+            <app-table-action
+              action="edit"
+              label="Editar"
+              (triggered)="alEditar.emit({ clave: ent.clave, datos: fila })"
+            />
+          }
+          @if (accionesResueltas.eliminar) {
+            <app-table-action
+              action="deactivate"
+              label="Desactivar"
+              (triggered)="solicitarBaja(ent.clave, fila)"
+            />
+          }
+        </ng-template>
+      </app-data-table>
+    </app-accordion-item>
+  }
+</app-accordion>
+
+<!-- DiÃ¡logo CRUD compartido -->
+<app-crud-dialog
+  #dialogoCrud
+  [labelledBy]="idTituloDialogo"
+  [size]="(entidades().find(e => e.clave === claveEntidadActiva())?.tamanoDialogo) ?? 'md'"
+  (cancelled)="cerrarDialogo()"
+  (closed)="cerrarDialogo()"
+>
+  <header class="pagina-crud-accordion__dialogo-cabecera">
+    <h2 [id]="idTituloDialogo" class="pagina-crud-accordion__dialogo-titulo">
+      {{ tituloDialogo() }}
+    </h2>
+    <app-icon-button
+      icon="fa-solid fa-xmark"
+      label="Cerrar"
+      (buttonClick)="cerrarDialogo()"
+    />
+  </header>
+
+  @if (errorOperacion(); as msgError) {
+    <div class="pagina-crud-accordion__dialogo-error" role="alert" data-dialog-error>
+      <app-alert kind="danger">{{ msgError }}</app-alert>
+    </div>
+  }
+
+  @if (formularioCrud(); as tpl) {
+    <ng-container
+      [ngTemplateOutlet]="tpl"
+      [ngTemplateOutletContext]="contextoFormulario()"
+    />
+  }
+
+  @if (!esModoPrevisualizacion) {
+    <footer class="pagina-crud-accordion__dialogo-pie">
+      <app-button variant="outline" (buttonClick)="cerrarDialogo()">Cancelar</app-button>
+      <app-button
+        variant="primary"
+        [loading]="guardando()"
+        [disabled]="guardando()"
+        (buttonClick)="alGuardar.emit()"
+      >
+        Guardar
+      </app-button>
+    </footer>
+  }
+</app-crud-dialog>
+
+<!-- ConfirmaciÃ³n de baja lÃ³gica (igual que Chasis A) -->
+@if (mostrarConfirmacion()) {
+  <div class="pagina-crud-accordion__confirmacion-fondo" (click)="cancelarBaja()">
+    <div
+      class="pagina-crud-accordion__confirmacion"
+      role="alertdialog"
+      aria-labelledby="confirmacion-titulo-acc"
+      (click)="$event.stopPropagation()"
+    >
+      <h3 id="confirmacion-titulo-acc">
+        {{ confResueltas.titulo(entidadAEliminar()) }}
+      </h3>
+      <p>{{ confResueltas.mensaje(entidadAEliminar()) }}</p>
+      <footer class="pagina-crud-accordion__confirmacion-pie">
+        <app-button variant="outline" data-dialog-initial-focus (buttonClick)="cancelarBaja()">
+          {{ confResueltas.etiquetaCancelar }}
+        </app-button>
+        <app-button variant="primary" tone="danger" (buttonClick)="confirmarBaja()">
+          {{ confResueltas.etiquetaConfirmar }}
+        </app-button>
+      </footer>
+    </div>
+  </div>
+}
+

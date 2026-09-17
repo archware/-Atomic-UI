@@ -1,0 +1,76 @@
+:host {
+  display: block;
+  min-height: 100%;
+}
+
+.pagina-wizard {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--space-8));
+}
+
+app-page-header {
+  margin-block-end: var(--space-5);
+}
+
+.pagina-wizard__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.pagina-wizard__stepper-container {
+  padding: 1.5rem 2.25rem;
+  background-color: var(--surface-section);
+  border-block-end: 1px solid var(--border-color);
+}
+
+.pagina-wizard__content {
+  flex: 1;
+  padding: 2.25rem; /* Amplio espacio para el contenido del formulario */
+}
+
+.pagina-wizard__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2.25rem;
+  background-color: var(--surface-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  margin-block-start: var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.pagina-wizard__footer-start {
+  display: flex;
+}
+
+.pagina-wizard__footer-end {
+  display: flex;
+  gap: 2.25rem; /* Mantenemos 36px horizontal para consistencia con botones de modal */
+}
+
+@media (max-width: 48rem) {
+  .pagina-wizard__stepper-container,
+  .pagina-wizard__content,
+  .pagina-wizard__footer {
+    padding: var(--space-4);
+  }
+
+  .pagina-wizard__footer {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .pagina-wizard__footer-start,
+  .pagina-wizard__footer-end {
+    width: 100%;
+    justify-content: center;
+  }
+}

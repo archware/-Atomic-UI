@@ -1,0 +1,29 @@
+<app-page-header
+  [title]="titulo()"
+  [subtitle]="subtitulo()"
+  [eyebrow]="eyebrow()"
+>
+  <ng-container page-header-actions>
+    <ng-content select="[dashboard-acciones]"></ng-content>
+  </ng-container>
+</app-page-header>
+
+<div class="pagina-dashboard__body">
+  <app-data-state
+    [loading]="cargando()"
+    [error]="error()"
+    [isEmpty]="vacio()"
+    [emptyText]="textoVacio()"
+    [onRetry]="alReintentar()"
+  >
+    <ng-template #content>
+      @if (metricas() && metricas().length > 0) {
+        <app-metrics-grid class="pagina-dashboard__metricas" [metrics]="metricas()"></app-metrics-grid>
+      }
+
+      <div class="pagina-dashboard__widgets">
+        <ng-content select="[dashboard-contenido]"></ng-content>
+      </div>
+    </ng-template>
+  </app-data-state>
+</div>
