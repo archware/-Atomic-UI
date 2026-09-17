@@ -17,29 +17,7 @@ export type VersionVariant = 'pill' | 'badge' | 'text' | 'compact';
   standalone: true,
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div class="atomic-version" [class]="'atomic-version--' + (variant() || 'badge')">
-      @if (variant() === 'pill' || variant() === 'badge' || !variant()) {
-        <span class="atomic-version__dot" [class]="'atomic-version__dot--' + (environment() || 'beta').toLowerCase()"></span>
-      }
-
-      @if (appName()) {
-        <span class="atomic-version__name">{{ appName() }}</span>
-      }
-
-      <span class="atomic-version__number">{{ version() || 'v1.1.0' }}</span>
-
-      @if (environment()) {
-        <span class="atomic-version__env" [class]="'atomic-version__env--' + (environment() || 'beta').toLowerCase()">
-          {{ environment() }}
-        </span>
-      }
-
-      @if (showBuildDate() && buildDate()) {
-        <span class="atomic-version__date">({{ buildDate() }})</span>
-      }
-    </div>
-  `,
+  templateUrl: './version.component.html',
   styleUrl: './version.component.css'
 })
 export class VersionComponent {

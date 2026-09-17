@@ -116,7 +116,7 @@ export class FormDialog {
 @Component({
   selector: 'app-form-dialog-actions, prest-form-dialog-actions',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<div class="form-dialog-actions"><ng-content /></div>',
   styleUrl: './form-dialog-actions.scss',
+    templateUrl: './form-dialog-actions.component.html'
 })
 export class FormDialogActions {}

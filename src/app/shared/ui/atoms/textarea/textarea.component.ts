@@ -28,42 +28,7 @@ export type TextareaVariant = 'floating' | 'outline' | 'material';
       multi: true
     }
   ],
-  template: `
-    <div 
-      class="textarea-wrapper"
-      [class]="'variant-' + variant()"
-      [class.focused]="isFocused()"
-      [class.has-value]="hasValue()"
-      [class.has-error]="error()"
-      [class.disabled]="isDisabled()"
-    >
-      <textarea
-        class="textarea-input"
-        [id]="textareaId()"
-        [rows]="rows()"
-        [disabled]="isDisabled()"
-        [readonly]="readonly()"
-        [value]="value"
-        [attr.maxlength]="maxlength()"
-        [attr.placeholder]="variant() === 'floating' || variant() === 'material' ? ' ' : placeholder()"
-        (input)="onInput($event)"
-        (focus)="onFocus()"
-        (blur)="onBlur()"
-      ></textarea>
-      <label class="textarea-label" [attr.for]="textareaId()">{{ label() }}</label>
-      <span class="textarea-line"></span>
-
-      <!-- Character counter -->
-      @if (maxlength() && showCounter()) {
-        <span class="textarea-counter">{{ value.length }} / {{ maxlength() }}</span>
-      }
-    </div>
-
-    <!-- Error message -->
-    @if (error()) {
-      <span class="textarea-error">{{ error() }}</span>
-    }
-  `,
+  templateUrl: './textarea.component.html',
   styleUrl: './textarea.component.css'
 })
 export class TextareaComponent implements ControlValueAccessor {

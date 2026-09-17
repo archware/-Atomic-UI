@@ -16,12 +16,8 @@ import {
   selector: 'app-accordion',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div class="accordion" [class.accordion-flush]="flush()">
-      <ng-content></ng-content>
-    </div>
-  `,
   styleUrl: './accordion.component.css',
+    templateUrl: './accordion.component.html'
 })
 export class AccordionComponent {
   readonly flush = input(false);
@@ -99,60 +95,8 @@ export class AccordionComponent {
   selector: 'app-accordion-item',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div class="accordion-item" [class.open]="isOpen()" [class.disabled]="disabled()">
-      <!--
-        EL TITULO DE UN PANEL ES UN ENCABEZADO, Y AQUI NO LO ERA.
-
-        El disparador era un <button> suelto, asi que los paneles NO aparecian en
-        el indice de encabezados. Quien navega saltando por titulos —que es como
-        se recorre una pantalla con lector de pantalla— pasaba del titulo de la
-        pagina directamente a lo que hubiera DENTRO del primer panel abierto, sin
-        enterarse de que existian los demas ni de como se llamaban.
-
-        Es lo que dicen las practicas de ARIA para acordeon: el boton va envuelto
-        en un elemento con rol de encabezado. El nivel lo decide quien monta la
-        pantalla, porque solo alli se sabe que hay por encima; 3 es el valor
-        sensato bajo un <h1> de pagina y un <h2> de seccion.
-      -->
-      <div role="heading" [attr.aria-level]="headingLevel()">
-      <button
-        #header
-        type="button"
-        class="accordion-header"
-        [id]="headerId"
-        [disabled]="disabled()"
-        [attr.aria-expanded]="isOpen()"
-        [attr.aria-controls]="contentId"
-        (click)="toggle()"
-        (keydown)="handleHeaderKeydown($event)"
-      >
-        <span class="accordion-heading">
-          <span class="accordion-title">{{ title() }}</span>
-          @if (description()) {
-            <span class="accordion-description">{{ description() }}</span>
-          }
-        </span>
-        <span class="accordion-icon" aria-hidden="true">
-          <i class="fa-solid fa-chevron-down"></i>
-        </span>
-      </button>
-      </div>
-      <div
-        class="accordion-content"
-        [id]="contentId"
-        role="region"
-        [attr.aria-labelledby]="headerId"
-        [attr.aria-hidden]="!isOpen()"
-        [attr.inert]="isOpen() ? null : ''"
-      >
-        <div class="accordion-body">
-          <ng-content></ng-content>
-        </div>
-      </div>
-    </div>
-  `,
   styleUrl: './accordion-item.component.css',
+    templateUrl: './accordion-item-component.component.html'
 })
 export class AccordionItemComponent implements OnInit, OnDestroy {
   private static nextId = 0;

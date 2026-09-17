@@ -1,0 +1,26 @@
+<div 
+      class="row"
+      [class.row--variant-form]="variant() === 'form'"
+      [class.row--responsive]="responsive()"
+      [class.row--align-left]="align() === 'left'"
+      [class.row--align-center]="align() === 'center'"
+      [class.row--align-right]="align() === 'right'"
+      [class.row--align-stretch]="align() === 'stretch'"
+      [class.row--justify-start]="justify() === 'start'"
+      [class.row--justify-center]="justify() === 'center'"
+      [class.row--justify-end]="justify() === 'end'"
+      [class.row--justify-between]="justify() === 'between'"
+      [class.row--justify-around]="justify() === 'around'"
+      [class.row--valign-top]="verticalAlign() === 'top'"
+      [class.row--valign-center]="verticalAlign() === 'center'"
+      [class.row--valign-bottom]="verticalAlign() === 'bottom'"
+      [class.row--valign-stretch]="verticalAlign() === 'stretch'"
+      [class.row--valign-baseline]="verticalAlign() === 'baseline'"
+      [class.row--wrap]="wrap() === 'wrap'"
+      [appVariablesCss]="{
+        '--row-columns': computedColumns,
+        '--row-gap': computedGap
+      }"
+    >
+      <ng-content></ng-content>
+    </div>

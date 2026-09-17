@@ -19,7 +19,7 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, input } from '@a
   imports: [],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-content></ng-content>`,
+  templateUrl: './table-cell.component.html',
   host: {
     '[class.align-left]': 'align() === "left"',
     '[class.align-center]': 'align() === "center"',

@@ -32,22 +32,7 @@ export type BadgePosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-
   standalone: true,
   imports: [CommonModule, NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    @if (visible()) {
-      <span
-        class="badge"
-        [ngClass]="badgeClasses"
-        [attr.aria-label]="ariaLabel() || (count() ? count() + ' notificaciones' : null)"
-      >
-        @if (!dot()) {
-          {{ displayCount }}
-        }
-      </span>
-    }
-    @if (!visible() && overlay()) {
-      <ng-content></ng-content>
-    }
-  `,
+  templateUrl: './badge.component.html',
   styleUrl: './badge.component.css'
 })
 export class BadgeComponent {

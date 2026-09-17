@@ -1,0 +1,31 @@
+<div class="language-switcher" [class.open]="isOpen()">
+      <button 
+        type="button" 
+        class="language-btn"
+        (click)="toggle()"
+        [attr.aria-expanded]="isOpen()"
+        aria-haspopup="listbox"
+      >
+        <span class="language-flag">{{ currentLanguage().flag }}</span>
+        <span class="language-code">{{ currentLanguage().code.toUpperCase() }}</span>
+        <i class="fa-solid fa-chevron-down chevron"></i>
+      </button>
+
+      @if (isOpen()) {
+        <div class="language-dropdown" role="listbox">
+          @for (lang of languages; track lang.code) {
+            <button 
+              type="button"
+              class="language-option"
+              [class.active]="lang.code === currentLanguage().code"
+              [attr.aria-selected]="lang.code === currentLanguage().code"
+              role="option"
+              (click)="selectLanguage(lang)"
+            >
+              <span class="language-flag">{{ lang.flag }}</span>
+              <span class="language-name">{{ lang.name }}</span>
+            </button>
+          }
+        </div>
+      }
+    </div>

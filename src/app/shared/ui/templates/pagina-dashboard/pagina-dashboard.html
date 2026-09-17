@@ -3,7 +3,7 @@
   [subtitle]="subtitulo()"
   [eyebrow]="eyebrow()"
 >
-  <ng-container page-header-actions>
+  <ng-container ngProjectAs="[page-header-actions]">
     <ng-content select="[dashboard-acciones]"></ng-content>
   </ng-container>
 </app-page-header>

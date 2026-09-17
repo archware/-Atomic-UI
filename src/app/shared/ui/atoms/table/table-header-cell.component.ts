@@ -9,22 +9,7 @@ export type SortDirection = 'asc' | 'desc' | null;
   imports: [CommonModule],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div class="th-content" [class.sortable]="sortable()">
-      <ng-content></ng-content>
-      @if (sortable()) {
-        <span class="sort-indicator" [class.active]="sortDirection() !== null">
-          @if (sortDirection() === 'asc') {
-            <i class="fa-solid fa-sort-up"></i>
-          } @else if (sortDirection() === 'desc') {
-            <i class="fa-solid fa-sort-down"></i>
-          } @else {
-            <i class="fa-solid fa-sort"></i>
-          }
-        </span>
-      }
-    </div>
-  `,
+  templateUrl: './table-header-cell.component.html',
   styleUrl: './table-header-cell.component.css'
 })
 export class TableHeaderCellComponent {

@@ -1,0 +1,25 @@
+<span 
+      class="chip"
+      [class]="'chip-' + variant() + ' chip-' + size()"
+      [class.chip-interactive]="clickable()"
+      [class.chip-selected]="selected()"
+      (click)="onClick()"
+      (keydown.enter)="onClick()"
+      (keydown.space)="onClick()"
+      [attr.role]="clickable() ? 'button' : null"
+      [attr.tabindex]="clickable() ? 0 : null"
+    >
+      @if (icon()) {
+        <span class="chip-icon">{{ icon() }}</span>
+      }
+      <span class="chip-label"><ng-content></ng-content></span>
+      @if (removable()) {
+        <button type="button"
+          class="chip-remove" 
+          (click)="onRemove($event)"
+          (keydown.enter)="onRemove($event)"
+          (keydown.space)="onRemove($event)"
+          aria-label="Eliminar"
+        >×</button>
+      }
+    </span>

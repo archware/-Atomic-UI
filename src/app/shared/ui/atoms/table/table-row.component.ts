@@ -12,7 +12,7 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy, input } from '@a
   imports: [],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-content></ng-content>`,
+  templateUrl: './table-row.component.html',
   host: {
     '[class.selected]': 'selected()'
   },

@@ -1,0 +1,32 @@
+
+    <section
+      class="metrics-grid"
+      [class.metrics-grid--empty]="metrics().length === 0"
+      [appVariablesCss]="{
+        '--min-col-width': minCardWidth(),
+        '--metric-columns-desktop': columnCount(4),
+        '--metric-columns-tablet': columnCount(2),
+        '--metric-columns-mobile': columnCount(1)
+      }"
+      [attr.aria-label]="ariaLabel()"
+    >
+      @for (metric of metrics(); track metric.id ?? metric) {
+        <app-kpi-card
+          [title]="metric.title"
+          [subtitle]="metric.subtitle ?? ''"
+          [value]="metric.value"
+          [displayValue]="metric.displayValue ?? ''"
+          [format]="metric.format ?? 'number'"
+          [currency]="metric.currency ?? 'PEN'"
+          [locale]="metric.locale ?? 'es-PE'"
+          [fractionDigits]="metric.fractionDigits ?? null"
+          [tone]="metric.tone ?? 'neutral'"
+          [trend]="metric.trend ?? null"
+          [trendValue]="metric.trendValue ?? ''"
+          [comparisonLabel]="metric.comparisonLabel ?? ''"
+          [iconClass]="metric.iconClass ?? ''"
+          [series]="metric.series ?? []"
+        />
+      }
+    </section>
+  

@@ -1,0 +1,67 @@
+
+    <div class="data-pager-container">
+      <!-- Left: Page size & Total -->
+      <div class="pager-group pager-left">
+        <div class="pager-page-size-group">
+          <app-text variant="body-sm" color="muted" weight="semibold">Registros por página:</app-text>
+          <div class="page-size-select-wrapper">
+            <app-select2 
+              [options]="selectOptions()" 
+              [ngModel]="pageSize()"
+              (ngModelChange)="onPageSizeChange($event)"
+              [searchable]="false">
+            </app-select2>
+          </div>
+        </div>
+
+        <app-text variant="body-sm" color="muted" weight="semibold">Total de registros: {{ total() }}</app-text>
+      </div>
+
+      <!-- Right: Pagination Controls -->
+      <div class="pager-group pager-right">
+        <app-text variant="body-sm" color="muted" weight="semibold">Página {{ page() }} de {{ totalPages() }}</app-text>
+
+        <div class="pager-controls">
+          <app-icon-button 
+            size="sm" 
+            variant="ghost" 
+            [disabled]="page() === 1"
+            (clicked)="goToPage(1)"
+            title="Primera página"
+          >
+            <i class="fa-solid fa-angles-left"></i>
+          </app-icon-button>
+
+          <app-icon-button 
+            size="sm" 
+            variant="ghost" 
+            [disabled]="page() === 1"
+            (clicked)="goToPage(page() - 1)"
+            title="Página anterior"
+          >
+            <i class="fa-solid fa-angle-left"></i>
+          </app-icon-button>
+
+          <app-icon-button 
+            size="sm" 
+            variant="ghost" 
+            [disabled]="page() === totalPages()"
+            (clicked)="goToPage(page() + 1)"
+            title="Página siguiente"
+          >
+            <i class="fa-solid fa-angle-right"></i>
+          </app-icon-button>
+
+          <app-icon-button 
+            size="sm" 
+            variant="ghost" 
+            [disabled]="page() === totalPages()"
+            (clicked)="goToPage(totalPages())"
+            title="Última página"
+          >
+            <i class="fa-solid fa-angles-right"></i>
+          </app-icon-button>
+        </div>
+      </div>
+    </div>
+  

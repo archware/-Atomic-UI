@@ -5,21 +5,7 @@ import { ScrollOverlayComponent } from './scroll-overlay.component';
 @Component({
   standalone: true,
   imports: [ScrollOverlayComponent],
-  template: `
-    <app-scroll-overlay
-      class="outer-overlay"
-      horizontalSelector=".outer-horizontal"
-      verticalSelector=".outer-vertical"
-    >
-      <div class="outer-horizontal">
-        <div class="outer-vertical">
-          <app-scroll-overlay class="inner-overlay">
-            <div>Contenido interno</div>
-          </app-scroll-overlay>
-        </div>
-      </div>
-    </app-scroll-overlay>
-  `,
+    templateUrl: './nested-scroll-overlay-host-component.component.html'
 })
 class NestedScrollOverlayHostComponent {}
 

@@ -16,31 +16,7 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
   standalone: true,
   imports: [CommonModule, VariablesCssDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div
-      class="avatar"
-      [ngClass]="['avatar-' + size(), 'avatar-' + variant(), rounded() ? 'avatar-rounded' : '']"
-      [appVariablesCss]="{ '--avatar-background-color': colorFondo() }"
-    >
-      @if (src() && !imageFailed()) {
-        <img [src]="src()" [alt]="name()" (error)="onImageError()">
-      } @else if (icon()) {
-        <i [class]="icon()"></i>
-      } @else if (initials() || name()) {
-        <span class="avatar-initials">{{ computedInitials() }}</span>
-      } @else {
-        <span class="avatar-placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
-          </svg>
-        </span>
-      }
-      @if (status()) {
-        <span class="avatar-status" [class]="'status-' + status()" [attr.aria-label]="status()"></span>
-      }
-    </div>
-  `,
+  templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.css'
 })
 export class AvatarComponent {

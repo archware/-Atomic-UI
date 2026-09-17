@@ -16,34 +16,7 @@ export type InputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel
       multi: true
     }
   ],
-  template: `
-    <div class="form-group" [class.has-error]="error()" [class.disabled]="isDisabled()">
-      @if (label()) {
-        <label class="form-label" [attr.for]="inputId">{{ label() }}</label>
-      }
-      <div class="input-container">
-        @if (iconClass()) {
-          <i [class]="'input-icon ' + iconClass()"></i>
-        } @else if (icon()) {
-          <span class="input-icon">{{ icon() }}</span>
-        }
-        <input
-          [id]="inputId"
-          class="form-input"
-          [type]="type()"
-          [placeholder]="placeholder()"
-          [disabled]="isDisabled()"
-          [value]="value"
-          [attr.data-clipboard-policy]="type() === 'password' ? 'paste-only' : null"
-          (input)="onInput($event)"
-          (blur)="onTouched()"
-        />
-      </div>
-      @if (error()) {
-        <span class="input-error">{{ error() }}</span>
-      }
-    </div>
-  `,
+  templateUrl: './input.component.html',
   styleUrl: './input.component.css'
 })
 export class InputComponent implements ControlValueAccessor {

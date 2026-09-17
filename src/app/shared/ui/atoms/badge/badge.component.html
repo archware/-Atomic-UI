@@ -1,0 +1,14 @@
+@if (visible()) {
+      <span
+        class="badge"
+        [ngClass]="badgeClasses"
+        [attr.aria-label]="ariaLabel() || (count() ? count() + ' notificaciones' : null)"
+      >
+        @if (!dot()) {
+          {{ displayCount }}
+        }
+      </span>
+    }
+    @if (!visible() && overlay()) {
+      <ng-content></ng-content>
+    }

@@ -20,28 +20,7 @@ export type TableMobileScrollMode = 'page' | 'bounded';
   imports: [ScrollOverlayComponent],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <app-scroll-overlay
-      class="atomic-table-container so-block"
-      [class.atomic-table-striped]="striped()"
-      [class.atomic-table-unified-scroll]="unifiedScroll()"
-      [class.atomic-table-bounded-scroll]="hasBoundedScroll"
-      [class.atomic-table-mobile-scroll-bounded]="hasBoundedMobileScroll"
-      [class.atomic-table-truncate-cells]="cellOverflow() === 'truncate'"
-      [maxBodyHeight]="maxHeight()"
-      [minColumnWidth]="40"
-      [columnTemplate]="columnTemplate()"
-      [lockColumnTemplate]="!!columnTemplate()"
-      [verticalSelector]="unifiedScroll() || maxHeight() ? null : 'tbody'"
-      [nativeScrollbars]="scrollbarMode() === 'native'"
-      [resetKey]="scrollResetKey()"
-      [scrollAreaAriaLabel]="scrollViewportLabel"
-    >
-      <table class="atomic-table">
-        <ng-content></ng-content>
-      </table>
-    </app-scroll-overlay>
-  `,
+  templateUrl: './table.component.html',
   styleUrl: './table.component.css',
 })
 export class TableComponent implements OnInit, OnDestroy {

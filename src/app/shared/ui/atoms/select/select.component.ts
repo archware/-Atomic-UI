@@ -18,35 +18,7 @@ export interface SelectOption {
       multi: true
     }
   ],
-  template: `
-    <div class="form-group" [class.has-error]="error()" [class.disabled]="isDisabled()">
-      @if (label()) {
-        <label class="form-label" [attr.for]="selectId">{{ label() }}</label>
-      }
-      <div class="select-container">
-        <select
-          #nativeSelect
-          [id]="selectId"
-          class="form-select"
-          [disabled]="isDisabled()"
-          [value]="value"
-          (change)="onSelectChange($event)"
-          (blur)="onTouched()"
-        >
-          @if (placeholder()) {
-            <option value="" disabled [selected]="!value">{{ placeholder() }}</option>
-          }
-          @for (option of options(); track option.value) {
-            <option [value]="option.value">{{ option.label }}</option>
-          }
-        </select>
-        <!-- Arrow handled by form-select background-image -->
-      </div>
-      @if (error()) {
-        <span class="select-error">{{ error() }}</span>
-      }
-    </div>
-  `,
+  templateUrl: './select.component.html',
   styleUrl: './select.component.css'
 })
 export class SelectComponent implements ControlValueAccessor, AfterViewInit {

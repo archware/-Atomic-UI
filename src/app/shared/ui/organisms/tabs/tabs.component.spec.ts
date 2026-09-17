@@ -16,13 +16,7 @@ import { TabComponent, TabsComponent } from './tabs.component';
 @Component({
   standalone: true,
   imports: [TabsComponent, TabComponent],
-  template: `
-    <app-tabs>
-      <app-tab label="General">Contenido general</app-tab>
-      <app-tab label="Detalle">Contenido de detalle</app-tab>
-      <app-tab label="Bloqueada" [disabled]="true">Contenido bloqueado</app-tab>
-    </app-tabs>
-  `,
+    templateUrl: './tabs-host-component.component.html'
 })
 class TabsHostComponent {}
 

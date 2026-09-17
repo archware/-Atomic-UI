@@ -13,23 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       multi: true
     }
   ],
-  template: `
-    <label class="checkbox-wrapper" [class.disabled]="isDisabled()">
-      <input
-        type="checkbox"
-        class="checkbox-input"
-        [checked]="checked"
-        [disabled]="isDisabled()"
-        (change)="onCheckChange($event)"
-      />
-      <span class="checkbox-box">
-        <svg class="checkbox-check" viewBox="0 0 12 12" fill="none">
-          <path d="M2 6L5 9L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </span>
-      <span class="checkbox-label">{{ label() }}<ng-content></ng-content></span>
-    </label>
-  `,
+  templateUrl: './checkbox.component.html',
   styleUrl: './checkbox.component.css'
 })
 export class CheckboxComponent implements ControlValueAccessor {

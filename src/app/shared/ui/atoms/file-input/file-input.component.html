@@ -1,0 +1,92 @@
+<div
+      class="file-input-wrapper"
+      [class.disabled]="isDisabled()"
+      [class.drag-over]="isDragging()"
+      [class.invalid]="visibleError"
+      [class.compact]="density() === 'compact'"
+    >
+      @if (label()) {
+        <label class="file-label" [for]="inputId">{{ label() }}</label>
+      }
+      @if (hint()) {
+        <p class="file-hint" [id]="inputId + '-hint'">{{ hint() }}</p>
+      }
+      <div
+        class="drop-zone"
+        (click)="openFileDialog()"
+        (dragover)="onDragOver($event)"
+        (dragleave)="isDragging.set(false)"
+        (drop)="onDrop($event)"
+        (blur)="onTouched()"
+        (keydown.enter)="openFileDialog()"
+        (keydown.space)="openFileDialog(); $event.preventDefault()"
+        [attr.tabindex]="isDisabled() ? -1 : 0"
+        role="button"
+        [attr.aria-disabled]="isDisabled()"
+        [attr.aria-invalid]="visibleError ? 'true' : null"
+        [attr.aria-describedby]="
+          visibleError ? inputId + '-error' : hint() ? inputId + '-hint' : null
+        "
+        aria-label="Seleccionar archivo"
+      >
+        <i class="fa-solid fa-cloud-arrow-up drop-icon" aria-hidden="true"></i>
+        <div class="drop-copy">
+          <p class="drop-text"><strong>Haz clic</strong> o arrastra archivos aquí</p>
+          @if (accept()) {
+            <p class="drop-hint">Formatos: {{ accept() }}</p>
+          }
+          @if (maxSizeMB()) {
+            <p class="drop-hint">Máximo {{ maxSizeMB() }} MB por archivo</p>
+          }
+        </div>
+      </div>
+
+      <input
+        #fileInput
+        [id]="inputId"
+        type="file"
+        class="file-hidden"
+        [accept]="accept()"
+        [multiple]="multiple()"
+        [disabled]="isDisabled()"
+        (change)="onFileChange($event)"
+        (blur)="onTouched()"
+        [attr.aria-invalid]="visibleError ? 'true' : null"
+        [attr.aria-label]="label() || 'Seleccionar archivo'"
+        [attr.aria-describedby]="
+          visibleError ? inputId + '-error' : hint() ? inputId + '-hint' : null
+        "
+      />
+
+      @if (visibleError) {
+        <p class="file-error" [id]="inputId + '-error'" role="alert">
+          <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> {{ visibleError }}
+        </p>
+      }
+
+      @if (files().length > 0) {
+        <ul class="file-list" aria-label="Archivos seleccionados">
+          @for (f of files(); track f.file) {
+            <li class="file-item">
+              @if (f.preview) {
+                <img class="file-preview" [src]="f.preview" alt="" />
+              } @else {
+                <i class="fa-solid fa-file file-icon" aria-hidden="true"></i>
+              }
+              <span class="file-name" [title]="f.name">{{ f.name }}</span>
+              <span class="file-size">{{ formatSize(f.size) }}</span>
+              @if (!isDisabled()) {
+                <button
+                  type="button"
+                  class="file-remove"
+                  (click)="removeFile(f)"
+                  [attr.aria-label]="'Eliminar ' + f.name"
+                >
+                  <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+              }
+            </li>
+          }
+        </ul>
+      }
+    </div>

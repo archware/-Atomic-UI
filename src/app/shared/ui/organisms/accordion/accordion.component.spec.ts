@@ -6,16 +6,7 @@ import { AccordionComponent, AccordionItemComponent } from './accordion.componen
 @Component({
   standalone: true,
   imports: [AccordionComponent, AccordionItemComponent],
-  template: `
-    <app-accordion [single]="true">
-      <app-accordion-item title="Cliente" description="Cliente seleccionado" [open]="true">
-        <button type="button">Acción cliente</button>
-      </app-accordion-item>
-      <app-accordion-item title="Cotización" [headingLevel]="2">
-        Contenido cotización
-      </app-accordion-item>
-    </app-accordion>
-  `,
+    templateUrl: './accordion-test-host-component.component.html'
 })
 class AccordionTestHostComponent {}
 

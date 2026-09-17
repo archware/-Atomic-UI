@@ -29,25 +29,7 @@ const CHANNELS: Readonly<
   standalone: true,
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <span
-      class="status-badge"
-      [class]="'status-badge--' + status() + ' status-badge--' + size()"
-      [attr.aria-label]="computedAriaLabel"
-      [attr.role]="announce() ? 'status' : null"
-      [attr.aria-live]="announce() ? 'polite' : null"
-    >
-      @if (channelDefinition; as channelInfo) {
-        <span class="status-badge__channel">
-          <i [class]="channelInfo.iconClass" aria-hidden="true"></i>
-          <span>{{ channelInfo.label }}</span>
-        </span>
-        <span class="status-badge__separator" aria-hidden="true"></span>
-      }
-      <span class="status-badge__dot" aria-hidden="true"></span>
-      <span class="status-badge__label">{{ statusLabel }}</span>
-    </span>
-  `,
+  templateUrl: './status-badge.component.html',
   styleUrl: './status-badge.component.css',
 })
 export class StatusBadgeComponent {

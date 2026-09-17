@@ -1,0 +1,73 @@
+
+    <app-accordion>
+      <app-accordion-item
+        [title]="title()"
+        [description]="accordionDescription()"
+        [open]="open"
+        [disabled]="isDisabled()"
+        (openChange)="setExpanded($event)"
+      >
+        @if (optional() && !expanded()) {
+          <span aria-hidden="true"></span>
+        } @else if (rows().length === 0) {
+          <p class="denomination-counter__empty">{{ emptyMessage() }}</p>
+        } @else {
+          <div class="denomination-counter__status" [attr.data-state]="state()" aria-live="polite">
+            <span>{{ stateLabel() }}</span>
+            @if (state() === 'suggested' && total() > 0 && !isDisabled()) {
+              <app-button
+                type="button"
+                variant="outline"
+                size="sm"
+                iconClass="check"
+                (buttonClick)="confirmCurrentValue()"
+              >
+                {{ suggestionActionLabel() }}
+              </app-button>
+            }
+          </div>
+          <div class="denomination-counter__head" aria-hidden="true">
+            <span>Denominación</span>
+            <span>Cantidad</span>
+            <span>Subtotal</span>
+          </div>
+          <div class="denomination-counter__rows">
+            @for (row of rows(); track row.code) {
+              <div class="denomination-counter__row">
+                <div class="denomination-counter__denomination">
+                  <strong>{{ row.label }}</strong>
+                  @if (row.description) {
+                    <span>{{ row.description }}</span>
+                  }
+                </div>
+                <app-number-input
+                  [inputId]="id() + '-' + row.code"
+                  [label]="'Cantidad de ' + row.label"
+                  [min]="0"
+                  [max]="maxQuantity"
+                  [step]="1"
+                  [disabled]="isDisabled()"
+                  [ngModel]="row.quantity"
+                  [ngModelOptions]="{ standalone: true }"
+                  (ngModelChange)="setQuantity(row.code, $event)"
+                />
+                <output
+                  class="denomination-counter__subtotal"
+                  [attr.aria-label]="'Subtotal de ' + row.label"
+                >
+                  {{ formatMoney(row.subtotal) }}
+                </output>
+              </div>
+            }
+          </div>
+          <div class="denomination-counter__total" aria-live="polite">
+            <span>{{ totalLabel() }}</span>
+            <strong>{{ formatMoney(total()) }}</strong>
+          </div>
+          @if (calculationNotice()) {
+            <p class="denomination-counter__notice">{{ calculationNotice() }}</p>
+          }
+        }
+      </app-accordion-item>
+    </app-accordion>
+  

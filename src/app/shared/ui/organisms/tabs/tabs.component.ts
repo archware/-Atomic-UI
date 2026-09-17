@@ -8,8 +8,8 @@ import { Component, signal, ContentChildren, QueryList, AfterContentInit, Elemen
 @Component({
   selector: 'app-tab',
   standalone: true,
-  template: `<ng-content></ng-content>`,
-  styleUrl: './tab.component.css'
+  styleUrl: './tab.component.css',
+    templateUrl: './tab-component.component.html'
 })
 export class TabComponent {
   /** Tab label displayed in the header */
@@ -56,49 +56,8 @@ export class TabComponent {
   selector: 'app-tabs',
   standalone: true,
   imports: [],
-  template: `
-    <div class="tabs-container">
-      <div
-        class="tabs-header"
-        #tabsHeader
-        role="tablist"
-        [attr.aria-label]="ariaLabel()"
-        [attr.aria-orientation]="orientation()"
-        (keydown)="onHeaderKeydown($event)"
-      >
-        @for (tab of tabs; track tab.label(); let i = $index) {
-          <button 
-            type="button"
-            class="tab-button"
-            role="tab"
-            [id]="'tab-' + i"
-            [attr.aria-selected]="activeIndex() === i"
-            [attr.aria-controls]="'tabpanel-' + i"
-            [attr.tabindex]="activeIndex() === i ? 0 : -1"
-            [class.active]="activeIndex() === i"
-            [class.disabled]="tab.disabled()"
-            (click)="!tab.disabled() && selectTab(i, $event)"
-          >
-            @if (tab.iconClass()) {
-              <i [class]="tab.iconClass()" class="tab-icon" aria-hidden="true"></i>
-            } @else if (tab.icon()) {
-              <span class="tab-icon" aria-hidden="true">{{ tab.icon() }}</span>
-            }
-            {{ tab.label() }}
-          </button>
-        }
-      </div>
-      <div 
-        class="tabs-content"
-        role="tabpanel"
-        [id]="'tabpanel-' + activeIndex()"
-        [attr.aria-labelledby]="'tab-' + activeIndex()"
-      >
-        <ng-content></ng-content>
-      </div>
-    </div>
-  `,
-  styleUrl: './tabs.component.css'
+  styleUrl: './tabs.component.css',
+    templateUrl: './tabs.component.html'
 })
 export class TabsComponent implements AfterContentInit {
   @ContentChildren(TabComponent) tabComponents!: QueryList<TabComponent>;

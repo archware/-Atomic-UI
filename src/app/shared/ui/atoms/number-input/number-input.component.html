@@ -1,0 +1,56 @@
+<div class="number-input-wrapper" [class.number-input--disabled]="isDisabled()">
+      @if (label()) {
+        <label class="number-input__label" [attr.for]="inputId()">{{ label() }}</label>
+      }
+      <div class="number-input__control">
+        <button
+          type="button"
+          class="number-input__btn"
+          aria-label="Decrementar"
+          [disabled]="isDisabled() || value() <= min()"
+          (click)="decrement()"
+        >
+          <i class="fa-solid fa-minus" aria-hidden="true"></i>
+        </button>
+
+        <input
+          #nativeInput
+          [id]="inputId()"
+          type="number"
+          class="number-input__field"
+          [min]="min()"
+          [max]="max()"
+          [step]="step()"
+          [disabled]="isDisabled()"
+          [value]="value()"
+          (input)="onInput($event)"
+          (blur)="onTouched()"
+          [attr.aria-label]="label() ? null : 'Número'"
+          [attr.aria-describedby]="describedBy"
+          [attr.aria-invalid]="error() ? 'true' : null"
+        />
+
+        <button
+          type="button"
+          class="number-input__btn"
+          aria-label="Incrementar"
+          [disabled]="isDisabled() || value() >= max()"
+          (click)="increment()"
+        >
+          <i class="fa-solid fa-plus" aria-hidden="true"></i>
+        </button>
+      </div>
+      @if (hint()) {
+        <span class="number-input__hint" [id]="inputId() + '-hint'">{{ hint() }}</span>
+      }
+      @if (error()) {
+        <span class="number-input__error" [id]="inputId() + '-error'" role="alert">{{ error() }}</span>
+      }
+      <!--
+        Un recorte mudo es lo mismo que un dato falso: el campo enseña una cifra
+        y el total suma otra. Si se ajusta lo tecleado, se dice.
+      -->
+      @if (adjustment(); as adjusted) {
+        <span class="number-input__adjustment" role="status">{{ adjusted }}</span>
+      }
+    </div>

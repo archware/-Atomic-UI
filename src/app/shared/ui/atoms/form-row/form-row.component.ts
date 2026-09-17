@@ -19,17 +19,7 @@ import { VariablesCssDirective } from '../../directives/variables-css.directive'
   standalone: true,
   imports: [VariablesCssDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div 
-      class="form-row-grid"
-      [appVariablesCss]="{
-        '--form-row-columns': columns(),
-        '--form-row-gap': gap()
-      }"
-    >
-      <ng-content></ng-content>
-    </div>
-  `,
+  templateUrl: './form-row.component.html',
   styleUrl: './form-row.component.css'
 })
 export class FormRowComponent {

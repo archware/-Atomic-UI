@@ -1,0 +1,15 @@
+
+    <div
+      #chartContainer
+      class="chart-container"
+      [appVariablesCss]="{ '--chart-container-height': height() }"
+    >
+      @if (isChartReady()) {
+        <canvas baseChart
+          [data]="data()"
+          [options]="options()"
+          [type]="type()">
+        </canvas>
+      }
+    </div>
+  

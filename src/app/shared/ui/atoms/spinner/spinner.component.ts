@@ -26,18 +26,7 @@ export type SpinnerVariant = 'primary' | 'secondary' | 'white' | 'current';
   standalone: true,
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <span
-      class="spinner"
-      [class]="'spinner--' + size() + ' spinner--' + variant()"
-      [attr.role]="'status'"
-      [attr.aria-label]="label()"
-      [attr.aria-live]="'polite'"
-    >
-      <span class="spinner__ring"></span>
-      <span class="visually-hidden">{{ label() }}</span>
-    </span>
-  `,
+  templateUrl: './spinner.component.html',
   styleUrl: './spinner.component.css',
 })
 export class SpinnerComponent {

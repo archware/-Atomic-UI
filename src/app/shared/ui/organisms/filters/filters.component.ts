@@ -23,25 +23,8 @@ import { ButtonComponent } from '../../atoms/button/button.component';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [PanelComponent, ButtonComponent],
-  template: `
-    <app-panel [title]="title()" icon="🔍" variant="default" padding="md">
-      <div class="filter-bar">
-        <ng-content></ng-content>
-        <div class="filter-actions">
-          <app-button variant="primary" (buttonClick)="onFilter()">
-            <i icon-left class="fa-solid fa-magnifying-glass"></i>
-            {{ filterLabel() }}
-          </app-button>
-          @if (showClear()) {
-            <app-button variant="ghost" (buttonClick)="onClear()">
-              {{ clearLabel() }}
-            </app-button>
-          }
-        </div>
-      </div>
-    </app-panel>
-  `,
-  styleUrl: './filters.component.styles.css'
+  styleUrl: './filters.component.styles.css',
+    templateUrl: './filters.component.html'
 })
 export class FiltersComponent {
   /** Título del panel de filtros */

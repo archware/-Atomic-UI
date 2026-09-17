@@ -20,14 +20,7 @@ import { ValidationService } from '../../services/validation.service';
   standalone: true,
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    @if (showError) {
-      <div class="form-error" role="alert" aria-live="polite">
-        <i class="fa-solid fa-circle-exclamation error-icon" aria-hidden="true"></i>
-        <span class="error-message">{{ errorMessage }}</span>
-      </div>
-    }
-  `,
+  templateUrl: './form-error.component.html',
   styleUrl: './form-error.component.css'
 })
 export class FormErrorComponent {

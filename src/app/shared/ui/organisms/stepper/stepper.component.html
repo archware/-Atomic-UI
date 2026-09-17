@@ -1,0 +1,40 @@
+
+    <div class="stepper" [class.stepper-vertical]="vertical()" role="navigation" aria-label="Progreso">
+      @for (step of steps(); track step.label; let i = $index) {
+        <div
+          class="step"
+          [class.completed]="i < currentStep()"
+          [class.active]="i === currentStep()"
+          [class.disabled]="i > currentStep() && !allowSkip()"
+          (click)="goToStep(i)"
+          (keydown.enter)="goToStep(i)"
+          (keydown.space)="goToStep(i)"
+          [attr.aria-current]="i === currentStep() ? 'step' : null"
+          role="button"
+          tabindex="0"
+        >
+          <div class="step-indicator">
+            @if (i < currentStep()) {
+              <span class="step-check" aria-hidden="true">✓</span>
+            } @else if (step.icon) {
+              <span class="step-icon" aria-hidden="true">{{ step.icon }}</span>
+            } @else {
+              <span class="step-number">{{ i + 1 }}</span>
+            }
+          </div>
+          <div class="step-content">
+            <span class="step-label">{{ step.label }}</span>
+            @if (step.description) {
+              <span class="step-description">{{ step.description }}</span>
+            }
+            @if (step.optional) {
+              <span class="step-optional">Opcional</span>
+            }
+          </div>
+        </div>
+        @if (i < steps().length - 1) {
+          <div class="step-connector" [class.completed]="i < currentStep()" aria-hidden="true"></div>
+        }
+      }
+    </div>
+  

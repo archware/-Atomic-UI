@@ -22,26 +22,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       multi: true
     }
   ],
-  template: `
-    <label class="toggle-wrapper" [class.disabled]="isDisabled()">
-      <input
-        type="checkbox"
-        role="switch"
-        class="toggle-input"
-        [checked]="checked"
-        [disabled]="isDisabled()"
-        [attr.aria-checked]="checked"
-        [attr.aria-label]="label() ? null : ariaLabel()"
-        (change)="onToggleChange($event)"
-      />
-      <span class="toggle-track">
-        <span class="toggle-thumb"></span>
-      </span>
-      @if (label()) {
-        <span class="toggle-label">{{ label() }}</span>
-      }
-    </label>
-  `,
+  templateUrl: './toggle.component.html',
   styleUrl: './toggle.component.css'
 })
 export class ToggleComponent implements ControlValueAccessor {

@@ -10,17 +10,7 @@ import {
 @Component({
   standalone: true,
   imports: [DenominationCounter, ReactiveFormsModule],
-  template: `
-    <app-denomination-counter
-      title="Efectivo recibido"
-      [optional]="true"
-      [open]="true"
-      [state]="state"
-      [denominations]="denominations"
-      [value]="valorControlado"
-      [formControl]="control"
-    />
-  `,
+    templateUrl: './test-host.component.html'
 })
 class TestHost {
   state: 'empty' | 'suggested' | 'confirmed' = 'confirmed';

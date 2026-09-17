@@ -5,28 +5,7 @@ import { Component, signal, input, model } from '@angular/core';
   selector: 'app-rating',
   standalone: true,
   imports: [],
-  template: `
-    <div class="rating" [class]="'rating-' + size()" [class.readonly]="readonly()">
-      @for (star of stars; track $index; let i = $index) {
-        <button type="button"
-          class="star"
-          [class.filled]="i < (hoverValue() ?? value())"
-          [class.half]="allowHalf() && (i + 0.5) === (hoverValue() ?? value())"
-          (mouseenter)="!readonly() && onHover(i + 1)"
-          (mouseleave)="!readonly() && onLeave()"
-          (click)="!readonly() && onSelect(i + 1)"
-          (keydown.enter)="!readonly() && onSelect(i + 1)"
-          (keydown.space)="!readonly() && onSelect(i + 1)"
-          [disabled]="readonly()"
-        >
-          <i class="fa-solid fa-star"></i>
-        </button>
-      }
-      @if (showValue()) {
-        <span class="rating-value">{{ value().toFixed(1) }}</span>
-      }
-    </div>
-  `,
+  templateUrl: './rating.component.html',
   styleUrl: './rating.component.css'
 })
 export class RatingComponent {

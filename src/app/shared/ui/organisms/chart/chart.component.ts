@@ -24,22 +24,8 @@ function getChartType(chart: ChartInstance): ChartType | undefined {
   selector: 'app-chart',
   standalone: true,
   imports: [BaseChartDirective, VariablesCssDirective],
-  template: `
-    <div
-      #chartContainer
-      class="chart-container"
-      [appVariablesCss]="{ '--chart-container-height': height() }"
-    >
-      @if (isChartReady()) {
-        <canvas baseChart
-          [data]="data()"
-          [options]="options()"
-          [type]="type()">
-        </canvas>
-      }
-    </div>
-  `,
-  styleUrl: './chart.component.css'
+  styleUrl: './chart.component.css',
+    templateUrl: './chart.component.html'
 })
 export class ChartComponent implements OnInit, OnDestroy {
   readonly type = input<ChartType>('line');

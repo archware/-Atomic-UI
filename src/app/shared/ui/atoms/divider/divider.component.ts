@@ -19,18 +19,7 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
   standalone: true,
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div class="divider"
-         [class.divider--vertical]="orientation() === 'vertical'"
-         [class.divider--light]="variant() === 'light'"
-         [class.divider--strong]="variant() === 'strong'"
-         [class.divider--dashed]="variant() === 'dashed'"
-         role="separator">
-      @if (label() || text()) {
-        <span class="divider-text">{{ label() || text() }}</span>
-      }
-    </div>
-  `,
+  templateUrl: './divider.component.html',
   styleUrl: './divider.component.css'
 })
 export class DividerComponent {

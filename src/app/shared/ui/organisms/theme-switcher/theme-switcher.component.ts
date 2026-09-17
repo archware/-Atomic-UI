@@ -8,25 +8,11 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
   selector: 'app-theme-switcher',
   standalone: true,
   imports: [IconButtonComponent],
-  template: `
-    <div class="theme-switcher">
-      <!-- Botón de alternancia simple Light/Dark -->
-      <app-icon-button variant="ghost"
-        (clicked)="toggleTheme($event)"
-        [tooltip]="themeService.isDarkMode() ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
-      >
-        <!-- Ícono Sol (tema claro) - visible cuando está en modo oscuro -->
-        <i class="fa-solid fa-sun icon icon-sun" [class.hidden]="themeService.isDarkMode()"></i>
-
-        <!-- Ícono Luna (tema oscuro) - visible cuando está en modo claro -->
-        <i class="fa-solid fa-moon icon icon-moon" [class.hidden]="!themeService.isDarkMode()"></i>
-      </app-icon-button>
-    </div>
-  `,
   styleUrl: './theme-switcher.component.css',
   host: {
     '[attr.data-theme-switcher]': 'true'
-  }
+  },
+    templateUrl: './theme-switcher.component.html'
 })
 export class ThemeSwitcherComponent {
   themeService = inject(ThemeService);

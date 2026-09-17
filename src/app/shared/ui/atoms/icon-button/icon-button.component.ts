@@ -7,24 +7,7 @@ export type IconButtonAnimation = 'rotate' | 'grow' | 'none';
   selector: 'app-icon-button',
   standalone: true,
   imports: [],
-  template: `
-    <button 
-      class="icon-btn"
-      [class.icon-anim-rotate]="animation() === 'rotate'"
-      [class.icon-anim-grow]="animation() === 'grow'"
-      [class.icon-anim-none]="animation() === 'none'"
-      [class.icon-btn--ghost]="variant() === 'ghost'"
-      [class.icon-btn--avatar]="variant() === 'avatar'"
-      [attr.title]="tooltip()"
-      [attr.aria-label]="ariaLabel() || tooltip()"
-      [disabled]="disabled()"
-      (click)="!disabled() && clicked.emit($event)">
-      <ng-content></ng-content>
-      @if (badge() && badge() > 0) {
-        <span class="icon-btn__badge">{{ badge() > 9 ? '9+' : badge() }}</span>
-      }
-    </button>
-  `,
+  templateUrl: './icon-button.component.html',
   styleUrl: './icon-button.component.css'
 })
 export class IconButtonComponent {

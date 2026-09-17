@@ -1,0 +1,79 @@
+<div
+      class="floating-input-wrapper"
+      [class]="'variant-' + variant()"
+      [class.focused]="isFocused()"
+      [class.has-value]="hasValue()"
+      [class.has-error]="error()"
+      [class.disabled]="isDisabled()"
+      [class.has-icon]="icon() || type() === 'password'"
+      [appVariablesCss]="{ '--floating-input-width': width() || null }"
+    >
+      <input
+        #inputEl
+        class="floating-input"
+        [id]="inputId()"
+        [type]="actualType()"
+        [disabled]="isDisabled()"
+        [readonly]="readonly()"
+        [value]="value()"
+        [attr.data-clipboard-policy]="type() === 'password' ? 'paste-only' : null"
+        [attr.autocomplete]="autocomplete() || (type() === 'password' ? 'current-password' : 'off')"
+        (input)="onInput($event)"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+        [attr.placeholder]="variant() === 'floating' || variant() === 'material' ? ' ' : placeholder()"
+      />
+      <label class="floating-label" [attr.for]="inputId()">{{ label() }}</label>
+      <span class="input-line"></span>
+
+      <!-- Icon button (password toggle or custom icon) -->
+      @if (type() === 'password') {
+        <button
+          type="button"
+          class="input-icon-btn"
+          [disabled]="isDisabled()"
+          [attr.aria-label]="passwordToggleAccessibleLabel()"
+          [attr.aria-pressed]="showPassword()"
+          [attr.aria-controls]="inputId()"
+          (click)="onPasswordToggleClick($event)"
+        >
+          <i
+            class="fa-solid"
+            [class.fa-eye]="!showPassword()"
+            [class.fa-eye-slash]="showPassword()"
+            aria-hidden="true"
+          ></i>
+        </button>
+      } @else if (iconClass() || clearable()) {
+        <button
+          type="button"
+          class="input-icon-btn input-icon-btn--static"
+          (click)="handleIconClick($event)"
+          (keydown.enter)="handleIconClick($event)"
+          (keydown.space)="handleIconClick($event); $event.preventDefault()"
+          tabindex="0"
+          [attr.aria-label]="label() || 'Input icon action'"
+          [appVariablesCss]="{
+            '--floating-input-icon-cursor': clearable() && hasValue() ? 'pointer' : 'default'
+          }"
+        >
+          <i [class]="getIconClass()"></i>
+        </button>
+      } @else if (icon()) {
+        <button
+          type="button"
+          class="input-icon-btn input-icon-btn--static"
+          (click)="emitIconClick($event)"
+          (keydown.enter)="emitIconClick($event)"
+          (keydown.space)="emitIconClick($event); $event.preventDefault()"
+          tabindex="0"
+          [attr.aria-label]="label() || 'Input icon action'"
+        >
+          {{ icon() }}
+        </button>
+      }
+
+      @if (error()) {
+        <span class="input-error">{{ error() }}</span>
+      }
+    </div>

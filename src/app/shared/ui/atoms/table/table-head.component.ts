@@ -11,13 +11,7 @@ import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/
   imports: [],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <thead class="atomic-thead">
-      <tr>
-        <ng-content></ng-content>
-      </tr>
-    </thead>
-  `,
+  templateUrl: './table-head.component.html',
   styleUrl: './table-head.component.css'
 })
 export class TableHeadComponent { }

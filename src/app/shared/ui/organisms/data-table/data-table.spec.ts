@@ -28,29 +28,7 @@ const rows: readonly LoanRow[] = [
 
 @Component({
   imports: [DataTable],
-  template: `
-    <app-data-table
-      caption="Créditos vigentes"
-      [columns]="columns"
-      [rows]="rows"
-      actionsWidth="12rem"
-      [trackBy]="trackById"
-    >
-      <ng-template #actions let-row let-index="index">
-        <button
-          class="edit-action"
-          type="button"
-          [attr.data-id]="$any(row).id"
-          [attr.data-index]="index"
-          (click)="edit($any(row).id)"
-        >
-          Editar
-        </button>
-        <button class="view-action" type="button">Ver</button>
-        <button class="delete-action" type="button">Eliminar</button>
-      </ng-template>
-    </app-data-table>
-  `,
+    templateUrl: './data-table-host.component.html'
 })
 class DataTableHost {
   protected readonly columns = columns;
@@ -424,16 +402,7 @@ describe('DataTable', () => {
 */
 @Component({
   imports: [DataTable],
-  template: `
-    <app-data-table
-      caption="Tamaño fuera de catálogo"
-      [columns]="columns"
-      [rows]="rows"
-      pagination="client"
-      [pageSize]="pageSize()"
-      [pageSizeOptions]="pageSizeOptions"
-    ></app-data-table>
-  `,
+    templateUrl: './page-size-host.component.html'
 })
 class PageSizeHost {
   protected readonly columns = columns;
