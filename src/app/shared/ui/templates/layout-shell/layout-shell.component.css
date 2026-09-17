@@ -57,7 +57,7 @@
 
 .content-wrapper {
   width: 100%;
-  padding: var(--space-6);
+  padding: 24px 36px;
   box-sizing: border-box;
 }
 
@@ -114,11 +114,7 @@
   }
 }
 
-@media (max-width: 48rem) {
-  .content-wrapper {
-    padding: var(--space-3);
-  }
-}
+
 
 .layout-skip-link {
   position: absolute;
