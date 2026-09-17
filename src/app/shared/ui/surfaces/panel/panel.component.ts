@@ -36,6 +36,7 @@ export class PanelComponent {
 
   /** Optional icon displayed before title */
   readonly icon = input('');
+  readonly iconClass = input('');
 
   /** Whether to show the header section */
   readonly showHeader = input(true);
@@ -52,3 +53,4 @@ export class PanelComponent {
   /** Title text alignment */
   readonly titleAlign = input<PanelTitleAlign>('left');
 }
+

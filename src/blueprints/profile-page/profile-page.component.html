@@ -1,7 +1,7 @@
 ﻿<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
 
   <!-- Sidebar -->
-  <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="Perfil" logoIcon="fa-solid fa-id-card" (navigate)="onNavigate($event)"></app-sidebar>
+  <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="Perfil" logoiconClass="fa-solid fa-id-card" (navigate)="onNavigate($event)"></app-sidebar>
 
   <!-- Topbar -->
   <app-topbar
@@ -45,7 +45,7 @@
     </app-panel>
 
     <!-- Columna derecha: Formularios -->
-    <app-panel variant="elevated" padding="lg" title="Informacin personal" icon="fa-solid fa-user-pen">
+    <app-panel variant="elevated" padding="lg" title="Informacin personal" iconClass="fa-solid fa-user-pen">
       <div class="mb-6"><app-text variant="body-sm" color="muted">Actualiza tus datos bÇ­sicos y cmo te verÇ­n otros usuarios en el sistema.</app-text></div>
 
       @if (saveSuccess()) {
@@ -94,7 +94,7 @@
     </app-panel>
 
     <!-- Cambio de contrasea -->
-    <app-panel variant="elevated" padding="lg" title="Cambiar contrasea" icon="fa-solid fa-lock" class="mt-6">
+    <app-panel variant="elevated" padding="lg" title="Cambiar contrasea" iconClass="fa-solid fa-lock" class="mt-6">
 
       <div class="mb-6"><app-text variant="body-sm" color="muted">AsegÇ§rate de usar una contrasea larga y difcil de adivinar.</app-text></div>
 
@@ -130,4 +130,5 @@
   </app-pagina-ajustes>
 
 </app-layout-shell>
+
 

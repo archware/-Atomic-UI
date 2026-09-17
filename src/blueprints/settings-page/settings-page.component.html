@@ -1,6 +1,6 @@
 ﻿<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
 
-  <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="Ajustes" logoIcon="fa-solid fa-sliders" (navigate)="onNavigate($event)"></app-sidebar>
+  <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="Ajustes" logoiconClass="fa-solid fa-sliders" (navigate)="onNavigate($event)"></app-sidebar>
 
   <app-topbar
     slot="topbar"
@@ -32,7 +32,7 @@
     <app-panel padding="lg" variant="elevated">
       <app-tabs>
         <!-- PESTAA: PERFIL -->
-        <app-tab label="Perfil" icon="fa-regular fa-id-badge">
+        <app-tab label="Perfil" iconClass="fa-regular fa-id-badge">
           <div >
             <app-text variant="h4" class="mb-2">Informacin del perfil</app-text>
             <app-text variant="body-sm" color="muted" class="mb-6">Actualiza tu foto y tus datos personales.</app-text>
@@ -64,7 +64,7 @@
         </app-tab>
 
         <!-- PESTAA: SEGURIDAD -->
-        <app-tab label="Seguridad" icon="fa-solid fa-shield-halved">
+        <app-tab label="Seguridad" iconClass="fa-solid fa-shield-halved">
           <div >
             <app-text variant="h4" class="mb-2">Cambiar contrasea</app-text>
             <app-text variant="body-sm" color="muted" class="mb-6">Te recomendamos usar una contrasea fuerte que no uses en otros sitios.</app-text>
@@ -84,7 +84,7 @@
         </app-tab>
 
         <!-- PESTAA: NOTIFICACIONES -->
-        <app-tab label="Notificaciones" icon="fa-regular fa-bell">
+        <app-tab label="Notificaciones" iconClass="fa-regular fa-bell">
           <div >
             <app-text variant="h4" class="mb-2">Preferencias de notificaciones</app-text>
             <app-text variant="body-sm" color="muted" class="mb-6">Decide quÇ¸ correos y alertas quieres recibir.</app-text>
@@ -120,7 +120,7 @@
         </app-tab>
 
         <!-- PESTAA: APARIENCIA -->
-        <app-tab label="Apariencia" icon="fa-solid fa-palette">
+        <app-tab label="Apariencia" iconClass="fa-solid fa-palette">
           <div class="d-flex flex-col gap-2">
             <app-text variant="h4" class="mb-2">Personalizacin</app-text>
             <app-text variant="body-sm" color="muted" class="mb-6">Ajusta el aspecto visual de la plataforma.</app-text>
@@ -142,5 +142,6 @@
   </app-pagina-ajustes>
 
 </app-layout-shell>
+
 
 

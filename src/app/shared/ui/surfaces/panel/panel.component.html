@@ -1,4 +1,4 @@
-<div class="panel" [class.panel--elevated]="variant() === 'elevated'" [class.panel--card]="variant() === 'card'"
+﻿<div class="panel" [class.panel--elevated]="variant() === 'elevated'" [class.panel--card]="variant() === 'card'"
   [class.panel--floating]="variant() === 'floating'" [class.panel--flat]="variant() === 'flat'"
   [class.panel--outlined]="variant() === 'outlined'" [class.panel--transparent]="variant() === 'transparent'"
   [class.panel--plain]="variant() === 'plain'" [class.panel--padding-none]="padding() === 'none'"
@@ -6,9 +6,11 @@
   [class.panel--padding-lg]="padding() === 'lg'">
 
   <!-- Header -->
-  @if (showHeader() && (title() || icon())) {
+  @if (showHeader() && (title() || icon() || iconClass())) {
   <header class="panel__header">
-    @if (icon()) {
+    @if (iconClass()) {
+    <i class="panel__icon {{ iconClass() }}"></i>
+    } @else if (icon()) {
     <span class="panel__icon">{{ icon() }}</span>
     }
     @if (title()) {
@@ -38,3 +40,4 @@
     <ng-content select="[slot=footer]"></ng-content>
   </footer>
 </div>
+
