@@ -29,7 +29,7 @@
   cursor: not-allowed;
   background: transparent;
   color: var(--text-color-secondary);
-  transform: none;
+  transform: none !important;
 }
 
 /* Ghost variant - más sutil */
@@ -120,7 +120,7 @@
 .icon-anim-none:hover ::ng-deep i.fa-solid,
 .icon-anim-none:hover ::ng-deep i.fa-regular,
 .icon-anim-none:hover ::ng-deep i.fa-brands {
-  transform: none;
+  transform: none !important;
   /* Still allow color change for interactive feedback */
   color: var(--primary-color);
 }
