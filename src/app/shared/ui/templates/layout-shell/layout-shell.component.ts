@@ -77,7 +77,7 @@ export class LayoutShellComponent implements OnInit, OnChanges {
     this.desconectarMedia?.();
     this.desconectarMedia = null;
 
-    const mediaQuery = this.document.defaultView?.matchMedia(this.compactViewportQuery());
+    if (!this.document.defaultView?.matchMedia) return; const mediaQuery = this.document.defaultView.matchMedia(this.compactViewportQuery());
     if (!mediaQuery) {
       return;
     }
