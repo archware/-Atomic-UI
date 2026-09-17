@@ -1,4 +1,4 @@
-.so-root {
+﻿.so-root {
   position: relative;
   display: inline-block;
   max-width: 100%;
@@ -58,7 +58,7 @@
   height: 0;
 }
 
-/* Agregamos padding al área scrolleable para dar respiro al final y asegurar que el último registro se vea por completo */
+/* Agregamos padding al Ã¡rea scrolleable para dar respiro al final y asegurar que el Ãºltimo registro se vea por completo */
 .so-scroll-area {
   padding-bottom: var(--so-scroll-end-space);
   scroll-padding-bottom: var(--so-scroll-end-space);
@@ -134,7 +134,7 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 180ms ease;
-  z-index: 10;
+  z-index: 20;
   display: none;
 }
 
@@ -195,10 +195,10 @@
   top: 0;
   height: var(--so-track-size);
   width: 0;
-  z-index: 2;
+  z-index: 20;
 }
 
-/* Las dimensiones de las barras se controlan dinámicamente desde TypeScript cuando ambas están activas */
+/* Las dimensiones de las barras se controlan dinÃ¡micamente desde TypeScript cuando ambas estÃ¡n activas */
 
 .so-thumb {
   position: absolute;
@@ -282,7 +282,7 @@
   overflow: hidden;
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 20;
 }
 
 .so-root[data-so-table][data-so-sync-columns] thead tr,
@@ -323,3 +323,5 @@
   height: var(--so-body-height, auto);
   min-height: var(--so-body-height, auto);
 }
+
+
