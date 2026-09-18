@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "d9a1ae3e233cd742f1c14596375c0b41ec487234e3d3869f51d7bfff6b94bb14",
+  "sourceTreeSha256": "6b1a6ffb5953f835ca76cc25ed42654923b8d546089c1f659a7046ad6cf5b913",
   "fileCount": 310,
   "files": [
     {
@@ -45,8 +45,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/avatar/avatar.component.ts",
-      "bytes": 2326,
-      "sha256": "a5c70cb070bec4e5db21cc9173e03758aaae10b1776f4978ac8174537d5c3d5d"
+      "bytes": 2335,
+      "sha256": "3e071fd31f85c203d64c4455d0916a9a9737905f59837c846b18bf27295f2ff7"
     },
     {
       "path": "src/app/shared/ui/atoms/badge/badge.component.css",
@@ -1011,7 +1011,7 @@
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.scss",
       "bytes": 9629,
-      "sha256": "ba1b90867acafd9487ef9d552280a2af4cee0c2b1f3560cbe8491a4b583b793e"
+      "sha256": "20d24afe50c75da62a82ade8a49ecbbf0313c75b7ff103a882b222d87ff92262"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.ts",
@@ -1410,8 +1410,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.css",
-      "bytes": 2897,
-      "sha256": "74ebea5a2b4b487c3e987b68ae0fbf46aff952bb1c76f1cba4bb99e3bbe5ebb4"
+      "bytes": 2895,
+      "sha256": "0d937f90361dca11d01099a5c6bb706dc3a26b37db6b20d6fdd638f53db567b5"
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.html",
