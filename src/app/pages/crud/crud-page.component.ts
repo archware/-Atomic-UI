@@ -1,4 +1,4 @@
-﻿import { Component, signal, inject, PLATFORM_ID, HostListener } from '@angular/core';
+import { Component, signal, inject, PLATFORM_ID, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import {
@@ -22,7 +22,7 @@ import { CrudTableComponent } from '../../../blueprints/crud-table/crud-table.co
   ],
   template: `
     <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
-      <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="CRUD Gen" logoIcon="fa-solid fa-database" (navigate)="onNavigate($event)"></app-sidebar>
+      <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="CRUD Gen" logoIcon="fa-solid fa-database" logoIconColor="var(--orange-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'CRUD Admin', role: 'Administrador', initials: 'CA' }" (navigate)="onNavigate($event)"></app-sidebar>
       <app-topbar slot="topbar" title="CRUD" userInitials="HC" userName="COTAHA"
         userEmail="cotaha@email.com" [notificationCount]="0"
         (toggleSidebar)="onToggleSidebar()" (logout)="onLogout()">
