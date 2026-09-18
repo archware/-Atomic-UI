@@ -1,4 +1,4 @@
-﻿import { Component, signal, HostListener, input, output } from '@angular/core';
+import { Component, signal, HostListener, input, output } from '@angular/core';
 
 
 export interface UserMenuAction {
@@ -84,7 +84,6 @@ export class UserMenuComponent {
   readonly menuActions = input<UserMenuAction[]>([
       { id: 'profile', label: 'Mi Perfil', icon: 'fa-solid fa-user' },
       { id: 'settings', label: 'Configuración', icon: 'fa-solid fa-gear' },
-      { id: 'password', label: 'Cambiar Contraseña', icon: 'fa-solid fa-key' },
       { id: 'logout', label: 'Cerrar Sesión', icon: 'fa-solid fa-arrow-right-from-bracket', danger: true }
   ]);
 

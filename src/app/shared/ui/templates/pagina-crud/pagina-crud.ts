@@ -165,11 +165,11 @@ export class PaginaCrud<T extends object = any> {
   // ─── Eventos ─────────────────────────────────────────────────
   /** Se emite cuando la tabla necesita datos (cambio de página, búsqueda). */
   readonly alSolicitarPagina = output<SolicitudPagina>();
-  /** Se emite al pulsar el bot�n "Nuevo". */
+  /** Se emite al pulsar el bot�n "Nuevo". */
   readonly alCrear = output<void>();
-  /** Se emite al pulsar el bot�n "Ver" en una fila. */
+  /** Se emite al pulsar el bot�n "Ver" en una fila. */
   readonly alVer = output<T>();
-  /** Se emite al pulsar el bot�n "Editar" en una fila. */
+  /** Se emite al pulsar el bot�n "Editar" en una fila. */
   readonly alEditar = output<T>();
   /** Se emite al confirmar la baja lógica de una fila. */
   readonly alEliminar = output<T>();
@@ -258,7 +258,7 @@ export class PaginaCrud<T extends object = any> {
     });
   }
 
-  // ─── Gesti�n del diálogo CRUD ────────────────────────────────
+  // ─── Gesti�n del diálogo CRUD ────────────────────────────────
   /** Abre el diálogo con foco en el primer campo habilitado. */
   abrirDialogo(): void {
     this.dialogoCrud()?.showModal();

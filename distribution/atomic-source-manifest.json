@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "d0d7332994beefe6b9daf761518e1acd2998fc39b50f0a93af3ce8efd107d418",
+  "sourceTreeSha256": "4d60cfa5bd1a0a7c4f1b93860d330108f9e622066ceff5d6b8f804684ab6a166",
   "fileCount": 309,
   "files": [
     {
@@ -1465,8 +1465,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.ts",
-      "bytes": 12590,
-      "sha256": "7dfe62975adf21236365464d26dd64f48984b2e44ca063ce074162720374df44"
+      "bytes": 12598,
+      "sha256": "082f84d76348c5430a38bbe9a9ecc6e31ff68b5d00151fe29cd2c99c4ec4e104"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-dashboard/pagina-dashboard.html",
