@@ -10,8 +10,8 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "4d60cfa5bd1a0a7c4f1b93860d330108f9e622066ceff5d6b8f804684ab6a166",
-  "fileCount": 309,
+  "sourceTreeSha256": "316fd59ccb692e8180e2c73b1755a1692806492d5c0b492274d3630557a05a01",
+  "fileCount": 310,
   "files": [
     {
       "path": "projects/atomic-ui/ng-package.json",
@@ -594,6 +594,11 @@
       "sha256": "30b5b5d7bd85ca3b2ebbe6602c767305e3129e334b23382a70db5700b14b4d55"
     },
     {
+      "path": "src/app/shared/ui/config/chasis.config.ts",
+      "bytes": 1829,
+      "sha256": "6036dc5ace043ce84db595a3f8af3c7e12e52e2d34570e21d57c62091771006a"
+    },
+    {
       "path": "src/app/shared/ui/directives/permission.directive.ts",
       "bytes": 2429,
       "sha256": "b90f3b82a232124302c9a485f55e76ce03bc7609f20717ee4f01b1bc73660eaa"
@@ -615,8 +620,8 @@
     },
     {
       "path": "src/app/shared/ui/index.ts",
-      "bytes": 15453,
-      "sha256": "0d0905624060cbb8125d944e9ba3faded325399b703a40fa98fbce17bed12b88"
+      "bytes": 15572,
+      "sha256": "7e7e5b939c49b608dfa521e1e17847d4d1fa4210561b2f047fac0c130499bd89"
     },
     {
       "path": "src/app/shared/ui/interceptors/auth.interceptor.ts",
@@ -1220,8 +1225,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.ts",
-      "bytes": 3786,
-      "sha256": "78c316f11913cde0e526dc30f9c355d8f977050854cddaa06983d4b64ed5dddc"
+      "bytes": 4112,
+      "sha256": "8d3db442b811ef1abf8a1a7be50548dcac4e6e2521f3b7de851ae2203f25b88f"
     },
     {
       "path": "src/app/shared/ui/organisms/stepper/stepper.component.css",
@@ -1295,8 +1300,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.ts",
-      "bytes": 2431,
-      "sha256": "9cc84771727fa7287360502f1f3bb975fa6323820ae30ffc9249cf05503479e8"
+      "bytes": 2821,
+      "sha256": "107f94d6f54c37e7146cad5149c78692649199dad4e705b02636644374e88c62"
     },
     {
       "path": "src/app/shared/ui/services/api.service.ts",

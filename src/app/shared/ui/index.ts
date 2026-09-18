@@ -1,4 +1,4 @@
-﻿/**
+/**
  * UI Component Library - Barrel Exports (superficie EXCLUSIVAMENTE visual)
  *
  * Importar componentes desde aquí:
@@ -346,7 +346,10 @@ export * from './templates/modelos-crud';
 // NEW BLUEPRINT REFACTOR COMPONENTS
 // ============================================
 export { PaginaAjustesComponent } from './templates/pagina-ajustes/pagina-ajustes.component';
+export { PaginaWizardComponent } from './templates/pagina-wizard/pagina-wizard';
 export { ProfileCoverComponent } from './molecules/profile-cover/profile-cover.component';
 export { FormActionsComponent } from './molecules/form-actions/form-actions.component';
 export { SettingItemComponent } from './molecules/setting-item/setting-item.component';
 export { AuthBannerComponent } from './molecules/auth-banner/auth-banner.component';
+
+export * from './config/chasis.config';

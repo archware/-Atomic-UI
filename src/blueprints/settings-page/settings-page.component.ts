@@ -81,6 +81,7 @@ export class SettingsPageComponent implements OnInit {
   protected successMessage = signal<string | null>(null);
   protected errorMessage = signal<string | null>(null);
 
+
   // ============================================================
   // MENU — @customize: ajusta a tu navegación
   // ============================================================

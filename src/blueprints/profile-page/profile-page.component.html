@@ -1,11 +1,8 @@
 <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
 
-  <!-- Sidebar -->
-  <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="CxC Ventas" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }" (navigate)="onNavigate($event)"></app-sidebar>
+  <app-sidebar slot="sidebar" (navigate)="onNavigate($event)"></app-sidebar>
 
-  <!-- Topbar -->
-  <app-topbar [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true"
-    slot="topbar"
+  <app-topbar slot="topbar"
     title="Mi Perfil"
     [userInitials]="(currentUser?.names ?? 'U')[0]"
     [userName]="currentUser?.names ?? 'Usuario'"
@@ -16,10 +13,18 @@
     <app-theme-switcher></app-theme-switcher>
   </app-topbar>
 
-  <!-- Contenido principal -->
-  <div class="flex justify-center p-6 mt-8">
-    <div class="w-full max-w-md">
-      <!-- Resumen de cuenta -->
+  <app-pagina-wizard
+    titulo="Mi Perfil"
+    subtitulo="Información pública de tu cuenta."
+    [steps]="wizardSteps"
+    [activeStep]="activeStep()"
+    [allowSkip]="false"
+    [nextEnabled]="true"
+    (stepChange)="activeStep.set($event)"
+    (onFinish)="onFinish()"
+    (onCancel)="onCancel()"
+  >
+    <div class="wizard-step-body" style="padding: 1.5rem;">
       <app-panel variant="elevated" padding="none">
         <app-profile-cover 
           [loading]="profileApi.loading()"
@@ -42,15 +47,13 @@
             </div>
           </div>
           <div class="mt-6">
-            <app-button type="button" variant="primary" (click)="goToSettings()" class="w-full">
+            <app-button type="button" variant="primary" (buttonClick)="goToSettings()" class="w-full">
               <i class="fa-solid fa-user-pen mr-2"></i> Editar perfil
             </app-button>
           </div>
         </div>
       </app-panel>
     </div>
-  </div>
+  </app-pagina-wizard>
 
 </app-layout-shell>
-
-

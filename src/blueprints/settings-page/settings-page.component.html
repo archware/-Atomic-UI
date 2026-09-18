@@ -13,13 +13,17 @@
   >
   </app-topbar>
 
-  <app-pagina-ajustes>
-
-    <div ajustes-aside>
-      <app-text variant="h3" weight="semibold">Configuración</app-text>
-      <app-text variant="body-sm" color="muted">Administra tus preferencias de cuenta.</app-text>
-    </div>
-
+  <app-pagina-wizard
+    titulo="Configuración"
+    subtitulo="Administra tus preferencias de cuenta."
+    [steps]="wizardSteps"
+    [activeStep]="activeStep()"
+    [allowSkip]="true"
+    [nextEnabled]="true"
+    (stepChange)="activeStep.set($event)"
+    (onFinish)="onFinish()"
+    (onCancel)="onCancel()"
+  >
     <!-- Alert de estado -->
     @if (successMessage()) {
       <app-alert kind="success" [closable]="true" class="mb-4">{{ successMessage() }}</app-alert>
@@ -28,12 +32,10 @@
       <app-alert kind="danger" [closable]="true" class="mb-4">{{ errorMessage() }}</app-alert>
     }
 
-    <!-- Panel de Tabs -->
-    <app-panel padding="lg" variant="elevated">
-      <app-tabs>
-        <!-- PESTAA: PERFIL -->
-        <app-tab label="Perfil" iconClass="fa-regular fa-id-badge">
-          <div >
+    <div class="wizard-step-body" style="padding: 1.5rem;">
+      @switch (activeStep()) {
+        @case (0) {
+          <div>
             <app-text variant="h4" class="mb-2">Información del perfil</app-text>
             <app-text variant="body-sm" color="muted" class="mb-6">Actualiza tu foto y tus datos personales.</app-text>
 
@@ -61,16 +63,15 @@
               </app-form-actions>
             </form>
           </div>
-        </app-tab>
+        }
 
-        <!-- PESTAA: SEGURIDAD -->
-        <app-tab label="Seguridad" iconClass="fa-solid fa-shield-halved">
-          <div >
+        @case (1) {
+          <div>
             <app-text variant="h4" class="mb-2">Cambiar contraseña</app-text>
             <app-text variant="body-sm" color="muted" class="mb-6">Te recomendamos usar una contraseña fuerte que no uses en otros sitios.</app-text>
 
             <form [formGroup]="passwordForm" (ngSubmit)="savePassword()">
-              <div class="d-flex flex-col gap-3 mb-4" class="w-full">
+              <div class="d-flex flex-col gap-3 mb-4 w-full">
                 <app-floating-input formControlName="currentPassword" type="password" label="Contraseña actual" variant="outline"></app-floating-input>
                 <app-floating-input formControlName="newPassword" type="password" label="Nueva contraseña" variant="outline"></app-floating-input>
                 <app-floating-input formControlName="confirmPassword" type="password" label="Confirmar nueva contraseña" variant="outline"></app-floating-input>
@@ -81,11 +82,10 @@
               </app-form-actions>
             </form>
           </div>
-        </app-tab>
+        }
 
-        <!-- PESTAA: NOTIFICACIONES -->
-        <app-tab label="Notificaciones" iconClass="fa-regular fa-bell">
-          <div >
+        @case (2) {
+          <div>
             <app-text variant="h4" class="mb-2">Preferencias de notificaciones</app-text>
             <app-text variant="body-sm" color="muted" class="mb-6">Decide qué correos y alertas quieres recibir.</app-text>
 
@@ -117,10 +117,9 @@
               <app-button variant="outline" (buttonClick)="saveNotifications()">Guardar Preferencias</app-button>
             </app-form-actions>
           </div>
-        </app-tab>
+        }
 
-        <!-- PESTAA: APARIENCIA -->
-        <app-tab label="Apariencia" iconClass="fa-solid fa-palette">
+        @case (3) {
           <div class="d-flex flex-col gap-2">
             <app-text variant="h4" class="mb-2">Personalización</app-text>
             <app-text variant="body-sm" color="muted" class="mb-6">Ajusta el aspecto visual de la plataforma.</app-text>
@@ -135,13 +134,9 @@
               <app-theme-switcher></app-theme-switcher>
             </app-setting-item>
           </div>
-        </app-tab>
-      </app-tabs>
-    </app-panel>
-
-  </app-pagina-ajustes>
+        }
+      }
+    </div>
+  </app-pagina-wizard>
 
 </app-layout-shell>
-
-
-

@@ -1,4 +1,4 @@
-﻿import {
+import {
   Component,
   ElementRef,
   inject,
@@ -10,6 +10,8 @@ import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import { AvatarComponent } from '../../atoms/avatar/avatar.component';
 import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
+
+import { CHASIS_CONFIG, defaultChasisConfig } from '../../config/chasis.config';
 
 export interface SidebarMenuItem {
   id?: string;
@@ -41,33 +43,34 @@ export interface SidebarUser {
 export class SidebarComponent {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly config = inject(CHASIS_CONFIG, { optional: true }) ?? defaultChasisConfig;
 
   /** Menu items to display */
-  readonly menuItems = input<SidebarMenuItem[]>([]);
+  readonly menuItems = input<SidebarMenuItem[]>(this.config.menuItems);
 
   /** Current user information */
-  readonly user = input<SidebarUser | null>();
+  readonly user = input<SidebarUser | null>(this.config.defaultUser);
 
   /** Check if the sidebar is expanded (visual mode) */
   readonly collapsed = input(false);
 
   /** Logo text */
-  readonly logoText = input('Atomic UI');
+  readonly logoText = input(this.config.logoText);
 
   /** Logo icon */
-  readonly logoIcon = input('fa-solid fa-atom');
+  readonly logoIcon = input(this.config.logoIcon);
 
   /** Logo icon color */
-  readonly logoIconColor = input<string>();
+  readonly logoIconColor = input<string>(this.config.logoIconColor);
 
   /** Logo text color */
-  readonly logoTextColor = input<string>();
+  readonly logoTextColor = input<string>(this.config.logoTextColor);
 
   /** Background color for the header (logo area) */
-  readonly headerBgColor = input<string>();
+  readonly headerBgColor = input<string>(this.config.headerBgColor);
 
   /** Background color for the footer (user area) */
-  readonly footerBgColor = input<string>();
+  readonly footerBgColor = input<string>(this.config.footerBgColor);
 
   /** Event emitted when a menu item is clicked */
   readonly navigate = output<SidebarMenuItem>();
