@@ -96,6 +96,7 @@ td[data-label='Usuario'] {
 }
 
 tbody tr {
+  background-color: var(--surface-background);
   transition: background-color 140ms ease;
 }
 
@@ -156,17 +157,28 @@ tbody tr:last-child td {
   justify-content: center;
 }
 
-.data-table__cell--end,
-.data-table__actions,
-.data-table__actions-heading {
+.data-table__cell--end {
   text-align: end;
 }
 
 .data-table__actions,
 .data-table__actions-heading {
+  text-align: center;
   width: var(--data-table-actions-width, 12rem);
   min-width: var(--data-table-actions-width, 12rem);
   white-space: nowrap;
+  position: sticky;
+  right: 0;
+}
+
+.data-table__actions-heading {
+  z-index: 20;
+  background-color: var(--table-header-bg);
+}
+
+.data-table__actions {
+  z-index: 10;
+  background-color: inherit;
 }
 
 .data-table__cell--end .data-table__sort-button {
@@ -183,7 +195,7 @@ tbody tr:last-child td {
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   gap: var(--space-2);
 }
 

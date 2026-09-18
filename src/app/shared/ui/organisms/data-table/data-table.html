@@ -199,7 +199,8 @@
                       column.isBadge ||
                       column.key === 'stateLabel' ||
                       column.key === 'state' ||
-                      column.key === 'status'
+                      column.key === 'status' ||
+                      column.key === 'estado'
                     ) {
                       <app-status-badge
                         [status]="getBadgeStatus(column, row)"
