@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "256447da484307327a0c5202cb5a9393e156e104d321fb14538ebba9f20237b7",
+  "sourceTreeSha256": "4e8aeae7e64d053088517bf3371d5decb67db74541de465aa0915171917beb86",
   "fileCount": 310,
   "files": [
     {
@@ -1005,13 +1005,13 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.html",
-      "bytes": 8599,
-      "sha256": "844595f1144d5805dd09a933108b4430ebb574e7a26973b306d3017e00d9bd04"
+      "bytes": 8609,
+      "sha256": "024d223ca3a9378c2db62891d5dab4d97272d17e431fc99fec6129c1cb6da35c"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.scss",
-      "bytes": 8912,
-      "sha256": "c50bfbc3c9d1d0c6cc22f2ade7bc9a71cda0692172d75f642bcb653ae3fa572b"
+      "bytes": 8915,
+      "sha256": "e8213e23b409d5e42bf71ea06d767636401aa70bf569c312ef6eaeba58ccfba8"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.ts",
