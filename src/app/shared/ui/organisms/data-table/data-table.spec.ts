@@ -363,7 +363,7 @@ describe('DataTable', () => {
     await fixture.whenStable();
 
     expect(pageSizes).toEqual([20]);
-    expect(pages).toEqual([1, 3]);
+    expect(pages).toEqual([1, 2]);
   });
 
   it('disables both page controls while loading and preserves boundary states', async () => {

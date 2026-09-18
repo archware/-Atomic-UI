@@ -8,6 +8,7 @@
     [userName]="currentUser?.names ?? 'Usuario'"
     [userEmail]="currentUser?.email ?? ''"
     (toggleSidebar)="onToggleSidebar()"
+    (userAction)="onUserAction($any($event))"
     (logout)="logout()"
   >
     <app-theme-switcher></app-theme-switcher>

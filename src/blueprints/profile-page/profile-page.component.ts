@@ -108,5 +108,10 @@ export class ProfilePageComponent implements OnInit {
     this.sidebarVisible.update(v => !v);
   }
 
+  protected onUserAction(action: any): void {
+    if (action.id === 'profile') this.router.navigate(['/profile']);
+    else if (action.id === 'settings') this.router.navigate(['/settings']);
+  }
+
   get currentUser() { return this.auth.currentUser(); }
 }

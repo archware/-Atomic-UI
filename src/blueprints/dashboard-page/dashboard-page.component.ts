@@ -61,7 +61,10 @@ export class DashboardPageComponent implements OnInit {
   closeSidebar() { this.sidebarVisible.set(false); }
   toggleSidebar() { this.sidebarVisible.update(v => !v); }
   onMenuItemClick(item: SidebarMenuItem): void { if (item.route) this.router.navigate([item.route]); }
-  onUserAction(_action: unknown) {}
+  onUserAction(action: any): void {
+    if (action.id === 'profile') this.router.navigate(['/profile']);
+    else if (action.id === 'settings') this.router.navigate(['/settings']);
+  }
   onLogout() {}
 
   recentTransactions: SummaryListItem[] = [

@@ -126,8 +126,8 @@ export class DataTable<T extends object = Record<string, unknown>> {
     contentChild<TemplateRef<DataTableActionContext<T>>>('actions');
 
   private readonly activeSort = signal<ActiveSort<T> | null>(null);
-  private readonly clientPage = linkedSignal(() => Math.max(this.page(), 1));
-  private readonly clientPageSize = linkedSignal(() => Math.max(this.pageSize(), 1));
+  private readonly internalPage = linkedSignal(() => Math.max(this.page(), 1));
+  private readonly internalPageSize = linkedSignal(() => Math.max(this.pageSize(), 1));
   private readonly collator = new Intl.Collator('es-PE', {
     numeric: true,
     sensitivity: 'base',
@@ -139,11 +139,7 @@ export class DataTable<T extends object = Record<string, unknown>> {
   protected readonly paginationEnabled = computed(
     () => this.pagination() !== 'none',
   );
-  protected readonly effectivePageSize = computed(() =>
-    this.usesClientPagination()
-      ? this.clientPageSize()
-      : Math.max(this.pageSize(), 1),
-  );
+  protected readonly effectivePageSize = computed(() => this.internalPageSize());
   /*
     El desplegable «POR PÁGINA» tiene que poder mostrar el tamaño REALMENTE
     vigente, aunque nadie lo haya incluido en la lista de opciones.
@@ -185,12 +181,10 @@ export class DataTable<T extends object = Record<string, unknown>> {
     );
   });
   protected readonly effectivePage = computed(() => {
-    if (!this.paginationEnabled()) {
-      return 1;
-    }
+    if (!this.paginationEnabled()) return 1;
     return this.usesClientPagination()
-      ? Math.min(this.clientPage(), this.effectiveTotalPages())
-      : Math.max(this.page(), 1);
+      ? Math.min(this.internalPage(), this.effectiveTotalPages())
+      : this.internalPage();
   });
   protected readonly effectiveHasPreviousPage = computed(() =>
     this.usesClientPagination()
@@ -217,9 +211,9 @@ export class DataTable<T extends object = Record<string, unknown>> {
 
   protected onPageSizeSelectionChange(value: string): void {
     const pageSize = Number(value);
+    this.internalPageSize.set(pageSize);
     if (this.usesClientPagination()) {
-      this.clientPageSize.set(pageSize);
-      this.clientPage.set(1);
+      this.internalPage.set(1);
       return;
     }
     this.pageSizeChange.emit(pageSize);
@@ -229,9 +223,9 @@ export class DataTable<T extends object = Record<string, unknown>> {
     const target = event.target;
     if (target instanceof HTMLSelectElement) {
       const pageSize = Number(target.value);
+      this.internalPageSize.set(pageSize);
       if (this.usesClientPagination()) {
-        this.clientPageSize.set(pageSize);
-        this.clientPage.set(1);
+        this.internalPage.set(1);
         return;
       }
       this.pageSizeChange.emit(pageSize);
@@ -252,10 +246,9 @@ export class DataTable<T extends object = Record<string, unknown>> {
   */
   protected onPageChange(page: number): void {
     this.rescueFocusFromPager();
+    const newPage = Math.min(Math.max(page, 1), this.effectiveTotalPages());
+    this.internalPage.set(newPage);
     if (this.usesClientPagination()) {
-      this.clientPage.set(
-        Math.min(Math.max(page, 1), this.effectiveTotalPages()),
-      );
       return;
     }
     this.pageChange.emit(page);
@@ -401,7 +394,7 @@ export class DataTable<T extends object = Record<string, unknown>> {
 
     this.activeSort.set(direction ? { key: column.key, direction } : null);
     if (this.usesClientPagination()) {
-      this.clientPage.set(1);
+      this.internalPage.set(1);
     }
     this.sortChange.emit({ key: column.key, direction });
   }
