@@ -1,4 +1,4 @@
-﻿import { Component, signal, ChangeDetectionStrategy, HostListener, inject, PLATFORM_ID } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy, HostListener, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -170,6 +170,10 @@ export class ShowcasePageComponent {
 
   onLogout() {
     alert('Cerrando sesión...');
+  }
+
+  onHomeClick() {
+    this.router.navigate(['/dashboard']);
   }
 
   // ============================================

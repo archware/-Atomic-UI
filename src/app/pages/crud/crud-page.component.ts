@@ -25,7 +25,17 @@ import { CrudTableComponent } from '../../../blueprints/crud-table/crud-table.co
       <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="CRUD Gen" logoIcon="fa-solid fa-database" logoIconColor="var(--orange-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'CRUD Admin', role: 'Administrador', initials: 'CA' }" (navigate)="onNavigate($event)"></app-sidebar>
       <app-topbar slot="topbar" title="CRUD" userInitials="HC" userName="COTAHA"
         userEmail="cotaha@email.com" [notificationCount]="0"
-        (toggleSidebar)="onToggleSidebar()" (logout)="onLogout()">
+        (toggleSidebar)="onToggleSidebar()" (logout)="onLogout()"
+        subtitle="Entorno Operativo"
+        apiStatus="API en línea"
+        [showHomeButton]="true"
+        [showSidebarToggle]="true"
+        [showUserInfo]="false"
+        userRole="Administrador"
+        bgColor="var(--surface-sunken)"
+        [showNotifications]="false"
+        [showLanguageSwitcher]="false"
+        (homeClick)="onHomeClick()">
         <app-theme-switcher></app-theme-switcher>
       </app-topbar>
       <app-crud-table></app-crud-table>
@@ -75,6 +85,10 @@ export class CrudPageComponent {
 
   onLogout() {
     this.router.navigate(['/login']);
+  }
+
+  onHomeClick() {
+    this.router.navigate(['/dashboard']);
   }
 }
 
