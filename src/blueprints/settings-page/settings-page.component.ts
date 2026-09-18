@@ -176,6 +176,11 @@ export class SettingsPageComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  onUserAction(action: any): void {
+    if (action.id === 'profile') this.router.navigate(['/profile']);
+    else if (action.id === 'settings') this.router.navigate(['/settings']);
+  }
+
   saveProfile(): void {
     if (this.profileForm.invalid) return;
     this.clearMessages();
