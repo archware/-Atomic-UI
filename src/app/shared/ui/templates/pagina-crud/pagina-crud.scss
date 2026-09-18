@@ -45,8 +45,8 @@ app-query-toolbar {
 }
 
 .pagina-crud__btn-cerrar:hover {
-  background-color: var(--danger-color, #ef4444);
-  color: #ffffff;
+  background-color: var(--danger-color, var(--red-500));
+  color: var(--text-color-on-danger, var(--gray-0));
   border-color: transparent;
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);

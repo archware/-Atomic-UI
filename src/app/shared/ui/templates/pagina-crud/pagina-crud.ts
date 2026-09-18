@@ -164,11 +164,11 @@ export class PaginaCrud<T extends object = any> {
   // â”€â”€â”€ Eventos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   /** Se emite cuando la tabla necesita datos (cambio de pÃ¡gina, bÃºsqueda). */
   readonly alSolicitarPagina = output<SolicitudPagina>();
-  /** Se emite al pulsar el botÃ³n "Nuevo". */
+  /** Se emite al pulsar el botón "Nuevo". */
   readonly alCrear = output<void>();
-  /** Se emite al pulsar el botÃ³n "Ver" en una fila. */
+  /** Se emite al pulsar el botón "Ver" en una fila. */
   readonly alVer = output<T>();
-  /** Se emite al pulsar el botÃ³n "Editar" en una fila. */
+  /** Se emite al pulsar el botón "Editar" en una fila. */
   readonly alEditar = output<T>();
   /** Se emite al confirmar la baja lÃ³gica de una fila. */
   readonly alEliminar = output<T>();
@@ -257,7 +257,7 @@ export class PaginaCrud<T extends object = any> {
     });
   }
 
-  // â”€â”€â”€ GestiÃ³n del diÃ¡logo CRUD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â”€â”€â”€ Gestión del diÃ¡logo CRUD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   /** Abre el diÃ¡logo con foco en el primer campo habilitado. */
   abrirDialogo(): void {
     this.dialogoCrud()?.showModal();
