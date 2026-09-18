@@ -1,8 +1,11 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  NgZone,
+  OnDestroy,
   TemplateRef,
   computed,
   contentChild,
@@ -85,8 +88,9 @@ function trackByIdentity<T extends object>(_index: number, row: T): T {
   templateUrl: './data-table.html',
   styleUrl: './data-table.scss',
 })
-export class DataTable<T extends object = Record<string, unknown>> {
+export class DataTable<T extends object = Record<string, unknown>> implements AfterViewInit, OnDestroy {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly zone = inject(NgZone);
   readonly columns = input.required<readonly DataTableColumn<T>[]>();
   readonly rows = input.required<readonly T[]>();
   readonly caption = input.required<string>();
@@ -486,5 +490,54 @@ export class DataTable<T extends object = Record<string, unknown>> {
       return left ? 1 : -1;
     }
     return this.collator.compare(String(left), String(right));
+  }
+
+  protected readonly isScrolledRight = signal(true);
+  private scrollObserver?: ResizeObserver;
+  private scrollListener?: () => void;
+
+  ngAfterViewInit(): void {
+    this.zone.runOutsideAngular(() => {
+      const host = this.host.nativeElement;
+      const scrollArea = host.querySelector('.so-scroll-area');
+      if (!scrollArea) {
+        return;
+      }
+
+      const checkScroll = () => {
+        const { scrollLeft, clientWidth, scrollWidth } = scrollArea;
+        // Permite 1px de tolerancia por redondeos en pantallas con escala fraccional
+        const atRight = scrollWidth === 0 || (scrollLeft + clientWidth >= scrollWidth - 1);
+        if (this.isScrolledRight() !== atRight) {
+          this.zone.run(() => this.isScrolledRight.set(atRight));
+        }
+      };
+
+      this.scrollListener = () => checkScroll();
+      scrollArea.addEventListener('scroll', this.scrollListener, { passive: true });
+
+      if (typeof ResizeObserver !== 'undefined') {
+        this.scrollObserver = new ResizeObserver(() => checkScroll());
+        this.scrollObserver.observe(scrollArea);
+        const table = host.querySelector('table');
+        if (table) {
+          this.scrollObserver.observe(table);
+        }
+      }
+
+      setTimeout(checkScroll, 0);
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.scrollListener) {
+      const scrollArea = this.host.nativeElement.querySelector('.so-scroll-area');
+      if (scrollArea) {
+        scrollArea.removeEventListener('scroll', this.scrollListener);
+      }
+    }
+    if (this.scrollObserver) {
+      this.scrollObserver.disconnect();
+    }
   }
 }

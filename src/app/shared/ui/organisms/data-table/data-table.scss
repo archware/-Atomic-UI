@@ -169,16 +169,25 @@ tbody tr:last-child td {
   white-space: nowrap;
   position: sticky;
   right: 0;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .data-table__actions-heading {
   z-index: 20;
   background-color: var(--table-header-bg);
+  background-image: linear-gradient(var(--hover-background), var(--hover-background));
 }
 
 .data-table__actions {
   z-index: 10;
   background-color: inherit;
+  background-image: linear-gradient(var(--hover-background), var(--hover-background));
+}
+
+.data-table:not(.data-table--scrolled-right) .data-table__actions-heading,
+.data-table:not(.data-table--scrolled-right) .data-table__actions {
+  border-left: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
 }
 
 .data-table__cell--end .data-table__sort-button {

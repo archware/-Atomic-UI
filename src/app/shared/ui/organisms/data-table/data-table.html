@@ -73,7 +73,11 @@
     tabindex="0"
     [attr.aria-label]="regionLabel()"
   >
-    <table class="data-table" [attr.aria-busy]="effectiveStatus() === 'loading'">
+    <table
+      class="data-table"
+      [attr.aria-busy]="effectiveStatus() === 'loading'"
+      [class.data-table--scrolled-right]="isScrolledRight()"
+    >
       <caption class="data-table__caption" [class.data-table__caption--hidden]="!captionVisible()">
         {{
           caption()
