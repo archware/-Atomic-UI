@@ -144,6 +144,7 @@
 .user-menu__item-label {
   flex: 1;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 /*
@@ -188,4 +189,3 @@
 }
 
 .user-menu__item:last-child { border-bottom-left-radius: calc(var(--radius-lg) - 1px); border-bottom-right-radius: calc(var(--radius-lg) - 1px); }
-

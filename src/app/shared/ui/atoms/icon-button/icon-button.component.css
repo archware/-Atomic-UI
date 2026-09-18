@@ -63,10 +63,10 @@
 /* Badge */
 .icon-btn__badge {
   position: absolute;
-  top: var(--space-1);
-  right: var(--space-1);
-  min-width: var(--space-2);
-  height: var(--space-2);
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
   padding: 0 4px;
   font-size: 0.625rem;
   font-weight: var(--font-weight-emphasis);
