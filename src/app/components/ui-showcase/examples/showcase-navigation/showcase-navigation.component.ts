@@ -99,7 +99,6 @@ export class ShowcaseNavigationComponent {
   ];
 
   variant2Items: SidebarMenuItem[] = [
-    { label: 'Mi Perfil', icon: 'fa-solid fa-user', route: '/profile', iconColor: 'var(--info-color)' },
     { label: 'Seguridad', icon: 'fa-solid fa-shield-alt', route: '/security', iconColor: 'var(--success-color)' },
     { label: 'Notificaciones', icon: 'fa-solid fa-bell', route: '/notifications', iconColor: 'var(--warning-color)' },
     { label: 'Ayuda', icon: 'fa-solid fa-circle-question', route: '/help', iconColor: 'var(--text-color-secondary)' },

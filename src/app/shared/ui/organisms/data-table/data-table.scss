@@ -15,13 +15,18 @@
 }
 
 .data-table__viewport {
-  display: block;
+  display: flex;
+  flex-direction: column;
   height: auto;
   min-height: 18rem;
   max-height: 55rem;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow: hidden;
   background: var(--surface-background);
+
+  ::ng-deep > .so-scroll-area {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
 }
 
 .data-table {

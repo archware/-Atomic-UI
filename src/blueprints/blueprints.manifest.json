@@ -9,7 +9,6 @@
     { "path": "error-pages", "status": "legacy-demo" },
     { "path": "forgot-password-page", "status": "legacy-demo" },
     { "path": "login-page", "status": "legacy-demo" },
-    { "path": "profile-page", "status": "legacy-demo" },
     { "path": "register-page", "status": "legacy-demo" },
     { "path": "reports-page", "status": "legacy-demo" },
     { "path": "settings-page", "status": "legacy-demo" }

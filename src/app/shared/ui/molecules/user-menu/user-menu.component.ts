@@ -81,9 +81,7 @@ export class UserMenuComponent {
 
   /** Menu actions */
   readonly menuActions = input<UserMenuAction[]>([
-      { id: 'profile', label: 'Mi Perfil', icon: 'fa-solid fa-user' },
       { id: 'settings', label: 'Configuración', icon: 'fa-solid fa-gear' },
-      { id: 'password', label: 'Cambiar Contraseña', icon: 'fa-solid fa-key' },
       { id: 'logout', label: 'Cerrar Sesión', icon: 'fa-solid fa-arrow-right-from-bracket', danger: true }
   ]);
 

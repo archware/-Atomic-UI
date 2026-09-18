@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "5b613a131402b82f5c4a4cacd0eb29409b3459d1693936fd8ae0805909e4ee9d",
+  "sourceTreeSha256": "c435604b23c547761beb7aa2d44c34493cf5a72648b2b038f968b8ffe0777c02",
   "fileCount": 310,
   "files": [
     {
@@ -595,8 +595,8 @@
     },
     {
       "path": "src/app/shared/ui/config/chasis.config.ts",
-      "bytes": 1829,
-      "sha256": "6036dc5ace043ce84db595a3f8af3c7e12e52e2d34570e21d57c62091771006a"
+      "bytes": 1722,
+      "sha256": "5a24da534a613459e1818105b70383b3fa38017d81d0fd8c4ded34e1de414f25"
     },
     {
       "path": "src/app/shared/ui/directives/permission.directive.ts",
@@ -920,8 +920,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/user-menu/user-menu.component.ts",
-      "bytes": 3919,
-      "sha256": "00211e7d578cf777532fb838b25b3d1bdedc9de5d3ea288dcf28cc5f2cdd980e"
+      "bytes": 3767,
+      "sha256": "9ab2655acac7062508de184e4f1a7dc07327d395e48ad6be1a20169194caf06e"
     },
     {
       "path": "src/app/shared/ui/organisms/accordion/accordion-item-component.component.html",
@@ -1010,8 +1010,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.scss",
-      "bytes": 9630,
-      "sha256": "769564c255c6247c9ffdca735acf7d0596a0e4a9d1e99f81d50aeba5cd9ae7ea"
+      "bytes": 9707,
+      "sha256": "6c6c3790dee7eb5e4e8492e8b11ce64c592b0a7c59fa37dd00a975be618692f4"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.ts",

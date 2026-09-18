@@ -67,7 +67,6 @@ export class CrudTableComponent implements OnInit {
     { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' , iconColor: 'var(--secondary-color)' },
     { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' , iconColor: 'var(--info-color)' },
     { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud' , active: true, iconColor: 'var(--success-color)' },
-    { label: 'Profile', icon: 'fa-solid fa-user', route: '/profile' , iconColor: 'var(--warning-color)' },
     { label: 'Settings', icon: 'fa-solid fa-gear', route: '/settings' , iconColor: 'var(--text-color-secondary)' },
   ];
 
@@ -87,8 +86,7 @@ export class CrudTableComponent implements OnInit {
   }
 
   onUserAction(action: any): void {
-    if (action.id === 'profile') this.router.navigate(['/profile']);
-    else if (action.id === 'settings') this.router.navigate(['/settings']);
+    if (action.id === 'settings') this.router.navigate(['/settings']);
   }
 
   private readonly fb = inject(FormBuilder).nonNullable;

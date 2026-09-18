@@ -1,4 +1,4 @@
-﻿import { Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { guestGuard } from './shared/ui/guards/auth.guard';
 
 /**
@@ -47,12 +47,7 @@ export const routes: Routes = [
       import('../blueprints/dashboard-page/dashboard-page.component').then(m => m.DashboardPageComponent),
     // canActivate: [authGuard], // Disabled for UI Demo
   },
-  {
-    path: 'profile',
-    loadComponent: () =>
-      import('../blueprints/profile-page/profile-page.component').then(m => m.ProfilePageComponent),
-    // canActivate: [authGuard], // Disabled for UI Demo
-  },
+
   {
     path: 'settings',
     loadComponent: () =>
