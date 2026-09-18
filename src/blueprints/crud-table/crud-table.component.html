@@ -4,7 +4,7 @@
 
   <!-- Topbar Slot -->
   <app-topbar [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true" slot="topbar" [title]="'Gestión de Usuarios'" [userInitials]="'HC'" [userName]="'COTAHA'"
-    [userEmail]="'cotaha@email.com'" [notificationCount]="3" (toggleSidebar)="onToggleSidebar()" (logout)="onLogout()">
+    [userEmail]="'cotaha@email.com'" [notificationCount]="3" (toggleSidebar)="onToggleSidebar()" (userAction)="onUserAction($any($event))" (logout)="onLogout()">
     <app-theme-switcher></app-theme-switcher>
   </app-topbar>
 

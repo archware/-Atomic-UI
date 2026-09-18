@@ -86,6 +86,11 @@ export class CrudTableComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  onUserAction(action: any): void {
+    if (action.id === 'profile') this.router.navigate(['/profile']);
+    else if (action.id === 'settings') this.router.navigate(['/settings']);
+  }
+
   private readonly fb = inject(FormBuilder).nonNullable;
   private readonly router = inject(Router);
 
