@@ -14,6 +14,7 @@ describe('FooterComponent', () => {
     fixture.componentRef.setInput('variant', 'simple');
     fixture.componentRef.setInput('companyName', 'Hospital Regional Ayacucho');
     fixture.componentRef.setInput('year', 2026);
+    fixture.componentRef.setInput('supportText', 'Soporte: Sistemas de Información');
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;

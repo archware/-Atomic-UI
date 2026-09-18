@@ -8,7 +8,6 @@ import {
   TopbarComponent,
   SidebarComponent,
   SidebarMenuItem,
-  PanelComponent,
   RowComponent,
   TextComponent,
   ButtonComponent,
@@ -16,8 +15,6 @@ import {
   AvatarComponent,
   DividerComponent,
   Alert,
-  TabsComponent,
-  TabComponent,
   ToggleComponent,
   SelectComponent,
   ThemeSwitcherComponent,
@@ -79,7 +76,6 @@ export class SettingsPageComponent implements OnInit {
   protected successMessage = signal<string | null>(null);
   protected errorMessage = signal<string | null>(null);
 
-  protected activeTab = signal('perfil');
   protected pestanas: PestanaDetalle[] = [
     { clave: 'perfil', titulo: 'Perfil', activa: true },
     { clave: 'seguridad', titulo: 'Seguridad' },

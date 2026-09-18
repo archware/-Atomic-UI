@@ -8,14 +8,9 @@ import {
   SidebarComponent,
   SidebarMenuItem,
   PanelComponent,
-  RowComponent,
-  AvatarComponent,
   TextComponent,
   ButtonComponent,
   DividerComponent,
-  Alert,
-  ChipComponent,
-  SkeletonComponent,
   ProfileCoverComponent,
   ThemeSwitcherComponent,
   PaginaDetallePestanas,
@@ -61,7 +56,6 @@ export class ProfilePageComponent implements OnInit {
   protected sidebarVisible = signal(true);
   protected profileApi     = useApi<UserProfile>();
 
-  protected activeTab = signal('perfil');
   protected pestanas: PestanaDetalle[] = [
     { clave: 'perfil', titulo: 'Perfil Público', activa: true },
   ];

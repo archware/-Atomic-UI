@@ -33,6 +33,8 @@ describe('TopbarComponent', () => {
   it('renders action icons without static inline styles', () => {
     fixture.componentRef.setInput('showLanguageSwitcher', false);
     fixture.componentRef.setInput('showNotifications', true);
+    fixture.componentRef.setInput('showHomeButton', false);
+    fixture.componentRef.setInput('showSidebarToggle', true);
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
@@ -59,6 +61,8 @@ describe('TopbarComponent', () => {
   it('emits notification clicks', () => {
     fixture.componentRef.setInput('showLanguageSwitcher', false);
     fixture.componentRef.setInput('showNotifications', true);
+    fixture.componentRef.setInput('showHomeButton', false);
+    fixture.componentRef.setInput('showSidebarToggle', true);
     const notificationClick = jasmine.createSpy('notificationClick');
     component.notificationClick.subscribe(notificationClick);
     fixture.detectChanges();

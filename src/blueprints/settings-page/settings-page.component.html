@@ -20,16 +20,18 @@
     (alVolver)="onCancel()"
     etiquetaVolver="Volver"
   >
+    <ng-template #resumen>
+      @if (successMessage()) {
+        <app-alert kind="success" [closable]="true" class="mb-4 mx-6 mt-4">{{ successMessage() }}</app-alert>
+      }
+      @if (errorMessage()) {
+        <app-alert kind="danger" [closable]="true" class="mb-4 mx-6 mt-4">{{ errorMessage() }}</app-alert>
+      }
+    </ng-template>
+
     <!-- Contenido de cada pestaña por clave -->
     <ng-template #pestana let-clave>
       <div style="padding: 1.5rem;">
-        <!-- Alert de estado -->
-        @if (successMessage()) {
-          <app-alert kind="success" [closable]="true" class="mb-4">{{ successMessage() }}</app-alert>
-        }
-        @if (errorMessage()) {
-          <app-alert kind="danger" [closable]="true" class="mb-4">{{ errorMessage() }}</app-alert>
-        }
 
         @switch (clave) {
           @case ('perfil') {

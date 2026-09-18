@@ -12,7 +12,7 @@
 
   <!-- Sidebar Slot -->
   <aside class="layout-sidebar" [class.active]="sidebarVisible()" [attr.aria-label]="sidebarLabel()"
-    [attr.aria-hidden]="compactViewport() && !sidebarVisible() ? 'true' : null" [attr.inert]="sidebarInert">
+    [attr.aria-hidden]="sidebarVisible() ? null : 'true'" [attr.inert]="sidebarInert">
     <ng-content select="[slot=sidebar]"></ng-content>
   </aside>
 
