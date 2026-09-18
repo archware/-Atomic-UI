@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "936a04217b816c78a040b48cfb7b21fdd8eb568bedc0ac0b4064e85956d556d8",
+  "sourceTreeSha256": "d9a1ae3e233cd742f1c14596375c0b41ec487234e3d3869f51d7bfff6b94bb14",
   "fileCount": 310,
   "files": [
     {
@@ -915,13 +915,13 @@
     },
     {
       "path": "src/app/shared/ui/molecules/user-menu/user-menu.component.css",
-      "bytes": 4049,
-      "sha256": "0235bb3eec3e59bb7f6eb7724bde00b85601cbf7684e3806a8c0ac182150b6c2"
+      "bytes": 4292,
+      "sha256": "9accfd5fbbc9d047ce75ee58a49e1194d0f4ed3a846a10beae31d8b72ccfbab5"
     },
     {
       "path": "src/app/shared/ui/molecules/user-menu/user-menu.component.ts",
-      "bytes": 3809,
-      "sha256": "123daa196c5a4bb7f6d17f48d45fb058a1075782b39fb8dba7014e968a8a1738"
+      "bytes": 3871,
+      "sha256": "9d1951b589a58aa235210366d6f01a75ceeb93e6dc4a1e5a3ba53e40ec773a88"
     },
     {
       "path": "src/app/shared/ui/organisms/accordion/accordion-item-component.component.html",
@@ -1010,8 +1010,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.scss",
-      "bytes": 9531,
-      "sha256": "792f300b921922bf25fdd1eb17c799170677a576a71d397e899afb5b8f688d06"
+      "bytes": 9629,
+      "sha256": "ba1b90867acafd9487ef9d552280a2af4cee0c2b1f3560cbe8491a4b583b793e"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.ts",
@@ -1220,8 +1220,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.html",
-      "bytes": 3812,
-      "sha256": "d5c4caf827c6a1c8fab1384098de1594c2126b7d0d32fa7e3cada2db9385618d"
+      "bytes": 3793,
+      "sha256": "a1b5a4d979250225985a57cc83ad700fb7369f449ed1e6319843578a96805567"
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.ts",
@@ -1410,8 +1410,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.css",
-      "bytes": 2898,
-      "sha256": "c9ace7f8f9fde268a0b039b8191b2270ecac025ff779d6c982c12b50de92eb2b"
+      "bytes": 2897,
+      "sha256": "74ebea5a2b4b487c3e987b68ae0fbf46aff952bb1c76f1cba4bb99e3bbe5ebb4"
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.html",

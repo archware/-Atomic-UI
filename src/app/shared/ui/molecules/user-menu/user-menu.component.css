@@ -46,16 +46,17 @@
   box-shadow: var(--shadow-lg);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(calc(-1 * var(--space-2)));
+  transform: translateY(calc(-1 * var(--space-2))) translateZ(0);
   transition: all 200ms ease;
   z-index: 1000;
   overflow: hidden;
+  isolation: isolate;
 }
 
 .user-menu.open .user-menu__dropdown {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translateY(0) translateZ(0);
 }
 
 /* === Header === */
@@ -79,6 +80,7 @@
   color: var(--text-color);
   white-space: nowrap;
   overflow: hidden;
+  isolation: isolate;
   text-overflow: ellipsis;
 }
 
@@ -87,6 +89,7 @@
   color: var(--text-color-secondary);
   white-space: nowrap;
   overflow: hidden;
+  isolation: isolate;
   text-overflow: ellipsis;
 }
 
@@ -183,3 +186,6 @@
   color: var(--text-color-secondary);
   margin-left: var(--space-1);
 }
+
+.user-menu__item:last-child { border-bottom-left-radius: calc(var(--radius-lg) - 1px); border-bottom-right-radius: calc(var(--radius-lg) - 1px); }
+

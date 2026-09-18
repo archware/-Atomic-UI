@@ -1,6 +1,5 @@
 import { Component, signal, HostListener, input, output } from '@angular/core';
 
-
 export interface UserMenuAction {
   id: string;
   label: string;
@@ -19,7 +18,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
       <!-- Avatar Button -->
       <button type="button" class="user-menu__trigger" [class.user-menu__trigger--extended]="showUserInfo()" (click)="toggle()"
         [attr.aria-expanded]="isOpen()" aria-haspopup="menu" title="Menú de usuario">
-        <app-avatar [initials]="initials()" [name]="userName()" size="md" [color]="avatarColor()"></app-avatar>
+        <app-avatar [initials]="initials()" [name]="userName()" size="md" variant="user"></app-avatar>
         @if (showUserInfo()) {
           <div class="user-menu__trigger-info">
             <span class="user-menu__trigger-name">{{ userName() }}</span>
@@ -34,7 +33,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
       <!-- Dropdown Menu -->
       <div class="user-menu__dropdown" role="menu">
         <div class="user-menu__header">
-          <app-avatar [initials]="initials()" [name]="userName()" size="lg" [color]="avatarColor()"></app-avatar>
+          <app-avatar [initials]="initials()" [name]="userName()" size="lg" variant="user"></app-avatar>
           <div class="user-menu__info">
             <span class="user-menu__name">{{ userName() }}</span>
             @if (userRole()) {
@@ -58,7 +57,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
         }
       </div>
     </div>
-`,
+  `,
   styleUrl: './user-menu.component.css'
 })
 export class UserMenuComponent {
@@ -84,6 +83,7 @@ export class UserMenuComponent {
   readonly menuActions = input<UserMenuAction[]>([
       { id: 'profile', label: 'Mi Perfil', icon: 'fa-solid fa-user' },
       { id: 'settings', label: 'Configuración', icon: 'fa-solid fa-gear' },
+      { id: 'password', label: 'Cambiar Contraseña', icon: 'fa-solid fa-key' },
       { id: 'logout', label: 'Cerrar Sesión', icon: 'fa-solid fa-arrow-right-from-bracket', danger: true }
   ]);
 
@@ -115,5 +115,3 @@ export class UserMenuComponent {
     }
   }
 }
-
-

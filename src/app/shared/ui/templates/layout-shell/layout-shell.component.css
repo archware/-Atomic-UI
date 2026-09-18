@@ -1,4 +1,4 @@
-﻿
+
 /* CSS Grid Layout */
 .layout-shell {
   display: grid;
@@ -29,7 +29,7 @@
   grid-area: header;
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 1050;
   padding: 0;
   display: flex;
   align-items: center;
