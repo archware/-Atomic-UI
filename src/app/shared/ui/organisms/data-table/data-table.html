@@ -29,13 +29,13 @@
       <div class="data-table__pagination">
         <div class="data-table__page-size">
           <span>POR PÁGINA:</span>
-          <app-select
+          <app-form-select
             ariaLabel="Por página"
             [selected]="effectivePageSize()"
             [options]="pageSizeSelectOptions()"
             [placeholder]="''"
             (selectionChange)="onPageSizeSelectionChange($event)">
-          </app-select>
+          </app-form-select>
         </div>
 
         <span class="data-table__page-info">
