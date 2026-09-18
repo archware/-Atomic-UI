@@ -25,7 +25,7 @@
       </span>
 
       <!-- Configurable Icon (Left) -->
-      @if (iconPosition() === 'left') {
+      @if (iconPosition() === 'left' && !loading()) {
         @if (icon()) {
           <span class="btn-icon-wrapper btn-icon-wrapper--left btn-icon--emoji" aria-hidden="true">{{ icon() }}</span>
         } @else if (resolvedIconClass) {
@@ -39,7 +39,7 @@
       <ng-content></ng-content>
 
       <!-- Configurable Icon (Right) -->
-      @if (iconPosition() === 'right') {
+      @if (iconPosition() === 'right' && !loading()) {
         @if (icon()) {
           <span class="btn-icon-wrapper btn-icon-wrapper--right btn-icon--emoji" aria-hidden="true">{{ icon() }}</span>
         } @else if (resolvedIconClass) {

@@ -1,4 +1,4 @@
-import { Component, signal, ChangeDetectionStrategy, HostListener, inject, PLATFORM_ID } from '@angular/core';
+import { Component, signal, computed, ChangeDetectionStrategy, HostListener, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -21,6 +21,8 @@ import {
   ChipComponent,
   DatepickerComponent,
   FiltersComponent,
+  DataTable,
+  DataTableColumn,
 } from '@shared/ui';
 
 interface TableRow {
@@ -55,6 +57,8 @@ interface TableRow {
     DatepickerComponent,
     ChipComponent,
     FiltersComponent,
+  DataTable,
+  DataTableColumn,
     TranslateModule,
   ],
   templateUrl: './showcase-page.component.html',
@@ -214,6 +218,41 @@ export class ShowcasePageComponent {
   rowCount = signal(25);
   private allTableData: TableRow[] = [];
   protected readonly tableData = signal<TableRow[]>([]);
+
+  protected readonly tableColumns = computed<DataTableColumn<TableRow>[]>(() => [
+    { key: 'col1', header: this.translate.instant('table.headers.id'), align: 'center', width: '70px', sortable: true },
+    { key: 'col2', header: this.translate.instant('table.headers.name'), width: 'minmax(150px, 1fr)', sortable: true },
+    { key: 'col3', header: this.translate.instant('table.headers.email'), width: 'minmax(220px, 1.5fr)', sortable: true },
+    { key: 'col4', header: this.translate.instant('table.headers.date'), width: '100px', sortable: true },
+    { 
+      key: 'col5', 
+      header: this.translate.instant('table.headers.status'), 
+      align: 'center', 
+      width: '130px', 
+      isBadge: true, 
+      badgeStatus: (row) => this.getBadgeStatusForTable(row.statusVariant),
+      format: (val) => this.translate.instant(val as string)
+    },
+    { key: 'col6', header: this.translate.instant('table.headers.type'), width: '175px', sortable: true, format: (val) => this.translate.instant(val as string) },
+    { key: 'col7', header: this.translate.instant('table.headers.amount'), width: '90px', sortable: true },
+    { key: 'col8', header: this.translate.instant('table.headers.priority'), align: 'center', width: '110px', sortable: true, format: (val) => this.translate.instant(val as string) },
+  ]);
+
+  private getBadgeStatusForTable(variant: string): 'unconfigured' | 'active' | 'degraded' | 'inactive' {
+    switch (variant) {
+      case 'success':
+      case 'primary':
+        return 'active';
+      case 'warning':
+      case 'secondary':
+        return 'degraded';
+      case 'error':
+        return 'inactive';
+      default:
+        return 'unconfigured';
+    }
+  }
+
 
   updateRowCount(count: string | number) {
     const value = Number(count);
