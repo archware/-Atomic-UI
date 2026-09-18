@@ -74,3 +74,20 @@ app-page-header {
     justify-content: center;
   }
 }
+
+.pagina-wizard__formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.pagina-wizard__step-body {
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.pagina-wizard__step-title {
+  margin-top: 0;
+  margin-bottom: var(--space-5);
+  color: var(--primary-color);
+}

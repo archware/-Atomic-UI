@@ -117,3 +117,15 @@ app-query-toolbar {
   min-width: 15rem;
   max-width: 20rem;
 }
+
+.pagina-crud__formulario {
+  padding: 1.5rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.pagina-crud__grid {
+  display: grid;
+  gap: var(--space-4);
+}

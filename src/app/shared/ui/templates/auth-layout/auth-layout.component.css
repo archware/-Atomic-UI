@@ -71,3 +71,19 @@
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+.auth-layout__banner-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.auth-layout__banner-text {
+  opacity: 0.85;
+}
+
+.auth-layout__form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
