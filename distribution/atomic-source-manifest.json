@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "8e51d2310d2c582d166ce5a87ab0fd4ce3c00718429442005903de747499abac",
+  "sourceTreeSha256": "4e3221bc79e304ec9195e62c35c625f6876ec60ce22f2bf4a7c3c50536f90916",
   "fileCount": 310,
   "files": [
     {
@@ -1415,13 +1415,13 @@
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.html",
-      "bytes": 2068,
-      "sha256": "e80d7ade7ed7af8b7b753c520fa46afbabc3b0e4d64c0f569d7cb2582990065c"
+      "bytes": 2046,
+      "sha256": "50e491bd979cf1c30f91401a6d425a8788c7fb39dfcb8dbe271f4b4cc0633560"
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.ts",
-      "bytes": 5181,
-      "sha256": "9023cff40b2fa2b33de6d2d207940461dd93a89dea87744a558ed13f5f2dc632"
+      "bytes": 5154,
+      "sha256": "b4c062aaf9276e0d53274e99af8eab22aace38a3d1b95b2e4b08ab26828e570d"
     },
     {
       "path": "src/app/shared/ui/templates/modelos-crud.ts",
