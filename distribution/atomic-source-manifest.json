@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "85a8694293d5aebe9a9d1dc1486ca00c350c702ca7e1b056b16a6fd029af49f8",
+  "sourceTreeSha256": "8bf94a72d7488ce987ea106e15bb45d9fb9fefe92818b489f3aa44327ed3338a",
   "fileCount": 310,
   "files": [
     {
@@ -85,8 +85,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/button/button.component.html",
-      "bytes": 1897,
-      "sha256": "1639104217f5554fcac158c171b744a2f38933496b6d154ea1e3b0cc7adfe75a"
+      "bytes": 1925,
+      "sha256": "54e885ad3f8eabd9fb4bd947fc7fe4068651040c27e709b3f31643a23ecf09bf"
     },
     {
       "path": "src/app/shared/ui/atoms/button/button.component.ts",
@@ -1520,8 +1520,8 @@
     },
     {
       "path": "src/styles/themes/_buttons.css",
-      "bytes": 10081,
-      "sha256": "a7187a43d500aaee9b3d549298ece2366673e84aa0bb9ee28611a89a67b39ad9"
+      "bytes": 9822,
+      "sha256": "fb76673b43ec121dd2ccfef712e0ae86d54c20039de408d810fbe4515f6e53eb"
     },
     {
       "path": "src/styles/themes/_forms.css",

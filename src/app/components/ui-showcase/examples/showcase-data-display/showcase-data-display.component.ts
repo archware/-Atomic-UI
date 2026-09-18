@@ -11,6 +11,7 @@ import { ChipComponent } from '../../../../shared/ui/atoms/chip/chip.component';
 import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
 import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
 import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecules/action-group/action-group.component';
+import { DataTable, DataTableColumn } from '../../../../shared/ui/organisms/data-table/data-table';
 import { ChartComponent } from '../../../../shared/ui/organisms/chart/chart.component';
 
 @Component({
@@ -27,7 +28,8 @@ import { ChartComponent } from '../../../../shared/ui/organisms/chart/chart.comp
     RowComponent,
     TextComponent,
     ActionGroupComponent,
-    ChartComponent
+    ChartComponent,
+    DataTable
 ],
   template: `
     <!-- TABLAS CON ACTION GROUP -->
@@ -35,43 +37,22 @@ import { ChartComponent } from '../../../../shared/ui/organisms/chart/chart.comp
       <p style="color: var(--text-color-secondary); margin-bottom: 1rem; font-size: 0.875rem;">
         Tabla con ActionGroup: overflow inteligente de acciones. El menú se crea en document.body para evitar problemas de z-index.
       </p>
-      <app-table [maxHeight]="350" [columnTemplate]="'minmax(200px, 1fr) 120px 120px 120px 140px'">
-        <app-table-head>
-          <tr app-table-row>
-            <th app-table-header-cell>Nombre</th>
-            <th app-table-header-cell>Rol</th>
-            <th app-table-header-cell>Estado</th>
-            <th app-table-header-cell>Fecha</th>
-            <th app-table-header-cell class="text-right">Acciones</th>
-          </tr>
-        </app-table-head>
-        <tbody>
-          @for (user of tableUsers; track user.id) {
-            <tr app-table-row [selected]="user.selected">
-              <td app-table-cell [dataLabel]="'Nombre:'">
-                <app-row gap="0.5rem" verticalAlign="center" columns="auto 1fr">
-                  <app-avatar [name]="user.name" size="sm"></app-avatar>
-                  <app-text>{{ user.name }}</app-text>
-                </app-row>
-              </td>
-              <td app-table-cell [dataLabel]="'Rol:'">{{ user.role }}</td>
-              <td app-table-cell [dataLabel]="'Estado:'">
-                <app-chip [variant]="user.chipVariant" size="sm">{{ user.status }}</app-chip>
-              </td>
-              <td app-table-cell [dataLabel]="'Fecha:'">{{ user.date }}</td>
-              <td app-table-cell class="actions-cell">
-                <app-action-group
-                  [actions]="tableActions"
-                  [maxVisible]="user.maxVisible"
-                  [compact]="user.compact"
-                  size="md"
-                  (actionClick)="onAction($event, user.name)">
-                </app-action-group>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </app-table>
+      <app-data-table 
+        [columns]="tableColumns"
+        [rows]="tableUsers"
+        caption="Usuarios"
+        actionsWidth="140px"
+        [showRowNumber]="false">
+        <ng-template #actions let-ctx>
+          <app-action-group
+            [actions]="tableActions"
+            [maxVisible]="ctx.row.maxVisible"
+            [compact]="ctx.row.compact"
+            size="md"
+            (actionClick)="onAction($event, ctx.row.name)">
+          </app-action-group>
+        </ng-template>
+      </app-data-table>
 
       <h4 class="subsection-title">Variantes de ActionGroup</h4>
       <div class="action-variants">
@@ -204,6 +185,13 @@ import { ChartComponent } from '../../../../shared/ui/organisms/chart/chart.comp
   `]
 })
 export class ShowcaseDataDisplayComponent {
+  tableColumns: DataTableColumn<any>[] = [
+    { key: 'name', header: 'Nombre', width: 'minmax(200px, 1fr)' },
+    { key: 'role', header: 'Rol', width: '120px' },
+    { key: 'status', header: 'Estado', width: '120px', isBadge: true, badgeStatus: (row) => row.chipVariant === 'success' ? 'active' : (row.chipVariant === 'warning' ? 'degraded' : 'inactive') },
+    { key: 'date', header: 'Fecha', width: '120px' },
+  ];
+
   // Table actions
   tableActions: ActionItem[] = [
     { id: 'view', icon: 'fa-solid fa-eye', label: 'Ver detalles', variant: 'success' },
