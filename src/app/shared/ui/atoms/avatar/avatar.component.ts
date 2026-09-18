@@ -30,7 +30,7 @@ export class AvatarComponent {
   readonly icon = input<string>(); // New: Icon class support
   readonly variant = input<AvatarVariant>('default'); // New: Color variant
   readonly colorFondo = computed(() =>
-    this.color() ?? (!this.src() && !this.icon() && this.variant() === 'default' ? this.colorFromName() : null)
+    this.color() || (!this.src() && !this.icon() && this.variant() === 'default' ? this.colorFromName() : null)
   );
 
   imageFailed = signal(false);

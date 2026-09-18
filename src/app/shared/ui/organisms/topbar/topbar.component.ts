@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, input, output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, inject, signal, HostListener } from '@angular/core';
+
+export interface TopbarNotification {
+  id: string;
+  title: string;
+  message?: string;
+  time: string;
+  isRead?: boolean;
+  icon?: string;
+  iconColor?: string;
+}
 
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 import { UserMenuComponent, UserMenuAction } from '../../molecules/user-menu/user-menu.component';
@@ -59,8 +69,33 @@ export class TopbarComponent {
   /** Event emitted when logout is clicked */
   readonly logout = output<void>();
 
+  /** Notifications list */
+  readonly notifications = input<TopbarNotification[]>([]);
+
   /** Event emitted when notifications are clicked */
-  readonly notificationClick = output<void>();
+  readonly notificationClick = output<TopbarNotification>();
+
+  /** Event emitted when 'mark all as read' is clicked */
+  readonly markAllRead = output<void>();
+
+  isNotificationsOpen = signal(false);
+
+  toggleNotifications(): void {
+    this.isNotificationsOpen.update(v => !v);
+  }
+
+  onNotificationClick(notification: TopbarNotification): void {
+    this.notificationClick.emit(notification);
+    this.isNotificationsOpen.set(false);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.notification-dropdown-wrapper')) {
+      this.isNotificationsOpen.set(false);
+    }
+  }
 
   /** Event emitted when any user menu action is clicked */
   readonly userAction = output<UserMenuAction>();

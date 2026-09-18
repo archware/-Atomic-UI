@@ -18,7 +18,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
       <!-- Avatar Button -->
       <button type="button" class="user-menu__trigger" [class.user-menu__trigger--extended]="showUserInfo()" (click)="toggle()"
         [attr.aria-expanded]="isOpen()" aria-haspopup="menu" title="Menú de usuario">
-        <app-avatar [initials]="initials()" [name]="userName()" size="md" variant="user"></app-avatar>
+        <app-avatar [initials]="initials()" [name]="userName()" size="md" variant="user" [color]="avatarColor()"></app-avatar>
         @if (showUserInfo()) {
           <div class="user-menu__trigger-info">
             <span class="user-menu__trigger-name">{{ userName() }}</span>
@@ -33,7 +33,7 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
       <!-- Dropdown Menu -->
       <div class="user-menu__dropdown" role="menu">
         <div class="user-menu__header">
-          <app-avatar [initials]="initials()" [name]="userName()" size="lg" variant="user"></app-avatar>
+          <app-avatar [initials]="initials()" [name]="userName()" size="lg" variant="user" [color]="avatarColor()"></app-avatar>
           <div class="user-menu__info">
             <span class="user-menu__name">{{ userName() }}</span>
             @if (userRole()) {

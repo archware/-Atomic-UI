@@ -22,6 +22,7 @@
 .avatar-warning { background-color: var(--avatar-background-color, var(--warning-color-lighter)); color: var(--warning-color-text); }
 .avatar-danger { background-color: var(--avatar-background-color, var(--danger-color-lighter)); color: var(--danger-color-text); }
 .avatar-info { background-color: var(--avatar-background-color, var(--info-color-lighter)); color: var(--info-color-text); }
+.avatar-user { background: var(--primary-color-gradient, linear-gradient(135deg, var(--primary-color, var(--purple-500, #8b5cf6)), var(--primary-color-dark, var(--purple-700, #6d28d9)))) !important; color: white !important; }
 
 .avatar-xs { width: var(--avatar-size-xs, var(--space-5)); height: var(--avatar-size-xs, var(--space-5)); font-size: var(--text-xs); }
 .avatar-sm { width: var(--avatar-size-sm, var(--space-6)); height: var(--avatar-size-sm, var(--space-6)); font-size: var(--text-xs); }
