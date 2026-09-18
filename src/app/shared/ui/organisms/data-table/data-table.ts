@@ -117,7 +117,7 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
   readonly page = input(1);
   readonly pageSize = input(10);
   readonly totalPages = input(1);
-  readonly pageSizeOptions = input<readonly number[]>([10, 20, 30, 40, 50]);
+  readonly pageSizeOptions = input<readonly number[]>([10, 20, 50, 100]);
   readonly hasPreviousPage = input(false);
   readonly hasNextPage = input(false);
 
