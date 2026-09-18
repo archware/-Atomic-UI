@@ -18,7 +18,9 @@ import {
   SkeletonComponent,
   ProfileCoverComponent,
   ThemeSwitcherComponent,
+  PaginaDetallePestanas,
 } from '@shared/ui';
+import type { PestanaDetalle } from '@shared/ui';
 import { AuthService } from '@shared/ui/services/auth.service';
 import { useApi } from '@shared/ui/services/use-api.service';
 
@@ -41,16 +43,12 @@ interface UserProfile {
     TopbarComponent,
     SidebarComponent,
     PanelComponent,
-    RowComponent,
-    AvatarComponent,
     TextComponent,
     ButtonComponent,
     DividerComponent,
-    Alert,
-    ChipComponent,
-    SkeletonComponent,
     ProfileCoverComponent,
-    ThemeSwitcherComponent
+    ThemeSwitcherComponent,
+    PaginaDetallePestanas
   ],
   templateUrl: './profile-page.component.html',
   styleUrl:    './profile-page.component.css',
@@ -62,6 +60,19 @@ export class ProfilePageComponent implements OnInit {
 
   protected sidebarVisible = signal(true);
   protected profileApi     = useApi<UserProfile>();
+
+  protected activeTab = signal('perfil');
+  protected pestanas: PestanaDetalle[] = [
+    { clave: 'perfil', titulo: 'Perfil Público', activa: true },
+  ];
+
+  onFinish(): void {
+    this.router.navigate(['/dashboard']);
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/dashboard']);
+  }
 
   protected readonly menuItems: SidebarMenuItem[] = [
     { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' , iconColor: 'var(--secondary-color)' },

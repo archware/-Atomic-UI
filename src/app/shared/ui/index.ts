@@ -346,6 +346,7 @@ export * from './templates/modelos-crud';
 // NEW BLUEPRINT REFACTOR COMPONENTS
 // ============================================
 export { PaginaAjustesComponent } from './templates/pagina-ajustes/pagina-ajustes.component';
+export { PaginaDetallePestanas } from './templates/pagina-detalle-pestanas/pagina-detalle-pestanas';
 export { PaginaWizardComponent } from './templates/pagina-wizard/pagina-wizard';
 export { ProfileCoverComponent } from './molecules/profile-cover/profile-cover.component';
 export { FormActionsComponent } from './molecules/form-actions/form-actions.component';

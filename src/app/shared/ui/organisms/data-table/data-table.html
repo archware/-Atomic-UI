@@ -27,14 +27,16 @@
       </div>
 
       <div class="data-table__pagination">
-        <label class="data-table__page-size">
+        <div class="data-table__page-size">
           <span>POR PÁGINA:</span>
-          <select [value]="effectivePageSize()" (change)="onPageSizeChange($event)">
-            @for (size of effectivePageSizeOptions(); track size) {
-              <option [value]="size" [selected]="size === effectivePageSize()">{{ size }}</option>
-            }
-          </select>
-        </label>
+          <app-select
+            ariaLabel="Por página"
+            [selected]="effectivePageSize()"
+            [options]="pageSizeSelectOptions()"
+            [placeholder]="''"
+            (selectionChange)="onPageSizeSelectionChange($event)">
+          </app-select>
+        </div>
 
         <span class="data-table__page-info">
           Página {{ effectivePage() }} de {{ effectiveTotalPages() }}

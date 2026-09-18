@@ -21,10 +21,11 @@ import {
   ToggleComponent,
   SelectComponent,
   ThemeSwitcherComponent,
-  PaginaAjustesComponent,
+  PaginaDetallePestanas,
   FormActionsComponent,
   SettingItemComponent,
 } from '@shared/ui';
+import type { PestanaDetalle } from '@shared/ui';
 import { ApiService } from '@shared/ui/services/api.service';
 import { useApi } from '@shared/ui/services/use-api.service';
 
@@ -51,7 +52,6 @@ import { useApi } from '@shared/ui/services/use-api.service';
     LayoutShellComponent,
     TopbarComponent,
     SidebarComponent,
-    PanelComponent,
     RowComponent,
     TextComponent,
     ButtonComponent,
@@ -59,12 +59,10 @@ import { useApi } from '@shared/ui/services/use-api.service';
     AvatarComponent,
     DividerComponent,
     Alert,
-    TabsComponent,
-    TabComponent,
     ToggleComponent,
     SelectComponent,
     ThemeSwitcherComponent,
-    PaginaAjustesComponent,
+    PaginaDetallePestanas,
     FormActionsComponent,
     SettingItemComponent
   ],
@@ -81,7 +79,22 @@ export class SettingsPageComponent implements OnInit {
   protected successMessage = signal<string | null>(null);
   protected errorMessage = signal<string | null>(null);
 
+  protected activeTab = signal('perfil');
+  protected pestanas: PestanaDetalle[] = [
+    { clave: 'perfil', titulo: 'Perfil', activa: true },
+    { clave: 'seguridad', titulo: 'Seguridad' },
+    { clave: 'notificaciones', titulo: 'Notificaciones' },
+    { clave: 'personalizacion', titulo: 'Personalización' },
+  ];
 
+  onFinish(): void {
+    // Implement wizard finish logic if necessary
+    this.router.navigate(['/dashboard']);
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/dashboard']);
+  }
   // ============================================================
   // MENU — @customize: ajusta a tu navegación
   // ============================================================

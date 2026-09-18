@@ -19,6 +19,7 @@ import {
 } from '../../atoms/status-badge/status-badge.component';
 import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
+import { Select, SelectOption } from '../../atoms/form-select/select';
 
 export type DataTableAlignment = 'start' | 'center' | 'end';
 export type DataTableDensity = 'comfortable' | 'compact';
@@ -78,6 +79,7 @@ function trackByIdentity<T extends object>(_index: number, row: T): T {
     ScrollOverlayComponent,
     StatusBadgeComponent,
     VariablesCssDirective,
+    Select,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './data-table.html',
@@ -161,6 +163,12 @@ export class DataTable<T extends object = Record<string, unknown>> {
       ? options
       : [...options, current].sort((first, second) => first - second);
   });
+  protected readonly pageSizeSelectOptions = computed<readonly SelectOption[]>(() => {
+    return this.effectivePageSizeOptions().map((size) => ({
+      value: size,
+      label: String(size),
+    }));
+  });
   protected readonly effectiveTotalRecords = computed(
     () => this.totalRecords() ?? this.rows().length,
   );
@@ -206,6 +214,16 @@ export class DataTable<T extends object = Record<string, unknown>> {
     if (total === 0) return 0;
     return Math.min(this.effectivePage() * this.effectivePageSize(), total);
   });
+
+  protected onPageSizeSelectionChange(value: string): void {
+    const pageSize = Number(value);
+    if (this.usesClientPagination()) {
+      this.clientPageSize.set(pageSize);
+      this.clientPage.set(1);
+      return;
+    }
+    this.pageSizeChange.emit(pageSize);
+  }
 
   protected onPageSizeChange(event: Event): void {
     const target = event.target;

@@ -274,15 +274,11 @@ tbody tr:last-child td {
   gap: var(--space-2);
 }
 
-.data-table__page-size select {
-  width: 3.75rem;
-  min-width: 3.75rem;
-  max-width: 3.75rem;
-  min-height: 2.125rem;
-  padding: 0 0.85rem 0 0.4rem;
-  font-size: var(--text-xs);
-  background-position: right 0.2rem center;
-  background-size: 0.65rem 0.65rem;
+.data-table__page-size app-select {
+  width: 5rem;
+  min-width: 5rem;
+  max-width: 5rem;
+  --control-height: 2.125rem;
 }
 
 .data-table__page-info {

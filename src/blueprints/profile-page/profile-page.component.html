@@ -13,47 +13,45 @@
     <app-theme-switcher></app-theme-switcher>
   </app-topbar>
 
-  <app-pagina-wizard
+  <app-pagina-detalle-pestanas
     titulo="Mi Perfil"
     subtitulo="Información pública de tu cuenta."
-    [steps]="wizardSteps"
-    [activeStep]="activeStep()"
-    [allowSkip]="false"
-    [nextEnabled]="true"
-    (stepChange)="activeStep.set($event)"
-    (onFinish)="onFinish()"
-    (onCancel)="onCancel()"
+    [pestanas]="pestanas"
+    (alVolver)="onCancel()"
+    etiquetaVolver="Volver"
   >
-    <div class="wizard-step-body" style="padding: 1.5rem;">
-      <app-panel variant="elevated" padding="none">
-        <app-profile-cover 
-          [loading]="profileApi.loading()"
-          [initials]="(currentUser?.names ?? 'U')[0]"
-          [firstName]="profileApi.data()?.firstName ?? ''"
-          [lastName]="profileApi.data()?.lastName ?? ''"
-          [role]="profileApi.data()?.role ?? 'Usuario'">
-        </app-profile-cover>
-
-        <div class="p-6">
-          <app-divider></app-divider>
-          <div class="flex flex-col gap-3 mt-4">
-            <div class="flex flex-col gap-1">
-              <app-text variant="label" color="muted">Email</app-text>
-              <app-text variant="body-sm">{{ profileApi.data()?.email ?? '' }}</app-text>
+    <ng-template #pestana let-clave>
+      <div style="padding: 1.5rem;">
+        <app-panel variant="elevated" padding="none">
+          <app-profile-cover 
+            [loading]="profileApi.loading()"
+            [initials]="(currentUser?.names ?? 'U')[0]"
+            [firstName]="profileApi.data()?.firstName ?? ''"
+            [lastName]="profileApi.data()?.lastName ?? ''"
+            [role]="profileApi.data()?.role ?? 'Usuario'">
+          </app-profile-cover>
+  
+          <div class="p-6">
+            <app-divider></app-divider>
+            <div class="flex flex-col gap-3 mt-4">
+              <div class="flex flex-col gap-1">
+                <app-text variant="label" color="muted">Email</app-text>
+                <app-text variant="body-sm">{{ profileApi.data()?.email ?? '' }}</app-text>
+              </div>
+              <div class="flex flex-col gap-1">
+                <app-text variant="label" color="muted">Teléfono</app-text>
+                <app-text variant="body-sm">{{ profileApi.data()?.phone ?? 'No registrado' }}</app-text>
+              </div>
             </div>
-            <div class="flex flex-col gap-1">
-              <app-text variant="label" color="muted">Teléfono</app-text>
-              <app-text variant="body-sm">{{ profileApi.data()?.phone ?? 'No registrado' }}</app-text>
+            <div class="mt-6">
+              <app-button type="button" variant="primary" (buttonClick)="goToSettings()" class="w-full">
+                <i class="fa-solid fa-user-pen mr-2"></i> Editar perfil
+              </app-button>
             </div>
           </div>
-          <div class="mt-6">
-            <app-button type="button" variant="primary" (buttonClick)="goToSettings()" class="w-full">
-              <i class="fa-solid fa-user-pen mr-2"></i> Editar perfil
-            </app-button>
-          </div>
-        </div>
-      </app-panel>
-    </div>
-  </app-pagina-wizard>
+        </app-panel>
+      </div>
+    </ng-template>
+  </app-pagina-detalle-pestanas>
 
 </app-layout-shell>

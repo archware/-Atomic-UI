@@ -13,130 +13,129 @@
   >
   </app-topbar>
 
-  <app-pagina-wizard
+  <app-pagina-detalle-pestanas
     titulo="Configuración"
     subtitulo="Administra tus preferencias de cuenta."
-    [steps]="wizardSteps"
-    [activeStep]="activeStep()"
-    [allowSkip]="true"
-    [nextEnabled]="true"
-    (stepChange)="activeStep.set($event)"
-    (onFinish)="onFinish()"
-    (onCancel)="onCancel()"
+    [pestanas]="pestanas"
+    (alVolver)="onCancel()"
+    etiquetaVolver="Volver"
   >
-    <!-- Alert de estado -->
-    @if (successMessage()) {
-      <app-alert kind="success" [closable]="true" class="mb-4">{{ successMessage() }}</app-alert>
-    }
-    @if (errorMessage()) {
-      <app-alert kind="danger" [closable]="true" class="mb-4">{{ errorMessage() }}</app-alert>
-    }
-
-    <div class="wizard-step-body" style="padding: 1.5rem;">
-      @switch (activeStep()) {
-        @case (0) {
-          <div>
-            <app-text variant="h4" class="mb-2">Información del perfil</app-text>
-            <app-text variant="body-sm" color="muted" class="mb-6">Actualiza tu foto y tus datos personales.</app-text>
-
-            <div class="d-flex items-center gap-4 mb-4">
-              <app-avatar initials="AD" size="xl" status="online"></app-avatar>
-              <div class="d-flex flex-col gap-1">
-                <app-button variant="outline" size="sm">Cambiar foto</app-button>
-                <app-text variant="caption" color="muted">JPG o PNG, máx. 2MB.</app-text>
-              </div>
-            </div>
-
-            <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
-              <app-row columns="1fr 1fr" gap="1rem" class="mb-4">
-                <app-floating-input formControlName="firstName" label="Nombre" variant="outline"></app-floating-input>
-                <app-floating-input formControlName="lastName" label="Apellido" variant="outline"></app-floating-input>
-              </app-row>
-
-              <app-row columns="1fr 1fr" gap="1rem" class="mb-4">
-                <app-floating-input formControlName="email" type="email" label="Correo electrónico" variant="outline"></app-floating-input>
-                <app-floating-input formControlName="phone" type="tel" label="Teléfono" variant="outline"></app-floating-input>
-              </app-row>
-
-              <app-form-actions>
-                <app-button type="submit" variant="primary" [disabled]="saving()">Guardar Perfil</app-button>
-              </app-form-actions>
-            </form>
-          </div>
+    <!-- Contenido de cada pestaña por clave -->
+    <ng-template #pestana let-clave>
+      <div style="padding: 1.5rem;">
+        <!-- Alert de estado -->
+        @if (successMessage()) {
+          <app-alert kind="success" [closable]="true" class="mb-4">{{ successMessage() }}</app-alert>
+        }
+        @if (errorMessage()) {
+          <app-alert kind="danger" [closable]="true" class="mb-4">{{ errorMessage() }}</app-alert>
         }
 
-        @case (1) {
-          <div>
-            <app-text variant="h4" class="mb-2">Cambiar contraseña</app-text>
-            <app-text variant="body-sm" color="muted" class="mb-6">Te recomendamos usar una contraseña fuerte que no uses en otros sitios.</app-text>
+        @switch (clave) {
+          @case ('perfil') {
+            <div>
+              <app-text variant="h4" class="mb-2">Información del perfil</app-text>
+              <app-text variant="body-sm" color="muted" class="mb-6">Actualiza tu foto y tus datos personales.</app-text>
 
-            <form [formGroup]="passwordForm" (ngSubmit)="savePassword()">
-              <div class="d-flex flex-col gap-3 mb-4 w-full">
-                <app-floating-input formControlName="currentPassword" type="password" label="Contraseña actual" variant="outline"></app-floating-input>
-                <app-floating-input formControlName="newPassword" type="password" label="Nueva contraseña" variant="outline"></app-floating-input>
-                <app-floating-input formControlName="confirmPassword" type="password" label="Confirmar nueva contraseña" variant="outline"></app-floating-input>
+              <div class="d-flex items-center gap-4 mb-4">
+                <app-avatar initials="AD" size="xl" status="online"></app-avatar>
+                <div class="d-flex flex-col gap-1">
+                  <app-button variant="outline" size="sm">Cambiar foto</app-button>
+                  <app-text variant="caption" color="muted">JPG o PNG, máx. 2MB.</app-text>
+                </div>
               </div>
 
+              <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+                <app-row columns="1fr 1fr" gap="1rem" class="mb-4">
+                  <app-floating-input formControlName="firstName" label="Nombre" variant="outline"></app-floating-input>
+                  <app-floating-input formControlName="lastName" label="Apellido" variant="outline"></app-floating-input>
+                </app-row>
+
+                <app-row columns="1fr 1fr" gap="1rem" class="mb-4">
+                  <app-floating-input formControlName="email" type="email" label="Correo electrónico" variant="outline"></app-floating-input>
+                  <app-floating-input formControlName="phone" type="tel" label="Teléfono" variant="outline"></app-floating-input>
+                </app-row>
+
+                <app-form-actions>
+                  <app-button type="submit" variant="primary" [disabled]="saving()">Guardar Perfil</app-button>
+                </app-form-actions>
+              </form>
+            </div>
+          }
+
+          @case ('seguridad') {
+            <div>
+              <app-text variant="h4" class="mb-2">Cambiar contraseña</app-text>
+              <app-text variant="body-sm" color="muted" class="mb-6">Te recomendamos usar una contraseña fuerte que no uses en otros sitios.</app-text>
+
+              <form [formGroup]="passwordForm" (ngSubmit)="savePassword()">
+                <div class="d-flex flex-col gap-3 mb-4 w-full">
+                  <app-floating-input formControlName="currentPassword" type="password" label="Contraseña actual" variant="outline"></app-floating-input>
+                  <app-floating-input formControlName="newPassword" type="password" label="Nueva contraseña" variant="outline"></app-floating-input>
+                  <app-floating-input formControlName="confirmPassword" type="password" label="Confirmar nueva contraseña" variant="outline"></app-floating-input>
+                </div>
+
+                <app-form-actions>
+                  <app-button type="submit" variant="primary" [disabled]="saving()">Actualizar contraseña</app-button>
+                </app-form-actions>
+              </form>
+            </div>
+          }
+
+          @case ('notificaciones') {
+            <div>
+              <app-text variant="h4" class="mb-2">Preferencias de notificaciones</app-text>
+              <app-text variant="body-sm" color="muted" class="mb-6">Decide qué correos y alertas quieres recibir.</app-text>
+
+              <div class="d-flex flex-col">
+                <app-setting-item title="Notificaciones por correo" description="Recibir alertas importantes directamente en tu buzón.">
+                  <app-toggle [ngModel]="notifEmail()" (ngModelChange)="notifEmail.set($event)"></app-toggle>
+                </app-setting-item>
+
+                <app-divider></app-divider>
+
+                <app-setting-item title="Notificaciones Push" description="Recibir alertas en tiempo real en el navegador.">
+                  <app-toggle [ngModel]="notifPush()" (ngModelChange)="notifPush.set($event)"></app-toggle>
+                </app-setting-item>
+
+                <app-divider></app-divider>
+
+                <app-setting-item title="Resumen semanal" description="Un correo con el resumen de la actividad de tu cuenta.">
+                  <app-toggle [ngModel]="notifWeekly()" (ngModelChange)="notifWeekly.set($event)"></app-toggle>
+                </app-setting-item>
+
+                <app-divider></app-divider>
+
+                <app-setting-item title="Alertas de seguridad" description="Avisos sobre inicios de sesión inusuales (Obligatorio)." >
+                  <app-toggle [ngModel]="true" [disabled]="true"></app-toggle>
+                </app-setting-item>
+              </div>
+
               <app-form-actions>
-                <app-button type="submit" variant="primary" [disabled]="saving()">Actualizar contraseña</app-button>
+                <app-button variant="outline" (buttonClick)="saveNotifications()">Guardar Preferencias</app-button>
               </app-form-actions>
-            </form>
-          </div>
-        }
+            </div>
+          }
 
-        @case (2) {
-          <div>
-            <app-text variant="h4" class="mb-2">Preferencias de notificaciones</app-text>
-            <app-text variant="body-sm" color="muted" class="mb-6">Decide qué correos y alertas quieres recibir.</app-text>
+          @case ('personalizacion') {
+            <div class="d-flex flex-col gap-2">
+              <app-text variant="h4" class="mb-2">Personalización</app-text>
+              <app-text variant="body-sm" color="muted" class="mb-6">Ajusta el aspecto visual de la plataforma.</app-text>
 
-            <div class="d-flex flex-col">
-              <app-setting-item title="Notificaciones por correo" description="Recibir alertas importantes directamente en tu buzón.">
-                <app-toggle [ngModel]="notifEmail()" (ngModelChange)="notifEmail.set($event)"></app-toggle>
+              <app-setting-item title="Idioma" description="Selecciona el idioma de la interfaz.">
+                <app-select [options]="languageOptions" [ngModel]="selectedLanguage()" (ngModelChange)="selectedLanguage.set($event)"></app-select>
               </app-setting-item>
 
               <app-divider></app-divider>
 
-              <app-setting-item title="Notificaciones Push" description="Recibir alertas en tiempo real en el navegador.">
-                <app-toggle [ngModel]="notifPush()" (ngModelChange)="notifPush.set($event)"></app-toggle>
-              </app-setting-item>
-
-              <app-divider></app-divider>
-
-              <app-setting-item title="Resumen semanal" description="Un correo con el resumen de la actividad de tu cuenta.">
-                <app-toggle [ngModel]="notifWeekly()" (ngModelChange)="notifWeekly.set($event)"></app-toggle>
-              </app-setting-item>
-
-              <app-divider></app-divider>
-
-              <app-setting-item title="Alertas de seguridad" description="Avisos sobre inicios de sesión inusuales (Obligatorio)." >
-                <app-toggle [ngModel]="true" [disabled]="true"></app-toggle>
+              <app-setting-item title="Tema Visual" description="Cambia entre modo claro y oscuro.">
+                <app-theme-switcher></app-theme-switcher>
               </app-setting-item>
             </div>
-
-            <app-form-actions>
-              <app-button variant="outline" (buttonClick)="saveNotifications()">Guardar Preferencias</app-button>
-            </app-form-actions>
-          </div>
+          }
         }
-
-        @case (3) {
-          <div class="d-flex flex-col gap-2">
-            <app-text variant="h4" class="mb-2">Personalización</app-text>
-            <app-text variant="body-sm" color="muted" class="mb-6">Ajusta el aspecto visual de la plataforma.</app-text>
-
-            <app-setting-item title="Idioma" description="Selecciona el idioma de la interfaz.">
-              <app-select [options]="languageOptions" [ngModel]="selectedLanguage()" (ngModelChange)="selectedLanguage.set($event)"></app-select>
-            </app-setting-item>
-
-            <app-divider></app-divider>
-
-            <app-setting-item title="Tema Visual" description="Cambia entre modo claro y oscuro.">
-              <app-theme-switcher></app-theme-switcher>
-            </app-setting-item>
-          </div>
-        }
-      }
-    </div>
-  </app-pagina-wizard>
+      </div>
+    </ng-template>
+  </app-pagina-detalle-pestanas>
 
 </app-layout-shell>
