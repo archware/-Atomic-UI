@@ -1,7 +1,7 @@
-﻿<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
+<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
 
   <!-- Sidebar -->
-  <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="Perfil" logoiconClass="fa-solid fa-id-card" (navigate)="onNavigate($event)"></app-sidebar>
+  <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="CxC Ventas" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }" (navigate)="onNavigate($event)"></app-sidebar>
 
   <!-- Topbar -->
   <app-topbar [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true"
@@ -17,117 +17,39 @@
   </app-topbar>
 
   <!-- Contenido principal -->
-  <app-pagina-ajustes>
+  <div class="flex justify-center p-6 mt-8">
+    <div class="w-full max-w-md">
+      <!-- Resumen de cuenta -->
+      <app-panel variant="elevated" padding="none">
+        <app-profile-cover 
+          [loading]="profileApi.loading()"
+          [initials]="(currentUser?.names ?? 'U')[0]"
+          [firstName]="profileApi.data()?.firstName ?? ''"
+          [lastName]="profileApi.data()?.lastName ?? ''"
+          [role]="profileApi.data()?.role ?? 'Usuario'">
+        </app-profile-cover>
 
-    <!-- Columna izquierda: Resumen de cuenta -->
-    <app-panel variant="elevated" padding="none" ajustes-aside>
-      <app-profile-cover 
-        [loading]="profileApi.loading()"
-        [initials]="(currentUser?.names ?? 'U')[0]"
-        [firstName]="profileApi.data()?.firstName ?? ''"
-        [lastName]="profileApi.data()?.lastName ?? ''"
-        [role]="profileApi.data()?.role ?? 'Usuario'">
-      </app-profile-cover>
-
-      <div class="p-6">
-        <app-divider></app-divider>
-        <div class="d-flex flex-col gap-3 mt-4">
-          <div class="d-flex flex-col gap-1">
-            <app-text variant="label" color="muted">Email</app-text>
-            <app-text variant="body-sm">{{ profileApi.data()?.email ?? '?"' }}</app-text>
+        <div class="p-6">
+          <app-divider></app-divider>
+          <div class="flex flex-col gap-3 mt-4">
+            <div class="flex flex-col gap-1">
+              <app-text variant="label" color="muted">Email</app-text>
+              <app-text variant="body-sm">{{ profileApi.data()?.email ?? '' }}</app-text>
+            </div>
+            <div class="flex flex-col gap-1">
+              <app-text variant="label" color="muted">Teléfono</app-text>
+              <app-text variant="body-sm">{{ profileApi.data()?.phone ?? 'No registrado' }}</app-text>
+            </div>
           </div>
-          <div class="d-flex flex-col gap-1">
-            <app-text variant="label" color="muted">TelÇ¸fono</app-text>
-            <app-text variant="body-sm">{{ profileApi.data()?.phone ?? 'No registrado' }}</app-text>
+          <div class="mt-6">
+            <app-button type="button" variant="primary" (click)="goToSettings()" class="w-full">
+              <i class="fa-solid fa-user-pen mr-2"></i> Editar perfil
+            </app-button>
           </div>
         </div>
-      </div>
-    </app-panel>
-
-    <!-- Columna derecha: Formularios -->
-    <app-panel variant="elevated" padding="lg" title="Información personal" iconClass="fa-solid fa-user-pen">
-      <div class="mb-6"><app-text variant="body-sm" color="muted">Actualiza tus datos bÇ­sicos y cmo te verÇ­n otros usuarios en el sistema.</app-text></div>
-
-      @if (saveSuccess()) {
-        <app-alert kind="success" [closable]="true">Perfil actualizado correctamente.</app-alert>
-      }
-      @if (saveApi.hasError()) {
-        <app-alert kind="danger" [closable]="false">{{ saveApi.error()?.message ?? 'Error al guardar' }}</app-alert>
-      }
-
-      <form [formGroup]="infoForm" (ngSubmit)="saveProfile()" novalidate>
-        <app-row columns="1fr 1fr" gap="1rem">
-          <div class="mb-4">
-            <app-floating-input
-              formControlName="firstName"
-              label="Nombre"
-              variant="outline"
-              [error]="uf['firstName'].invalid && uf['firstName'].touched ? 'Nombre requerido' : ''"
-            ></app-floating-input>
-          </div>
-          <div class="mb-4">
-            <app-floating-input
-              formControlName="lastName"
-              label="Apellido"
-              variant="outline"
-              [error]="uf['lastName'].invalid && uf['lastName'].touched ? 'Apellido requerido' : ''"
-            ></app-floating-input>
-          </div>
-        </app-row>
-
-        <div class="mb-4">
-          <app-floating-input
-            formControlName="phone"
-            label="TelÇ¸fono (opcional)"
-            type="tel"
-            variant="outline"
-          ></app-floating-input>
-        </div>
-
-        <app-form-actions>
-          <app-button type="button" variant="ghost" (click)="infoForm.reset()">Cancelar</app-button>
-          <app-button type="submit" variant="primary" [disabled]="saveApi.loading()">
-            @if (saveApi.loading()) { Guardando... } @else { Guardar cambios }
-          </app-button>
-        </app-form-actions>
-      </form>
-    </app-panel>
-
-    <!-- Cambio de contraseña -->
-    <app-panel variant="elevated" padding="lg" title="Cambiar contraseña" iconClass="fa-solid fa-lock" class="mt-6">
-
-      <div class="mb-6"><app-text variant="body-sm" color="muted">AsegÇ§rate de usar una contraseña larga y difícil de adivinar.</app-text></div>
-
-      @if (passSuccess()) {
-        <app-alert kind="success" [closable]="true">Contrasea actualizada correctamente.</app-alert>
-      }
-      @if (passwordApi.hasError()) {
-        <app-alert kind="danger" [closable]="false">{{ passwordApi.error()?.message ?? 'Error al cambiar contraseña' }}</app-alert>
-      }
-
-      <form [formGroup]="passForm" (ngSubmit)="changePassword()" novalidate>
-        <div class="mb-4">
-          <app-floating-input formControlName="current" label="Contrasea actual" type="password" variant="outline" [error]="pf['current'].invalid && pf['current'].touched ? 'Ingresa tu contraseña actual' : ''"></app-floating-input>
-        </div>
-
-        <div class="mb-4">
-          <app-floating-input formControlName="password" label="Nueva contraseña" type="password" variant="outline" [error]="pf['password'].invalid && pf['password'].touched ? 'Mínimo 8 caracteres' : ''"></app-floating-input>
-        </div>
-
-        <div class="mb-4">
-          <app-floating-input formControlName="confirm" label="Confirmar nueva contraseña" type="password" variant="outline" [error]="passForm.hasError('passwordMismatch') && pf['confirm'].touched ? 'Las contraseñas no coinciden' : ''"></app-floating-input>
-        </div>
-
-        <app-form-actions>
-          <app-button type="button" variant="ghost" (click)="passForm.reset()">Cancelar</app-button>
-          <app-button type="submit" variant="primary" [disabled]="passwordApi.loading()">
-            @if (passwordApi.loading()) { Actualizando... } @else { Cambiar contraseña }
-          </app-button>
-        </app-form-actions>
-      </form>
-    </app-panel>
-
-  </app-pagina-ajustes>
+      </app-panel>
+    </div>
+  </div>
 
 </app-layout-shell>
 

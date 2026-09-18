@@ -1,6 +1,6 @@
-﻿<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
+<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
 
-  <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="Ajustes" logoiconClass="fa-solid fa-sliders" (navigate)="onNavigate($event)"></app-sidebar>
+  <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="CxC Ventas" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }" (navigate)="onNavigate($event)"></app-sidebar>
 
   <app-topbar [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true"
     slot="topbar"
@@ -41,7 +41,7 @@
               <app-avatar initials="AD" size="xl" status="online"></app-avatar>
               <div class="d-flex flex-col gap-1">
                 <app-button variant="outline" size="sm">Cambiar foto</app-button>
-                <app-text variant="caption" color="muted">JPG o PNG, mÇ­x. 2MB.</app-text>
+                <app-text variant="caption" color="muted">JPG o PNG, máx. 2MB.</app-text>
               </div>
             </div>
 
@@ -52,8 +52,8 @@
               </app-row>
 
               <app-row columns="1fr 1fr" gap="1rem" class="mb-4">
-                <app-floating-input formControlName="email" type="email" label="Correo electrnico" variant="outline"></app-floating-input>
-                <app-floating-input formControlName="phone" type="tel" label="TelÇ¸fono" variant="outline"></app-floating-input>
+                <app-floating-input formControlName="email" type="email" label="Correo electrónico" variant="outline"></app-floating-input>
+                <app-floating-input formControlName="phone" type="tel" label="Teléfono" variant="outline"></app-floating-input>
               </app-row>
 
               <app-form-actions>
@@ -71,7 +71,7 @@
 
             <form [formGroup]="passwordForm" (ngSubmit)="savePassword()">
               <div class="d-flex flex-col gap-3 mb-4" class="w-full">
-                <app-floating-input formControlName="currentPassword" type="password" label="Contrasea actual" variant="outline"></app-floating-input>
+                <app-floating-input formControlName="currentPassword" type="password" label="Contraseña actual" variant="outline"></app-floating-input>
                 <app-floating-input formControlName="newPassword" type="password" label="Nueva contraseña" variant="outline"></app-floating-input>
                 <app-floating-input formControlName="confirmPassword" type="password" label="Confirmar nueva contraseña" variant="outline"></app-floating-input>
               </div>
@@ -87,10 +87,10 @@
         <app-tab label="Notificaciones" iconClass="fa-regular fa-bell">
           <div >
             <app-text variant="h4" class="mb-2">Preferencias de notificaciones</app-text>
-            <app-text variant="body-sm" color="muted" class="mb-6">Decide quÇ¸ correos y alertas quieres recibir.</app-text>
+            <app-text variant="body-sm" color="muted" class="mb-6">Decide qué correos y alertas quieres recibir.</app-text>
 
             <div class="d-flex flex-col">
-              <app-setting-item title="Notificaciones por correo" description="Recibir alertas importantes directamente en tu buzn.">
+              <app-setting-item title="Notificaciones por correo" description="Recibir alertas importantes directamente en tu buzón.">
                 <app-toggle [ngModel]="notifEmail()" (ngModelChange)="notifEmail.set($event)"></app-toggle>
               </app-setting-item>
 
@@ -108,7 +108,7 @@
 
               <app-divider></app-divider>
 
-              <app-setting-item title="Alertas de seguridad" description="Avisos sobre inicios de sesin inusuales (Obligatorio)." >
+              <app-setting-item title="Alertas de seguridad" description="Avisos sobre inicios de sesión inusuales (Obligatorio)." >
                 <app-toggle [ngModel]="true" [disabled]="true"></app-toggle>
               </app-setting-item>
             </div>
@@ -122,7 +122,7 @@
         <!-- PESTAA: APARIENCIA -->
         <app-tab label="Apariencia" iconClass="fa-solid fa-palette">
           <div class="d-flex flex-col gap-2">
-            <app-text variant="h4" class="mb-2">Personalizacin</app-text>
+            <app-text variant="h4" class="mb-2">Personalización</app-text>
             <app-text variant="body-sm" color="muted" class="mb-6">Ajusta el aspecto visual de la plataforma.</app-text>
 
             <app-setting-item title="Idioma" description="Selecciona el idioma de la interfaz.">

@@ -30,7 +30,7 @@ import {
   ],
   template: `
     <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
-      <app-sidebar slot="sidebar" [menuItems]="menuItems" [user]="sidebarUser()" (navigate)="onNavigate($event)"></app-sidebar>
+      <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="CxC Ventas" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }" (navigate)="onNavigate($event)"></app-sidebar>
       <app-topbar [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true" slot="topbar" title="Analíticas" [userName]="'Usuario'" (toggleSidebar)="sidebarVisible.set(!sidebarVisible())">
         <app-theme-switcher></app-theme-switcher>
       </app-topbar>
@@ -66,12 +66,11 @@ export class AnalyticsPageComponent {
   router = inject(Router);
 
   menuItems: SidebarMenuItem[] = [
-    { id: 'dashboard', label: 'Resumen', icon: 'fa-solid fa-chart-pie', route: '/dashboard' },
-    { id: 'analytics', label: 'Analíticas', icon: 'fa-solid fa-chart-line', route: '/analytics', active: true },
-    { id: 'projects', label: 'Proyectos', icon: 'fa-solid fa-folder-open', route: '/crud' },
-    { id: 'reports', label: 'Reportes', icon: 'fa-solid fa-file-chart-column', route: '/reports' },
-    { id: 'profile', label: 'Mi Perfil', icon: 'fa-solid fa-user', route: '/profile' },
-    { id: 'settings', label: 'Configuración', icon: 'fa-solid fa-gear', route: '/settings' }
+    { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' , iconColor: 'var(--secondary-color)' },
+    { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' , iconColor: 'var(--info-color)' },
+    { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud' , iconColor: 'var(--success-color)' },
+    { label: 'Profile', icon: 'fa-solid fa-user', route: '/profile' , iconColor: 'var(--warning-color)' },
+    { label: 'Settings', icon: 'fa-solid fa-gear', route: '/settings' , iconColor: 'var(--text-color-secondary)' },
   ];
 
   sidebarUser = computed(() => ({ name: 'Usuario', role: 'Admin', initials: 'US', photo: '' }));

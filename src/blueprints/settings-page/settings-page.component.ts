@@ -1,4 +1,4 @@
-﻿import { Component, inject, signal, computed, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, PLATFORM_ID } from '@angular/core';
 
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -21,9 +21,9 @@ import {
   ToggleComponent,
   SelectComponent,
   ThemeSwitcherComponent,
-    PaginaAjustesComponent,
-    FormActionsComponent,
-    SettingItemComponent,
+  PaginaAjustesComponent,
+  FormActionsComponent,
+  SettingItemComponent,
 } from '@shared/ui';
 import { ApiService } from '@shared/ui/services/api.service';
 import { useApi } from '@shared/ui/services/use-api.service';
@@ -85,10 +85,11 @@ export class SettingsPageComponent implements OnInit {
   // MENU — @customize: ajusta a tu navegación
   // ============================================================
   protected menuItems: SidebarMenuItem[] = [
-      { label: 'Volver a Showcase', icon: 'fa-solid fa-arrow-left', route: '/showcase', iconColor: 'var(--primary-color)' },
-    { label: 'Dashboard', icon: 'fa-solid fa-gauge', route: '/dashboard', iconColor: 'var(--info-color)' },
-    { label: 'Usuarios', icon: 'fa-solid fa-users', route: '/crud', iconColor: 'var(--success-color)' },
-    { label: 'Configuración', icon: 'fa-solid fa-gear', route: '/settings', active: true, iconColor: 'var(--text-color-secondary)' },
+    { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' , iconColor: 'var(--secondary-color)' },
+    { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' , iconColor: 'var(--info-color)' },
+    { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud' , iconColor: 'var(--success-color)' },
+    { label: 'Profile', icon: 'fa-solid fa-user', route: '/profile' , iconColor: 'var(--warning-color)' },
+    { label: 'Settings', icon: 'fa-solid fa-gear', route: '/settings' , iconColor: 'var(--text-color-secondary)' },
   ];
 
   // ============================================================
@@ -198,13 +199,3 @@ export class SettingsPageComponent implements OnInit {
     this.errorMessage.set(null);
   }
 }
-
-
-
-
-
-
-
-
-
-

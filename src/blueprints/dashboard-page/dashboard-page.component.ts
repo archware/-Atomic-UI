@@ -43,13 +43,11 @@ export class DashboardPageComponent implements OnInit {
 
   get menuItems(): SidebarMenuItem[] {
     return [
-      { id: 'showcase', label: 'Volver a Showcase', icon: 'fa-solid fa-palette', route: '/showcase', iconColor: 'var(--secondary-color)' },
-      { id: 'dashboard', label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard', active: true, iconColor: 'var(--info-color)' },
-      { id: 'analytics', label: 'Analíticas', icon: 'fa-solid fa-chart-line', route: '/analytics' },
-      { id: 'projects', label: 'Proyectos', icon: 'fa-solid fa-table', route: '/crud', badge: 5 },
-      { id: 'reports', label: 'Reportes', icon: 'fa-solid fa-file-pdf', route: '/reports' },
-      { id: 'profile', label: 'Mi Perfil', icon: 'fa-solid fa-user', route: '/profile' },
-      { id: 'settings', label: 'Configuración', icon: 'fa-solid fa-gear', route: '/settings' }
+      { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' , iconColor: 'var(--secondary-color)' },
+      { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' , iconColor: 'var(--info-color)' },
+      { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud' , iconColor: 'var(--success-color)' },
+      { label: 'Profile', icon: 'fa-solid fa-user', route: '/profile' , iconColor: 'var(--warning-color)' },
+      { label: 'Settings', icon: 'fa-solid fa-gear', route: '/settings' , iconColor: 'var(--text-color-secondary)' },
     ];
   }
 
