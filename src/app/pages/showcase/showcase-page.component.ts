@@ -129,7 +129,7 @@ export class ShowcasePageComponent {
   sidebarVisible = signal(this.getInitialSidebarState());
 
   menuItems: SidebarMenuItem[] = [
-    { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' , iconColor: 'var(--secondary-color)' },
+    { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' , active: true, iconColor: 'var(--secondary-color)' },
     { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' , iconColor: 'var(--info-color)' },
     { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud' , iconColor: 'var(--success-color)' },
     { label: 'Profile', icon: 'fa-solid fa-user', route: '/profile' , iconColor: 'var(--warning-color)' },
