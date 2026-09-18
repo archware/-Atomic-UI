@@ -4,7 +4,7 @@
   <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="Perfil" logoiconClass="fa-solid fa-id-card" (navigate)="onNavigate($event)"></app-sidebar>
 
   <!-- Topbar -->
-  <app-topbar
+  <app-topbar [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true"
     slot="topbar"
     title="Mi Perfil"
     [userInitials]="(currentUser?.names ?? 'U')[0]"

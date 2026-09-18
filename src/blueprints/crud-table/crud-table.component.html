@@ -3,7 +3,7 @@
   <app-sidebar slot="sidebar" [menuItems]="menuItems" (navigate)="onSidebarNavigate($event)"></app-sidebar>
 
   <!-- Topbar Slot -->
-  <app-topbar slot="topbar" [title]="'Gestión de Usuarios'" [userInitials]="'HC'" [userName]="'COTAHA'"
+  <app-topbar [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true" slot="topbar" [title]="'Gestión de Usuarios'" [userInitials]="'HC'" [userName]="'COTAHA'"
     [userEmail]="'cotaha@email.com'" [notificationCount]="3" (toggleSidebar)="onToggleSidebar()" (logout)="onLogout()">
     <app-theme-switcher></app-theme-switcher>
   </app-topbar>

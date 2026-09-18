@@ -28,7 +28,7 @@ import {
   template: `
     <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
       <app-sidebar slot="sidebar" [menuItems]="menuItems" [user]="sidebarUser()" (navigate)="onNavigate($event)"></app-sidebar>
-      <app-topbar slot="topbar" title="Reportes" [userName]="'Usuario'" (toggleSidebar)="sidebarVisible.set(!sidebarVisible())">
+      <app-topbar [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true" slot="topbar" title="Reportes" [userName]="'Usuario'" (toggleSidebar)="sidebarVisible.set(!sidebarVisible())">
         <app-theme-switcher></app-theme-switcher>
       </app-topbar>
 

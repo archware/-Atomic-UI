@@ -2,7 +2,7 @@
 
   <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="Ajustes" logoiconClass="fa-solid fa-sliders" (navigate)="onNavigate($event)"></app-sidebar>
 
-  <app-topbar
+  <app-topbar [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true"
     slot="topbar"
     title="Configuración"
     userInitials="AD"
