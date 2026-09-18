@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "316fd59ccb692e8180e2c73b1755a1692806492d5c0b492274d3630557a05a01",
+  "sourceTreeSha256": "8e51d2310d2c582d166ce5a87ab0fd4ce3c00718429442005903de747499abac",
   "fileCount": 310,
   "files": [
     {
@@ -620,8 +620,8 @@
     },
     {
       "path": "src/app/shared/ui/index.ts",
-      "bytes": 15572,
-      "sha256": "7e7e5b939c49b608dfa521e1e17847d4d1fa4210561b2f047fac0c130499bd89"
+      "bytes": 15673,
+      "sha256": "e74435630fc98977919dbea4848fc71fa250785abe9873618e15304efde54519"
     },
     {
       "path": "src/app/shared/ui/interceptors/auth.interceptor.ts",
@@ -1005,18 +1005,18 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.html",
-      "bytes": 8616,
-      "sha256": "c8f33e7658d683ddfbff6cc3eb4d63aa0596e60cbab7efd37e3c63892be01eab"
+      "bytes": 8599,
+      "sha256": "844595f1144d5805dd09a933108b4430ebb574e7a26973b306d3017e00d9bd04"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.scss",
-      "bytes": 9049,
-      "sha256": "65b7c7fa5edca8603db6c688fffacdf02301a2433b5ec68f3daa615d2faae54f"
+      "bytes": 8910,
+      "sha256": "5f260ff6c8109190114b10617302f0f0690fa38905f1050ca7d9d30300e3d831"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.ts",
-      "bytes": 15903,
-      "sha256": "72fead3768401b2eeb0b2df1bd7c51f05ffa32f52e9c56fe549804a0722f7eab"
+      "bytes": 16466,
+      "sha256": "01f21a29e06af1f1b2690ace61a1b88696d9debcd3e8e5ab9139a1c7a6cefeff"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/page-size-host.component.html",
