@@ -1,4 +1,4 @@
-﻿<div class="sidebar-container" [class.collapsed]="collapsed()">
+<div class="sidebar-container" [class.collapsed]="collapsed()">
   <div class="sidebar-logo" [appVariablesCss]="{'--logo-icon-color': logoIconColor() || null, '--logo-text-color': logoTextColor() || null, '--sidebar-header-bg': headerBgColor() || null}">
     <i [class]="logoIcon() + ' logo-icon'"></i>
     @if (!collapsed()) {
@@ -17,7 +17,7 @@
       class="sidebar-nav"
       (keydown)="handleKeydown($event)"
       tabindex="-1"
-      aria-label="NavegaciÃ³n principal"
+      aria-label="Navegación principal"
       data-sidebar-scroll-surface
     >
       <ng-template #menuTree let-items let-level="level">
@@ -86,7 +86,8 @@
         <app-avatar
           [name]="currentUser.name || 'User'"
           [initials]="currentUser.initials"
-          [src]="currentUser.photo"`r`n          [color]="currentUser.avatarColor"
+          [src]="currentUser.photo"
+          [color]="currentUser.avatarColor"
           [size]="'md'"
         ></app-avatar>
         @if (!collapsed()) {

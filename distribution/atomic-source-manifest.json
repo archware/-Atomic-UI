@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "54a70c36cfc0d64417dafb1f3078affd174106d0e9ac7f0881214d21a7474e48",
+  "sourceTreeSha256": "68939b2eb44310ca5732152f83d843202cc33a71eb6d8ae05b3da00841cb78b5",
   "fileCount": 309,
   "files": [
     {
@@ -1215,8 +1215,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.html",
-      "bytes": 3820,
-      "sha256": "343965c13adf0eb5cbf5d4359f0790a00c32312873ecd9db613ad4c49fef3b63"
+      "bytes": 3812,
+      "sha256": "d5c4caf827c6a1c8fab1384098de1594c2126b7d0d32fa7e3cada2db9385618d"
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.ts",
@@ -1465,8 +1465,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.ts",
-      "bytes": 15304,
-      "sha256": "94f3bdd66c792ff87783c061dd548255ca2c58b37a18930a71353f4e6a82e6b8"
+      "bytes": 12590,
+      "sha256": "7dfe62975adf21236365464d26dd64f48984b2e44ca063ce074162720374df44"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-dashboard/pagina-dashboard.html",
