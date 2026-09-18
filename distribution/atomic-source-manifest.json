@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "ef43bb84e6cd5b8aa9de35b3a89508ad07fc6ce7f163f4b772dcf73efec1f1d6",
+  "sourceTreeSha256": "d0d7332994beefe6b9daf761518e1acd2998fc39b50f0a93af3ce8efd107d418",
   "fileCount": 309,
   "files": [
     {
@@ -915,8 +915,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/user-menu/user-menu.component.ts",
-      "bytes": 3893,
-      "sha256": "3ad28bba83c6dad981622687ac4af10fc7d2554a6104912fe5006758b3c50238"
+      "bytes": 3809,
+      "sha256": "123daa196c5a4bb7f6d17f48d45fb058a1075782b39fb8dba7014e968a8a1738"
     },
     {
       "path": "src/app/shared/ui/organisms/accordion/accordion-item-component.component.html",
