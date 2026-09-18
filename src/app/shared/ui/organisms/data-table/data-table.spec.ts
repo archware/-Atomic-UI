@@ -88,7 +88,7 @@ describe('DataTable', () => {
     const overlayStyle = getComputedStyle(overlay);
     const viewportStyle = getComputedStyle(viewport);
 
-    expect(overlayStyle.maxHeight).toBe('none');
+    expect(overlayStyle.maxHeight).toBe('608px');
     expect(overlayStyle.overflowX).toBe('hidden');
     expect(viewportStyle.overflowX).toBe('auto');
   });
@@ -242,6 +242,7 @@ describe('DataTable', () => {
 
   it('renders the paginated range and current page from one-based inputs', async () => {
     const fixture = await createTable();
+    fixture.componentRef.setInput('pagination', 'server');
     fixture.componentRef.setInput('totalRecords', 45);
     fixture.componentRef.setInput('page', 2);
     fixture.componentRef.setInput('pageSize', 20);
@@ -272,6 +273,7 @@ describe('DataTable', () => {
   it('renders a zero range and disables pagination for an empty result', async () => {
     const fixture = await createTable();
     fixture.componentRef.setInput('rows', []);
+    fixture.componentRef.setInput('pagination', 'server');
     fixture.componentRef.setInput('totalRecords', 0);
     fixture.componentRef.setInput('page', 1);
     fixture.componentRef.setInput('totalPages', 1);
@@ -337,6 +339,7 @@ describe('DataTable', () => {
 
   it('emits page size and previous or next one-based pages from the toolbar', async () => {
     const fixture = await createTable();
+    fixture.componentRef.setInput('pagination', 'server');
     fixture.componentRef.setInput('totalRecords', 45);
     fixture.componentRef.setInput('page', 2);
     fixture.componentRef.setInput('pageSize', 10);
@@ -368,6 +371,7 @@ describe('DataTable', () => {
 
   it('disables both page controls while loading and preserves boundary states', async () => {
     const fixture = await createTable('loading');
+    fixture.componentRef.setInput('pagination', 'server');
     fixture.componentRef.setInput('totalRecords', 30);
     fixture.componentRef.setInput('page', 1);
     fixture.componentRef.setInput('totalPages', 3);
