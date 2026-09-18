@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "68939b2eb44310ca5732152f83d843202cc33a71eb6d8ae05b3da00841cb78b5",
+  "sourceTreeSha256": "ef43bb84e6cd5b8aa9de35b3a89508ad07fc6ce7f163f4b772dcf73efec1f1d6",
   "fileCount": 309,
   "files": [
     {
@@ -1210,8 +1210,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.css",
-      "bytes": 5057,
-      "sha256": "1294542b70dc47b49f501938254d999ceb2617811262a4f564942f076ea0a489"
+      "bytes": 5099,
+      "sha256": "a0c1515d24acbb908441e0a24d452c58b513ac973bf2a967cd2f224ba4522c45"
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.html",
