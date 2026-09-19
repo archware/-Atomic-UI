@@ -9,7 +9,7 @@
     </div>
 
     @if (showHomeButton()) {
-      <app-icon-button variant="ghost" animation="grow" tooltip="Inicio" (clicked)="homeClick.emit()">
+      <app-icon-button variant="ghost" animation="rotate" tooltip="Inicio" (clicked)="homeClick.emit()">
         <i class="fa-solid fa-house topbar-icon home-icon" aria-hidden="true"></i>
       </app-icon-button>
     }
@@ -38,7 +38,7 @@
     <ng-content></ng-content>
     @if (showNotifications()) {
       <div class="notification-dropdown-wrapper">
-        <app-icon-button variant="ghost" animation="grow" tooltip="Notificaciones" [badge]="notificationCount()" (clicked)="toggleNotifications()">
+        <app-icon-button variant="ghost" animation="rotate" tooltip="Notificaciones" [badge]="notificationCount()" (clicked)="toggleNotifications()">
           <i class="fa-regular fa-bell topbar-icon" aria-hidden="true"></i>
         </app-icon-button>
 

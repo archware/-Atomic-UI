@@ -121,6 +121,7 @@
      Doctrina §6: número de secuencia al abrir y cerrar.
      El formulario se proyecta desde el consumidor.
      ═══════════════════════════════════════════════════════════ -->
+@if (interaccionActual() !== 'browser') {
 <app-crud-dialog
   #dialogoCrud
   [labelledBy]="idTituloDialogo"
@@ -151,6 +152,18 @@
     </div>
   }
 
+  
+  @if (interaccionActual() === 'stepper') {
+    <div class="pagina-crud__stepper-container" style="padding-bottom: 1rem;">
+      <app-stepper
+        [steps]="wizardSteps()"
+        [activeStep]="wizardActiveStep()"
+        [allowSkip]="wizardAllowSkip()"
+        (stepChange)="alCambiarPasoWizard.emit($event)"
+      ></app-stepper>
+    </div>
+  }
+
   <!-- Formulario proyectado por el consumidor -->
   @if (formularioCrud(); as tpl) {
     <ng-container
@@ -160,7 +173,7 @@
   }
 
   <!-- Pie del diálogo: botones de acción -->
-  @if (!esModoPrevisualizacion) {
+  @if (!esModoPrevisualizacion && interaccionActual() !== 'stepper') {
     <footer class="pagina-crud__dialogo-pie">
       <app-button
         variant="outline"
@@ -179,6 +192,7 @@
     </footer>
   }
 </app-crud-dialog>
+}
 
 <!-- ═══════════════════════════════════════════════════════════
      DIÁLOGO DE CONFIRMACIÓN DE BAJA LÓGICA

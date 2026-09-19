@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "8bf94a72d7488ce987ea106e15bb45d9fb9fefe92818b489f3aa44327ed3338a",
+  "sourceTreeSha256": "046ee29d57e235c6c007268194ebc3ab1d3382426ac1322bb35015219b9ac4db",
   "fileCount": 310,
   "files": [
     {
@@ -246,7 +246,7 @@
     {
       "path": "src/app/shared/ui/atoms/icon-button/icon-button.component.css",
       "bytes": 3210,
-      "sha256": "d88ca4f4d7b28f00768370b59c2c0b3ae95b4a4750108cbc0cc35aa1b5a126fc"
+      "sha256": "89faa795bc4ee6df861ad936b63cdff83a9856520dcea9d23241a6307b8f0f59"
     },
     {
       "path": "src/app/shared/ui/atoms/icon-button/icon-button.component.html",
@@ -1295,8 +1295,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.html",
-      "bytes": 3640,
-      "sha256": "04994117127001890eded872246a7beada06197fbbf5c3fa51a1c58f387f15ad"
+      "bytes": 3644,
+      "sha256": "c4c789b99451501976294f093439d4cee7c71f4283ef7641ba94323af902e731"
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.ts",
@@ -1460,8 +1460,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.html",
-      "bytes": 8475,
-      "sha256": "98b31cd6906df48d096d2d22f3a82b8bb978e930c0d3f7252ada75dc1112378d"
+      "bytes": 8909,
+      "sha256": "775cabae5373752d723cf659dd825425c08a860348aaecbc95f3d66ca325ca4e"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.scss",
@@ -1470,8 +1470,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.ts",
-      "bytes": 12595,
-      "sha256": "a61aa40f87f124a47b306d2e0f575a20b3cf7e9e091266ed915e89edca95248a"
+      "bytes": 13893,
+      "sha256": "7952392bf90fb10f1b74fae26a6cae066e06b7624b2eabf4e430b1248c26a0e1"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-dashboard/pagina-dashboard.html",
@@ -1520,8 +1520,8 @@
     },
     {
       "path": "src/styles/themes/_buttons.css",
-      "bytes": 9822,
-      "sha256": "fb76673b43ec121dd2ccfef712e0ae86d54c20039de408d810fbe4515f6e53eb"
+      "bytes": 10121,
+      "sha256": "48b17ff8cfed39648905617268e4abe2302c37b8c6b93a30db1fdad11804fcdf"
     },
     {
       "path": "src/styles/themes/_forms.css",

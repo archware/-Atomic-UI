@@ -12,6 +12,7 @@ import {
 import { PageHeader } from '../../organisms/page-header/page-header';
 import { QueryToolbar } from '../../organisms/query-toolbar/query-toolbar';
 import { DataTable, type DataTableColumn, type DataTableStatus } from '../../organisms/data-table/data-table';
+import { StepperComponent, type Step } from '../../organisms/stepper/stepper.component';
 import { CrudDialog } from '../../organisms/crud-dialog/crud-dialog';
 import { TableActionsComponent } from '../../molecules/table-actions/table-actions.component';
 import { ActionGroupComponent } from '../../molecules/action-group/action-group.component';
@@ -92,6 +93,7 @@ export interface FiltroBusqueda {
     NgTemplateOutlet,
     Alert,
     CrudDialog,
+    StepperComponent,
     ActionGroupComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -158,6 +160,25 @@ export class PaginaCrud<T extends object = any> {
   readonly entidadActiva = input<T | null>(null);
   readonly guardando = input(false);
   readonly errorOperacion = input<string | null>(null);
+
+  
+  // ─── Configuración de Interacción (Wizard/Browser/Popup) ──────
+  readonly interaccionCrear = input<'popup' | 'stepper' | 'browser'>('popup');
+  readonly interaccionEditar = input<'popup' | 'stepper' | 'browser'>('popup');
+  readonly interaccionVer = input<'popup' | 'stepper' | 'browser'>('popup');
+  readonly interaccionEliminar = input<'popup' | 'stepper' | 'browser'>('popup');
+
+  protected interaccionActual(): 'popup' | 'stepper' | 'browser' {
+    const modo = this.modoCrud();
+    if (modo === 'crear') return this.interaccionCrear();
+    if (modo === 'editar') return this.interaccionEditar();
+    if (modo === 'ver') return this.interaccionVer();
+    return 'popup';
+  }
+  readonly wizardSteps = input<Step[]>([]);
+  readonly wizardActiveStep = input<number>(0);
+  readonly wizardAllowSkip = input<boolean>(false);
+  readonly alCambiarPasoWizard = output<number>();
 
   // ─── Configuración del diálogo ───────────────────────────────
   readonly tamanoDialogo = input<'sm' | 'md' | 'lg' | 'xl'>('md');
@@ -277,8 +298,14 @@ export class PaginaCrud<T extends object = any> {
 
   // ─── Baja lógica con confirmación (Doctrina §7 y §12) ───────
   protected solicitarBaja(entidad: T): void {
-    this.entidadAEliminar.set(entidad);
-    this.mostrarConfirmacion.set(true);
+    if (this.interaccionEliminar() === 'browser') {
+      // Si el modo es browser, omitimos el popup de confirmación interno 
+      // y delegamos la acción al consumidor (quien debe hacer la navegación o confirmación)
+      this.alEliminar.emit(entidad);
+    } else {
+      this.entidadAEliminar.set(entidad);
+      this.mostrarConfirmacion.set(true);
+    }
   }
 
   protected confirmarBaja(): void {

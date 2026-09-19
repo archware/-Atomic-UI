@@ -309,9 +309,12 @@
   border-right-width: 0;
 }
 
-/* Animacion para iconos dentro de botones normales */
-.btn i, .btn svg { transition: transform 0.3s ease-in-out; }
-.btn:hover:not(:disabled):not([aria-disabled='true']) i,
-.btn:hover:not(:disabled):not([aria-disabled='true']) svg {
-  transform: scale(1.1);
+/* Animacion para iconos dentro de botones solitarios */
+.btn-icon i, .btn-icon svg {
+  transition: transform 0.3s ease-in-out;
+}
+
+.btn-icon:hover:not(:disabled):not([aria-disabled='true']) i,
+.btn-icon:hover:not(:disabled):not([aria-disabled='true']) svg {
+  transform: scale(1.1) rotate(180deg);
 }

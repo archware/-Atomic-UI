@@ -101,7 +101,7 @@
 .icon-anim-rotate:hover ::ng-deep i.fa-solid,
 .icon-anim-rotate:hover ::ng-deep i.fa-regular,
 .icon-anim-rotate:hover ::ng-deep i.fa-brands {
-  transform: rotate(45deg) scale(1.15);
+  transform: scale(1.1) rotate(180deg);
   color: var(--primary-color);
 }
 
