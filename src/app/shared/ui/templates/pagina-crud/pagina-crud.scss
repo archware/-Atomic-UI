@@ -35,22 +35,6 @@ app-query-toolbar {
   font-weight: var(--font-weight-title);
 }
 
-.pagina-crud__btn-cerrar {
-  --control-height: 2.5rem;
-  border-radius: 50%;
-  background-color: var(--surface-section);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
-  transition: all 0.2s ease;
-}
-
-.pagina-crud__btn-cerrar:hover {
-  background-color: var(--danger-color, var(--red-500));
-  color: var(--text-color-on-danger, var(--gray-0));
-  border-color: transparent;
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
 
 .pagina-crud__dialogo-error {
   padding-inline: 2.25rem;
@@ -81,30 +65,33 @@ app-query-toolbar {
   background-color: var(--surface-background);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 1.5rem 2.25rem;
   max-inline-size: 28rem;
   box-shadow: var(--shadow-xl, 0 20px 25px -5px rgb(0 0 0 / 0.3));
+  overflow: hidden;
 }
 
 .pagina-crud__confirmacion-titulo {
-  margin: 0 0 var(--space-3);
-  padding-bottom: var(--space-3);
+  margin: 0;
+  padding: 1.5rem 2.25rem;
   border-bottom: 1px solid var(--border-color);
+  background-color: var(--modal-header-bg, var(--surface-background));
   font-size: var(--text-lg);
   font-weight: var(--font-weight-title);
 }
 
 .pagina-crud__confirmacion-mensaje {
-  margin: 0 0 var(--space-4);
+  margin: 0;
+  padding: 1.5rem 2.25rem;
   color: var(--text-color-secondary);
 }
 
 .pagina-crud__confirmacion-pie {
   display: flex;
   justify-content: flex-end;
-  gap: 2.25rem; /* 36px horizontal gap between buttons */
-  padding-top: 1.5rem;
+  gap: 1.5rem; /* 24px gap */
+  padding: 1.5rem 2.25rem;
   border-top: 1px solid var(--border-color);
+  background-color: var(--modal-footer-bg, var(--surface-section));
 }
 
 .pagina-crud__filtros-cascada {

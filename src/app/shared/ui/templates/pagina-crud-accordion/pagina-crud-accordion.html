@@ -139,10 +139,10 @@
       aria-labelledby="confirmacion-titulo-acc"
       (click)="$event.stopPropagation()"
     >
-      <h3 id="confirmacion-titulo-acc">
+      <h3 id="confirmacion-titulo-acc" class="pagina-crud-accordion__confirmacion-titulo">
         {{ confResueltas.titulo(entidadAEliminar()) }}
       </h3>
-      <p>{{ confResueltas.mensaje(entidadAEliminar()) }}</p>
+      <p class="pagina-crud-accordion__confirmacion-mensaje">{{ confResueltas.mensaje(entidadAEliminar()) }}</p>
       <footer class="pagina-crud-accordion__confirmacion-pie">
         <app-button variant="outline" data-dialog-initial-focus (buttonClick)="cancelarBaja()">
           {{ confResueltas.etiquetaCancelar }}

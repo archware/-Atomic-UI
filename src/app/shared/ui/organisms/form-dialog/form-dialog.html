@@ -26,5 +26,8 @@
     <div class="form-dialog__body">
       <ng-content />
     </div>
+
+    <!-- The actions are now explicitly placed in the footer area outside the body -->
+    <ng-content select="app-form-dialog-actions" />
   </article>
 </app-crud-dialog>

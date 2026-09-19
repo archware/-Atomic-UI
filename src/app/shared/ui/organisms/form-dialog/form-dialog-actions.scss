@@ -1,10 +1,9 @@
 :host {
   display: block;
-  min-width: 0;
   position: sticky;
   z-index: 1;
   bottom: 0;
-  background: var(--modal-bg);
+  background: var(--modal-footer-bg, var(--surface-section));
 }
 
 .form-dialog-actions {
@@ -13,7 +12,7 @@
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: var(--form-row-gap);
-  padding-top: var(--space-5);
+  padding: var(--space-5) var(--space-6);
   border-top: 1px solid var(--modal-border);
 }
 
@@ -21,5 +20,6 @@
   .form-dialog-actions {
     align-items: stretch;
     gap: var(--space-3);
+    padding: var(--space-4);
   }
 }

@@ -55,14 +55,31 @@ app-query-toolbar {
 .pagina-crud-accordion__confirmacion {
   background-color: var(--color-surface);
   border-radius: var(--radius-lg);
-  padding: var(--space-6);
   max-inline-size: 28rem;
   box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.pagina-crud-accordion__confirmacion-titulo {
+  margin: 0;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--modal-header-bg, var(--color-surface));
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-title);
+}
+
+.pagina-crud-accordion__confirmacion-mensaje {
+  margin: 0;
+  padding: var(--space-4) var(--space-5);
+  color: var(--text-color-secondary);
 }
 
 .pagina-crud-accordion__confirmacion-pie {
   display: flex;
   justify-content: flex-end;
   gap: var(--space-3);
-  margin-block-start: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border-block-start: var(--border-width-thin) solid var(--color-border);
+  background-color: var(--modal-footer-bg, var(--surface-section));
 }
