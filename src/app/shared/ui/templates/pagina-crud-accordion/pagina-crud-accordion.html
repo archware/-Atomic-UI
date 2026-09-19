@@ -95,7 +95,7 @@
     <h2 [id]="idTituloDialogo" class="pagina-crud-accordion__dialogo-titulo">
       {{ tituloDialogo() }}
     </h2>
-    <app-icon-button icon="fa-solid fa-xmark" aria-label="Cerrar" variant="ghost" animation="none" (buttonClick)="cerrarDialogo()" />
+    <app-icon-button icon="fa-solid fa-xmark" aria-label="Cerrar" variant="ghost" animation="none" (clicked)="cerrarDialogo()" />
   </header>
 
   @if (errorOperacion(); as msgError) {
@@ -115,7 +115,7 @@
 
   @if (!esModoPrevisualizacion) {
     <footer class="pagina-crud-accordion__dialogo-pie">
-      <app-button variant="outline" (buttonClick)="cerrarDialogo()">Cancelar</app-button>
+      <app-button variant="outline" (clicked)="cerrarDialogo()">Cancelar</app-button>
       <app-button
         variant="primary"
         [loading]="guardando()"

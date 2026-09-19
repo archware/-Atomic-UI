@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "3437e9cf406c610134717c5a7fd8e07f503ed1ce7baa3356c07ac15c168e6e82",
+  "sourceTreeSha256": "961ff5ee672e2d22c00292a3afc8a62348622250de21612d9189b7e2472a81ea",
   "fileCount": 310,
   "files": [
     {
@@ -1295,13 +1295,13 @@
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.html",
-      "bytes": 1974,
-      "sha256": "4340ce6cd44b69a640dbcf37ebb6100d9dbcccd8d6e0de22e1b9dd7eb7a81db0"
+      "bytes": 3636,
+      "sha256": "d116012c18b8942319debcc85887222527043470e546de2f9664253300fc5d18"
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.ts",
-      "bytes": 2427,
-      "sha256": "957d6fe0495ff6aec41edd088a68b3cb571ec2ddb8159d751cc3058b10685902"
+      "bytes": 3746,
+      "sha256": "e1de0449cc35cec170f5c2fa71df8281d805b4d6891bd7631ed75af6e37847a4"
     },
     {
       "path": "src/app/shared/ui/services/api.service.ts",
@@ -1445,8 +1445,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.html",
-      "bytes": 5320,
-      "sha256": "98a5e0aff59baddc3fd891215f329e8617e297ae09763fe0f0b0c4b8b204fef9"
+      "bytes": 5312,
+      "sha256": "92f799ccd3df54bfb86f8e093e2439ad451d86f4db470279799687e7f826162a"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.scss",
@@ -1460,13 +1460,13 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.html",
-      "bytes": 11367,
-      "sha256": "48aed475a0b55c7f3833804e72fcac069fa31b9b222c9c5a1c24c406a760d231"
+      "bytes": 11359,
+      "sha256": "4176aee45ddf5e7b8ea4b3dac891eee41ed74b990efd9e6b37a3413f808773e4"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.scss",
-      "bytes": 3232,
-      "sha256": "df527e5e7ae1160f9ce4632bd1cb8b3ecba17d2b5b5f32542a946c08d162775c"
+      "bytes": 3234,
+      "sha256": "9c69027e9987be90363576a6f1277f41c77f2e48a466665358ce936819b79b7d"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.ts",

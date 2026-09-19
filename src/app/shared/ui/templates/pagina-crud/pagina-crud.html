@@ -134,7 +134,7 @@
     <h2 [id]="idTituloDialogo" class="pagina-crud__dialogo-titulo">
       {{ tituloDialogo() }}
     </h2>
-      <app-icon-button class="pagina-crud__btn-cerrar" variant="ghost" animation="none" aria-label="Cerrar" (buttonClick)="cerrarDialogo()">
+      <app-icon-button class="pagina-crud__btn-cerrar" variant="ghost" animation="none" aria-label="Cerrar" (clicked)="cerrarDialogo()">
         <i class="fa-solid fa-xmark"></i>
       </app-icon-button>
   </header>
@@ -173,7 +173,7 @@
     <footer class="pagina-crud__dialogo-pie">
       <app-button
         variant="outline"
-        (buttonClick)="cerrarDialogo()"
+        (clicked)="cerrarDialogo()"
       >
         Cancelar
       </app-button>
