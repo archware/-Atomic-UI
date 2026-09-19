@@ -138,7 +138,6 @@
 .sidebar-toggle-wrapper ::ng-deep button, .sidebar-toggle-wrapper ::ng-deep app-icon-button { transform: none !important; }
 
 
-.home-icon { color: var(--primary-color); }
 
 /* === Notification Dropdown === */
 .notification-dropdown-wrapper {

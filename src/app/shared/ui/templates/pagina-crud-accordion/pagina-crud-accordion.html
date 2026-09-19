@@ -1,12 +1,12 @@
-<!--
-  Chasis B â€” PÃ¡gina CRUD multi-entidad con acordeÃ³n.
+﻿<!--
+  Chasis B Ã¢â‚¬â€ PÃƒÂ¡gina CRUD multi-entidad con acordeÃƒÂ³n.
 
-  PatrÃ³n ADR-007:
-    PageHeader â†’ Accordion â†’ [AccordionItem Ã— N entidades]
-      â†’ QueryToolbar + DataTable + CrudDialog compartido
+  PatrÃƒÂ³n ADR-007:
+    PageHeader Ã¢â€ â€™ Accordion Ã¢â€ â€™ [AccordionItem Ãƒâ€” N entidades]
+      Ã¢â€ â€™ QueryToolbar + DataTable + CrudDialog compartido
 
-  Doctrina Â§15: acordeÃ³n solo cuando hay â‰¥2 secciones que compiten.
-  La entidad principal arranca abierta, las secundarias retraÃ­das.
+  Doctrina Ã‚Â§15: acordeÃƒÂ³n solo cuando hay Ã¢â€°Â¥2 secciones que compiten.
+  La entidad principal arranca abierta, las secundarias retraÃƒÂ­das.
 -->
 
 <app-page-header
@@ -21,8 +21,8 @@
       [description]="ent.descripcion ?? ''"
       [open]="ent.abiertoInicial ?? false"
     >
-      <!-- Barra de bÃºsqueda y acciÃ³n por entidad -->
-      <app-query-toolbar [accessibleLabel]="'BÃºsqueda y acciones de ' + ent.titulo">
+      <!-- Barra de bÃƒÂºsqueda y acciÃƒÂ³n por entidad -->
+      <app-query-toolbar [accessibleLabel]="'BÃƒÂºsqueda y acciones de ' + ent.titulo">
         <div query-filters>
           <app-input
             type="search"
@@ -83,7 +83,7 @@
   }
 </app-accordion>
 
-<!-- DiÃ¡logo CRUD compartido -->
+<!-- DiÃƒÂ¡logo CRUD compartido -->
 <app-crud-dialog
   #dialogoCrud
   [labelledBy]="idTituloDialogo"
@@ -95,11 +95,7 @@
     <h2 [id]="idTituloDialogo" class="pagina-crud-accordion__dialogo-titulo">
       {{ tituloDialogo() }}
     </h2>
-    <app-icon-button
-      icon="fa-solid fa-xmark"
-      label="Cerrar"
-      (buttonClick)="cerrarDialogo()"
-    />
+    <app-icon-button icon="fa-solid fa-xmark" aria-label="Cerrar" variant="ghost" animation="none" (buttonClick)="cerrarDialogo()" />
   </header>
 
   @if (errorOperacion(); as msgError) {
@@ -130,7 +126,7 @@
   }
 </app-crud-dialog>
 
-<!-- ConfirmaciÃ³n de baja lÃ³gica (igual que Chasis A) -->
+<!-- ConfirmaciÃƒÂ³n de baja lÃƒÂ³gica (igual que Chasis A) -->
 @if (mostrarConfirmacion()) {
   <div class="pagina-crud-accordion__confirmacion-fondo" (click)="cancelarBaja()">
     <div
@@ -154,4 +150,5 @@
     </div>
   </div>
 }
+
 

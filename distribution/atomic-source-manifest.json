@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "42f5f94b8aa595b30f28b9852d68a2af9f59e09f64b399637a1f0973ff515b33",
+  "sourceTreeSha256": "2f3b804535d8c0f6b9a7d2a6744e4b09c1ebf6c5a82107b2a05e8beb2e1293a3",
   "fileCount": 310,
   "files": [
     {
@@ -1290,13 +1290,13 @@
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.css",
-      "bytes": 5699,
-      "sha256": "2f94ebd56b9730b6da6add38c22128540643808465e206cd37b9ac7999b5c72a"
+      "bytes": 5655,
+      "sha256": "1e6f62d72d587376f9047c03d42fe287f80be88060b0b6505ff66685c0856818"
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.html",
-      "bytes": 3644,
-      "sha256": "c4c789b99451501976294f093439d4cee7c71f4283ef7641ba94323af902e731"
+      "bytes": 3636,
+      "sha256": "d116012c18b8942319debcc85887222527043470e546de2f9664253300fc5d18"
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.ts",
@@ -1445,8 +1445,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.html",
-      "bytes": 5121,
-      "sha256": "26fe70175bca439c80fd07f78bc3064bf9f778bde60a55442fc48d033ecf24c3"
+      "bytes": 5248,
+      "sha256": "9fadbaba7e84a44988939a4f83dba208a1159aa570304cdbae4a91010daf0e15"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.scss",
@@ -1460,8 +1460,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.html",
-      "bytes": 8909,
-      "sha256": "775cabae5373752d723cf659dd825425c08a860348aaecbc95f3d66ca325ca4e"
+      "bytes": 11335,
+      "sha256": "71a260b791d3f303e8664c8ad8eb6d831ac42de3c2a426f3b3128b9e1aec21e6"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.scss",

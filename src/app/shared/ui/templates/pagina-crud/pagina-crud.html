@@ -1,17 +1,17 @@
-<!--
-  Chasis A — Página CRUD de entidad única.
+﻿<!--
+  Chasis A â€” PÃ¡gina CRUD de entidad Ãºnica.
 
-  Composición canónica (ADR-007):
-    PageHeader → QueryToolbar → DataTable (con acciones) → CrudDialog
+  ComposiciÃ³n canÃ³nica (ADR-007):
+    PageHeader â†’ QueryToolbar â†’ DataTable (con acciones) â†’ CrudDialog
 
   El formulario CRUD se proyecta mediante <ng-template #formularioCrud>.
-  El chasis se encarga de la estructura, estados y ciclo de vida del diálogo.
+  El chasis se encarga de la estructura, estados y ciclo de vida del diÃ¡logo.
 -->
 
-<!-- ═══════════════════════════════════════════════════════════
-     CABECERA DE PÁGINA
-     Doctrina §13: una sola <h1> por página, emitida por page-header.
-     ═══════════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     CABECERA DE PÃGINA
+     Doctrina Â§13: una sola <h1> por pÃ¡gina, emitida por page-header.
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 @if (!embedded()) {
   <app-page-header
   [title]="titulo()"
@@ -19,11 +19,11 @@
 />
 }
 
-<!-- ═══════════════════════════════════════════════════════════
-     BARRA DE BÚSQUEDA Y ACCIÓN PRINCIPAL
-     Doctrina §15: el botón de alta lleva verbo + icono.
-     ═══════════════════════════════════════════════════════════ -->
-<app-query-toolbar accessibleLabel="Búsqueda y acciones de {{ titulo() }}">
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     BARRA DE BÃšSQUEDA Y ACCIÃ“N PRINCIPAL
+     Doctrina Â§15: el botÃ³n de alta lleva verbo + icono.
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<app-query-toolbar accessibleLabel="BÃºsqueda y acciones de {{ titulo() }}">
   <div query-filters class="pagina-crud__filtros-cascada">
     @if (opcionesBusqueda().length > 0) {
       <app-select
@@ -79,12 +79,12 @@
     </div>
 </app-query-toolbar>
 
-<!-- ═══════════════════════════════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      GRILLA DE DATOS
-     El DataTable ya maneja los 4 estados (Doctrina §1):
+     El DataTable ya maneja los 4 estados (Doctrina Â§1):
        loading, error, empty, success (idle para estado inicial).
-     La paginación es server-side por defecto.
-     ═══════════════════════════════════════════════════════════ -->
+     La paginaciÃ³n es server-side por defecto.
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <app-data-table
   [columns]="columnas()"
   [rows]="filas()"
@@ -102,9 +102,9 @@
   (retry)="alReintentar.emit()"
 >
   <!--
-    Columna de acciones estándar (Doctrina ADR-007):
-    3 botones de solo icono → ver, editar, eliminar.
-    Doctrina §15: las acciones de fila van como iconos con nombre accesible.
+    Columna de acciones estÃ¡ndar (Doctrina ADR-007):
+    3 botones de solo icono â†’ ver, editar, eliminar.
+    Doctrina Â§15: las acciones de fila van como iconos con nombre accesible.
   -->
     <ng-template #actions let-fila let-indice="index">
       <app-action-group
@@ -115,12 +115,12 @@
     </ng-template>
 </app-data-table>
 
-<!-- ═══════════════════════════════════════════════════════════
-     DIÁLOGO CRUD (crear / editar / ver)
-     Doctrina §5: foco al primer campo tras abrir.
-     Doctrina §6: número de secuencia al abrir y cerrar.
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     DIÃLOGO CRUD (crear / editar / ver)
+     Doctrina Â§5: foco al primer campo tras abrir.
+     Doctrina Â§6: nÃºmero de secuencia al abrir y cerrar.
      El formulario se proyecta desde el consumidor.
-     ═══════════════════════════════════════════════════════════ -->
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 @if (interaccionActual() !== 'browser') {
 <app-crud-dialog
   #dialogoCrud
@@ -129,23 +129,17 @@
   (cancelled)="cerrarDialogo()"
   (closed)="cerrarDialogo()"
 >
-  <!-- Cabecera del diálogo -->
+  <!-- Cabecera del diÃ¡logo -->
   <header class="pagina-crud__dialogo-cabecera">
     <h2 [id]="idTituloDialogo" class="pagina-crud__dialogo-titulo">
       {{ tituloDialogo() }}
     </h2>
-      <app-icon-button
-        class="pagina-crud__btn-cerrar"
-        variant="ghost"
-        animation="none"
-        tooltip="Cerrar"
-        (clicked)="cerrarDialogo()"
-      >
+      <app-icon-button class="pagina-crud__btn-cerrar" variant="ghost" animation="none" aria-label="Cerrar" (buttonClick)="cerrarDialogo()">
         <i class="fa-solid fa-xmark"></i>
       </app-icon-button>
   </header>
 
-  <!-- Error de operación (Doctrina §2: no cantar éxito sin confirmación) -->
+  <!-- Error de operaciÃ³n (Doctrina Â§2: no cantar Ã©xito sin confirmaciÃ³n) -->
   @if (errorOperacion(); as msgError) {
     <div class="pagina-crud__dialogo-error" role="alert" data-dialog-error>
       <app-alert kind="danger">{{ msgError }}</app-alert>
@@ -172,7 +166,7 @@
     />
   }
 
-  <!-- Pie del diálogo: botones de acción -->
+  <!-- Pie del diÃ¡logo: botones de acciÃ³n -->
   @if (!esModoPrevisualizacion && interaccionActual() !== 'stepper') {
     <footer class="pagina-crud__dialogo-pie">
       <app-button
@@ -194,14 +188,14 @@
 </app-crud-dialog>
 }
 
-<!-- ═══════════════════════════════════════════════════════════
-     DIÁLOGO DE CONFIRMACIÓN DE BAJA LÓGICA
-     Doctrina §7:
-       - El mensaje enumera qué va a cambiar.
-       - El botón lleva el verbo del acto ('Desactivar').
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     DIÃLOGO DE CONFIRMACIÃ“N DE BAJA LÃ“GICA
+     Doctrina Â§7:
+       - El mensaje enumera quÃ© va a cambiar.
+       - El botÃ³n lleva el verbo del acto ('Desactivar').
        - El foco inicial se pone en cancelar.
-     Doctrina §12: se confirma porque no se puede deshacer desde la pantalla.
-     ═══════════════════════════════════════════════════════════ -->
+     Doctrina Â§12: se confirma porque no se puede deshacer desde la pantalla.
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 @if (mostrarConfirmacion()) {
   <div class="pagina-crud__confirmacion-fondo" (click)="cancelarBaja()">
     <div
@@ -218,7 +212,7 @@
         {{ confResueltas.mensaje(entidadAEliminar()) }}
       </p>
       <footer class="pagina-crud__confirmacion-pie">
-        <!-- Foco inicial en cancelar (Doctrina §7) -->
+        <!-- Foco inicial en cancelar (Doctrina Â§7) -->
         <app-button
           variant="outline"
           data-dialog-initial-focus
@@ -237,5 +231,8 @@
     </div>
   </div>
 }
+
+
+
 
 
