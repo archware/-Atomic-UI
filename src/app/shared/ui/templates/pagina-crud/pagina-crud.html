@@ -169,24 +169,25 @@
   }
 
   <!-- Pie del diÃ¡logo: botones de acciÃ³n -->
-  @if (!esModoPrevisualizacion && interaccionActual() !== 'stepper') {
-    <footer class="pagina-crud__dialogo-pie">
-      <app-button
-        variant="outline"
-        (clicked)="cerrarDialogo()"
-      >
-        Cancelar
-      </app-button>
-      <app-button
-        variant="primary"
-        [loading]="guardando()"
-        [disabled]="guardando()"
-        (buttonClick)="alGuardar.emit()"
-      >
-        Guardar
-      </app-button>
-    </footer>
-  }
+  @if (interaccionActual() !== 'stepper') {
+      <footer class="pagina-crud__dialogo-pie">
+        <app-button
+          variant="outline"
+          (clicked)="cerrarDialogo()"
+        >
+          {{ esModoPrevisualizacion ? 'Cerrar' : 'Cancelar' }}
+        </app-button>
+        @if (!esModoPrevisualizacion) {
+          <app-button
+            variant="primary"
+            [loading]="guardando()"
+            [disabled]="guardando()"
+          >
+            Guardar
+          </app-button>
+        }
+      </footer>
+    }
 </app-crud-dialog>
 }
 
