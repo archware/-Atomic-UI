@@ -1,4 +1,4 @@
-﻿<!--
+<!--
   Chasis B Ã¢â‚¬â€ PÃƒÂ¡gina CRUD multi-entidad con acordeÃƒÂ³n.
 
   PatrÃƒÂ³n ADR-007:
@@ -105,10 +105,12 @@
   }
 
   @if (formularioCrud(); as tpl) {
-    <ng-container
-      [ngTemplateOutlet]="tpl"
-      [ngTemplateOutletContext]="contextoFormulario()"
-    />
+    <div class="pagina-crud-accordion__dialogo-cuerpo">
+      <ng-container
+        [ngTemplateOutlet]="tpl"
+        [ngTemplateOutletContext]="contextoFormulario()"
+      />
+    </div>
   }
 
   @if (!esModoPrevisualizacion) {

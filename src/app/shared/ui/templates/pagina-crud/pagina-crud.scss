@@ -41,6 +41,10 @@ app-query-toolbar {
   padding-block-start: 1.5rem;
 }
 
+.pagina-crud__dialogo-cuerpo {
+  padding: 1.5rem 2.25rem;
+}
+
 .pagina-crud__dialogo-pie {
   display: flex;
   justify-content: flex-end;
@@ -115,4 +119,9 @@ app-query-toolbar {
 .pagina-crud__grid {
   display: grid;
   gap: var(--space-4);
+}
+
+.pagina-crud__stepper-container {
+  padding: 1.5rem 2.25rem;
+  padding-bottom: 1rem;
 }

@@ -1,4 +1,4 @@
-﻿<!--
+<!--
   Chasis A â€” PÃ¡gina CRUD de entidad Ãºnica.
 
   ComposiciÃ³n canÃ³nica (ADR-007):
@@ -148,7 +148,7 @@
 
   
   @if (interaccionActual() === 'stepper') {
-    <div class="pagina-crud__stepper-container" style="padding-bottom: 1rem;">
+    <div class="pagina-crud__stepper-container">
       <app-stepper
         [steps]="wizardSteps()"
         [activeStep]="wizardActiveStep()"
@@ -160,10 +160,12 @@
 
   <!-- Formulario proyectado por el consumidor -->
   @if (formularioCrud(); as tpl) {
-    <ng-container
-      [ngTemplateOutlet]="tpl"
-      [ngTemplateOutletContext]="contextoFormulario()"
-    />
+    <div class="pagina-crud__dialogo-cuerpo">
+      <ng-container
+        [ngTemplateOutlet]="tpl"
+        [ngTemplateOutletContext]="contextoFormulario()"
+      />
+    </div>
   }
 
   <!-- Pie del diÃ¡logo: botones de acciÃ³n -->

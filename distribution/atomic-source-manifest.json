@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "2f3b804535d8c0f6b9a7d2a6744e4b09c1ebf6c5a82107b2a05e8beb2e1293a3",
+  "sourceTreeSha256": "3437e9cf406c610134717c5a7fd8e07f503ed1ce7baa3356c07ac15c168e6e82",
   "fileCount": 310,
   "files": [
     {
@@ -1225,8 +1225,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.ts",
-      "bytes": 4112,
-      "sha256": "8d3db442b811ef1abf8a1a7be50548dcac4e6e2521f3b7de851ae2203f25b88f"
+      "bytes": 3786,
+      "sha256": "78c316f11913cde0e526dc30f9c355d8f977050854cddaa06983d4b64ed5dddc"
     },
     {
       "path": "src/app/shared/ui/organisms/stepper/stepper.component.css",
@@ -1295,13 +1295,13 @@
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.html",
-      "bytes": 3636,
-      "sha256": "d116012c18b8942319debcc85887222527043470e546de2f9664253300fc5d18"
+      "bytes": 1974,
+      "sha256": "4340ce6cd44b69a640dbcf37ebb6100d9dbcccd8d6e0de22e1b9dd7eb7a81db0"
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.ts",
-      "bytes": 3746,
-      "sha256": "e1de0449cc35cec170f5c2fa71df8281d805b4d6891bd7631ed75af6e37847a4"
+      "bytes": 2427,
+      "sha256": "957d6fe0495ff6aec41edd088a68b3cb571ec2ddb8159d751cc3058b10685902"
     },
     {
       "path": "src/app/shared/ui/services/api.service.ts",
@@ -1445,13 +1445,13 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.html",
-      "bytes": 5248,
-      "sha256": "9fadbaba7e84a44988939a4f83dba208a1159aa570304cdbae4a91010daf0e15"
+      "bytes": 5320,
+      "sha256": "98a5e0aff59baddc3fd891215f329e8617e297ae09763fe0f0b0c4b8b204fef9"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.scss",
-      "bytes": 2320,
-      "sha256": "88e2e3682cba8defdc3d01c5c35d9a064c11e0ed6b146eca37394874a66c13ac"
+      "bytes": 2406,
+      "sha256": "77d533032f75008e52bfc569fe1783a651b67fe99d16f0e121def994157f0822"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.ts",
@@ -1460,13 +1460,13 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.html",
-      "bytes": 11335,
-      "sha256": "71a260b791d3f303e8664c8ad8eb6d831ac42de3c2a426f3b3128b9e1aec21e6"
+      "bytes": 11367,
+      "sha256": "48aed475a0b55c7f3833804e72fcac069fa31b9b222c9c5a1c24c406a760d231"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.scss",
-      "bytes": 3083,
-      "sha256": "99be4de1ad5e272d9c111140b0a627b4e43cc1bfde72f940f7f07707cdfa8ace"
+      "bytes": 3232,
+      "sha256": "df527e5e7ae1160f9ce4632bd1cb8b3ecba17d2b5b5f32542a946c08d162775c"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.ts",
