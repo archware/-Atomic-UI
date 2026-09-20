@@ -93,7 +93,7 @@
               class="data-table__cell--end"
               [appVariablesCss]="{ '--data-table-column-width': rowNumberWidth() }"
             >
-              <span class="data-table__heading">{{ rowNumberHeader() }}</span>
+              <span class="data-table__heading">{{ rowNumberHeader() | translate }}</span>
             </th>
           }
 
@@ -113,14 +113,14 @@
                   [attr.aria-label]="sortButtonLabel(column)"
                   (click)="onSort(column)"
                 >
-                  <span>{{ column.header }}</span>
+                  <span>{{ column.header | translate }}</span>
                   <i
                     class="fa-solid {{ sortIndicatorClass(column) }} data-table__sort-indicator"
                     aria-hidden="true"
                   ></i>
                 </button>
               } @else {
-                <span class="data-table__heading">{{ column.header }}</span>
+                <span class="data-table__heading">{{ column.header | translate }}</span>
               }
             </th>
           }
@@ -131,7 +131,7 @@
               class="data-table__actions-heading"
               [appVariablesCss]="{ '--data-table-actions-width': actionsWidth() }"
             >
-              {{ actionsHeader() }}
+              {{ actionsHeader() | translate }}
             </th>
           }
         </tr>
@@ -194,7 +194,7 @@
                 @for (column of columns(); track column.key) {
                   <td
                     [attr.data-column]="column.key"
-                    [attr.data-label]="column.header"
+                    [attr.data-label]="column.header | translate"
                     [appVariablesCss]="{ '--data-table-column-width': column.width ?? null }"
                     [class.data-table__cell--center]="column.align === 'center'"
                     [class.data-table__cell--end]="column.align === 'end'"

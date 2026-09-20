@@ -13,6 +13,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface SelectOption {
   readonly value: string | number;
@@ -24,6 +25,7 @@ export interface SelectOption {
 @Component({
   selector: 'app-select, prest-select, app-form-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [TranslateModule],
   templateUrl: './select.html',
   styleUrl: './select.scss',
   providers: [

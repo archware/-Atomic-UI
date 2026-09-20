@@ -1,20 +1,9 @@
-import { ChangeDetectionStrategy, Component, input, output, inject, signal, HostListener } from '@angular/core';
-
-export interface TopbarNotification {
-  id: string;
-  title: string;
-  message?: string;
-  time: string;
-  isRead?: boolean;
-  icon?: string;
-  iconColor?: string;
-}
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 import { UserMenuComponent, UserMenuAction } from '../../molecules/user-menu/user-menu.component';
 import { LanguageSwitcherComponent } from '../../atoms/language-switcher/language-switcher.component';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
-import { CHASIS_CONFIG, defaultChasisConfig } from '../../config/chasis.config';
 
 @Component({
   selector: 'app-topbar',
@@ -25,34 +14,33 @@ import { CHASIS_CONFIG, defaultChasisConfig } from '../../config/chasis.config';
   styleUrl: './topbar.component.css',
 })
 export class TopbarComponent {
-  private readonly config = inject(CHASIS_CONFIG, { optional: true }) ?? defaultChasisConfig;
-
   /** Page title displayed in the topbar */
   readonly title = input('');
   readonly subtitle = input('');
-  readonly apiStatus = input(this.config.apiStatus);
+  readonly apiStatus = input('');
   readonly apiStatusColor = input<'success' | 'warning' | 'danger'>('success');
-  readonly showSidebarToggle = input(this.config.showSidebarToggle);
-  readonly showHomeButton = input(this.config.showHomeButton);
-  readonly showUserInfo = input(this.config.showUserInfo);
+  readonly showSidebarToggle = input(true);
+  readonly showHomeButton = input(false);
+  readonly showUserInfo = input(false);
+
 
   /** Background color for the topbar */
   readonly bgColor = input<string>();
 
   /** User initials for avatar */
-  readonly userInitials = input(this.config.defaultUser.initials);
+  readonly userInitials = input('U');
 
   /** User display name */
-  readonly userName = input(this.config.defaultUser.name);
+  readonly userName = input('Usuario');
 
   /** User email */
-  readonly userEmail = input(this.config.defaultUser.email);
+  readonly userEmail = input('usuario@email.com');
 
   /** User role displayed in the session menu */
-  readonly userRole = input(this.config.defaultUser.role);
+  readonly userRole = input('');
 
   /** User avatar color */
-  readonly avatarColor = input<string>(this.config.defaultUser.avatarColor ?? '');
+  readonly avatarColor = input<string>('');
 
   /** Number of unread notifications */
   readonly notificationCount = input(0);
@@ -69,33 +57,8 @@ export class TopbarComponent {
   /** Event emitted when logout is clicked */
   readonly logout = output<void>();
 
-  /** Notifications list */
-  readonly notifications = input<TopbarNotification[]>([]);
-
   /** Event emitted when notifications are clicked */
-  readonly notificationClick = output<TopbarNotification>();
-
-  /** Event emitted when 'mark all as read' is clicked */
-  readonly markAllRead = output<void>();
-
-  isNotificationsOpen = signal(false);
-
-  toggleNotifications(): void {
-    this.isNotificationsOpen.update(v => !v);
-  }
-
-  onNotificationClick(notification: TopbarNotification): void {
-    this.notificationClick.emit(notification);
-    this.isNotificationsOpen.set(false);
-  }
-
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.notification-dropdown-wrapper')) {
-      this.isNotificationsOpen.set(false);
-    }
-  }
+  readonly notificationClick = output<void>();
 
   /** Event emitted when any user menu action is clicked */
   readonly userAction = output<UserMenuAction>();
@@ -109,6 +72,3 @@ export class TopbarComponent {
     this.logout.emit();
   }
 }
-
-
-

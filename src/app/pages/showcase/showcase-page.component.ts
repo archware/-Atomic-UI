@@ -2,7 +2,7 @@ import { Component, signal, computed, ChangeDetectionStrategy, HostListener, inj
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { UiShowcaseComponent } from '../../components/ui-showcase/ui-showcase.component';
 import {
   ScrollOverlayComponent,
@@ -58,7 +58,7 @@ interface TableRow {
     ChipComponent,
     FiltersComponent,
     DataTable,
-    TranslateModule,
+    TranslatePipe, TranslateDirective,
   ],
   templateUrl: './showcase-page.component.html',
   styleUrl: './showcase-page.component.css',
@@ -88,14 +88,16 @@ export class ShowcasePageComponent {
   filterDateEnd = '';
   floatingInputValue = '';
 
-  statusOptions: Select2Option[] = [
-    { value: '', label: 'filters.statusOptions.all' },
-    { value: 'data.status.active', label: 'filters.statusOptions.active' },
-    { value: 'data.status.pending', label: 'filters.statusOptions.pending' },
-    { value: 'data.status.completed', label: 'filters.statusOptions.completed' },
-    { value: 'data.status.review', label: 'filters.statusOptions.review' },
-    { value: 'data.status.approved', label: 'filters.statusOptions.approved' },
-  ];
+  get statusOptions(): Select2Option[] {
+    return [
+      { value: '', label: 'filters.statusOptions.all' },
+      { value: 'data.status.active', label: 'filters.statusOptions.active' },
+      { value: 'data.status.pending', label: 'filters.statusOptions.pending' },
+      { value: 'data.status.completed', label: 'filters.statusOptions.completed' },
+      { value: 'data.status.review', label: 'filters.statusOptions.review' },
+      { value: 'data.status.approved', label: 'filters.statusOptions.approved' },
+    ];
+  }
   filterStatus: string | number = '';
 
   getStatusClass(statusKey: string): 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' {
@@ -219,22 +221,22 @@ export class ShowcasePageComponent {
   protected readonly tableData = signal<TableRow[]>([]);
 
   protected readonly tableColumns = computed<DataTableColumn<TableRow>[]>(() => [
-    { key: 'col1', header: this.translate.instant('table.headers.id'), align: 'center', width: '70px', sortable: true },
-    { key: 'col2', header: this.translate.instant('table.headers.name'), width: 'minmax(150px, 1fr)', sortable: true },
-    { key: 'col3', header: this.translate.instant('table.headers.email'), width: 'minmax(220px, 1.5fr)', sortable: true },
-    { key: 'col4', header: this.translate.instant('table.headers.date'), width: '100px', sortable: true },
+    { key: 'col1', header: 'table.headers.id', align: 'center', width: '70px', sortable: true },
+    { key: 'col2', header: 'table.headers.name', width: 'minmax(150px, 1fr)', sortable: true },
+    { key: 'col3', header: 'table.headers.email', width: 'minmax(220px, 1.5fr)', sortable: true },
+    { key: 'col4', header: 'table.headers.date', width: '100px', sortable: true },
     { 
       key: 'col5', 
-      header: this.translate.instant('table.headers.status'), 
+      header: 'table.headers.status', 
       align: 'center', 
       width: '130px', 
       isBadge: true, 
       badgeStatus: (row) => this.getBadgeStatusForTable(row.statusVariant),
       format: (val) => this.translate.instant(val as string)
     },
-    { key: 'col6', header: this.translate.instant('table.headers.type'), width: '175px', sortable: true, format: (val) => this.translate.instant(val as string) },
-    { key: 'col7', header: this.translate.instant('table.headers.amount'), width: '90px', sortable: true },
-    { key: 'col8', header: this.translate.instant('table.headers.priority'), align: 'center', width: '110px', sortable: true, format: (val) => this.translate.instant(val as string) },
+    { key: 'col6', header: 'table.headers.type', width: '175px', sortable: true, format: (val) => this.translate.instant(val as string) },
+    { key: 'col7', header: 'table.headers.amount', width: '90px', sortable: true },
+    { key: 'col8', header: 'table.headers.priority', align: 'center', width: '110px', sortable: true, format: (val) => this.translate.instant(val as string) },
   ]);
 
   private getBadgeStatusForTable(variant: string): 'unconfigured' | 'active' | 'degraded' | 'inactive' {

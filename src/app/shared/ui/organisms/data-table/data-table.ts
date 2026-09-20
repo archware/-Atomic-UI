@@ -15,6 +15,7 @@ import {
   output,
   signal,
 } from '@angular/core';
+import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
 import { Alert } from '../../molecules/alert/alert.component';
 import {
   StatusBadgeComponent,
@@ -83,6 +84,7 @@ function trackByIdentity<T extends object>(_index: number, row: T): T {
     StatusBadgeComponent,
     VariablesCssDirective,
     Select,
+    TranslatePipe, TranslateDirective,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './data-table.html',

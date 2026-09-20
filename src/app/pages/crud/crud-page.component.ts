@@ -30,7 +30,6 @@ import { CrudTableComponent } from '../../../blueprints/crud-table/crud-table.co
         apiStatus="API en línea"
         [showHomeButton]="true"
         [showSidebarToggle]="true"
-        [showUserInfo]="false"
         userRole="Administrador"
         bgColor="var(--surface-sunken)"
         [showNotifications]="false"

@@ -16,18 +16,9 @@ import { AvatarComponent } from '../../atoms/avatar/avatar.component';
   template: `
     <div class="user-menu" [class.open]="isOpen()">
       <!-- Avatar Button -->
-      <button type="button" class="user-menu__trigger" [class.user-menu__trigger--extended]="showUserInfo()" (click)="toggle()"
+      <button type="button" class="user-menu__trigger" (click)="toggle()"
         [attr.aria-expanded]="isOpen()" aria-haspopup="menu" title="Menú de usuario">
-        <app-avatar [initials]="initials()" [name]="userName()" size="md" variant="user" [color]="avatarColor()"></app-avatar>
-        @if (showUserInfo()) {
-          <div class="user-menu__trigger-info">
-            <span class="user-menu__trigger-name">{{ userName() }}</span>
-            @if (userRole()) {
-              <span class="user-menu__trigger-role">{{ userRole() }}</span>
-            }
-          </div>
-          <i class="fa-solid fa-chevron-down user-menu__trigger-chevron"></i>
-        }
+        <app-avatar [initials]="initials()" size="md" variant="user" [color]="avatarColor()"></app-avatar>
       </button>
 
       <!-- Dropdown Menu -->
@@ -76,8 +67,6 @@ export class UserMenuComponent {
   /** Color of the avatar */
   readonly avatarColor = input<string>();
 
-  /** Show full user info (name, role) in the trigger */
-  readonly showUserInfo = input(false);
 
   /** Menu actions */
   readonly menuActions = input<UserMenuAction[]>([

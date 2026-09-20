@@ -43,13 +43,13 @@ import { ChartComponent } from '../../../../shared/ui/organisms/chart/chart.comp
         caption="Usuarios"
         actionsWidth="140px"
         [showRowNumber]="false">
-        <ng-template #actions let-row="row">
+        <ng-template #actions let-row>
           <app-action-group
             [actions]="tableActions"
-            [maxVisible]="row?.maxVisible ?? 3"
-            [compact]="row?.compact"
+            [maxVisible]="row.maxVisible"
+            [compact]="row.compact"
             size="md"
-            (actionClick)="onAction($event, row?.name)">
+            (actionClick)="onAction($event, row.name)">
           </app-action-group>
         </ng-template>
       </app-data-table>

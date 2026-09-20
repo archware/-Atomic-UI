@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 
@@ -20,7 +21,7 @@ export interface Select2Option {
   // Standalone component for Select2 dropdown
   selector: 'app-select2',
   standalone: true,
-  imports: [FormsModule, VariablesCssDirective],
+  imports: [FormsModule, VariablesCssDirective, TranslatePipe, TranslateDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -61,7 +62,7 @@ export interface Select2Option {
               @if (selectedOption()!.icon) {
                 <span class="option-icon">{{ selectedOption()!.icon }}</span>
               }
-              {{ selectedOption()!.label }}
+              {{ selectedOption()!.label | translate }}
             } @else if (!label()) {
               <span class="placeholder">{{ placeholder() }}</span>
             }
@@ -73,7 +74,7 @@ export interface Select2Option {
           <div class="select2-tags">
             @for (opt of selectedOptions(); track opt.value) {
               <span class="select2-tag">
-                {{ opt.label }}
+                {{ opt.label | translate }}
                 <button
                   type="button"
                   class="tag-remove"
@@ -138,7 +139,7 @@ export interface Select2Option {
                 @if (option.icon) {
                   <span class="option-icon" aria-hidden="true">{{ option.icon }}</span>
                 }
-                <span class="option-label">{{ option.label }}</span>
+                <span class="option-label">{{ option.label | translate }}</span>
                 @if (isSelected(option)) {
                   <span class="check-icon" aria-hidden="true">✓</span>
                 }

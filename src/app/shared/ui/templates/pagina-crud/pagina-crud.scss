@@ -125,4 +125,21 @@ app-query-toolbar {
   padding: 1.5rem 2.25rem;
   padding-bottom: 1rem;
 }
- 
+
+app-icon-button.pagina-crud__btn-cerrar {
+  ::ng-deep .icon-btn {
+    border-radius: var(--radius-full, 50%);
+    background-color: var(--surface-hover, rgba(0, 0, 0, 0.05));
+    transition: all 0.2s ease-in-out;
+  }
+
+  ::ng-deep .icon-btn:hover {
+    background-color: var(--danger-color, #ef4444) !important;
+    transform: scale(1.1) !important;
+    box-shadow: var(--shadow-sm);
+  }
+
+  ::ng-deep .icon-btn:hover i {
+    color: #ffffff !important;
+  }
+}

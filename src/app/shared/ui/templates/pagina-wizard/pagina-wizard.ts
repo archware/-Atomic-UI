@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, input, output, signal } from '@angu
 import { PageHeader } from '../../organisms/page-header/page-header';
 import { StepperComponent, Step } from '../../organisms/stepper/stepper.component';
 import { ButtonComponent } from '../../atoms/button/button.component';
+import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 
 /**
  * Chasis de Pantalla para Flujos Multi-Paso (Wizard)
@@ -11,7 +12,7 @@ import { ButtonComponent } from '../../atoms/button/button.component';
 @Component({
   selector: 'app-pagina-wizard',
   standalone: true,
-  imports: [PageHeader, StepperComponent, ButtonComponent],
+  imports: [PageHeader, StepperComponent, ButtonComponent, IconButtonComponent],
   templateUrl: './pagina-wizard.html',
   styleUrl: './pagina-wizard.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

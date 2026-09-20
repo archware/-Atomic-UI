@@ -27,7 +27,7 @@
         </option>
       }
       @if (legacyOption(); as legacyOption) {
-        <option [value]="legacyOption.value" selected>{{ legacyOption.label }}</option>
+        <option [value]="legacyOption.value" selected>{{ legacyOption.label | translate }}</option>
       }
       @for (option of options(); track option.value) {
         <option
@@ -35,7 +35,7 @@
           [disabled]="option.disabled ?? false"
           [selected]="value() === option.value.toString()"
         >
-          {{ option.label }}
+          {{ option.label | translate }}
         </option>
       }
     </select>

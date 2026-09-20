@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "961ff5ee672e2d22c00292a3afc8a62348622250de21612d9189b7e2472a81ea",
+  "sourceTreeSha256": "3f3cbc187568af77fc88925227f5d43ac047912491554b2a09015ce81142dafc",
   "fileCount": 310,
   "files": [
     {
@@ -1445,13 +1445,13 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.html",
-      "bytes": 5312,
-      "sha256": "92f799ccd3df54bfb86f8e093e2439ad451d86f4db470279799687e7f826162a"
+      "bytes": 5390,
+      "sha256": "7b32c3eed265a327f10e839999ea40c3d41d860ac693e96867948648069743de"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.scss",
-      "bytes": 2406,
-      "sha256": "77d533032f75008e52bfc569fe1783a651b67fe99d16f0e121def994157f0822"
+      "bytes": 2874,
+      "sha256": "54bcf4bb3442abe6dd1f87c7fe48dbe1253c17f8e8d004c16e7ec916f78526fe"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.ts",
@@ -1460,13 +1460,13 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.html",
-      "bytes": 11359,
-      "sha256": "4176aee45ddf5e7b8ea4b3dac891eee41ed74b990efd9e6b37a3413f808773e4"
+      "bytes": 11431,
+      "sha256": "aacbac9d5db5d0e90bca5cec995339d722574a70bc2b453518978e29d87264e3"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.scss",
-      "bytes": 3234,
-      "sha256": "9c69027e9987be90363576a6f1277f41c77f2e48a466665358ce936819b79b7d"
+      "bytes": 3690,
+      "sha256": "23f0f1181801b18db2c140b76f5b47c919198ed9688b9d89e172e9d889422451"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.ts",
@@ -1505,18 +1505,18 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-wizard/pagina-wizard.html",
-      "bytes": 1746,
-      "sha256": "f901d2d7aabde74c1560c4b469be12d922c46f7279a7e1afb243360dede75767"
+      "bytes": 2012,
+      "sha256": "eb6f51c409d212a4764b462ff76b9f0bf8108d85be1989c31ce254fd1ce8a31a"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-wizard/pagina-wizard.scss",
-      "bytes": 1886,
-      "sha256": "963942095b63ae0eccf014c2adf29619e6b4979140d50ae6d7398fad757fc171"
+      "bytes": 2353,
+      "sha256": "96fb220ef73e427435416ce442b9e72c9c2a2e1bde396d42ef7c13a64d1e4488"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-wizard/pagina-wizard.ts",
-      "bytes": 2315,
-      "sha256": "a3a59a71b3d586f07902cf999e148d5d46f75bc7927b65a3e3ef81b9f19bcd8d"
+      "bytes": 2421,
+      "sha256": "22c8c84c9eb01913aa39420d84310413e0786be693a1a5f85195bcb74d853a0b"
     },
     {
       "path": "src/styles/themes/_buttons.css",

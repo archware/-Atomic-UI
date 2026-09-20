@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 
 export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
-export type IconButtonAnimation = 'rotate' | 'grow' | 'none';
+export type IconButtonAnimation = 'rotate' | 'grow' | 'none' | 'custom';
 
 @Component({
   selector: 'app-icon-button',

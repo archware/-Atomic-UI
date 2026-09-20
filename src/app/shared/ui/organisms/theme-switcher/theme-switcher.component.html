@@ -1,7 +1,7 @@
 
     <div class="theme-switcher">
       <!-- Botón de alternancia simple Light/Dark -->
-      <app-icon-button variant="ghost"
+      <app-icon-button variant="ghost" animation="custom"
         (clicked)="toggleTheme($event)"
         [tooltip]="themeService.isDarkMode() ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
       >

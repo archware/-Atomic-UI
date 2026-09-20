@@ -2,15 +2,15 @@
   <div class="topbar-left">
     <div class="sidebar-toggle-wrapper">
       @if (showSidebarToggle()) {
-        <app-icon-button variant="ghost" animation="none" tooltip="MenÃº" (clicked)="toggleSidebar.emit()">
+        <app-icon-button variant="ghost" [animation]="'none'" tooltip="Menú" (clicked)="toggleSidebar.emit()">
           <i class="fa-solid fa-bars topbar-icon" aria-hidden="true"></i>
         </app-icon-button>
       }
     </div>
 
     @if (showHomeButton()) {
-      <app-icon-button variant="ghost" animation="rotate" tooltip="Inicio" (clicked)="homeClick.emit()">
-        <i class="fa-regular fa-house topbar-icon" aria-hidden="true"></i>
+      <app-icon-button variant="ghost" [animation]="'none'" tooltip="Inicio" (clicked)="homeClick.emit()">
+        <i class="fa-solid fa-home topbar-icon" aria-hidden="true"></i>
       </app-icon-button>
     }
 
@@ -37,44 +37,9 @@
     }
     <ng-content></ng-content>
     @if (showNotifications()) {
-      <div class="notification-dropdown-wrapper">
-        <app-icon-button variant="ghost" animation="rotate" tooltip="Notificaciones" [badge]="notificationCount()" (clicked)="toggleNotifications()">
-          <i class="fa-regular fa-bell topbar-icon" aria-hidden="true"></i>
-        </app-icon-button>
-
-        @if (isNotificationsOpen()) {
-          <div class="notification-dropdown">
-            <div class="notification-header">
-              <span class="notification-title">Notificaciones</span>
-              <button class="mark-read-btn" (click)="markAllRead.emit()">Marcar leídas</button>
-            </div>
-            <div class="notification-list">
-              @if (notifications().length === 0) {
-                <div class="notification-empty">No hay notificaciones</div>
-              }
-              @for (notification of notifications(); track notification.id) {
-                <div class="notification-item" [class.unread]="!notification.isRead" (click)="onNotificationClick(notification)">
-                  @if (notification.icon) {
-                    <div class="notification-icon" [style.color]="notification.iconColor">
-                      <i [class]="notification.icon"></i>
-                    </div>
-                  }
-                  <div class="notification-content">
-                    <span class="notification-item-title">{{ notification.title }}</span>
-                    @if (notification.message) {
-                      <span class="notification-item-message">{{ notification.message }}</span>
-                    }
-                    <span class="notification-item-time">{{ notification.time }}</span>
-                  </div>
-                  @if (!notification.isRead) {
-                    <div class="notification-unread-dot"></div>
-                  }
-                </div>
-              }
-            </div>
-          </div>
-        }
-      </div>
+      <app-icon-button variant="ghost" [animation]="'none'" tooltip="Notificaciones" [badge]="notificationCount()" (clicked)="notificationClick.emit()">
+        <i class="fa-regular fa-bell topbar-icon" aria-hidden="true"></i>
+      </app-icon-button>
     }
     <app-user-menu
       [initials]="userInitials()"
@@ -82,7 +47,6 @@
       [userEmail]="userEmail()"
       [userRole]="userRole()"
       [avatarColor]="avatarColor()"
-      [showUserInfo]="showUserInfo()"
       (actionSelected)="onUserAction($event)"
       (logout)="onLogout()"
     ></app-user-menu>
