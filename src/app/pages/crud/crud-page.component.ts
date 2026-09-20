@@ -22,8 +22,8 @@ import { CrudTableComponent } from '../../../blueprints/crud-table/crud-table.co
   ],
   template: `
     <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
-      <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="CRUD Gen" logoIcon="fa-solid fa-database" logoIconColor="var(--orange-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'CRUD Admin', role: 'Administrador', initials: 'CA' }" (navigate)="onNavigate($event)"></app-sidebar>
-      <app-topbar slot="topbar" title="CRUD" userInitials="HC" userName="COTAHA"
+      <app-sidebar ngProjectAs="[slot=sidebar]" slot="sidebar" [menuItems]="menuItems" logoText="CRUD Gen" logoIcon="fa-solid fa-database" logoIconColor="var(--orange-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'CRUD Admin', role: 'Administrador', initials: 'CA' }" (navigate)="onNavigate($event)"></app-sidebar>
+      <app-topbar ngProjectAs="[slot=topbar]" slot="topbar" title="CRUD" userInitials="HC" userName="COTAHA"
         userEmail="cotaha@email.com" [notificationCount]="0"
         (toggleSidebar)="onToggleSidebar()" (logout)="onLogout()"
         subtitle="Entorno Operativo"
@@ -53,6 +53,7 @@ export class CrudPageComponent {
     { label: 'Volver a Showcase', icon: 'fa-solid fa-arrow-left', route: '/showcase' , iconColor: 'var(--secondary-color)' },
     { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' , iconColor: 'var(--info-color)' },
     { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud', active: true, iconColor: 'var(--success-color)' },
+    { label: 'Wizard', icon: 'fa-solid fa-wand-magic-sparkles', route: '/wizard' , iconColor: 'var(--warning-color)' },
     { label: 'Settings', icon: 'fa-solid fa-gear', route: '/settings' , iconColor: 'var(--text-color-secondary)' },
   ];
 

@@ -60,6 +60,11 @@ export const routes: Routes = [
       import('../blueprints/crud-table/crud-table.component').then(m => m.CrudTableComponent),
     // canActivate: [authGuard], // Disabled for UI Demo
   },
+  {
+    path: 'wizard',
+    loadComponent: () =>
+      import('../blueprints/wizard-page/wizard-page.component').then(m => m.WizardPageComponent),
+  },
 
   // ===================================================
   // Rutas de ERROR

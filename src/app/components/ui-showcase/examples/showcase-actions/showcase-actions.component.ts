@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
 import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.component';
+import { ActionMenuComponent, ActionMenuItem } from '../../../../shared/ui/molecules/action-menu/action-menu.component';
 
 @Component({
   selector: 'app-showcase-actions',
@@ -10,7 +11,8 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
   imports: [
     PanelComponent,
     TextComponent,
-    ButtonComponent
+    ButtonComponent,
+    ActionMenuComponent
 ],
   template: `
     <!-- BOTONES -->
@@ -41,6 +43,32 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
           <app-button variant="danger" icon="🗑️">Eliminar</app-button>
           <app-button variant="outline" icon="📋">Copiar</app-button>
           <app-button variant="ghost" icon="⚙️">Opciones</app-button>
+        </div>
+      </div>
+    </app-panel>
+
+    <!-- MENUS DE ACCION -->
+    <app-panel title="Action Menu (Dropdown contextual)" variant="flat" padding="md" class="showcase-section">
+      <div style="display: flex; gap: 2rem; align-items: flex-start;">
+        <div>
+          <app-text variant="caption" color="muted">Por defecto (Kebab):</app-text>
+          <div style="margin-top: 0.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: space-between;">
+            <span>Fila de tabla de ejemplo</span>
+            <app-action-menu [actions]="tableActions" (actionClick)="onActionClicked($event)"></app-action-menu>
+          </div>
+        </div>
+
+        <div>
+          <app-text variant="caption" color="muted">Customizado (Gear icon):</app-text>
+          <div style="margin-top: 0.5rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: space-between;">
+            <span>Item con configuraciones</span>
+            <app-action-menu 
+              triggerIcon="fa-solid fa-gear" 
+              triggerTitle="Configuraciones"
+              [actions]="configActions" 
+              (actionClick)="onActionClicked($event)">
+            </app-action-menu>
+          </div>
         </div>
       </div>
     </app-panel>
@@ -92,4 +120,21 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
     .btn-lg { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
   `]
 })
-export class ShowcaseActionsComponent { }
+export class ShowcaseActionsComponent {
+  tableActions: ActionMenuItem[] = [
+    { id: 'view', label: 'Ver detalles', icon: 'fa-solid fa-eye' },
+    { id: 'edit', label: 'Editar', icon: 'fa-solid fa-pen' },
+    { id: 'delete', label: 'Eliminar', icon: 'fa-solid fa-trash', variant: 'danger' }
+  ];
+
+  configActions: ActionMenuItem[] = [
+    { id: 'settings', label: 'Ajustes', icon: 'fa-solid fa-sliders' },
+    { id: 'export', label: 'Exportar', icon: 'fa-solid fa-download' },
+    { id: 'disable', label: 'Deshabilitar', icon: 'fa-solid fa-ban', disabled: true }
+  ];
+
+  onActionClicked(actionId: string): void {
+    console.log('Action clicked:', actionId);
+    alert('Action clicked: ' + actionId);
+  }
+}

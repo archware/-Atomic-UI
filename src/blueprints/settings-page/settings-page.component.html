@@ -1,8 +1,8 @@
 <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
 
-  <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="CxC Ventas" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }" (navigate)="onNavigate($event)"></app-sidebar>
+  <app-sidebar ngProjectAs="[slot=sidebar]" slot="sidebar" [menuItems]="menuItems" logoText="CxC Ventas" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }" (navigate)="onNavigate($event)"></app-sidebar>
 
-  <app-topbar [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true"
+  <app-topbar ngProjectAs="[slot=topbar]" [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true"
     slot="topbar"
     title="Configuración"
     userInitials="AD"

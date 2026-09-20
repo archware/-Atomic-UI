@@ -1,9 +1,10 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { TabsComponent, TabComponent } from '../../../../shared/ui/organisms/tabs/tabs.component';
 import { AccordionComponent, AccordionItemComponent } from '../../../../shared/ui/organisms/accordion/accordion.component';
 import { SidebarComponent, SidebarMenuItem } from '../../../../shared/ui/organisms/sidebar/sidebar.component';
+import { TopbarComponent } from '../../../../shared/ui/organisms/topbar/topbar.component';
 import { StepperComponent, Step } from '../../../../shared/ui/organisms/stepper/stepper.component';
 
 @Component({
@@ -16,16 +17,38 @@ import { StepperComponent, Step } from '../../../../shared/ui/organisms/stepper/
     AccordionComponent,
     AccordionItemComponent,
     SidebarComponent,
+    TopbarComponent,
     StepperComponent
 ],
   template: `
+    <!-- TOPBAR -->
+    <app-panel title="Topbar (Organism)" variant="flat" padding="md" class="showcase-section">
+      <div style="width: 100%; border: 1px solid var(--border-color); border-radius: 0.75rem; overflow: hidden; background-color: var(--surface-ground);">
+        <app-topbar 
+          title="Atomic UI Topbar" 
+          userInitials="DU" 
+          userName="Demo User"
+          userEmail="demo.user@email.com" 
+          [notificationCount]="3" 
+          subtitle="Entorno Operativo"
+          apiStatus="API en línea"
+          [showHomeButton]="true"
+          [showSidebarToggle]="true"
+          userRole="Administrator"
+          bgColor="var(--surface-sunken)"
+          [showNotifications]="true"
+          [showLanguageSwitcher]="false">
+        </app-topbar>
+      </div>
+    </app-panel>
+
     <!-- SIDEBAR -->
     <app-panel title="Sidebar (Organism)" variant="flat" padding="md" class="showcase-section">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; width: 100%; box-sizing: border-box;">
 
         <!-- Variant 1: Dashboard -->
         <div style="height: 500px; min-width: 0; border: 1px solid var(--border-color); border-radius: 0.75rem; overflow: hidden; position: relative; background-color: var(--surface-ground);">
-          <app-sidebar [menuItems]="variant1Items" [user]="exampleUser" [collapsed]="false"></app-sidebar>
+          <app-sidebar [menuItems]="variant1Items" [user]="exampleUser" [collapsed]="false" logoText="CxC Ventas" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)"></app-sidebar>
           <div style="position: absolute; top: 0.75rem; right: 0.75rem; background: rgba(0,0,0,0.45); backdrop-filter: blur(4px); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; color: #e5e7eb; letter-spacing: 0.02em;">
             Variant 1: Main App
           </div>
@@ -33,7 +56,7 @@ import { StepperComponent, Step } from '../../../../shared/ui/organisms/stepper/
 
         <!-- Variant 2: Settings/Simple -->
         <div style="height: 500px; min-width: 0; border: 1px solid var(--border-color); border-radius: 0.75rem; overflow: hidden; position: relative; background-color: var(--surface-ground);">
-          <app-sidebar [menuItems]="variant2Items" [collapsed]="false"></app-sidebar>
+          <app-sidebar [menuItems]="variant2Items" [collapsed]="false" logoText="Config" logoIcon="fa-solid fa-gear" logoIconColor="var(--info-color)"></app-sidebar>
           <div style="position: absolute; top: 0.75rem; right: 0.75rem; background: rgba(0,0,0,0.45); backdrop-filter: blur(4px); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; color: #e5e7eb; letter-spacing: 0.02em;">
             Variant 2: Settings Context
           </div>

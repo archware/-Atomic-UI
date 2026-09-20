@@ -170,6 +170,9 @@ export { TableActionsComponent } from './molecules/table-actions/table-actions.c
 export { ActionGroupComponent } from './molecules/action-group/action-group.component';
 export type { ActionItem } from './molecules/action-group/action-group.component';
 
+export { ActionMenuComponent } from './molecules/action-menu/action-menu.component';
+export type { ActionMenuItem } from './molecules/action-menu/action-menu.component';
+
 export { ContextMenuComponent } from './molecules/context-menu/context-menu.component';
 export type {
   ContextMenuAction,

@@ -45,6 +45,7 @@ export class DashboardPageComponent implements OnInit {
     { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' , iconColor: 'var(--secondary-color)' },
     { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' , active: true, iconColor: 'var(--info-color)' },
     { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud' , iconColor: 'var(--success-color)' },
+    { label: 'Wizard', icon: 'fa-solid fa-wand-magic-sparkles', route: '/wizard' , iconColor: 'var(--warning-color)' },
     { label: 'Settings', icon: 'fa-solid fa-gear', route: '/settings' , iconColor: 'var(--text-color-secondary)' },
   ];
 

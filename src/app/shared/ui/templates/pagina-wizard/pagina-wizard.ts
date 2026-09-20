@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { PageHeader } from '../../organisms/page-header/page-header';
 import { StepperComponent, Step } from '../../organisms/stepper/stepper.component';
 import { ButtonComponent } from '../../atoms/button/button.component';
@@ -39,10 +39,10 @@ export class PaginaWizardComponent {
 
   // Eventos de Navegación y Acciones
   readonly stepChange = output<number>();
-  readonly onCancel = output<void>();
-  readonly onNext = output<void>();
-  readonly onBack = output<void>();
-  readonly onFinish = output<void>();
+  readonly cancelled = output<void>();
+  readonly nextClicked = output<void>();
+  readonly backClicked = output<void>();
+  readonly finished = output<void>();
 
   get isFirstStep(): boolean {
     return this.activeStep() === 0;
@@ -57,24 +57,24 @@ export class PaginaWizardComponent {
   }
 
   handleCancel() {
-    this.onCancel.emit();
+    this.cancelled.emit();
   }
 
   handleBack() {
     if (!this.isFirstStep) {
-      this.onBack.emit();
+      this.backClicked.emit();
     }
   }
 
   handleNext() {
     if (!this.isLastStep && this.nextEnabled()) {
-      this.onNext.emit();
+      this.nextClicked.emit();
     }
   }
 
   handleFinish() {
     if (this.isLastStep && this.nextEnabled() && !this.loading()) {
-      this.onFinish.emit();
+      this.finished.emit();
     }
   }
 }

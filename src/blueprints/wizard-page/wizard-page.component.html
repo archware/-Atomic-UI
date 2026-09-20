@@ -1,0 +1,145 @@
+<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
+  <app-sidebar ngProjectAs="[slot=sidebar]" slot="sidebar"
+    [menuItems]="menuItems"
+    logoText="CxC Ventas" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }"
+    (navigate)="onSidebarNavigate($event)"
+  ></app-sidebar>
+
+  <app-topbar ngProjectAs="[slot=topbar]" slot="topbar"
+    [showHomeButton]="true"
+    [apiStatus]="'API en línea'"
+    [showUserInfo]="false"
+    [showSidebarToggle]="true"
+    [title]="'Wizard'"
+    [userInitials]="'UD'"
+    [userName]="'Usuario Demo'"
+    [userEmail]="'usuario@demo.com'"
+    (toggleSidebar)="onToggleSidebar()"
+    (userAction)="onUserAction($event)"
+    (logout)="onLogout()"
+  >
+    <app-theme-switcher></app-theme-switcher>
+  </app-topbar>
+
+  <div layout-content class="wizard-page-container">
+    <app-pagina-wizard
+      [titulo]="'Registro de Nuevo Paciente'"
+      [subtitulo]="'Complete los pasos para registrar un paciente nuevo en el sistema'"
+      [steps]="steps"
+      [activeStep]="currentStep()"
+      [allowSkip]="true"
+      [loading]="isSaving()"
+      [nextEnabled]="nextEnabled"
+      (stepChange)="onStepChange($event)"
+      (nextClicked)="onNext()"
+      (backClicked)="onBack()"
+      (cancelled)="onCancel()"
+      (finished)="onFinish()"
+    >
+      <form [formGroup]="form" class="wizard-form-content">
+        @if (currentStep() === 0) {
+          <div class="step-content">
+            <app-text variant="h3">Información Básica</app-text>
+            <app-text variant="body" color="secondary" class="mb-4">Ingrese los datos personales del paciente.</app-text>
+
+            <app-row>
+              <app-floating-input
+                formControlName="firstName"
+                label="Nombres"
+                placeholder="Ej. Juan"
+                [error]="form.controls.firstName.touched && form.controls.firstName.invalid ? 'Campo requerido' : ''"
+              />
+              <app-floating-input
+                formControlName="lastName"
+                label="Apellidos"
+                placeholder="Ej. Pérez"
+                [error]="form.controls.lastName.touched && form.controls.lastName.invalid ? 'Campo requerido' : ''"
+              />
+            </app-row>
+
+            <app-row>
+              <app-floating-input
+                formControlName="documentId"
+                label="Documento de Identidad"
+                placeholder="DNI / Carnet de Extranjería"
+                [error]="form.controls.documentId.touched && form.controls.documentId.invalid ? 'Campo requerido' : ''"
+              />
+              <div class="empty-space"></div>
+            </app-row>
+          </div>
+        }
+
+        @if (currentStep() === 1) {
+          <div class="step-content">
+            <app-text variant="h3">Detalles Médicos</app-text>
+            <app-text variant="body" color="secondary" class="mb-4">Información relevante para la atención.</app-text>
+
+            <app-row>
+              <app-select2
+                formControlName="bloodType"
+                label="Grupo Sanguíneo"
+                [options]="bloodTypeOptions"
+                placeholder="Seleccione..."
+              />
+              <div class="empty-space"></div>
+            </app-row>
+
+            <app-row>
+              <app-floating-input
+                formControlName="allergies"
+                label="Alergias Conocidas"
+                placeholder="Especifique si existen alergias"
+              />
+            </app-row>
+            
+            <app-row>
+              <app-toggle
+                formControlName="hasInsurance"
+                label="Cuenta con Seguro Privado"
+              />
+            </app-row>
+          </div>
+        }
+
+        @if (currentStep() === 2) {
+          <div class="step-content">
+            <app-text variant="h3">Confirmación de Datos</app-text>
+            <app-text variant="body" color="secondary" class="mb-4">Revise la información ingresada antes de finalizar.</app-text>
+
+            <div class="summary-box">
+              <app-text variant="h4" class="summary-title">Información Básica</app-text>
+              <div class="summary-grid">
+                <div>
+                  <app-text variant="caption" color="secondary">Nombres Completos</app-text>
+                  <app-text variant="body">{{ form.value.firstName || '-' }} {{ form.value.lastName || '-' }}</app-text>
+                </div>
+                <div>
+                  <app-text variant="caption" color="secondary">Documento</app-text>
+                  <app-text variant="body">{{ form.value.documentId || '-' }}</app-text>
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <app-text variant="h4" class="summary-title mt-4">Detalles Médicos</app-text>
+              <div class="summary-grid">
+                <div>
+                  <app-text variant="caption" color="secondary">Grupo Sanguíneo</app-text>
+                  <app-text variant="body">{{ form.value.bloodType || 'No especificado' }}</app-text>
+                </div>
+                <div>
+                  <app-text variant="caption" color="secondary">Seguro Privado</app-text>
+                  <app-text variant="body">{{ form.value.hasInsurance ? 'Sí' : 'No' }}</app-text>
+                </div>
+                <div class="col-span-2">
+                  <app-text variant="caption" color="secondary">Alergias</app-text>
+                  <app-text variant="body">{{ form.value.allergies || 'Ninguna registrada' }}</app-text>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </form>
+    </app-pagina-wizard>
+  </div>
+</app-layout-shell>

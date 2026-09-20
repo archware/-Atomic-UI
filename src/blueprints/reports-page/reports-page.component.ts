@@ -27,8 +27,8 @@ import {
   ],
   template: `
     <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
-      <app-sidebar slot="sidebar" [menuItems]="menuItems" logoText="CxC Ventas" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }" (navigate)="onNavigate($event)"></app-sidebar>
-      <app-topbar [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true" slot="topbar" title="Reportes" [userName]="'Usuario'" (toggleSidebar)="sidebarVisible.set(!sidebarVisible())">
+      <app-sidebar ngProjectAs="[slot=sidebar]" slot="sidebar" [menuItems]="menuItems" logoText="CxC Ventas" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }" (navigate)="onNavigate($event)"></app-sidebar>
+      <app-topbar ngProjectAs="[slot=topbar]" [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true" slot="topbar" title="Reportes" [userName]="'Usuario'" (toggleSidebar)="sidebarVisible.set(!sidebarVisible())">
         <app-theme-switcher></app-theme-switcher>
       </app-topbar>
 
@@ -80,6 +80,7 @@ export class ReportsPageComponent {
     { label: 'Showcase', icon: 'fa-solid fa-palette', route: '/showcase' , iconColor: 'var(--secondary-color)' },
     { label: 'Dashboard', icon: 'fa-solid fa-chart-pie', route: '/dashboard' , iconColor: 'var(--info-color)' },
     { label: 'CRUD', icon: 'fa-solid fa-table', route: '/crud' , iconColor: 'var(--success-color)' },
+    { label: 'Wizard', icon: 'fa-solid fa-wand-magic-sparkles', route: '/wizard' , iconColor: 'var(--warning-color)' },
     { label: 'Settings', icon: 'fa-solid fa-gear', route: '/settings' , iconColor: 'var(--text-color-secondary)' },
   ];
 
