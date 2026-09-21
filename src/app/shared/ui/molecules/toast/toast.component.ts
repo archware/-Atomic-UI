@@ -34,9 +34,12 @@ export interface ToastConfig {
  * this.toast.success('¡Guardado!');
  * ```
  */
+import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
+
 @Component({
   selector: 'app-toast',
   standalone: true,
+  imports: [IconButtonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     popover: 'manual',
@@ -61,7 +64,7 @@ export interface ToastConfig {
         </span>
         <span class="toast-message">{{ toast.message }}</span>
         @if (toast.dismissible) {
-          <button type="button" class="toast-close" (click)="toastService.dismiss(toast.id)" aria-label="Cerrar"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+          <app-icon-button class="toast-close" (clicked)="toastService.dismiss(toast.id)" ariaLabel="Cerrar" variant="ghost" animation="none"><i class="fa-solid fa-xmark" aria-hidden="true"></i></app-icon-button>
         }
       </div>
     }

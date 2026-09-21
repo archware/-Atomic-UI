@@ -39,63 +39,64 @@
       <form [formGroup]="form" class="wizard-form-content">
         @if (currentStep() === 0) {
           <div class="step-content">
-            <app-text variant="h3">Información Básica</app-text>
-            <app-text variant="body" color="secondary" class="mb-4">Ingrese los datos personales del paciente.</app-text>
+            <app-text variant="h3">Layout 1 Columna</app-text>
+            <app-text variant="body" color="secondary" class="mb-4">Ejemplo de distribución en 1 columna (columns="1").</app-text>
 
-            <app-row>
-              <app-floating-input
-                formControlName="firstName"
-                label="Nombres"
-                placeholder="Ej. Juan"
-                [error]="form.controls.firstName.touched && form.controls.firstName.invalid ? 'Campo requerido' : ''"
-              />
-              <app-floating-input
-                formControlName="lastName"
-                label="Apellidos"
-                placeholder="Ej. Pérez"
-                [error]="form.controls.lastName.touched && form.controls.lastName.invalid ? 'Campo requerido' : ''"
-              />
-            </app-row>
-
-            <app-row>
-              <app-floating-input
-                formControlName="documentId"
-                label="Documento de Identidad"
-                placeholder="DNI / Carnet de Extranjería"
-                [error]="form.controls.documentId.touched && form.controls.documentId.invalid ? 'Campo requerido' : ''"
-              />
-              <div class="empty-space"></div>
-            </app-row>
+            <div style="max-width: 600px; margin: 0 auto;">
+              <app-row columns="1" variant="form">
+                <app-floating-input
+                  formControlName="firstName"
+                  label="Nombres"
+                  placeholder="Ej. Juan"
+                  [error]="form.controls.firstName.touched && form.controls.firstName.invalid ? 'Campo requerido' : ''"
+                />
+                <app-select2
+                  formControlName="gender"
+                  label="Género"
+                  [options]="genderOptions"
+                  placeholder="Seleccione..."
+                />
+                <app-textarea
+                  formControlName="address"
+                  label="Dirección Completa"
+                  placeholder="Avenida, Calle, Nro, Distrito..."
+                  [rows]="3"
+                  [error]="form.controls.address.touched && form.controls.address.invalid ? 'Campo requerido' : ''"
+                ></app-textarea>
+              </app-row>
+            </div>
           </div>
         }
 
         @if (currentStep() === 1) {
           <div class="step-content">
-            <app-text variant="h3">Detalles Médicos</app-text>
-            <app-text variant="body" color="secondary" class="mb-4">Información relevante para la atención.</app-text>
+            <app-text variant="h3">Layout 2 Columnas</app-text>
+            <app-text variant="body" color="secondary" class="mb-4">Ejemplo de distribución en 2 columnas (columns="2").</app-text>
 
-            <app-row>
+            <app-row columns="2" variant="form">
               <app-select2
-                formControlName="bloodType"
-                label="Grupo Sanguíneo"
-                [options]="bloodTypeOptions"
-                placeholder="Seleccione..."
+                formControlName="country"
+                label="País de Residencia"
+                [options]="countryOptions"
+                placeholder="Seleccione país..."
               />
-              <div class="empty-space"></div>
-            </app-row>
-
-            <app-row>
+              <app-select2
+                formControlName="state"
+                label="Estado / Departamento"
+                [options]="stateOptions"
+                placeholder="Seleccione estado..."
+              />
               <app-floating-input
-                formControlName="allergies"
-                label="Alergias Conocidas"
-                placeholder="Especifique si existen alergias"
+                formControlName="city"
+                label="Ciudad"
+                placeholder="Ej. Lima"
+                [error]="form.controls.city.touched && form.controls.city.invalid ? 'Campo requerido' : ''"
               />
-            </app-row>
-            
-            <app-row>
-              <app-toggle
-                formControlName="hasInsurance"
-                label="Cuenta con Seguro Privado"
+              <app-floating-input
+                type="tel"
+                formControlName="phone"
+                label="Teléfono"
+                placeholder="Ej. 999 888 777"
               />
             </app-row>
           </div>
@@ -103,40 +104,89 @@
 
         @if (currentStep() === 2) {
           <div class="step-content">
-            <app-text variant="h3">Confirmación de Datos</app-text>
-            <app-text variant="body" color="secondary" class="mb-4">Revise la información ingresada antes de finalizar.</app-text>
+            <app-text variant="h3">Layout 3 Columnas</app-text>
+            <app-text variant="body" color="secondary" class="mb-4">Ejemplo de distribución en 3 columnas (columns="3").</app-text>
 
-            <div class="summary-box">
-              <app-text variant="h4" class="summary-title">Información Básica</app-text>
-              <div class="summary-grid">
-                <div>
-                  <app-text variant="caption" color="secondary">Nombres Completos</app-text>
-                  <app-text variant="body">{{ form.value.firstName || '-' }} {{ form.value.lastName || '-' }}</app-text>
-                </div>
-                <div>
-                  <app-text variant="caption" color="secondary">Documento</app-text>
-                  <app-text variant="body">{{ form.value.documentId || '-' }}</app-text>
-                </div>
+            <app-row columns="3" variant="form">
+              <app-floating-input
+                formControlName="lastName"
+                label="Apellidos"
+                placeholder="Ej. Pérez"
+                [error]="form.controls.lastName.touched && form.controls.lastName.invalid ? 'Campo requerido' : ''"
+              />
+              <app-floating-input
+                formControlName="documentId"
+                label="Documento de Identidad"
+                placeholder="DNI / Carnet de Extranjería"
+                [error]="form.controls.documentId.touched && form.controls.documentId.invalid ? 'Campo requerido' : ''"
+              />
+              <app-datepicker
+                formControlName="birthDate"
+                label="Fecha de Nacimiento"
+                [error]="form.controls.birthDate.touched && form.controls.birthDate.invalid ? 'Campo requerido' : ''"
+              ></app-datepicker>
+              <app-select2
+                formControlName="maritalStatus"
+                label="Estado Civil"
+                [options]="maritalStatusOptions"
+                placeholder="Seleccione..."
+              />
+              <app-select2
+                formControlName="bloodType"
+                label="Grupo Sanguíneo"
+                [options]="bloodTypeOptions"
+                placeholder="Seleccione..."
+              />
+              <app-floating-input
+                formControlName="emergencyContact"
+                label="Contacto de Emergencia"
+                placeholder="Nombre del familiar o amistad"
+              />
+            </app-row>
+          </div>
+        }
+
+        @if (currentStep() === 3) {
+          <div class="step-content">
+            <app-text variant="h3">Layout 4 Columnas</app-text>
+            <app-text variant="body" color="secondary" class="mb-4">Ejemplo de distribución en 4 columnas (columns="4").</app-text>
+
+            <app-row columns="4" variant="form">
+              <app-floating-input
+                formControlName="emergencyContact"
+                label="Familiar"
+                placeholder="Familiar"
+              />
+              <app-floating-input
+                type="tel"
+                formControlName="emergencyPhone"
+                label="Teléfono"
+                placeholder="Ej. 999 111 222"
+              />
+              <app-floating-input
+                type="email"
+                formControlName="email"
+                label="Correo"
+                placeholder="ejemplo@correo.com"
+                [error]="form.controls.email.touched && form.controls.email.invalid ? 'Correo inválido o requerido' : ''"
+              />
+              <app-floating-input
+                formControlName="allergies"
+                label="Alergias"
+                placeholder="Alergias"
+              />
+              <app-toggle formControlName="hasInsurance" label="¿Tiene Seguro?"></app-toggle>
+              <app-radio formControlName="preferredContact" [options]="contactPreferencesOptions" label="Contacto Preferido"></app-radio>
+              <div style="grid-column: span 2;">
+                <app-file-input formControlName="documents" label="Documentos Adicionales" [multiple]="true"></app-file-input>
               </div>
-
-              <div class="divider"></div>
-
-              <app-text variant="h4" class="summary-title mt-4">Detalles Médicos</app-text>
-              <div class="summary-grid">
-                <div>
-                  <app-text variant="caption" color="secondary">Grupo Sanguíneo</app-text>
-                  <app-text variant="body">{{ form.value.bloodType || 'No especificado' }}</app-text>
-                </div>
-                <div>
-                  <app-text variant="caption" color="secondary">Seguro Privado</app-text>
-                  <app-text variant="body">{{ form.value.hasInsurance ? 'Sí' : 'No' }}</app-text>
-                </div>
-                <div class="col-span-2">
-                  <app-text variant="caption" color="secondary">Alergias</app-text>
-                  <app-text variant="body">{{ form.value.allergies || 'Ninguna registrada' }}</app-text>
-                </div>
-              </div>
-            </div>
+            </app-row>
+            <app-row columns="1" variant="form" class="mt-4">
+              <app-checkbox
+                formControlName="agreeTerms"
+                label="Declaro que la información proporcionada es veraz y acepto los términos y condiciones"
+              ></app-checkbox>
+            </app-row>
           </div>
         }
       </form>

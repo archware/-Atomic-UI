@@ -5,51 +5,24 @@
   align-items: center;
 }
 
-.action-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  padding: 0;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: all 150ms ease;
-  color: var(--text-color);
-}
-
-.action-btn:hover {
-  background: var(--surface-elevated);
-  border-color: var(--border-color);
-}
-
-.action-btn.view { 
+app-icon-button.action-btn.view ::ng-deep .icon-btn { 
   color: var(--secondary-color); 
 }
-
-.action-btn.view:hover { 
-  color: var(--secondary-color);
+app-icon-button.action-btn.view ::ng-deep .icon-btn:hover { 
   background: var(--secondary-color-lighter);
 }
 
-.action-btn.edit { 
+app-icon-button.action-btn.edit ::ng-deep .icon-btn { 
   color: var(--primary-color); 
 }
-
-.action-btn.edit:hover { 
-  color: var(--primary-color);
+app-icon-button.action-btn.edit ::ng-deep .icon-btn:hover { 
   background: var(--primary-color-lighter);
 }
 
-.action-btn.delete { 
+app-icon-button.action-btn.delete ::ng-deep .icon-btn { 
   color: var(--danger-color-text);
 }
-
-.action-btn.delete:hover { 
-  color: var(--danger-color-text);
+app-icon-button.action-btn.delete ::ng-deep .icon-btn:hover { 
   background: var(--danger-color-lighter);
 }
 

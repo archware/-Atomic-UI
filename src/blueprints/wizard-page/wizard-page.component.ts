@@ -12,10 +12,15 @@ import {
   FloatingInputComponent,
   Select2Component,
   RowComponent,
-  
+  TextareaComponent,
   TextComponent,
   Step,
-  ToggleComponent
+  ToggleComponent,
+  DatepickerComponent,
+  CheckboxComponent,
+  RadioComponent,
+  FileInputComponent,
+  FileInputFile
 } from '@shared/ui';
 
 @Component({
@@ -31,9 +36,13 @@ import {
     FloatingInputComponent,
     Select2Component,
     RowComponent,
-    
+    TextareaComponent,
     TextComponent,
-    ToggleComponent
+    ToggleComponent,
+    DatepickerComponent,
+    CheckboxComponent,
+    RadioComponent,
+    FileInputComponent
   ],
   templateUrl: './wizard-page.component.html',
   styleUrl: './wizard-page.component.css'
@@ -77,7 +86,8 @@ export class WizardPageComponent {
 
   steps: Step[] = [
     { label: 'Información Básica', description: 'Datos personales' },
-    { label: 'Detalles Médicos', description: 'Historial' },
+    { label: 'Datos de Contacto', description: 'Ubicación y comunicación' },
+    { label: 'Detalles Médicos', description: 'Historial y seguro' },
     { label: 'Confirmación', description: 'Revisar datos' }
   ];
 
@@ -85,9 +95,27 @@ export class WizardPageComponent {
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     documentId: ['', Validators.required],
+    birthDate: ['', Validators.required],
+    gender: ['', Validators.required],
+    maritalStatus: [''],
+
+    country: ['', Validators.required],
+    state: [''],
+    city: ['', Validators.required],
+    address: ['', Validators.required],
+    phone: [''],
+    email: ['', [Validators.required, Validators.email]],
+
     bloodType: [''],
     allergies: [''],
     hasInsurance: [false],
+    medicalHistory: [''],
+    emergencyContact: [''],
+    emergencyPhone: [''],
+    agreeTerms: [false, Validators.requiredTrue],
+    preferredContact: ['email'],
+    documents: [[] as FileInputFile[]],
+    languages: [[] as string[]]
   });
 
   bloodTypeOptions = [
@@ -101,30 +129,57 @@ export class WizardPageComponent {
     { value: 'AB-', label: 'AB-' },
   ];
 
+  genderOptions = [
+    { value: 'M', label: 'Masculino' },
+    { value: 'F', label: 'Femenino' },
+    { value: 'O', label: 'Otro' },
+  ];
+
+  maritalStatusOptions = [
+    { value: 'S', label: 'Soltero/a' },
+    { value: 'C', label: 'Casado/a' },
+    { value: 'D', label: 'Divorciado/a' },
+    { value: 'V', label: 'Viudo/a' },
+  ];
+
+  languageOptions = [
+    { value: 'es', label: 'Español' },
+    { value: 'en', label: 'Inglés' },
+    { value: 'pt', label: 'Portugués' },
+    { value: 'fr', label: 'Francés' },
+  ];
+
+  countryOptions = [
+    { value: 'PE', label: 'Perú' },
+    { value: 'MX', label: 'México' },
+    { value: 'CO', label: 'Colombia' },
+    { value: 'AR', label: 'Argentina' },
+    { value: 'CL', label: 'Chile' },
+  ];
+
+  stateOptions = [
+    { value: 'LIM', label: 'Lima' },
+    { value: 'CUS', label: 'Cusco' },
+    { value: 'ARE', label: 'Arequipa' },
+    { value: 'PIU', label: 'Piura' },
+  ];
+
+  contactPreferencesOptions = [
+    { value: 'email', label: 'Correo Electrónico' },
+    { value: 'phone', label: 'Llamada Telefónica' },
+    { value: 'whatsapp', label: 'WhatsApp' },
+  ];
+
   get nextEnabled(): boolean {
-    if (this.currentStep() === 0) {
-      return this.form.controls.firstName.valid && this.form.controls.lastName.valid && this.form.controls.documentId.valid;
-    }
     return true;
   }
 
   onStepChange(stepIndex: number) {
-    // Only allow navigating backward or to completed steps for this demo
-    if (stepIndex < this.currentStep()) {
-      this.currentStep.set(stepIndex);
-    }
+    this.currentStep.set(stepIndex);
   }
 
   onNext() {
     if (this.currentStep() < this.steps.length - 1) {
-      if (this.currentStep() === 0) {
-        this.form.controls.firstName.markAsTouched();
-        this.form.controls.lastName.markAsTouched();
-        this.form.controls.documentId.markAsTouched();
-        if (this.form.controls.firstName.invalid || this.form.controls.lastName.invalid || this.form.controls.documentId.invalid) {
-          return;
-        }
-      }
       this.currentStep.update(v => v + 1);
     }
   }
@@ -140,6 +195,10 @@ export class WizardPageComponent {
   }
 
   onFinish() {
+    this.form.markAllAsTouched();
+    if (this.form.invalid) {
+      return;
+    }
     this.isSaving.set(true);
     setTimeout(() => {
       this.isSaving.set(false);

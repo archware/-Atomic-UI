@@ -65,18 +65,18 @@
           [class.atomic-footer__social--vertical]="vertical"
           [attr.aria-label]="socialTitle()">
           @for (link of socialLinks(); track link.url) {
-            <a
+            <app-link
               class="atomic-footer__social-link"
               [class.atomic-footer__social-link--with-text]="vertical"
               [href]="link.url"
               target="_blank"
-              rel="noopener noreferrer"
-              [attr.aria-label]="getSocialLabel(link)">
+              [ariaLabel]="getSocialLabel(link)"
+              variant="muted">
               <i [class]="getSocialIcon(link.platform)" aria-hidden="true"></i>
               @if (vertical) {
                 <span>{{ getSocialLabel(link) }}</span>
               }
-            </a>
+            </app-link>
           }
         </nav>
       }
@@ -86,7 +86,7 @@
       @if (legalLinks().length > 0) {
         <nav class="atomic-footer__legal" [attr.aria-label]="legalTitle()">
           @for (link of legalLinks(); track link.url; let last = $last) {
-            <a class="atomic-footer__legal-link" [href]="link.url">{{ link.label }}</a>
+            <app-link class="atomic-footer__legal-link" [href]="link.url" variant="muted">{{ link.label }}</app-link>
             @if (!last) {
               <span class="atomic-footer__separator" aria-hidden="true">·</span>
             }

@@ -13,10 +13,13 @@ import { PopupService, PopupItem } from '../../services/popup.service';
  * <app-popup-container></app-popup-container>
  * ```
  */
+import { ButtonComponent } from '../../atoms/button/button.component';
+import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
+
 @Component({
   selector: 'app-popup-container',
   standalone: true,
-  imports: [],
+  imports: [ButtonComponent, IconButtonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @for (popup of popupService.popups(); track popup.id) {
@@ -47,9 +50,9 @@ import { PopupService, PopupItem } from '../../services/popup.service';
             }
             <h3 class="popup-title" [id]="'popup-title-' + popup.id">{{ popup.title }}</h3>
             @if (popup.closable) {
-              <button class="popup-close" (click)="onDismiss(popup)" type="button" aria-label="Cerrar">
+              <app-icon-button class="popup-close" (clicked)="onDismiss(popup)" ariaLabel="Cerrar" variant="ghost" animation="none">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-              </button>
+              </app-icon-button>
             }
           </div>
 
@@ -67,15 +70,14 @@ import { PopupService, PopupItem } from '../../services/popup.service';
           @if (popup.buttons && popup.buttons.length > 0) {
             <div class="popup-footer">
               @for (button of popup.buttons; track button.label) {
-                <button 
-                  type="button"
+                <app-button 
                   class="popup-btn"
-                  [class]="'popup-btn-' + (button.variant || 'primary')"
+                  [variant]="button.variant || 'primary'"
                   [attr.data-autofocus]="button.autofocus ? '' : null"
-                  (click)="button.action()"
+                  (buttonClick)="button.action()"
                 >
                   {{ button.label }}
-                </button>
+                </app-button>
               }
             </div>
           }

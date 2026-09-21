@@ -2,6 +2,7 @@ import { Component, ContentChild, TemplateRef, ChangeDetectionStrategy, input } 
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from '../../atoms/loader/loader.component';
 import { ApiError } from '../../services/api.service';
+import { ButtonComponent } from '../../atoms/button/button.component';
 
 /**
  * Componente para manejar estados de carga de datos.
@@ -55,7 +56,7 @@ import { ApiError } from '../../services/api.service';
 @Component({
   selector: 'app-data-state',
   standalone: true,
-  imports: [CommonModule, LoaderComponent],
+  imports: [CommonModule, LoaderComponent, ButtonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <!-- Loading State -->
@@ -85,10 +86,9 @@ import { ApiError } from '../../services/api.service';
             <h4 class="error-title">{{ errorTitle() }}</h4>
             <p class="error-message">{{ currentError.message }}</p>
             @if (showRetryButton()) {
-              <button type="button" class="retry-button" (click)="onRetry().emit()">
-                <i class="fa-solid fa-rotate-right"></i>
+              <app-button class="retry-button" variant="outline" icon="fa-solid fa-rotate-right" (buttonClick)="onRetry().emit()">
                 Reintentar
-              </button>
+              </app-button>
             }
           </div>
         }

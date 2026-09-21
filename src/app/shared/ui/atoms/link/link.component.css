@@ -1,0 +1,16 @@
+﻿:host { display: inline-flex; }
+.atomic-link {
+  text-decoration: none;
+  font-weight: var(--font-weight-medium, 500);
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+  cursor: pointer;
+}
+.atomic-link:hover { text-decoration: underline; }
+.atomic-link--primary { color: var(--primary-color); }
+.atomic-link--primary:hover { color: var(--primary-color-dark); }
+.atomic-link--secondary { color: var(--secondary-color); }
+.atomic-link--secondary:hover { color: var(--secondary-color-dark); }
+.atomic-link--muted { color: var(--text-color-muted); font-weight: normal; }
+.atomic-link--muted:hover { color: var(--text-color-secondary); }
+.atomic-link--danger { color: var(--danger-color); }
+.atomic-link--danger:hover { color: var(--danger-color-dark, #b91c1c); }

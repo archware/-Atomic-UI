@@ -39,10 +39,12 @@ const MODAL_ERROR_SELECTORS = [
   '[aria-invalid="true"]',
 ] as const;
 
+import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
+
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [],
+  imports: [IconButtonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="modal-overlay"
@@ -63,15 +65,16 @@ const MODAL_ERROR_SELECTORS = [
         <!-- Header -->
         <div class="modal-header">
           <h3 class="modal-title" [id]="titleId">{{ title() }}</h3>
-          <button
+          <app-icon-button
             class="modal-close"
-            (click)="requestClose()"
-            type="button"
-            aria-label="Cerrar"
+            (clicked)="requestClose()"
+            ariaLabel="Cerrar"
+            variant="ghost"
+            animation="none"
             [disabled]="busy()"
           >
             <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-          </button>
+          </app-icon-button>
         </div>
 
         <!-- Body -->

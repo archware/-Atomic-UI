@@ -88,25 +88,7 @@
   color: var(--text-color);
 }
 
-.popup-close {
-  width: var(--control-height-sm);
-  height: var(--control-height-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--text-xl);
-  color: var(--text-color-secondary);
-  background: transparent;
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: all 150ms ease;
-}
 
-.popup-close:hover {
-  background: var(--surface-hover);
-  color: var(--text-color);
-}
 
 /* Body */
 .popup-body {
@@ -130,49 +112,3 @@
   border-top: 1px solid var(--border-color);
 }
 
-.popup-btn {
-  padding: var(--space-2) var(--space-4);
-  font-size: var(--text-sm);
-  font-weight: var(--font-weight-body);
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: all 150ms ease;
-}
-
-.popup-btn-primary {
-  background: var(--primary-color);
-  color: var(--text-color-on-primary);
-}
-
-.popup-btn-primary:hover {
-  background: var(--primary-color-dark);
-}
-
-.popup-btn-secondary {
-  background: var(--surface-hover);
-  color: var(--text-color);
-}
-
-.popup-btn-secondary:hover {
-  background: var(--border-color);
-}
-
-.popup-btn-danger {
-  background: var(--danger-color);
-  color: var(--gray-0);
-}
-
-.popup-btn-danger:hover {
-  background: var(--danger-color-dark);
-}
-
-.popup-btn-ghost {
-  background: transparent;
-  color: var(--text-color-secondary);
-}
-
-.popup-btn-ghost:hover {
-  background: var(--surface-hover);
-  color: var(--text-color);
-}

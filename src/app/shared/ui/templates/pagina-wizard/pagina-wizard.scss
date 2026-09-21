@@ -1,12 +1,12 @@
 :host {
   display: block;
-  min-height: 100%;
+  overflow: visible !important;
 }
 
 .pagina-wizard {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - var(--space-8));
+  overflow: visible !important;
 }
 
 app-page-header {
@@ -14,24 +14,22 @@ app-page-header {
 }
 
 .pagina-wizard__body {
-  flex: 1;
   display: flex;
   flex-direction: column;
   background-color: var(--surface-background);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  overflow: visible !important;
   box-shadow: var(--shadow-sm);
 }
 
 .pagina-wizard__stepper-container {
   padding: 1.5rem 2.25rem;
-  background-color: var(--surface-section);
+  background-color: var(--surface-background);
   border-block-end: 1px solid var(--border-color);
 }
 
 .pagina-wizard__content {
-  flex: 1;
   padding: 1.5rem 2.25rem; /* Amplio espacio para el contenido del formulario */
 }
 
@@ -40,11 +38,8 @@ app-page-header {
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 2.25rem;
-  background-color: var(--surface-background);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  margin-block-start: var(--space-5);
-  box-shadow: var(--shadow-sm);
+  background-color: transparent;
+  border-block-start: 1px solid var(--border-color);
 }
 
 .pagina-wizard__footer-start {
@@ -82,8 +77,7 @@ app-page-header {
 }
 
 .pagina-wizard__step-body {
-  max-width: 32rem;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .pagina-wizard__step-title {
@@ -96,16 +90,22 @@ app-icon-button.pagina-wizard__btn-cerrar {
   ::ng-deep .icon-btn {
     border-radius: var(--radius-full, 50%);
     background-color: var(--surface-hover, rgba(0, 0, 0, 0.05));
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   ::ng-deep .icon-btn:hover {
     background-color: var(--danger-color, #ef4444) !important;
     transform: scale(1.1) !important;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
   }
 
   ::ng-deep .icon-btn:hover i {
     color: #ffffff !important;
+  }
+
+  ::ng-deep .icon-btn:active {
+    background-color: #b91c1c !important; /* Tailwind red-700, darker than danger */
+    transform: scale(0.9) !important;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2) !important;
   }
 }

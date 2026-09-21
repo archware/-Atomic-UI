@@ -8,7 +8,7 @@
     primero que encuentra quien navega con teclado: sin él, llegar al contenido
     obliga a recorrer el menú entero en cada carga de página.
   -->
-  <a class="layout-skip-link" href="#layout-main-content">{{ skipLinkLabel() }}</a>
+  <app-link class="layout-skip-link" href="#layout-main-content">{{ skipLinkLabel() }}</app-link>
 
   <!-- Sidebar Slot -->
   <aside class="layout-sidebar" [class.active]="sidebarVisible()" [attr.aria-label]="sidebarLabel()"

@@ -86,24 +86,28 @@
   margin: 0;
 }
 
-.modal-close {
-  width: var(--control-height-sm);
-  height: var(--control-height-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--text-2xl);
-  color: var(--text-color-secondary);
-  background: transparent;
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: all 150ms ease;
-}
+app-icon-button.modal-close {
+  ::ng-deep .icon-btn {
+    border-radius: var(--radius-full, 50%);
+    background-color: var(--surface-hover, rgba(0, 0, 0, 0.05));
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 
-.modal-close:hover {
-  background: var(--surface-hover);
-  color: var(--text-color);
+  ::ng-deep .icon-btn:hover {
+    background-color: var(--danger-color, #ef4444) !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  ::ng-deep .icon-btn:hover i {
+    color: #ffffff !important;
+  }
+
+  ::ng-deep .icon-btn:active {
+    background-color: #b91c1c !important;
+    transform: scale(0.9) !important;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2) !important;
+  }
 }
 
   .modal-body {
@@ -119,15 +123,7 @@
   border-top: 1px solid var(--border-color);
 }
 
-.modal-close:disabled {
-  color: var(--text-color-muted);
-  cursor: not-allowed;
-}
 
-.modal-close:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
-}
 
 @media (prefers-reduced-motion: reduce) {
   .modal-overlay,

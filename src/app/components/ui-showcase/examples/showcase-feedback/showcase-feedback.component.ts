@@ -3,11 +3,12 @@ import { Component, inject } from '@angular/core';
 import { ToastService } from '../../../../shared/ui/services/toast.service';
 import { PopupService } from '../../../../shared/ui/services/popup.service';
 import { ModalService } from '../../../../shared/ui/services/modal.service';
+import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.component';
 
 @Component({
   selector: 'app-showcase-feedback',
   standalone: true,
-  imports: [],
+  imports: [ButtonComponent],
   template: `
     <!-- ALERTS -->
     <section class="showcase-section">
@@ -43,9 +44,9 @@ import { ModalService } from '../../../../shared/ui/services/modal.service';
       <h3 class="section-title">Modales</h3>
       <p class="text-sm text-gray-500 mb-4">Diálogos modales que bloquean la interacción con el resto de la página.</p>
       <div class="button-grid">
-        <button class="btn btn-primary" (click)="openConfirmModal()">Modal de Confirmación</button>
-        <button class="btn btn-danger" (click)="openBlockingModal()">Modal Bloqueante</button>
-        <button class="btn btn-outline" (click)="openAlertModal()">Modal Alerta</button>
+        <app-button variant="primary" (click)="openConfirmModal()">Modal de Confirmación</app-button>
+        <app-button variant="danger" (click)="openBlockingModal()">Modal Bloqueante</app-button>
+        <app-button variant="outline" (click)="openAlertModal()">Modal Alerta</app-button>
       </div>
     </section>
 
@@ -54,10 +55,10 @@ import { ModalService } from '../../../../shared/ui/services/modal.service';
       <h3 class="section-title">Popups</h3>
       <p class="text-sm text-gray-500 mb-4">Ventanas emergentes informativas o de promoción.</p>
       <div class="button-grid">
-        <button class="btn btn-secondary" (click)="showPromoPopup()">Popup Promocional</button>
-        <button class="btn btn-outline" (click)="showInfoPop()">Popup Informativo</button>
-        <button class="btn btn-success" (click)="showSuccessPopup()">Popup Éxito</button>
-        <button class="btn btn-danger" (click)="showConfirmPopup()">Popup Confirmación</button>
+        <app-button variant="secondary" (click)="showPromoPopup()">Popup Promocional</app-button>
+        <app-button variant="outline" (click)="showInfoPop()">Popup Informativo</app-button>
+        <app-button variant="success" (click)="showSuccessPopup()">Popup Éxito</app-button>
+        <app-button variant="danger" (click)="showConfirmPopup()">Popup Confirmación</app-button>
       </div>
     </section>
 
@@ -65,9 +66,9 @@ import { ModalService } from '../../../../shared/ui/services/modal.service';
     <section class="showcase-section">
       <h3 class="section-title">Tooltips</h3>
       <div class="tooltip-container">
-        <button class="btn btn-outline tooltip-trigger" data-tooltip="Este es un tooltip de ayuda">
+        <app-button variant="outline" class="tooltip-trigger" data-tooltip="Este es un tooltip de ayuda">
           Hover para tooltip
-        </button>
+        </app-button>
       </div>
     </section>
 
@@ -75,10 +76,10 @@ import { ModalService } from '../../../../shared/ui/services/modal.service';
     <section class="showcase-section">
       <h3 class="section-title">Toast / Notificaciones</h3>
       <div class="button-grid">
-        <button class="btn btn-primary" (click)="showToast('info')">Info</button>
-        <button class="btn btn-success" (click)="showToast('success')">Success</button>
-        <button class="btn btn-warning" (click)="showToast('warning')">Warning</button>
-        <button class="btn btn-danger" (click)="showToast('error')">Error</button>
+        <app-button variant="primary" (click)="showToast('info')">Info</app-button>
+        <app-button variant="success" (click)="showToast('success')">Success</app-button>
+        <app-button variant="warning" (click)="showToast('warning')">Warning</app-button>
+        <app-button variant="danger" (click)="showToast('error')">Error</app-button>
       </div>
     </section>
   `,
@@ -94,15 +95,6 @@ import { ModalService } from '../../../../shared/ui/services/modal.service';
     .alert-success { border-color: var(--success-color); background: color-mix(in srgb, var(--success-color), transparent 90%); }
     .alert-warning { border-color: var(--warning-color); background: color-mix(in srgb, var(--warning-color), transparent 90%); }
     .alert-danger { border-color: var(--danger-color); background: color-mix(in srgb, var(--danger-color), transparent 90%); }
-
-    .btn { padding: 0.5rem 1rem; border-radius: 0.375rem; border: none; cursor: pointer; }
-    .btn-primary { background: var(--primary-color); color: white; }
-    .btn-secondary { background: var(--secondary-color); color: white; }
-    .btn-success { background: var(--success-color); color: white; }
-    .btn-warning { background: var(--warning-color); color: white; }
-    .btn-danger { background: var(--danger-color); color: white; }
-    .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); }
-    .btn-ghost { background: transparent; color: var(--text-color); }
 
     /* Simple Tooltip impl for demo */
     .tooltip-trigger { position: relative; }

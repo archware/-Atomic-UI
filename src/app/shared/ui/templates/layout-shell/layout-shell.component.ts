@@ -16,6 +16,7 @@ import { DOCUMENT } from '@angular/common';
 import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-overlay.component';
 import { FooterComponent } from '../../organisms/footer/footer.component';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
+import { LinkComponent } from '../../atoms/link/link.component';
 
 /** Ancho a partir del cual el cajón deja de convivir con el contenido y lo tapa. */
 const COMPACT_VIEWPORT = '(max-width: 768px)';
@@ -23,7 +24,7 @@ const COMPACT_VIEWPORT = '(max-width: 768px)';
 @Component({
   selector: 'app-layout-shell',
   standalone: true,
-  imports: [ScrollOverlayComponent, FooterComponent, VariablesCssDirective],
+  imports: [ScrollOverlayComponent, FooterComponent, VariablesCssDirective, LinkComponent],
   templateUrl: './layout-shell.component.html',
   styleUrl: './layout-shell.component.css'
 })

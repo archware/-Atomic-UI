@@ -10,12 +10,22 @@
   cursor: pointer;
 }
 
+.datepicker-wrapper {
+  position: relative;
+  margin-top: var(--space-3);
+}
+
+::ng-deep .datepicker-trigger app-floating-input .floating-input-wrapper {
+  margin-top: 0;
+}
+
 /* Icon overrides for the input trigger */
 .calendar-icon-btn {
   position: absolute;
-  right: var(--space-2);
-  top: 50%;
+  right: 1rem;
+  top: calc(var(--control-height, 48px) / 2);
   transform: translateY(-50%);
+  box-sizing: border-box;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -208,4 +218,9 @@
   background-color: var(--hover-background);
   font-weight: var(--font-weight-title);
   border: 1px solid var(--primary-color);
+}
+
+::ng-deep .datepicker-trigger app-floating-input input.floating-input {
+  padding-right: 3rem;
+  box-sizing: border-box;
 }

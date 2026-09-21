@@ -1,11 +1,12 @@
 import { Component, output } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
+import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 
 @Component({
   selector: 'app-table-actions',
   standalone: true,
-  imports: [TranslateModule],
+  imports: [TranslateModule, IconButtonComponent],
   templateUrl: './table-actions.component.html',
   styleUrl: './table-actions.component.css'
 })

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VersionComponent } from '../../atoms/version/version.component';
+import { LinkComponent } from '../../atoms/link/link.component';
 import { AppVersionService } from '../../services/app-version.service';
 
 export interface SocialLink {
@@ -26,7 +27,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, VersionComponent],
+  imports: [CommonModule, VersionComponent, LinkComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './footer.component.css',
     templateUrl: './footer.component.html'

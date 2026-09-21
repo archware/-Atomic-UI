@@ -1,6 +1,7 @@
 import { Component, inject, computed, signal, OnDestroy } from '@angular/core';
 
 import { ThemeService } from '../shared/ui/services/theme.service';
+import { ButtonComponent } from '../shared/ui/atoms/button/button.component';
 
 /**
  * EJEMPLOS DE USO DEL SERVICIO DE TEMAS
@@ -16,7 +17,7 @@ import { ThemeService } from '../shared/ui/services/theme.service';
 @Component({
   selector: 'app-example-basic',
   standalone: true,
-  imports: [],
+  imports: [ButtonComponent],
   template: `
     <div class="card">
       <h3>Tema Dinámico Básico</h3>
@@ -26,9 +27,9 @@ import { ThemeService } from '../shared/ui/services/theme.service';
       <p>¿Está en modo oscuro? <strong>{{ themeService.isDarkMode() ? 'Sí' : 'No' }}</strong></p>
 
       <!-- Botón para alternar -->
-      <button (click)="themeService.toggleTheme()">
+      <app-button (click)="themeService.toggleTheme()">
         Alternar Tema
-      </button>
+      </app-button>
     </div>
   `,
   styles: [`
@@ -40,25 +41,12 @@ import { ThemeService } from '../shared/ui/services/theme.service';
       border-radius: 8px;
       transition: all 300ms ease;
     }
-
-    button {
-      background-color: #2563eb;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    button:hover {
-      background-color: #1d4ed8;
-    }
   `]
 })
 export class ExampleBasicComponent {
   themeService = inject(ThemeService);
 }
+
 
 // ============================================================================
 // EJEMPLO 2: Componente con Condicionales CSS
@@ -115,7 +103,7 @@ export class ExampleConditionalComponent {
 @Component({
   selector: 'app-example-computed',
   standalone: true,
-  imports: [],
+  imports: [ButtonComponent],
   template: `
     <div class="info-box">
       <h3>Información Computada del Tema</h3>
@@ -125,18 +113,18 @@ export class ExampleConditionalComponent {
       <p><strong>Nombre amigable:</strong> {{ themeName() }}</p>
 
       <div class="button-group">
-        <button (click)="themeService.setLightTheme()"
+        <app-button (click)="themeService.setLightTheme()"
           [disabled]="themeService.getSelectedTheme() === 'light'">
           ☀️ Claro
-        </button>
-        <button (click)="themeService.setDarkTheme()"
+        </app-button>
+        <app-button (click)="themeService.setDarkTheme()"
           [disabled]="themeService.getSelectedTheme() === 'dark'">
           🌙 Oscuro
-        </button>
-        <button (click)="themeService.setSystemTheme()"
+        </app-button>
+        <app-button (click)="themeService.setSystemTheme()"
           [disabled]="themeService.getSelectedTheme() === 'system'">
           💻 Sistema
-        </button>
+        </app-button>
       </div>
     </div>
   `,
@@ -157,26 +145,7 @@ export class ExampleConditionalComponent {
       flex-wrap: wrap;
     }
 
-    button {
-      background-color: #2563eb;
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9rem;
-    }
 
-    button:hover:not(:disabled) {
-      background-color: #1d4ed8;
-    }
-
-    button:disabled {
-      background-color: var(--input-disabled-bg);
-      border-color: var(--input-disabled-text);
-      color: var(--input-disabled-text);
-      cursor: not-allowed;
-    }
   `]
 })
 export class ExampleComputedComponent {
@@ -208,7 +177,7 @@ export class ExampleComputedComponent {
 @Component({
   selector: 'app-example-listener',
   standalone: true,
-  imports: [],
+  imports: [ButtonComponent],
   template: `
     <div class="event-box">
       <h3>Escuchar Cambios de Tema</h3>
@@ -218,9 +187,9 @@ export class ExampleComputedComponent {
 
       <p>Total de cambios: {{ changeCount() }}</p>
 
-      <button (click)="themeService.toggleTheme()">
+      <app-button (click)="themeService.toggleTheme()">
         Cambiar Tema (observa el timestamp)
-      </button>
+      </app-button>
     </div>
   `,
   styles: [`
@@ -242,19 +211,7 @@ export class ExampleComputedComponent {
       color: var(--text-secondary);
     }
 
-    button {
-      background-color: #2563eb;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
 
-    button:hover {
-      background-color: #1d4ed8;
-    }
   `]
 })
 export class ExampleListenerComponent implements OnDestroy {

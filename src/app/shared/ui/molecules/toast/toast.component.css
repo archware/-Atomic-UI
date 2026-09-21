@@ -67,20 +67,7 @@
   font-size: var(--text-sm);
 }
 
-.toast-close {
-  background: none;
-  border: none;
-  font-size: var(--text-xl);
-  color: var(--text-color-secondary);
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
-  flex-shrink: 0;
-}
 
-.toast-close:hover {
-  color: var(--text-color);
-}
 
 @keyframes slideIn {
   from { transform: translateX(100%); opacity: 0; }

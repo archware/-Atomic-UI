@@ -1,19 +1,18 @@
 .wizard-page-container {
-  height: 100%;
   padding: var(--space-6);
-  background-color: var(--background-color, #f4f6f8);
+  background-color: transparent;
+  overflow: visible !important;
 }
 
 .wizard-form-content {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  overflow: visible !important;
 }
 
 .step-content {
-  max-width: 48rem; /* 768px */
-  margin: 0 auto;
   width: 100%;
+  overflow: visible !important;
 }
 
 .mb-4 {

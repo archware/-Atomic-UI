@@ -6,7 +6,7 @@
 }
 
 :host:has(.select2-wrapper.open) {
-  z-index: 1000;
+  z-index: 9999 !important;
 }
 
 .select2-wrapper {
@@ -16,7 +16,7 @@
 }
 
 .select2-wrapper.open {
-  z-index: 1000;
+  z-index: 9999 !important;
 }
 
 .select2-wrapper.disabled {
@@ -196,7 +196,7 @@
     del fondo; la lista quedaba mas plana que el campo que la abre.
   */
   box-shadow: var(--shadow-lg);
-  z-index: 10000;
+  z-index: 9999 !important;
   animation: dropdownSlide 200ms ease;
   overflow: hidden;
   /* FIXED: Permitir clics en Wails */

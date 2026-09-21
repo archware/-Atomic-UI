@@ -29,15 +29,13 @@
     <div class="pagina-wizard__content" role="region" [attr.aria-label]="steps()[activeStep()]?.label">
       <ng-content></ng-content>
     </div>
-  </div>
-
-  <!-- Pie de Acciones -->
-  <footer class="pagina-wizard__footer">
-    <div class="pagina-wizard__footer-start">
-      <app-button
-        variant="ghost"
-        (buttonClick)="handleCancel()"
-      >
+    <!-- Pie de Acciones -->
+    <footer class="pagina-wizard__footer">
+      <div class="pagina-wizard__footer-start">
+        <app-button
+          variant="ghost"
+          (buttonClick)="handleCancel()"
+        >
         {{ etiquetaCancelar() }}
       </app-button>
     </div>
@@ -72,4 +70,5 @@
       }
     </div>
   </footer>
+  </div>
 </div>

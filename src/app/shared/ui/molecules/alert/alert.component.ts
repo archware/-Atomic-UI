@@ -18,6 +18,7 @@
  *   falla en compilacion, donde el @switch anterior simplemente no pintaba.
  */
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 
 export type AlertKind = 'info' | 'success' | 'warning' | 'danger';
 export type AlertSpacing = 'default' | 'compact' | 'none';
@@ -48,14 +49,15 @@ const ALERT_ICONS: Readonly<Record<AlertKind, string>> = {
           <div class="alert__message"><ng-content /></div>
         </div>
         @if (closable()) {
-          <button class="alert__close" type="button" aria-label="Cerrar mensaje" (click)="close()">
+          <app-icon-button class="alert__close" ariaLabel="Cerrar mensaje" (clicked)="close()" variant="ghost" animation="none">
             <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-          </button>
+          </app-icon-button>
         }
       </div>
     }
   `,
   styleUrl: './alert.scss',
+  imports: [IconButtonComponent],
   host: {
     '[class.alert-flow--default]': "spacing() === 'default'",
     '[class.alert-flow--compact]': "spacing() === 'compact'",

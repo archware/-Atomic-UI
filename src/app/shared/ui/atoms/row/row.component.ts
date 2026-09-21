@@ -1,5 +1,4 @@
 import { Component, input } from '@angular/core';
-import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 /** Horizontal alignment options */
 export type RowAlign = 'left' | 'center' | 'right' | 'stretch';
@@ -33,7 +32,7 @@ export type RowVariant = 'default' | 'form';
 @Component({
   selector: 'app-row',
   standalone: true,
-  imports: [VariablesCssDirective],
+  imports: [],
   templateUrl: './row.component.html',
   styleUrl: './row.component.css'
 })
@@ -91,6 +90,9 @@ export class RowComponent {
     // If columns was explicitly set, always use it (highest priority)
     const columns = this.columns();
     if (columns !== undefined) {
+      if (!isNaN(Number(columns))) {
+        return `repeat(${columns}, 1fr)`;
+      }
       return columns;
     }
 

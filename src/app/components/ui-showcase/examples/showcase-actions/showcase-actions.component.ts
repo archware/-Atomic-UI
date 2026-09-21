@@ -18,20 +18,20 @@ import { ActionMenuComponent, ActionMenuItem } from '../../../../shared/ui/molec
     <!-- BOTONES -->
     <app-panel title="Botones" variant="flat" padding="md" class="showcase-section">
       <div class="button-grid">
-        <button class="btn btn-primary">Primary</button>
-        <button class="btn btn-secondary">Secondary</button>
-        <button class="btn btn-success">Success</button>
-        <button class="btn btn-warning">Warning</button>
-        <button class="btn btn-danger">Danger</button>
-        <button class="btn btn-outline">Outline</button>
-        <button class="btn btn-ghost">Ghost</button>
-        <button class="btn btn-primary" disabled>Disabled</button>
+        <app-button variant="primary">Primary</app-button>
+        <app-button variant="secondary">Secondary</app-button>
+        <app-button variant="success">Success</app-button>
+        <app-button variant="warning">Warning</app-button>
+        <app-button variant="danger">Danger</app-button>
+        <app-button variant="outline">Outline</app-button>
+        <app-button variant="ghost">Ghost</app-button>
+        <app-button variant="primary" [disabled]="true">Disabled</app-button>
       </div>
 
       <div class="button-sizes">
-        <button class="btn btn-primary btn-sm">Small</button>
-        <button class="btn btn-primary">Medium</button>
-        <button class="btn btn-primary btn-lg">Large</button>
+        <app-button variant="primary" size="sm">Small</app-button>
+        <app-button variant="primary">Medium</app-button>
+        <app-button variant="primary" size="lg">Large</app-button>
       </div>
 
       <div style="margin-top: 1rem;">
@@ -91,33 +91,6 @@ import { ActionMenuComponent, ActionMenuItem } from '../../../../shared/ui/molec
       align-items: center;
       margin-top: 1rem;
     }
-    /* Estilos legacy para botones nativos en el showcase */
-    .btn {
-      padding: 0.5rem 1rem;
-      border-radius: 0.375rem;
-      font-weight: var(--font-weight-body);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-      border: 1px solid transparent;
-    }
-    .btn-primary { background-color: var(--primary-color); color: white; }
-    .btn-secondary { background-color: var(--secondary-color); color: white; }
-    .btn-success { background-color: var(--success-color); color: white; }
-    .btn-warning { background-color: var(--warning-color); color: white; }
-    .btn-danger { background-color: var(--danger-color); color: white; }
-    .btn-outline { background-color: transparent; border-color: var(--border-color); color: var(--text-color); }
-    .btn-ghost { background-color: transparent; color: var(--text-color); }
-    .btn:disabled {
-      background: var(--input-disabled-bg);
-      border-color: var(--input-disabled-text);
-      color: var(--input-disabled-text);
-      cursor: not-allowed;
-    }
-    .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.875rem; }
-    .btn-lg { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
   `]
 })
 export class ShowcaseActionsComponent {

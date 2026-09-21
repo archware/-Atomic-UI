@@ -1,29 +1,29 @@
 <div class="actions-container">
-  <button
-    type="button"
+  <app-icon-button
     class="action-btn view"
-    [title]="'table.actions.view' | translate"
-    [attr.aria-label]="'table.actions.view' | translate"
-    (click)="view.emit()"
+    [tooltip]="'table.actions.view' | translate"
+    [ariaLabel]="'table.actions.view' | translate"
+    (clicked)="view.emit()"
+    variant="ghost"
   >
     <i class="fa-solid fa-eye"></i>
-  </button>
-  <button
-    type="button"
+  </app-icon-button>
+  <app-icon-button
     class="action-btn edit"
-    [title]="'table.actions.edit' | translate"
-    [attr.aria-label]="'table.actions.edit' | translate"
-    (click)="edit.emit()"
+    [tooltip]="'table.actions.edit' | translate"
+    [ariaLabel]="'table.actions.edit' | translate"
+    (clicked)="edit.emit()"
+    variant="ghost"
   >
     <i class="fa-solid fa-pencil"></i>
-  </button>
-  <button
-    type="button"
+  </app-icon-button>
+  <app-icon-button
     class="action-btn delete"
-    [title]="'table.actions.delete' | translate"
-    [attr.aria-label]="'table.actions.delete' | translate"
-    (click)="delete.emit()"
+    [tooltip]="'table.actions.delete' | translate"
+    [ariaLabel]="'table.actions.delete' | translate"
+    (clicked)="delete.emit()"
+    variant="ghost"
   >
     <i class="fa-solid fa-trash-can"></i>
-  </button>
+  </app-icon-button>
 </div>

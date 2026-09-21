@@ -1,0 +1,19 @@
+﻿@if (routerLink()) {
+  <a
+    [routerLink]="routerLink()"
+    [attr.target]="target()"
+    [attr.aria-label]="ariaLabel()"
+    class="atomic-link atomic-link--{{ variant() }}"
+  >
+    <ng-content></ng-content>
+  </a>
+} @else {
+  <a
+    [href]="href() ?? '#'"
+    [attr.target]="target()"
+    [attr.aria-label]="ariaLabel()"
+    class="atomic-link atomic-link--{{ variant() }}"
+  >
+    <ng-content></ng-content>
+  </a>
+}
