@@ -96,6 +96,9 @@ export const authInterceptor: HttpInterceptorFn = (
         return next(req);
     }
 
+    // Ensure HttpOnly cookies are sent automatically
+    req = req.clone({ withCredentials: true });
+
     // Get current token
     const token = tokenService.getTokenApp(DEFAULT_APP_ID);
 

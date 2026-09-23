@@ -4,11 +4,12 @@ import { ToastService } from '../../../../shared/ui/services/toast.service';
 import { PopupService } from '../../../../shared/ui/services/popup.service';
 import { ModalService } from '../../../../shared/ui/services/modal.service';
 import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.component';
+import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
 
 @Component({
   selector: 'app-showcase-feedback',
   standalone: true,
-  imports: [ButtonComponent],
+  imports: [ButtonComponent, TextComponent],
   template: `
     <!-- ALERTS -->
     <section class="showcase-section">
@@ -42,7 +43,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
     <!-- MODALES -->
     <section class="showcase-section">
       <h3 class="section-title">Modales</h3>
-      <p class="text-sm text-gray-500 mb-4">Diálogos modales que bloquean la interacción con el resto de la página.</p>
+      <app-text variant="body-sm" color="muted" style="display:block; margin-bottom: 1rem;">Diálogos modales que bloquean la interacción con el resto de la página.</app-text>
       <div class="button-grid">
         <app-button variant="primary" (click)="openConfirmModal()">Modal de Confirmación</app-button>
         <app-button variant="danger" (click)="openBlockingModal()">Modal Bloqueante</app-button>
@@ -53,7 +54,7 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
     <!-- POPUPS -->
     <section class="showcase-section">
       <h3 class="section-title">Popups</h3>
-      <p class="text-sm text-gray-500 mb-4">Ventanas emergentes informativas o de promoción.</p>
+      <app-text variant="body-sm" color="muted" style="display:block; margin-bottom: 1rem;">Ventanas emergentes informativas o de promoción.</app-text>
       <div class="button-grid">
         <app-button variant="secondary" (click)="showPromoPopup()">Popup Promocional</app-button>
         <app-button variant="outline" (click)="showInfoPop()">Popup Informativo</app-button>

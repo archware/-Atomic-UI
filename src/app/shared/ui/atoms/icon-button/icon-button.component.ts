@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 
-export type IconButtonVariant = 'default' | 'ghost' | 'avatar';
+export type IconButtonVariant = 'default' | 'ghost' | 'avatar' | 'close';
 export type IconButtonAnimation = 'rotate' | 'grow' | 'none' | 'custom';
 
 @Component({
