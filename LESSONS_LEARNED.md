@@ -795,3 +795,8 @@ La solución robusta es detener la propagación del evento `click` en la opción
 - **Contexto:** En aplicaciones híbridas a veces se inyectan modales HTML custom en lugar de los componentes estándar de Atomic UI.
 - **Problema:** Los desarrolladores acostumbran hardcodear colores (ej. #1e293b o texto gris) que se rompen (volviéndose invisibles) cuando el usuario activa el Dark Mode global.
 - **Lección aprendida:** Cualquier modal proyectado fuera de los componentes empaquetados de Atomic UI debe estar construido utilizando obligatoriamente los tokens semánticos `var(--surface-section)`, `var(--surface-elevated)` y `var(--text-color)`. Queda prohibido el uso de utilitarios de color estáticos, como Tailwind `text-secondary` o hexadecimales fijos, para superficies modales.
+
+### Resolucin de la Grilla Responsiva (Acciones)
+- **Doctrina:** Las acciones de la grilla de datos (Data Table) en formato responsivo (mvil/tarjetas) NUNCA deben romper la cuadricula de dos columnas establecida por las celdas de datos. 
+- El label "ACCIONES" se debe ubicar en la primera columna (grid-template-columns: 40%) como un texto normal (sin opacidad, sin posiciones absolutas).
+- Los iconos (ver, editar, eliminar) deben estar contenidos en la segunda columna (1fr) usando justify-content: center para asegurar alineacin esttica con el resto de la tarjeta.
