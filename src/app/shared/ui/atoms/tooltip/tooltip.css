@@ -1,0 +1,54 @@
+.tooltip {
+  position: absolute;
+  background-color: var(--tooltip-bg, #1f2937);
+  color: var(--tooltip-text, #ffffff);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  box-shadow: var(--tooltip-shadow, 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06));
+  z-index: 9999;
+  pointer-events: none;
+  max-width: 250px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  animation: ui-fade-in 0.2s ease forwards;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+}
+
+.tooltip--top::after {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0;
+  border-color: var(--tooltip-bg, #1f2937) transparent transparent transparent;
+}
+
+.tooltip--bottom::after {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 5px 5px;
+  border-color: transparent transparent var(--tooltip-bg, #1f2937) transparent;
+}
+
+.tooltip--left::after {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 5px 0 5px 5px;
+  border-color: transparent transparent transparent var(--tooltip-bg, #1f2937);
+}
+
+.tooltip--right::after {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 5px 5px 5px 0;
+  border-color: transparent var(--tooltip-bg, #1f2937) transparent transparent;
+}

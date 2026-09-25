@@ -37,7 +37,7 @@ describe('PopupContainerComponent', () => {
     const cancelar = fixture.nativeElement.querySelector(
       '[data-autofocus]',
     ) as HTMLButtonElement;
-    expect(document.activeElement).toBe(cancelar);
+    expect(document.activeElement).toBe(cancelar.querySelector('button'));
 
     const escape = new KeyboardEvent('keydown', {
       key: 'Escape',
@@ -58,7 +58,7 @@ describe('PopupContainerComponent', () => {
     let cancelaciones = 0;
     abrirConfirmacion(() => (cancelaciones += 1));
 
-    const close = fixture.nativeElement.querySelector('.popup-close') as HTMLButtonElement;
+    const close = fixture.nativeElement.querySelector('.popup-close button') as HTMLButtonElement;
     close.click();
 
     expect(cancelaciones).toBe(1);

@@ -58,7 +58,6 @@ import type { ModalSize } from '../app/shared/ui/services/modal.service';
 type CasoModal =
   | 'sin-dialogos'
   | 'confirmacion'
-  | 'aviso'
   | 'bloqueante'
   | 'cierre-libre'
   | 'contenido'
@@ -118,14 +117,7 @@ const RESUMEN_DEL_CIERRE = [
               Anular la boleta
             </app-button>
           }
-          @case ('aviso') {
-            <app-button variant="outline" (buttonClick)="avisarConEtiquetaPropia()">
-              Aviso con etiqueta propia
-            </app-button>
-            <app-button variant="ghost" (buttonClick)="avisarConEtiquetaPorOmision()">
-              Aviso con la etiqueta por omision
-            </app-button>
-          }
+
           @case ('bloqueante') {
             <app-button variant="danger" (buttonClick)="exigirDecision()">
               Abrir el turno de hoy
@@ -300,9 +292,7 @@ class ModalServiceStory {
       case 'confirmacion':
         this.confirmarAnulacion();
         break;
-      case 'aviso':
-        this.avisarConEtiquetaPropia();
-        break;
+
       case 'bloqueante':
         this.exigirDecision();
         break;
@@ -345,23 +335,7 @@ class ModalServiceStory {
     });
   }
 
-  /** El tercer argumento de `alert()` es la etiqueta del unico boton. */
-  protected avisarConEtiquetaPropia(): void {
-    this.modal.alert(
-      'No se pudo comprobar el RUC',
-      'El servicio de SUNAT no respondio en 30 segundos. El comprobante quedo guardado como borrador; vuelva a intentarlo desde la bandeja de pendientes.',
-      'Entendido',
-    );
-    this.anotar('alert(titulo, mensaje, "Entendido") -> un solo boton, etiqueta propia.');
-  }
 
-  protected avisarConEtiquetaPorOmision(): void {
-    this.modal.alert(
-      'Sesion actualizada',
-      'Se aplicaron los permisos nuevos. No hace falta volver a entrar.',
-    );
-    this.anotar('alert(titulo, mensaje) -> la etiqueta cae en "Aceptar".');
-  }
 
   /*
     EL DIALOGO DEL QUE NO SE SALE SIN RESPONDER.
@@ -645,25 +619,6 @@ export const ConfirmacionQueNombraElActo: Story = {
   }),
 };
 
-export const AvisoDeUnSoloBoton: Story = {
-  name: 'Aviso de un solo boton',
-  parameters: {
-    docs: {
-      description: {
-        story: [
-          '`alert(titulo, mensaje, etiqueta)` es el caso sin decision: informa y se cierra.',
-          'El tercer argumento cae en «Aceptar» si no se pasa; los dos botones de arriba abren la',
-          'misma pieza con etiqueta propia y con la de omision para que se vea la diferencia.',
-          'Si el aviso cuenta algo que salio mal, la etiqueta util es la que reconoce el hecho',
-          '(«Entendido»), no la que finge un permiso que nadie pidio.',
-        ].join(' '),
-      },
-    },
-  },
-  render: () => ({
-    template: `<app-story-modal-service caso="aviso" />`,
-  }),
-};
 
 export const DecisionSinSalidaPorFuera: Story = {
   name: 'Decision obligatoria: sin aspa y sin fondo',

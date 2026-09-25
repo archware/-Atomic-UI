@@ -61,6 +61,7 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
         [class.modal-sm]="size() === 'sm'"
         [class.modal-md]="size() === 'md'"
         [class.modal-lg]="size() === 'lg'"
+        [class.modal-xl]="size() === 'xl'"
       >
         <!-- Header -->
         <div class="modal-header">
@@ -69,11 +70,10 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
             class="modal-close"
             (clicked)="requestClose()"
             ariaLabel="Cerrar"
-            variant="ghost"
+            variant="hanging-close"
             animation="none"
             [disabled]="busy()"
           >
-            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
           </app-icon-button>
         </div>
 
@@ -105,7 +105,7 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
   private pendingErrorFocus?: AfterRenderRef;
 
   readonly title = input('');
-  readonly size = input<'sm' | 'md' | 'lg'>('md');
+  readonly size = input<'sm' | 'md' | 'lg' | 'xl'>('md');
   readonly closeOnBackdrop = input(true);
   readonly hasFooter = input(true);
   readonly busy = input(false);

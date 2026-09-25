@@ -1,5 +1,5 @@
 <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="closeSidebar()">
-  <app-sidebar ngProjectAs="[slot=sidebar]" slot="sidebar" [menuItems]="menuItems" logoText="CxC Ventas" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }" (navigate)="onMenuItemClick($event)"></app-sidebar>
+  <app-sidebar ngProjectAs="[slot=sidebar]" slot="sidebar" [menuItems]="menuItems" logoText="Atomic UI" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }" (navigate)="onMenuItemClick($event)"></app-sidebar>
   <app-topbar ngProjectAs="[slot=topbar]" [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true" slot="topbar" [title]="'Dashboard'" [userInitials]="userInitials()"
     [userName]="currentUser()?.name || 'Usuario'" [userEmail]="currentUser()?.email || 'usuario@email.com'"
     [notificationCount]="3" (toggleSidebar)="toggleSidebar()" (userAction)="onUserAction($any($event))"

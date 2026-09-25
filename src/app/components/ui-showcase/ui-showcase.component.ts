@@ -12,6 +12,7 @@ import { ShowcaseNavigationComponent } from './examples/showcase-navigation/show
 import { ShowcaseDataDisplayComponent } from './examples/showcase-data-display/showcase-data-display.component';
 import { ShowcaseFeedbackComponent } from './examples/showcase-feedback/showcase-feedback.component';
 import { ShowcaseStatusComponent } from './examples/showcase-status/showcase-status.component';
+import { ShowcaseTemplatesComponent } from './examples/showcase-templates/showcase-templates.component';
 
 @Component({
   selector: 'app-ui-showcase',
@@ -26,7 +27,8 @@ import { ShowcaseStatusComponent } from './examples/showcase-status/showcase-sta
     ShowcaseNavigationComponent,
     ShowcaseDataDisplayComponent,
     ShowcaseFeedbackComponent,
-    ShowcaseStatusComponent
+    ShowcaseStatusComponent,
+    ShowcaseTemplatesComponent
 ],
   template: `
     <app-panel title="UI Components Showcase (Refactorizado)" variant="elevated" padding="lg">
@@ -54,6 +56,9 @@ import { ShowcaseStatusComponent } from './examples/showcase-status/showcase-sta
 
       <!-- 8. Status (Loaders) -->
       <app-showcase-status></app-showcase-status>
+      
+      <!-- 9. Templates (Pagina CRUD & Accordion) -->
+      <app-showcase-templates></app-showcase-templates>
 
       <!-- Footer Demo at the bottom -->
       <app-footer

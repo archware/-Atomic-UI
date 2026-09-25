@@ -23,8 +23,8 @@ app-query-toolbar {
 .pagina-crud__dialogo-cabecera {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem 2.25rem; /* 24px vertical, 36px horizontal */
+  justify-content: center;
+  padding: 1rem 1.5rem;
   background-color: var(--modal-header-bg);
   border-block-end: var(--border-width-thin, 1px) solid var(--border-color);
 }
@@ -33,6 +33,9 @@ app-query-toolbar {
   margin: 0;
   font-size: var(--text-lg);
   font-weight: var(--font-weight-title);
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
 }
 
 
@@ -42,14 +45,14 @@ app-query-toolbar {
 }
 
 .pagina-crud__dialogo-cuerpo {
-  padding: 1.5rem 2.25rem;
+  padding: 1rem 1.5rem;
 }
 
 .pagina-crud__dialogo-pie {
   display: flex;
   justify-content: flex-end;
-  gap: 2.25rem; /* 36px horizontal gap between buttons */
-  padding: 1.5rem 2.25rem; /* 24px vertical, 36px horizontal */
+  gap: 1.5rem; /* 24px horizontal gap between buttons */
+  padding: 1rem 1.5rem; /* 16px vertical, 24px horizontal */
   background-color: var(--modal-footer-bg);
   border-block-start: var(--border-width-thin, 1px) solid var(--border-color);
 }
@@ -71,7 +74,8 @@ app-query-toolbar {
   border-radius: var(--radius-lg);
   max-inline-size: 28rem;
   box-shadow: var(--shadow-xl, 0 20px 25px -5px rgb(0 0 0 / 0.3));
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
 }
 
 .pagina-crud__confirmacion-titulo {
@@ -81,6 +85,9 @@ app-query-toolbar {
   background-color: var(--modal-header-bg, var(--surface-background));
   font-size: var(--text-lg);
   font-weight: var(--font-weight-title);
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 .pagina-crud__confirmacion-mensaje {
@@ -96,6 +103,7 @@ app-query-toolbar {
   padding: 1.5rem 2.25rem;
   border-top: 1px solid var(--border-color);
   background-color: var(--modal-footer-bg, var(--surface-section));
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 
 .pagina-crud__filtros-cascada {
@@ -125,5 +133,7 @@ app-query-toolbar {
   padding: 1.5rem 2.25rem;
   padding-bottom: 1rem;
 }
+
+
 
 

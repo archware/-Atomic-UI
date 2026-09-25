@@ -1,34 +1,11 @@
 /**
- * Alert unificado (5.4.0). Sustituye la implementacion previa del ADN, que
- * divergia del consumidor en nombres de entrada y perdia por merito tecnico:
- *
- * - `variant` -> `kind` y `flowSpacing` -> `spacing`: mismo conjunto de valores,
- *   renombrado puro. `AlertKind` conserva su nombre porque es contrato de
- *   dominio en el consumidor (credit-score-presentation.ts).
- * - Se retiran `size` y `message`. `size` no tenia ningun uso legitimo y
- *   competia con el sistema de espaciado; `message` duplicaba la proyeccion de
- *   contenido, que pasa a ser el unico canal del cuerpo.
- * - `role` condicional: `alert` solo para `danger`, `status` para el resto. El
- *   anterior fijaba role="alert" -que implica aria-live assertive- y luego lo
- *   sobrescribia con polite: una combinacion contradictoria.
- * - Signals en vez de campos planos: con provideZonelessChangeDetection, el
- *   `dismiss()` anterior escribia un campo que no agendaba deteccion de
- *   cambios, de modo que la alerta no llegaba a desaparecer.
- * - Mapa `Record<AlertKind, string>` exhaustivo: anadir un kind sin icono ahora
- *   falla en compilacion, donde el @switch anterior simplemente no pintaba.
+ * Alert unificado.
  */
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 
 export type AlertKind = 'info' | 'success' | 'warning' | 'danger';
 export type AlertSpacing = 'default' | 'compact' | 'none';
-
-const ALERT_ICONS: Readonly<Record<AlertKind, string>> = {
-  info: 'fa-circle-info',
-  success: 'fa-circle-check',
-  warning: 'fa-triangle-exclamation',
-  danger: 'fa-circle-xmark',
-};
 
 @Component({
   selector: 'app-alert, prest-alert',
@@ -41,17 +18,25 @@ const ALERT_ICONS: Readonly<Record<AlertKind, string>> = {
         [attr.role]="kind() === 'danger' ? 'alert' : 'status'"
         [attr.aria-live]="kind() === 'danger' ? 'assertive' : 'polite'"
       >
-        <i class="fa-solid {{ iconClass() }} alert__icon" aria-hidden="true"></i>
+        @if (kind() === 'info') {
+          <i class="fa-solid fa-circle-info alert__icon" aria-hidden="true"></i>
+        } @else if (kind() === 'success') {
+          <i class="fa-solid fa-circle-check alert__icon" aria-hidden="true"></i>
+        } @else if (kind() === 'warning') {
+          <i class="fa-solid fa-triangle-exclamation alert__icon" aria-hidden="true"></i>
+        } @else if (kind() === 'danger') {
+          <span class="close blades heavy alert__icon" aria-hidden="true"></span>
+        }
+
         <div class="alert__body">
           @if (title()) {
             <strong class="alert__title">{{ title() }}</strong>
           }
           <div class="alert__message"><ng-content /></div>
         </div>
+
         @if (closable()) {
-          <app-icon-button class="alert__close" ariaLabel="Cerrar mensaje" (clicked)="close()" variant="ghost" animation="none">
-            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-          </app-icon-button>
+          <app-icon-button class="alert__close" ariaLabel="Cerrar mensaje" (clicked)="close()" variant="close" animation="none" />
         }
       </div>
     }
@@ -72,7 +57,6 @@ export class Alert {
   readonly closed = output<void>();
 
   protected readonly visible = signal(true);
-  protected readonly iconClass = computed(() => ALERT_ICONS[this.kind()]);
   protected readonly classes = computed(() => `alert alert--${this.kind()}`);
 
   protected close(): void {

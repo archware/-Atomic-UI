@@ -28,7 +28,6 @@
     margin: auto;
     position: relative;
     max-height: calc(100dvh - var(--space-8));
-    overflow: hidden;
   }
 
 /* Sizes */
@@ -75,7 +74,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-4) var(--space-5);
+  padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -99,9 +98,9 @@ app-icon-button.modal-close {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
   }
 
-  ::ng-deep .icon-btn:hover i {
-    color: #ffffff !important;
-  }
+  ::ng-deep .icon-btn:hover i,
+  ::ng-deep .icon-btn:hover svg,
+  ::ng-deep .icon-btn:hover 
 
   ::ng-deep .icon-btn:active {
     background-color: #b91c1c !important;
@@ -111,7 +110,7 @@ app-icon-button.modal-close {
 }
 
   .modal-body {
-    padding: var(--space-5);
+    padding: 1rem 1.5rem;
     overflow-y: auto;
   }
 
@@ -119,7 +118,7 @@ app-icon-button.modal-close {
   display: flex;
   justify-content: flex-end;
   gap: 36px;
-  padding: var(--space-4) var(--space-5);
+  padding: 1rem 1.5rem;
   border-top: 1px solid var(--border-color);
 }
 
@@ -132,8 +131,8 @@ app-icon-button.modal-close {
   }
 }
 
-/*
- * Dark mode se maneja automáticamente via tokens semánticos.
+/* Dark mode se maneja automáticamente via tokens semánticos.
  * --surface-background, --overlay-backdrop, --surface-hover
  * ya tienen valores apropiados para temas oscuros.
  */
+

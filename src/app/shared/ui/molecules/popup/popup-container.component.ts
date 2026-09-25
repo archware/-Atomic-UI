@@ -35,10 +35,9 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
       >
         <div 
           class="popup" 
-          [class]="'popup-' + popup.size + ' popup-type-' + popup.type"
+          [class]="'popup-' + popup.size + ' popup-type-' + popup.type + (popup.layout ? ' popup-layout-' + popup.layout : '')"
           (click)="$event.stopPropagation()"
-          (keydown.escape)="onEscape(popup, $event)"
-          (keydown)="$event.stopPropagation()"
+          (keydown)="onPopupKeydown($event, popup)"
           tabindex="-1"
         >
           <!-- Header -->
@@ -50,8 +49,7 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
             }
             <h3 class="popup-title" [id]="'popup-title-' + popup.id">{{ popup.title }}</h3>
             @if (popup.closable) {
-              <app-icon-button class="popup-close" (clicked)="onDismiss(popup)" ariaLabel="Cerrar" variant="ghost" animation="none">
-                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+              <app-icon-button class="popup-close" (clicked)="onDismiss(popup)" ariaLabel="Cerrar" variant="hanging-close" animation="none">
               </app-icon-button>
             }
           </div>
@@ -119,7 +117,8 @@ export class PopupContainerComponent {
         overlay?.querySelector<HTMLElement>('[data-autofocus]') ??
         overlay?.querySelector<HTMLElement>('.popup-btn');
       if (objetivo) {
-        objetivo.focus();
+        const nativeFocusable = objetivo.matches('button, input, [tabindex]') ? objetivo : objetivo.querySelector<HTMLElement>('button, input, [tabindex]');
+        (nativeFocusable || objetivo).focus();
         this.focused.add(ultimo.id);
       }
     });
@@ -158,6 +157,13 @@ export class PopupContainerComponent {
     }
     if (popup.closable) {
       this.popupService.close(popup.id);
+    }
+  }
+
+  onPopupKeydown(event: KeyboardEvent, popup: PopupItem): void {
+    event.stopPropagation();
+    if (event.key === 'Escape') {
+      this.onEscape(popup, event);
     }
   }
 }

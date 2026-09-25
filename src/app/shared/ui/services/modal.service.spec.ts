@@ -22,12 +22,12 @@ describe('ModalService', () => {
     expect(service.modals()).toEqual([]);
   });
 
-  it('keeps alert actions scoped to their own modal', () => {
+  it('keeps open actions scoped to their own modal', () => {
     const service = new ModalService();
-    const firstId = service.alert('Primero', 'Mensaje');
-    const secondId = service.alert('Segundo', 'Mensaje');
+    const firstId = service.open({ title: 'Primero', message: 'Mensaje' });
+    const secondId = service.open({ title: 'Segundo', message: 'Mensaje' });
 
-    service.modals().find((modal) => modal.id === firstId)?.buttons?.[0].action();
+    service.close(firstId);
     jasmine.clock().tick(200);
 
     expect(service.modals().map((modal) => modal.id)).toEqual([secondId]);

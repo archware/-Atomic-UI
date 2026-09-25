@@ -1,6 +1,6 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, HostBinding } from '@angular/core';
 
-export type IconButtonVariant = 'default' | 'ghost' | 'avatar' | 'close';
+export type IconButtonVariant = 'default' | 'ghost' | 'avatar' | 'close' | 'hanging-close';
 export type IconButtonAnimation = 'rotate' | 'grow' | 'none' | 'custom';
 
 @Component({
@@ -13,6 +13,11 @@ export type IconButtonAnimation = 'rotate' | 'grow' | 'none' | 'custom';
 export class IconButtonComponent {
   /** Button variant */
   readonly variant = input<IconButtonVariant>('default');
+
+  @HostBinding('class.is-hanging-close')
+  get isHangingClose() {
+    return this.variant() === 'hanging-close';
+  }
 
   /** Hover animation for the icon */
   readonly animation = input<IconButtonAnimation>('rotate');

@@ -2,34 +2,24 @@ import { Component } from '@angular/core';
 import type { ChartConfiguration } from 'chart.js';
 
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
-import { TableComponent } from '../../../../shared/ui/atoms/table/table.component';
-import { TableHeadComponent } from '../../../../shared/ui/atoms/table/table-head.component';
-import { TableRowComponent } from '../../../../shared/ui/atoms/table/table-row.component';
-import { TableCellComponent } from '../../../../shared/ui/atoms/table/table-cell.component';
 import { AvatarComponent } from '../../../../shared/ui/atoms/avatar/avatar.component';
 import { ChipComponent } from '../../../../shared/ui/atoms/chip/chip.component';
-import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
-import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
 import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecules/action-group/action-group.component';
 import { DataTable, DataTableColumn } from '../../../../shared/ui/organisms/data-table/data-table';
 import { ChartComponent } from '../../../../shared/ui/organisms/chart/chart.component';
+import { PaginationComponent } from '../../../../shared/ui/molecules/pagination/pagination.component';
 
 @Component({
   selector: 'app-showcase-data-display',
   standalone: true,
   imports: [
     PanelComponent,
-    TableComponent,
-    TableHeadComponent,
-    TableRowComponent,
-    TableCellComponent,
     AvatarComponent,
     ChipComponent,
-    RowComponent,
-    TextComponent,
     ActionGroupComponent,
     ChartComponent,
-    DataTable
+    DataTable,
+    PaginationComponent
 ],
   template: `
     <!-- TABLAS CON ACTION GROUP -->
@@ -150,6 +140,70 @@ import { ChartComponent } from '../../../../shared/ui/organisms/chart/chart.comp
         </app-panel>
       </div>
     </section>
+
+    <!-- PAGINACIÓN -->
+    <section class="showcase-section">
+      <h3 class="section-title">Paginación (Variantes)</h3>
+      <p style="color: var(--text-color-secondary); margin-bottom: 1rem; font-size: 0.875rem;">
+        Componente <code>&lt;app-pagination&gt;</code> con 4 variantes: <code>standard</code>, <code>minimal</code>, <code>rounded</code>, <code>cards</code>.
+      </p>
+
+      <app-panel title="Variante: standard" style="margin-bottom: 1rem;">
+        <app-pagination
+          [total]="100"
+          [pageSize]="10"
+          [page]="1"
+          variant="standard"
+          size="md">
+        </app-pagination>
+      </app-panel>
+
+      <app-panel title="Variante: minimal" style="margin-bottom: 1rem;">
+        <app-pagination
+          [total]="100"
+          [pageSize]="10"
+          [page]="1"
+          variant="minimal"
+          size="md">
+        </app-pagination>
+      </app-panel>
+
+      <app-panel title="Variante: rounded" style="margin-bottom: 1rem;">
+        <app-pagination
+          [total]="100"
+          [pageSize]="10"
+          [page]="1"
+          variant="rounded"
+          size="md">
+        </app-pagination>
+      </app-panel>
+
+      <app-panel title="Variante: cards" style="margin-bottom: 1rem;">
+        <app-pagination
+          [total]="100"
+          [pageSize]="10"
+          [page]="1"
+          variant="cards"
+          size="md">
+        </app-pagination>
+      </app-panel>
+
+      <h4 class="subsection-title">Tamaños (Sizes) - Variante 'standard'</h4>
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-color-secondary)">Size: sm</span>
+          <app-pagination [total]="50" [pageSize]="10" [page]="1" size="sm"></app-pagination>
+        </div>
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-color-secondary)">Size: md (default)</span>
+          <app-pagination [total]="50" [pageSize]="10" [page]="1" size="md"></app-pagination>
+        </div>
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-color-secondary)">Size: lg</span>
+          <app-pagination [total]="50" [pageSize]="10" [page]="1" size="lg"></app-pagination>
+        </div>
+      </div>
+    </section>
   `,
   styles: [`
     .showcase-section { margin-bottom: 2rem; display: block; }
@@ -188,7 +242,7 @@ export class ShowcaseDataDisplayComponent {
   tableColumns: DataTableColumn<any>[] = [
     { key: 'name', header: 'Nombre', width: 'minmax(200px, 1fr)' },
     { key: 'role', header: 'Rol', width: '120px' },
-    { key: 'status', header: 'Estado', width: '120px', isBadge: true, badgeStatus: (row) => row.chipVariant === 'success' ? 'active' : (row.chipVariant === 'warning' ? 'degraded' : 'inactive') },
+    { key: 'status', header: 'Estado', width: '120px', isTag: true, tagVariant: (row: any) => row.chipVariant === 'success' ? 'success' : (row.chipVariant === 'warning' ? 'warning' : 'error') },
     { key: 'date', header: 'Fecha', width: '120px' },
   ];
 

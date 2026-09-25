@@ -6,11 +6,16 @@
       [class.icon-btn--ghost]="variant() === 'ghost'"
       [class.icon-btn--avatar]="variant() === 'avatar'"
       [class.icon-btn--close]="variant() === 'close'"
+      [class.icon-btn--hanging-close]="variant() === 'hanging-close'"
       [attr.title]="tooltip()"
       [attr.aria-label]="ariaLabel() || tooltip()"
       [disabled]="disabled()"
       (click)="!disabled() && clicked.emit($event)">
-      <ng-content></ng-content>
+      @if (variant() === 'close' || variant() === 'hanging-close') {
+        <span class="close blades heavy"></span>
+      } @else {
+        <ng-content></ng-content>
+      }
       @if (badge() && badge() > 0) {
         <span class="icon-btn__badge">{{ badge() > 9 ? '9+' : badge() }}</span>
       }

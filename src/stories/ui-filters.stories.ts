@@ -26,7 +26,7 @@ export const Default: Story = {
         { value: 'active',   label: 'Activo' },
         { value: 'inactive', label: 'Inactivo' },
       ],
-      onFilter: () => alert('Filtrar'),
+      onFilter: () => console.log('Filtrar'),
     },
     template: `
       <app-filters

@@ -1,12 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Select2Component } from './select2.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('Select2Component', () => {
   let fixture: ComponentFixture<Select2Component>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Select2Component],
+      imports: [Select2Component, TranslateModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Select2Component);
@@ -22,7 +23,7 @@ describe('Select2Component', () => {
       '.select2-wrapper',
     ) as HTMLElement;
     expect(wrapper.classList).toContain('open');
-    expect(getComputedStyle(wrapper).zIndex).toBe('1000');
+    expect(getComputedStyle(wrapper).zIndex).toBe('9999');
   });
 
   it('removes a disabled control from the tab order and keeps it closed', () => {

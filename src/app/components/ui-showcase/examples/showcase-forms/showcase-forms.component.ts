@@ -6,10 +6,11 @@ import { Select2Component, Select2Option } from '../../../../shared/ui/molecules
 import { DatepickerComponent } from '../../../../shared/ui/molecules/datepicker/datepicker.component';
 import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
 import { DropdownComponent, DropdownOption } from '../../../../shared/ui/molecules/dropdown/dropdown.component';
-import { TextareaComponent } from '../../../../shared/ui/atoms/textarea/textarea.component';
+import { FloatingTextareaComponent } from '../../../../shared/ui/atoms/floating-textarea/floating-textarea.component';
 import { RadioComponent, RadioOption } from '../../../../shared/ui/atoms/radio/radio.component';
 import { CheckboxComponent } from '../../../../shared/ui/atoms/checkbox/checkbox.component';
 import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.component';
+import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/query-toolbar';
 
 @Component({
   selector: 'app-showcase-forms',
@@ -21,10 +22,11 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
     DatepickerComponent,
     RowComponent,
     DropdownComponent,
-    TextareaComponent,
+    FloatingTextareaComponent,
     RadioComponent,
     CheckboxComponent,
-    ButtonComponent
+    ButtonComponent,
+    QueryToolbar
 ],
   template: `
     <!-- FLOATING INPUTS -->
@@ -95,6 +97,37 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
           [(ngModel)]="passwordInputValue"
           [ngModelOptions]="{standalone: true}"
         ></app-floating-input>
+      </div>
+
+      <h4 class="subsection-title">Floating Textareas</h4>
+      <div class="input-variants-grid">
+        <app-floating-textarea 
+          variant="floating" 
+          label="Floating Textarea" 
+          [(ngModel)]="floatingTextareaValue"
+          [ngModelOptions]="{standalone: true}"
+        ></app-floating-textarea>
+
+        <app-floating-textarea 
+          variant="underline" 
+          label="Underline Textarea" 
+          [(ngModel)]="underlineTextareaValue"
+          [ngModelOptions]="{standalone: true}"
+        ></app-floating-textarea>
+
+        <app-floating-textarea 
+          variant="material" 
+          label="Material Textarea" 
+          [(ngModel)]="materialTextareaValue"
+          [ngModelOptions]="{standalone: true}"
+        ></app-floating-textarea>
+
+        <app-floating-textarea 
+          variant="outline" 
+          label="Outline Textarea" 
+          [(ngModel)]="outlineTextareaValue"
+          [ngModelOptions]="{standalone: true}"
+        ></app-floating-textarea>
       </div>
 
       <h4 class="subsection-title">Anchos Personalizados</h4>
@@ -208,6 +241,56 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
       <p class="mt-2 text-sm">Seleccionado: {{ selectedCountry || 'Ninguno' }}</p>
     </section>
 
+    <!-- BÚSQUEDA (SIMPLE VS CASCADA) -->
+    <section class="showcase-section">
+      <h3 class="section-title">Variante de Búsqueda</h3>
+      <p style="color: var(--text-color-secondary); margin-bottom: 1rem; font-size: 0.875rem;">
+        Demostración del "Buscador Simple" vs "Búsqueda en Cascada" simulando el comportamiento dentro de <code>&lt;app-query-toolbar&gt;</code> (como se usa en <code>pagina-crud</code>).
+      </p>
+
+      <div style="background: var(--surface-elevated); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-bottom: 1.5rem;">
+        <h4 class="subsection-title" style="margin-top: 0;">1. Buscador Simple</h4>
+        <app-query-toolbar accessibleLabel="Búsqueda simple">
+          <div query-filters style="display: flex; gap: 0.5rem; width: 100%;">
+            <app-floating-input 
+              variant="outline" 
+              label="Buscar..." 
+              type="search"
+              width="300px"
+            ></app-floating-input>
+          </div>
+          <div query-actions>
+            <app-button variant="primary" iconClass="fa-solid fa-plus">
+              <strong>Nuevo</strong>
+            </app-button>
+          </div>
+        </app-query-toolbar>
+      </div>
+
+      <div style="background: var(--surface-elevated); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+        <h4 class="subsection-title" style="margin-top: 0;">2. Búsqueda en Cascada</h4>
+        <app-query-toolbar accessibleLabel="Búsqueda en cascada">
+          <div query-filters style="display: flex; gap: 0.5rem; width: 100%; align-items: center; flex-wrap: wrap;">
+            <app-select2 
+              [options]="[{value: 'name', label: 'Nombre'}, {value: 'status', label: 'Estado'}]" 
+              placeholder="Buscar por..."
+              width="180px"
+            ></app-select2>
+            <app-select2 
+              [options]="[{value: 'active', label: 'Activo'}, {value: 'inactive', label: 'Inactivo'}]" 
+              placeholder="Valor"
+              width="200px"
+            ></app-select2>
+          </div>
+          <div query-actions>
+            <app-button variant="primary" iconClass="fa-solid fa-plus">
+              <strong>Nuevo</strong>
+            </app-button>
+          </div>
+        </app-query-toolbar>
+      </div>
+    </section>
+
     <!-- FORMULARIO -->
     <section class="showcase-section">
       <h3 class="section-title">Formulario con Componentes Atomic</h3>
@@ -251,14 +334,13 @@ import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.compo
 
         <!-- Mensaje - fila completa -->
         <app-row variant="form" columns="1fr">
-          <app-textarea 
+          <app-floating-textarea 
           label="Mensaje" 
           variant="floating"
           [rows]="4"
-          [maxlength]="500"
           [(ngModel)]="formData.message"
           name="message"
-          ></app-textarea>
+          ></app-floating-textarea>
         </app-row>
 
         
@@ -319,6 +401,12 @@ export class ShowcaseFormsComponent {
   errorInputValue = '';
   dateInputValue = '';
   passwordInputValue = '';
+
+  // Textarea values
+  floatingTextareaValue = '';
+  underlineTextareaValue = '';
+  materialTextareaValue = '';
+  outlineTextareaValue = '';
 
   // Width examples
   widthExample1 = '';

@@ -1,4 +1,4 @@
-﻿import '@angular/compiler';
+import '@angular/compiler';
 import { ApplicationConfig, ErrorHandler, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, importProvidersFrom } from '@angular/core';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -56,7 +56,6 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     importProvidersFrom(
       TranslateModule.forRoot({
-        defaultLanguage: 'es',
         fallbackLang: 'es',
         loader: {
           provide: TranslateLoader,

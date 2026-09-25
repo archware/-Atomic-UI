@@ -1,7 +1,8 @@
-﻿@if (routerLink()) {
+@if (routerLink()) {
   <a
     [routerLink]="routerLink()"
     [attr.target]="target()"
+    [attr.rel]="rel()"
     [attr.aria-label]="ariaLabel()"
     class="atomic-link atomic-link--{{ variant() }}"
   >
@@ -11,6 +12,7 @@
   <a
     [href]="href() ?? '#'"
     [attr.target]="target()"
+    [attr.rel]="rel()"
     [attr.aria-label]="ariaLabel()"
     class="atomic-link atomic-link--{{ variant() }}"
   >

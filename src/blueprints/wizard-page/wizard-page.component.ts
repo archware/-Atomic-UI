@@ -20,7 +20,8 @@ import {
   CheckboxComponent,
   RadioComponent,
   FileInputComponent,
-  FileInputFile
+  FileInputFile,
+  PopupService
 } from '@shared/ui';
 
 @Component({
@@ -69,7 +70,7 @@ export class WizardPageComponent {
   }
 
   onLogout() {
-    alert('Cerrando sesión...');
+    this.popup.info('Sesión finalizada', 'Cerrando sesión...');
     this.router.navigate(['/login']);
   }
 
@@ -79,6 +80,7 @@ export class WizardPageComponent {
 
   private readonly fb = inject(FormBuilder).nonNullable;
   private readonly router = inject(Router);
+  private readonly popup = inject(PopupService);
 
   // WIZARD STATE
   currentStep = signal(0);
@@ -202,7 +204,7 @@ export class WizardPageComponent {
     this.isSaving.set(true);
     setTimeout(() => {
       this.isSaving.set(false);
-      alert('Datos guardados exitosamente');
+      this.popup.success('Éxito', 'Datos guardados exitosamente');
       this.router.navigate(['/crud']);
     }, 1500);
   }

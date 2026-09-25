@@ -24,6 +24,7 @@
 }
 
 .popup {
+  position: relative;
   background: var(--surface-background);
   border-radius: var(--radius-lg);
   width: 90%;
@@ -32,7 +33,7 @@
   display: flex;
   flex-direction: column;
   max-height: 90vh;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .popup-closing .popup {
@@ -53,6 +54,7 @@
 .popup-sm { max-width: 360px; }
 .popup-md { max-width: 450px; }
 .popup-lg { max-width: 600px; }
+.popup-xl { max-width: 1140px; }
 
 /* Header */
 .popup-header {
@@ -111,4 +113,5 @@
   padding: var(--space-4) var(--space-5);
   border-top: 1px solid var(--border-color);
 }
+
 

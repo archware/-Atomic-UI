@@ -1,0 +1,46 @@
+<div
+      class="floating-textarea-wrapper"
+      [class]="'variant-' + variant()"
+      [class.focused]="isFocused()"
+      [class.has-value]="hasValue()"
+      [class.has-error]="error()"
+      [class.disabled]="isDisabled()"
+      [appVariablesCss]="{ '--floating-textarea-width': width() || null }"
+    >
+      <textarea
+        #textareaEl
+        class="floating-textarea"
+        [id]="textareaId()"
+        [disabled]="isDisabled()"
+        [readonly]="readonly()"
+        [value]="value()"
+        [rows]="rows()"
+        (input)="onInput($event)"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+        [attr.placeholder]="variant() === 'floating' || variant() === 'material' ? ' ' : placeholder()"
+      ></textarea>
+      <label class="floating-label" [attr.for]="textareaId()">{{ label() }}</label>
+      <span class="textarea-line"></span>
+
+      @if (clearable()) {
+        <button
+          type="button"
+          class="textarea-icon-btn textarea-icon-btn--static"
+          (click)="handleClearClick($event)"
+          (keydown.enter)="handleClearClick($event)"
+          (keydown.space)="handleClearClick($event); $event.preventDefault()"
+          tabindex="0"
+          [attr.aria-label]="'Clear'"
+          [appVariablesCss]="{
+            '--floating-textarea-icon-cursor': hasValue() ? 'pointer' : 'default'
+          }"
+        >
+          <i class="fa-solid fa-times" [style.display]="hasValue() ? 'inline-block' : 'none'"></i>
+        </button>
+      }
+
+      @if (error()) {
+        <span class="textarea-error">{{ error() }}</span>
+      }
+    </div>

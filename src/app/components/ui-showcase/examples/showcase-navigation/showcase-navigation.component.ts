@@ -48,7 +48,7 @@ import { StepperComponent, Step } from '../../../../shared/ui/organisms/stepper/
 
         <!-- Variant 1: Dashboard -->
         <div style="height: 500px; min-width: 0; border: 1px solid var(--border-color); border-radius: 0.75rem; overflow: hidden; position: relative; background-color: var(--surface-ground);">
-          <app-sidebar [menuItems]="variant1Items" [user]="exampleUser" [collapsed]="false" logoText="CxC Ventas" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)"></app-sidebar>
+          <app-sidebar [menuItems]="variant1Items" [user]="exampleUser" [collapsed]="false" logoText="Atomic UI" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)"></app-sidebar>
           <div style="position: absolute; top: 0.75rem; right: 0.75rem; background: rgba(0,0,0,0.45); backdrop-filter: blur(4px); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; color: #e5e7eb; letter-spacing: 0.02em;">
             Variant 1: Main App
           </div>

@@ -40,7 +40,7 @@ describe('FooterComponent', () => {
 
     const element = fixture.nativeElement as HTMLElement;
     expect(element.querySelector('.atomic-footer__legal-link')?.textContent).toContain('Privacidad');
-    expect(element.querySelector('.atomic-footer__social-link')?.getAttribute('rel')).toBe(
+    expect(element.querySelector('.atomic-footer__social-link a')?.getAttribute('rel')).toBe(
       'noopener noreferrer'
     );
   });
@@ -76,7 +76,7 @@ describe('FooterComponent', () => {
     fixture.detectChanges();
 
     const links = (fixture.nativeElement as HTMLElement).querySelectorAll(
-      '.atomic-footer__social-link'
+      '.atomic-footer__social-link a'
     );
     expect(links[0].getAttribute('aria-label')).toBe('X');
     expect(links[1].getAttribute('aria-label')).toBe('Código institucional');

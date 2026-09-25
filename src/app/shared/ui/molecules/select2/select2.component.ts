@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 
@@ -21,7 +21,7 @@ export interface Select2Option {
   // Standalone component for Select2 dropdown
   selector: 'app-select2',
   standalone: true,
-  imports: [FormsModule, VariablesCssDirective, TranslatePipe, TranslateDirective],
+  imports: [FormsModule, VariablesCssDirective, TranslatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,

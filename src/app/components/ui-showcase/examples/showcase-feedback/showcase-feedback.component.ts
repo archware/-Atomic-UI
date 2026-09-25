@@ -45,9 +45,9 @@ import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
       <h3 class="section-title">Modales</h3>
       <app-text variant="body-sm" color="muted" style="display:block; margin-bottom: 1rem;">Diálogos modales que bloquean la interacción con el resto de la página.</app-text>
       <div class="button-grid">
-        <app-button variant="primary" (click)="openConfirmModal()">Modal de Confirmación</app-button>
-        <app-button variant="danger" (click)="openBlockingModal()">Modal Bloqueante</app-button>
-        <app-button variant="outline" (click)="openAlertModal()">Modal Alerta</app-button>
+        <app-button variant="primary" (buttonClick)="openConfirmModal()">Modal de Confirmación</app-button>
+        <app-button variant="danger" (buttonClick)="openBlockingModal()">Modal Bloqueante</app-button>
+        <app-button variant="outline" (buttonClick)="openAlertModal()">Modal Alerta</app-button>
       </div>
     </section>
 
@@ -56,10 +56,10 @@ import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
       <h3 class="section-title">Popups</h3>
       <app-text variant="body-sm" color="muted" style="display:block; margin-bottom: 1rem;">Ventanas emergentes informativas o de promoción.</app-text>
       <div class="button-grid">
-        <app-button variant="secondary" (click)="showPromoPopup()">Popup Promocional</app-button>
-        <app-button variant="outline" (click)="showInfoPop()">Popup Informativo</app-button>
-        <app-button variant="success" (click)="showSuccessPopup()">Popup Éxito</app-button>
-        <app-button variant="danger" (click)="showConfirmPopup()">Popup Confirmación</app-button>
+        <app-button variant="secondary" (buttonClick)="showPromoPopup()">Popup Promocional</app-button>
+        <app-button variant="outline" (buttonClick)="showInfoPop()">Popup Informativo</app-button>
+        <app-button variant="success" (buttonClick)="showSuccessPopup()">Popup Éxito</app-button>
+        <app-button variant="danger" (buttonClick)="showConfirmPopup()">Popup Confirmación</app-button>
       </div>
     </section>
 
@@ -77,10 +77,10 @@ import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
     <section class="showcase-section">
       <h3 class="section-title">Toast / Notificaciones</h3>
       <div class="button-grid">
-        <app-button variant="primary" (click)="showToast('info')">Info</app-button>
-        <app-button variant="success" (click)="showToast('success')">Success</app-button>
-        <app-button variant="warning" (click)="showToast('warning')">Warning</app-button>
-        <app-button variant="danger" (click)="showToast('error')">Error</app-button>
+        <app-button variant="primary" (buttonClick)="showToast('info')">Info</app-button>
+        <app-button variant="success" (buttonClick)="showToast('success')">Success</app-button>
+        <app-button variant="warning" (buttonClick)="showToast('warning')">Warning</app-button>
+        <app-button variant="danger" (buttonClick)="showToast('error')">Error</app-button>
       </div>
     </section>
   `,
@@ -191,6 +191,6 @@ export class ShowcaseFeedbackComponent {
   }
 
   openAlertModal() {
-    this.modal.alert('Información Importante', 'Este es un mensaje de alerta simple con un solo botón de acción.');
+    this.popup.info('Información Importante', 'Este es un mensaje de alerta simple con un solo botón de acción.');
   }
 }

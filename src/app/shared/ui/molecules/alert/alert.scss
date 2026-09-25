@@ -44,7 +44,38 @@ que la separacion total no crece.
 
 .alert__icon {
   flex: 0 0 auto;
-  margin-top: 0.2em;
+  margin-top: 0.15em;
+}
+
+/* ── CSS-only X icon (blades.heavy) for danger alerts ──────────────── */
+/* Duplicated from icon-button.component.css because Angular's view    */
+/* encapsulation prevents those rules from reaching alert's template.  */
+.close {
+  position: relative;
+  display: inline-block;
+  font-size: 18px;
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
+}
+.close::before, .close::after {
+  content: "";
+  position: absolute;
+  height: 0.04em;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  margin-top: -0.02em;
+  background: currentColor;
+}
+.close::before { transform: rotate(45deg); }
+.close::after  { transform: rotate(-45deg); }
+.close.heavy::before, .close.heavy::after {
+  height: 0.24em;
+  margin-top: -0.12em;
+}
+.close.blades::before, .close.blades::after {
+  border-radius: 0.1em 0;
 }
 
 .alert__body,
@@ -67,27 +98,31 @@ que la separacion total no crece.
   line-height: 1.5;
 }
 
-.alert__close {
-  width: 1.75rem;
-  height: 1.75rem;
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  padding: 0;
-  border: 0;
+
+
+
+
+/* Override icon-button's encapsulated hover transforms and shadows that
+   are too aggressive for the inline-alert context.                        */
+.alert__close ::ng-deep .icon-btn--close {
   border-radius: var(--radius-sm);
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  opacity: 0.72;
+  box-shadow: none;
 }
 
-.alert__close:hover {
+.alert__close ::ng-deep .icon-btn--close:hover {
   background: rgb(255 255 255 / 45%);
-  opacity: 1;
+  color: inherit;
+  transform: none;
+  box-shadow: none;
 }
 
-.alert__close:focus-visible {
+.alert__close ::ng-deep .icon-btn--close:active {
+  background: rgb(255 255 255 / 55%);
+  transform: none;
+  box-shadow: none;
+}
+
+.alert__close ::ng-deep .icon-btn--close:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }
@@ -126,4 +161,30 @@ consumia ni un solo fichero del ecosistema.
 .alert--danger {
   background: var(--danger-color-lighter);
   color: var(--alert-danger-text);
+}
+
+/* Fixes over control height to avoid button overflow */
+:host {
+  --control-height: 1.75rem;
+}
+
+::ng-deep .alert__close .icon-btn--close {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-sm);
+  background: transparent !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  opacity: 0.72;
+  transform: none !important;
+}
+
+::ng-deep .alert__close .icon-btn--close:hover {
+  background: rgb(255 255 255 / 45%) !important;
+  opacity: 1;
+}
+
+::ng-deep .alert__close .icon-btn--close:focus-visible {
+  outline: 2px solid currentColor !important;
+  outline-offset: 2px !important;
 }

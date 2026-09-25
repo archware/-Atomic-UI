@@ -16,13 +16,13 @@ describe('Alert', () => {
 
   it('aplica la clase semantica del kind y muestra el titulo', async () => {
     fixture.componentRef.setInput('kind', 'warning');
-    fixture.componentRef.setInput('title', 'Atención');
+    fixture.componentRef.setInput('title', 'Atencion');
     await fixture.whenStable();
 
     const alert = fixture.nativeElement.querySelector('.alert') as HTMLElement;
     expect(alert.classList).toContain('alert--warning');
     expect(fixture.nativeElement.querySelector('.alert__title')?.textContent?.trim()).toBe(
-      'Atención',
+      'Atencion',
     );
   });
 
@@ -36,9 +36,6 @@ describe('Alert', () => {
     expect((fixture.nativeElement as HTMLElement).classList).toContain('alert-flow--none');
   });
 
-  // `role="alert"` implica `aria-live="assertive"`. La implementacion anterior lo
-  // fijaba para los cuatro kinds y luego lo sobrescribia con `polite`: una
-  // combinacion contradictoria que cada lector de pantalla resuelve distinto.
   it('reserva la interrupcion del lector de pantalla para el kind danger', async () => {
     fixture.componentRef.setInput('kind', 'info');
     await fixture.whenStable();
@@ -53,19 +50,44 @@ describe('Alert', () => {
     expect(alert.getAttribute('aria-live')).toBe('assertive');
   });
 
-  // Con `provideZonelessChangeDetection`, la implementacion anterior escribia un
-  // campo plano al cerrar y no agendaba deteccion: la alerta emitia el evento
-  // pero no llegaba a desaparecer de la pantalla.
   it('emite closed y desaparece de verdad en modo zoneless', async () => {
     fixture.componentRef.setInput('closable', true);
     let closedCount = 0;
     fixture.componentInstance.closed.subscribe(() => (closedCount += 1));
     await fixture.whenStable();
 
-    (fixture.nativeElement.querySelector('.alert__close') as HTMLButtonElement).click();
+    (fixture.nativeElement.querySelector('.alert__close button') as HTMLButtonElement).click();
     await fixture.whenStable();
 
     expect(closedCount).toBe(1);
     expect(fixture.nativeElement.querySelector('.alert')).toBeNull();
+  });
+
+  it('renderiza iconos correctos para info, success y warning', async () => {
+    const iconMap: Record<string, string> = {
+      'info': 'fa-circle-info',
+      'success': 'fa-circle-check',
+      'warning': 'fa-triangle-exclamation'
+    };
+    
+    for (const kind of ['info', 'success', 'warning'] as const) {
+      fixture.componentRef.setInput('kind', kind);
+      await fixture.whenStable();
+      const icon = fixture.nativeElement.querySelector('.alert__icon') as HTMLElement;
+      expect(icon).not.toBeNull();
+      expect(icon.classList).toContain(iconMap[kind]);
+    }
+  });
+
+  it('renderiza el icono blades.heavy para danger', async () => {
+    fixture.componentRef.setInput('kind', 'danger');
+    await fixture.whenStable();
+
+    const icon = fixture.nativeElement.querySelector('.alert__icon') as HTMLElement;
+    expect(icon).withContext('danger debe tener icono').not.toBeNull();
+    expect(icon.classList).toContain('close');
+    expect(icon.classList).toContain('blades');
+    expect(icon.classList).toContain('heavy');
+    expect(icon.getAttribute('aria-hidden')).toBe('true');
   });
 });

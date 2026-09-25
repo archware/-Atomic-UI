@@ -7,25 +7,30 @@
   max-width: var(--crud-dialog-current-max-width);
   max-height: var(--crud-dialog-max-height);
   padding: var(--crud-dialog-padding);
-  overflow: hidden;
   border: 1px solid var(--modal-border);
   border-radius: var(--radius-lg);
   background: var(--modal-bg);
   color: var(--text-color);
   box-shadow: var(--modal-shadow);
+  overflow: visible;
 }
 
 .crud-dialog__viewport {
   display: block;
   max-width: 100%;
   max-height: var(--crud-dialog-max-height);
+  overflow: visible !important;
+
+  ::ng-deep .so-scroll-area {
+    position: static;
+  }
 }
 
 .crud-dialog__surface {
   max-width: 100%;
   max-height: var(--crud-dialog-max-height);
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow-y: visible;
+  overflow-x: visible;
   overscroll-behavior: contain;
 }
 

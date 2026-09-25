@@ -79,8 +79,8 @@ const COLUMNAS: readonly DataTableColumn<MovimientoFila>[] = [
     key: 'estado',
     header: 'Estado',
     width: '10rem',
-    isBadge: true,
-    badgeStatus: (fila) => ESTADO_A_INSIGNIA[fila.estado],
+    isTag: true,
+    tagVariant: (fila: MovimientoFila) => ESTADO_A_INSIGNIA[fila.estado] as any,
   },
 ];
 

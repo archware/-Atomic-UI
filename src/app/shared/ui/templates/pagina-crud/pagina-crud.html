@@ -26,25 +26,27 @@
 <app-query-toolbar accessibleLabel="BÃºsqueda y acciones de {{ titulo() }}">
   <div query-filters class="pagina-crud__filtros-cascada">
     @if (opcionesBusqueda().length > 0) {
-      <app-select
+      <app-select2
         class="pagina-crud__filtro-control"
-        [options]="opcionesBusqueda()"
-        [selected]="tipoBusquedaInterno()"
-        (selectionChange)="onTipoBusquedaCambiado($event)"
-        label="Buscar por"
-      ></app-select>
+        [options]="opcionesBusquedaSelect2()"
+        [ngModel]="tipoBusquedaInterno()"
+        (ngModelChange)="onTipoBusquedaCambiado($event)"
+        [label]="'Buscar por'"
+        [searchable]="false"
+      ></app-select2>
     }
 
     <!-- Cascada: solo aparece si hay un tipo seleccionado -->
     @if (tipoBusquedaInterno(); as tipo) {
       @if (getTipoFiltro(tipo) === 'select') {
-        <app-select
+        <app-select2
           class="pagina-crud__filtro-control"
           [options]="getOpcionesFiltro(tipo)"
-          [selected]="busqueda()"
-          (selectionChange)="alBuscar($event)"
-          label="Valor"
-        ></app-select>
+          [ngModel]="busqueda()"
+          (ngModelChange)="alBuscar($event)"
+          [label]="'Valor'"
+          [searchable]="false"
+        ></app-select2>
       } @else {
         <app-input
           class="pagina-crud__filtro-control"
@@ -134,8 +136,7 @@
     <h2 [id]="idTituloDialogo" class="pagina-crud__dialogo-titulo">
       {{ tituloDialogo() }}
     </h2>
-      <app-icon-button class="pagina-crud__btn-cerrar" variant="close" animation="none" aria-label="Cerrar" (clicked)="cerrarDialogo()">
-        <i class="fa-solid fa-xmark"></i>
+      <app-icon-button variant="hanging-close" animation="none" aria-label="Cerrar" (clicked)="cerrarDialogo()">
       </app-icon-button>
   </header>
 
@@ -173,7 +174,7 @@
       <footer class="pagina-crud__dialogo-pie">
         <app-button
           variant="outline"
-          (clicked)="cerrarDialogo()"
+          (buttonClick)="cerrarDialogo()"
         >
           {{ esModoPrevisualizacion ? 'Cerrar' : 'Cancelar' }}
         </app-button>
@@ -182,6 +183,7 @@
             variant="primary"
             [loading]="guardando()"
             [disabled]="guardando()"
+            (buttonClick)="alGuardar.emit()"
           >
             Guardar
           </app-button>
@@ -209,8 +211,10 @@
       (click)="$event.stopPropagation()"
     >
       <h3 id="confirmacion-titulo" class="pagina-crud__confirmacion-titulo">
-        {{ confResueltas.titulo(entidadAEliminar()) }}
-      </h3>
+          {{ confResueltas.titulo(entidadAEliminar()) }}
+        </h3>
+        <app-icon-button variant="hanging-close" animation="none" aria-label="Cerrar" (clicked)="cancelarBaja()">
+        </app-icon-button>
       <p id="confirmacion-mensaje" class="pagina-crud__confirmacion-mensaje">
         {{ confResueltas.mensaje(entidadAEliminar()) }}
       </p>

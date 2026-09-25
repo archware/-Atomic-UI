@@ -24,7 +24,7 @@ export interface ChasisConfig {
 }
 
 export const defaultChasisConfig: ChasisConfig = {
-  logoText: 'CxC Ventas',
+  logoText: 'Atomic UI',
   logoIcon: 'fa-solid fa-sack-dollar',
   logoIconColor: 'var(--purple-500)',
   logoTextColor: 'var(--text-color)',

@@ -89,12 +89,14 @@ const ETIQUETAS_POR_TAMANO: Readonly<Record<PopupSize, string>> = {
   sm: 'sm · hasta 360 px',
   md: 'md · hasta 450 px',
   lg: 'lg · hasta 600 px',
+  xl: 'xl · hasta 1140 px',
 };
 
 const MENSAJES_POR_TAMANO: Readonly<Record<PopupSize, string>> = {
   sm: 'Una frase y un boton. Es el ancho que corresponde a un aviso que se lee de un vistazo.',
   md: 'El ancho por omision: dos o tres lineas, una decision.',
   lg: 'Solo si el aviso trae una lista o un detalle que no se puede resumir mas.',
+  xl: 'Dialogo muy ancho, pensado para layouts complejos como pagina-crud-accordion o formularios densos.',
 };
 
 const DETALLE_DEL_RECHAZO = [

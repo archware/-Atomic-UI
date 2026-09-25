@@ -171,8 +171,8 @@ const COLUMNAS_ACTIVIDAD: readonly DataTableColumn<ActividadFila>[] = [
     key: 'estado',
     header: 'Estado',
     width: '10rem',
-    isBadge: true,
-    badgeStatus: (fila) => ESTADO_A_INSIGNIA[fila.estado],
+    isTag: true,
+    tagVariant: (fila: ActividadFila) => ESTADO_A_INSIGNIA[fila.estado] as any,
   },
 ];
 

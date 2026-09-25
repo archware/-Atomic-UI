@@ -131,7 +131,7 @@ export const CONFIRMACION_BAJA_DEFECTO: Readonly<Required<ConfiguracionConfirmac
   titulo: () => 'Confirmar desactivación',
   mensaje: () => 'Este registro quedará inactivo. Las referencias existentes se conservarán.',
   etiquetaConfirmar: 'Desactivar',
-  etiquetaCancelar: 'Revisar',
+  etiquetaCancelar: 'Cancelar',
 } as const;
 
 // ============================================================

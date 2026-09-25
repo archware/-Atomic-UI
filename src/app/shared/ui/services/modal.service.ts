@@ -109,21 +109,7 @@ export class ModalService {
     return id;
   }
 
-  /**
-   * Modal de alerta simple con un solo botón.
-   */
-  alert(title: string, message: string, buttonLabel = 'Aceptar'): number {
-    let id = 0;
-    id = this.open({
-      title,
-      message,
-      size: 'sm',
-      buttons: [
-        { label: buttonLabel, variant: 'primary', action: () => this.close(id) }
-      ]
-    });
-    return id;
-  }
+
 
   /**
    * Cierra un modal específico por ID.

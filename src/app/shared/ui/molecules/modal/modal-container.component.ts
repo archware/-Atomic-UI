@@ -28,7 +28,6 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
         [class.modal-closing]="modal.closing"
         (click)="onBackdropClick(modal)"
         (keydown.escape)="onEscape(modal)"
-        (keydown.enter)="onEnter(modal)"
         tabindex="-1"
       >
         <div 
@@ -37,7 +36,7 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
           [class]="'modal-' + modal.size"
           [class.modal-exit]="modal.closing"
           (click)="$event.stopPropagation()"
-          (keydown)="$event.stopPropagation()"
+          (keydown)="onModalKeydown($event, modal)"
           role="dialog"
           aria-modal="true"
           [attr.aria-labelledby]="'modal-title-' + modal.id"
@@ -47,8 +46,7 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
           <div class="modal-header">
             <h3 class="modal-title" [id]="'modal-title-' + modal.id">{{ modal.title }}</h3>
             @if (modal.closable) {
-              <app-icon-button class="modal-close" (clicked)="modalService.close(modal.id)" ariaLabel="Cerrar" variant="ghost" animation="none">
-                <i class="fa-solid fa-xmark"></i>
+              <app-icon-button class="modal-close" (clicked)="modalService.close(modal.id)" ariaLabel="Cerrar" variant="hanging-close" animation="none">
               </app-icon-button>
             }
           </div>
@@ -125,12 +123,10 @@ export class ModalContainerComponent {
     }
   }
 
-  onEnter(modal: ModalItem): void {
-    if (modal.buttons && modal.buttons.length > 0) {
-      const primaryBtn = modal.buttons.find(b => b.variant === 'primary' || !b.variant) || modal.buttons[0];
-      if (primaryBtn && primaryBtn.action) {
-        primaryBtn.action();
-      }
+  onModalKeydown(event: KeyboardEvent, modal: ModalItem): void {
+    event.stopPropagation();
+    if (event.key === 'Escape') {
+      this.onEscape(modal);
     }
   }
 }

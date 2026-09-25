@@ -1,7 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 
-export type PopupSize = 'sm' | 'md' | 'lg';
+export type PopupSize = 'sm' | 'md' | 'lg' | 'xl';
 export type PopupType = 'info' | 'success' | 'warning' | 'error' | 'confirm';
+export type PopupLayout = 'pagina-crud' | 'pagina-crud-accordion' | 'pagina-wizard';
 
 export interface PopupButton {
   label: string;
@@ -31,6 +32,8 @@ export interface PopupConfirmOptions {
   tone?: 'default' | 'danger';
   /** Por defecto `cancel`: la salida segura es la que recibe el foco. */
   initialFocus?: 'cancel' | 'confirm';
+  /** Variante de diseño del popup */
+  layout?: PopupLayout;
   onConfirm: () => void;
   onCancel?: () => void;
 }
@@ -41,6 +44,7 @@ export interface PopupConfig {
   message?: string;
   type?: PopupType;
   size?: PopupSize;
+  layout?: PopupLayout;
   icon?: string;
   closable?: boolean;
   closeOnBackdrop?: boolean;
@@ -100,6 +104,7 @@ export class PopupService {
       id,
       type: config.type ?? 'info',
       size: config.size ?? 'md',
+      layout: config.layout,
       closable: config.closable ?? true,
       closeOnBackdrop: config.closeOnBackdrop ?? true
     };
@@ -109,12 +114,14 @@ export class PopupService {
   }
 
   /** Popup informativo simple */
-  info(title: string, message: string): number {
+  info(title: string, message: string, size?: PopupSize, layout?: PopupLayout): number {
     let id = 0;
     id = this.show({
       title,
       message,
       type: 'info',
+      size,
+      layout,
       icon: 'fa-solid fa-circle-info',
       buttons: [{ label: 'Aceptar', variant: 'primary', action: () => this.close(id) }]
     });
@@ -122,12 +129,14 @@ export class PopupService {
   }
 
   /** Popup de éxito */
-  success(title: string, message: string): number {
+  success(title: string, message: string, size?: PopupSize, layout?: PopupLayout): number {
     let id = 0;
     id = this.show({
       title,
       message,
       type: 'success',
+      size,
+      layout,
       icon: 'fa-solid fa-circle-check',
       buttons: [{ label: 'Aceptar', variant: 'primary', action: () => this.close(id) }]
     });
@@ -135,12 +144,14 @@ export class PopupService {
   }
 
   /** Popup de advertencia */
-  warning(title: string, message: string): number {
+  warning(title: string, message: string, size?: PopupSize, layout?: PopupLayout): number {
     let id = 0;
     id = this.show({
       title,
       message,
       type: 'warning',
+      size,
+      layout,
       icon: 'fa-solid fa-triangle-exclamation',
       buttons: [{ label: 'Entendido', variant: 'primary', action: () => this.close(id) }]
     });
@@ -148,12 +159,14 @@ export class PopupService {
   }
 
   /** Popup de error */
-  error(title: string, message: string): number {
+  error(title: string, message: string, size?: PopupSize, layout?: PopupLayout): number {
     let id = 0;
     id = this.show({
       title,
       message,
       type: 'error',
+      size,
+      layout,
       icon: 'fa-solid fa-circle-xmark',
       buttons: [{ label: 'Cerrar', variant: 'danger', action: () => this.close(id) }]
     });
@@ -178,6 +191,7 @@ export class PopupService {
       title: options.title,
       message: options.message,
       type: 'confirm',
+      layout: options.layout,
       icon: 'fa-solid fa-question-circle',
       closeOnBackdrop: false,
       buttons: [

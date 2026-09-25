@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { CommonModule } from '@angular/common';
 import { LinkComponent } from '../app/shared/ui/atoms/link/link.component';
-import { action } from '@storybook/addon-actions';
 
 const meta: Meta<LinkComponent> = {
   title: 'Atoms/Link',
@@ -18,10 +17,6 @@ const meta: Meta<LinkComponent> = {
       control: 'select',
       options: ['primary', 'secondary', 'muted', 'danger'],
       description: 'Variante semántica del enlace.',
-    },
-    disabled: {
-      control: 'boolean',
-      description: 'Estado de deshabilitado del enlace.',
     },
     href: {
       control: 'text',
@@ -39,7 +34,6 @@ const meta: Meta<LinkComponent> = {
   },
   args: {
     variant: 'primary',
-    disabled: false,
     href: '#',
     target: '_self',
     ariaLabel: '',

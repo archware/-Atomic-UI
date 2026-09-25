@@ -1,4 +1,4 @@
-﻿import {
+import {
   Component,
   ElementRef,
   inject,
@@ -10,6 +10,7 @@ import { isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 import { AvatarComponent } from '../../atoms/avatar/avatar.component';
 import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
+import { TooltipDirective } from '../../atoms/tooltip/tooltip.directive';
 
 export interface SidebarMenuItem {
   id?: string;
@@ -21,6 +22,7 @@ export interface SidebarMenuItem {
   badge?: string | number;
   children?: SidebarMenuItem[];
   expanded?: boolean;
+  separator?: boolean;
 }
 
 export interface SidebarUser {
@@ -34,7 +36,7 @@ export interface SidebarUser {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [AvatarComponent, NgTemplateOutlet, ScrollOverlayComponent, VariablesCssDirective],
+  imports: [AvatarComponent, NgTemplateOutlet, ScrollOverlayComponent, VariablesCssDirective, TooltipDirective],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })

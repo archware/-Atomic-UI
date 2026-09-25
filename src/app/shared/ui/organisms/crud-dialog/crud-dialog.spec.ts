@@ -13,13 +13,13 @@ describe('CrudDialog', () => {
     expect(dialog.getAttribute('aria-labelledby')).toBe('editor-title');
     expect(dialog.getAttribute('aria-describedby')).toBe('editor-help');
     expect(dialog.classList).toContain('crud-dialog');
-    expect(getComputedStyle(dialog).overflow).toBe('hidden');
+    expect(getComputedStyle(dialog).overflow).toBe('visible');
 
     const viewport = dialog.querySelector('app-scroll-overlay') as HTMLElement;
     const surface = dialog.querySelector('[data-crud-dialog-scroll-surface]') as HTMLElement;
     expect(viewport.classList).toContain('crud-dialog__viewport');
     expect(surface.getAttribute('data-so-managed-scrollbar')).toBe('true');
-    expect(getComputedStyle(surface).overflowY).toBe('auto');
+    expect(getComputedStyle(surface).overflowY).toBe('visible');
     expect(getComputedStyle(surface).getPropertyValue('scrollbar-width')).toBe('none');
   });
 

@@ -3,7 +3,7 @@ import { Component, forwardRef, signal, ChangeDetectionStrategy, input, output, 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
-export type FloatingInputType = 'text' | 'date' | 'number' | 'password' | 'email' | 'tel' | 'datetime-local' | 'time';
+export type FloatingInputType = 'text' | 'search' | 'date' | 'number' | 'password' | 'email' | 'tel' | 'datetime-local' | 'time';
 export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outline';
 
 @Component({

@@ -1,11 +1,12 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Select } from './select';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('Select', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Select],
+      imports: [Select, TranslateModule.forRoot()],
       providers: [provideZonelessChangeDetection()],
     }).compileComponents();
   });

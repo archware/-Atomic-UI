@@ -15,15 +15,16 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { Alert } from '../../molecules/alert/alert.component';
 import {
-  StatusBadgeComponent,
-  StatusBadgeStatus,
-} from '../../atoms/status-badge/status-badge.component';
+  ChipComponent,
+  ChipVariant,
+} from '../../atoms/chip/chip.component';
 import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
-import { Select, SelectOption } from '../../atoms/form-select/select';
+import { Select2Component, Select2Option } from '../../molecules/select2/select2.component';
+import { FormsModule } from '@angular/forms';
 
 export type DataTableAlignment = 'start' | 'center' | 'end';
 export type DataTableDensity = 'comfortable' | 'compact';
@@ -37,8 +38,8 @@ export interface DataTableColumn<T extends object = Record<string, unknown>> {
   readonly sortable?: boolean;
   readonly align?: DataTableAlignment;
   readonly width?: string;
-  readonly isBadge?: boolean;
-  readonly badgeStatus?: (row: T) => StatusBadgeStatus;
+  readonly isTag?: boolean;
+  readonly tagVariant?: (row: T) => ChipVariant;
   readonly value?: (row: T) => unknown;
   readonly format?: (value: unknown, row: T) => string;
   readonly sortValue?: (row: T) => unknown;
@@ -81,10 +82,11 @@ function trackByIdentity<T extends object>(_index: number, row: T): T {
     Alert,
     NgTemplateOutlet,
     ScrollOverlayComponent,
-    StatusBadgeComponent,
+    ChipComponent,
     VariablesCssDirective,
-    Select,
-    TranslatePipe, TranslateDirective,
+    Select2Component,
+    FormsModule,
+    TranslatePipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './data-table.html',
@@ -165,7 +167,7 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
       ? options
       : [...options, current].sort((first, second) => first - second);
   });
-  protected readonly pageSizeSelectOptions = computed<readonly SelectOption[]>(() => {
+  protected readonly pageSizeSelectOptions = computed<Select2Option[]>(() => {
     return this.effectivePageSizeOptions().map((size) => ({
       value: size,
       label: String(size),
@@ -215,7 +217,7 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
     return Math.min(this.effectivePage() * this.effectivePageSize(), total);
   });
 
-  protected onPageSizeSelectionChange(value: string): void {
+  protected onPageSizeSelectionChange(value: string | number): void {
     const pageSize = Number(value);
     this.internalPageSize.set(pageSize);
     if (this.usesClientPagination()) {
@@ -225,18 +227,7 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
     this.pageSizeChange.emit(pageSize);
   }
 
-  protected onPageSizeChange(event: Event): void {
-    const target = event.target;
-    if (target instanceof HTMLSelectElement) {
-      const pageSize = Number(target.value);
-      this.internalPageSize.set(pageSize);
-      if (this.usesClientPagination()) {
-        this.internalPage.set(1);
-        return;
-      }
-      this.pageSizeChange.emit(pageSize);
-    }
-  }
+
 
   /*
   EL BOTON QUE SE DESHABILITA BAJO LOS DEDOS SE LLEVA EL FOCO AL <body>.
@@ -341,9 +332,9 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
     return this.trackBy()(index, row);
   }
 
-  protected getBadgeStatus(column: DataTableColumn<T>, row: T): StatusBadgeStatus {
-    if (column.badgeStatus) {
-      return column.badgeStatus(row);
+  protected getTagVariant(column: DataTableColumn<T>, row: T): ChipVariant {
+    if (column.tagVariant) {
+      return column.tagVariant(row);
     }
     const val = String(this.columnValue(column, row) ?? '').toLowerCase();
     if (
@@ -353,7 +344,7 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
       val === 'true' ||
       val === '1'
     ) {
-      return 'active';
+      return 'success';
     }
     if (
       val === 'inactivo' ||
@@ -362,12 +353,12 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
       val === 'false' ||
       val === '0'
     ) {
-      return 'inactive';
+      return 'error';
     }
     if (val.includes('incidencia') || val.includes('degradado') || val.includes('vencido')) {
-      return 'degraded';
+      return 'warning';
     }
-    return 'unconfigured';
+    return 'default';
   }
 
   protected displayValue(column: DataTableColumn<T>, row: T): string {

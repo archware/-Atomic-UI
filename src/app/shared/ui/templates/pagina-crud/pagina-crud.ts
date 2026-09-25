@@ -6,6 +6,7 @@ import {
   input,
   output,
   signal,
+  computed,
   TemplateRef,
   viewChild,
 } from '@angular/core';
@@ -19,7 +20,7 @@ import { ActionGroupComponent } from '../../molecules/action-group/action-group.
 import { TableAction } from '../../atoms/table-action/table-action';
 import { ButtonComponent } from '../../atoms/button/button.component';
 import { Input } from '../../atoms/form-input/input';
-import { Select, type SelectOption } from '../../atoms/form-select/select';
+import { Select2Component, type Select2Option as SelectOption } from '../../molecules/select2/select2.component';
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 import { NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -88,7 +89,7 @@ export interface FiltroBusqueda {
     DataTable,
     ButtonComponent,
     Input,
-    Select,
+    Select2Component,
     IconButtonComponent,
     NgTemplateOutlet,
     Alert,
@@ -117,6 +118,13 @@ export class PaginaCrud<T extends object = any> {
 
   // Estado UI interno para la cascada — signal puro.
   readonly tipoBusquedaInterno = signal<string | null>(null);
+
+  protected readonly opcionesBusquedaSelect2 = computed<SelectOption[]>(() => {
+    return this.opcionesBusqueda().map(op => ({
+      value: op.value,
+      label: op.label,
+    }));
+  });
 
   /** Devuelve 'select' o 'texto' según la opción elegida. */
     constructor() {
@@ -223,8 +231,8 @@ export class PaginaCrud<T extends object = any> {
     const base = this.titulo();
     switch (this.modoCrud()) {
       case 'crear': return `Nuevo ${base}`;
-      case 'editar': return `Editar ${base}`;
-      case 'ver': return `Detalle de ${base}`;
+      case 'editar': return `Editar`;
+      case 'ver': return `Visualización`;
     }
   }
 

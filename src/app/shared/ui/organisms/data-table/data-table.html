@@ -28,14 +28,15 @@
 
       <div class="data-table__pagination">
         <div class="data-table__page-size">
-          <span>POR PÁGINA:</span>
-          <app-form-select
+          <span>Por página:</span>
+          <app-select2
             ariaLabel="Por página"
-            [selected]="effectivePageSize()"
+            [ngModel]="effectivePageSize()"
+            (ngModelChange)="onPageSizeSelectionChange($event)"
             [options]="pageSizeSelectOptions()"
             [placeholder]="''"
-            (selectionChange)="onPageSizeSelectionChange($event)">
-          </app-form-select>
+            [searchable]="false">
+          </app-select2>
         </div>
 
         <span class="data-table__page-info">
@@ -200,16 +201,17 @@
                     [class.data-table__cell--end]="column.align === 'end'"
                   >
                     @if (
-                      column.isBadge ||
+                      column.isTag ||
                       column.key === 'stateLabel' ||
                       column.key === 'state' ||
                       column.key === 'status' ||
                       column.key === 'estado'
                     ) {
-                      <app-status-badge
-                        [status]="getBadgeStatus(column, row)"
-                        [label]="displayValue(column, row)"
-                      />
+                      <app-chip
+                        [variant]="getTagVariant(column, row)"
+                      >
+                        {{ displayValue(column, row) }}
+                      </app-chip>
                     } @else {
                       {{ displayValue(column, row) }}
                     }

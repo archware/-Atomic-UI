@@ -2,10 +2,9 @@ import { Component, signal, computed, ChangeDetectionStrategy, HostListener, inj
 import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TranslatePipe, TranslateDirective, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { UiShowcaseComponent } from '../../components/ui-showcase/ui-showcase.component';
 import {
-  ScrollOverlayComponent,
   ThemeSwitcherComponent,
   PanelComponent,
   LayoutShellComponent,
@@ -23,6 +22,7 @@ import {
   FiltersComponent,
   DataTable,
   DataTableColumn,
+  PopupService
 } from '@shared/ui';
 
 interface TableRow {
@@ -42,7 +42,6 @@ interface TableRow {
   standalone: true,
   imports: [
     FormsModule,
-    ScrollOverlayComponent,
     ThemeSwitcherComponent,
     UiShowcaseComponent,
     PanelComponent,
@@ -58,7 +57,7 @@ interface TableRow {
     ChipComponent,
     FiltersComponent,
     DataTable,
-    TranslatePipe, TranslateDirective,
+    TranslatePipe,
   ],
   templateUrl: './showcase-page.component.html',
   styleUrl: './showcase-page.component.css',
@@ -68,6 +67,7 @@ export class ShowcasePageComponent {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly translate = inject(TranslateService);
   private readonly router = inject(Router);
+  private readonly popup = inject(PopupService);
   private readonly MOBILE_BREAKPOINT = 768;
 
   protected readonly title = signal('app.title');
@@ -174,7 +174,7 @@ export class ShowcasePageComponent {
   }
 
   onLogout() {
-    alert('Cerrando sesión...');
+    this.popup.info('Sesión finalizada', 'Cerrando sesión...');
   }
 
   onHomeClick() {
@@ -231,8 +231,8 @@ export class ShowcasePageComponent {
       header: 'table.headers.status', 
       align: 'center', 
       width: '130px', 
-      isBadge: true, 
-      badgeStatus: (row) => this.getBadgeStatusForTable(row.statusVariant),
+      isTag: true, 
+      tagVariant: (row: any) => this.getTagVariantForTable(row.statusVariant),
       format: (val) => this.translate.instant(val as string)
     },
     { key: 'col6', header: 'table.headers.type', width: '175px', sortable: true, format: (val) => this.translate.instant(val as string) },
@@ -240,18 +240,18 @@ export class ShowcasePageComponent {
     { key: 'col8', header: 'table.headers.priority', align: 'center', width: '110px', sortable: true, format: (val) => this.translate.instant(val as string) },
   ]);
 
-  private getBadgeStatusForTable(variant: string): 'unconfigured' | 'active' | 'degraded' | 'inactive' {
+  private getTagVariantForTable(variant: string): any {
     switch (variant) {
       case 'success':
       case 'primary':
-        return 'active';
+        return 'success';
       case 'warning':
       case 'secondary':
-        return 'degraded';
+        return 'warning';
       case 'error':
-        return 'inactive';
+        return 'error';
       default:
-        return 'unconfigured';
+        return 'default';
     }
   }
 

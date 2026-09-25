@@ -1,4 +1,4 @@
-﻿import { Component, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 export type LinkVariant = 'primary' | 'secondary' | 'muted' | 'danger';
@@ -16,4 +16,5 @@ export class LinkComponent {
   readonly target = input<string>('_self');
   readonly variant = input<LinkVariant>('primary');
   readonly ariaLabel = input<string>();
+  readonly rel = input<string>();
 }

@@ -11,14 +11,12 @@ import {
   PaginaCrud,
   FloatingInputComponent,
   Select2Component,
-  RowComponent,
-  ButtonComponent,
-  TextComponent,
   DataTableColumn,
-  DataTableStatus
+  DataTableStatus,
+  PopupService
 } from '@shared/ui';
 
-import { ApiService } from '@shared/ui/services/api.service';
+
 import { useApi } from '@shared/ui/services/use-api.service';
 import { of, delay } from 'rxjs';
 
@@ -52,10 +50,7 @@ let idCounter = 51;
     ThemeSwitcherComponent,
     PaginaCrud,
     FloatingInputComponent,
-    Select2Component,
-    RowComponent,
-    ButtonComponent,
-    TextComponent
+    Select2Component
   ],
   templateUrl: './crud-table.component.html',
   styleUrl: './crud-table.component.css'
@@ -82,7 +77,7 @@ export class CrudTableComponent implements OnInit {
   }
 
   onLogout() {
-    alert('Cerrando sesión...');
+    this.popup.info('Sesión finalizada', 'Cerrando sesión...');
     this.router.navigate(['/login']);
   }
 
@@ -92,6 +87,7 @@ export class CrudTableComponent implements OnInit {
 
   private readonly fb = inject(FormBuilder).nonNullable;
   private readonly router = inject(Router);
+  private readonly popup = inject(PopupService);
 
   @ViewChild(PaginaCrud) readonly paginaCrud!: PaginaCrud<Entity>;
 
@@ -102,18 +98,18 @@ export class CrudTableComponent implements OnInit {
   readonly columnas: DataTableColumn<Entity>[] = [
     { key: 'name', header: 'Nombre', sortable: true },
     { key: 'email', header: 'Email', sortable: true },
-    { key: 'role', header: 'Rol', sortable: true, isBadge: true, badgeStatus: () => 'info' as any },
+    { key: 'role', header: 'Rol', sortable: true, isTag: true, tagVariant: () => 'default' },
     {
       key: 'status',
       header: 'Estado',
       sortable: true,
-      isBadge: true,
-      badgeStatus: (row: Entity) => {
+      isTag: true,
+      tagVariant: (row: Entity) => {
         switch (row.status) {
           case 'active': return 'success';
           case 'pending': return 'warning';
-          case 'inactive': return 'danger';
-          default: return 'info';
+          case 'inactive': return 'error';
+          default: return 'default';
         }
       },
       format: (val: any) => val === 'active' ? 'Activo' : val === 'pending' ? 'Pendiente' : 'Inactivo'

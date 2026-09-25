@@ -35,6 +35,7 @@ describe('LayoutShellComponent', () => {
       providers: [provideZonelessChangeDetection()],
     }).compileComponents();
     const fixture = TestBed.createComponent(LayoutShellComponent);
+    fixture.componentRef.setInput('compactViewportQuery', '(min-width: 0px)');
     fixture.componentRef.setInput('sidebarVisible', false);
     fixture.detectChanges();
     await fixture.whenStable();

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
 import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.component';
 import { ActionMenuComponent, ActionMenuItem } from '../../../../shared/ui/molecules/action-menu/action-menu.component';
+import { PopupService } from '../../../../shared/ui/services/popup.service';
 
 @Component({
   selector: 'app-showcase-actions',
@@ -94,6 +95,8 @@ import { ActionMenuComponent, ActionMenuItem } from '../../../../shared/ui/molec
   `]
 })
 export class ShowcaseActionsComponent {
+  private readonly popup = inject(PopupService);
+
   tableActions: ActionMenuItem[] = [
     { id: 'view', label: 'Ver detalles', icon: 'fa-solid fa-eye' },
     { id: 'edit', label: 'Editar', icon: 'fa-solid fa-pen' },
@@ -108,6 +111,6 @@ export class ShowcaseActionsComponent {
 
   onActionClicked(actionId: string): void {
     console.log('Action clicked:', actionId);
-    alert('Action clicked: ' + actionId);
+    this.popup.info('Acción', 'Action clicked: ' + actionId);
   }
 }

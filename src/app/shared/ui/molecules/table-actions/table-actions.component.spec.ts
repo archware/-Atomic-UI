@@ -20,7 +20,7 @@ describe('TableActionsComponent', () => {
 
   it('provides an accessible name for every icon action', () => {
     const buttons = fixture.nativeElement.querySelectorAll(
-      '.action-btn',
+      '.action-btn button',
     ) as NodeListOf<HTMLButtonElement>;
 
     expect(buttons.length).toBe(3);
@@ -31,7 +31,7 @@ describe('TableActionsComponent', () => {
     const view = jasmine.createSpy('view');
     component.view.subscribe(view);
 
-    (fixture.nativeElement.querySelector('.action-btn.view') as HTMLButtonElement).click();
+    (fixture.nativeElement.querySelector('.action-btn.view button') as HTMLButtonElement).click();
 
     expect(view).toHaveBeenCalledTimes(1);
   });

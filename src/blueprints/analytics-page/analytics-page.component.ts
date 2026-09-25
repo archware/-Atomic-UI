@@ -30,7 +30,7 @@ import {
   ],
   template: `
     <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
-      <app-sidebar ngProjectAs="[slot=sidebar]" slot="sidebar" [menuItems]="menuItems" logoText="CxC Ventas" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }" (navigate)="onNavigate($event)"></app-sidebar>
+      <app-sidebar ngProjectAs="[slot=sidebar]" slot="sidebar" [menuItems]="menuItems" logoText="Atomic UI" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }" (navigate)="onNavigate($event)"></app-sidebar>
       <app-topbar ngProjectAs="[slot=topbar]" [showHomeButton]="true" apiStatus="API en línea" [showUserInfo]="false" [showSidebarToggle]="true" slot="topbar" title="Analíticas" [userName]="'Usuario'" (toggleSidebar)="sidebarVisible.set(!sidebarVisible())">
         <app-theme-switcher></app-theme-switcher>
       </app-topbar>

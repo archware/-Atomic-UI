@@ -134,19 +134,19 @@ describe('ModalComponent', () => {
   describe('size', () => {
     it('should apply modal-md class by default', () => {
       const modal: HTMLElement = fixture.nativeElement.querySelector('.modal');
-      expect(modal.classList.contains('modal-md')).toBeTrue();
+      expect(modal.classList.contains('modal-md')).toBe(true);
     });
 
     it('should apply modal-sm class for size sm', () => {
       setInput('size', 'sm');
       const modal: HTMLElement = fixture.nativeElement.querySelector('.modal');
-      expect(modal.classList.contains('modal-sm')).toBeTrue();
+      expect(modal.classList.contains('modal-sm')).toBe(true);
     });
 
     it('should apply modal-lg class for size lg', () => {
       setInput('size', 'lg');
       const modal: HTMLElement = fixture.nativeElement.querySelector('.modal');
-      expect(modal.classList.contains('modal-lg')).toBeTrue();
+      expect(modal.classList.contains('modal-lg')).toBe(true);
     });
   });
 
@@ -156,10 +156,10 @@ describe('ModalComponent', () => {
       let emitted = false;
       component.closed.subscribe(() => { emitted = true; });
 
-      const closeBtn: HTMLButtonElement = fixture.nativeElement.querySelector('.modal-close');
+      const closeBtn = fixture.nativeElement.querySelector('.modal-close button') as HTMLButtonElement;
       closeBtn.click();
 
-      expect(emitted).toBeTrue();
+      expect(emitted).toBe(true);
     });
 
     it('should emit closed on backdrop click when closeOnBackdrop=true', () => {
@@ -169,7 +169,7 @@ describe('ModalComponent', () => {
 
       component.onBackdropClick();
 
-      expect(emitted).toBeTrue();
+      expect(emitted).toBe(true);
     });
 
     it('should NOT emit closed on backdrop click when closeOnBackdrop=false', () => {
@@ -179,7 +179,7 @@ describe('ModalComponent', () => {
 
       component.onBackdropClick();
 
-      expect(emitted).toBeFalse();
+      expect(emitted).toBe(false);
     });
 
     it('should emit closed on Escape when closeOnBackdrop=true', () => {
@@ -189,7 +189,7 @@ describe('ModalComponent', () => {
 
       component.onEscape();
 
-      expect(emitted).toBeTrue();
+      expect(emitted).toBe(true);
     });
 
     it('should NOT emit closed on Escape when closeOnBackdrop=false', () => {
@@ -199,7 +199,7 @@ describe('ModalComponent', () => {
 
       component.onEscape();
 
-      expect(emitted).toBeFalse();
+      expect(emitted).toBe(false);
     });
 
     it('blocks close controls, Escape and backdrop while an async action is busy', () => {
@@ -208,13 +208,13 @@ describe('ModalComponent', () => {
       setInput('busy', true);
 
       const modal = fixture.nativeElement.querySelector('.modal') as HTMLElement;
-      const closeBtn = fixture.nativeElement.querySelector('.modal-close') as HTMLButtonElement;
+      const closeBtn = fixture.nativeElement.querySelector('.modal-close button') as HTMLButtonElement;
       closeBtn.click();
       component.onEscape();
       component.onBackdropClick();
 
       expect(modal.getAttribute('aria-busy')).toBe('true');
-      expect(closeBtn.disabled).toBeTrue();
+      expect(closeBtn.disabled).toBe(true);
       expect(emissions).toBe(0);
     });
   });
@@ -247,7 +247,8 @@ describe('ModalComponent', () => {
     });
 
     it('should have aria-label on the close button', () => {
-      const closeBtn: HTMLButtonElement = fixture.nativeElement.querySelector('.modal-close');
+      // we check the internal button's aria-label
+      const closeBtn = fixture.nativeElement.querySelector('.modal-close button') as HTMLButtonElement;
       expect(closeBtn.getAttribute('aria-label')).toBeTruthy();
     });
 
@@ -264,13 +265,13 @@ describe('ModalComponent', () => {
     it('moves initial focus into the dialog', async () => {
       await Promise.resolve();
 
-      const close = fixture.nativeElement.querySelector('.modal-close') as HTMLButtonElement;
+      const close = fixture.nativeElement.querySelector('.modal-close button') as HTMLButtonElement;
       expect(document.activeElement).toBe(close);
     });
 
     it('cycles focus inside the dialog on Tab', async () => {
       await Promise.resolve();
-      const close = fixture.nativeElement.querySelector('.modal-close') as HTMLButtonElement;
+      const close = fixture.nativeElement.querySelector('.modal-close button') as HTMLButtonElement;
       const event = new KeyboardEvent('keydown', {
         key: 'Tab',
         bubbles: true,
@@ -279,7 +280,7 @@ describe('ModalComponent', () => {
 
       close.dispatchEvent(event);
 
-      expect(event.defaultPrevented).toBeTrue();
+      expect(event.defaultPrevented).toBe(true);
       expect(document.activeElement).toBe(close);
     });
 
@@ -305,7 +306,7 @@ describe('ModalComponent', () => {
       error.tabIndex = -1;
       body.appendChild(error);
 
-      expect(component.focusError()).toBeTrue();
+      expect(component.focusError()).toBe(true);
       expect(document.activeElement).toBe(error);
     });
 
@@ -314,7 +315,7 @@ describe('ModalComponent', () => {
       hostFixture.detectChanges();
       await hostFixture.whenStable();
 
-      expect(hostFixture.componentInstance.resolveFailure()).toBeFalse();
+      expect(hostFixture.componentInstance.resolveFailure()).toBe(false);
       await hostFixture.whenStable();
 
       const error = hostFixture.nativeElement.querySelector('[data-modal-error]') as HTMLElement;
@@ -345,7 +346,7 @@ describe('ModalComponent', () => {
       // mismo—: lo dice `aria-disabled`, que se anuncia y no roba el foco.
       expect(submit.getAttribute('aria-disabled')).toBe('true');
       dialog.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-      expect(hostFixture.componentInstance.opened()).toBeTrue();
+      expect(hostFixture.componentInstance.opened()).toBe(true);
 
       hostFixture.componentInstance.finish();
       await hostFixture.whenStable();

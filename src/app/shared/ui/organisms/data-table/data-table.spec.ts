@@ -1,4 +1,5 @@
 import { Component, provideZonelessChangeDetection, signal } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { TestBed } from '@angular/core/testing';
 import { DataTable, DataTableColumn, DataTableSortChange } from './data-table';
 
@@ -44,7 +45,7 @@ class DataTableHost {
 describe('DataTable', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DataTable],
+      imports: [DataTable, TranslateModule.forRoot()],
       providers: [provideZonelessChangeDetection()],
     }).compileComponents();
   });
@@ -88,7 +89,7 @@ describe('DataTable', () => {
     const overlayStyle = getComputedStyle(overlay);
     const viewportStyle = getComputedStyle(viewport);
 
-    expect(overlayStyle.maxHeight).toBe('608px');
+    expect(overlayStyle.maxHeight).toBe('880px');
     expect(overlayStyle.overflowX).toBe('hidden');
     expect(viewportStyle.overflowX).toBe('auto');
   });
@@ -172,7 +173,7 @@ describe('DataTable', () => {
   });
 
   it('projects one actions template per row with row and sorted index context', async () => {
-    await TestBed.configureTestingModule({ imports: [DataTableHost] }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [DataTableHost, TranslateModule.forRoot()] }).compileComponents();
     const fixture = TestBed.createComponent(DataTableHost);
     await fixture.whenStable();
     const actions = fixture.nativeElement.querySelectorAll('.edit-action');
@@ -183,7 +184,7 @@ describe('DataTable', () => {
   });
 
   it('reserves a configurable column for three horizontal actions', async () => {
-    await TestBed.configureTestingModule({ imports: [DataTableHost] }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [DataTableHost, TranslateModule.forRoot()] }).compileComponents();
     const fixture = TestBed.createComponent(DataTableHost);
     await fixture.whenStable();
     const heading = fixture.nativeElement.querySelector(
@@ -254,15 +255,15 @@ describe('DataTable', () => {
 
     const summary = fixture.nativeElement.querySelector('.data-table__summary') as HTMLElement;
     const pageInfo = fixture.nativeElement.querySelector('.data-table__page-info') as HTMLElement;
-    const pageSize = fixture.nativeElement.querySelector(
-      '.data-table__page-size select',
-    ) as HTMLSelectElement;
+    const pageSizeValue = fixture.nativeElement.querySelector(
+      '.data-table__page-size .select2-value',
+    ) as HTMLElement;
 
     expect(summary.textContent?.replace(/\s+/g, ' ').trim()).toBe(
       'Mostrando 21 - 40 de 45 registro(s)',
     );
     expect(pageInfo.textContent).toContain('2 de 3');
-    expect(pageSize.value).toBe('20');
+    expect(pageSizeValue.textContent?.trim()).toBe('20');
     expect(
       fixture.nativeElement.querySelector(
         'tbody tr:not(.data-table__state-row) td[data-column="rowNumber"]',
@@ -353,14 +354,20 @@ describe('DataTable', () => {
     fixture.componentInstance.pageSizeChange.subscribe((size) => pageSizes.push(size));
     fixture.componentInstance.pageChange.subscribe((page) => pages.push(page));
 
-    const pageSize = fixture.nativeElement.querySelector(
-      '.data-table__page-size select',
-    ) as HTMLSelectElement;
+    const trigger = fixture.nativeElement.querySelector(
+      '.data-table__page-size .select2-trigger',
+    ) as HTMLElement;
+    trigger.click();
+    await fixture.whenStable();
+
+    const option20 = Array.from(fixture.nativeElement.querySelectorAll('.select2-option')).find(
+      (el: any) => el.textContent?.trim() === '20'
+    ) as HTMLElement;
+    option20.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+
     const buttons = fixture.nativeElement.querySelectorAll(
       '.data-table__page-btn',
     ) as NodeListOf<HTMLButtonElement>;
-    pageSize.value = '20';
-    pageSize.dispatchEvent(new Event('change'));
     buttons[0]?.click();
     buttons[1]?.click();
     await fixture.whenStable();
@@ -417,12 +424,15 @@ class PageSizeHost {
 
 describe('DataTable — tamaño de página fuera del catálogo', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [provideZonelessChangeDetection()] });
+    TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
+      providers: [provideZonelessChangeDetection()],
+    });
   });
 
   function opciones(root: HTMLElement): number[] {
-    return Array.from(root.querySelectorAll('.data-table__page-size option')).map((option) =>
-      Number((option as HTMLOptionElement).value),
+    return Array.from(root.querySelectorAll('.data-table__page-size .select2-option .option-label')).map((option) =>
+      Number(option.textContent?.trim()),
     );
   }
 
@@ -430,22 +440,25 @@ describe('DataTable — tamaño de página fuera del catálogo', () => {
     const fixture = TestBed.createComponent(PageSizeHost);
     await fixture.whenStable();
 
+    const trigger = fixture.nativeElement.querySelector('.data-table__page-size .select2-trigger') as HTMLElement;
+    trigger.click();
+    await fixture.whenStable();
+
     expect(opciones(fixture.nativeElement)).toEqual([10, 20, 25, 30, 40, 50]);
 
-    // Se comprueba sobre el `<select>`, no sobre `option[selected]`: Angular
-    // fija la PROPIEDAD del DOM y no el atributo, asi que el selector de
-    // atributo no encuentra nada aunque el control muestre lo correcto. Y lo
-    // que importa aqui es justo lo que el usuario ve elegido.
-    const select = fixture.nativeElement.querySelector(
-      '.data-table__page-size select',
-    ) as HTMLSelectElement;
-    expect(select.value).toBe('25');
-    expect(select.selectedOptions[0]?.textContent?.trim()).toBe('25');
+    const selectValue = fixture.nativeElement.querySelector(
+      '.data-table__page-size .select2-value',
+    ) as HTMLElement;
+    expect(selectValue.textContent?.trim()).toBe('25');
   });
 
   it('no toca la lista cuando el tamaño vigente ya está en ella', async () => {
     const fixture = TestBed.createComponent(PageSizeHost);
     fixture.componentInstance.pageSize.set(30);
+    await fixture.whenStable();
+
+    const trigger = fixture.nativeElement.querySelector('.data-table__page-size .select2-trigger') as HTMLElement;
+    trigger.click();
     await fixture.whenStable();
 
     expect(opciones(fixture.nativeElement)).toEqual([10, 20, 30, 40, 50]);
@@ -470,7 +483,7 @@ function renderedCustomers(root: HTMLElement): string[] {
 */
 describe('DataTable: el foco sobrevive al paginador', () => {
   it('traslada el foco al resumen antes de que el boton se deshabilite', async () => {
-    await TestBed.configureTestingModule({ imports: [DataTable] }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [DataTable, TranslateModule.forRoot()] }).compileComponents();
     const fixture = TestBed.createComponent(DataTable);
     fixture.componentRef.setInput('columns', [{ key: 'a', header: 'A' }]);
     fixture.componentRef.setInput('rows', [{ a: 1 }]);
@@ -510,7 +523,7 @@ describe('DataTable: el foco sobrevive al paginador', () => {
 */
 describe('DataTable: el resumen no afirma un recuento que no tiene', () => {
   async function tabla(status: string) {
-    await TestBed.configureTestingModule({ imports: [DataTable] }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [DataTable, TranslateModule.forRoot()] }).compileComponents();
     const fixture = TestBed.createComponent(DataTable);
     fixture.componentRef.setInput('columns', [{ key: 'a', header: 'A' }]);
     fixture.componentRef.setInput('rows', []);
