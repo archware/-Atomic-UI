@@ -800,3 +800,21 @@ La solución robusta es detener la propagación del evento `click` en la opción
 - **Doctrina:** Las acciones de la grilla de datos (Data Table) en formato responsivo (mvil/tarjetas) NUNCA deben romper la cuadricula de dos columnas establecida por las celdas de datos. 
 - El label "ACCIONES" se debe ubicar en la primera columna (grid-template-columns: 40%) como un texto normal (sin opacidad, sin posiciones absolutas).
 - Los iconos (ver, editar, eliminar) deben estar contenidos en la segunda columna (1fr) usando justify-content: center para asegurar alineacin esttica con el resto de la tarjeta.
+
+## [2026-09-25] - Paginación Selects, CSS Flex-Grow y Color de Marca
+
+**Evidencia observada:** Los combos de selección de paginación presentaban problemas de anchos CSS (`flex-grow` desconfigurado) y discrepancias en el diseño usando `app-form-select`.
+**Decisión generalizable:** Reemplazar obligatoriamente `app-form-select` por `app-select2` (versión robusta) en los módulos de paginación. Se han fijado los anchos `flex-grow` para evitar desbordamientos y se ha unificado el fondo de la paginación al color de marca `var(--primary-color-light)`.
+**Mecanismo preventivo:** Las compuertas de gobernanza y visuales rechazarán componentes de paginación basados en elementos estándar que no apliquen el patrón robusto estipulado.
+
+## [2026-09-25] - Arquitectura y Topología de Proxy
+
+**Evidencia observada:** Ambigüedad en la resolución de peticiones locales del ecosistema Angular (puerto 5007) dirigidas al backend CQRS.
+**Decisión generalizable:** Toda llamada hacia `/api/v2/...` en el puerto 5007 será redirigida a través de `proxy.conf.json` hacia el backend central (puerto 7149), como la arquitectura predeterminada de desarrollo.
+**Mecanismo preventivo:** Proteger el `proxy.conf.json` de modificaciones aleatorias y asegurar su validación mediante pruebas cruzadas con `endpoints.rest`.
+
+## [2026-09-25] - Autenticación y Credenciales Backend Legacy (Referencia)
+
+**Contexto en el consumidor:** Los consumidores experimentaban `401 CREDENCIALES_INVALIDAS` y `403 Forbidden` al interactuar con el backend `cxc-ventas-back`.
+**Lección aprendida:** Los fallos se derivaron de corrupción en variables shell para PBKDF2 y falta de roles legacy en la matriz de permisos de CQRS. El backend debe asegurar que `ObtenerRolesPermisosAsync` use `NombreUsuario` e implemente fallbacks, garantizando que el UI reciba un estado transparente y confiable sin tener que gestionar parches locales para permisos.
+

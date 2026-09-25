@@ -583,3 +583,14 @@ poner `opacity: 0.7` encima**. Sin la regla enunciada, el remiendo se replica y
 la razón se pierde.
 
 Por eso esto vive aquí y no en un comentario.
+
+## Reglas de Paginación y Anchos
+
+1. **Combos Robustos en Paginación:** Para la paginación y controles densos de tabla, usar `app-select2` en lugar de `app-form-select`. 
+2. **Control de Anchos:** Los anchos deben estar fijados sin `flex-grow` expansivo que rompa el layout de la caja de herramientas.
+3. **Fondo de Marca:** El fondo de la paginación y controles relacionados debe utilizar el token `var(--primary-color-light)`.
+
+## Arquitectura de Red (Desarrollo)
+
+1. **Ruteo de Proxy:** Las peticiones del ecosistema local Angular (puerto 5007) hacia el backend (puerto 7149) en rutas `/api/v2/...` deben fluir a través del `proxy.conf.json`. Nunca se debe codificar (hardcodear) el puerto del backend directamente en los servicios frontend.
+
