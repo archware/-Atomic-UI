@@ -1,5 +1,6 @@
 import { ErrorHandler, Injectable, inject, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 /**
  * GlobalErrorHandlerService — Captura errores no manejados en la aplicación.
@@ -51,6 +52,15 @@ export class GlobalErrorHandlerService implements ErrorHandler {
   }
 
   private shouldIgnore(error: Error): boolean {
+    if (error instanceof HttpErrorResponse && error.status === 403) {
+      return true;
+    }
+
+    // A veces Angular envuelve los errores en un "rejection" promise
+    if ('rejection' in error && error['rejection'] instanceof HttpErrorResponse && error['rejection'].status === 403) {
+      return true;
+    }
+
     return this.IGNORED_ERRORS.some(ignored =>
       error.message?.includes(ignored)
     );

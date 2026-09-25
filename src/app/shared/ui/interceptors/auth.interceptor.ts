@@ -96,22 +96,16 @@ export const authInterceptor: HttpInterceptorFn = (
         return next(req);
     }
 
-    // Ensure HttpOnly cookies are sent automatically
-    req = req.clone({ withCredentials: true });
-
-    // Get current token
-    const token = tokenService.getTokenApp(DEFAULT_APP_ID);
-
-    // Add token if available
-    if (token) {
-        req = addTokenHeader(req, token);
-    }
+    // Add credentials for HttpOnly cookies
+    req = req.clone({
+        withCredentials: true
+    });
 
     return next(req).pipe(
         catchError((error: HttpErrorResponse) => {
             // Handle 401 Unauthorized
-            if (error.status === 401 && token) {
-                return handle401Error(req, next, tokenService, authService);
+            if (error.status === 401) {
+                authService.logout();
             }
 
             return throwError(() => error);
@@ -127,9 +121,7 @@ function addTokenHeader(
     token: string
 ): HttpRequest<unknown> {
     return request.clone({
-        setHeaders: {
-            Authorization: `Bearer ${token}`
-        }
+        withCredentials: true
     });
 }
 
