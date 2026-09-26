@@ -174,7 +174,7 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
     }));
   });
   protected readonly effectiveTotalRecords = computed(
-    () => this.totalRecords() ?? this.rows().length,
+    () => this.totalRecords() ?? this.sortedRows().length,
   );
   protected readonly effectiveTotalPages = computed(() => {
     if (!this.paginationEnabled()) {
@@ -269,7 +269,7 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
 
   protected readonly effectiveStatus = computed<DataTableStatus>(() => {
     const requestedStatus = this.status();
-    if (requestedStatus === 'success' && this.rows().length === 0) {
+    if (requestedStatus === 'success' && this.sortedRows().length === 0) {
       return 'empty';
     }
     return requestedStatus;
@@ -289,20 +289,57 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
   );
 
   private readonly sortedRows = computed<readonly T[]>(() => {
-    const rows = this.rows();
+    let rows: unknown = this.rows();
+    if (typeof rows === 'string') {
+      try {
+        rows = JSON.parse(rows);
+      } catch {
+        rows = [];
+      }
+    }
+    
+    if (rows && typeof rows === 'object' && !Array.isArray(rows)) {
+      const anyRows = rows as any;
+      // Extract array from known wrapper properties or fallback to the first array found
+      if (Array.isArray(anyRows.$values)) {
+        rows = anyRows.$values;
+      } else if (Array.isArray(anyRows.data)) {
+        rows = anyRows.data;
+      } else if (Array.isArray(anyRows.items)) {
+        rows = anyRows.items;
+      } else if (Array.isArray(anyRows.elementos)) {
+        rows = anyRows.elementos;
+      } else if (anyRows.value && Array.isArray(anyRows.value.elementos)) {
+        rows = anyRows.value.elementos;
+      } else if (anyRows.value && Array.isArray(anyRows.value.data)) {
+        rows = anyRows.value.data;
+      } else {
+        const arrayKey = Object.keys(anyRows).find(key => Array.isArray(anyRows[key]));
+        if (arrayKey) {
+          rows = anyRows[arrayKey];
+        } else if (anyRows.value && typeof anyRows.value === 'object') {
+          const valArrayKey = Object.keys(anyRows.value).find(key => Array.isArray(anyRows.value[key]));
+          if (valArrayKey) rows = anyRows.value[valArrayKey];
+        }
+      }
+    }
+
+    if (!Array.isArray(rows)) {
+      rows = [];
+    }
     const sort = this.activeSort();
     if (!sort) {
-      return rows;
+      return rows as readonly T[];
     }
 
     const column = this.columns().find(
       (candidate) => candidate.key === sort.key && candidate.sortable,
     );
     if (!column) {
-      return rows;
+      return rows as readonly T[];
     }
 
-    return rows
+    return (rows as readonly T[])
       .map<IndexedRow<T>>((row, originalIndex) => ({ row, originalIndex }))
       .sort((left, right) => {
         const comparison = this.compareRows(column, left.row, right.row, sort.direction);
@@ -329,7 +366,11 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
   }
 
   protected identifyRow(index: number, row: T): unknown {
-    return this.trackBy()(index, row);
+    const identity = this.trackBy()(index, row);
+    if (identity === row && (typeof row !== 'object' || row === null)) {
+      return index;
+    }
+    return identity;
   }
 
   protected getTagVariant(column: DataTableColumn<T>, row: T): ChipVariant {
