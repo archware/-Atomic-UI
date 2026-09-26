@@ -1,5 +1,5 @@
-<div class="field" [class.field--error]="error()">
-  @if (label()) {
+<div class="field" [class.field--error]="error()" [class.field--floating]="variant() === 'floating'">
+  @if (label() && variant() === 'standard') {
     <label class="field__label" [for]="id()">
       {{ label() }}
       @if (required()) {
@@ -14,7 +14,7 @@
       [type]="effectiveType()"
       [value]="value()"
       [attr.data-clipboard-policy]="type() === 'password' ? 'paste-only' : null"
-      [placeholder]="placeholder()"
+      [placeholder]="placeholder() || (variant() === 'floating' ? ' ' : '')"
       [autocomplete]="autocomplete()"
       [inputMode]="inputMode()"
       [attr.maxlength]="maxLength()"
@@ -31,6 +31,9 @@
       (input)="handleInput($event)"
       (blur)="handleBlur()"
     />
+    @if (label() && variant() === 'floating') {
+      <label class="floating-label" [for]="id()">{{ label() }}</label>
+    }
     @if (type() === 'password' && revealable()) {
       <button
         class="field__reveal"

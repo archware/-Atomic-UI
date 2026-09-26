@@ -14,7 +14,6 @@
   color: var(--text-color);
   font-size: var(--text-sm);
   font-weight: var(--font-weight-title);
-  text-transform: uppercase;
 }
 
 .field__required {
@@ -87,7 +86,6 @@
   cursor: pointer;
   font-size: var(--text-xs);
   font-weight: var(--font-weight-title);
-  text-transform: uppercase;
   transform: translateY(-50%);
 }
 
@@ -103,3 +101,36 @@
 .field__message--error {
   color: var(--danger-color-text);
 }
+
+.field--floating {
+  position: relative;
+  margin-top: var(--space-3);
+}
+
+.field--floating .field__control {
+  position: static;
+}
+
+.field--floating .floating-label {
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--text-sm);
+  color: var(--input-placeholder);
+  pointer-events: none;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--input-bg);
+  padding: 0 var(--space-2);
+  white-space: nowrap;
+}
+
+.field--floating .field__input:focus ~ .floating-label,
+.field--floating .field__input:not(:placeholder-shown) ~ .floating-label {
+  top: -0.625rem;
+  transform: translateY(0);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-body);
+  color: var(--info-color-text);
+}
+

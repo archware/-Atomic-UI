@@ -18,7 +18,7 @@ describe('Input', () => {
 
     const element = fixture.nativeElement.querySelector('input') as HTMLInputElement;
     expect(element.value).toBe('12345678');
-    expect(element.disabled).toBeTrue();
+    expect(element.disabled).toBe(true);
   });
 
   it('associates label, constraints and errors with the native input', async () => {
@@ -37,7 +37,7 @@ describe('Input', () => {
     expect(label.htmlFor).toBe('start-date');
     expect(requiredMarker.textContent?.trim()).toBe('*');
     expect(element.min).toBe('2026-07-22');
-    expect(element.required).toBeTrue();
+    expect(element.required).toBe(true);
     expect(element.getAttribute('aria-describedby')).toBe('start-date-error');
   });
 

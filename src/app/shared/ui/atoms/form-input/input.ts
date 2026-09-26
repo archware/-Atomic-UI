@@ -36,6 +36,7 @@ export class Input implements ControlValueAccessor {
   readonly controlId = input<string | null>(null);
   readonly type = input<InputType>('text');
   readonly label = input('');
+  readonly variant = input<'standard' | 'floating'>('standard');
   readonly placeholder = input('');
   readonly autocomplete = input('off');
   readonly inputMode = input<InputMode>('text');
