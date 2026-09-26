@@ -28,10 +28,11 @@
     @if (opcionesBusqueda().length > 0) {
       <app-select2
         class="pagina-crud__filtro-control"
-        [options]="opcionesBusquedaSelect2()"
+        [options]="opcionesBusquedaParaSelect()"
         [ngModel]="tipoBusquedaInterno()"
         (ngModelChange)="onTipoBusquedaCambiado($event)"
-        [label]="'Buscar por'"
+        label="Buscar por"
+        variant="standard"
         [searchable]="false"
       ></app-select2>
     }
@@ -41,10 +42,11 @@
       @if (getTipoFiltro(tipo) === 'select') {
         <app-select2
           class="pagina-crud__filtro-control"
-          [options]="getOpcionesFiltro(tipo)"
+          [options]="getOpcionesFiltroConVacio(tipo)"
           [ngModel]="busqueda()"
           (ngModelChange)="alBuscar($event)"
-          [label]="'Valor'"
+          label="Valor"
+          variant="standard"
           [searchable]="false"
         ></app-select2>
       } @else {

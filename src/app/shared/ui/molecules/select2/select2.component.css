@@ -129,14 +129,17 @@
 .select2-arrow {
   position: absolute;
   right: var(--space-3);
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
+  bottom: 0;
   color: var(--text-color-secondary);
   transition: transform 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .select2-wrapper.open .select2-arrow {
-  transform: translateY(-50%) rotate(180deg);
+  transform: rotate(180deg);
 }
 
 /* === TAGS (Multiple) === */

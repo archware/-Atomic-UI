@@ -11,7 +11,7 @@ import { VariablesCssDirective } from '../../directives/variables-css.directive'
 
 
 export interface Select2Option {
-  value: string | number;
+  value: string | number | null;
   label: string;
   icon?: string;
   disabled?: boolean;
@@ -31,14 +31,18 @@ export interface Select2Option {
   template: `
     <div
       class="select2-wrapper"
+      [class.variant-standard]="variant() === 'standard'"
       [class.open]="isOpen()"
       [class.disabled]="disabled"
       [class.focused]="isOpen()"
       [class.has-value]="hasValue()"
       [class.multiple]="multiple()"
-      [class.has-label]="label()"
+      [class.has-label]="label() && variant() === 'floating'"
       [appVariablesCss]="{ '--select2-width': width() || null }"
     >
+      @if (label() && variant() === 'standard') {
+        <label class="form-label" [id]="selectId()">{{ label() }}</label>
+      }
       <div class="select2-trigger"
         (click)="$event.stopPropagation(); toggleDropdown()"
         (keydown)="handleKeydown($event)"
@@ -52,7 +56,7 @@ export interface Select2Option {
         [attr.aria-expanded]="isOpen()"
         aria-haspopup="listbox"
       >
-        @if (label()) {
+        @if (label() && variant() === 'floating') {
           <span class="floating-label" [id]="selectId()">{{ label() }}</span>
         }
         <!-- Single value display -->
@@ -63,7 +67,7 @@ export interface Select2Option {
                 <span class="option-icon">{{ selectedOption()!.icon }}</span>
               }
               {{ selectedOption()!.label | translate }}
-            } @else if (!label()) {
+            } @else if (!label() || variant() === 'standard') {
               <span class="placeholder">{{ placeholder() }}</span>
             }
           </span>
@@ -83,7 +87,7 @@ export interface Select2Option {
                   (click)="removeTag(opt, $event)">×</button>
               </span>
             }
-            @if (selectedOptions().length === 0 && !label()) {
+            @if (selectedOptions().length === 0 && (!label() || variant() === 'standard')) {
               <span class="placeholder">{{ placeholder() }}</span>
             }
           </div>
@@ -157,17 +161,18 @@ export interface Select2Option {
 export class Select2Component implements ControlValueAccessor {
   // La señal interna conserva el contrato público histórico `options` mientras se adapta su setter.
   // eslint-disable-next-line @angular-eslint/no-input-rename
-  readonly entradaOpciones = input<Select2Option[]>([], { alias: 'options' });
+  readonly entradaOpciones = input<readonly Select2Option[]>([], { alias: 'options' });
 
-  set options(value: Select2Option[]) {
+  set options(value: readonly Select2Option[]) {
     this._options = [...(value || [])];
     this.reconcilePendingValue();
     this.ensureEnabledHighlight();
   }
-  get options(): Select2Option[] {
+  get options(): readonly Select2Option[] {
     return this._options;
   }
   readonly label = input('');
+  readonly variant = input<'floating' | 'standard'>('floating');
   readonly ariaLabel = input('');
   readonly placeholder = input('Seleccionar...');
   readonly searchLabel = input('Buscar opciones');
@@ -189,7 +194,7 @@ export class Select2Component implements ControlValueAccessor {
   readonly searchable = input(true);
   readonly multiple = input(false);
   readonly width = input(''); // Optional: e.g., '200px', '50%', 'auto'
-  readonly valueChange = output<string | number | (string | number)[]>();
+  readonly valueChange = output<string | number | null | (string | number | null)[]>();
 
   isOpen = signal(false);
   searchTerm = signal('');
@@ -198,7 +203,7 @@ export class Select2Component implements ControlValueAccessor {
   highlightedIndex = signal(-1);
   private _options: Select2Option[] = [];
   private readonly disabledState = signal(false);
-  private pendingValue: unknown = null;
+  private pendingValue: unknown = undefined;
   private readonly sincronizarOpciones = effect(() => {
     const opciones = this.entradaOpciones();
     untracked(() => {
@@ -227,7 +232,7 @@ export class Select2Component implements ControlValueAccessor {
     return this.multiple() ? this.selectedOptions().length > 0 : this.selectedOption() !== null;
   }
 
-  filteredOptions(): Select2Option[] {
+  filteredOptions(): readonly Select2Option[] {
     const term = this.searchTerm().toLowerCase();
     if (!term) return this.options;
     return this.options.filter(o => o.label.toLowerCase().includes(term));
@@ -420,7 +425,7 @@ export class Select2Component implements ControlValueAccessor {
   private applyIncomingValue(value: unknown, emit = false): void {
     if (this.multiple()) {
       const values = Array.isArray(value) ? value as (string | number)[] : [];
-      const validOptions = this.options.filter(o => values.includes(o.value));
+      const validOptions = this.options.filter(o => o.value !== null && values.includes(o.value as string | number));
       this.selectedOptions.set(validOptions);
       if (emit) {
         this.onChange(validOptions.map(o => o.value));
@@ -438,9 +443,9 @@ export class Select2Component implements ControlValueAccessor {
 
   /** Rehidrata selección cuando cambian las opciones */
   private reconcilePendingValue(): void {
-    if (this.pendingValue !== null) {
+    if (this.pendingValue !== undefined) {
       this.applyIncomingValue(this.pendingValue);
-      this.pendingValue = null;
+      this.pendingValue = undefined;
       return;
     }
 

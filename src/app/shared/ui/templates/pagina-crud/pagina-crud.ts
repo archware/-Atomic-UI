@@ -20,7 +20,7 @@ import { ActionGroupComponent } from '../../molecules/action-group/action-group.
 import { TableAction } from '../../atoms/table-action/table-action';
 import { ButtonComponent } from '../../atoms/button/button.component';
 import { Input } from '../../atoms/form-input/input';
-import { Select2Component, type Select2Option as SelectOption } from '../../molecules/select2/select2.component';
+import { Select2Component, type Select2Option } from '../../molecules/select2/select2.component';
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 import { NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -77,7 +77,7 @@ export interface FiltroBusqueda {
   label: string;
   value: string;
   tipo?: 'texto' | 'select';
-  opcionesSelect?: SelectOption[];
+  opcionesSelect?: Select2Option[];
 }
 
 @Component({
@@ -119,13 +119,6 @@ export class PaginaCrud<T extends object = any> {
   // Estado UI interno para la cascada — signal puro.
   readonly tipoBusquedaInterno = signal<string | null>(null);
 
-  protected readonly opcionesBusquedaSelect2 = computed<SelectOption[]>(() => {
-    return this.opcionesBusqueda().map(op => ({
-      value: op.value,
-      label: op.label,
-    }));
-  });
-
   /** Devuelve 'select' o 'texto' según la opción elegida. */
     constructor() {
     effect(() => {
@@ -142,10 +135,27 @@ export class PaginaCrud<T extends object = any> {
   }
 
   /** Devuelve las opciones del select secundario. */
-  protected getOpcionesFiltro(tipo: string): SelectOption[] {
+  protected getOpcionesFiltro(tipo: string): Select2Option[] {
     const filtro = this.opcionesBusqueda().find(o => o.value === tipo);
     return filtro?.opcionesSelect ?? [];
   }
+
+  protected getOpcionesFiltroConVacio(tipo: string): Select2Option[] {
+    const opciones = this.getOpcionesFiltro(tipo);
+    return [
+      { label: 'Seleccionar...', value: null },
+      ...opciones
+    ];
+  }
+
+  protected readonly opcionesBusquedaParaSelect = computed<Select2Option[]>(() => {
+    const opciones = this.opcionesBusqueda();
+    if (opciones.length === 0) return [];
+    return [
+      { label: 'Seleccionar...', value: null },
+      ...opciones.map(o => ({ label: o.label, value: o.value, icon: undefined, disabled: false }))
+    ];
+  });
 
   // ─── Datos de la grilla ──────────────────────────────────────
   readonly columnas = input.required<readonly DataTableColumn<T>[]>();
@@ -249,11 +259,13 @@ export class PaginaCrud<T extends object = any> {
 
   // ─── Acciones de la grilla ───────────────────────────────────
   /** Actualiza la cascada de UI internamente y notifica al padre. */
-  protected onTipoBusquedaCambiado(valor: string): void {
+  protected onTipoBusquedaCambiado(valor: string | null): void {
     console.log('[CASCADA] onTipoBusquedaCambiado llamado con:', valor);
     this.tipoBusquedaInterno.set(valor);
     this.busqueda.set('');
-    this.alCambiarTipoBusqueda.emit(valor);
+    if (valor !== null) {
+      this.alCambiarTipoBusqueda.emit(valor);
+    }
     this.alSolicitarPagina.emit({
       pagina: 1,
       tamano: this.tamanioPagina(),
@@ -262,12 +274,13 @@ export class PaginaCrud<T extends object = any> {
     console.log('[CASCADA] tipoBusquedaInterno ahora es:', this.tipoBusquedaInterno());
   }
 
-  protected alBuscar(termino: string): void {
-    this.busqueda.set(termino);
+  protected alBuscar(termino: string | null): void {
+    const term = termino || '';
+    this.busqueda.set(term);
     this.alSolicitarPagina.emit({
       pagina: 1,
       tamano: this.tamanioPagina(),
-      busqueda: termino,
+      busqueda: term,
     });
   }
 
