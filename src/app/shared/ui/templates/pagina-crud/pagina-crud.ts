@@ -265,7 +265,6 @@ export class PaginaCrud<T extends object = any> {
   // ─── Acciones de la grilla ───────────────────────────────────
   /** Actualiza la cascada de UI internamente y notifica al padre. */
   protected onTipoBusquedaCambiado(valor: string | null): void {
-    console.log('[CASCADA] onTipoBusquedaCambiado llamado con:', valor);
     this.tipoBusquedaInterno.set(valor);
     this.busqueda.set('');
     if (valor !== null) {
@@ -276,7 +275,6 @@ export class PaginaCrud<T extends object = any> {
       tamano: this.tamanioPagina(),
       busqueda: '',
     });
-    console.log('[CASCADA] tipoBusquedaInterno ahora es:', this.tipoBusquedaInterno());
   }
 
   protected alBuscar(termino: string | null): void {
