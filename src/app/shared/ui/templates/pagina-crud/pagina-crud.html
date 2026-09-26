@@ -45,7 +45,7 @@
           [options]="getOpcionesFiltroConVacio(tipo)"
           [ngModel]="busqueda()"
           (ngModelChange)="alBuscar($event)"
-          label="Valor"
+          [label]="labelFiltroSecundario()"
           variant="floating"
           [searchable]="false"
         ></app-select2>
@@ -56,7 +56,7 @@
           [placeholder]="placeholderBusqueda()"
           [ngModel]="busqueda()"
           (valueChange)="alBuscar($event)"
-          label="Valor"
+          [label]="labelFiltroSecundario()"
           variant="floating"
         />
       }
@@ -69,7 +69,7 @@
         [placeholder]="placeholderBusqueda()"
         [ngModel]="busqueda()"
         (valueChange)="alBuscar($event)"
-        label="Valor"
+        [label]="labelFiltroSecundario()"
         variant="floating"
       />
     }

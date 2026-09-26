@@ -119,6 +119,11 @@ export class PaginaCrud<T extends object = any> {
   // Estado UI interno para la cascada — signal puro.
   readonly tipoBusquedaInterno = signal<string | null>(null);
 
+  readonly labelFiltroSecundario = computed(() => {
+    const seleccion = this.tipoBusquedaInterno();
+    return this.opcionesBusqueda().find(x => x.value === seleccion)?.label ?? 'Valor de Búsqueda';
+  });
+
   /** Devuelve 'select' o 'texto' según la opción elegida. */
     constructor() {
     effect(() => {
