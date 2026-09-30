@@ -1,0 +1,60 @@
+<!-- ALERTS -->
+    <section class="showcase-section">
+      <h3 class="section-title">Alertas</h3>
+      <app-alert kind="info" title="Información:" spacing="compact">
+        Este es un mensaje informativo para el usuario.
+      </app-alert>
+      <app-alert kind="success" title="Éxito:" spacing="compact">
+        La operación se completó correctamente.
+      </app-alert>
+      <app-alert kind="warning" title="Advertencia:" spacing="compact">
+        Por favor revise los datos antes de continuar.
+      </app-alert>
+      <app-alert kind="danger" title="Error:" spacing="compact">
+        Ocurrió un problema al procesar su solicitud.
+      </app-alert>
+    </section>
+
+    <!-- MODALES -->
+    <section class="showcase-section">
+      <h3 class="section-title">Modales</h3>
+      <app-text variant="body-sm" color="muted" class="section-description">Diálogos modales que bloquean la interacción con el resto de la página.</app-text>
+      <div class="button-grid">
+        <app-button variant="primary" (buttonClick)="openConfirmModal()">Modal de Confirmación</app-button>
+        <app-button variant="danger" (buttonClick)="openBlockingModal()">Modal Bloqueante</app-button>
+        <app-button variant="outline" (buttonClick)="openAlertModal()">Modal Alerta</app-button>
+      </div>
+    </section>
+
+    <!-- POPUPS -->
+    <section class="showcase-section">
+      <h3 class="section-title">Popups</h3>
+      <app-text variant="body-sm" color="muted" class="section-description">Ventanas emergentes informativas o de promoción.</app-text>
+      <div class="button-grid">
+        <app-button variant="secondary" (buttonClick)="showPromoPopup()">Popup Promocional</app-button>
+        <app-button variant="outline" (buttonClick)="showInfoPop()">Popup Informativo</app-button>
+        <app-button variant="success" (buttonClick)="showSuccessPopup()">Popup Éxito</app-button>
+        <app-button variant="danger" (buttonClick)="showConfirmPopup()">Popup Confirmación</app-button>
+      </div>
+    </section>
+
+    <!-- TOOLTIP DEMO -->
+    <section class="showcase-section">
+      <h3 class="section-title">Tooltips</h3>
+      <div class="tooltip-container">
+        <app-button variant="outline" class="tooltip-trigger" data-tooltip="Este es un tooltip de ayuda">
+          Hover para tooltip
+        </app-button>
+      </div>
+    </section>
+
+    <!-- TOAST -->
+    <section class="showcase-section">
+      <h3 class="section-title">Toast / Notificaciones</h3>
+      <div class="button-grid">
+        <app-button variant="primary" (buttonClick)="showToast('info')">Info</app-button>
+        <app-button variant="success" (buttonClick)="showToast('success')">Success</app-button>
+        <app-button variant="warning" (buttonClick)="showToast('warning')">Warning</app-button>
+        <app-button variant="danger" (buttonClick)="showToast('error')">Error</app-button>
+      </div>
+    </section>

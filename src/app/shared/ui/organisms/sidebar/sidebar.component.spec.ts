@@ -3,6 +3,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidebarComponent, SidebarMenuItem } from './sidebar.component';
 
 describe('SidebarComponent', () => {
+  it('conserva y retira el color del icono por la directiva canónica', () => {
+    const view = TestBed.createComponent(SidebarComponent);
+    const item = { id: 'home', label: 'Inicio', icon: 'fa-solid fa-house', iconColor: 'var(--info-color-text)' };
+    view.componentRef.setInput('menuItems', [item]);
+    view.detectChanges();
+    const icon: HTMLElement = view.nativeElement.querySelector('.nav-icon');
+    expect(icon.style.getPropertyValue('--sidebar-item-icon-color')).toBe('var(--info-color-text)');
+    expect(icon.style.color).toBe('');
+    view.componentRef.setInput('menuItems', [{ ...item, iconColor: undefined }]);
+    view.detectChanges();
+    expect(icon.style.getPropertyValue('--sidebar-item-icon-color')).toBe('');
+  });
   let component: SidebarComponent;
   let fixture: ComponentFixture<SidebarComponent>;
 

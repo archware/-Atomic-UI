@@ -8,6 +8,10 @@
   "source": "src/app/shared/ui/atoms/table-action/table-action.ts",
   "purpose": "Acción iconográfica compacta y accesible para una fila de tabla o lista operativa.",
   "variants": [
+    { "name": "profile", "values": [
+      { "value": "standard", "meaning": "Identidad histórica del átomo.", "default": true },
+      { "value": "catalog", "meaning": "Identidad visual compacta del catálogo; no informa éxito." }
+    ] },
     {
       "name": "action",
       "values": [
@@ -18,7 +22,7 @@
         { "value": "channels", "meaning": "Gestionar canales; mobile-screen-button y tono info." },
         { "value": "reset-password", "meaning": "Restablecer clave; key y tono warning." },
         { "value": "activate", "meaning": "Activar; circle-check y tono success." },
-        { "value": "deactivate", "meaning": "Desactivar; circle-xmark y tono danger." },
+        { "value": "deactivate", "meaning": "Desactivar; circle-xmark en standard, trash en catalog; tono danger." },
         { "value": "renew", "meaning": "Renovar; clock-rotate-left y tono warning." },
         { "value": "select", "meaning": "Seleccionar; hand-pointer y tono primary." },
         { "value": "late-fee", "meaning": "Mora; file-invoice-dollar y tono warning." },
@@ -47,6 +51,7 @@
     }
   ],
   "inputs": [
+    { "name": "profile", "type": "TableActionProfile", "default": "standard", "meaning": "standard conserva la identidad anterior; catalog usa ojo neutro, lápiz azul, activación verde y papelera roja sin cajas." },
     { "name": "action", "type": "TableActionName", "default": "view", "meaning": "Define icono y tono semánticos por defecto." },
     { "name": "label", "type": "string", "required": true, "meaning": "Nombre accesible y tooltip visible." },
     { "name": "iconClass", "type": "string | null", "default": null, "meaning": "Sobrescribe el icono; acepta alias o clases Font Awesome." },

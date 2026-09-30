@@ -5,7 +5,7 @@ author: "Hospital Regional de Ayacucho"
 document_type: "guía técnica"
 status: "vigente"
 date: "2026-08-20"
-last_updated: "2026-08-23"
+last_updated: "2026-09-29"
 version: "6.0.0-borrador.2"
 owner: "Hospital Regional de Ayacucho"
 ---
@@ -72,7 +72,7 @@ background: var(--surface-elevated);   /* Fondo más elevado */
 /* Escala de espaciado: 0, 1, 2, 3, 4, 5, 6, 8 */
 padding: var(--space-2) var(--space-4);  /* 0.5rem 1rem */
 gap: var(--space-3);                      /* 0.75rem */
-margin: var(--space-6);                   /* 1.5rem */
+margin: var(--space-6);                   /* 2rem; space-5 es 1.5rem */
 ```
 
 #### 📐 Border Radius
@@ -136,7 +136,7 @@ La hoja `nombre.component.css` conserva toda la presentación:
 }
 
 .elemento-primary { background: var(--primary-color-lighter); color: var(--primary-color); }
-.elemento-success { background: var(--success-color-lighter); color: var(--success-color); }
+.elemento-success { background: var(--success-color-lighter); color: var(--success-color-text); }
 .elemento-sm { padding: var(--space-1) var(--space-2); font-size: var(--text-xs); }
 .elemento-lg { padding: var(--space-3) var(--space-5); font-size: var(--text-lg); }
 ```
@@ -165,12 +165,11 @@ padding: 0.5rem;          /* ❌ Usar var(--space-2) */
 border-radius: 8px;       /* ❌ Usar var(--radius-md) */
 ```
 
-### ⚠️ Fallbacks Permitidos
-```css
-/* Fallbacks para tokens que pueden no existir */
-width: var(--avatar-size-md, 2.5rem);
-height: var(--checkbox-size, 1.5rem);
-```
+### Tokens verificados, sin respaldos que oculten ausencias
+
+Comprobar la definición real de cada token antes de usarlo. No inventar tokens
+con un valor fijo de respaldo: si siempre se usa el respaldo, la tokenización
+es falsa. Crear primero el token semántico que falta y probar temas y medidas.
 
 ---
 
@@ -216,7 +215,7 @@ height: var(--checkbox-size, 1.5rem);
 |---|---|
 | Node.js | `^22.22.3 || ^24.15.0 || >=26.0.0` |
 | npm | Versión incluida con el runtime seleccionado y compatible con `package-lock.json` |
-| Angular | 22.1.x, fijado por `package.json` y `package-lock.json` |
+| Angular | Línea declarada 22.2.x; resolución concreta fijada por `package-lock.json` |
 
 La preparación utiliza `npm ci` y `npm run governance:check`; una divergencia
 de dependencias se resuelve mediante un cambio explícito de manifiesto y lock.
@@ -271,3 +270,11 @@ aporta presentación, tokens, variantes, accesibilidad y comportamiento visual.
 Si un proceso queda huérfano, se identifica por PID y directorio de trabajo. No
 se utiliza una orden global contra todos los procesos Node. No se eliminan locks
 ni dependencias para forzar una compilación.
+
+## Lecciones de catálogos — ATOMIC-20260929-004
+
+Seguir el [contrato canónico](../../docs/CONTRATO_CATALOGOS_CRUD.md): el ADN
+resuelve icono/tono y bloqueo visual; el consumidor decide acción, permisos,
+cambios reales y resultado HTTP. No incorporar DTOs ni comparaciones de estado
+traducido a un átomo. Conservar la tercera posición, el centrado y el modal.
+La adopción local autorizada de un candidato no modifica las reglas de release.

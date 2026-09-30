@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
+import { Alert } from '../../../../shared/ui/molecules/alert/alert.component';
 import { ToastService } from '../../../../shared/ui/services/toast.service';
 import { PopupService } from '../../../../shared/ui/services/popup.service';
 import { ModalService } from '../../../../shared/ui/services/modal.service';
@@ -9,111 +10,10 @@ import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
 @Component({
   selector: 'app-showcase-feedback',
   standalone: true,
-  imports: [ButtonComponent, TextComponent],
-  template: `
-    <!-- ALERTS -->
-    <section class="showcase-section">
-      <h3 class="section-title">Alertas</h3>
-      <div class="alert alert-info">
-        <span class="alert-icon">ℹ️</span>
-        <div class="alert-content">
-          <strong>Información:</strong> Este es un mensaje informativo para el usuario.
-        </div>
-      </div>
-      <div class="alert alert-success">
-        <span class="alert-icon">✅</span>
-        <div class="alert-content">
-          <strong>Éxito:</strong> La operación se completó correctamente.
-        </div>
-      </div>
-      <div class="alert alert-warning">
-        <span class="alert-icon">⚠️</span>
-        <div class="alert-content">
-          <strong>Advertencia:</strong> Por favor revise los datos antes de continuar.
-        </div>
-      </div>
-      <div class="alert alert-danger">
-        <span class="alert-icon">❌</span>
-        <div class="alert-content">
-          <strong>Error:</strong> Ocurrió un problema al procesar su solicitud.
-        </div>
-      </div>
-    </section>
-
-    <!-- MODALES -->
-    <section class="showcase-section">
-      <h3 class="section-title">Modales</h3>
-      <app-text variant="body-sm" color="muted" style="display:block; margin-bottom: 1rem;">Diálogos modales que bloquean la interacción con el resto de la página.</app-text>
-      <div class="button-grid">
-        <app-button variant="primary" (buttonClick)="openConfirmModal()">Modal de Confirmación</app-button>
-        <app-button variant="danger" (buttonClick)="openBlockingModal()">Modal Bloqueante</app-button>
-        <app-button variant="outline" (buttonClick)="openAlertModal()">Modal Alerta</app-button>
-      </div>
-    </section>
-
-    <!-- POPUPS -->
-    <section class="showcase-section">
-      <h3 class="section-title">Popups</h3>
-      <app-text variant="body-sm" color="muted" style="display:block; margin-bottom: 1rem;">Ventanas emergentes informativas o de promoción.</app-text>
-      <div class="button-grid">
-        <app-button variant="secondary" (buttonClick)="showPromoPopup()">Popup Promocional</app-button>
-        <app-button variant="outline" (buttonClick)="showInfoPop()">Popup Informativo</app-button>
-        <app-button variant="success" (buttonClick)="showSuccessPopup()">Popup Éxito</app-button>
-        <app-button variant="danger" (buttonClick)="showConfirmPopup()">Popup Confirmación</app-button>
-      </div>
-    </section>
-
-    <!-- TOOLTIP DEMO -->
-    <section class="showcase-section">
-      <h3 class="section-title">Tooltips</h3>
-      <div class="tooltip-container">
-        <app-button variant="outline" class="tooltip-trigger" data-tooltip="Este es un tooltip de ayuda">
-          Hover para tooltip
-        </app-button>
-      </div>
-    </section>
-
-    <!-- TOAST -->
-    <section class="showcase-section">
-      <h3 class="section-title">Toast / Notificaciones</h3>
-      <div class="button-grid">
-        <app-button variant="primary" (buttonClick)="showToast('info')">Info</app-button>
-        <app-button variant="success" (buttonClick)="showToast('success')">Success</app-button>
-        <app-button variant="warning" (buttonClick)="showToast('warning')">Warning</app-button>
-        <app-button variant="danger" (buttonClick)="showToast('error')">Error</app-button>
-      </div>
-    </section>
-  `,
-  styles: [`
-    .showcase-section { margin-bottom: 2rem; display: block; }
-    .section-title { font-size: 1.25rem; font-weight: var(--font-weight-emphasis); margin-bottom: 1rem; color: var(--text-color); }
-    .button-grid { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-
-    /* Alerts styles reuse */
-    .alert { padding: 1rem; border-radius: var(--radius-md); border-left: 4px solid transparent; display: flex; gap: 0.75rem; margin-bottom: 1rem; background: var(--surface-elevated); }
-    .alert-icon { font-size: 1.25rem; }
-    .alert-info { border-color: var(--info-color); background: color-mix(in srgb, var(--info-color), transparent 90%); }
-    .alert-success { border-color: var(--success-color); background: color-mix(in srgb, var(--success-color), transparent 90%); }
-    .alert-warning { border-color: var(--warning-color); background: color-mix(in srgb, var(--warning-color), transparent 90%); }
-    .alert-danger { border-color: var(--danger-color); background: color-mix(in srgb, var(--danger-color), transparent 90%); }
-
-    /* Simple Tooltip impl for demo */
-    .tooltip-trigger { position: relative; }
-    .tooltip-trigger:hover::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--text-color);
-      color: var(--text-color-on-primary);
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
-      font-size: 0.75rem;
-      white-space: nowrap;
-      margin-bottom: 0.5rem;
-    }
-  `]
+  imports: [ButtonComponent, TextComponent, Alert],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './showcase-feedback.component.html',
+  styleUrl: './showcase-feedback.component.css'
 })
 export class ShowcaseFeedbackComponent {
   private readonly toast = inject(ToastService);

@@ -7,6 +7,7 @@
   "summary": "Mantenimiento paginado con búsqueda y alta/edición en diálogo.",
   "whenToUse": "Catálogos pequeños o medianos cuyo formulario cabe en un diálogo y cuya lista sigue visible.",
   "componentStack": {
+    "chassis": ["pagina-crud", "summary-list"],
     "header": ["page-header"],
     "filters": ["query-toolbar", "input", "button"],
     "surface": ["card"],

@@ -50,6 +50,13 @@
   background: var(--surface-section);
 }
 
+/* El perfil de catálogo mantiene los iconos sin cajas elevadas. */
+.table-action--profile-catalog {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
 .table-action:not(:disabled):active {
   transform: translateY(1px);
 }

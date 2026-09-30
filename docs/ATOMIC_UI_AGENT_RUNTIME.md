@@ -5,7 +5,8 @@ author: "Hospital Regional de Ayacucho"
 document_type: "arquitectura"
 status: "vigente"
 date: "2026-08-20"
-version: "5.8.4"
+version: "5.22.0"
+last_updated: "2026-09-29"
 owner: "Hospital Regional de Ayacucho"
 ---
 
@@ -78,11 +79,14 @@ de acciones resuelven la estructura visual repetida observada en Front Atomic.
 El consumidor conserva permisos, rutas, formularios tipados, fachadas, DTO,
 HTTP y reglas de negocio.
 
-En un `FormDialog`, el cierre visual canónico es una única X superior con
-etiqueta accesible específica, dentro de un control cuadrado y centrado respecto
-del encabezado. El encabezado permanece visible durante el
-desplazamiento. El pie contiene `Cancelar` solo cuando hay datos por descartar,
-además de la acción principal; un diálogo informativo no repite `Cerrar` abajo.
+El perfil de catálogo de `PaginaCrud` conserva título centrado, X accesible
+`hanging-close` y un pie con Cerrar/Cancelar neutro. El detalle usa contenido
+semántico, no formularios deshabilitados. Ver el
+[contrato visual de catálogos](./CONTRATO_CATALOGOS_CRUD.md).
+`FormDialog` conserva su composición existente para otros flujos; no autoriza
+a sustituir la ventana de un catálogo ni a imponer una X cuadrada o retirar
+Cerrar por preferencia del agente. La presentación reutilizable se resuelve en
+Atomic antes de retirar el diseño local, preservando controles de cierre y foco.
 
 ## Modos de generación
 
@@ -127,3 +131,12 @@ una extensión del sistema o una ambigüedad no resuelta por el catálogo.
 - El dry-run es revisable, la generación es determinista y no sobrescribe.
 - Catálogo, tokens, tooling, lint, pruebas, aplicación y Storybook aplicables
   terminan en verde.
+
+## Catálogos: continuidad ATOMIC-20260929-004
+
+El [contrato canónico](CONTRATO_CATALOGOS_CRUD.md) gobierna el flujo: tres acciones
+contextuales, editor sin estado, una confirmación, Guardar válido y con cambios
+reales; preservar contexto y resultados confirmados si falla la recarga.
+Aplicar también las reglas UX action-hierarchy, form-behavior y async-feedback.
+Una receta o una prueba estática no demuestra que el generador ni el consumidor
+completo cumplen: contrastar el componente conectado y validar HTTP simulado.

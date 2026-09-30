@@ -1,4 +1,4 @@
-import { Component, forwardRef, signal, ChangeDetectionStrategy, input, output, model, ElementRef, ViewChild } from '@angular/core';
+import { Component, forwardRef, signal, ChangeDetectionStrategy, input, output, model } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
 

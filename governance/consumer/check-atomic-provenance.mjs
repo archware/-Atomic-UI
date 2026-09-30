@@ -15,7 +15,7 @@ const {
 } = canonicalization;
 const { confinedPath, relativePath } = safePaths;
 const { verifySourceManifest } = sourceManifest;
-const POLICY_VERSION = '1.2.2';
+const POLICY_VERSION = '1.2.3';
 const REQUIRED_MARKER = 'ATOMIC_GOVERNANCE_REQUIRED';
 /*
 HTML no distingue mayusculas, por lo que el archivo `.html` se comprueba con
@@ -777,7 +777,7 @@ const shellRoot =
   typeof manifest.shellRoot === 'string' ? normalize(manifest.shellRoot).trim() : '';
 if (!shellRoot) {
   failures.push(
-    'shellRoot es obligatorio: el shell de la aplicación es superficie gobernada (política 1.2.2).',
+    'shellRoot es obligatorio: el shell de la aplicación es superficie gobernada (política 1.2.3).',
   );
 } else {
   const absoluteShellRoot = safeJoin(consumerRoot, shellRoot, 'shellRoot');

@@ -105,8 +105,9 @@
               [attr.data-column]="column.key"
               [attr.aria-sort]="ariaSort(column)"
               [appVariablesCss]="{ '--data-table-column-width': column.width ?? null }"
-              [class.data-table__cell--center]="column.align === 'center'"
-              [class.data-table__cell--end]="column.align === 'end'"
+              [class.data-table__cell--start]="column.align === 'start'"
+              [class.data-table__cell--center]="columnAlignment(column) === 'center'"
+              [class.data-table__cell--end]="columnAlignment(column) === 'end'"
             >
               @if (column.sortable) {
                 <button
@@ -157,9 +158,10 @@
                 <app-alert kind="danger" spacing="none">
                   <div class="data-table__state data-table__state--inline">
                     <span>{{ errorMessage() }}</span>
-                    <button class="data-table__retry" type="button" (click)="retry.emit()">
+                    <app-button class="data-table__retry" variant="outline" tone="neutral"
+                      size="sm" [fullWidth]="true" (buttonClick)="retry.emit()">
                       {{ retryLabel() }}
-                    </button>
+                    </app-button>
                   </div>
                 </app-alert>
               </td>
@@ -198,16 +200,11 @@
                     [attr.data-column]="column.key"
                     [attr.data-label]="column.header | translate"
                     [appVariablesCss]="{ '--data-table-column-width': column.width ?? null }"
-                    [class.data-table__cell--center]="column.align === 'center'"
-                    [class.data-table__cell--end]="column.align === 'end'"
+                    [class.data-table__cell--start]="column.align === 'start'"
+                    [class.data-table__cell--center]="columnAlignment(column) === 'center'"
+                    [class.data-table__cell--end]="columnAlignment(column) === 'end'"
                   >
-                    @if (
-                      column.isTag ||
-                      column.key === 'stateLabel' ||
-                      column.key === 'state' ||
-                      column.key === 'status' ||
-                      column.key === 'estado'
-                    ) {
+                    @if (isTagColumn(column)) {
                       <app-chip
                         [variant]="getTagVariant(column, row)"
                       >

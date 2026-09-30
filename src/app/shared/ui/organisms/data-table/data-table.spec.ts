@@ -42,6 +42,110 @@ class DataTableHost {
   }
 }
 
+describe('DataTable: alineacion de etiquetas de estado', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DataTable, TranslateModule.forRoot()],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
+  });
+
+  async function crear(columnas: readonly DataTableColumn<Record<string, unknown>>[]) {
+    const fixture = TestBed.createComponent(DataTable);
+    fixture.componentRef.setInput('caption', 'Estados');
+    fixture.componentRef.setInput('columns', columnas);
+    fixture.componentRef.setInput('rows', [{
+      activo: 'Activo', estado: 'Inactivo', state: 'Pendiente', status: 'Activo',
+      stateLabel: 'En revisión', nombre: 'Descripción extensa del catálogo',
+    }]);
+    fixture.componentRef.setInput('pagination', 'none');
+    await fixture.whenStable();
+    return fixture;
+  }
+
+  for (const key of ['activo', 'estado', 'state', 'status', 'stateLabel']) {
+    it('centra encabezado y etiqueta sin depender del texto visible: ' + key, async () => {
+      const fixture = await crear([{ key, header: 'Situación', isTag: key === 'activo', sortable: true }]);
+      const host = fixture.nativeElement as HTMLElement;
+      const header = host.querySelector('th[data-column="' + key + '"]') as HTMLElement;
+      const cell = host.querySelector('td[data-column="' + key + '"]') as HTMLElement;
+      expect(header.classList.contains('data-table__cell--center')).toBeTrue();
+      expect(cell.classList.contains('data-table__cell--center')).toBeTrue();
+      expect(cell.querySelector('app-chip')).not.toBeNull();
+      expect(getComputedStyle(header.querySelector('button')!).justifyContent).toBe('center');
+    });
+  }
+
+  for (const align of ['start', 'center', 'end'] as const) {
+    it('respeta una alineacion explicita en etiquetas: ' + align, async () => {
+      const fixture = await crear([{ key: 'activo', header: 'Estado', isTag: true, align }]);
+      const cells = (fixture.nativeElement as HTMLElement).querySelectorAll('[data-column="activo"]');
+      expect(cells.length).toBe(2);
+      cells.forEach(cell => {
+        expect(cell.classList.contains('data-table__cell--center')).toBe(align === 'center');
+        expect(cell.classList.contains('data-table__cell--end')).toBe(align === 'end');
+      });
+    });
+  }
+
+for (const ancho of [320, 375, 768, 1366]) {
+    for (const tema of ['light', 'dark']) {
+      it('centra la geometria del badge sin desplazar la etiqueta movil: ' + ancho + '/' + tema, async () => {
+        const fixture = await crear([
+          { key: 'nombre', header: 'Nombre' },
+          { key: 'activo', header: 'Estado', isTag: true },
+        ]);
+        const marco = document.createElement('iframe');
+        marco.width = String(ancho);
+        marco.height = '800';
+        document.body.appendChild(marco);
+        try {
+          const destino = marco.contentDocument!;
+          const vista = marco.contentWindow!;
+          const estilos = destino.createElement('style');
+          estilos.textContent = Array.from(document.styleSheets)
+            .flatMap(hoja => Array.from(hoja.cssRules, regla => regla.cssText)).join('\n');
+          destino.head.appendChild(estilos);
+          destino.documentElement.classList.toggle('dark', tema === 'dark');
+          destino.documentElement.setAttribute('data-theme', tema);
+          destino.documentElement.style.fontSize = '16px';
+          destino.body.appendChild((fixture.nativeElement as HTMLElement).cloneNode(true));
+          await destino.fonts.ready;
+          await new Promise<void>(resolve => vista.requestAnimationFrame(() => resolve()));
+          const celda = destino.querySelector('td[data-column="activo"]') as HTMLElement;
+          const badge = celda.querySelector('.chip') as HTMLElement;
+          const estilo = vista.getComputedStyle(celda);
+          const caja = celda.getBoundingClientRect();
+          const etiqueta = badge.getBoundingClientRect();
+          expect(etiqueta.width).toBeGreaterThan(0);
+          let centroEsperado = caja.left + caja.width / 2;
+          if (ancho <= 768) {
+            expect(estilo.display).toBe('grid');
+            const columnas = estilo.gridTemplateColumns.split(' ').map(Number.parseFloat);
+            expect(columnas.length).toBe(2);
+            centroEsperado = caja.right - Number.parseFloat(estilo.borderRightWidth)
+              - Number.parseFloat(estilo.paddingRight) - columnas[1]! / 2;
+            expect(vista.getComputedStyle(celda, '::before').content).toContain('Estado');
+            expect(vista.getComputedStyle(celda, '::before').textAlign).toBe('start');
+          } else {
+            expect(estilo.textAlign).toBe('center');
+          }
+          expect(Math.abs(etiqueta.left + etiqueta.width / 2 - centroEsperado)).toBeLessThan(1);
+        } finally {
+          marco.remove();
+        }
+      });
+    }
+  }
+
+  it('no centra las columnas ordinarias ni depende de una etiqueta traducida', async () => {
+    const fixture = await crear([{ key: 'nombre', header: 'Estado' }]);
+    const cell = (fixture.nativeElement as HTMLElement).querySelector('td[data-column="nombre"]')!;
+    expect(cell.classList.contains('data-table__cell--center')).toBeFalse();
+    expect(cell.querySelector('app-chip')).toBeNull();
+  });
+});
+
 describe('DataTable', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -236,6 +340,8 @@ describe('DataTable', () => {
 
     expect(alert.textContent).toContain('No fue posible cargar la información');
     expect(retryButton.type).toBe('button');
+    expect(retryButton.classList).toContain('btn-outline');
+    expect(retryButton.classList).toContain('btn-tone-neutral');
     retryButton.click();
     await fixture.whenStable();
     expect(retries).toBe(1);

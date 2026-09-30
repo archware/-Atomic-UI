@@ -13,7 +13,7 @@ const {
   uniqueStrings,
 } = require('./query-atomic-catalog.js');
 
-const ALLOWED_LAYERS = new Set(['atom', 'molecule', 'organism']);
+const ALLOWED_LAYERS = new Set(['atom', 'molecule', 'organism', 'surface', 'template']);
 const ALLOWED_UX_PRIORITIES = new Set(['must', 'should', 'may']);
 const ALLOWED_UX_ENFORCERS = new Set(['catalog', 'recipe', 'generator', 'gate', 'unit', 'a11y', 'visual', 'review']);
 const UI_LAYER_DIRECTORIES = Object.freeze(['atoms', 'molecules', 'organisms', 'surfaces', 'templates']);

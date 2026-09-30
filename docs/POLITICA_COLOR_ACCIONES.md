@@ -12,7 +12,11 @@ identifica prioridad, no la existencia de un botón o de un icono.
    superficie neutral visible; `ghost` se reserva para la menor jerarquía.
 3. `secondary` se reserva para una acción operativa destacada que no compita con
    una primaria en la misma región.
-4. `success`, `warning` y `danger` solo expresan consecuencia o estado.
+4. `success`, `warning` y `danger` expresan consecuencia o estado.
+   En el perfil `catalog`: consultar usa ojo neutro, editar lápiz azul,
+   activar marca circular verde y desactivar papelera roja. El dueño aprobó
+   esta revisión en ATOMIC-20260929-005 para distinguir consulta y activación;
+   sustituye la excepción histórica del ojo verde. No modifica `standard`.
 5. Un icono KPI es `neutral` por defecto. `brand`, `info`, `success`, `warning`
    o `danger` requieren una razón semántica vinculada al indicador.
 6. El color no sustituye texto, etiqueta accesible, orden ni agrupación.
@@ -34,6 +38,10 @@ identifica prioridad, no la existencia de un botón o de un icono.
 
 ## Antipatrones
 
+Para catálogos rige el [contrato visual](./CONTRATO_CATALOGOS_CRUD.md): Cerrar y
+Cancelar son neutrales, las acciones compactas no se sustituyen por botones
+elevados y el significado de la papelera se declara mediante texto de confirmación.
+
 - cuatro botones primarios en una misma fila;
 - iconos de todas las métricas con color de marca;
 - usar `danger` para llamar la atención sobre una acción inocua;
@@ -43,3 +51,11 @@ identifica prioridad, no la existencia de un botón o de un icono.
 
 La política se aplica primero en Atomic UI y se propaga a los consumidores con
 pruebas, procedencia y registro de decisión.
+
+## Alertas: muestra y componente comparten implementación
+
+Showcase y producto consumen Alert: fondo tenue, acento lateral semántico,
+texto de lectura neutro e icono contrastado. No dibujar otra alerta con div/CSS
+en la demo. El título conserva capitalización; el cuerpo admite contenido largo.
+Reintentar es una acción auxiliar neutra, no una acción de marca ni destructiva.
+El color siempre se acompaña de mensaje, icono y anuncio accesible.

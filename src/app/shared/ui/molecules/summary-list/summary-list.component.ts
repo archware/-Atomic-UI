@@ -1,5 +1,8 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { VariablesCssDirective } from '../../directives/variables-css.directive';
+
+export type SummaryListLayout = 'summary' | 'detail';
 
 export interface SummaryListItem {
   label: string;
@@ -11,9 +14,9 @@ export interface SummaryListItem {
 @Component({
   selector: 'app-summary-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, VariablesCssDirective],
   template: `
-    <dl class="summary-list" [class.summary-list--featured]="featured()">
+    <dl class="summary-list" [class.data-list]="layout() === 'detail'" [class.summary-list--featured]="featured()" [class.summary-list--detail]="layout() === 'detail'">
       @for (item of items(); track item.label) {
         <div>
           <dt>
@@ -22,7 +25,7 @@ export interface SummaryListItem {
             }
             {{ item.label }}
           </dt>
-          <dd [style.color]="item.valueColor">{{ item.value }}</dd>
+          <dd [appVariablesCss]="{'--summary-value-color': item.valueColor}">{{ item.value }}</dd>
         </div>
       }
     </dl>
@@ -31,6 +34,8 @@ export interface SummaryListItem {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SummaryListComponent {
-  readonly items = input<SummaryListItem[]>([]);
+  readonly items = input<readonly SummaryListItem[]>([]);
   readonly featured = input(false);
+  /** Detalle semántico sin controles ni estilos del consumidor. */
+  readonly layout = input<SummaryListLayout>('summary');
 }

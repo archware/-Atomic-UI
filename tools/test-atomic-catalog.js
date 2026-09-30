@@ -182,6 +182,18 @@ try {
   assert.deepEqual(validation.failures, []);
   assert.deepEqual(validation.warnings, []);
 
+  // La capa real de las plantillas debe consultarse sin fingir que es un organismo.
+  const layerItem = catalog.items.find(item => item.document.id === 'button');
+  const originalLayer = layerItem.document.layer;
+  for (const layer of ['template', 'surface']) {
+    layerItem.document.layer = layer;
+    assert.deepEqual(validateCatalog(catalog, { selection: catalog.items, requireMinimum: false }).failures, []);
+  }
+  layerItem.document.layer = 'invented-layout';
+  assert.ok(validateCatalog(catalog, { selection: catalog.items, requireMinimum: false }).failures.some(failure => failure.includes('layer')));
+  layerItem.document.layer = originalLayer;
+  assert.deepEqual(validateCatalog(catalog, { selection: catalog.items, requireMinimum: false }).failures, []);
+
   const queryCapture = captureIo();
   assert.equal(
     queryMain(['--catalog-root', catalogRoot, '--component', 'button', '--json'], queryCapture.io),

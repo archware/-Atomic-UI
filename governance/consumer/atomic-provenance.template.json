@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "policyVersion": "1.2.2",
+  "policyVersion": "1.2.3",
   "changeId": "ATOMIC-BOOTSTRAP",
   "atomicRepository": "../-Atomic-UI",
   "atomicRemote": "archware/-Atomic-UI",

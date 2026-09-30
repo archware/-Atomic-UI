@@ -40,8 +40,9 @@
               [appTooltip]="(collapsed() || item.label.length > 13) ? item.label : ''" tooltipPosition="right"
             >
               <i
-                [class]="item.icon + ' nav-icon'" [style.color]="item.iconColor || null"
+                [class]="item.icon + ' nav-icon'"
                 [appVariablesCss]="{
+                  '--sidebar-item-icon-color': item.iconColor || null,
                   '--sidebar-icon-color': item.active ? null : item.iconColor || null
                 }"
                 aria-hidden="true"

@@ -2,7 +2,7 @@
 title: "Continuidad para agentes de Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-08-23"
+last_updated: "2026-09-30"
 document_type: "manual de continuidad"
 status: "vigente"
 version: "1.0.0"
@@ -12,6 +12,91 @@ document_standard: "C:\\Users\\cotaha\\Documents\\Repos2\\ESTANDAR_DOCUMENTAL_AG
 ---
 
 # Continuidad para agentes de Atomic UI
+
+## Guardado local ATOMIC-20260930-006
+
+El dueño autoriza commits locales de los cambios acumulados, incluido Atomic;
+sin push, despliegue ni operaciones de base de datos. Este guardado conserva
+trabajo en curso y no certifica cierre funcional ni procedencia global.
+La autorización explícita de esta sesión permite únicamente el commit local;
+no levanta el congelamiento general ni permite push o publicación.
+Consultar el [roadmap de guardado](../.agents/roadmaps/ROADMAP_ATOMIC-20260930-006_checkpoint.md)
+y git log para identificar el commit; las cifras inferiores son antecedentes.
+
+## Corte vigente ATOMIC-20260929-005
+
+Alert y la muestra comparten ahora implementación; acento lateral y texto
+neutro, sin estilos propios de alerta en consumidores. TableAction catalog:
+Ver neutro, Editar azul, Activar verde, Desactivar rojo. La aprobación expresa
+del dueño sustituye la antigua excepción de ojo verde; standard no cambia.
+DataTable adopta Button neutro para retry, manteniendo su evento.
+
+Adopción candidata en ventas-cxc, documentada allí como VCXC-20260929-006.
+No equivale a publicación ni altera la política instalada del consumidor.
+54 pruebas específicas pasan; 512/516 en la suite completa, cuatro fallos de
+autenticación fuera del corte. Build, biblioteca y Storybook pasan. Referencia
+visual aislada: atomic-alert-reference--superficies, con Panel/Alert/DataTable.
+Ver [roadmap y límites](../.agents/roadmaps/ROADMAP_ATOMIC-20260929-005_alertas.md).
+Las cifras siguientes son antecedentes de cada asignación.
+
+## Corte vigente ATOMIC-20260929-004
+
+Entidades y Tipos adoptaron el candidato local con autorización expresa en
+VCXC-20260929-004; Familias continúa en VCXC-20260929-005. Por tanto, las frases
+«adopción pendiente» y «editor intacto» de los antecedentes siguientes describen
+su fecha, no el estado actual. La publicación y propagación certificada siguen
+pendientes; política instalada en Ventas 1.2.2 y fuente 1.2.3 no se falsean.
+
+Se actualizan doctrinas/rutas de lectura y reglas UX. PaginaCrud añade
+bloquearCierre; SummaryList detail se consume en Familias. No trasladar al ADN
+consultas, DTOs, IDs, permisos ni orquestación. Véanse
+[contrato](CONTRATO_CATALOGOS_CRUD.md) y
+[roadmap](../.agents/roadmaps/ROADMAP_ATOMIC-20260929-004_lecciones_catalogos.md).
+
+Evidencia actual: 13/13 focalizadas, negativa 1/10 al retirar la guarda y verde
+tras restaurarla. Build/lib, catálogo estructural, tooling, paquete y smoke
+del generador pasan. Suite global 510/514; lint, API de catálogo, tokens,
+tipografía y contraste mantienen deuda en rutas no intervenidas. No es release.
+
+## Continuación ATOMIC-20260929-003
+
+Capacidad candidata: tercera acción contextual de catálogo y
+`PaginaCrud.guardarHabilitado`. No se alteran estilos ni valores predeterminados
+de otros consumidores. Quince pruebas focalizadas pasan; adopción en Entidades
+y Tipos de Ventas pendiente de autorización local expresa o referencia elegible
+del Guardián. El editor del consumidor permanece intacto mientras tanto.
+Consultar el [roadmap](../.agents/roadmaps/ROADMAP_ATOMIC-20260929-003_accion_contextual.md)
+y la [desviación](../.agents/desviaciones/DESVIACION_ATOMIC-20260929-003.md).
+
+## Continuación ATOMIC-20260929-002
+
+Corrección candidata del centrado de estados en DataTable; conserva align
+explícito y no altera acciones ni ventanas. Véanse
+[roadmap](../.agents/roadmaps/ROADMAP_ATOMIC-20260929-002_alineacion_estados.md),
+[contrato](CONTRATO_CATALOGOS_CRUD.md) y
+[evidencia](../.agents/evidencias/ATOMIC-20260929-002.md).
+La fuente sigue en main / 98cc215757a03787371fa7cdf2dcd564a2430fef, con trabajo
+previo preservado. No se modifica ventas-cxc. La adopción necesita referencia
+limpia revisada por el Guardián y resolver la instalación de monorepos:
+[desviación](../.agents/desviaciones/DESVIACION-20260929-002.md).
+
+## Continuación ATOMIC-20260928-001
+
+Se trabaja sobre `main`, OID inicial
+`98cc215757a03787371fa7cdf2dcd564a2430fef`, limpio antes de esta asignación.
+Cambios candidatos en árbol, sin commit ni publicación. La política de fuente
+es 1.2.3; las copias de consumidores no se han actualizado. Leer el
+[roadmap](../.agents/roadmaps/ROADMAP_ATOMIC-20260928-001_preservacion_visual.md),
+el [contrato visual](./CONTRATO_CATALOGOS_CRUD.md) y la
+[evidencia](../.agents/evidencias/ATOMIC-20260928-001.md).
+
+`PaginaCrud`, `SummaryList layout="detail"` y `TableAction profile="catalog"`
+son capacidades candidatas para Familias. No copiar encima de sus pruebas ni
+perder filtros, validación, DTO o coordinación asíncrona. El generador todavía
+compone su receta por organismos y no acredita el nuevo patrón. La auditoría
+acepta proyecto dentro de Git en modo lectura; la instalación del workflow de
+monorepo sigue pendiente. Sin compuertas globales y referencia limpia recuperable
+no se propaga ni se declara terminado el frente Ventas.
 
 ## Propósito y límites
 

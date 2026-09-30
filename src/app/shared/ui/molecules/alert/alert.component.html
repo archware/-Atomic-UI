@@ -1,0 +1,30 @@
+@if (visible()) {
+      <div
+        class="alert"
+        [class]="classes()"
+        [attr.role]="kind() === 'danger' ? 'alert' : 'status'"
+        [attr.aria-live]="kind() === 'danger' ? 'assertive' : 'polite'"
+      >
+        @if (kind() === 'info') {
+          <i class="fa-solid fa-circle-info alert__icon" aria-hidden="true"></i>
+        } @else if (kind() === 'success') {
+          <i class="fa-solid fa-circle-check alert__icon" aria-hidden="true"></i>
+        } @else if (kind() === 'warning') {
+          <i class="fa-solid fa-triangle-exclamation alert__icon" aria-hidden="true"></i>
+        } @else if (kind() === 'danger') {
+          <i class="fa-solid fa-xmark alert__icon" aria-hidden="true"></i>
+        }
+
+        <div class="alert__body">
+          @if (title()) {
+            <strong class="alert__title">{{ title() }}</strong>
+          }
+          <div class="alert__message"><ng-content /></div>
+        </div>
+
+        @if (closable()) {
+          <app-table-action class="alert__close" action="custom" iconClass="fa-xmark"
+            label="Cerrar mensaje" tone="neutral" size="sm" (triggered)="close()" />
+        }
+      </div>
+    }

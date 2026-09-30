@@ -1,0 +1,22 @@
+.showcase-section { margin-bottom: var(--space-6); display: block; }
+    .section-title { font-size: var(--text-lg); font-weight: var(--font-weight-emphasis); margin-bottom: var(--space-4); color: var(--text-color); }
+    .button-grid { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+
+    /* Simple Tooltip impl for demo */
+    .tooltip-trigger { position: relative; }
+    .tooltip-trigger:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--text-color);
+      color: var(--text-color-on-primary);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--space-1);
+      font-size: var(--text-xs);
+      white-space: nowrap;
+      margin-bottom: var(--space-2);
+    }
+
+.section-description { display: block; margin-bottom: var(--space-4); }

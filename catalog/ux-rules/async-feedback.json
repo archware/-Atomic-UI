@@ -6,34 +6,81 @@
   "intent": "Representar toda operación remota sin estados ambiguos, duplicados o inventados.",
   "priority": "must",
   "appliesTo": {
-    "intents": ["crud", "form", "detail", "wizard", "dashboard", "transaction", "document", "authentication", "settings"],
-    "components": ["data-state", "data-table", "alert", "toast", "button", "modal", "form-dialog"]
+    "intents": [
+      "crud",
+      "form",
+      "detail",
+      "wizard",
+      "dashboard",
+      "transaction",
+      "document",
+      "authentication",
+      "settings"
+    ],
+    "components": [
+      "data-state",
+      "data-table",
+      "alert",
+      "toast",
+      "button",
+      "modal",
+      "form-dialog"
+    ]
   },
   "requirements": [
     {
       "id": "dialog-mutation-lifecycle",
       "statement": "Mantener el diálogo abierto y enfocar su alerta ante fallo; cerrarlo solo tras éxito y crear el Toast de confirmación después de retirar el overlay.",
-      "enforcedBy": ["catalog", "recipe", "unit", "a11y", "review"]
+      "enforcedBy": [
+        "catalog",
+        "recipe",
+        "unit",
+        "a11y",
+        "review"
+      ]
     },
     {
       "id": "collection-states",
       "statement": "Cubrir idle, loading, success con datos, success vacío y error recuperable en toda colección remota.",
-      "enforcedBy": ["recipe", "generator", "unit", "visual"]
+      "enforcedBy": [
+        "recipe",
+        "generator",
+        "unit",
+        "visual"
+      ]
     },
     {
       "id": "mutation-states",
       "statement": "Separar el estado de mutación del estado de consulta y bloquear el doble envío mientras esté loading.",
-      "enforcedBy": ["recipe", "generator", "unit"]
+      "enforcedBy": [
+        "recipe",
+        "generator",
+        "unit"
+      ]
     },
     {
       "id": "local-versus-global-feedback",
       "statement": "Mostrar errores de validación junto al control y reservar Toast para el resultado global de una mutación remota.",
-      "enforcedBy": ["recipe", "generator", "review"]
+      "enforcedBy": [
+        "recipe",
+        "generator",
+        "review"
+      ]
     },
     {
       "id": "retry-preserves-intent",
       "statement": "Una acción de reintento conserva consulta, filtros y contexto visibles sin inventar datos sustitutos.",
-      "enforcedBy": ["generator", "unit"]
+      "enforcedBy": [
+        "generator",
+        "unit"
+      ]
+    },
+    {
+      "id": "confirmed-mutation-refresh",
+      "statement": "Una mutación confirmada actualiza la vista; el GET posterior no prolonga su bloqueo ni convierte su éxito en fallo. Conservar consulta, distinguir filtro de activos y ofrecer reintento de lectura sin repetir escrituras ambiguas.",
+      "enforcedBy": [
+        "review"
+      ]
     }
   ],
   "acceptance": [
@@ -47,6 +94,7 @@
     "src/app/shared/ui/molecules/modal/modal.component.ts",
     "src/app/shared/ui/molecules/data-state/data-state.component.ts",
     "src/app/shared/ui/organisms/data-table/data-table.ts",
-    "src/app/shared/ui/molecules/toast/toast.component.ts"
+    "src/app/shared/ui/molecules/toast/toast.component.ts",
+    "docs/CONTRATO_CATALOGOS_CRUD.md"
   ]
 }

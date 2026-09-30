@@ -6,29 +6,67 @@
   "intent": "Evitar competencia visual y conservar el significado de color, posición y agrupación.",
   "priority": "must",
   "appliesTo": {
-    "intents": ["crud", "form", "detail", "wizard", "dashboard", "transaction", "document", "settings"],
-    "components": ["button", "table-action", "action-group", "form-dialog"]
+    "intents": [
+      "crud",
+      "form",
+      "detail",
+      "wizard",
+      "dashboard",
+      "transaction",
+      "document",
+      "settings"
+    ],
+    "components": [
+      "button",
+      "table-action",
+      "action-group",
+      "form-dialog"
+    ]
   },
   "requirements": [
     {
       "id": "one-primary-per-region",
       "statement": "Permitir como máximo una acción primary por región de acciones.",
-      "enforcedBy": ["recipe", "generator", "visual"]
+      "enforcedBy": [
+        "recipe",
+        "generator",
+        "visual"
+      ]
     },
     {
       "id": "semantic-tones",
-      "statement": "Usar success, warning y danger únicamente cuando expresen consecuencia o estado real.",
-      "enforcedBy": ["catalog", "recipe", "review"]
+      "statement": "Usar tonos para consecuencias o estados reales. En el perfil catalog, consultar usa ojo neutro, editar lápiz azul y activar marca verde; desactivar conserva papelera roja. La consulta no debe compartir el verde de activación.",
+      "enforcedBy": [
+        "catalog",
+        "recipe",
+        "review"
+      ]
     },
     {
       "id": "visible-action-limit",
       "statement": "Mostrar hasta tres acciones contextuales y mover las adicionales al desbordamiento accesible de ActionGroup.",
-      "enforcedBy": ["recipe", "generator", "unit", "a11y"]
+      "enforcedBy": [
+        "recipe",
+        "generator",
+        "unit",
+        "a11y"
+      ]
     },
     {
       "id": "color-needs-label",
       "statement": "Acompañar el color con texto, etiqueta accesible, icono semántico y agrupación comprensible.",
-      "enforcedBy": ["generator", "a11y", "review"]
+      "enforcedBy": [
+        "generator",
+        "a11y",
+        "review"
+      ]
+    },
+    {
+      "id": "catalog-contextual-state",
+      "statement": "En catálogos con baja lógica declarada, la tercera acción alterna Desactivar/Activar por intención del consumidor; una confirmación desde grilla, sin cuarto botón ni estado editable junto a Guardar.",
+      "enforcedBy": [
+        "review"
+      ]
     }
   ],
   "acceptance": [
@@ -39,6 +77,7 @@
   "evidence": [
     "docs/POLITICA_COLOR_ACCIONES.md",
     "src/app/shared/ui/molecules/action-group/action-group.component.ts",
-    "src/app/shared/ui/atoms/table-action/table-action.ts"
+    "src/app/shared/ui/atoms/table-action/table-action.ts",
+    "docs/CONTRATO_CATALOGOS_CRUD.md"
   ]
 }

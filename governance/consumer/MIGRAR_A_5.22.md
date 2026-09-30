@@ -5,7 +5,7 @@ status: "vigente"
 date: "2026-08-23"
 updated: "2026-08-23"
 version: "5.22.0"
-policy_version: "1.2.2"
+policy_version: "1.2.3"
 owner: "Hospital Regional de Ayacucho"
 ---
 
@@ -17,6 +17,25 @@ no sustituye componentes existentes ni determina por sí mismo si una adaptació
 debe conservarse. Por tanto, cada migración empieza en modo de solo lectura y
 termina con pruebas del consumidor real.
 
+La revisión de política 1.2.3 añade promoción visual no destructiva. No cambia
+la versión de producto 5.22.0 ni acredita publicación del árbol de trabajo.
+
+### Proyecto dentro de una raíz Git compartida
+
+La auditoría distingue explícitamente las dos raíces:
+
+```powershell
+npm run governance:install -- C:/Users/cotaha/source/repos --project-root=ventas-cxc --ui-root=src/app/shared/ui --audit-only
+```
+
+Esta modalidad es exclusivamente de lectura y sigue exigiendo fuente Atomic
+limpia y verificable. La escritura se rechaza antes de tocar archivos: queda
+pendiente definir CI en la raíz Git compartida sin ampliar la frontera del
+producto. No se debe omitir `--project-root` para forzar una instalación en
+`repos`. Tampoco sirve `--package-root` como sustituto de la raíz de producto.
+El código, documentación y pruebas del consumidor se conservan hasta preparar
+una propagación íntegra y revisada.
+
 ## 1. Condiciones previas de procedencia
 
 La fuente Atomic debe cumplir simultáneamente estas condiciones:
@@ -26,7 +45,7 @@ La fuente Atomic debe cumplir simultáneamente estas condiciones:
    remota destinada a CI;
 3. `package.json`, `distribution/package-contract.json` y
    `distribution/atomic-source-manifest.json` describen la misma versión;
-4. las 158 fuentes publicadas coinciden con la huella agregada del manifiesto;
+4. las fuentes enumeradas por el manifiesto coinciden con su huella agregada;
 5. ninguna ruta propagable presenta cambios, archivos ignorados o archivos sin
    seguimiento.
 

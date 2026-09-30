@@ -11,8 +11,6 @@
  *   - PaginaDetallePestanas → vista de detalle con pestañas
  */
 
-import type { TemplateRef } from '@angular/core';
-
 // ============================================================
 // PAGINACIÓN
 // ============================================================
@@ -59,7 +57,7 @@ export interface ContextoFormularioCrud<T> {
  * Define una entidad dentro de un acordeón CRUD.
  * Cada entrada genera un accordion-item con su propia grilla y diálogo.
  */
-export interface EntidadAccordion<T extends object = Record<string, unknown>> {
+export interface EntidadAccordion<_T extends object = Record<string, unknown>> {
   /** Identificador único de la entidad dentro del acordeón. */
   readonly clave: string;
   /** Título visible en la cabecera del accordion-item. */
@@ -124,6 +122,8 @@ export interface ConfiguracionConfirmacion {
   readonly etiquetaConfirmar?: string;
   /** Texto del botón de cancelación. Por defecto: 'Revisar'. */
   readonly etiquetaCancelar?: string;
+  /** Consecuencia visual declarada por el consumidor; no se infiere del registro. */
+  readonly varianteConfirmar?: 'danger' | 'success';
 }
 
 /** Confirmación por defecto para bajas lógicas. */
@@ -132,6 +132,7 @@ export const CONFIRMACION_BAJA_DEFECTO: Readonly<Required<ConfiguracionConfirmac
   mensaje: () => 'Este registro quedará inactivo. Las referencias existentes se conservarán.',
   etiquetaConfirmar: 'Desactivar',
   etiquetaCancelar: 'Cancelar',
+  varianteConfirmar: 'danger',
 } as const;
 
 // ============================================================

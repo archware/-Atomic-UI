@@ -143,6 +143,7 @@ export type {
   TableActionName,
   TableActionTone,
   TableActionSize,
+  TableActionProfile,
 } from './atoms/table-action/table-action';
 
 export { TooltipDirective } from './atoms/tooltip/tooltip.directive';
@@ -308,7 +309,7 @@ export type {
 // SURFACES
 // ============================================
 export { SummaryListComponent } from './molecules/summary-list/summary-list.component';
-export type { SummaryListItem } from './molecules/summary-list/summary-list.component';
+export type { SummaryListItem, SummaryListLayout } from './molecules/summary-list/summary-list.component';
 
 export { ComparisonChartComponent } from './molecules/comparison-chart/comparison-chart.component';
 export type { ComparisonChartItem } from './molecules/comparison-chart/comparison-chart.component';

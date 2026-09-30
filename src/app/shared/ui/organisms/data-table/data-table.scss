@@ -142,8 +142,7 @@ tbody tr:last-child td {
   background: color-mix(in srgb, currentColor 8%, transparent);
 }
 
-.data-table__sort-button:focus-visible,
-.data-table__retry:focus-visible {
+.data-table__sort-button:focus-visible {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
@@ -152,6 +151,10 @@ tbody tr:last-child td {
   color: var(--primary-color);
   font-size: var(--text-md);
   line-height: 1;
+}
+
+.data-table__cell--start {
+  text-align: start;
 }
 
 .data-table__cell--center {
@@ -164,6 +167,19 @@ tbody tr:last-child td {
 
 .data-table__cell--end {
   text-align: end;
+}
+
+.data-table__cell--end .data-table__sort-button {
+  justify-content: flex-end;
+}
+
+// En tarjetas móviles, centrar el valor sin desplazar su etiqueta ::before.
+.data-table__cell--center > app-chip {
+  justify-self: center;
+}
+
+.data-table__cell--end > app-chip {
+  justify-self: end;
 }
 
 .data-table__actions,
@@ -245,6 +261,7 @@ tbody tr:last-child td {
   min-height: 0;
   justify-content: space-between;
   text-align: start;
+  color: inherit;
 }
 
 .data-table__spinner {
@@ -257,19 +274,7 @@ tbody tr:last-child td {
 }
 
 .data-table__retry {
-  min-height: 2.25rem;
-  padding: 0 var(--space-3);
-  border: 1px solid var(--primary-color);
-  border-radius: var(--radius-md);
-  background: transparent;
-  color: var(--primary-color);
-  cursor: pointer;
-  font: inherit;
-  font-weight: var(--font-weight-title);
-}
-
-.data-table__retry:hover {
-  background: var(--primary-color-lighter);
+  flex: 0 0 auto;
 }
 
 /* DATA TABLE TOOLBAR & TOP PAGINATION */

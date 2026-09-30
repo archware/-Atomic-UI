@@ -1,0 +1,339 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "pagina-crud",
+  "layer": "template",
+  "selector": "app-pagina-crud",
+  "export": "PaginaCrud",
+  "source": "src/app/shared/ui/templates/pagina-crud/pagina-crud.ts",
+  "purpose": "Plantilla canónica de catálogo que preserva acciones compactas, filtros y ventanas.",
+  "inputs": [
+    {
+      "name": "titulo",
+      "type": "string",
+      "meaning": "Título del catálogo.",
+      "required": true
+    },
+    {
+      "name": "subtitulo",
+      "type": "string | null",
+      "meaning": "Descripción opcional."
+    },
+    {
+      "name": "etiquetaNuevo",
+      "type": "string",
+      "meaning": "Etiqueta del alta."
+    },
+    {
+      "name": "embedded",
+      "type": "boolean",
+      "meaning": "Oculta el encabezado cuando se integra en otro contenedor."
+    },
+    {
+      "name": "iconoNuevo",
+      "type": "string",
+      "meaning": "Icono del alta."
+    },
+    {
+      "name": "opcionesBusqueda",
+      "type": "readonly FiltroBusqueda[]",
+      "meaning": "Filtros declarados por el consumidor."
+    },
+    {
+      "name": "tipoBusqueda",
+      "type": "string | null",
+      "meaning": "Campo seleccionado."
+    },
+    {
+      "name": "placeholderBusqueda",
+      "type": "string",
+      "meaning": "Indicación del buscador."
+    },
+    {
+      "name": "captionTabla",
+      "type": "string",
+      "meaning": "Descripción accesible de la tabla."
+    },
+    {
+      "name": "columnas",
+      "type": "readonly DataTableColumn<T>[]",
+      "meaning": "Columnas declaradas por el consumidor.",
+      "required": true
+    },
+    {
+      "name": "filas",
+      "type": "readonly T[]",
+      "meaning": "Filas sin reglas de negocio en Atomic.",
+      "required": true
+    },
+    {
+      "name": "estado",
+      "type": "DataTableStatus",
+      "meaning": "Estado de carga de la tabla."
+    },
+    {
+      "name": "paginaActual",
+      "type": "number",
+      "meaning": "Página actual."
+    },
+    {
+      "name": "totalRegistros",
+      "type": "number | null",
+      "meaning": "Total informado por el consumidor."
+    },
+    {
+      "name": "tamanioPagina",
+      "type": "number",
+      "meaning": "Cantidad de filas por página."
+    },
+    {
+      "name": "totalPaginas",
+      "type": "number",
+      "meaning": "Cantidad de páginas."
+    },
+    {
+      "name": "tienePaginaAnterior",
+      "type": "boolean",
+      "meaning": "Disponibilidad de página anterior."
+    },
+    {
+      "name": "tienePaginaSiguiente",
+      "type": "boolean",
+      "meaning": "Disponibilidad de página siguiente."
+    },
+    {
+      "name": "incluirInactivos",
+      "type": "boolean",
+      "meaning": "Compatibilidad histórica; no deriva filtros ni consulta HTTP."
+    },
+    {
+      "name": "acciones",
+      "type": "AccionesCrud",
+      "meaning": "Acciones predeterminadas del catálogo."
+    },
+    {
+      "name": "confirmacionBaja",
+      "type": "ConfiguracionConfirmacion",
+      "meaning": "Texto y consecuencia de la baja."
+    },
+    {
+      "name": "accionesPorFila",
+      "type": "((fila: T) => ActionItem[]) | null",
+      "meaning": "Acciones y permisos explícitos por fila."
+    },
+    {
+      "name": "confirmacionControlada",
+      "type": "boolean",
+      "meaning": "true exige resolverConfirmacion después de la respuesta; false conserva compatibilidad automática."
+    },
+    {
+      "name": "detalle",
+      "type": "readonly SummaryListItem[] | null",
+      "meaning": "Detalle semántico; null conserva el slot histórico."
+    },
+    {
+      "name": "modoCrud",
+      "type": "ModoCrud",
+      "meaning": "Crear, editar o consultar."
+    },
+    {
+      "name": "entidadActiva",
+      "type": "T | null",
+      "meaning": "Entidad contextual."
+    },
+    {
+      "name": "guardando",
+      "type": "boolean",
+      "meaning": "Bloquea cierre y operaciones durante la petición."
+    },
+    {
+      "name": "bloquearCierre",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Bloqueo explícito de cierre; el consumidor lo libera antes de cerrar tras respuesta."
+    },
+    {
+      "name": "guardarHabilitado",
+      "type": "boolean",
+      "default": true,
+      "meaning": "El consumidor declara validez y cambios reales; false impide emitir alGuardar."
+    },
+    {
+      "name": "errorOperacion",
+      "type": "string | null",
+      "meaning": "Mensaje confirmado de error, no éxito optimista."
+    },
+    {
+      "name": "interaccionCrear",
+      "type": "'popup' | 'stepper' | 'browser'",
+      "meaning": "Modo de interacción de crear."
+    },
+    {
+      "name": "interaccionEditar",
+      "type": "'popup' | 'stepper' | 'browser'",
+      "meaning": "Modo de interacción de editar."
+    },
+    {
+      "name": "interaccionVer",
+      "type": "'popup' | 'stepper' | 'browser'",
+      "meaning": "Modo de interacción de ver."
+    },
+    {
+      "name": "interaccionEliminar",
+      "type": "'popup' | 'stepper' | 'browser'",
+      "meaning": "Modo de interacción de eliminar."
+    },
+    {
+      "name": "wizardSteps",
+      "type": "Step[]",
+      "meaning": "Pasos de la interacción guiada."
+    },
+    {
+      "name": "wizardActiveStep",
+      "type": "number",
+      "meaning": "Paso actual."
+    },
+    {
+      "name": "wizardAllowSkip",
+      "type": "boolean",
+      "meaning": "Navegación libre declarada."
+    },
+    {
+      "name": "tamanoDialogo",
+      "type": "'sm' | 'md' | 'lg' | 'xl'",
+      "meaning": "Tamaño canónico de ventana."
+    }
+  ],
+  "variants": [],
+  "outputs": [
+    {
+      "name": "alCambiarTipoBusqueda",
+      "type": "string",
+      "meaning": "Intención de presentación; el consumidor coordina el resultado."
+    },
+    {
+      "name": "alCambiarPasoWizard",
+      "type": "number",
+      "meaning": "Intención de presentación; el consumidor coordina el resultado."
+    },
+    {
+      "name": "alSolicitarPagina",
+      "type": "SolicitudPagina",
+      "meaning": "Intención de presentación; el consumidor coordina el resultado."
+    },
+    {
+      "name": "alCrear",
+      "type": "void",
+      "meaning": "Intención de presentación; el consumidor coordina el resultado."
+    },
+    {
+      "name": "alVer",
+      "type": "T",
+      "meaning": "Intención de presentación; el consumidor coordina el resultado."
+    },
+    {
+      "name": "alEditar",
+      "type": "T",
+      "meaning": "Intención de presentación; el consumidor coordina el resultado."
+    },
+    {
+      "name": "alEliminar",
+      "type": "T",
+      "meaning": "Intención de presentación; el consumidor coordina el resultado."
+    },
+    {
+      "name": "alGuardar",
+      "type": "void",
+      "meaning": "Intención de presentación; el consumidor coordina el resultado."
+    },
+    {
+      "name": "alCerrarDialogo",
+      "type": "void",
+      "meaning": "Intención de presentación; el consumidor coordina el resultado."
+    },
+    {
+      "name": "alReintentar",
+      "type": "void",
+      "meaning": "Intención de presentación; el consumidor coordina el resultado."
+    },
+    {
+      "name": "alAccionFila",
+      "type": "{ accion: string; entidad: T }",
+      "meaning": "Intención de presentación; el consumidor coordina el resultado."
+    },
+    {
+      "name": "alConfirmarAccion",
+      "type": "{ accion: string; entidad: T }",
+      "meaning": "Intención de presentación; el consumidor coordina el resultado."
+    }
+  ],
+  "states": [
+    {
+      "name": "ready",
+      "meaning": "Presentación de los datos declarados."
+    }
+  ],
+  "a11y": [
+    "Contenido semántico y nombres accesibles; no deriva significado del color."
+  ],
+  "responsive": [
+    "El contenido conserva el orden de lectura; validar matriz de tamaños del contrato visual."
+  ],
+  "tokens": [
+    "--space-5",
+    "--text-color"
+  ],
+  "story": {
+    "path": "src/stories/pagina-crud.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "candidate",
+    "notes": [
+      "Candidato en árbol de trabajo; propagación pendiente de validación y referencia elegible."
+    ]
+  },
+  "canonicalFor": [
+    "modal-catalog",
+    "crud-page",
+    "catalog-detail"
+  ],
+  "methods": [
+    {
+      "name": "abrirDialogo",
+      "type": "void",
+      "meaning": "Abre y enfoca el editor."
+    },
+    {
+      "name": "cerrarDialogo",
+      "type": "void",
+      "meaning": "Cierra una vez, salvo envío en curso."
+    },
+    {
+      "name": "enfocarError",
+      "type": "void",
+      "meaning": "Enfoca el error de la operación."
+    },
+    {
+      "name": "abrirConfirmacion",
+      "type": "(entidad: T, configuracion: ConfiguracionConfirmacion, accion?: string) => void",
+      "meaning": "Abre confirmación explícita y enfoca Cancelar."
+    },
+    {
+      "name": "resolverConfirmacion",
+      "type": "(exito: boolean) => void",
+      "meaning": "Cierra solo tras éxito confirmado; conserva contexto tras error."
+    }
+  ],
+  "slots": [
+    {
+      "name": "#formularioCrud",
+      "type": "TemplateRef<ContextoFormularioCrud<T>>",
+      "meaning": "Campos de negocio del alta/edición, no estructura del modal."
+    }
+  ]
+}

@@ -36,7 +36,9 @@
             '--floating-textarea-icon-cursor': hasValue() ? 'pointer' : 'default'
           }"
         >
-          <i class="fa-solid fa-times" [style.display]="hasValue() ? 'inline-block' : 'none'"></i>
+          @if (hasValue()) {
+            <i class="fa-solid fa-times" aria-hidden="true"></i>
+          }
         </button>
       }
 

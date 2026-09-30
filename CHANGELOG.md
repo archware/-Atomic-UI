@@ -2,7 +2,7 @@
 title: 'Registro de cambios de Atomic UI'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-08-23'
-last_updated: '2026-08-25'
+last_updated: '2026-09-30'
 document_type: 'changelog'
 version: '5.22.0'
 status: 'vigente'
@@ -11,6 +11,79 @@ owner: 'Hospital Regional de Ayacucho'
 ---
 
 # Registro de cambios
+
+## ATOMIC-20260930-006 — guardado local autorizado
+
+El dueño solicita confirmar los cambios acumulados de frontend, backend/BD y
+Atomic. Se prepara un checkpoint por repositorio, no una versión productiva.
+La autorización explícita de esta sesión permite únicamente el commit local;
+no levanta el congelamiento general ni permite push o publicación.
+Validaciones, exclusiones y rollback en el
+[roadmap](.agents/roadmaps/ROADMAP_ATOMIC-20260930-006_checkpoint.md).
+No se declara corregida la deuda registrada en asignaciones anteriores.
+
+## ATOMIC-20260929-005 — alertas y acciones distinguibles
+
+La muestra de alertas ya consume Alert: se retira su diseño paralelo. La
+molécula incorpora acento lateral, superficie semántica tenue, texto neutro,
+plantilla externa y cierre TableAction. DataTable conserva retry y usa Button
+neutro. El dueño aprueba Ver neutro, Editar azul, Activar verde y baja roja
+en el perfil catalog; standard no cambia.
+
+54 pruebas focalizadas pasan y la prueba negativa detecta volver el ojo a
+verde. Build, biblioteca y Storybook compilan. Suite fuente: 512/516, cuatro
+fallos del interceptor de autenticación ajenos al corte. Adopción local candidata
+en Ventas, sin publicación; evidencia y deuda en el
+[roadmap](.agents/roadmaps/ROADMAP_ATOMIC-20260929-005_alertas.md).
+
+## ATOMIC-20260929-004 — lecciones de catálogos y bloqueo explícito
+
+Contrato, doctrina de interfaz, instrucciones, skill, guía, runtime, flujo y
+reglas UX alineados con la adopción local: acción contextual, cambios reales,
+recarga independiente y prueba del componente conectado. PaginaCrud añade
+bloquearCierre=false; la prueba negativa detecta retirada de la guarda.
+SummaryList existente adoptado en Familias por decisión local expresa, sin
+publicación ni modificación de política instalada. Las afirmaciones de no
+propagación de los cortes siguientes son históricas.
+
+## ATOMIC-20260929-003 — acción contextual y guardado habilitado, candidato
+
+Se explicita Activar (`fa-circle-check`, success) en el perfil de catálogo,
+reutilizando la misma tercera acción que Desactivar (`fa-trash`, danger).
+PaginaCrud incorpora `guardarHabilitado=true` por compatibilidad y bloquea la
+emisión cuando es false, está guardando o se consulta en modo ver. El consumidor
+decide cambios reales y validez; no se incorpora dominio ni HTTP a Atomic.
+Quince pruebas focalizadas pasan; prueba negativa de la guarda comprobada.
+No se ha propagado a Ventas ni publicado. Compuertas globales y límites en el
+[roadmap](.agents/roadmaps/ROADMAP_ATOMIC-20260929-003_accion_contextual.md).
+
+## ATOMIC-20260929-002 — centrado de etiquetas, candidato sin propagar
+
+DataTable centra encabezado y contenido de columnas de etiquetas por omisión,
+respetando align explícito y las columnas ordinarias. Una detección compartida
+gobierna renderizado y alineación; no depende del texto traducido del encabezado.
+En móvil se centra el valor sin mover su etiqueta. Sin cambios de iconos,
+colores, densidad, popups ni lógica del consumidor.
+Pruebas y límites en la [evidencia](.agents/evidencias/ATOMIC-20260929-002.md).
+No se declara adopción: la fuente sucia y la instalación de monorepos siguen
+bloqueando el traslado gobernado a Ventas. Sin cambio de versión ni publicación.
+
+## ATOMIC-20260928-001 — candidato de preservación visual, sin publicar
+
+- Política 1.2.3: promover diseño útil antes de retirar HTML/CSS local; distinguir
+  mejora funcional de rediseño. Se mantiene la versión de producto 5.22.0.
+- Perfil aditivo `catalog` para acciones, detalle semántico `SummaryList` y
+  extensión compatible de `PaginaCrud` con confirmación controlada, cierre
+  bloqueado durante envío y acciones por fila declaradas por el consumidor.
+- Siete bindings de estilos reemplazados por clases o la directiva canónica,
+  conservando valores dinámicos. Catálogo incorpora plantillas y superficies.
+- Auditoría de proyectos dentro de Git mediante `--project-root --audit-only`;
+  escrituras de gobierno en monorepos siguen rechazadas por falta de contrato CI.
+- Pasan las 15 pruebas iniciales del contrato, tooling, build y Storybook.
+  La suite global registra 4 fallos de autenticación reproducidos aisladamente.
+  Ver [evidencia](.agents/evidencias/ATOMIC-20260928-001.md) para estado final.
+- No se ha propagado a Ventas ni cambiado su código. Generador, validación
+  global y publicación permanecen pendientes; no es cierre de Atomic 6.0.
 
 ## fix(tabs): las flechas siguen la orientacion y respetan los modificadores
 

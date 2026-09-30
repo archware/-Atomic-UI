@@ -1,29 +1,9 @@
-<!--
-  Chasis A â€” PÃ¡gina CRUD de entidad Ãºnica.
-
-  ComposiciÃ³n canÃ³nica (ADR-007):
-    PageHeader â†’ QueryToolbar â†’ DataTable (con acciones) â†’ CrudDialog
-
-  El formulario CRUD se proyecta mediante <ng-template #formularioCrud>.
-  El chasis se encarga de la estructura, estados y ciclo de vida del diÃ¡logo.
--->
-
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     CABECERA DE PÃGINA
-     Doctrina Â§13: una sola <h1> por pÃ¡gina, emitida por page-header.
-     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- Chasis de catálogo: la estructura visual pertenece al ADN. -->
 @if (!embedded()) {
-  <app-page-header
-  [title]="titulo()"
-  [subtitle]="subtitulo()"
-/>
+  <app-page-header [title]="titulo()" [subtitle]="subtitulo()" />
 }
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     BARRA DE BÃšSQUEDA Y ACCIÃ“N PRINCIPAL
-     Doctrina Â§15: el botÃ³n de alta lleva verbo + icono.
-     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-<app-query-toolbar accessibleLabel="BÃºsqueda y acciones de {{ titulo() }}">
+<app-query-toolbar accessibleLabel="Búsqueda y acciones de {{ titulo() }}">
   <div query-filters class="pagina-crud__filtros-cascada">
     @if (opcionesBusqueda().length > 0) {
       <app-select2
@@ -34,10 +14,8 @@
         label="Buscar por"
         variant="floating"
         [searchable]="false"
-      ></app-select2>
+      />
     }
-
-    <!-- Cascada: solo aparece si hay un tipo seleccionado -->
     @if (tipoBusquedaInterno(); as tipo) {
       @if (getTipoFiltro(tipo) === 'select') {
         <app-select2
@@ -48,7 +26,7 @@
           [label]="labelFiltroSecundario()"
           variant="floating"
           [searchable]="false"
-        ></app-select2>
+        />
       } @else {
         <app-input
           class="pagina-crud__filtro-control"
@@ -61,7 +39,6 @@
         />
       }
     }
-
     @if (opcionesBusqueda().length === 0) {
       <app-input
         class="pagina-crud__filtro-control"
@@ -74,23 +51,13 @@
       />
     }
   </div>
-    <div query-actions>
-      <app-button
-        variant="primary"
-        [iconClass]="iconoNuevo()"
-        (buttonClick)="alCrear.emit()"
-      >
-        <strong>{{ etiquetaNuevo() }}</strong>
-      </app-button>
-    </div>
+  <div query-actions>
+    <app-button variant="primary" [iconClass]="iconoNuevo()" [disabled]="guardando()" (buttonClick)="alCrear.emit()">
+      <strong>{{ etiquetaNuevo() }}</strong>
+    </app-button>
+  </div>
 </app-query-toolbar>
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     GRILLA DE DATOS
-     El DataTable ya maneja los 4 estados (Doctrina Â§1):
-       loading, error, empty, success (idle para estado inicial).
-     La paginaciÃ³n es server-side por defecto.
-     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <app-data-table
   [columns]="columnas()"
   [rows]="filas()"
@@ -107,141 +74,88 @@
   (pageSizeChange)="alCambiarTamanioPagina($event)"
   (retry)="alReintentar.emit()"
 >
-  <!--
-    Columna de acciones estÃ¡ndar (Doctrina ADR-007):
-    3 botones de solo icono â†’ ver, editar, eliminar.
-    Doctrina Â§15: las acciones de fila van como iconos con nombre accesible.
-  -->
-    <ng-template #actions let-fila let-indice="index">
-      <app-action-group
-        [actions]="getGridActions()"
-        [maxVisible]="3"
-        (actionClick)="handleGridAction($event, fila)"
-      ></app-action-group>
-    </ng-template>
+  <ng-template #actions let-fila>
+    <app-action-group
+      [actions]="getGridActions(fila)"
+      [maxVisible]="3"
+      (actionClick)="handleGridAction($event, fila)"
+    />
+  </ng-template>
 </app-data-table>
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     DIÃLOGO CRUD (crear / editar / ver)
-     Doctrina Â§5: foco al primer campo tras abrir.
-     Doctrina Â§6: nÃºmero de secuencia al abrir y cerrar.
-     El formulario se proyecta desde el consumidor.
-     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 @if (interaccionActual() !== 'browser') {
-<app-crud-dialog
-  #dialogoCrud
-  [labelledBy]="idTituloDialogo"
-  [size]="tamanoDialogo()"
-  (cancelled)="cerrarDialogo()"
-  (closed)="cerrarDialogo()"
->
-  <!-- Cabecera del diÃ¡logo -->
-  <header class="pagina-crud__dialogo-cabecera">
-    <h2 [id]="idTituloDialogo" class="pagina-crud__dialogo-titulo">
-      {{ tituloDialogo() }}
-    </h2>
-      <app-icon-button variant="hanging-close" animation="none" aria-label="Cerrar" (clicked)="cerrarDialogo()">
-      </app-icon-button>
-  </header>
-
-  <!-- Error de operaciÃ³n (Doctrina Â§2: no cantar Ã©xito sin confirmaciÃ³n) -->
-  @if (errorOperacion(); as msgError) {
-    <div class="pagina-crud__dialogo-error" role="alert" data-dialog-error>
-      <app-alert kind="danger">{{ msgError }}</app-alert>
-    </div>
-  }
-
-  
-  @if (interaccionActual() === 'stepper') {
-    <div class="pagina-crud__stepper-container">
-      <app-stepper
-        [steps]="wizardSteps()"
-        [activeStep]="wizardActiveStep()"
-        [allowSkip]="wizardAllowSkip()"
-        (stepChange)="alCambiarPasoWizard.emit($event)"
-      ></app-stepper>
-    </div>
-  }
-
-  <!-- Formulario proyectado por el consumidor -->
-  @if (formularioCrud(); as tpl) {
-    <div class="pagina-crud__dialogo-cuerpo">
-      <ng-container
-        [ngTemplateOutlet]="tpl"
-        [ngTemplateOutletContext]="contextoFormulario()"
-      />
-    </div>
-  }
-
-  <!-- Pie del diÃ¡logo: botones de acciÃ³n -->
-  @if (interaccionActual() !== 'stepper') {
+  <app-crud-dialog
+    #dialogoCrud
+    [labelledBy]="idTituloDialogo"
+    [size]="tamanoDialogo()"
+    (cancelled)="cerrarDialogo()"
+  >
+    <header class="pagina-crud__dialogo-cabecera">
+      <h2 [id]="idTituloDialogo" class="pagina-crud__dialogo-titulo">{{ tituloDialogo() }}</h2>
+      <app-icon-button variant="hanging-close" animation="none" ariaLabel="Cerrar ventana"
+        [disabled]="guardando() || bloquearCierre()" (clicked)="cerrarDialogo()" />
+    </header>
+    @if (errorOperacion(); as msgError) {
+      <div class="pagina-crud__dialogo-error" role="alert" data-dialog-error>
+        <app-alert kind="danger">{{ msgError }}</app-alert>
+      </div>
+    }
+    @if (interaccionActual() === 'stepper') {
+      <div class="pagina-crud__stepper-container">
+        <app-stepper [steps]="wizardSteps()" [activeStep]="wizardActiveStep()"
+          [allowSkip]="wizardAllowSkip()" (stepChange)="alCambiarPasoWizard.emit($event)" />
+      </div>
+    }
+    @if (esModoPrevisualizacion && detalle(); as itemsDetalle) {
+      <div class="pagina-crud__dialogo-cuerpo">
+        <app-summary-list layout="detail" [items]="itemsDetalle" />
+      </div>
+    } @else if (formularioCrud(); as tpl) {
+      <div class="pagina-crud__dialogo-cuerpo">
+        <ng-container [ngTemplateOutlet]="tpl" [ngTemplateOutletContext]="contextoFormulario()" />
+      </div>
+    }
+    @if (interaccionActual() !== 'stepper') {
       <footer class="pagina-crud__dialogo-pie">
-        <app-button
-          variant="outline"
-          (buttonClick)="cerrarDialogo()"
-        >
+        <app-button variant="outline" [disabled]="guardando() || bloquearCierre()" (buttonClick)="cerrarDialogo()">
           {{ esModoPrevisualizacion ? 'Cerrar' : 'Cancelar' }}
         </app-button>
         @if (!esModoPrevisualizacion) {
-          <app-button
-            variant="primary"
-            [loading]="guardando()"
-            [disabled]="guardando()"
-            (buttonClick)="alGuardar.emit()"
-          >
-            Guardar
-          </app-button>
+          <app-button variant="primary" [loading]="guardando()" [disabled]="guardando() || !guardarHabilitado()"
+            (buttonClick)="solicitarGuardar()">Guardar</app-button>
         }
       </footer>
     }
-</app-crud-dialog>
+  </app-crud-dialog>
 }
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     DIÃLOGO DE CONFIRMACIÃ“N DE BAJA LÃ“GICA
-     Doctrina Â§7:
-       - El mensaje enumera quÃ© va a cambiar.
-       - El botÃ³n lleva el verbo del acto ('Desactivar').
-       - El foco inicial se pone en cancelar.
-     Doctrina Â§12: se confirma porque no se puede deshacer desde la pantalla.
-     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-@if (mostrarConfirmacion()) {
-  <div class="pagina-crud__confirmacion-fondo" (click)="cancelarBaja()">
-    <div
-      class="pagina-crud__confirmacion"
-      role="alertdialog"
-      aria-labelledby="confirmacion-titulo"
-      aria-describedby="confirmacion-mensaje"
-      (click)="$event.stopPropagation()"
-    >
-      <h3 id="confirmacion-titulo" class="pagina-crud__confirmacion-titulo">
-          {{ confResueltas.titulo(entidadAEliminar()) }}
-        </h3>
-        <app-icon-button variant="hanging-close" animation="none" aria-label="Cerrar" (clicked)="cancelarBaja()">
-        </app-icon-button>
-      <p id="confirmacion-mensaje" class="pagina-crud__confirmacion-mensaje">
-        {{ confResueltas.mensaje(entidadAEliminar()) }}
-      </p>
-      <footer class="pagina-crud__confirmacion-pie">
-        <!-- Foco inicial en cancelar (Doctrina Â§7) -->
-        <app-button
-          variant="outline"
-          data-dialog-initial-focus
-          (buttonClick)="cancelarBaja()"
-        >
-          {{ confResueltas.etiquetaCancelar }}
-        </app-button>
-        <app-button
-          variant="primary"
-          tone="danger"
-          (buttonClick)="confirmarBaja()"
-        >
-          {{ confResueltas.etiquetaConfirmar }}
-        </app-button>
-      </footer>
-    </div>
+<!-- Siempre montado: showModal puede capturar el origen y enfocar Cancelar. -->
+<app-crud-dialog #dialogoConfirmacion [labelledBy]="idTituloConfirmacion"
+  [describedBy]="idMensajeConfirmacion" size="sm" (cancelled)="cancelarBaja()">
+  <header class="pagina-crud__dialogo-cabecera">
+    <h2 [id]="idTituloConfirmacion" class="pagina-crud__dialogo-titulo">
+      @if (mostrarConfirmacion()) { {{ confResueltas.titulo(entidadAEliminar()) }} }
+    </h2>
+    <app-icon-button variant="hanging-close" animation="none" ariaLabel="Cerrar confirmación"
+      [disabled]="bloqueadaConfirmacion()" (clicked)="cancelarBaja()" />
+  </header>
+  <div class="pagina-crud__dialogo-cuerpo">
+    <p [id]="idMensajeConfirmacion" class="pagina-crud__confirmacion-mensaje">
+      @if (mostrarConfirmacion()) { {{ confResueltas.mensaje(entidadAEliminar()) }} }
+    </p>
+    @if (errorOperacion(); as errorConfirmacion) {
+      <app-alert kind="danger" data-dialog-error>{{ errorConfirmacion }}</app-alert>
+    }
   </div>
-}
+  <footer class="pagina-crud__dialogo-pie">
+    <app-button variant="outline" data-dialog-initial-focus [disabled]="bloqueadaConfirmacion()"
+      (buttonClick)="cancelarBaja()">{{ confResueltas.etiquetaCancelar }}</app-button>
+    <app-button [variant]="confResueltas.varianteConfirmar" [loading]="bloqueadaConfirmacion()"
+      [disabled]="bloqueadaConfirmacion()" (buttonClick)="confirmarBaja()">
+      {{ confResueltas.etiquetaConfirmar }}
+    </app-button>
+  </footer>
+</app-crud-dialog>
 
 
 

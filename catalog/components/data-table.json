@@ -53,12 +53,12 @@
       "values": [
         {
           "value": "start",
-          "meaning": "Texto y valores generales.",
+          "meaning": "Texto y valores generales; las columnas de etiquetas usan center si no declaran align.",
           "default": true
         },
         {
           "value": "center",
-          "meaning": "Estados o valores breves centrados."
+          "meaning": "Estados o valores breves centrados; valor por omisión de columnas de etiquetas."
         },
         {
           "value": "end",
@@ -104,7 +104,7 @@
       "name": "columns",
       "type": "readonly DataTableColumn<T>[]",
       "required": true,
-      "meaning": "Columnas tipadas con key/header y format, sort, badge, width o align opcionales."
+      "meaning": "Columnas tipadas con key/header y format, sortable, isTag, tagVariant, width o align opcionales. align explícito prevalece."
     },
     {
       "name": "rows",
@@ -294,8 +294,9 @@
   ],
   "behavior": [
     "El orden local es estable y usa Intl.Collator es-PE con numeric y sensibilidad base.",
-    "DataTableColumn puede derivar value, format, sortValue, compare y badgeStatus sin lógica de dominio interna.",
-    "Keys stateLabel, state y status se presentan como StatusBadge aunque isBadge no se indique."
+    "DataTableColumn puede derivar value, format, sortValue, compare y tagVariant sin lógica de dominio interna.",
+    "isTag y las keys stateLabel, state, status y estado se presentan como Chip, sin inferir estado desde el encabezado traducido.",
+    "Las columnas de etiquetas centran encabezado y valor por omisión; align explícito prevalece. Las columnas ordinarias conservan su presentación."
   ],
   "states": [
     {

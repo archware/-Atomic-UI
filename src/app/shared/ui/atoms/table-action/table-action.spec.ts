@@ -2,6 +2,42 @@ import { TestBed } from '@angular/core/testing';
 import { TableAction } from './table-action';
 
 describe('TableAction', () => {
+  it('conserva el perfil histórico y añade el perfil compacto de catálogo explícito', () => {
+    const casos = [
+      // Consulta no comparte el verde de activar: cambio visual aprobado.
+      ['view', 'fa-eye', 'neutral'], ['edit', 'fa-pen', 'info'],
+      ['activate', 'fa-circle-check', 'success'],
+      ['deactivate', 'fa-trash', 'danger'], ['delete', 'fa-trash', 'danger'],
+    ] as const;
+    for (const [action, icon, tone] of casos) {
+      const fixture = TestBed.createComponent(TableAction);
+      fixture.componentRef.setInput('label', action);
+      fixture.componentRef.setInput('action', action);
+      fixture.componentRef.setInput('profile', 'catalog');
+      fixture.detectChanges();
+      expect(fixture.nativeElement.querySelector('i').classList).toContain(icon);
+      const clases = fixture.nativeElement.querySelector('button').classList;
+      expect(clases).toContain(`table-action--${tone}`);
+      expect(clases).toContain('table-action--profile-catalog');
+      fixture.destroy();
+    }
+  });
+
+  it('no emite durante carga ni deshabilitado', () => {
+    const fixture = TestBed.createComponent(TableAction);
+    fixture.componentRef.setInput('label', 'Ver');
+    const accion = jasmine.createSpy('accion');
+    fixture.componentInstance.triggered.subscribe(accion);
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+    fixture.nativeElement.querySelector('button').click();
+    expect(accion).not.toHaveBeenCalled();
+    fixture.componentRef.setInput('loading', false);
+    fixture.componentRef.setInput('disabled', true);
+    fixture.detectChanges();
+    fixture.nativeElement.querySelector('button').click();
+    expect(accion).not.toHaveBeenCalled();
+  });
   it('presenta la acción de consulta con color informativo cuando está habilitada', async () => {
     await TestBed.configureTestingModule({ imports: [TableAction] }).compileComponents();
     const fixture = TestBed.createComponent(TableAction);

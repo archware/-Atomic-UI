@@ -6,7 +6,7 @@
   "selector": "app-alert, prest-alert",
   "export": "Alert",
   "source": "src/app/shared/ui/molecules/alert/alert.component.ts",
-  "purpose": "Mensaje semántico inline que permanece dentro del flujo del documento.",
+  "purpose": "Mensaje semántico inline con fondo tenue, acento lateral y texto legible; compartido por showcase y consumidores.",
   "variants": [
     {
       "name": "kind",
@@ -35,16 +35,16 @@
       "values": [
         {
           "value": "default",
-          "meaning": "Separación amplia posterior.",
+          "meaning": "Separación amplia de flujo simétrica.",
           "default": true
         },
         {
           "value": "compact",
-          "meaning": "Separación posterior reducida."
+          "meaning": "Separación de flujo simétrica reducida."
         },
         {
           "value": "none",
-          "meaning": "Sin margen posterior; útil dentro de tablas o composiciones."
+          "meaning": "Sin margen de flujo; útil dentro de tablas o composiciones."
         }
       ]
     }
@@ -72,7 +72,7 @@
       "name": "spacing",
       "type": "AlertSpacing",
       "default": "default",
-      "meaning": "Separación respecto del siguiente bloque."
+      "meaning": "Separación vertical simétrica en el flujo."
     }
   ],
   "outputs": [
@@ -92,7 +92,7 @@
   "states": [
     {
       "name": "visible",
-      "meaning": "Aviso renderizado con role alert."
+      "meaning": "Aviso renderizado: danger usa alert, el resto status."
     },
     {
       "name": "dismissible",
@@ -104,9 +104,9 @@
     }
   ],
   "a11y": [
-    "Usa role=alert; danger anuncia assertive y el resto polite.",
+    "Danger usa role=alert y assertive; los demás role=status y polite.",
     "El icono semántico está marcado aria-hidden.",
-    "El botón opcional usa aria-label Cerrar alerta y foco visible."
+    "El cierre opcional usa TableAction neutro, nombre Cerrar mensaje y foco visible."
   ],
   "responsive": [
     "No define quiebres propios; el contenido flex puede encogerse y el espaciado de flujo es configurable."
@@ -115,8 +115,6 @@
     "--alert-danger-bg",
     "--alert-danger-border",
     "--alert-danger-text",
-    "--alert-flow-gap",
-    "--alert-flow-gap-compact",
     "--alert-info-bg",
     "--alert-info-border",
     "--alert-info-text",
@@ -126,17 +124,17 @@
     "--alert-warning-bg",
     "--alert-warning-border",
     "--alert-warning-text",
-    "--radius-md",
-    "--radius-sm",
+    "--alert-flow-gap",
+    "--alert-flow-gap-compact",
+    "--text-color",
+    "--font-weight-title",
     "--space-1",
     "--space-2",
     "--space-3",
     "--space-4",
-    "--space-5",
-    "--space-10",
-    "--text-base",
+    "--radius-md",
     "--text-sm",
-    "--text-xs"
+    "--text-lg"
   ],
   "story": {
     "path": "src/stories/ui-alert.stories.ts",

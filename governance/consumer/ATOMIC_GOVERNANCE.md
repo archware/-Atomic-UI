@@ -2,7 +2,7 @@
 
 > Marcador normativo: `ATOMIC_GOVERNANCE_REQUIRED`
 >
-> Versión de política: `1.2.2`
+> Versión de política: `1.2.3`
 
 Este documento es un contrato, no una recomendación. `-Atomic-UI` es la única
 fuente de verdad para átomos, moléculas, organismos, superficies, plantillas,
@@ -81,6 +81,32 @@ Las páginas, navegación, permisos, contratos API, estado, validación y reglas
 negocio se implementan en la aplicación. Su interfaz se compone con objetos del
 ADN Atomic. Un layout específico puede existir en una feature siempre que no se
 convierta en un segundo sistema visual ni duplique un componente reutilizable.
+No ampara reconstruir cabeceras, acciones, tablas, detalle o pies de modal con
+marcado/CSS propio cuando corresponden a una plantilla Atomic.
+
+## Preservación visual (política 1.2.3)
+
+Un patrón útil observado en un consumidor se inventaría y se promueve primero
+al ADN, con API tipada, estilos externos, tokens, catálogo y pruebas. No se
+elimina antes de disponer de un reemplazo validado. Una corrección funcional
+no autoriza cambiar iconos, colores, densidad ni geometría sin requisito.
+Los bindings, validaciones, DTO, HTTP y permisos permanecen en el producto.
+Las listas semánticas de detalle y la estructura reutilizable viven en Atomic,
+no en formularios deshabilitados ni en composiciones visuales locales.
+
+Las variantes nuevas conservan los valores predeterminados anteriores cuando
+su cambio afectaría a otros flujos. El perfil `catalog` de acciones mantiene
+los iconos compactos de consulta, edición y baja. La revisión visual autorizada
+ATOMIC-20260929-005 distingue consulta (ojo neutro) de activación (marca verde);
+edición conserva lápiz azul y baja `fa-trash` roja. No cambia el perfil standard
+ni declara actualizadas las copias de política instaladas en consumidores.
+Cerrar/Cancelar es neutro, nunca `secondary` por su color de marca.
+
+Comparar antes/después, estados, foco, teclado y tamaños; un build o un gate
+estático no certifica fidelidad visual. Preservar pruebas y adaptaciones al
+propagar. Distinguir raíz Git y raíz de producto: no instalar en la raíz
+compartida como atajo. La fuente debe seguir siendo limpia, verificable y
+recuperable; esta revisión no rebaja los invariantes 14 y 15.
 
 ## Flujo obligatorio
 

@@ -17,8 +17,7 @@
       [class.row--valign-stretch]="verticalAlign() === 'stretch'"
       [class.row--valign-baseline]="verticalAlign() === 'baseline'"
       [class.row--wrap]="wrap() === 'wrap'"
-      [style.--row-columns]="computedColumns"
-      [style.--row-gap]="computedGap"
+      [appVariablesCss]="{'--row-columns': computedColumns, '--row-gap': computedGap}"
     >
       <ng-content></ng-content>
     </div>

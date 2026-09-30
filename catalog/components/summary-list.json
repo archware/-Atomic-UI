@@ -1,0 +1,81 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "summary-list",
+  "layer": "molecule",
+  "selector": "app-summary-list",
+  "export": "SummaryListComponent",
+  "source": "src/app/shared/ui/molecules/summary-list/summary-list.component.ts",
+  "purpose": "Lista de definiciones para resúmenes existentes y detalles semánticos de solo lectura.",
+  "inputs": [
+    {
+      "name": "items",
+      "type": "readonly SummaryListItem[]",
+      "meaning": "Etiquetas y valores sin transformar."
+    },
+    {
+      "name": "featured",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Destaca valores en la presentación histórica."
+    },
+    {
+      "name": "layout",
+      "type": "SummaryListLayout",
+      "default": "summary",
+      "meaning": "summary conserva tarjetas; detail presenta detalle vertical sin controles."
+    }
+  ],
+  "variants": [
+    {
+      "name": "layout",
+      "values": [
+        {
+          "value": "summary",
+          "meaning": "Resumen histórico con tarjetas.",
+          "default": true
+        },
+        {
+          "value": "detail",
+          "meaning": "Detalle semántico, etiquetas destacadas y valores multilínea."
+        }
+      ]
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "ready",
+      "meaning": "Presentación de los datos declarados."
+    }
+  ],
+  "a11y": [
+    "Contenido semántico y nombres accesibles; no deriva significado del color."
+  ],
+  "responsive": [
+    "El contenido conserva el orden de lectura; validar matriz de tamaños del contrato visual."
+  ],
+  "tokens": [
+    "--space-5",
+    "--text-color"
+  ],
+  "story": {
+    "path": "src/stories/summary-list.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/molecules/summary-list/summary-list.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "candidate",
+    "notes": [
+      "Candidato en árbol de trabajo; propagación pendiente de validación y referencia elegible."
+    ]
+  },
+  "canonicalFor": [
+    "readonly-detail",
+    "semantic-detail",
+    "summary"
+  ]
+}

@@ -17,6 +17,7 @@ import {
 } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Alert } from '../../molecules/alert/alert.component';
+import { ButtonComponent } from '../../atoms/button/button.component';
 import {
   ChipComponent,
   ChipVariant,
@@ -80,6 +81,7 @@ function trackByIdentity<T extends object>(_index: number, row: T): T {
   selector: 'app-data-table, prest-data-table',
   imports: [
     Alert,
+    ButtonComponent,
     NgTemplateOutlet,
     ScrollOverlayComponent,
     ChipComponent,
@@ -371,6 +373,14 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
       return index;
     }
     return identity;
+  }
+
+  protected isTagColumn(column: DataTableColumn<T>): boolean {
+    return !!column.isTag || ['stateLabel', 'state', 'status', 'estado'].includes(column.key);
+  }
+
+  protected columnAlignment(column: DataTableColumn<T>): DataTableAlignment {
+    return column.align ?? (this.isTagColumn(column) ? 'center' : 'start');
   }
 
   protected getTagVariant(column: DataTableColumn<T>, row: T): ChipVariant {

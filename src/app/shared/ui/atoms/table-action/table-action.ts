@@ -23,6 +23,16 @@ export type TableActionTone =
   | 'warning'
   | 'danger';
 export type TableActionSize = 'sm' | 'md' | 'lg';
+export type TableActionProfile = 'standard' | 'catalog';
+
+/** Identidad visual del catálogo; no representa el resultado de la operación. */
+const CATALOG_ACTIONS: Partial<Record<TableActionName, { icon: string; tone: TableActionTone }>> = {
+  view: { icon: 'fa-eye', tone: 'neutral' },
+  edit: { icon: 'fa-pen', tone: 'info' },
+  activate: { icon: 'fa-circle-check', tone: 'success' },
+  deactivate: { icon: 'fa-trash', tone: 'danger' },
+  delete: { icon: 'fa-trash', tone: 'danger' },
+};
 
 const ICONS: Readonly<Record<TableActionName, string>> = {
   view: 'fa-eye',
@@ -65,6 +75,7 @@ const TONES: Readonly<Record<TableActionName, TableActionTone>> = {
 })
 export class TableAction {
   readonly action = input<TableActionName>('view');
+  readonly profile = input<TableActionProfile>('standard');
   readonly label = input.required<string>();
   /** Clase Font Awesome preferida. Acepta `print`, `fa-print` o clases completas. */
   readonly iconClass = input<string | null>(null);
@@ -78,10 +89,10 @@ export class TableAction {
   readonly triggered = output<MouseEvent>();
 
   protected readonly renderedIconClasses = computed(() =>
-    resolveTableActionIcon(this.action(), this.iconClass() ?? this.icon()),
+    resolveTableActionIcon(this.action(), this.iconClass() ?? this.icon(), this.profile()),
   );
   protected readonly toneClass = computed(
-    () => `table-action table-action--${this.tone() ?? TONES[this.action()]} table-action--${this.size()}`,
+    () => `table-action table-action--${this.tone() ?? resolveTableActionTone(this.action(), this.profile())} table-action--${this.size()} table-action--profile-${this.profile()}`,
   );
 
   protected onClick(event: MouseEvent): void {
@@ -121,11 +132,13 @@ export function normalizeTableActionIcon(
 export function resolveTableActionIcon(
   action: TableActionName,
   value?: string | null,
+  profile: TableActionProfile = 'standard',
 ): string {
-  return normalizeTableActionIcon(value, ICONS[action]);
+  const icon = profile === 'catalog' ? CATALOG_ACTIONS[action]?.icon : undefined;
+  return normalizeTableActionIcon(value, icon ?? ICONS[action]);
 }
 
 /** Comparte el tono semántico con grupos de acciones y otros consumidores Atomic. */
-export function resolveTableActionTone(action: TableActionName): TableActionTone {
-  return TONES[action];
+export function resolveTableActionTone(action: TableActionName, profile: TableActionProfile = 'standard'): TableActionTone {
+  return (profile === 'catalog' ? CATALOG_ACTIONS[action]?.tone : undefined) ?? TONES[action];
 }

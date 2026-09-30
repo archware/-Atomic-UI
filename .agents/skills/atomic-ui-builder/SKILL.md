@@ -38,6 +38,12 @@ Use the repository catalog as the source of truth. Load only the context require
 
 8. Keep Atomic presentation-only. Consumers own routes, HTTP adapters, DTOs, state orchestration, permissions, and business logic. An integrated generation requires explicit endpoint, method, and contract information; otherwise generate UI-only ports and placeholders that cannot masquerade as working data.
 9. If the required visual object or variant is absent, implement and validate it in Atomic first, add it to the catalog, then consume it. Do not reproduce it locally in the consumer.
+   Before replacing existing markup or CSS, inventory its useful design and
+   behavior. Promote that design into Atomic before removing the consumer
+   implementation. For catalogs read `docs/CONTRATO_CATALOGOS_CRUD.md`, prefer
+   `PaginaCrud` and use `SummaryList` with `layout="detail"` for readonly data.
+   Do not assume the generator already emits that chassis: inspect the dry-run
+   and reject a parallel visual implementation. Keep business code in the app.
 10. Run the catalog, generator, lint, test, and build gates relevant to the change. Report any gate not run and why.
 
 ## Variant Decisions
@@ -45,7 +51,7 @@ Use the repository catalog as the source of truth. Load only the context require
 - Choose by meaning and interaction, never by visual preference alone.
 - Keep size, density, tone, state, and layout as independent typed axes when the component contract exposes them.
 - Reject undeclared values and undocumented combinations.
-- Use semantic action tones: primary for the single main action, neutral for secondary actions, danger for destructive actions, and success only for confirmatory semantics.
+- Use semantic action tones: primary for the single main action, neutral for secondary actions, danger for destructive actions, and success for confirmatory semantics. In the catalog profile, view is neutral and activate is green; the owner-approved ATOMIC-20260929-005 revision supersedes the historical green-eye exception. A showcase must render the same canonical component as consumers, not a styled imitation.
 - Use compact density only where information volume or viewport constraints justify it; never reduce target or readability requirements.
 - Preserve explicit loading, empty, error, disabled, readonly, invalid, and success states when they apply.
 
@@ -72,3 +78,12 @@ Use narrower component tests during iteration, but finish with the applicable re
 - Query `catalog/ux-rules/` for interaction and accessibility behavior.
 - Read `governance/consumer/ATOMIC_GOVERNANCE.md` only when consumer ownership or propagation is in question.
 - Read `.agents/workflows/atomic-design-guide.md` only when changing Atomic itself or when the compact catalog lacks a required decision.
+
+## Catalog lessons — ATOMIC-20260929-004
+
+For an existing catalog, verify the active component/template, not just files
+left in the feature. Apply docs/CONTRATO_CATALOGOS_CRUD.md: reuse the third row
+action for activate/deactivate, never leave a second Save after confirmation.
+The consumer supplies real-change validity and close locking. Test both state
+transitions, reverted edits, malformed IDs and refresh failure separately from
+mutation failure. Review-only UX requirements are not automated generator gates.

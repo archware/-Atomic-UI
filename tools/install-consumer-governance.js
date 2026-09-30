@@ -451,11 +451,27 @@ function main() {
   let consumerRoot;
   let packageRoot;
   let uiRoot;
+  let gitRoot;
+  const projectRootOption = option('project-root', '');
+  const auditOnly = process.argv.includes('--audit-only');
   try {
     consumerRoot = fs.realpathSync.native(path.resolve(consumerArg));
     const consumerRepository = repositoryIdentity(consumerRoot);
     if (consumerRepository.topLevel !== consumerRoot) {
       throw new Error('La ruta consumidora debe ser exactamente la raíz de su repositorio Git.');
+    }
+    gitRoot = consumerRoot;
+    if (projectRootOption) {
+      // Distinguir el producto de Git sin habilitar escrituras en la raíz común.
+      // El workflow de CI de un monorepo exige una decisión propia del dueño.
+      if (!auditOnly) {
+        throw new Error('--project-root solo admite --audit-only; la instalación en monorepo requiere definir primero su integración CI sin escribir en la raíz compartida.');
+      }
+      const project = confinedPath(gitRoot, projectRootOption, 'project-root');
+      consumerRoot = fs.realpathSync.native(project.absolute);
+      if (repositoryIdentity(consumerRoot).topLevel !== gitRoot) {
+        throw new Error('project-root debe pertenecer a la misma raíz Git, no a otro repositorio anidado.');
+      }
     }
     packageRoot = relativePath(
       consumerRoot,
@@ -495,7 +511,6 @@ function main() {
     console.error(error.message);
     process.exit(1);
   }
-  const auditOnly = process.argv.includes('--audit-only');
   const adaptationDecisionOption = option('adaptation-decision', '');
   let adaptationDecision = '';
   try {
@@ -606,11 +621,13 @@ function main() {
   const pendingAdaptations = adaptations.length + serviceAdaptations.length;
   const auditReport = {
     schemaVersion: 1,
-    policyVersion: '1.2.2',
+    policyVersion: '1.2.3',
     status: pendingAdaptations === 0 ? 'exact' : 'adaptation-records-required',
     atomicRef: reference,
     ...identity,
     consumerRoot: normalize(consumerRoot),
+    gitRoot: normalize(gitRoot),
+    projectRoot: normalize(path.relative(gitRoot, consumerRoot)) || '.',
     packageRoot,
     uiRoot,
     shellRoot,
@@ -768,7 +785,7 @@ function main() {
 
   const manifest = {
     schemaVersion: 1,
-    policyVersion: '1.2.2',
+    policyVersion: '1.2.3',
     changeId,
     atomicRepository: normalize(path.relative(consumerRoot, atomicRoot)),
     atomicRemote: 'archware/-Atomic-UI',

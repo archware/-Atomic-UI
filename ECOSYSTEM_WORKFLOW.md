@@ -3,13 +3,17 @@ title: "Arquitectura y flujo de trabajo del ecosistema Atomic"
 subtitle: "Gobierno, distribución y propagación verificable"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-12"
+last_updated: "2026-09-29"
+document_type: "arquitectura"
+status: "vigente"
+version: "1.1.0"
 ---
 
 # Arquitectura y flujo de trabajo del ecosistema
 
 > **Fecha original:** julio de 2026
 >
-> **Última actualización:** 12 de agosto de 2026
+> **Última actualización:** 29 de septiembre de 2026
 >
 > **Contexto:** El documento define la arquitectura de trabajo sincronizado
 > entre los tres proyectos base principales, la fuente Atomic y un consumidor
@@ -20,7 +24,7 @@ date: "2026-08-12"
 
 El entorno de trabajo se compone de una fuente visual transicional y sus consumidores:
 
-1. **`-Atomic-UI`**: fuente de la verdad visual. El repositorio conserva componentes, sistema de diseño, tokens CSS y utilidades visuales. Desde 5.5.0 declara ademas el proyecto Angular de tipo `library` **atomic-ui**: `npx ng build atomic-ui` compila `@hra/atomic-ui` en formato Angular Package Format. Lo que sigue bloqueado no es la compilacion sino la **publicacion** en un registro npm, que espera registro privado y procedencia firmada. Vease `distribution/PACKAGE_STATUS.md`.
+1. **`-Atomic-UI`**: fuente de la verdad visual. El repositorio conserva componentes, sistema de diseño, tokens CSS y utilidades visuales. Desde 5.5.0 declara además el proyecto Angular de tipo `library` **atomic-ui**: `npx ng build atomic-ui` compila `@hra/atomic-ui` en formato Angular Package Format. Lo que sigue bloqueado no es la compilación sino la **publicación** en un registro npm, que espera registro privado y procedencia firmada. Véase `distribution/PACKAGE_STATUS.md`.
 2. **`base_python_angular`**: aplicación de escritorio con backend Python, frontend Angular y WebView2.
 3. **`base_wails_angular`**: aplicación de escritorio con backend Go, frontend Angular y Wails sobre WebView2 en Windows.
 4. **`base_tauri_angular`**: aplicación de escritorio con backend Rust, frontend Angular y Tauri.
@@ -81,18 +85,19 @@ change detection debe quedar declarada; nunca se considera una nueva fuente.
 
 ### 3. Distribución verificable
 
-El destino estable será un paquete Angular compilado con el nombre
-`@hra/atomic-ui`. Mientras el repositorio sea una aplicación Angular y no exista
-un proyecto `library` con `ng-packagr`, el artefacto se mantendrá como scaffold
-privado y no instalable. `distribution/package-contract.json` registra este
-bloqueo; `distribution/atomic-source-manifest.json` fija la procedencia por
-SHA-256 y `npm run package:check` ejecuta un `npm pack --dry-run` sin red.
+El proyecto `library` ya existe en `projects/atomic-ui` y compila
+`@hra/atomic-ui` mediante `npm run lib:build`; se verificó en
+ATOMIC-20260928-001. El contrato declara `library-buildable` y
+`runtimeInstallable: false`: compilar no significa publicar ni tener un paquete
+de runtime autorizado para instalar. `distribution/atomic-source-manifest.json`
+fija la procedencia por SHA-256 y `npm run package:check` incluye el artefacto
+privado transicional, sin autorizar publicación.
 
-El estado verde del gate transicional confirma integridad y reproducibilidad del
-contrato. No confirma que exista una biblioteca Angular compilada ni autoriza
-publicación. La exportación raíz se habilitará solamente después de separar del
-barrel la autenticación, el transporte HTTP, el caché y los permisos propios de
-cada consumidor.
+El estado verde del gate transicional confirma las comprobaciones que ejecuta;
+la compilación de biblioteca tiene su evidencia separada. Ninguna autoriza
+publicación. Permanece pendiente separar del barrel la autenticación, el
+transporte HTTP, el caché y los permisos propios de cada consumidor antes de
+declarar una distribución de runtime exclusivamente visual.
 
 La identidad de fuentes utiliza desde 5.5.6 la canonización
 `git-clean-eol-v1`; desde 5.5.8 el contrato se aplica de forma cerrada en la
@@ -175,3 +180,11 @@ El ecosistema sigue un enfoque **DB-First**, lo que dicta cómo se construye una
 9. El build y las pruebas de verificación se ejecutan en cada consumidor
    afectado.
 10. `CHANGELOG.md` se actualiza en Atomic UI con el identificador del cambio.
+
+## Continuación de catálogos — ATOMIC-20260929-004
+
+Aplicar [CONTRATO_CATALOGOS_CRUD](docs/CONTRATO_CATALOGOS_CRUD.md) antes de migrar
+otro catálogo. Verificar la pantalla activa, caracterizar sus operaciones y
+conservar pruebas de error y reactivación. Separar evidencia local autorizada
+de publicación certificada; registrar capacidades realmente adoptadas y deuda.
+No dar por propagada una API por cambiar doctrina ni sobrescribir adaptaciones.

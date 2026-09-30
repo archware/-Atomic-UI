@@ -4,7 +4,7 @@ author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
 document_type: "registro técnico"
 status: "en revisión"
-last_updated: "2026-08-23"
+last_updated: "2026-09-29"
 version: "1.0.0"
 last_change_id: "ECO-20260823-003"
 owners:
@@ -12,6 +12,80 @@ owners:
 ---
 
 # Lecciones aprendidas de Atomic UI
+
+## ATOMIC-20260929-005 — la muestra debe usar el componente
+
+Una muestra dibujada con HTML/CSS propio puede ser visualmente preferible y no
+representar el ADN que se distribuye. Promover el patrón aprobado a la molécula
+y consumirla en el ejemplo; no copiar el diseño a cada pantalla. Mantener
+proyección, cierre, anuncios accesibles y eventos al cambiar la apariencia.
+
+Ver y Activar no deben compartir el verde en catalog: se aprueba ojo neutro y
+activación verde, sin modificar standard. El reintento reutiliza Button neutro.
+Probar el tema junto con su superficie: cambiar solo data-theme en un contenedor
+transparente mezcla texto oscuro/claro con el fondo del documento.
+
+Compilar Storybook no prueba renderizado. La referencia nueva usa un id
+alfabético porque el renderer instalado falla con ids iniciados por número;
+no se renombraron contratos históricos. Atribuir al dueño sus confirmaciones
+en una sesión compartida; no presentarlas como pruebas automáticas.
+
+## ATOMIC-20260929-004 — adopción parcial comprobable
+
+No copiar la plantilla completa para adoptar una guarda. Exponer bloqueo visual
+explícito y probar cierre programático, Escape, X y Cancelar; liberar y renderizar
+antes de cerrar tras éxito. Comparar campos corresponde al consumidor, no al
+ADN. Una confirmación desde la fila no debe dejar un Guardar adicional.
+
+La recarga es lectura independiente; su fallo no convierte un ACK confirmado en
+fracaso ni autoriza repetir escrituras. Códigos, IDs y forma de ACK/DTO no se
+trasladan al átomo. Una regla UX de revisión no es una guarda del generador.
+Adopción local autorizada y publicación certificada son estados distintos.
+
+## ATOMIC-20260929-003 — una intención por flujo
+
+Un interruptor dentro de Editar que abre otra confirmación y vuelve a un
+Guardar habilitado confunde dos operaciones. Para catálogos, reutilizar la
+tercera acción de fila con semántica explícita activar/desactivar; conservar
+su posición, tamaño y nombres accesibles. No añadir un cuarto botón ni inferir
+el estado de un DTO dentro del átomo. La acción y la validez las declara el
+consumidor mediante APIs tipadas de Atomic.
+
+Dirty no acredita cambios: la comparación con los valores de entrada pertenece
+a la fachada, incluido el caso de editar y restituir. Disabled visual requiere
+una guarda de emisión y otra de dominio. La prueba negativa de esta asignación
+detectó la retirada de la guarda, no solo un atributo HTML.
+
+## ATOMIC-20260929-002 — alineación semántica y geometría comprobada
+
+La captura de Familias mostró encabezados centrados y etiquetas al inicio.
+Renderizar Chip no imponía la clase de alineación del td: solo se aplicaba si
+el consumidor declaraba align. Resolver ambos desde la misma clasificación de
+columna evita repetir CSS o defaults en cada feature.
+
+El comportamiento por omisión para etiquetas es center; align explícito manda.
+No inferirlo del encabezado traducido. En móvil el td es grid: text-align no
+centra por sí solo su hijo. justify-self en el host de Chip centra el valor
+y conserva la etiqueta ::before al inicio. Las pruebas miden ambos espacios,
+en cuatro anchuras y dos temas; las clases DOM por sí solas no prueban geometría.
+Los estilos y textos de negocio permanecen fuera del filtro visual.
+
+## ATOMIC-20260928-001 — conservar el diseño al centralizarlo
+
+La regresión de Familias mostró que ensamblar componentes Atomic no garantiza
+conservar la plantilla: botones genéricos agrandaron las filas y Cerrar quedó
+amarillo y de ancho completo. La corrección reusable pertenece al ADN, no a
+CSS correctivo del consumidor. Inventariar antes/después, extender APIs de forma
+aditiva y retirar diseño local solo tras validar su reemplazo. Mantener la
+semántica de solo lectura sin recuperar inputs deshabilitados.
+
+La revisión de catálogo detectó otra brecha: las plantillas ya estaban en el
+árbol y barrel, pero el esquema solo admitía tres capas. El catálogo ahora
+representa `surface` y `template` sin disfrazarlas de organismos y sus pruebas
+rechazan una capa inventada. Eso no demuestra que el generador ya use la plantilla.
+
+Un proyecto dentro de Git no es la raíz Git. Auditar ambos explícitamente no
+autoriza instalar workflows en una raíz compartida; esa decisión queda abierta.
 
 ## Índice superior de aprendizajes
 
@@ -817,4 +891,3 @@ La solución robusta es detener la propagación del evento `click` en la opción
 
 **Contexto en el consumidor:** Los consumidores experimentaban `401 CREDENCIALES_INVALIDAS` y `403 Forbidden` al interactuar con el backend `cxc-ventas-back`.
 **Lección aprendida:** Los fallos se derivaron de corrupción en variables shell para PBKDF2 y falta de roles legacy en la matriz de permisos de CQRS. El backend debe asegurar que `ObtenerRolesPermisosAsync` use `NombreUsuario` e implemente fallbacks, garantizando que el UI reciba un estado transparente y confiable sin tener que gestionar parches locales para permisos.
-

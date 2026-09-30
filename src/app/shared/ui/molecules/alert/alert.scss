@@ -4,187 +4,69 @@
   max-width: 100%;
 }
 
-/*
-UN MARGEN SOLO ABAJO DEJA EL AVISO PEGADO A LO DE ARRIBA.
+:host.alert-flow--default { margin-block: calc(var(--alert-flow-gap) / 2); }
+:host.alert-flow--compact { margin-block: calc(var(--alert-flow-gap-compact) / 2); }
+:host.alert-flow--none { margin-block: 0; }
 
-Casi todas las pantallas que consumen esto disponen su contenido con
-`display: grid` y un `gap` —22 de 27 medidas—, y en una rejilla los margenes NO
-se colapsan con el hueco: se suman. Resultado medido en la cola de solicitudes:
-1rem de separacion con lo que hay ENCIMA y 3,25rem con lo que hay DEBAJO. El
-aviso queda pegado al titulo y flotando sobre la tabla, y lo que se lee como
-descuido es esa asimetria.
-
-El margen se reparte ahora a los dos lados. En una rejilla eso deja el aviso
-centrado en su hueco; en flujo de bloque los margenes contiguos se colapsan, asi
-que la separacion total no crece.
-*/
-:host.alert-flow--default {
-  margin-block: calc(var(--feedback-section-gap, 2.25rem) / 2);
-}
-
-:host.alert-flow--compact {
-  margin-block: calc(var(--feedback-compact-gap, 1rem) / 2);
-}
-
-:host.alert-flow--none {
-  margin-block: 0;
-}
-
+/* Una sola superficie para el showcase y sus consumidores. El acento comunica
+   el tono; el texto usa contraste de lectura, nunca el color de relleno. */
 .alert {
-  position: relative;
   min-width: 0;
   display: flex;
   align-items: flex-start;
   gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid currentColor;
+  padding: var(--space-4);
+  border: 0;
+  border-inline-start: var(--space-1) solid var(--alert-accent);
   border-radius: var(--radius-md);
+  background: var(--alert-background);
+  color: var(--text-color);
   font-size: var(--text-sm);
+  line-height: 1.5;
 }
 
 .alert__icon {
   flex: 0 0 auto;
-  margin-top: 0.15em;
-}
-
-/* ── CSS-only X icon (blades.heavy) for danger alerts ──────────────── */
-/* Duplicated from icon-button.component.css because Angular's view    */
-/* encapsulation prevents those rules from reaching alert's template.  */
-.close {
-  position: relative;
-  display: inline-block;
-  font-size: 18px;
-  width: 1em;
-  height: 1em;
-  overflow: hidden;
-}
-.close::before, .close::after {
-  content: "";
-  position: absolute;
-  height: 0.04em;
-  width: 100%;
-  top: 50%;
-  left: 0;
-  margin-top: -0.02em;
-  background: currentColor;
-}
-.close::before { transform: rotate(45deg); }
-.close::after  { transform: rotate(-45deg); }
-.close.heavy::before, .close.heavy::after {
-  height: 0.24em;
-  margin-top: -0.12em;
-}
-.close.blades::before, .close.blades::after {
-  border-radius: 0.1em 0;
-}
-
-.alert__body,
-.alert__message {
-  min-width: 0;
-  overflow-wrap: anywhere;
+  color: var(--alert-symbol);
+  font-size: var(--text-lg);
+  line-height: inherit;
 }
 
 .alert__body {
   flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .alert__title {
-  display: block;
-  margin-bottom: var(--space-1);
-  text-transform: uppercase;
+  margin-inline-end: var(--space-2);
+  font-weight: var(--font-weight-title);
 }
 
 .alert__message {
-  line-height: 1.5;
+  display: inline;
+  overflow-wrap: anywhere;
 }
 
+.alert__close { flex: 0 0 auto; }
 
-
-
-
-/* Override icon-button's encapsulated hover transforms and shadows that
-   are too aggressive for the inline-alert context.                        */
-.alert__close ::ng-deep .icon-btn--close {
-  border-radius: var(--radius-sm);
-  box-shadow: none;
-}
-
-.alert__close ::ng-deep .icon-btn--close:hover {
-  background: rgb(255 255 255 / 45%);
-  color: inherit;
-  transform: none;
-  box-shadow: none;
-}
-
-.alert__close ::ng-deep .icon-btn--close:active {
-  background: rgb(255 255 255 / 55%);
-  transform: none;
-  box-shadow: none;
-}
-
-.alert__close ::ng-deep .icon-btn--close:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
-}
-
-/*
-El texto usa la rampa `--alert-*-text`, no el color base del tono.
-
-`--warning-color` y compania son colores de RELLENO: sirven para un icono o un
-borde, no para leerse encima de su propio fondo claro. Usados como color de
-texto incumplian el minimo de 4,5:1 de WCAG 1.4.3 en los tres temas:
-
-  tono      claro          dark           brand-dark
-  info      3,69 -> 9,52   3,74 -> 7,57   2,95 -> 5,97
-  success   2,12 -> 4,79   6,32 (ya ok)   4,97 (ya ok)
-  warning   2,13 -> 4,76   6,20 (ya ok)   4,97 (ya ok)
-  danger    3,24 -> 7,60   4,06 -> 7,29   3,27 -> 5,88
-
-Los tokens `--alert-*-text` ya existian en _tokens-components.css y no los
-consumia ni un solo fichero del ecosistema.
-*/
 .alert--info {
-  background: var(--info-color-lighter);
-  color: var(--alert-info-text);
+  --alert-background: var(--alert-info-bg);
+  --alert-accent: var(--alert-info-border);
+  --alert-symbol: var(--alert-info-text);
 }
-
 .alert--success {
-  background: var(--success-color-lighter);
-  color: var(--alert-success-text);
+  --alert-background: var(--alert-success-bg);
+  --alert-accent: var(--alert-success-border);
+  --alert-symbol: var(--alert-success-text);
 }
-
 .alert--warning {
-  background: var(--warning-color-lighter);
-  color: var(--alert-warning-text);
+  --alert-background: var(--alert-warning-bg);
+  --alert-accent: var(--alert-warning-border);
+  --alert-symbol: var(--alert-warning-text);
 }
-
 .alert--danger {
-  background: var(--danger-color-lighter);
-  color: var(--alert-danger-text);
-}
-
-/* Fixes over control height to avoid button overflow */
-:host {
-  --control-height: 1.75rem;
-}
-
-::ng-deep .alert__close .icon-btn--close {
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: var(--radius-sm);
-  background: transparent !important;
-  box-shadow: none !important;
-  color: inherit !important;
-  opacity: 0.72;
-  transform: none !important;
-}
-
-::ng-deep .alert__close .icon-btn--close:hover {
-  background: rgb(255 255 255 / 45%) !important;
-  opacity: 1;
-}
-
-::ng-deep .alert__close .icon-btn--close:focus-visible {
-  outline: 2px solid currentColor !important;
-  outline-offset: 2px !important;
+  --alert-background: var(--alert-danger-bg);
+  --alert-accent: var(--alert-danger-border);
+  --alert-symbol: var(--alert-danger-text);
 }

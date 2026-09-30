@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 export interface ComparisonChartItem {
   label: string;
@@ -12,7 +13,7 @@ export interface ComparisonChartItem {
 @Component({
   selector: 'app-comparison-chart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, VariablesCssDirective],
   template: `
     <div class="chart-legend" aria-label="Leyenda del gráfico">
       <span><i class="chart-legend__dot chart-legend__dot--a"></i>{{ labelA() }}</span>
@@ -25,10 +26,10 @@ export interface ComparisonChartItem {
           <strong class="monthly-chart__month">{{ item.label }}</strong>
           <div class="monthly-chart__plot" aria-hidden="true">
             <span class="monthly-chart__track">
-              <i class="monthly-chart__bar monthly-chart__bar--a" [style.width.%]="item.seriesAWidth"></i>
+              <i class="monthly-chart__bar monthly-chart__bar--a" [appVariablesCss]="{'--comparison-width': item.seriesAWidth + '%'}"></i>
             </span>
             <span class="monthly-chart__track">
-              <i class="monthly-chart__bar monthly-chart__bar--b" [style.width.%]="item.seriesBWidth"></i>
+              <i class="monthly-chart__bar monthly-chart__bar--b" [appVariablesCss]="{'--comparison-width': item.seriesBWidth + '%'}"></i>
             </span>
           </div>
           <div class="monthly-chart__values">

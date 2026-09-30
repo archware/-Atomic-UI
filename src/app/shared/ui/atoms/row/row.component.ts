@@ -1,4 +1,5 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 /** Horizontal alignment options */
 export type RowAlign = 'left' | 'center' | 'right' | 'stretch';
@@ -32,7 +33,8 @@ export type RowVariant = 'default' | 'form';
 @Component({
   selector: 'app-row',
   standalone: true,
-  imports: [],
+  imports: [VariablesCssDirective],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './row.component.html',
   styleUrl: './row.component.css'
 })

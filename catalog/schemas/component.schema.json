@@ -29,7 +29,7 @@
     "$schema": { "type": "string" },
     "schemaVersion": { "const": 1 },
     "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
-    "layer": { "enum": ["atom", "molecule", "organism"] },
+    "layer": { "enum": ["atom", "molecule", "organism", "surface", "template"] },
     "selector": { "type": "string", "minLength": 2 },
     "export": { "type": "string", "minLength": 2 },
     "source": { "type": "string", "minLength": 3 },

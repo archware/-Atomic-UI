@@ -3,7 +3,8 @@ title: 'Doctrina de interfaz de Atomic UI'
 document_type: 'doctrine'
 version: '5.9.0'
 status: 'vigente'
-updated: '2026-08-15'
+updated: '2026-09-29'
+last_updated: '2026-09-29'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
@@ -259,8 +260,12 @@ salida del enrutador —enlaces, botones, Atrás del navegador— y el aviso del
 navegador al cerrar la pestaña o recargar. Con uno solo, el agujero sigue abierto
 por el otro lado.
 
-**Pregunta por `dirty`, no por «hay un formulario abierto».** Quien solo entró a
-mirar no puede tropezarse con un diálogo. Y **los campos de búsqueda quedan
+**Pregunta por cambios reales, no por «hay un formulario abierto».** Comparar
+los campos editables con su instantánea inicial pertenece al consumidor.
+`dirty` puede seguir true al restituir todos los valores: no acredita cambios.
+Guardar debe permanecer deshabilitado sin cambios válidos, con guarda adicional
+contra envíos programáticos. Quien solo entró a mirar no puede tropezarse con
+un diálogo. Y **los campos de búsqueda quedan
 fuera**: teclear un documento para consultar no es trabajo que se pierda.
 
 **Por qué esa segunda mitad importa igual que la primera.** Un aviso que salta de
@@ -363,6 +368,12 @@ falta, y cuándo lo correcto es no ponerla.
 equivoca. Si la respuesta es «lo vuelve a pulsar bien», la confirmación sobra. Si
 es «llama a alguien», hace falta. Si es «no se entera», entonces lo que falta no
 es una confirmación: es que la pantalla diga lo que pasó.
+
+**Catálogos persistidos.** Activar/desactivar puede afectar referencias y
+disponibilidad aunque exista la operación inversa. Cuando su contrato exige
+confirmación, usar una sola desde la tercera acción contextual de la grilla;
+no un interruptor dentro de Editar seguido de otro Guardar. El
+[contrato de catálogos](docs/CONTRATO_CATALOGOS_CRUD.md) concreta este caso.
 
 **Y una confirmación no es un permiso.** El capítulo 7 ya lo exige: el permiso se
 comprueba otra vez **después** del «sí».
@@ -590,7 +601,24 @@ Por eso esto vive aquí y no en un comentario.
 2. **Control de Anchos:** Los anchos deben estar fijados sin `flex-grow` expansivo que rompa el layout de la caja de herramientas.
 3. **Fondo de Marca:** El fondo de la paginación y controles relacionados debe utilizar el token `var(--primary-color-light)`.
 
-## Arquitectura de Red (Desarrollo)
+## Promoción visual compatible (ATOMIC-20260928-001)
 
-1. **Ruteo de Proxy:** Las peticiones del ecosistema local Angular (puerto 5007) hacia el backend (puerto 7149) en rutas `/api/v2/...` deben fluir a través del `proxy.conf.json`. Nunca se debe codificar (hardcodear) el puerto del backend directamente en los servicios frontend.
+Revisión ATOMIC-20260929-005: una demostración debe consumir el mismo componente
+que presenta como referencia. ShowcaseFeedback tenía alertas HTML/CSS propias y
+el consumidor usaba Alert con otro aspecto: comparar solo demos ocultaba la
+divergencia. Su superficie se unifica en Alert y se prueba la composición real.
+El dueño autoriza ojo neutro para consulta, distinto del verde de Activar;
+conservar geometría, etiquetas y operaciones. No aplicar colores por feature.
 
+Cumplir Atomic-first no autoriza un rediseño. Un patrón útil de HTML/CSS local
+se inventaría, se convierte en pieza o variante de Atomic, se prueba y después
+se sustituye en el consumidor. No se elimina primero para cumplir un escáner.
+El [contrato de catálogos](./docs/CONTRATO_CATALOGOS_CRUD.md) fija acciones,
+detalle, ventanas y evidencias; el roadmap distingue implementación de adopción.
+
+## Arquitectura de Red (antecedente del consumidor)
+
+La referencia histórica a Angular en 5007 y backend en 7149 corresponde a
+`ventas-cxc`; no fija puertos, endpoints ni proxy para el ADN o sus demás
+consumidores. Cada producto documenta su red. Atomic permanece exclusivamente
+de presentación y no incorpora ese conocimiento de infraestructura.

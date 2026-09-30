@@ -269,14 +269,14 @@ try {
     path.join(sourceRoot, 'distribution/atomic-source-manifest.json'),
     `${JSON.stringify(sourceManifest, null, 2)}\n`,
   );
-  const atomicRef = commitRepository(sourceRoot, 'test: fixture Atomic 1.2.2');
+  const atomicRef = commitRepository(sourceRoot, 'test: fixture Atomic 1.2.3');
   const shellComponentPath = path.join(consumerRoot, 'src/app/app.component.ts');
   const shellCanonical = "export const shellTemplate = '<prest-shell />';\n";
   write(shellComponentPath, shellCanonical);
 
   const manifest = {
     schemaVersion: 1,
-    policyVersion: '1.2.2',
+    policyVersion: '1.2.3',
     changeId: 'GOVERNANCE-TEST',
     atomicRepository: '../atomic',
     atomicRemote: 'archware/-Atomic-UI',
@@ -342,7 +342,7 @@ try {
   };
   const manifestPath = path.join(consumerRoot, 'docs/atomic-provenance.json');
   write(manifestPath, JSON.stringify(manifest, null, 2));
-  commitRepository(consumerRoot, 'test: fixture consumidor 1.2.2');
+  commitRepository(consumerRoot, 'test: fixture consumidor 1.2.3');
 
   runGate(true, 'Ley Atomic verificada');
 
@@ -605,11 +605,44 @@ try {
   const installedManifest = JSON.parse(
     fs.readFileSync(path.join(installedConsumer, 'docs/atomic-provenance.json'), 'utf8'),
   );
+  // Monorepo: descubrir el proyecto explícito sin alterar ningún archivo.
+  const workspace = path.join(tempRoot, 'workspace-audit');
+  initializeRepository(workspace);
+  write(path.join(workspace, '.gitattributes'), '* text=auto eol=crlf\n');
+  const workspaceProject = path.join(workspace, 'ventas');
+  fs.cpSync(installedConsumer, workspaceProject, { recursive: true, filter: source => path.basename(source) !== '.git' });
+  const snapshot = directory => fs.readdirSync(directory, { withFileTypes: true })
+    .filter(entry => entry.name !== '.git')
+    .flatMap(entry => {
+      const file = path.join(directory, entry.name);
+      return entry.isDirectory() ? snapshot(file) : [[file, fs.readFileSync(file).toString('base64')]];
+    });
+  const workspaceBefore = JSON.stringify(snapshot(workspace));
+  const auditArgs = [path.join(atomicRoot, 'tools/install-consumer-governance.js'), workspace, '--project-root=ventas'];
+  const auditEnvironment = { ...process.env, ATOMIC_UI_ROOT: sourceRoot };
+  const auditWorkspace = JSON.parse(execFileSync(process.execPath, [...auditArgs, '--audit-only'], {
+    encoding: 'utf8', env: auditEnvironment,
+  }));
+  if (auditWorkspace.projectRoot !== 'ventas' || auditWorkspace.consumerRoot !== workspaceProject.replaceAll('\\', '/')) {
+    throw new Error('La auditoría confundió raíz Git y raíz del producto.');
+  }
+  for (const args of [auditArgs, [auditArgs[0], workspace, '--project-root=../escape', '--audit-only']]) {
+    let rejected = false;
+    try { execFileSync(process.execPath, args, { stdio: 'pipe', env: auditEnvironment }); }
+    catch (error) {
+      const output = `${error.stdout || ''}${error.stderr || ''}`;
+      rejected = args.includes('--audit-only') ? /project-root/.test(output) : /solo admite --audit-only/.test(output);
+    }
+    if (!rejected) throw new Error('La auditoría de monorepo permitió escritura o una ruta fuera del producto.');
+  }
+  if (JSON.stringify(snapshot(workspace)) !== workspaceBefore) {
+    throw new Error('La auditoría o su prueba negativa modificó archivos del monorepo.');
+  }
   if (installedManifest.components.length !== 1) {
     throw new Error('El instalador no inventarió el componente Atomic copiado.');
   }
   if (
-    installedManifest.policyVersion !== '1.2.2' ||
+    installedManifest.policyVersion !== '1.2.3' ||
     installedManifest.atomicRef !== atomicRef ||
     JSON.stringify(installedManifest.contentCanonicalization) !==
       JSON.stringify(CONTENT_CANONICALIZATION) ||
@@ -618,7 +651,7 @@ try {
     !fs.existsSync(path.join(installedConsumer, 'scripts/read-atomic-contract.cjs')) ||
     !fs.existsSync(path.join(installedConsumer, 'scripts/source-manifest.cjs'))
   ) {
-    throw new Error('El instalador no fijó la política 1.2.2 y su canonicalización completa.');
+    throw new Error('El instalador no fijó la política 1.2.3 y su canonicalización completa.');
   }
   for (const [local, atomic] of [
     ['docs/ATOMIC_GOVERNANCE.md', 'governance/consumer/ATOMIC_GOVERNANCE.md'],
@@ -1209,7 +1242,7 @@ try {
   }
 
   console.log(
-    'Contrato Atomic 1.2.2 probado: referencias inmutables, fuente limpia, canonicalización ' +
+    'Contrato Atomic 1.2.3 probado: referencias inmutables, fuente limpia, canonicalización ' +
       'LF/CRLF, binarios, filtros, servicios (exact/adapted), shell y workflow reforzado verificados.',
   );
 } finally {
