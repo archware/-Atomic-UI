@@ -1,0 +1,24 @@
+:host { display: block; min-width: 0; }
+.transaction-detail { padding: var(--space-4); color: var(--text-color); }
+header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-4); margin-bottom: var(--space-4); }
+h3 { margin: 0; font-size: var(--text-xl); font-weight: var(--font-weight-title); overflow-wrap: anywhere; }
+dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); margin: 0 0 var(--space-6); padding: var(--space-4); border: var(--border-width-thin) solid var(--border-color); border-radius: var(--radius-md); background: var(--surface-section); }
+dt { margin-bottom: var(--space-2); font-size: var(--text-sm); color: var(--text-color-secondary); }
+dd { margin: 0; overflow-wrap: anywhere; }
+dd span { display: block; }
+table { width: 100%; border-collapse: collapse; margin-bottom: var(--space-6); }
+caption { text-align: start; font-weight: var(--font-weight-title); padding-bottom: var(--space-2); border-bottom: var(--border-width-thin) solid var(--border-color); margin-bottom: var(--space-4); }
+th, td { padding: var(--space-2); border-bottom: var(--border-width-thin) solid var(--border-color); text-align: start; overflow-wrap: anywhere; }
+th { color: var(--text-color-secondary); border-bottom-width: var(--border-width-medium); font-weight: var(--font-weight-title); }
+.align-end { text-align: end; }
+footer { padding: var(--space-4); background: var(--surface-section); border-radius: var(--radius-md); text-align: end; font-size: var(--text-xl); font-weight: var(--font-weight-title); }
+@media (max-width: 48rem) {
+  .transaction-detail { padding: 0; }
+  dl { grid-template-columns: minmax(0, 1fr); }
+  table, tbody, tr, td { display: block; }
+  thead { display: none; }
+  caption { display: block; }
+  tr { margin-bottom: var(--space-3); border: var(--border-width-thin) solid var(--border-color); border-radius: var(--radius-md); }
+  td { display: flex; gap: var(--space-3); justify-content: space-between; text-align: end; }
+  td::before { content: attr(data-label); text-align: start; font-weight: var(--font-weight-emphasis); }
+}

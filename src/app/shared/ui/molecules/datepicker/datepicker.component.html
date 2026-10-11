@@ -2,10 +2,10 @@
 
   <!-- Trigger Input -->
   <!-- Trigger Input -->
-  <div class="datepicker-trigger" (click)="toggle()" (keydown)="onKeyDown($event)" tabindex="0" role="button"
-    aria-haspopup="grid" [attr.aria-expanded]="isOpen()" aria-label="Abrir calendario">
+  <div class="datepicker-trigger" (click)="toggle()" (keydown)="onKeyDown($event)" [attr.tabindex]="isDisabled() ? -1 : 0" role="button"
+    aria-haspopup="grid" [attr.aria-disabled]="isDisabled()" [attr.aria-expanded]="isOpen()" [attr.aria-label]="label() ? 'Abrir calendario: ' + label() : 'Abrir calendario'">
     <div class="datepicker-wrapper">
-      <app-floating-input [label]="label()" [value]="formattedValue()" [variant]="variant()" [disabled]="disabled()"
+      <app-floating-input [label]="label()" [value]="formattedValue()" [variant]="variant()" [disabled]="isDisabled()"
         [readonly]="true" [error]="error()" class="pointer-events-none">
       </app-floating-input>
       <!-- Custom Trigger Icon -->
@@ -32,7 +32,7 @@
   <div class="datepicker-popup" role="grid" [attr.aria-label]="(currentViewDate() | date:'MMMM yyyy')">
     <!-- Header -->
     <div class="calendar-header">
-      <button class="nav-btn" (click)="prev($event)" aria-label="Mes anterior">
+      <button type="button" class="nav-btn" (click)="prev($event)" aria-label="Mes anterior">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m15 18-6-6 6-6" />
@@ -50,7 +50,7 @@
         </button>
       </div>
 
-      <button class="nav-btn" (click)="next($event)" aria-label="Mes siguiente">
+      <button type="button" class="nav-btn" (click)="next($event)" aria-label="Mes siguiente">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m9 18 6-6-6-6" />

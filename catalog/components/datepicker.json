@@ -71,10 +71,10 @@
     "--text-xs"
   ],
   "story": { "path": "src/stories/ui-datepicker.stories.ts", "status": "available" },
-  "test": { "path": null, "status": "missing" },
+  "test": { "path": "src/app/shared/ui/molecules/datepicker/datepicker.component.spec.ts", "status": "available" },
   "stability": {
     "status": "candidate",
-    "notes": ["No usa OnPush. Desde 5.8.0 tiene prueba unitaria del contrato de valor.", "No expone min, max, required ni controlId y el popup fijo puede desbordar pantallas estrechas."]
+    "notes": ["Usa OnPush; prueba fecha civil, bloqueo, navegación y botones sin submit. CVA entrega Date local: el consumidor debe adaptar a fecha civil ISO para su API.", "No expone min, max, required ni controlId y el popup fijo puede desbordar pantallas estrechas."]
   },
   "canonicalFor": ["date-input", "calendar-selection"]
 }

@@ -2,11 +2,11 @@
 title: "Contrato visual de catálogos CRUD y promoción compatible"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-09-28"
-last_updated: "2026-09-29"
+last_updated: "2026-09-30"
 document_type: "contrato visual"
 status: "vigente"
-version: "1.3.0"
-change_id: "ATOMIC-20260929-004"
+version: "1.5.0"
+change_id: "ATOMIC-20260930-008"
 ---
 
 # Catálogos CRUD: preservar antes de sustituir
@@ -38,14 +38,48 @@ los bindings y campos específicos pertenecen al producto.
 
 ## Invariantes visuales del catálogo
 
+### Comprobación de adopción por consumidor
+
+La misma experiencia visual no implica el mismo contrato ni la misma seguridad.
+Aplicar la maestra 2.3.0, apartado 1.10, sin trasladar negocio al ADN.
+
+Antes de conectar un catálogo, dejar una matriz local por operación con:
+
+1. fuente verificable del contrato, identidad, entrada, salida y validaciones;
+2. responsable de autorización y pertenencia, con pruebas negativas previstas;
+3. capacidades Atomic realmente instaladas y bindings que las conectan;
+4. evidencia separada de presentación, integración y persistencia, o pendiente
+   explícito cuando no exista autorización o entorno para comprobarla.
+
+La matriz pertenece al consumidor. Atomic no incorpora endpoints, campos,
+longitudes de negocio ni contexto de inquilino. Una prueba de componentes o
+procedencia no valida la seguridad de su servidor. No copiar toda una fachada
+ni regenerar archivos existentes para uniformar apariencia.
+
+Las reglas siguientes ya existían: tres acciones, detalle semántico y
+preservación del diseño. La adopción exige comprobarlas en la ruta conectada,
+no solo reconocerlas en la documentación. La lista es un control de revisión,
+no una guarda nueva del generador.
+
+### Referencia visual que se conserva
+
+Paletas disponibles en Atomic UI: Primary, Secondary, Tertiary, Neutral, Slate, Success, Warning, Danger, Base.
+Regla estricta: Está prohibido inyectar colores en duro (Hex/RGB/nombres). Todo color debe asignarse exclusivamente utilizando los tokens CSS de Atomic UI.
+
 | Región | Contrato |
 | --- | --- |
 | Columna de estado | Etiquetas centradas junto con su encabezado por omisión. Una alineación explícita prevalece. En tarjetas móviles se centra el valor en su espacio, no la etiqueta de la celda. |
-| Acciones de fila | Grupo compacto de iconos con nombre accesible; sin botones elevados ni saltos de línea que inflen la fila. |
+| Acciones de fila | Grupo compacto de iconos con nombre accesible; sin botones elevados ni saltos de línea que inflen la fila. Acciones de grilla: La base son 3 botones visibles, pero se autoriza a los desarrolladores a añadir un 4to o 5to botón contextual si el requerimiento lo exige. Las acciones destructivas (Desactivar) DEBEN ir siempre en el menú desplegable (isMenuOnly: true). |
 | Consulta | Ojo neutro contrastado en el perfil de catálogo; se distingue de Activar verde (revisión aprobada ATOMIC-20260929-005). |
 | Edición | Lápiz azul según el perfil de catálogo. |
 | Baja | Papelera roja `fa-trash`; confirmación con botón `danger`. No confundir baja lógica con eliminación física. |
-| Activación | En catálogos con baja lógica ocupa la misma tercera posición que Desactivar: `activate`, círculo con marca verde (`fa-circle-check`). No añade un cuarto botón ni forma parte de Guardar. |
+| Activación | En catálogos con baja lógica ocupa la misma tercera posición que Desactivar: `activate`, círculo con marca verde (`fa-circle-check`). |
+
+### Ventanas y superposiciones
+
+Paneles Laterales (Side-panels) son para formularios grandes/complejos. Popups (Formularios centrados) son para formularios pequeños y rápidos. Modales (Alertas centradas) son EXCLUSIVAMENTE para mensajes del sistema y confirmaciones.
+Diseño visual de ventanas: Los Modales llevan el botón de cerrar (X) por dentro del contenedor blanco. Los Popups llevan el botón de cerrar flotando por fuera del contenedor.
+
 | Cabecera de ventana | Título centrado y cierre accesible `hanging-close`; conservar los tokens del encabezado. |
 | Detalle | Lista semántica de solo lectura; etiquetas en negrita, separación de 24 CSS px mediante `--space-5`, valores multilínea y sin divisores horizontales. |
 | Pie | Cerrar/Cancelar neutro (`outline`), alineado al final en escritorio; no usar `secondary` amarillo ni forzar ancho completo. |
@@ -65,7 +99,33 @@ local del consumidor. No requiere nuevos tokens ni cambios en colores o tamaños
 
 ## Coordinación asíncrona
 
-El consumidor declara por fila Ver, Editar y una única acción de estado. Para
+### Consulta no es edición bloqueada
+
+La referencia aprobada el 30 de septiembre es el detalle de Entidades con
+etiquetas y valores (imagen 1), no el formulario deshabilitado de Tipos
+(imagen 2). Ambas ventanas comparten el chasis; el cambio corresponde al
+contenido, no a un segundo diseño ni a una variante nueva de modal.
+
+- Consultar: SummaryList con layout detail, dl/dt/dd, sin input, select,
+  textarea, toggle, asteriscos de obligatoriedad ni acción Guardar.
+- Crear/editar: formulario tipado con sus validaciones y controles Atomic.
+- Activar/desactivar: confirmación independiente desde la tercera acción
+  de la grilla; no se incorpora a la consulta ni al guardado.
+
+Conservar cabecera centrada, cierre colgante, espaciado, temas y pie neutro.
+Usar el contrato instalado: si la copia compatible no expone el input detalle
+de PaginaCrud, proyectar SummaryList en el slot existente; no copiar otro modal.
+Sincronizar la apertura después de renderizar el nuevo contenido para que
+el foco no permanezca en un control retirado. Probar Ver, Cerrar, Editar,
+Cancelar y Ver nuevamente, con registros activos e inactivos.
+
+La prevención debe probar el DOM de la ruta real: la consulta contiene la
+lista semántica y ningún control de captura. No prohibir indiscriminadamente
+form.disable(): bloquear temporalmente la edición durante un envío es legítimo.
+La regla readonly-detail-content es de revisión, no una guarda del generador;
+cada consumidor acredita sus pruebas y su inventario de pendientes.
+
+El consumidor declara por fila Ver, Editar, una acción de estado y opcionalmente botones contextuales adicionales. Para
 activos usa `deactivate` y etiqueta Desactivar; para inactivos `activate` y
 etiqueta Activar. Atomic resuelve icono y tono mediante el perfil `catalog`;
 no lee propiedades de dominio, decide permisos ni ejecuta HTTP. El icono

@@ -2,16 +2,70 @@
 title: "Continuidad para agentes de Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-09-30"
+last_updated: "2026-10-01"
 document_type: "manual de continuidad"
 status: "vigente"
-version: "1.0.0"
-change_id: "ECO-20260823-003"
+version: "1.4.0"
+change_id: "ATOMIC-20261001-002"
 canonical_doctrine: "C:\\Users\\cotaha\\Documents\\Repos2\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\Documents\\Repos2\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
 
 # Continuidad para agentes de Atomic UI
+
+Se mantiene el contrato documental ECO-20260823-003. Las unidades candidatas
+inferiores no equivalen a una nueva publicación del ADN.
+
+## Calendario y selector candidatos
+
+ATOMIC-20261001-002 corrige navegación, bloqueo CVA y submit involuntario del
+Datepicker existente; su contrato Date/null no cambia. El catálogo registra las
+pruebas. Select2 flexibiliza texto seleccionado y lista con búsqueda. Ventas
+consume solo los bloques compatibles, sin perder su posición fija adaptada.
+17 pruebas focalizadas y build pasan; no hay certificación global, publicación
+ni cambio del manifiesto canónico. El smoke de gobierno falla por inventario.
+El popup de calendario conserva 320 px y no ofrece min/max: comprobar móvil y
+validar fechas en el consumidor, sin inventar inputs. Evidencia y rollback en
+el [roadmap](../.agents/roadmaps/ROADMAP_ATOMIC-20261001-002_calendario_selector.md).
+
+## Presentación de transacciones candidata
+
+ATOMIC-20261001-001 incorpora dos organismos para preservar Ventas sin estilos
+en la feature: TransactionDetail (grupos semánticos, tablas, acción, total) y
+TransactionEditor (disposición proyectada). El catálogo documenta API candidata;
+el consumidor aporta textos formateados y reglas de operación. Sin dependencias
+financieras, moneda o acceso HTTP en las piezas. No reemplazar ReceiptPanel ni
+PrintDocumentPanel: tienen otras responsabilidades.
+
+Tres pruebas de fuente y build pasan. La adopción local en ventas-cxc tiene
+64 pruebas específicas y comprobación visual; no prueba operaciones financieras.
+Persisten bloqueos globales de tokens/gobierno/procedencia ajenos a estas piezas.
+Sin publicación ni cambio de versión/manifiesto. Véase
+[roadmap](../.agents/roadmaps/ROADMAP_ATOMIC-20261001-001_transacciones.md).
+
+## Corte documental ATOMIC-20260930-008
+
+Reutilizar experiencia visual no transfiere contrato ni seguridad. Antes de
+conectar otro catálogo, exigir la matriz local del consumidor conforme a la
+maestra 2.3.0, apartado 1.10, y al [contrato](CONTRATO_CATALOGOS_CRUD.md).
+Mantener tres acciones, detalle semántico y diseño; comprobar su adopción real.
+
+Solo doctrina y documentación. Sin componentes, tokens, reglas ejecutables
+del catálogo, política o procedencia nuevos. Proveedores en ventas-cxc sigue
+pendiente de implementación; no atribuirle pruebas históricas de otros módulos.
+Ver [roadmap](../.agents/roadmaps/ROADMAP_ATOMIC-20260930-008_reutilizacion_segura.md).
+
+## Corte vigente ATOMIC-20260930-007
+
+Se precisa la consulta de catálogos mediante SummaryList detail, conservando
+cabecera, cierre y pie Atomic. La regla de diálogos readonly-detail-content
+es de revisión, no un control automático del generador. No hay cambios de
+componentes, estilos, tokens o política de propagación.
+
+ventas-cxc aplica el patrón a Tipos mediante VCXC-20260930-003 y conserva
+Familias/Entidades. Otros módulos siguen pendientes y están inventariados
+en el consumidor. Ver [contrato](CONTRATO_CATALOGOS_CRUD.md) y
+[roadmap](../.agents/roadmaps/ROADMAP_ATOMIC-20260930-007_detalle_catalogos.md).
 
 ## Guardado local ATOMIC-20260930-006
 

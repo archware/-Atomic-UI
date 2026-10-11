@@ -4,14 +4,67 @@ author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
 document_type: "registro técnico"
 status: "en revisión"
-last_updated: "2026-09-29"
-version: "1.0.0"
-last_change_id: "ECO-20260823-003"
+last_updated: "2026-10-01"
+version: "1.4.0"
+last_change_id: "ATOMIC-20261001-002"
 owners:
   - "Hospital Regional de Ayacucho"
 ---
 
 # Lecciones aprendidas de Atomic UI
+
+La continuidad documental se rige por ECO-20260823-003; cada corte registra
+evidencia propia sin convertir pruebas parciales en certificación global.
+
+## ATOMIC-20261001-002 — controles compuestos dentro de un formulario
+
+- Probar Datepicker dentro de un form, no solo aislado: cualquier botón de
+  navegación sin type puede enviarlo. El bloqueo CVA también debe impedir la
+  selección programática y quitar el disparador del orden de tabulación.
+- Al cambiar mes o año, fijar el día a 1 antes de la operación evita que Date
+  normalice el 31 a un mes distinto. El componente sigue emitiendo Date/null;
+  la serialización de fechas civiles pertenece al adaptador del consumidor.
+- Textos largos deben funcionar tanto seleccionados como en la lista. En un
+  dropdown con búsqueda, reservar la búsqueda y hacer flexible el scroll.
+  No sustituir una adaptación local de posición por la fuente completa.
+
+## ATOMIC-20261001-001 — promoción visual e integración separadas
+
+- Conservar diseño incluye superficies y contraste en ambos temas, no copiar
+  blancos/grises fijos de una captura clara. Usar tokens existentes verificados.
+- El organismo recibe presentación, no calcula deuda ni decide moneda/canal.
+  Proyección pública acotada al host; no estilizar internamente otros controles.
+- La prueba del consumidor debe recorrer CVA y valor DOM de cada entrada.
+  Probar solo un texto total deja sin observar los controles vacíos del editor.
+- Un cambio de habilitación no debe disparar cambios de negocio al rehidratar
+  formularios históricos. Esta responsabilidad se prueba en el consumidor.
+- Una adopción candidata local no es publicación ni prueba de toda la fuente.
+  Registrar compuertas que fallan o no concluyen; no actualizar hashes para verde.
+
+Fuente y evidencia en el
+[roadmap](.agents/roadmaps/ROADMAP_ATOMIC-20261001-001_transacciones.md).
+
+## ATOMIC-20260930-008 — el patrón no certifica su conexión
+
+- **Evidencia:** las revisiones de catálogos CXC encontraron controles visuales
+  presentes sin una operación equivalente conectada. Las tres acciones y el
+  detalle semántico ya estaban documentados; repetir la norma no migró las rutas.
+- **Decisión:** reutilizar composición e intenciones sin heredar contratos o
+  seguridad. El consumidor acredita su integración; Atomic, su API visual.
+- **Prevención:** matriz local por operación y pruebas de controles conectados,
+  cierre, foco y respuestas. Comprobar la versión instalada antes de proyectar
+  contenido; no usar una demo como evidencia de la pieza consumida.
+- **Alcance:** revisión exigida, no automatización del generador. Sin cambios
+  de componentes ni publicación en esta unidad. La falta de integración no
+  autoriza rediseño ni sobrescritura de adaptaciones o pruebas anteriores.
+
+## ATOMIC-20260930-007 — separar contenido y chasis de consulta
+
+Dos capturas pueden compartir modal y diferir por una migración parcial del
+contenido. Reutilizar SummaryList detail evita un rediseño innecesario.
+Registrar la regla de revisión y la prueba efectiva por consumidor; no anunciar
+una prohibición automatizada global si solo se verificó una ruta.
+No confundir lectura con el bloqueo legítimo del formulario durante un envío.
 
 ## ATOMIC-20260929-005 — la muestra debe usar el componente
 

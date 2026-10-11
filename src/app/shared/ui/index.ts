@@ -358,3 +358,6 @@ export { SettingItemComponent } from './molecules/setting-item/setting-item.comp
 export { AuthBannerComponent } from './molecules/auth-banner/auth-banner.component';
 
 export * from './config/chasis.config';
+export { TransactionDetail } from './organisms/transaction-detail/transaction-detail';
+export type { TransactionDetailGroup, TransactionDetailTable } from './organisms/transaction-detail/transaction-detail';
+export { TransactionEditor } from './organisms/transaction-editor/transaction-editor';

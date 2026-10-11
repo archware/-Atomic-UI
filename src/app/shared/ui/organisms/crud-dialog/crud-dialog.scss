@@ -58,3 +58,14 @@
     max-height: calc(100dvh - var(--space-4));
   }
 }
+
+.crud-dialog.side-panel {
+  margin: 0;
+  margin-left: auto;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  height: 100dvh;
+  max-height: 100dvh;
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
+}

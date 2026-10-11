@@ -1,0 +1,38 @@
+<article class="transaction-detail">
+  <header>
+    <h3>{{ title() }}</h3>
+    <ng-content select="[transactionAction]" />
+  </header>
+  <dl>
+    @for (group of groups(); track group.label) {
+      <div>
+        <dt>{{ group.label }}</dt>
+        <dd>@for (value of group.values; track $index) { <span>{{ value }}</span> }</dd>
+      </div>
+    }
+  </dl>
+  @for (table of tables(); track table.title) {
+    <section>
+      <table>
+        <caption>{{ table.title }}</caption>
+        <thead><tr>
+          @for (column of table.columns; track column.key) {
+            <th scope="col" [class.align-end]="column.align === 'end'">{{ column.label }}</th>
+          }
+        </tr></thead>
+        <tbody>
+          @for (row of table.rows; track $index) {
+            <tr>
+              @for (column of table.columns; track column.key) {
+                <td [attr.data-label]="column.label" [class.align-end]="column.align === 'end'">{{ row[column.key] }}</td>
+              }
+            </tr>
+          } @empty {
+            <tr><td [attr.colspan]="table.columns.length">Sin registros.</td></tr>
+          }
+        </tbody>
+      </table>
+    </section>
+  }
+  <footer>{{ total() }}</footer>
+</article>

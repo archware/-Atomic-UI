@@ -80,6 +80,31 @@ describe('DatepickerComponent — fechas civiles', () => {
     expect(component.value()).toBeNull();
   });
 
+  it('navega desde el día 31 sin saltar febrero', () => {
+    component.currentViewDate.set(new Date(2026, 0, 31));
+    component.next(new Event('click'));
+    expect(component.currentViewDate().getMonth()).toBe(1);
+    component.selectMonth(3);
+    expect(component.currentViewDate().getMonth()).toBe(3);
+  });
+
+  it('deshabilitado no acepta una selección programática', () => {
+    const cambiar = jasmine.createSpy('cambiar');
+    component.registerOnChange(cambiar);
+    component.setDisabledState(true);
+    component.selectDate(new Date(2026, 9, 7));
+    expect(cambiar).not.toHaveBeenCalled();
+  });
+
+  it('sus botones no envían el formulario anfitrión', () => {
+    const fixture = TestBed.createComponent(DatepickerComponent);
+    fixture.componentInstance.isOpen.set(true);
+    fixture.detectChanges();
+    const botones = fixture.nativeElement.querySelectorAll('button');
+    expect(botones.length).toBeGreaterThan(0);
+    for (const boton of botones) expect(boton.type).toBe('button');
+  });
+
   /*
     ESCAPE NO PUEDE LLEVARSE EL DIALOGO QUE CONTIENE AL CALENDARIO.
 

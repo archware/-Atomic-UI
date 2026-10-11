@@ -1,0 +1,23 @@
+app-transaction-editor { display: block; min-width: 0; }
+app-transaction-editor .transaction-editor { margin-top: var(--space-4); color: var(--text-color); }
+app-transaction-editor [transactionSection] { margin-top: var(--space-4); }
+app-transaction-editor [transactionLabel] { position: absolute; width: 0; height: 0; overflow: hidden; clip-path: inset(50%); }
+app-transaction-editor [transactionToolbar] { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-4); margin-block: var(--space-4); }
+app-transaction-editor [transactionLine], app-transaction-editor [transactionPayment] { display: grid; align-items: start; gap: var(--space-4); margin-bottom: var(--space-1); }
+app-transaction-editor [transactionLine] { grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr)) minmax(0, 1.3fr); }
+app-transaction-editor [transactionPayment] { grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr) minmax(0, 1.3fr) minmax(0, 1.3fr); }
+app-transaction-editor [transactionLine] > *, app-transaction-editor [transactionPayment] > * { min-width: 0; }
+app-transaction-editor [transactionColumns] { color: var(--text-color-secondary); font-size: var(--text-sm); margin-bottom: var(--space-2); }
+app-transaction-editor [transactionNumeric] { display: grid; grid-template-columns: minmax(0, 1fr) var(--touch-target-min); gap: var(--space-2); align-items: center; }
+app-transaction-editor [transactionTotal] { text-align: end; margin-top: var(--space-4); font-size: var(--text-lg); font-weight: var(--font-weight-title); }
+app-transaction-editor [transactionTotals] { display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: space-around; margin-top: var(--space-5); padding: var(--space-4); border: var(--border-width-thin) solid var(--border-color); border-radius: var(--radius-sm); background: var(--surface-section); font-size: var(--text-lg); font-weight: var(--font-weight-title); }
+app-transaction-editor [transactionTone="success"] { color: var(--success-color-text); }
+app-transaction-editor [transactionTone="danger"] { color: var(--danger-color-text); }
+app-transaction-editor [transactionTone="neutral"] { color: var(--text-color-secondary); }
+app-transaction-editor [transactionActions] { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-4); margin-top: var(--space-6); padding-top: var(--space-4); border-top: var(--border-width-thin) solid var(--border-color); }
+@media (max-width: 48rem) {
+  app-transaction-editor [transactionLine], app-transaction-editor [transactionPayment] { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); margin-bottom: var(--space-5); }
+  app-transaction-editor [transactionColumns] { display: none; }
+  app-transaction-editor [transactionCell]::before { content: attr(transactionCell); display: block; margin-bottom: var(--space-1); font-size: var(--text-sm); color: var(--text-color-secondary); }
+  app-transaction-editor [transactionNumeric]::before { grid-column: 1 / -1; }
+}

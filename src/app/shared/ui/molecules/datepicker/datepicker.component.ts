@@ -1,4 +1,4 @@
-import { Component, forwardRef, signal, computed, ElementRef, HostListener, inject, input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, forwardRef, signal, computed, ElementRef, HostListener, inject, input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FloatingInputComponent, FloatingInputVariant } from '../../atoms/floating-input/floating-input.component';
@@ -6,6 +6,7 @@ import { FloatingInputComponent, FloatingInputVariant } from '../../atoms/floati
 @Component({
   selector: 'app-datepicker',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, FloatingInputComponent, DatePipe],
   providers: [
     {
@@ -110,6 +111,7 @@ export class DatepickerComponent implements ControlValueAccessor {
   prev(e: Event) {
     e.stopPropagation();
     const d = new Date(this.currentViewDate());
+    d.setDate(1);
     const view = this.currentView();
 
     if (view === 'day') {
@@ -126,6 +128,7 @@ export class DatepickerComponent implements ControlValueAccessor {
   next(e: Event) {
     e.stopPropagation();
     const d = new Date(this.currentViewDate());
+    d.setDate(1);
     const view = this.currentView();
 
     if (view === 'day') {
@@ -147,6 +150,7 @@ export class DatepickerComponent implements ControlValueAccessor {
 
   // Selection Methods
   selectDate(date: Date) {
+    if (this.isDisabled() || !Number.isFinite(date.getTime())) return;
     this.value.set(date);
     this.onChange(date);
     this.isOpen.set(false);
@@ -155,6 +159,7 @@ export class DatepickerComponent implements ControlValueAccessor {
 
   selectMonth(monthIndex: number) {
     const d = new Date(this.currentViewDate());
+    d.setDate(1);
     d.setMonth(monthIndex);
     this.currentViewDate.set(d);
     this.currentView.set('day');
@@ -162,6 +167,7 @@ export class DatepickerComponent implements ControlValueAccessor {
 
   selectYear(year: number) {
     const d = new Date(this.currentViewDate());
+    d.setDate(1);
     d.setFullYear(year);
     this.currentViewDate.set(d);
     this.currentView.set('month'); // Go to month selection after year, or day? Let's go to day for faster flow.

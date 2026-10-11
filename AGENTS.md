@@ -2,14 +2,29 @@
 title: "Reglas obligatorias del repositorio Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-09-29"
+last_updated: "2026-09-30"
 document_type: "instrucción para agentes"
 status: "vigente"
-version: "1.0.0"
+version: "1.2.0"
+change_id: "ATOMIC-20260930-008"
 canonical_doctrine: "C:\\Users\\cotaha\\Documents\\Repos2\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\Documents\\Repos2\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 continuity_document: "docs/CONTINUIDAD_AGENTES.md"
 ---
+
+## Consulta semántica de catálogos
+
+Reutilizar la experiencia no copia contrato ni seguridad: exigir la matriz
+de operaciones del consumidor conforme a la maestra 2.3.0, apartado 1.10, y
+al [contrato de catálogos](docs/CONTRATO_CATALOGOS_CRUD.md).
+Atomic acredita presentación e intenciones; no endpoints, pertenencia ni
+éxito de negocio. Esta precisión es documental, no una guarda del generador.
+
+El [contrato de catálogos](docs/CONTRATO_CATALOGOS_CRUD.md) distingue consulta,
+edición y confirmación. Consultar usa SummaryList detail dentro del chasis
+existente, sin formulario deshabilitado. La regla readonly-detail-content
+requiere revisión y pruebas del consumidor; no es una guarda del generador.
+No introducir otro modal ni cambiar la apariencia para adoptar esta regla.
 
 ## CONGELAMIENTO DE PUBLICACIÓN — vigente desde 2026-08-26
 

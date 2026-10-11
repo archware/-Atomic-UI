@@ -1,0 +1,56 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "transaction-editor",
+  "layer": "organism",
+  "selector": "app-transaction-editor",
+  "export": "TransactionEditor",
+  "source": "src/app/shared/ui/organisms/transaction-editor/transaction-editor.ts",
+  "purpose": "Disposición transaccional proyectada con filas alineadas y tokens temáticos reales.",
+  "inputs": [],
+  "variants": [],
+  "outputs": [],
+  "slots": [
+    {
+      "name": "*",
+      "type": "content",
+      "meaning": "Contenido proyectado; marcadores transactionSection/Toolbar/Line/Payment/Columns/Numeric/Cell/Label/Total/Totals/Actions/Tone documentados en el componente."
+    }
+  ],
+  "states": [
+    {
+      "name": "ready",
+      "meaning": "Datos o controles suministrados por el consumidor."
+    }
+  ],
+  "a11y": [
+    "Conserva orden DOM, foco y semántica de los controles proyectados."
+  ],
+  "responsive": [
+    "Hasta 48rem se apilan filas con etiquetas; sin ancho mínimo rígido."
+  ],
+  "tokens": [
+    "--text-color",
+    "--text-color-secondary",
+    "--surface-section",
+    "--border-color",
+    "--space-4"
+  ],
+  "story": {
+    "path": null,
+    "status": "missing"
+  },
+  "test": {
+    "path": "src/app/shared/ui/organisms/transaction-editor/transaction-editor.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "candidate",
+    "notes": [
+      "Candidato local ATOMIC-20261001-001. Sin publicación ni certificación global."
+    ]
+  },
+  "canonicalFor": [
+    "transaction-editor"
+  ]
+}

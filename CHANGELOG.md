@@ -2,7 +2,7 @@
 title: 'Registro de cambios de Atomic UI'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-08-23'
-last_updated: '2026-09-30'
+last_updated: '2026-10-01'
 document_type: 'changelog'
 version: '5.22.0'
 status: 'vigente'
@@ -11,6 +11,44 @@ owner: 'Hospital Regional de Ayacucho'
 ---
 
 # Registro de cambios
+
+## ATOMIC-20261001-002 — calendario y selector en formularios
+
+Datepicker usa OnPush, respeta bloqueo CVA y navega desde el primer día para
+evitar saltos de mes desde días 29–31. Botones de navegación no envían forms.
+Select2 permite etiquetas multilínea y scroll de opciones dentro del espacio
+restante de búsqueda. 17 pruebas focalizadas y build pasan (aviso de presupuesto
+inicial); gobierno global falla en inventario durante smoke. Adopción candidata
+por bloques en Ventas, sin publicar ni renovar hashes. Ver el
+[roadmap](.agents/roadmaps/ROADMAP_ATOMIC-20261001-002_calendario_selector.md).
+
+## ATOMIC-20261001-001 — presentación de transacciones candidata
+
+Se incorporan TransactionDetail y TransactionEditor con plantillas/estilos
+externos, tokens existentes y entradas/proyección sin lógica financiera.
+Conservan tarjeta de resumen, tablas, total, filas y acciones del diseño CXC.
+Catálogo candidato y exportaciones disponibles; tres pruebas en ChromeHeadless
+y build de fuente pasan. Tokens y gobierno global no están certificados.
+Adopción local acotada en ventas-cxc, sin publicar, cambiar política o versión.
+Consultar el [roadmap](.agents/roadmaps/ROADMAP_ATOMIC-20261001-001_transacciones.md).
+
+## ATOMIC-20260930-008 — experiencia común, integración comprobada
+
+La doctrina de interfaz y el contrato de catálogos exigen evidencia propia
+del consumidor: misma presentación no acredita contratos ni autorización.
+Se mantienen tres acciones, detalle semántico y diseño. AGENTS, continuidad
+y lecciones enlazan la precisión; no se modifica catálogo ejecutable, código,
+CSS, tokens, política, versión de paquete ni procedencia.
+Validación documental y rollback en el
+[roadmap](.agents/roadmaps/ROADMAP_ATOMIC-20260930-008_reutilizacion_segura.md).
+
+## ATOMIC-20260930-007 — detalle uniforme de catálogos
+
+Contrato y regla de diálogos precisan consulta semántica, edición y confirmación,
+sin modificar componentes, CSS ni tokens. La ventana aprobada conserva su
+chasis y usa SummaryList detail; no se reutilizan formularios deshabilitados.
+Adopción local en Tipos de ventas-cxc mediante VCXC-20260930-003; no publicación
+ni cambio de procedencia. Ver [roadmap](.agents/roadmaps/ROADMAP_ATOMIC-20260930-007_detalle_catalogos.md).
 
 ## ATOMIC-20260930-006 — guardado local autorizado
 

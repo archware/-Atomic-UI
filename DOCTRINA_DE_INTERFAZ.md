@@ -1,10 +1,13 @@
 ---
 title: 'Doctrina de interfaz de Atomic UI'
 document_type: 'doctrine'
-version: '5.9.0'
+version: '5.10.0'
 status: 'vigente'
-updated: '2026-09-29'
-last_updated: '2026-09-29'
+updated: '2026-09-30'
+last_updated: '2026-09-30'
+author: 'Ing. Havel CONTRERAS TAPAHUASCO'
+date: '2026-09-30'
+change_id: 'ATOMIC-20260930-008'
 owner: 'Hospital Regional de Ayacucho'
 ---
 
@@ -616,7 +619,23 @@ se sustituye en el consumidor. No se elimina primero para cumplir un escáner.
 El [contrato de catálogos](./docs/CONTRATO_CATALOGOS_CRUD.md) fija acciones,
 detalle, ventanas y evidencias; el roadmap distingue implementación de adopción.
 
-## Arquitectura de Red (antecedente del consumidor)
+## Reutilizar la experiencia sin copiar la integración
+
+Una grilla y un diálogo iguales no prueban que dos operaciones tengan el mismo
+contrato ni la misma autorización. La regla 1.10 de la maestra gobierna esa
+comprobación en cada consumidor. Atomic reutiliza presentación, interacción y
+accesibilidad; no deduce datos, permisos o éxito por similitud con otra pantalla.
+
+Antes de adoptar el patrón, el consumidor debe declarar sus intenciones y
+respuestas verificadas. El [contrato de catálogos](docs/CONTRATO_CATALOGOS_CRUD.md)
+exige evidencia visual y funcional separada. Mantener las tres acciones,
+consulta semántica y diseño aprobado no certifica integración ni persistencia.
+Una carencia funcional no autoriza rediseño, regeneración masiva o sobrescritura.
+
+Esta precisión no cambia componentes, catálogo ejecutable ni política de
+procedencia; no instala una guarda nueva ni declara migrado ningún módulo.
+
+## Arquitectura de red (antecedente del consumidor)
 
 La referencia histórica a Angular en 5007 y backend en 7149 corresponde a
 `ventas-cxc`; no fija puertos, endpoints ni proxy para el ADN o sus demás

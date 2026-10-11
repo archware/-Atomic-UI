@@ -1,6 +1,6 @@
 # Roadmaps de mejora
 
-Esta carpeta contiene los roadmaps de mejora del proyecto. Cada roadmap documenta las tareas planificadas antes de iniciar una mejora o refactorizacion.
+Esta carpeta es HEREDADA: conserva los roadmaps históricos del proyecto, que no se mueven para no romper sus enlaces. El canon de roadmaps es `.agent/roadmaps/` y los roadmaps nuevos se abren allí, nunca aquí. Cada roadmap documenta las tareas planificadas antes de iniciar una mejora o refactorización.
 
 ## Convenciones
 - Formato de nombre: `ROADMAP_YYYYMMDD_descripcion_breve.md`

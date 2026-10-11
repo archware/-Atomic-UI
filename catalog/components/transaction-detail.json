@@ -1,0 +1,79 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "transaction-detail",
+  "layer": "organism",
+  "selector": "app-transaction-detail",
+  "export": "TransactionDetail",
+  "source": "src/app/shared/ui/organisms/transaction-detail/transaction-detail.ts",
+  "purpose": "Detalle transaccional semántico conservando tarjeta, tablas y total.",
+  "inputs": [
+    {
+      "name": "title",
+      "type": "string",
+      "default": "",
+      "meaning": "Título contextual."
+    },
+    {
+      "name": "groups",
+      "type": "readonly TransactionDetailGroup[]",
+      "meaning": "Grupos de etiqueta y textos."
+    },
+    {
+      "name": "tables",
+      "type": "readonly TransactionDetailTable[]",
+      "meaning": "Tablas de valores ya formateados."
+    },
+    {
+      "name": "total",
+      "type": "string",
+      "default": "",
+      "meaning": "Resumen final ya formateado."
+    }
+  ],
+  "variants": [],
+  "outputs": [],
+  "slots": [
+    {
+      "name": "[transactionAction]",
+      "type": "content",
+      "meaning": "Acción de la cabecera."
+    }
+  ],
+  "states": [
+    {
+      "name": "ready",
+      "meaning": "Datos o controles suministrados por el consumidor."
+    }
+  ],
+  "a11y": [
+    "Definiciones y tablas semánticas, encabezados y etiquetas por celda."
+  ],
+  "responsive": [
+    "Hasta 48rem se apilan filas con etiquetas; sin ancho mínimo rígido."
+  ],
+  "tokens": [
+    "--text-color",
+    "--text-color-secondary",
+    "--surface-section",
+    "--border-color",
+    "--space-4"
+  ],
+  "story": {
+    "path": null,
+    "status": "missing"
+  },
+  "test": {
+    "path": "src/app/shared/ui/organisms/transaction-detail/transaction-detail.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "candidate",
+    "notes": [
+      "Candidato local ATOMIC-20261001-001. Sin publicación ni certificación global."
+    ]
+  },
+  "canonicalFor": [
+    "transaction-detail"
+  ]
+}

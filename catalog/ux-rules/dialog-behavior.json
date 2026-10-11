@@ -6,10 +6,15 @@
   "intent": "Mantener foco, jerarquía, scroll y cierre predecibles en formularios y confirmaciones.",
   "priority": "must",
   "appliesTo": {
-    "intents": ["crud", "form", "wizard", "transaction", "document", "authentication", "settings"],
-    "components": ["crud-dialog", "form-dialog", "modal", "button", "alert", "toast"]
+    "intents": ["crud", "detail", "form", "wizard", "transaction", "document", "authentication", "settings"],
+    "components": ["crud-dialog", "form-dialog", "modal", "button", "alert", "toast", "summary-list", "pagina-crud"]
   },
   "requirements": [
+    {
+      "id": "readonly-detail-content",
+      "statement": "La consulta de catálogo conserva el chasis Atomic y muestra SummaryList layout=detail: etiquetas y valores semánticos, sin formulario, controles deshabilitados, obligatoriedad ni Guardar. Alta/edición usan controles; la confirmación de estado es una intención separada. El bloqueo temporal durante un envío no es una vista de consulta.",
+      "enforcedBy": ["review"]
+    },
     {
       "id": "async-result-focus",
       "statement": "Conservar el diálogo y enfocar el feedback local tras fallo; cerrar, restaurar foco y anunciar el éxito fuera del overlay tras una resolución correcta.",
@@ -37,6 +42,7 @@
     }
   ],
   "acceptance": [
+    "Ver conserva cabecera, cierre y pie; presenta dl/dt/dd, ningún control de captura y solo Cerrar. Probar también Editar y la reapertura para evitar perder el foco al reemplazar contenido.",
     "busy bloquea X, Escape y backdrop; loading bloquea envíos repetidos de la acción principal.",
     "Escape sigue el mismo contrato de cancelación que el botón secundario.",
     "La navegación por teclado permanece dentro del diálogo modal.",
@@ -46,6 +52,7 @@
     "src/app/shared/ui/molecules/modal/modal.component.ts",
     "src/app/shared/ui/atoms/button/button.component.ts",
     "src/app/shared/ui/organisms/crud-dialog/crud-dialog.ts",
-    "src/app/shared/ui/organisms/form-dialog/form-dialog.ts"
+    "src/app/shared/ui/organisms/form-dialog/form-dialog.ts",
+    "docs/CONTRATO_CATALOGOS_CRUD.md"
   ]
 }

@@ -337,7 +337,7 @@
    --pagination-active-text: var(--text-color-on-primary);
    --pagination-disabled-text: var(--text-color-muted);
    --pagination-border: var(--border-color);
-   --pagination-page-size-inline-size: 5rem;
+   --pagination-page-size-inline-size: 6rem;
 
    /* === PROGRESS BAR === */
    --progress-bg: var(--gray-200);

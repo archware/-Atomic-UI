@@ -115,30 +115,30 @@ const FONT_AWESOME_STYLE_CLASSES = new Set([
 /** Normaliza alias de iconos sin convertir una acción válida en el fallback de tres puntos. */
 export function normalizeTableActionIcon(
   value: string | null | undefined,
-  fallback: string,
+  fallback?: string,
 ): string {
-  const raw = value?.trim() || fallback;
+  const raw = value?.trim() || fallback || 'fa-ellipsis';
   const tokens = raw.split(/\s+/).filter(Boolean);
   const style = tokens.find((token) => FONT_AWESOME_STYLE_CLASSES.has(token)) ?? 'fa-solid';
   const glyph =
     tokens.find(
       (token) => token.startsWith('fa-') && !FONT_AWESOME_STYLE_CLASSES.has(token),
-    ) ?? `fa-${tokens.find((token) => !token.startsWith('fa-')) ?? fallback.replace(/^fa-/, '')}`;
+    ) ?? `fa-${tokens.find((token) => !token.startsWith('fa-')) ?? (fallback || 'fa-ellipsis').replace(/^fa-/, '')}`;
 
   return `${style} ${glyph}`;
 }
 
 /** Resuelve el glifo semántico de una acción y admite una sobreescritura explícita. */
 export function resolveTableActionIcon(
-  action: TableActionName,
+  action: TableActionName | string,
   value?: string | null,
   profile: TableActionProfile = 'standard',
 ): string {
-  const icon = profile === 'catalog' ? CATALOG_ACTIONS[action]?.icon : undefined;
-  return normalizeTableActionIcon(value, icon ?? ICONS[action]);
+  const icon = profile === 'catalog' ? CATALOG_ACTIONS[action as TableActionName]?.icon : undefined;
+  return normalizeTableActionIcon(value, icon ?? ICONS[action as TableActionName] ?? 'fa-ellipsis');
 }
 
 /** Comparte el tono semántico con grupos de acciones y otros consumidores Atomic. */
-export function resolveTableActionTone(action: TableActionName, profile: TableActionProfile = 'standard'): TableActionTone {
-  return (profile === 'catalog' ? CATALOG_ACTIONS[action]?.tone : undefined) ?? TONES[action];
+export function resolveTableActionTone(action: TableActionName | string, profile: TableActionProfile = 'standard'): TableActionTone {
+  return (profile === 'catalog' ? CATALOG_ACTIONS[action as TableActionName]?.tone : undefined) ?? TONES[action as TableActionName] ?? 'neutral';
 }
