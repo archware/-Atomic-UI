@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "targetPackage": "@hra/atomic-ui",
+  "targetPackage": "@atomic-ui/core",
   "versionSource": "package.json",
   "status": "library-buildable",
   "runtimeInstallable": false,

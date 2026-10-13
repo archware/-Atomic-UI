@@ -15,7 +15,7 @@
  *    import { TokenService } from '@shared/ui/services/token.service';
  *
  * NOTA: estas piezas son preocupaciones de aplicación y NO forman parte
- * del barrel visual `@shared/ui` ni de la biblioteca `@hra/atomic-ui`.
+ * del barrel visual `@shared/ui` ni de la biblioteca `@atomic-ui/core`.
  *
  * Este archivo es solo el punto de entrada del blueprint.
  * Los archivos reales están en shared/ui para evitar duplicación.

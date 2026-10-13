@@ -130,7 +130,7 @@ function validateContract(contract, publicExports, packageJson, repositoryRoot =
     resolvedRepositoryPath(absoluteValue, label, repositoryRoot);
 
   if (contract.schemaVersion !== 1) fail('package-contract.json debe usar schemaVersion 1.');
-  if (contract.targetPackage !== '@hra/atomic-ui') fail('El paquete objetivo debe ser @hra/atomic-ui.');
+  if (contract.targetPackage !== '@atomic-ui/core') fail('El paquete objetivo debe ser @atomic-ui/core.');
   if (contract.versionSource !== 'package.json') fail('La versión debe provenir de package.json.');
   if (contract.status !== 'library-buildable' || contract.runtimeInstallable !== false) {
     fail('El contrato debe declarar library-buildable y no instalable hasta publicar en un registro.');

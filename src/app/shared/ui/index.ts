@@ -10,7 +10,7 @@
  * ============================================================
  * LÍNEA DIVISORIA DE LA API PÚBLICA
  * ============================================================
- * Este barrel es la API pública de la biblioteca `@hra/atomic-ui`
+ * Este barrel es la API pública de la biblioteca `@atomic-ui/core`
  * (empaquetada desde `projects/atomic-ui`). SOLO puede exportar:
  *   - Componentes de presentación (atoms/molecules/organisms/surfaces/templates)
  *   - Directivas de presentación (p. ej. TooltipDirective)

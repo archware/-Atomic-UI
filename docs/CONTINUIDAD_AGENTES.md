@@ -211,7 +211,7 @@ tools/ y scripts/
 
 - Una feature de consumidor nunca se convierte en origen visual. Un hallazgo
   útil vuelve primero a esta fuente, queda catalogado y supera sus compuertas.
-- La biblioteca `@hra/atomic-ui` es el destino estable de distribución; un
+- La biblioteca `@atomic-ui/core` es el destino estable de distribución; un
   paquete local verde no autoriza publicación en un registro.
 - `generate:ui` compone únicamente contratos declarados. El modo integrado se
   rechaza si faltan endpoint, método o contrato real.

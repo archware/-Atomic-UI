@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "targetPackage": "@hra/atomic-ui",
+  "targetPackage": "@atomic-ui/core",
   "status": "library-buildable",
   "rootBarrel": "src/app/shared/ui/index.ts",
   "visualLayers": ["atoms", "molecules", "organisms", "surfaces", "templates"],

@@ -24,7 +24,7 @@ version: "1.1.0"
 
 El entorno de trabajo se compone de una fuente visual transicional y sus consumidores:
 
-1. **`-Atomic-UI`**: fuente de la verdad visual. El repositorio conserva componentes, sistema de diseño, tokens CSS y utilidades visuales. Desde 5.5.0 declara además el proyecto Angular de tipo `library` **atomic-ui**: `npx ng build atomic-ui` compila `@hra/atomic-ui` en formato Angular Package Format. Lo que sigue bloqueado no es la compilación sino la **publicación** en un registro npm, que espera registro privado y procedencia firmada. Véase `distribution/PACKAGE_STATUS.md`.
+1. **`-Atomic-UI`**: fuente de la verdad visual. El repositorio conserva componentes, sistema de diseño, tokens CSS y utilidades visuales. Desde 5.5.0 declara además el proyecto Angular de tipo `library` **atomic-ui**: `npx ng build atomic-ui` compila `@atomic-ui/core` en formato Angular Package Format. Lo que sigue bloqueado no es la compilación sino la **publicación** en un registro npm, que espera registro privado y procedencia firmada. Véase `distribution/PACKAGE_STATUS.md`.
 2. **`base_python_angular`**: aplicación de escritorio con backend Python, frontend Angular y WebView2.
 3. **`base_wails_angular`**: aplicación de escritorio con backend Go, frontend Angular y Wails sobre WebView2 en Windows.
 4. **`base_tauri_angular`**: aplicación de escritorio con backend Rust, frontend Angular y Tauri.
@@ -86,7 +86,7 @@ change detection debe quedar declarada; nunca se considera una nueva fuente.
 ### 3. Distribución verificable
 
 El proyecto `library` ya existe en `projects/atomic-ui` y compila
-`@hra/atomic-ui` mediante `npm run lib:build`; se verificó en
+`@atomic-ui/core` mediante `npm run lib:build`; se verificó en
 ATOMIC-20260928-001. El contrato declara `library-buildable` y
 `runtimeInstallable: false`: compilar no significa publicar ni tener un paquete
 de runtime autorizado para instalar. `distribution/atomic-source-manifest.json`

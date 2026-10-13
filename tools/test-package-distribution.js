@@ -44,7 +44,7 @@ function writeJson(file, value) {
 function sourceContract(sourceRoot = 'src/ui') {
   return {
     schemaVersion: 1,
-    targetPackage: '@hra/atomic-ui',
+    targetPackage: '@atomic-ui/core',
     status: 'library-buildable',
     sourceInventory: {
       algorithm: 'sha256',

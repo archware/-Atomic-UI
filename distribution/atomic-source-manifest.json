@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packageName": "@hra/atomic-ui",
+  "packageName": "@atomic-ui/core",
   "packageVersion": "5.22.0",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "7035f2287260ac61e6acc11de0b2d6394a32b3e28d6a9f99b101b2f36dee3999",
+  "sourceTreeSha256": "f99496441bee43a1ea801e2c89a44fb3d45245c64c45cf6698c962226f2b569e",
   "fileCount": 326,
   "files": [
     {
@@ -20,13 +20,13 @@
     },
     {
       "path": "projects/atomic-ui/package.json",
-      "bytes": 836,
-      "sha256": "ae40a346fb7685c0392e77f3de36d5582142adf600fd03d293acd6ded750b6b6"
+      "bytes": 837,
+      "sha256": "1f6d2b68b016f618aa4bc420b02dd3e2d9763ec9fe361c0d74c687113f169ffd"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
-      "bytes": 674,
-      "sha256": "25d314d20a0b871dc3c200f6796ff8d89bdf404b91f386918ef7df49d617fe36"
+      "bytes": 675,
+      "sha256": "d9ae1501ce1f9feac30f65a9eed17f9e4eec623bc70ce186f15c742e89dd23c4"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.prod.json",
@@ -655,8 +655,8 @@
     },
     {
       "path": "src/app/shared/ui/index.ts",
-      "bytes": 16180,
-      "sha256": "09f5bca873050eae6498f77409293b87ee49850457e90540d5c5cfe88f82ed62"
+      "bytes": 16181,
+      "sha256": "e85200faba49d3de6554f836eb5be1d8680264f79d0781b2e981101926e2e68a"
     },
     {
       "path": "src/app/shared/ui/interceptors/auth.interceptor.ts",
@@ -1640,8 +1640,8 @@
     },
     {
       "path": "src/styles/themes/tokens.css",
-      "bytes": 316,
-      "sha256": "bcd49d8ac7159e02743887725d97a084ba77c5f3c79e5104b5a2cdf08b325aa3"
+      "bytes": 318,
+      "sha256": "70148a292d83baa467da5932737ae8cd3a229cad8f49af26835ccbabb97ef0ec"
     }
   ]
 }

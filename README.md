@@ -22,7 +22,7 @@ gate protegido por hashes y CI obligatoria. Si falta un objeto visual, se crea y
 valida primero en este repositorio; el consumidor no puede inventarlo ni
 desactivar la compuerta. Véase [governance/README.md](./governance/README.md).
 
-La biblioteca `@hra/atomic-ui` compila localmente desde 5.5.0
+La biblioteca `@atomic-ui/core` compila localmente desde 5.5.0
 (`npx ng build atomic-ui` → `dist/atomic-ui`, formato Angular Package Format;
 `npm run lib:build` añade los tokens de tema). El contrato, el manifiesto
 SHA-256 y el empaquetado seco reproducible se describen en

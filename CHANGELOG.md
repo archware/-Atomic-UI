@@ -757,7 +757,7 @@ efecto secundario.
   la API de 29 componentes y 240 entradas, 648 tokens sin referencias
   ausentes, 418 pruebas Angular, lint, contraste, foco, la aplicación con 14
   rutas prerenderizadas y Storybook.
-- `lib:build` genera `@hra/atomic-ui` en formato Angular Package Format y copia
+- `lib:build` genera `@atomic-ui/core` en formato Angular Package Format y copia
   los nueve archivos CSS de tokens. El paquete privado en seco contiene cinco
   archivos y no produce un tarball.
 - El manifiesto registra 158 fuentes con SHA-256
@@ -795,7 +795,7 @@ efecto secundario.
   la API de 29 componentes y 239 entradas, 648 tokens sin referencias
   ausentes, 417 pruebas, lint, contraste, foco, la aplicación con 14 rutas
   prerenderizadas y Storybook.
-- `lib:build` genera `@hra/atomic-ui` en formato Angular Package Format y copia
+- `lib:build` genera `@atomic-ui/core` en formato Angular Package Format y copia
   los nueve archivos CSS de tokens.
 - El manifiesto registra 158 fuentes con SHA-256
   `8029634d8582c515df746579c8a686672d30cc48d507b7dfa87e603be5c34449`;
@@ -1561,9 +1561,9 @@ consumidores sube de `1.1.0` a `1.2.0`.
 
 ### Agregado
 
-- **Biblioteca `@hra/atomic-ui` compilable:** nuevo proyecto Angular de tipo `library` (`projects/atomic-ui`, builder `@angular/build:ng-packagr`, ng-packagr ^22 declarado como devDependency). El `entryFile` es el barrel visual canónico `src/app/shared/ui/index.ts`, de modo que la API pública empaquetada coincide exactamente con la superficie visual sin mover fuentes (ng-packagr fija `rootDir` en el directorio del entryFile, lo que descarta un `public-api.ts` intermedio en `projects/`). `npx ng build atomic-ui` produce Angular Package Format (fesm2022 + declaraciones, `compilationMode: partial`) en `dist/atomic-ui`.
-- **Tokens de tema distribuidos:** `src/styles/themes/tokens.css` como punto de entrada distribuible y `npm run lib:build` (build + `tools/copy-lib-tokens.cjs`) que copia `src/styles/themes/*.css` a `dist/atomic-ui/tokens/`, expuestos como `@hra/atomic-ui/tokens`. La copia es externa porque ng-packagr 22 prohíbe `assets` fuera de `projects/atomic-ui`.
-- **`projects/atomic-ui/package.json`:** paquete `@hra/atomic-ui` 5.5.0 con `"sideEffects": false`, dependencias Angular/rxjs/ngx-translate/chart.js/ng2-charts como `peerDependencies` y `tslib` como única dependencia runtime.
+- **Biblioteca `@atomic-ui/core` compilable:** nuevo proyecto Angular de tipo `library` (`projects/atomic-ui`, builder `@angular/build:ng-packagr`, ng-packagr ^22 declarado como devDependency). El `entryFile` es el barrel visual canónico `src/app/shared/ui/index.ts`, de modo que la API pública empaquetada coincide exactamente con la superficie visual sin mover fuentes (ng-packagr fija `rootDir` en el directorio del entryFile, lo que descarta un `public-api.ts` intermedio en `projects/`). `npx ng build atomic-ui` produce Angular Package Format (fesm2022 + declaraciones, `compilationMode: partial`) en `dist/atomic-ui`.
+- **Tokens de tema distribuidos:** `src/styles/themes/tokens.css` como punto de entrada distribuible y `npm run lib:build` (build + `tools/copy-lib-tokens.cjs`) que copia `src/styles/themes/*.css` a `dist/atomic-ui/tokens/`, expuestos como `@atomic-ui/core/tokens`. La copia es externa porque ng-packagr 22 prohíbe `assets` fuera de `projects/atomic-ui`.
+- **`projects/atomic-ui/package.json`:** paquete `@atomic-ui/core` 5.5.0 con `"sideEffects": false`, dependencias Angular/rxjs/ngx-translate/chart.js/ng2-charts como `peerDependencies` y `tslib` como única dependencia runtime.
 
 ### Cambiado
 
@@ -1850,7 +1850,7 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
   los valores se insertan con `textContent`, y el consumidor decide contenido
   y permisos. Validación: gobierno Atomic, 227/227 pruebas y build.
 - `ATOMIC-DIST-20260803-001`: se incorpora un contrato transicional para el
-  futuro paquete `@hra/atomic-ui`, con inventario de exportaciones, manifiesto
+  futuro paquete `@atomic-ui/core`, con inventario de exportaciones, manifiesto
   SHA-256 determinista y `npm pack --dry-run` privado, sin red y sin archivo
   `.tgz`.
 - El gate de distribución documenta y comprueba que el repositorio continúa

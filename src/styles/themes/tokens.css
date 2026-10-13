@@ -1,8 +1,8 @@
 /**
- * tokens.css — Punto de entrada de estilos distribuido con @hra/atomic-ui.
+ * tokens.css — Punto de entrada de estilos distribuido con @atomic-ui/core.
  *
  * Este archivo se copia a `dist/atomic-ui/tokens/tokens.css` durante
  * `npx ng build atomic-ui` junto con el resto de `src/styles/themes/`.
- * Los consumidores lo importan como `@hra/atomic-ui/tokens`.
+ * Los consumidores lo importan como `@atomic-ui/core/tokens`.
  */
 @import './index.css';

@@ -10,7 +10,7 @@ date: "2026-08-06"
 ## Propósito
 
 La carpeta `distribution` define el paso verificable entre la copia gobernada de
-fuentes y la biblioteca Angular `@hra/atomic-ui`. Desde 5.5.0 la biblioteca
+fuentes y la biblioteca Angular `@atomic-ui/core`. Desde 5.5.0 la biblioteca
 compila localmente (`npx ng build atomic-ui`, proyecto `projects/atomic-ui`
 con entryFile en el barrel visual); la implementación no traslada ni elimina
 componentes existentes y la publicación en registro sigue bloqueada.

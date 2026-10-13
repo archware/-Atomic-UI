@@ -1,5 +1,5 @@
 {
-  "name": "@hra/atomic-ui",
+  "name": "@atomic-ui/core",
   "version": "5.22.0",
   "description": "Biblioteca de componentes visuales Atomic UI, empaquetada en Angular Package Format.",
   "author": "COTAHA",
