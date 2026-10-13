@@ -4,7 +4,7 @@
   },
   "nav": {
     "dashboard": "Dashboard",
-    "patients": "Patients",
+    "users": "Users",
     "results": "Results",
     "settings": "Settings"
   },
@@ -69,11 +69,11 @@
       "inactive": "Inactive"
     },
     "type": {
-      "fua": "FUA",
-      "prescription": "Medical Prescription",
+      "invoice": "Invoice",
+      "receipt": "Receipt",
       "order": "Order",
-      "consultation": "Consultation",
-      "referral": "Referral"
+      "quote": "Quote",
+      "contract": "Contract"
     },
     "priority": {
       "high": "High",

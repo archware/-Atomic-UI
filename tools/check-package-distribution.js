@@ -325,7 +325,7 @@ function npmPackDryRun(contract, expectedManifest, packageJson, publicExports) {
       './contract': './package-contract.json',
       './provenance': './atomic-source-manifest.json',
     },
-    hraDistribution: {
+    atomicDistribution: {
       status: contract.status,
       runtimeInstallable: false,
       sourceTreeSha256: expectedManifest.sourceTreeSha256,

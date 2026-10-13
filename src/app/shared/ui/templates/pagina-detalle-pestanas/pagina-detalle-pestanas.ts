@@ -18,7 +18,7 @@ import type { PestanaDetalle } from '../modelos-crud';
  *
  * Para vistas que muestran el detalle de una entidad con secciones
  * organizadas por tabs (ej. detalle de crédito con cuotas, abonos,
- * historial; detalle de paciente con citas, estudios, recetas).
+ * historial; detalle de cliente con pedidos, facturas, contactos).
  *
  * El agente consumidor:
  *   1. Define las pestañas con PestanaDetalle[]

@@ -118,8 +118,8 @@ export const FocusAndLayering: Story = {
   render: () => ({
     props: {
       options: [
-        { value: 'aya', label: 'Ayacucho' },
-        { value: 'hua', label: 'Huamanga' },
+        { value: 'are', label: 'Arequipa' },
+        { value: 'cus', label: 'Cusco' },
         { value: 'blocked', label: 'No disponible', disabled: true },
       ],
     },

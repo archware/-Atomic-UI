@@ -23,8 +23,8 @@
 
   <div layout-content class="wizard-page-container">
     <app-pagina-wizard
-      [titulo]="'Registro de Nuevo Paciente'"
-      [subtitulo]="'Complete los pasos para registrar un paciente nuevo en el sistema'"
+      [titulo]="'Registro de Nuevo Usuario'"
+      [subtitulo]="'Complete los pasos para registrar un nuevo usuario en el sistema'"
       [steps]="steps"
       [activeStep]="currentStep()"
       [allowSkip]="true"
@@ -131,16 +131,15 @@
                 [options]="maritalStatusOptions"
                 placeholder="Seleccione..."
               />
-              <app-select2
-                formControlName="bloodType"
-                label="Grupo Sanguíneo"
-                [options]="bloodTypeOptions"
-                placeholder="Seleccione..."
+              <app-floating-input
+                formControlName="occupation"
+                label="Ocupación / Cargo"
+                placeholder="Ej. Diseñador, Desarrollador..."
               />
               <app-floating-input
-                formControlName="emergencyContact"
-                label="Contacto de Emergencia"
-                placeholder="Nombre del familiar o amistad"
+                formControlName="company"
+                label="Empresa / Organización"
+                placeholder="Nombre de la empresa"
               />
             </app-row>
           </div>
@@ -154,13 +153,13 @@
             <app-row columns="4" variant="form">
               <app-floating-input
                 formControlName="emergencyContact"
-                label="Familiar"
-                placeholder="Familiar"
+                label="Contacto de Referencia"
+                placeholder="Nombre de referencia"
               />
               <app-floating-input
                 type="tel"
                 formControlName="emergencyPhone"
-                label="Teléfono"
+                label="Teléfono de Referencia"
                 placeholder="Ej. 999 111 222"
               />
               <app-floating-input
@@ -171,11 +170,11 @@
                 [error]="form.controls.email.touched && form.controls.email.invalid ? 'Correo inválido o requerido' : ''"
               />
               <app-floating-input
-                formControlName="allergies"
-                label="Alergias"
-                placeholder="Alergias"
+                formControlName="bio"
+                label="Notas Adicionales"
+                placeholder="Información adicional"
               />
-              <app-toggle formControlName="hasInsurance" label="¿Tiene Seguro?"></app-toggle>
+              <app-toggle formControlName="receiveNotifications" label="¿Recibir Notificaciones?"></app-toggle>
               <app-radio formControlName="preferredContact" [options]="contactPreferencesOptions" label="Contacto Preferido"></app-radio>
               <div style="grid-column: span 2;">
                 <app-file-input formControlName="documents" label="Documentos Adicionales" [multiple]="true"></app-file-input>

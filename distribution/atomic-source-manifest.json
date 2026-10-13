@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "20f926557307b00e6559da70b9998b76021d6a00c0fe5b16b03246b88cd88ece",
+  "sourceTreeSha256": "7035f2287260ac61e6acc11de0b2d6394a32b3e28d6a9f99b101b2f36dee3999",
   "fileCount": 326,
   "files": [
     {
@@ -1580,8 +1580,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-detalle-pestanas/pagina-detalle-pestanas.ts",
-      "bytes": 4459,
-      "sha256": "b4b50f0b05a755b7648216694f2cfaf7b11198a72a6d7c3cf424b58f99110dee"
+      "bytes": 4462,
+      "sha256": "959d6f4c7db9b73318ba0a768a3cf8bd4ee6f7a244e86fb7a82ec8b62a03e529"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-wizard/pagina-wizard.html",

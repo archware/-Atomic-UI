@@ -1610,7 +1610,7 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 - Se integra la línea ascendente `5.2.1`, que incorpora el catálogo ejecutable,
   el generador declarativo de interfaces y el control de un único propietario
   de desplazamiento, con la línea local `5.1.40`, que incorpora el contrato de
-  distribución transicional, el gobierno de consumidores HRA y el saneamiento
+  distribución transicional, el gobierno de consumidores y el saneamiento
   de contratos TypeScript.
 - La resolución conserva los cambios de ambas líneas de desarrollo y explicita
   los puntos en que el historial utilizó el mismo número de versión para
@@ -2553,7 +2553,7 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 
 #### Added (Frontend - Wails & Tauri DataGrids)
 
-- **Columna de Fecha de Inicio Histórica**: En respuesta a peticiones funcionales, las tablas del CRM (Operativo) en Wails y Tauri ahora muestran 3 columnas de fechas de seguimiento del paciente: _F. Inicio_, _F. Última_, y _F. Próxima_. Esto incluyó la adición de la propiedad `fecha_inicio` en las estructuras del modelo.
+- **Columna de Fecha de Inicio Histórica**: En respuesta a peticiones funcionales, las tablas del CRM (Operativo) en Wails y Tauri ahora muestran 3 columnas de fechas de seguimiento del cliente: _F. Inicio_, _F. Última_, y _F. Próxima_. Esto incluyó la adición de la propiedad `fecha_inicio` en las estructuras del modelo.
 
 ---
 
@@ -2612,7 +2612,7 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 
 #### Fixed (Visual & Arquitectura)
 
-- **Alineación de Tarjetas (Dashboard)**: Se detectó que las tarjetas (`app-card`) del tablero gerencial no mantenían una altura uniforme debido a la ausencia de subtítulos en el indicador "Total Pacientes". Se insertó un espaciador fantasma (`&nbsp;`) transparente y no seleccionable (`user-select: none`) en dicho bloque, equilibrando la grilla CSS y logrando una uniformidad absoluta sin alterar semántica HTML.
+- **Alineación de Tarjetas (Dashboard)**: Se detectó que las tarjetas (`app-card`) del tablero gerencial no mantenían una altura uniforme debido a la ausencia de subtítulos en el indicador "Total Registros". Se insertó un espaciador fantasma (`&nbsp;`) transparente y no seleccionable (`user-select: none`) en dicho bloque, equilibrando la grilla CSS y logrando una uniformidad absoluta sin alterar semántica HTML.
 - **`ScrollOverlayComponent` y Scrollbars superpuestos**: Se detectó y solucionó una colisión visual en donde la barra de scroll vertical custom (`.so-scrollbar-y`) se dibujaba sobre la cabecera de la tabla (`thead`). Ahora el componente detecta dinámicamente la altura del header (`this.tableHead.offsetHeight`) y aplica un _offset_ automático al inicio de la barra y su altura, manteniéndola perfectamente confinada en la zona de datos (tbody).
 
 #### Fixed (Visual & CSS)

@@ -4,7 +4,7 @@
   },
   "nav": {
     "dashboard": "Dashboard",
-    "patients": "Pacientes",
+    "users": "Usuarios",
     "results": "Resultados",
     "settings": "Configuración"
   },
@@ -69,11 +69,11 @@
       "inactive": "Inactivo"
     },
     "type": {
-      "fua": "FUA",
-      "prescription": "Receta Médica",
+      "invoice": "Factura",
+      "receipt": "Boleta",
       "order": "Orden",
-      "consultation": "Consulta",
-      "referral": "Referencia"
+      "quote": "Cotización",
+      "contract": "Contrato"
     },
     "priority": {
       "high": "Alta",

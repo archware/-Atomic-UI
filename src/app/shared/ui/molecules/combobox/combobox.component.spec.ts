@@ -10,7 +10,7 @@ describe('ComboboxComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(ComboboxComponent);
-    fixture.componentRef.setInput('options', [{ label: 'Ayacucho', value: 'AYA' }]);
+    fixture.componentRef.setInput('options', [{ label: 'Arequipa', value: 'ARE' }]);
     fixture.detectChanges();
   });
 
@@ -28,7 +28,7 @@ describe('ComboboxComponent', () => {
   it('keeps disabled options visible and skips them during keyboard navigation', () => {
     fixture.componentRef.setInput('options', [
       { label: 'No disponible', value: 'blocked', disabled: true },
-      { label: 'Ayacucho', value: 'AYA' },
+      { label: 'Arequipa', value: 'ARE' },
     ]);
     fixture.detectChanges();
 
@@ -58,33 +58,33 @@ describe('ComboboxComponent', () => {
 
   it('exposes an accessible name and associates validation feedback', () => {
     fixture.componentRef.setInput('label', '');
-    fixture.componentRef.setInput('ariaLabel', 'Distrito de atención');
+    fixture.componentRef.setInput('ariaLabel', 'Distrito de residencia');
     fixture.componentRef.setInput('error', 'Seleccione un distrito');
     fixture.detectChanges();
 
     const input = (fixture.nativeElement as HTMLElement).querySelector('input') as HTMLInputElement;
     const error = (fixture.nativeElement as HTMLElement).querySelector('.combobox-error') as HTMLElement;
-    expect(input.getAttribute('aria-label')).toBe('Distrito de atención');
+    expect(input.getAttribute('aria-label')).toBe('Distrito de residencia');
     expect(input.getAttribute('aria-invalid')).toBe('true');
     expect(input.getAttribute('aria-errormessage')).toBe(error.id);
   });
 
   it('refreshes the selected label and filtered options when options change', () => {
-    fixture.componentInstance.writeValue('AYA');
+    fixture.componentInstance.writeValue('ARE');
     fixture.detectChanges();
-    expect(fixture.componentInstance.inputValue()).toBe('Ayacucho');
+    expect(fixture.componentInstance.inputValue()).toBe('Arequipa');
 
     fixture.componentRef.setInput('options', [
-      { label: 'Ayacucho actualizado', value: 'AYA' },
-      { label: 'Huamanga', value: 'HUA' },
+      { label: 'Arequipa actualizado', value: 'ARE' },
+      { label: 'Cusco', value: 'CUS' },
     ]);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.inputValue()).toBe('Ayacucho actualizado');
+    expect(fixture.componentInstance.inputValue()).toBe('Arequipa actualizado');
     fixture.componentInstance.inputValue.set('');
     expect(fixture.componentInstance.filteredOptions().map(option => option.value)).toEqual([
-      'AYA',
-      'HUA',
+      'ARE',
+      'CUS',
     ]);
   });
 

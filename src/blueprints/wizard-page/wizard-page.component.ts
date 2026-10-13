@@ -89,7 +89,7 @@ export class WizardPageComponent {
   steps: Step[] = [
     { label: 'Información Básica', description: 'Datos personales' },
     { label: 'Datos de Contacto', description: 'Ubicación y comunicación' },
-    { label: 'Detalles Médicos', description: 'Historial y seguro' },
+    { label: 'Preferencias y Perfil', description: 'Configuración adicional' },
     { label: 'Confirmación', description: 'Revisar datos' }
   ];
 
@@ -108,10 +108,10 @@ export class WizardPageComponent {
     phone: [''],
     email: ['', [Validators.required, Validators.email]],
 
-    bloodType: [''],
-    allergies: [''],
-    hasInsurance: [false],
-    medicalHistory: [''],
+    occupation: [''],
+    company: [''],
+    receiveNotifications: [true],
+    bio: [''],
     emergencyContact: [''],
     emergencyPhone: [''],
     agreeTerms: [false, Validators.requiredTrue],
@@ -119,17 +119,6 @@ export class WizardPageComponent {
     documents: [[] as FileInputFile[]],
     languages: [[] as string[]]
   });
-
-  bloodTypeOptions = [
-    { value: 'O+', label: 'O+' },
-    { value: 'O-', label: 'O-' },
-    { value: 'A+', label: 'A+' },
-    { value: 'A-', label: 'A-' },
-    { value: 'B+', label: 'B+' },
-    { value: 'B-', label: 'B-' },
-    { value: 'AB+', label: 'AB+' },
-    { value: 'AB-', label: 'AB-' },
-  ];
 
   genderOptions = [
     { value: 'M', label: 'Masculino' },

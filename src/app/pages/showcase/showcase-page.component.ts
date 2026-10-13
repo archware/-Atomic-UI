@@ -212,8 +212,8 @@ export class ShowcasePageComponent {
     'data.status.review', 'data.status.approved',
   ];
   private tipos = [
-    'data.type.fua', 'data.type.prescription', 'data.type.order',
-    'data.type.consultation', 'data.type.referral',
+    'data.type.invoice', 'data.type.receipt', 'data.type.order',
+    'data.type.quote', 'data.type.contract',
   ];
   private prioridades = ['data.priority.high', 'data.priority.medium', 'data.priority.low'];
 

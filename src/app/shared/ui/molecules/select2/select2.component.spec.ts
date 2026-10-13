@@ -11,7 +11,7 @@ describe('Select2Component', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(Select2Component);
-    fixture.componentRef.setInput('options', [{ label: 'Ayacucho', value: 'AYA' }]);
+    fixture.componentRef.setInput('options', [{ label: 'Arequipa', value: 'ARE' }]);
     fixture.detectChanges();
   });
 
@@ -43,7 +43,7 @@ describe('Select2Component', () => {
   it('announces disabled options and skips them when the list opens', () => {
     fixture.componentRef.setInput('options', [
       { label: 'No disponible', value: 'blocked', disabled: true },
-      { label: 'Ayacucho', value: 'AYA' },
+      { label: 'Arequipa', value: 'ARE' },
     ]);
     fixture.componentInstance.toggleDropdown();
     fixture.detectChanges();
@@ -59,27 +59,27 @@ describe('Select2Component', () => {
 
   it('gives every removable tag an explicit accessible label', () => {
     fixture.componentRef.setInput('multiple', true);
-    fixture.componentInstance.writeValue(['AYA']);
+    fixture.componentInstance.writeValue(['ARE']);
     fixture.detectChanges();
 
     const remove = (fixture.nativeElement as HTMLElement).querySelector(
       '.tag-remove',
     ) as HTMLButtonElement;
-    expect(remove.getAttribute('aria-label')).toBe('Quitar Ayacucho');
+    expect(remove.getAttribute('aria-label')).toBe('Quitar Arequipa');
   });
 
   it('rehydrates selected labels when asynchronous options are replaced', () => {
-    fixture.componentInstance.writeValue('AYA');
+    fixture.componentInstance.writeValue('ARE');
     fixture.componentRef.setInput('options', [
-      { label: 'Ayacucho actualizado', value: 'AYA' },
-      { label: 'Huamanga', value: 'HUA' },
+      { label: 'Arequipa actualizado', value: 'ARE' },
+      { label: 'Cusco', value: 'CUS' },
     ]);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.selectedOption()?.label).toBe('Ayacucho actualizado');
+    expect(fixture.componentInstance.selectedOption()?.label).toBe('Arequipa actualizado');
     expect(
       (fixture.nativeElement as HTMLElement).querySelector('.select2-value')?.textContent,
-    ).toContain('Ayacucho actualizado');
+    ).toContain('Arequipa actualizado');
   });
 
   it('uses the explicit accessible label when no visible label is provided', () => {
