@@ -38,7 +38,7 @@ como destino de instalación.
 - `base_tauri_angular`;
 - `base_wails_angular`;
 - `bcp_pdf_extractor`;
-- `hra_dashboard_resultados`.
+- `dashboard_resultados`.
 
 ## Tareas
 
@@ -90,7 +90,7 @@ Las salidas regenerables creadas durante la validación se retiraron al finaliza
   requiere una autorización separada por repositorio.
 - Las advertencias no bloqueantes de presupuesto CSS y de paquete deberán
   reducirse en una iteración de rendimiento sin elevar los límites como atajo.
-- El paquete portátil `hra-desktop-contracts` 0.3.1 está desactualizado respecto
+- El paquete portátil `desktop-contracts` 0.3.1 está desactualizado respecto
   de sus fuentes documentales. Corresponde publicar una versión nueva; no se
   deberá modificar retrospectivamente la versión 0.3.1.
 - La generación de ejecutables beta queda fuera de esta sincronización y deberá
