@@ -19,8 +19,8 @@ export class IconButtonComponent {
     return this.variant() === 'hanging-close';
   }
 
-  /** Hover animation for the icon */
-  readonly animation = input<IconButtonAnimation>('rotate');
+  /** Hover animation for the icon: defaults to 'none' (no animation) */
+  readonly animation = input<IconButtonAnimation>('none');
 
   /** Tooltip text */
   readonly tooltip = input('');

@@ -309,12 +309,41 @@
   border-right-width: 0;
 }
 
-/* Animacion para iconos dentro de botones solitarios */
-.btn-icon i, .btn-icon svg {
+/* Transicion para iconos dentro de botones */
+.btn-icon i, .btn-icon svg,
+.icon-btn i, .icon-btn svg {
   transition: transform 0.3s ease-in-out;
 }
 
+/* Por defecto, los iconos NO rotan ni se animan en hover */
 .btn-icon:hover:not(:disabled):not([aria-disabled='true']) i,
-.btn-icon:hover:not(:disabled):not([aria-disabled='true']) svg {
+.btn-icon:hover:not(:disabled):not([aria-disabled='true']) svg,
+.icon-btn:hover:not(:disabled):not([aria-disabled='true']) i,
+.icon-btn:hover:not(:disabled):not([aria-disabled='true']) svg {
+  transform: none;
+}
+
+/* Animaciones configurables para botones de icono solitario (solo cuando se solicite explícitamente) */
+.btn-icon.btn-icon--rotate:hover:not(:disabled):not([aria-disabled='true']) i,
+.btn-icon.btn-icon--rotate:hover:not(:disabled):not([aria-disabled='true']) svg,
+.btn-icon.icon-anim-rotate:hover:not(:disabled):not([aria-disabled='true']) i,
+.btn-icon.icon-anim-rotate:hover:not(:disabled):not([aria-disabled='true']) svg,
+.icon-btn.btn-icon--rotate:hover:not(:disabled):not([aria-disabled='true']) i,
+.icon-btn.btn-icon--rotate:hover:not(:disabled):not([aria-disabled='true']) svg,
+.icon-btn.icon-anim-rotate:hover:not(:disabled):not([aria-disabled='true']) i,
+.icon-btn.icon-anim-rotate:hover:not(:disabled):not([aria-disabled='true']) svg {
   transform: scale(1.1) rotate(180deg);
 }
+
+.btn-icon.btn-icon--grow:hover:not(:disabled):not([aria-disabled='true']) i,
+.btn-icon.btn-icon--grow:hover:not(:disabled):not([aria-disabled='true']) svg,
+.btn-icon.icon-anim-grow:hover:not(:disabled):not([aria-disabled='true']) i,
+.btn-icon.icon-anim-grow:hover:not(:disabled):not([aria-disabled='true']) svg,
+.icon-btn.btn-icon--grow:hover:not(:disabled):not([aria-disabled='true']) i,
+.icon-btn.btn-icon--grow:hover:not(:disabled):not([aria-disabled='true']) svg,
+.icon-btn.icon-anim-grow:hover:not(:disabled):not([aria-disabled='true']) i,
+.icon-btn.icon-anim-grow:hover:not(:disabled):not([aria-disabled='true']) svg {
+  transform: scale(1.15);
+}
+
+
