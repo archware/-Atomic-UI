@@ -77,7 +77,7 @@ la política `1.2.2` y el identificador de cambio
 | Tauri + Angular | `3eacbb8d0da70223fad180a642090c13e1f9c0b1` | 65 | 5 | 0 | 0 | 265/265 |
 | Wails + Angular | `d140653cfa725a0e7b5f0276a2c63eeffe62eaf4` | 65 | 5 | 0 | 0 | 250/250 |
 | Extractor BCP PDF | `c3d3a1853b748d764f7e2d72198866b68f3591c1` | 64 | 5 | 0 | 0 | 124/124 |
-| Panel de resultados HRA | `63f2647dbcc918dbd04761d3ace8cb664f66f7eb` | 68 | 5 | 0 | 15 | 302/302 |
+| Panel de resultados | `63f2647dbcc918dbd04761d3ace8cb664f66f7eb` | 68 | 5 | 0 | 15 | 302/302 |
 
 El panel de resultados también superó 31 de 31 pruebas de seguridad. Se
 comprobaron las compilaciones, los tipos, los temas, los contratos aplicables,
