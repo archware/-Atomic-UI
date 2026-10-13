@@ -10,8 +10,8 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "f3b11b0d7ee8d0ffa6f701074b464cec668c13a44122f736c69b577d7a0d6840",
-  "fileCount": 320,
+  "sourceTreeSha256": "a301cd4a4eed90a425f57e663ad0a4b100e52b898652728171480ef08f91991a",
+  "fileCount": 326,
   "files": [
     {
       "path": "projects/atomic-ui/ng-package.json",
@@ -480,8 +480,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/table-action/table-action.ts",
-      "bytes": 4759,
-      "sha256": "b6b7a490261e52b0ce54bd7cae00cf43ffe41d6907dc15314657ab9d63cd1832"
+      "bytes": 4920,
+      "sha256": "33f755f3a9e9ac89a8a14ca55357ee2e4b3ebba5263782eb4b3c83d9fe328b1c"
     },
     {
       "path": "src/app/shared/ui/atoms/table/table-cell.component.css",
@@ -655,8 +655,8 @@
     },
     {
       "path": "src/app/shared/ui/index.ts",
-      "bytes": 15885,
-      "sha256": "adc541859d741644a328302c77cf2259b8f65fcf217e815a7351edcc9dd9187e"
+      "bytes": 16180,
+      "sha256": "09f5bca873050eae6498f77409293b87ee49850457e90540d5c5cfe88f82ed62"
     },
     {
       "path": "src/app/shared/ui/interceptors/auth.interceptor.ts",
@@ -785,13 +785,13 @@
     },
     {
       "path": "src/app/shared/ui/molecules/datepicker/datepicker.component.html",
-      "bytes": 4353,
-      "sha256": "6d5f2de57900ec7a4ff2f8dd6ec7401afa0cf5d1357fa20bc84d29b04c377a06"
+      "bytes": 4498,
+      "sha256": "7b79ff1a425217d25314b42fbe3567877fe04ef3dc537f30ecdfd85b4ee7244e"
     },
     {
       "path": "src/app/shared/ui/molecules/datepicker/datepicker.component.ts",
-      "bytes": 11224,
-      "sha256": "57f55c20d160573cc5a329c15449f15e601f2c4945eae3a29cec1c6485816c93"
+      "bytes": 11443,
+      "sha256": "7da874e571a414711dd6371c20a35c0dba8a4390973f5bb3346fd4df4a1c3b97"
     },
     {
       "path": "src/app/shared/ui/molecules/dropdown/dropdown.component.css",
@@ -885,8 +885,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/select2/select2.component.css",
-      "bytes": 7498,
-      "sha256": "2f4df54baad15d461389a06cc4f13953af58ed07e2a9bdd304c4101a757b2636"
+      "bytes": 7772,
+      "sha256": "03840297f41de3bb808e9d6cc31a04ec95a6da9f5eb5ef7e2bdaa241800b7ae5"
     },
     {
       "path": "src/app/shared/ui/molecules/select2/select2.component.ts",
@@ -1025,8 +1025,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.scss",
-      "bytes": 1425,
-      "sha256": "4e0b2887d8279abb592f19434f181150dc6abc93644fa74a74f436e4a5d087d5"
+      "bytes": 1649,
+      "sha256": "326087517f4074bc3db66a5c3b88db6d1f87a24460b346bdce5d9fec84b796b6"
     },
     {
       "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.ts",
@@ -1055,8 +1055,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.html",
-      "bytes": 8906,
-      "sha256": "ba58ade2fcc6858bd637da67da2cc508cacf423e3a3938bdef7ede7ba1930a07"
+      "bytes": 8907,
+      "sha256": "a7989201d553a357690c3c83b0050ae5bd5b54616777a4b66387aaa4b818579f"
     },
     {
       "path": "src/app/shared/ui/organisms/data-table/data-table.scss",
@@ -1354,6 +1354,36 @@
       "sha256": "5262338b05b3a66b17f7c0b130ed57fcf6798441d870c7d7569848dc35af224e"
     },
     {
+      "path": "src/app/shared/ui/organisms/transaction-detail/transaction-detail.html",
+      "bytes": 1203,
+      "sha256": "b498f700fff6a37e998a55ca51286267b67ed2b74096ce60b68156a36416c595"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/transaction-detail/transaction-detail.scss",
+      "bytes": 2146,
+      "sha256": "2355d1e4b3099b507e9d86958fb793d9f8497e7fc99db0385c48306e86820a4d"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/transaction-detail/transaction-detail.ts",
+      "bytes": 926,
+      "sha256": "9ae430cbb93cfba614f1c823a63ffce1556951fb012553006c421bbd9225ea4d"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/transaction-editor/transaction-editor.html",
+      "bytes": 53,
+      "sha256": "5f897ef4164b4c37b43f34e6ef0a4394c5ff51871b1b74cb687a11177aaa381f"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/transaction-editor/transaction-editor.scss",
+      "bytes": 2990,
+      "sha256": "b1faa019d27e46301c7d233d62a9f92201a8fed500b6264630acc4b1727f4fe3"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/transaction-editor/transaction-editor.ts",
+      "bytes": 910,
+      "sha256": "dd4b46ce640aede84d889e887dd0297e9aa92607b214cee4a3d5e4230082fddd"
+    },
+    {
       "path": "src/app/shared/ui/services/api.service.ts",
       "bytes": 6972,
       "sha256": "7153f3ae2367590d1c66bc5dc714845b0b2608572f463d89a07e8ee36bb1c339"
@@ -1586,7 +1616,7 @@
     {
       "path": "src/styles/themes/_tokens-components.css",
       "bytes": 38898,
-      "sha256": "8de192b4ce0fb092f6afa61d80a9204fd33c1ee76d4eb85760d80bea4e61c7e3"
+      "sha256": "db97099e1fbc90e39fa035989dd05ac1f13d3413364fdc7329a16469588fc047"
     },
     {
       "path": "src/styles/themes/_tokens-primitives.css",
