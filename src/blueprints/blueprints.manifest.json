@@ -7,10 +7,9 @@
     { "path": "crud-table", "status": "legacy-demo", "replacement": "atomic.recipe.modal-catalog.v1" },
     { "path": "dashboard-page", "status": "legacy-demo" },
     { "path": "error-pages", "status": "legacy-demo" },
-    { "path": "forgot-password-page", "status": "legacy-demo" },
     { "path": "login-page", "status": "legacy-demo" },
-    { "path": "register-page", "status": "legacy-demo" },
     { "path": "reports-page", "status": "legacy-demo" },
-    { "path": "settings-page", "status": "legacy-demo" }
+    { "path": "settings-page", "status": "legacy-demo" },
+    { "path": "wizard-page", "status": "production" }
   ]
 }

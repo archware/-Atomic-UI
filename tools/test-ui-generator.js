@@ -188,9 +188,10 @@ function assertAngularCompilation(tempRoot) {
     extends: extendsPath,
     compilerOptions: {
       noEmit: true,
-      types: ['jasmine'],
+      types: [],
     },
     include,
+    exclude: ['**/*.spec.ts'],
   }, null, 2)}\n`, 'utf8');
 
   const ngc = path.join(ATOMIC_ROOT, 'node_modules', '@angular', 'compiler-cli', 'bundles', 'src', 'bin', 'ngc.js');

@@ -44,7 +44,7 @@ export const Default: Story = {
           <button class="atomic-button">Exportar</button>
         </ng-container>
         <ng-container dashboard-contenido>
-          <div style="padding: 1rem; background: var(--surface-bg); border-radius: 8px;">
+          <div style="padding: 1rem; background: var(--bg-surface); border-radius: 8px;">
             <p>Aquí se proyectan los paneles y widgets del dashboard.</p>
           </div>
         </ng-container>

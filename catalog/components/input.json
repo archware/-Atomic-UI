@@ -38,12 +38,20 @@
         { "value": false, "meaning": "Contraseña siempre oculta.", "default": true },
         { "value": true, "meaning": "Muestra un control para revelar u ocultar." }
       ]
+    },
+    {
+      "name": "variant",
+      "values": [
+        { "value": "standard", "meaning": "Presentación estándar de formulario con etiqueta superior.", "default": true },
+        { "value": "floating", "meaning": "Presentación moderna con etiqueta flotante interna." }
+      ]
     }
   ],
   "inputs": [
     { "name": "controlId", "type": "string | null", "default": null, "meaning": "Id explícito; si falta se genera uno estable por instancia." },
     { "name": "type", "type": "InputType", "default": "text", "meaning": "Tipo de input nativo." },
     { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible asociada al control." },
+    { "name": "variant", "type": "'standard' | 'floating'", "default": "standard", "meaning": "Variante visual del control: standard o floating." },
     { "name": "placeholder", "type": "string", "default": "", "meaning": "Ayuda breve dentro del campo." },
     { "name": "autocomplete", "type": "string", "default": "off", "meaning": "Valor del atributo autocomplete." },
     { "name": "inputMode", "type": "InputMode", "default": "text", "meaning": "Teclado virtual sugerido." },

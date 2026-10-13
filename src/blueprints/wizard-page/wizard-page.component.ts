@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -27,6 +27,7 @@ import {
 @Component({
   selector: 'app-wizard-page',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
     LayoutShellComponent,
@@ -74,7 +75,7 @@ export class WizardPageComponent {
     this.router.navigate(['/login']);
   }
 
-  onUserAction(action: any): void {
+  onUserAction(action: { id?: string }): void {
     if (action.id === 'settings') this.router.navigate(['/settings']);
   }
 
@@ -190,11 +191,8 @@ export class WizardPageComponent {
     if (this.form.invalid) {
       return;
     }
-    this.isSaving.set(true);
-    setTimeout(() => {
-      this.isSaving.set(false);
-      this.popup.success('Éxito', 'Datos guardados exitosamente');
-      this.router.navigate(['/crud']);
-    }, 1500);
+    this.isSaving.set(false);
+    this.popup.success('Éxito', 'Datos guardados exitosamente');
+    this.router.navigate(['/crud']);
   }
 }

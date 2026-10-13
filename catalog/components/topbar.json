@@ -15,10 +15,18 @@
   "variants": [],
   "inputs": [
     { "name": "title", "type": "string", "default": "", "meaning": "Título de la vista actual." },
+    { "name": "subtitle", "type": "string", "default": "", "meaning": "Subtítulo opcional de la vista actual." },
+    { "name": "apiStatus", "type": "string", "default": "", "meaning": "Texto que describe el estado de conectividad con la API." },
+    { "name": "apiStatusColor", "type": "'success' | 'warning' | 'danger'", "default": "success", "meaning": "Semántica visual del indicador de estado de la API." },
+    { "name": "showSidebarToggle", "type": "boolean", "default": true, "meaning": "Controla la presencia del botón para alternar la barra lateral." },
+    { "name": "showHomeButton", "type": "boolean", "default": false, "meaning": "Controla la presencia del botón de inicio." },
+    { "name": "showUserInfo", "type": "boolean", "default": false, "meaning": "Determina si se muestra información de usuario extendida en la barra." },
+    { "name": "bgColor", "type": "string | undefined", "meaning": "Color de fondo opcional para la barra superior." },
     { "name": "userInitials", "type": "string", "default": "U", "meaning": "Iniciales de la sesión." },
     { "name": "userName", "type": "string", "default": "Usuario", "meaning": "Nombre visible de la sesión." },
     { "name": "userEmail", "type": "string", "default": "usuario@email.com", "meaning": "Correo visible de la sesión." },
     { "name": "userRole", "type": "string", "default": "", "meaning": "Rol visible de la sesión." },
+    { "name": "avatarColor", "type": "string", "default": "", "meaning": "Color de fondo opcional para el avatar de usuario." },
     { "name": "notificationCount", "type": "number", "default": 0, "meaning": "Cantidad de notificaciones sin leer." },
     { "name": "showLanguageSwitcher", "type": "boolean", "default": true, "meaning": "Controla la presencia del selector de idioma." },
     { "name": "showNotifications", "type": "boolean", "default": true, "meaning": "Controla la presencia de notificaciones." }
@@ -27,7 +35,8 @@
     { "name": "toggleSidebar", "type": "void", "meaning": "Solicita alternar la navegación lateral." },
     { "name": "logout", "type": "void", "meaning": "Solicita cerrar la sesión." },
     { "name": "notificationClick", "type": "void", "meaning": "Notifica la activación del control de notificaciones." },
-    { "name": "userAction", "type": "UserMenuAction", "meaning": "Propaga una acción seleccionada en el menú de sesión." }
+    { "name": "userAction", "type": "UserMenuAction", "meaning": "Propaga una acción seleccionada en el menú de sesión." },
+    { "name": "homeClick", "type": "void", "meaning": "Notifica la activación del botón de inicio." }
   ],
   "states": [
     { "name": "full", "meaning": "Presenta idioma, tema, notificaciones y sesión." },

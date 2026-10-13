@@ -29,9 +29,9 @@
 }
 
 .summary-box {
-  background-color: var(--surface-section, #f8f9fa);
-  border: 1px solid var(--border-color, #e5e7eb);
-  border-radius: var(--radius-md, 8px);
+  background-color: var(--surface-section, var(--bg-surface));
+  border: var(--border-width-sm, 0.0625rem) solid var(--border-color);
+  border-radius: var(--radius-md, 0.5rem);
   padding: var(--space-5);
   margin-top: var(--space-4);
 }
@@ -48,12 +48,17 @@
   gap: var(--space-4);
 }
 
+.single-column-wrapper {
+  max-width: 37.5rem;
+  margin: 0 auto;
+}
+
 .col-span-2 {
   grid-column: span 2;
 }
 
 .divider {
-  height: 1px;
-  background-color: var(--border-color, #e5e7eb);
+  height: var(--border-width-sm, 0.0625rem);
+  background-color: var(--border-color);
   margin: var(--space-5) 0;
 }

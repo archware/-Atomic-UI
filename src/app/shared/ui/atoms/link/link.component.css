@@ -1,4 +1,4 @@
-﻿:host { display: inline-flex; }
+:host { display: inline-flex; }
 .atomic-link {
   text-decoration: none;
   font-weight: var(--font-weight-medium, 500);
@@ -12,5 +12,5 @@
 .atomic-link--secondary:hover { color: var(--secondary-color-dark); }
 .atomic-link--muted { color: var(--text-color-muted); font-weight: normal; }
 .atomic-link--muted:hover { color: var(--text-color-secondary); }
-.atomic-link--danger { color: var(--danger-color); }
-.atomic-link--danger:hover { color: var(--danger-color-dark, #b91c1c); }
+.atomic-link--danger { color: var(--danger-color-text); }
+.atomic-link--danger:hover { color: var(--danger-color-dark, var(--danger-color-text)); }

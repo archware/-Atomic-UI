@@ -141,7 +141,7 @@
   overflow: visible;
   clip-path: none;
   border-radius: var(--radius-md);
-  background-color: var(--surface-card);
+  background-color: var(--surface-card, var(--bg-primary));
   color: var(--text-color);
   box-shadow: var(--shadow-lg);
   outline: 2px solid var(--brand-primary-500);

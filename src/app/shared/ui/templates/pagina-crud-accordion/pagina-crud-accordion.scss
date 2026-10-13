@@ -20,7 +20,7 @@ app-query-toolbar {
   align-items: center;
   justify-content: space-between;
   padding: var(--space-4) var(--space-5);
-  border-block-end: var(--border-width-thin) solid var(--color-border);
+  border-block-end: var(--border-width-thin) solid var(--border-color);
 }
 
 .pagina-crud-accordion__dialogo-titulo {
@@ -43,7 +43,7 @@ app-query-toolbar {
   justify-content: flex-end;
   gap: var(--space-3);
   padding: var(--space-4) var(--space-5);
-  border-block-start: var(--border-width-thin) solid var(--color-border);
+  border-block-start: var(--border-width-thin) solid var(--border-color);
 }
 
 /* ─── Confirmación de baja ───────────────────────────────── */
@@ -57,7 +57,7 @@ app-query-toolbar {
 }
 
 .pagina-crud-accordion__confirmacion {
-  background-color: var(--color-surface);
+  background-color: var(--surface-bg, var(--bg-primary));
   border-radius: var(--radius-lg);
   max-inline-size: 28rem;
   box-shadow: var(--shadow-lg);
@@ -67,8 +67,8 @@ app-query-toolbar {
 .pagina-crud-accordion__confirmacion-titulo {
   margin: 0;
   padding: var(--space-4) var(--space-5);
-  border-bottom: 1px solid var(--color-border);
-  background-color: var(--modal-header-bg, var(--color-surface));
+  border-bottom: var(--border-width-thin) solid var(--border-color);
+  background-color: var(--modal-header-bg, var(--surface-bg, var(--bg-primary)));
   font-size: var(--text-lg);
   font-weight: var(--font-weight-title);
 }
@@ -84,7 +84,7 @@ app-query-toolbar {
   justify-content: flex-end;
   gap: var(--space-3);
   padding: var(--space-4) var(--space-5);
-  border-block-start: var(--border-width-thin) solid var(--color-border);
+  border-block-start: var(--border-width-thin) solid var(--border-color);
   background-color: var(--modal-footer-bg, var(--surface-section));
 }
 

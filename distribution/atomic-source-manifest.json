@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "f99496441bee43a1ea801e2c89a44fb3d45245c64c45cf6698c962226f2b569e",
+  "sourceTreeSha256": "ad8db0942f4735bae7203b79c923ac9e8115140beb8c91deb75190845172c586",
   "fileCount": 326,
   "files": [
     {
@@ -305,8 +305,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/link/link.component.css",
-      "bytes": 771,
-      "sha256": "caa3503addbb4cba2d33b74cc1678e4b5e761400dd2c710faceffeb2e85ab66f"
+      "bytes": 790,
+      "sha256": "fc49384d676b69522d429f43638b6fd64e434bb87554473f233968f015cdfa02"
     },
     {
       "path": "src/app/shared/ui/atoms/link/link.component.html",
@@ -1340,8 +1340,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.css",
-      "bytes": 5653,
-      "sha256": "4f28c268d3083283c5f3d6645998fc600132ab7d8ddc49026b7b9e894d352705"
+      "bytes": 5677,
+      "sha256": "60604210dae058451ffa0bd98339a858c39063c9db421834092627c6d723f45b"
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.html",
@@ -1490,8 +1490,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.css",
-      "bytes": 2895,
-      "sha256": "0d937f90361dca11d01099a5c6bb706dc3a26b37db6b20d6fdd638f53db567b5"
+      "bytes": 2914,
+      "sha256": "37e1c77351a0ecd297bec4c66e731eba21e58c51185254615ecf8c4bf4da6015"
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.html",
@@ -1530,8 +1530,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.scss",
-      "bytes": 2408,
-      "sha256": "6030fccb996919dbfeb6a1eb3106722bc3af52f496ddf4408e9f0dc47ca574ca"
+      "bytes": 2461,
+      "sha256": "058fdd28fe8e632bc1bd88559559e2fdcbb9e99f5be219f280f9d69b9bfdadbc"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.ts",
