@@ -3,7 +3,7 @@ title: "Índice de artefactos de diagnóstico históricos"
 document_type: "índice de artefactos"
 status: "histórico"
 date: "2026-08-20"
-owner: "Hospital Regional de Ayacucho"
+owner: "COTAHA"
 ---
 
 # Índice de artefactos de diagnóstico históricos

@@ -1,12 +1,12 @@
 ---
 title: "Guía de contribución de tokens en Atomic UI"
 subtitle: "Convenciones, auditoría y propagación gobernada de tokens visuales"
-author: "Hospital Regional de Ayacucho"
+author: "Ing. Havel CONTRERAS TAPAHUASCO"
 document_type: "guía técnica"
 status: "vigente"
 date: "2026-08-20"
 version: "5.8.4"
-owner: "Hospital Regional de Ayacucho"
+owner: "COTAHA"
 ---
 
 # Guía de contribución de tokens en Atomic UI

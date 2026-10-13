@@ -4,7 +4,7 @@ document_type: 'guide'
 version: '5.8.0'
 status: 'vigente'
 updated: '2026-08-13'
-owner: 'Hospital Regional de Ayacucho'
+owner: 'COTAHA'
 ---
 
 # Andamiaje de pruebas para consumidores

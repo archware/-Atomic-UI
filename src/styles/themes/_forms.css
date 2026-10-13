@@ -216,7 +216,7 @@ html.dark .form-select {
 /* ─────────────────────────────────────────────────────────────────────────────
    FORM STACKS (24px STANDARD SEPARATION)
    ─────────────────────────────────────────────────────────────────────────────
-   Estándar institucional HRA: 24px (1.5rem) de separación vertical entre
+   Estándar institucional: 24px (1.5rem) de separación vertical entre
    campos de formulario, incluidos los modales de configuración de BD.
    ───────────────────────────────────────────────────────────────────────────── */
 .atomic-form-stack {
@@ -234,6 +234,6 @@ html.dark .form-select {
   gap: var(--space-4); /* 16px entre cada checkbox */
 }
 
-/* Contenedor estandar de formulario inyectado can�nicamente */
+/* Contenedor estandar de formulario inyectado can�nicamente */
 .formulario { display: flex; flex-direction: column; gap: var(--space-6, 24px); }
 

@@ -8,7 +8,7 @@ last_updated: '2026-09-30'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-09-30'
 change_id: 'ATOMIC-20260930-008'
-owner: 'Hospital Regional de Ayacucho'
+owner: 'COTAHA'
 ---
 
 # Doctrina de interfaz

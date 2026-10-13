@@ -1,13 +1,13 @@
 ---
 title: "Guía de diseño atómico de Atomic UI"
 subtitle: "Jerarquía, tokens y reglas de composición visual"
-author: "Hospital Regional de Ayacucho"
+author: "Ing. Havel CONTRERAS TAPAHUASCO"
 document_type: "guía técnica"
 status: "vigente"
 date: "2026-08-20"
 last_updated: "2026-09-29"
 version: "6.0.0-borrador.2"
-owner: "Hospital Regional de Ayacucho"
+owner: "COTAHA"
 ---
 
 # Guía de diseño atómico de Atomic UI

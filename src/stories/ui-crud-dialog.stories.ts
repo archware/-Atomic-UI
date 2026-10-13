@@ -310,7 +310,7 @@ class CrudDialogFichaStory {
   private marcarRechazo(): void {
     this.razon.set(CLIENTE_EXISTENTE.razon);
     this.ruc.set('2055874');
-    this.errorRazon.set('Ya existe un cliente con esta razón social en la sede Ayacucho.');
+    this.errorRazon.set('Ya existe un cliente con esta razón social en la sede Central.');
     this.errorRuc.set('El RUC debe tener once dígitos.');
     this.resumen.set(
       'El servidor rechazó dos campos. Nada se guardó: corrija lo marcado y vuelva a enviar.',
@@ -591,7 +591,7 @@ class CrudDialogDesbordeStory {
 
   protected readonly cuotas = Array.from({ length: 40 }, (_, indice) => ({
     id: `CU-${String(indice + 1).padStart(4, '0')}`,
-    cliente: `Cliente ${indice + 1} de la cartera Ayacucho centro`,
+    cliente: `Cliente ${indice + 1} de la cartera Central`,
     importe: `S/ ${(320 + indice * 47.5).toFixed(2)}`,
   }));
 

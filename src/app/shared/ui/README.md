@@ -6,7 +6,7 @@ document_type: 'manual técnico'
 status: 'vigente'
 date: '2026-08-20'
 version: '5.8.4'
-owner: 'Hospital Regional de Ayacucho'
+owner: 'COTAHA'
 ---
 
 # Biblioteca de componentes Atomic UI

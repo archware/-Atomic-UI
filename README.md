@@ -1,6 +1,6 @@
 ---
 title: "Atomic UI: sistema de componentes y temas"
-subtitle: "Fuente visual canónica para aplicaciones de escritorio HRA"
+subtitle: "Fuente visual canónica para aplicaciones de escritorio"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-20"
 version: "5.8.4"

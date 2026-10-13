@@ -6,7 +6,7 @@ date: "2026-08-23"
 updated: "2026-08-23"
 version: "5.22.0"
 policy_version: "1.2.3"
-owner: "Hospital Regional de Ayacucho"
+owner: "COTAHA"
 ---
 
 # Migración de un consumidor a Atomic UI 5.22

@@ -5,7 +5,7 @@ status: "histórico"
 date: "2026-06-01"
 last_updated: "2026-08-20"
 superseded_by: "../../../docs/ATOMIC_UI_AGENT_RUNTIME.md"
-owner: "Hospital Regional de Ayacucho"
+owner: "COTAHA"
 ---
 
 # Blueprint histórico de guardas de autenticación

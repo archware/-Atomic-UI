@@ -64,17 +64,17 @@ const formateadorSoles = new Intl.NumberFormat('es-PE', {
 });
 
 const CLIENTES: readonly ClienteFila[] = [
-  { id: 'C-001', documento: '41258963', nombre: 'Rosa Quispe Ayala', cartera: 'Ayacucho centro', saldo: 12400, estado: 'Activo' },
-  { id: 'C-002', documento: '09871234', nombre: 'Julio Ccahuana Rivas', cartera: 'Ayacucho centro', saldo: 3150.5, estado: 'En mora' },
+  { id: 'C-001', documento: '41258963', nombre: 'Rosa Quispe Ayala', cartera: 'Lima centro', saldo: 12400, estado: 'Activo' },
+  { id: 'C-002', documento: '09871234', nombre: 'Julio Ccahuana Rivas', cartera: 'Lima centro', saldo: 3150.5, estado: 'En mora' },
   { id: 'C-003', documento: '45896321', nombre: 'Elena Barrios Loayza', cartera: 'Huanta', saldo: 0, estado: 'Inactivo' },
   { id: 'C-004', documento: '20558741', nombre: 'Comercial Andina S.A.C.', cartera: 'Corporativa', saldo: 48250.4, estado: 'Activo' },
   { id: 'C-005', documento: '43112907', nombre: 'Marco Huamán Pariona', cartera: 'Huanta', saldo: 890.25, estado: 'Activo' },
-  { id: 'C-006', documento: '10254783', nombre: 'Lucía Prado Ochoa', cartera: 'Ayacucho centro', saldo: 5620, estado: 'En mora' },
+  { id: 'C-006', documento: '10254783', nombre: 'Lucía Prado Ochoa', cartera: 'Lima centro', saldo: 5620, estado: 'En mora' },
   { id: 'C-007', documento: '20487561', nombre: 'Transportes Wari E.I.R.L.', cartera: 'Corporativa', saldo: 21740.8, estado: 'Activo' },
   { id: 'C-008', documento: '46337812', nombre: 'Carmen Vega Ríos', cartera: 'Cangallo', saldo: 1280, estado: 'Activo' },
   { id: 'C-009', documento: '08974512', nombre: 'Óscar Palomino Cárdenas', cartera: 'Cangallo', saldo: 0, estado: 'Inactivo' },
   { id: 'C-010', documento: '44125896', nombre: 'Nélida Sulca Quicaño', cartera: 'Huanta', saldo: 7410.6, estado: 'Activo' },
-  { id: 'C-011', documento: '42589631', nombre: 'Beatriz Aymara Conde', cartera: 'Ayacucho centro', saldo: 2130.45, estado: 'En mora' },
+  { id: 'C-011', documento: '42589631', nombre: 'Beatriz Aymara Conde', cartera: 'Lima centro', saldo: 2130.45, estado: 'En mora' },
   { id: 'C-012', documento: '20775412', nombre: 'Distribuidora Pampas S.A.', cartera: 'Corporativa', saldo: 96320, estado: 'Activo' },
   { id: 'C-013', documento: '47001235', nombre: 'Álvaro Gutiérrez Nolasco', cartera: 'Cangallo', saldo: 540, estado: 'Activo' },
   { id: 'C-014', documento: '41889623', nombre: 'Zenaida Berrocal Flores', cartera: 'Huanta', saldo: 3390.9, estado: 'Activo' },
@@ -87,7 +87,7 @@ const ESTADOS: readonly SelectOption[] = [
 ];
 
 const CARTERAS: readonly SelectOption[] = [
-  { value: 'Ayacucho centro', label: 'Ayacucho centro' },
+  { value: 'Lima centro', label: 'Lima centro' },
   { value: 'Huanta', label: 'Huanta' },
   { value: 'Cangallo', label: 'Cangallo' },
   { value: 'Corporativa', label: 'Corporativa' },

@@ -1,13 +1,13 @@
 ---
 title: "Sincronización gobernada de Atomic UI 5.22.0"
-subtitle: "Reconciliación de la fuente canónica y adopción verificable en los consumidores HRA"
+subtitle: "Reconciliación de la fuente canónica y adopción verificable en los consumidores"
 document_type: "hoja de ruta técnica"
 status: "Finalizada"
 date: "2026-08-23"
 last_updated: "2026-08-23"
 completion_date: "2026-08-23"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
-owner: "Hospital Regional de Ayacucho"
+owner: "COTAHA"
 change_id: "ATOMIC-5-22-0-SYNC-20260823"
 ---
 

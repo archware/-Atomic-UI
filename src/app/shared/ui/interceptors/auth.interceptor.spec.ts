@@ -51,14 +51,14 @@ describe('authInterceptor — a quien se firma', () => {
     });
 
     api = TestBed.inject(ApiService);
-    api.setBaseUrl('https://api.hra.gob.pe/v1');
+    api.setBaseUrl('https://api.ejemplo.com/v1');
 
     const tokens = TestBed.inject(TokenService);
     spyOn(tokens, 'getTokenApp').and.returnValue(TOKEN);
   });
 
   it('firma una peticion al origen propio de la API', () => {
-    expect(firmada('https://api.hra.gob.pe/v1/creditos')).toBe(true);
+    expect(firmada('https://api.ejemplo.com/v1/creditos')).toBe(true);
   });
 
   it('firma una ruta relativa, que siempre va al origen del documento', () => {
@@ -78,25 +78,25 @@ describe('authInterceptor — a quien se firma', () => {
       la base es el origen desnudo, que es como muchos consumidores la
       configuran, y entonces `startsWith` deja pasar al atacante.
     */
-    api.setBaseUrl('https://api.hra.gob.pe');
+    api.setBaseUrl('https://api.ejemplo.com');
 
-    expect(firmada('https://api.hra.gob.pe.atacante.net/robar')).toBe(false);
-    expect(firmada('https://api.hra.gob.pe/v1/creditos')).toBe(true);
+    expect(firmada('https://api.ejemplo.com.atacante.net/robar')).toBe(false);
+    expect(firmada('https://api.ejemplo.com/v1/creditos')).toBe(true);
   });
 
   it('NO firma el mismo host por un esquema o un puerto distintos', () => {
-    expect(firmada('http://api.hra.gob.pe/v1/creditos')).toBe(false);
-    expect(firmada('https://api.hra.gob.pe:8443/v1/creditos')).toBe(false);
+    expect(firmada('http://api.ejemplo.com/v1/creditos')).toBe(false);
+    expect(firmada('https://api.ejemplo.com:8443/v1/creditos')).toBe(false);
   });
 
   it('sigue sin firmar las rutas publicas declaradas', () => {
-    expect(firmada('https://api.hra.gob.pe/v1/Authentication/PostLogin')).toBe(false);
+    expect(firmada('https://api.ejemplo.com/v1/Authentication/PostLogin')).toBe(false);
   });
 
   it('sin baseUrl configurada, no entrega la credencial a ninguna URL absoluta', () => {
     api.setBaseUrl('');
 
-    expect(firmada('https://api.hra.gob.pe/v1/creditos')).toBe(false);
+    expect(firmada('https://api.ejemplo.com/v1/creditos')).toBe(false);
     // Lo relativo sigue funcionando: va al propio origen por construccion.
     expect(firmada('/api/creditos')).toBe(true);
   });

@@ -7,7 +7,7 @@ document_type: 'changelog'
 version: '5.22.0'
 status: 'vigente'
 updated: '2026-08-25'
-owner: 'Hospital Regional de Ayacucho'
+owner: 'COTAHA'
 ---
 
 # Registro de cambios

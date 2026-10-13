@@ -12,14 +12,14 @@ describe('FooterComponent', () => {
   it('renders the institutional line and hides the build date by default', () => {
     const fixture = TestBed.createComponent(FooterComponent);
     fixture.componentRef.setInput('variant', 'simple');
-    fixture.componentRef.setInput('companyName', 'Hospital Regional Ayacucho');
+    fixture.componentRef.setInput('companyName', 'Suite Barracuda');
     fixture.componentRef.setInput('year', 2026);
     fixture.componentRef.setInput('supportText', 'Soporte: Sistemas de Información');
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
     expect(element.textContent).toContain(
-      '© 2026 Hospital Regional Ayacucho - Todos los derechos reservados.'
+      '© 2026 Suite Barracuda - Todos los derechos reservados.'
     );
     expect(element.textContent).toContain('Soporte: Sistemas de Información');
     expect(element.querySelector('footer')?.getAttribute('aria-label')).toBe('Pie de página');

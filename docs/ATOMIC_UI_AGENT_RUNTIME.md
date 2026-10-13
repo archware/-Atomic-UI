@@ -1,13 +1,13 @@
 ---
 title: "Runtime de diseño de Atomic UI para agentes"
 subtitle: "Autoridad, contratos y generación determinista de interfaces"
-author: "Hospital Regional de Ayacucho"
+author: "Ing. Havel CONTRERAS TAPAHUASCO"
 document_type: "arquitectura"
 status: "vigente"
 date: "2026-08-20"
 version: "5.22.0"
 last_updated: "2026-09-29"
-owner: "Hospital Regional de Ayacucho"
+owner: "COTAHA"
 ---
 
 # Runtime de diseño de Atomic UI para agentes

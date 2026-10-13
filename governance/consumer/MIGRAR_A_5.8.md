@@ -7,7 +7,7 @@ updated: "2026-08-21"
 version: "5.8.4"
 policy_version: "1.2.2"
 superseded_by: "MIGRAR_A_5.22.md"
-owner: "Hospital Regional de Ayacucho"
+owner: "COTAHA"
 ---
 
 # Migración de un consumidor a Atomic UI 5.8

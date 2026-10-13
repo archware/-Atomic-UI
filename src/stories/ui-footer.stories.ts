@@ -47,7 +47,7 @@ const legalLinks: LegalLink[] = [
 export const Simple: Story = {
   args: {
     variant: 'simple',
-    companyName: 'Hospital Regional Ayacucho',
+    companyName: 'Suite Barracuda',
     year: 2026,
   },
 };
@@ -55,7 +55,7 @@ export const Simple: Story = {
 export const Inline: Story = {
   args: {
     variant: 'inline',
-    companyName: 'Hospital Regional Ayacucho',
+    companyName: 'Suite Barracuda',
     year: 2026,
     socialLinks: socialLinks,
     legalLinks: legalLinks,
@@ -65,9 +65,9 @@ export const Inline: Story = {
 export const Columns: Story = {
   args: {
     variant: 'columns',
-    companyName: 'Hospital Regional Ayacucho',
+    companyName: 'Suite Barracuda',
     year: 2026,
-    description: 'Servicios digitales institucionales para la atención hospitalaria.',
+    description: 'Servicios digitales institucionales para la gestión empresarial.',
     socialLinks: socialLinks,
     legalLinks: legalLinks,
   },

@@ -41,7 +41,7 @@ import {
 
 const ACTA_CORTA: PrintDocumentPage = {
   id: 'acta-entrega',
-  eyebrow: 'Sede Ayacucho centro',
+  eyebrow: 'Sede Central',
   title: 'Acta de entrega de equipo',
   subtitle: 'Documento interno · no válido como comprobante de pago',
   fields: [

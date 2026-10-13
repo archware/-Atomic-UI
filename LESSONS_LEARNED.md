@@ -8,7 +8,7 @@ last_updated: "2026-10-01"
 version: "1.4.0"
 last_change_id: "ATOMIC-20261001-002"
 owners:
-  - "Hospital Regional de Ayacucho"
+  - "COTAHA"
 ---
 
 # Lecciones aprendidas de Atomic UI
@@ -446,7 +446,7 @@ productivos fuera del ADN.
      <div class="app-root-content" style="flex: 1; overflow-y: auto; min-height: 0;">
        <app-dashboard></app-dashboard>
      </div>
-     <app-footer variant="inline" companyName="Hospital Regional Ayacucho"></app-footer>
+     <app-footer variant="inline" companyName="Suite Barracuda"></app-footer>
    </div>
    ```
 2. **Independencia total de i18n:** El `FooterComponent` de Atomic UI debe usar valores en texto plano con valores predeterminados (`copyrightText || 'Todos los derechos reservados.'`), evitando dependencias duras de `@ngx-translate/core` para garantizar un renderizado atómico libre de errores en cualquier entorno.
@@ -741,7 +741,7 @@ El usuario confirmó que la tipografía azul y la línea de acento azul eran ide
 
 ## [2026-07-20] - Fugas de Click en Componentes Encapsulados (app-button)
 
-**Contexto:** En el Orquestador del Acopiador HRA, el boton "Ejecutar Calculo" se mostraba deshabilitado (gris, opacity reducida) cuando faltaban fuentes de datos `[disabled]="!canExecuteIndicador()"`, pero el usuario reporto que al hacer click, el calculo se ejecutaba de todas formas.
+**Contexto:** En el Orquestador del Acopiador, el boton "Ejecutar Calculo" se mostraba deshabilitado (gris, opacity reducida) cuando faltaban fuentes de datos `[disabled]="!canExecuteIndicador()"`, pero el usuario reporto que al hacer click, el calculo se ejecutaba de todas formas.
 
 **Causa Raiz:** El consumidor enlazo la accion usando el evento nativo del DOM `(click)="ejecutarIndicador()"` directamente sobre la etiqueta `<app-button>`. En Angular, esto enlazar el listener al *Host Element*. Aunque el `<button>` HTML nativo en el interior del componente este `disabled` y no dispare eventos de click, el click del usuario impactaba en el host (padding, wrapper) y disparaba la funcion.
 
@@ -782,7 +782,7 @@ Queda estrictamente prohibido usar `(click)` sobre elementos custom de la librer
 
 ## [2026-07-19] - Tokens de Color Obligatorios en Modales y Overlays Custom
 
-**Contexto:** En la aplicacion base_python_angular (Acopiador HRA), los modales de alerta y confirmacion construidos con `app-card variant="elevated"` + `slot="image"` tenian colores hexadecimales fijos en el header (`#1e293b`, `#f8fafc`, `#334155`). En modo oscuro el texto parecia correcto (porque los colores fijos simulaban el dark mode), pero en modo claro el fondo quedaba negro y el texto blanco, siendo completamente ilegible.
+**Contexto:** En la aplicacion base_python_angular (Acopiador), los modales de alerta y confirmacion construidos con `app-card variant="elevated"` + `slot="image"` tenian colores hexadecimales fijos en el header (`#1e293b`, `#f8fafc`, `#334155`). En modo oscuro el texto parecia correcto (porque los colores fijos simulaban el dark mode), pero en modo claro el fondo quedaba negro y el texto blanco, siendo completamente ilegible.
 
 **La leccion:** Los consumidores de Atomic UI (Wails, Tauri, Python/WebView) NO deben usar colores hexadecimales fijos en ningun elemento que forme parte de un modal, overlay o dialogo. El sistema de tokens de Atomic garantiza la paridad automatica entre Light Mode y Dark Mode. Al forzar un color fijo, se rompe esa garantia y el componente queda "atado" a un solo tema.
 
@@ -884,7 +884,7 @@ La solución robusta es detener la propagación del evento `click` en la opción
 - **Lección Aprendida:** **NUNCA se debe asumir que una mejora en Wails es análoga a Tauri.** Queda strictly prohibido desarrollar mezclando o copiando sintaxis entre ecosistemas. A partir de ahora, cada ecosistema (Python, Wails, Tauri) debe ser desarrollado **de forma individual con su sintaxis nativa** y respetando sus propios paradigmas y librerías. Cualquier nueva característica o corrección requiere una auditoría profunda e independiente en su respectivo entorno para solucionar el problema de raíz, sin asumir paridad automática con los otros frameworks.
 
 ## Desbordamiento silencioso en grillas Flexbox
-- **Contexto:** Al usar el sistema en aplicaciones como el Acopiador HRA en Python, ciertas tarjetas de consola de texto forzaban el crecimiento vertical de la ventana más allá de `100vh`.
+- **Contexto:** Al usar el sistema en aplicaciones como el Acopiador en Python, ciertas tarjetas de consola de texto forzaban el crecimiento vertical de la ventana más allá de `100vh`.
 - **Problema:** En `app-card`, el contenedor interno `.card__body` es un bloque tradicional que crece con su contenido. Si un consumidor inyecta un `div` con `flex: 1` asumiendo que llenará el espacio, el texto largo puede expandir la grilla.
 - **Lección aprendida:** No se debe mutar `.card__body` a `display: flex` de forma global en Atomic UI, ya que rompería el flujo normal de texto y botones de las tarjetas tradicionales. Cuando un proyecto consumidor necesite que el contenido interno de una tarjeta ocupe el resto del layout, por ejemplo una terminal, el consumidor debe inyectar una regla estricta local: `:host ::ng-deep .mi-tarjeta .card__body { display: flex; flex-direction: column; min-height: 0; }`.
 

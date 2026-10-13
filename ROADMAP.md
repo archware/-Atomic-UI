@@ -5,7 +5,7 @@ status: "histórico"
 date: "2026-05-01"
 last_updated: "2026-08-20"
 superseded_by: "../.agents/roadmaps/ROADMAP_20260820_saneamiento_documental_y_generacion_manuales.md"
-owner: "Hospital Regional de Ayacucho"
+owner: "COTAHA"
 ---
 
 # Roadmap histórico de Atomic UI
