@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "cc1d8626b4287213508a76df569030ad4489e782a1c4d185817547d080e1a167",
+  "sourceTreeSha256": "d1365d817e2e5f277acef4c82344b04dbdbd57aff88816d385065bc46a652454",
   "fileCount": 326,
   "files": [
     {
@@ -830,23 +830,23 @@
     },
     {
       "path": "src/app/shared/ui/molecules/modal/modal-container.component.css",
-      "bytes": 1867,
-      "sha256": "09afe1e2f1430c52a410ef17a720cdad5d30f1c7c8905002e49342ce7530dde5"
+      "bytes": 2043,
+      "sha256": "d2690fee510ebfba04af01d17084e9ba5c229d5b47ae65fc36aef3a051ca31ca"
     },
     {
       "path": "src/app/shared/ui/molecules/modal/modal-container.component.ts",
-      "bytes": 4223,
-      "sha256": "9ad71ea919fd26e9d90224f01ae4c5a4188b649e484c607020355c3e23631734"
+      "bytes": 4215,
+      "sha256": "75ff41fbe1a9cfdb74a9157b35b6d6671021d439f6cf83be73d9a598fcb37095"
     },
     {
       "path": "src/app/shared/ui/molecules/modal/modal.component.css",
-      "bytes": 3108,
-      "sha256": "29926a06d988689de24ee3b122fdbba717355b8a5d88d6e7349d2f608a878991"
+      "bytes": 3395,
+      "sha256": "adc17736ed6b58019e22baa5e658bd51f4ba54011f734fb11deba233374ba475"
     },
     {
       "path": "src/app/shared/ui/molecules/modal/modal.component.ts",
-      "bytes": 7897,
-      "sha256": "0a50d21b2927c9f6f135be1e28971a44a38157c352335829bf4b4d4d1d8550a2"
+      "bytes": 7889,
+      "sha256": "bf28c296327249e3a26b6933b7e04c0cd74b91663a0ffb0215bc8d5e30444d87"
     },
     {
       "path": "src/app/shared/ui/molecules/pagination/pagination.component.css",
@@ -1025,8 +1025,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.scss",
-      "bytes": 1649,
-      "sha256": "326087517f4074bc3db66a5c3b88db6d1f87a24460b346bdce5d9fec84b796b6"
+      "bytes": 1961,
+      "sha256": "6f2991fac351dc789a1c447c4277b0894411daaba8d0b15a3652067f681b72ec"
     },
     {
       "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.ts",
@@ -1135,8 +1135,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/form-dialog/form-dialog-actions.scss",
-      "bytes": 506,
-      "sha256": "08db5910247ae1882295ccb127c060b32258b5c88c374d80d47e808a68db9275"
+      "bytes": 682,
+      "sha256": "888b28117608a159df4ef313f742e9622f0f04514958ddc79ddab1f4ef615bef"
     },
     {
       "path": "src/app/shared/ui/organisms/form-dialog/form-dialog.html",
@@ -1145,8 +1145,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/form-dialog/form-dialog.scss",
-      "bytes": 1353,
-      "sha256": "175273cb230cb21c3545549a08d520feee08fce0027473e01a5306393094307a"
+      "bytes": 1445,
+      "sha256": "ba833e3119d3d0b83af71ad49af709c13607d392a8270cd5038ae5e7d8215d1a"
     },
     {
       "path": "src/app/shared/ui/organisms/form-dialog/form-dialog.ts",

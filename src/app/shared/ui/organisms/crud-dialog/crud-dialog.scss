@@ -13,6 +13,8 @@
   color: var(--text-color);
   box-shadow: var(--modal-shadow);
   overflow: visible;
+  outline: none;
+  transform: translateZ(0);
 }
 
 .crud-dialog__viewport {
@@ -23,6 +25,12 @@
 
   ::ng-deep .so-scroll-area {
     position: static;
+  }
+
+  ::ng-deep .is-hanging-close {
+    position: fixed !important;
+    top: -0.75rem !important;
+    right: -0.75rem !important;
   }
 }
 
@@ -56,6 +64,13 @@
   .crud-dialog {
     width: calc(100% - var(--space-4));
     max-height: calc(100dvh - var(--space-4));
+  }
+
+  .crud-dialog__viewport {
+    ::ng-deep .is-hanging-close {
+      top: -0.5rem !important;
+      right: -0.5rem !important;
+    }
   }
 }
 

@@ -66,6 +66,9 @@ app-icon-button.is-hanging-close .icon-btn:hover {
 }
 
 app-icon-button.is-hanging-close .icon-btn:hover svg,
+app-icon-button.is-hanging-close .icon-btn:hover i {
+  color: white !important;
+}
 
 app-icon-button.is-hanging-close .icon-btn:active {
   transform: scale(0.95) !important;

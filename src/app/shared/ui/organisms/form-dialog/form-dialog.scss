@@ -19,6 +19,8 @@
   padding: var(--space-5) var(--space-6);
   border-bottom: 1px solid var(--modal-border);
   background: var(--modal-header-bg);
+  border-start-start-radius: var(--radius-lg);
+  border-start-end-radius: var(--radius-lg);
 }
 
 .form-dialog__heading {

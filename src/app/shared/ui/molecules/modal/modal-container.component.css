@@ -61,7 +61,8 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-4) var(--space-5);
-  border-bottom: 1px solid var(--border-color);
+  background: var(--modal-header-bg, var(--surface-section));
+  border-bottom: 1px solid var(--modal-border, var(--border-color));
 }
 
 .modal-title {
@@ -90,7 +91,8 @@
 .modal-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 36px;
+  gap: var(--space-3);
   padding: var(--space-4) var(--space-5);
-  border-top: 1px solid var(--border-color);
+  background: var(--modal-footer-bg, var(--surface-section));
+  border-top: 1px solid var(--modal-border, var(--border-color));
 }

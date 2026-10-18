@@ -46,7 +46,7 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
           <div class="modal-header">
             <h3 class="modal-title" [id]="'modal-title-' + modal.id">{{ modal.title }}</h3>
             @if (modal.closable) {
-              <app-icon-button class="modal-close" (clicked)="modalService.close(modal.id)" ariaLabel="Cerrar" variant="hanging-close" animation="none">
+              <app-icon-button class="modal-close" (clicked)="modalService.close(modal.id)" ariaLabel="Cerrar" variant="close" animation="none">
               </app-icon-button>
             }
           </div>

@@ -70,7 +70,7 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
             class="modal-close"
             (clicked)="requestClose()"
             ariaLabel="Cerrar"
-            variant="hanging-close"
+            variant="close"
             animation="none"
             [disabled]="busy()"
           >

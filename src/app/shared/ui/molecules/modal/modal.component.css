@@ -18,16 +18,17 @@
   }
 
   .modal {
-    background: var(--surface-background);
+    background: var(--modal-bg, var(--surface-background));
     border-radius: var(--radius-lg);
     width: 90%;
-    box-shadow: var(--shadow-xl);
+    box-shadow: var(--modal-shadow, var(--shadow-xl));
     animation: slideUp 200ms ease;
     display: flex;
     flex-direction: column;
     margin: auto;
     position: relative;
     max-height: calc(100dvh - var(--space-8));
+    overflow: hidden;
   }
 
 /* Sizes */
@@ -74,8 +75,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--border-color);
+  padding: var(--space-4) var(--space-5);
+  background: var(--modal-header-bg, var(--surface-section));
+  border-bottom: 1px solid var(--modal-border, var(--border-color));
 }
 
 .modal-title {
@@ -99,8 +101,9 @@ app-icon-button.modal-close {
   }
 
   ::ng-deep .icon-btn:hover i,
-  ::ng-deep .icon-btn:hover svg,
-  ::ng-deep .icon-btn:hover 
+  ::ng-deep .icon-btn:hover svg {
+    color: #ffffff !important;
+  }
 
   ::ng-deep .icon-btn:active {
     background-color: #b91c1c !important;
@@ -109,20 +112,19 @@ app-icon-button.modal-close {
   }
 }
 
-  .modal-body {
-    padding: 1rem 1.5rem;
-    overflow-y: auto;
-  }
+.modal-body {
+  padding: var(--space-4) var(--space-5);
+  overflow-y: auto;
+}
 
 .modal-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 36px;
-  padding: 1rem 1.5rem;
-  border-top: 1px solid var(--border-color);
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--modal-footer-bg, var(--surface-section));
+  border-top: 1px solid var(--modal-border, var(--border-color));
 }
-
-
 
 @media (prefers-reduced-motion: reduce) {
   .modal-overlay,
