@@ -38,15 +38,6 @@
 /* Directivas compartidas */
 @import './app/shared/ui/atoms/tooltip/tooltip.css';
 
-/* Tailwind CSS - DEBE IR DESPUÉS DE LOS IMPORTS */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
-
-
-
 app-icon-button.is-hanging-close {
   position: absolute;
   top: -12px;
