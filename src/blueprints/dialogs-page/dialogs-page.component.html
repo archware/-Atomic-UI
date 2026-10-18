@@ -1,0 +1,439 @@
+<app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
+  <app-sidebar
+    ngProjectAs="[slot=sidebar]"
+    slot="sidebar"
+    [menuItems]="menuItems"
+    logoText="Atomic UI"
+    logoIcon="fa-solid fa-sack-dollar"
+    logoIconColor="var(--primary-color)"
+    logoTextColor="var(--text-color)"
+    headerBgColor="var(--surface-sunken)"
+    footerBgColor="var(--surface-sunken)"
+    [user]="{ name: 'Inspector Doctrinal', role: 'Administrador', initials: 'ID' }"
+    (navigate)="onSidebarNavigate($event)"
+  />
+
+  <app-topbar
+    ngProjectAs="[slot=topbar]"
+    slot="topbar"
+    [showHomeButton]="true"
+    apiStatus="API en linea"
+    [showUserInfo]="false"
+    [showSidebarToggle]="true"
+    title="Blueprint de Variantes de Cierre"
+    userInitials="ID"
+    userName="Inspector Doctrinal"
+    userEmail="doctrina@institucion.gob.pe"
+    (toggleSidebar)="onToggleSidebar()"
+    (userAction)="onUserAction($event)"
+    (logout)="onLogout()"
+  >
+    <app-theme-switcher />
+  </app-topbar>
+
+  <div layout-content class="blueprint-surface">
+    <!-- Encabezado del Blueprint -->
+    <header class="blueprint-intro">
+      <div class="intro-headline">
+        <app-text variant="h2" weight="bold">Variantes Canonicas de Cierre y Descarte</app-text>
+        <app-text variant="body" color="secondary">
+          Especificacion oficial de superposiciones y acciones de escape conforme a la doctrina de interfaz institucional y normas de gobernanza.
+        </app-text>
+      </div>
+
+      <div class="badge-cluster">
+        <app-badge variant="primary" size="md">Doctrina Canonica</app-badge>
+        <app-badge variant="info" size="md">Modal vs Popup</app-badge>
+        <app-badge variant="success" size="md">Escape Unificado</app-badge>
+        <app-badge variant="secondary" size="md">100% OnPush</app-badge>
+      </div>
+    </header>
+
+    <!-- Indicador de Interaccion en Vivo -->
+    <section class="feedback-strip" aria-live="polite">
+      <app-text variant="caption" weight="bold" color="primary">Registro de Actividad:</app-text>
+      <app-text variant="body-sm" color="default">{{ lastInteraction() }}</app-text>
+    </section>
+
+    <!-- Seccion 1: Ley de Superposiciones (Modal vs Popup) -->
+    <section class="blueprint-block">
+      <div class="block-heading">
+        <app-text variant="h3" weight="bold">1. Ley de Superposiciones: Modal vs Popup</app-text>
+        <app-text variant="body-sm" color="secondary">
+          La ubicacion de la accion de cierre no es intercambiable ni estetica: define la categoria del dialogo.
+        </app-text>
+      </div>
+
+      <app-row columns="repeat(auto-fit, minmax(20rem, 1fr))" gap="1.5rem">
+        <!-- Tarjeta Modal -->
+        <article class="archetype-card archetype-card--modal">
+          <div class="archetype-meta">
+            <app-badge variant="info" size="sm">Mensajes del Sistema</app-badge>
+            <app-text variant="h4" weight="bold">Modal (Confirmaciones y Alertas)</app-text>
+            <app-text variant="body-sm" color="secondary">
+              Exclusivo para confirmaciones de estado, alertas del sistema y avisos bloqueantes. La accion de cierre reside estrictamente DENTRO del contenedor de superficie.
+            </app-text>
+          </div>
+
+          <!-- Mockup visual del Modal -->
+          <div class="mockup-frame">
+            <div class="mockup-header mockup-header--inside">
+              <app-text variant="body-sm" weight="bold">Anular Operacion</app-text>
+              <app-icon-button
+                variant="close"
+                animation="none"
+                ariaLabel="Cerrar modal de confirmacion"
+                tooltip="Boton interior con aspas sincronizadas"
+                (clicked)="onInsideCloseTrigger()"
+              />
+            </div>
+            <div class="mockup-body">
+              <app-text variant="caption" color="secondary">
+                ¿Confirma la cancelacion definitiva de este registro del sistema?
+              </app-text>
+            </div>
+            <div class="mockup-footer">
+              <app-button variant="outline" size="sm" (buttonClick)="onSecondaryCancelAction()">
+                Cancelar
+              </app-button>
+              <app-button variant="danger" size="sm" (buttonClick)="onInsideCloseTrigger()">
+                Confirmar
+              </app-button>
+            </div>
+          </div>
+
+          <div class="archetype-actions">
+            <app-button variant="outline" iconClass="fa-solid fa-shield-halved" (buttonClick)="onLaunchModal()">
+              Lanzar Modal Real
+            </app-button>
+          </div>
+        </article>
+
+        <!-- Tarjeta Popup -->
+        <article class="archetype-card archetype-card--popup">
+          <div class="archetype-meta">
+            <app-badge variant="warning" size="sm">Formularios Agiles</app-badge>
+            <app-text variant="h4" weight="bold">Popup (Captura Contextual)</app-text>
+            <app-text variant="body-sm" color="secondary">
+              Destinado a formularios pequenos, rapidos y paneles laterales de edicion. El boton de cierre flota por FUERA del contenedor de superficie.
+            </app-text>
+          </div>
+
+          <!-- Mockup visual del Popup -->
+          <div class="mockup-frame mockup-frame--hanging">
+            <div class="hanging-trigger-slot">
+              <app-icon-button
+                variant="hanging-close"
+                animation="none"
+                ariaLabel="Cerrar ventana emergente"
+                tooltip="Boton flotante exterior"
+                (clicked)="onHangingCloseTrigger()"
+              />
+            </div>
+            <div class="mockup-header">
+              <app-text variant="body-sm" weight="bold">Edicion de Contacto</app-text>
+            </div>
+            <div class="mockup-body">
+              <app-text variant="caption" color="secondary">
+                Formulario breve de modificacion inmediata de datos de contacto institucional.
+              </app-text>
+            </div>
+            <div class="mockup-footer">
+              <app-button variant="outline" size="sm" (buttonClick)="onSecondaryCancelAction()">
+                Cerrar
+              </app-button>
+              <app-button variant="primary" size="sm" (buttonClick)="onHangingCloseTrigger()">
+                Guardar
+              </app-button>
+            </div>
+          </div>
+
+          <div class="archetype-actions">
+            <app-button variant="primary" iconClass="fa-solid fa-window-restore" (buttonClick)="onLaunchPopup()">
+              Lanzar Popup Real
+            </app-button>
+          </div>
+        </article>
+      </app-row>
+    </section>
+
+    <!-- Seccion 2: Los 7 Patrones Canonicos de Cierre -->
+    <section class="blueprint-block">
+      <div class="block-heading">
+        <app-text variant="h3" weight="bold">2. Catalogo de los 7 Patrones de Cierre</app-text>
+        <app-text variant="body-sm" color="secondary">
+          Matriz interactiva con los componentes canonicos de Atomic UI, estado reactivo y sintaxis comprobada.
+        </app-text>
+      </div>
+
+      <div class="catalog-grid">
+        <!-- Variante 1: Hanging-Close -->
+        <article class="variant-tile">
+          <div class="tile-header">
+            <app-badge variant="primary" size="sm">Patron 1</app-badge>
+            <app-text variant="h4" weight="bold">Boton Flotante Exterior</app-text>
+          </div>
+          <app-text variant="body-sm" color="secondary">
+            Suspendido en la coordenada superior derecha de popups y paneles de edicion.
+          </app-text>
+          <div class="tile-stage">
+            <div class="relative-anchor">
+              <div class="mockup-mini-card">
+                <app-text variant="caption" weight="bold">Encabezado de Popup</app-text>
+              </div>
+              <div class="hanging-positioner">
+                <app-icon-button
+                  variant="hanging-close"
+                  animation="none"
+                  ariaLabel="Cerrar ventana exterior"
+                  (clicked)="onHangingCloseTrigger()"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="tile-code">
+            <code>app-icon-button variant="hanging-close" animation="none"</code>
+          </div>
+        </article>
+
+        <!-- Variante 2: Inside Close -->
+        <article class="variant-tile">
+          <div class="tile-header">
+            <app-badge variant="info" size="sm">Patron 2</app-badge>
+            <app-text variant="h4" weight="bold">Boton Integrado Interior</app-text>
+          </div>
+          <app-text variant="body-sm" color="secondary">
+            Ubicado dentro del contenedor de superficie. Integra aspas de transicion fisica para modales.
+          </app-text>
+          <div class="tile-stage">
+            <div class="inside-header-demo">
+              <app-text variant="caption" weight="bold">Encabezado de Modal</app-text>
+              <app-icon-button
+                variant="close"
+                animation="none"
+                ariaLabel="Cerrar modal interior"
+                (clicked)="onInsideCloseTrigger()"
+              />
+            </div>
+          </div>
+          <div class="tile-code">
+            <code>app-icon-button variant="close" animation="none"</code>
+          </div>
+        </article>
+
+        <!-- Variante 3: Ghost Dismiss -->
+        <article class="variant-tile">
+          <div class="tile-header">
+            <app-badge variant="secondary" size="sm">Patron 3</app-badge>
+            <app-text variant="h4" weight="bold">Boton Fantasma Contextual</app-text>
+          </div>
+          <app-text variant="body-sm" color="secondary">
+            Cierre transparente y plano para notificaciones flotantes, barras y avisos breves.
+          </app-text>
+          <div class="tile-stage">
+            <div class="toast-preview-bar">
+              <app-text variant="caption">Aviso rapido de sistema</app-text>
+              <app-icon-button
+                variant="ghost"
+                animation="none"
+                ariaLabel="Descartar aviso flotante"
+                (clicked)="onGhostCloseTrigger()"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </app-icon-button>
+            </div>
+          </div>
+          <div class="tile-actions">
+            <app-button variant="outline" size="sm" (buttonClick)="onLaunchToast()">
+              Probar Toast
+            </app-button>
+          </div>
+          <div class="tile-code">
+            <code>app-icon-button variant="ghost" animation="none"</code>
+          </div>
+        </article>
+
+        <!-- Variante 4: Table Action in Alert -->
+        <article class="variant-tile">
+          <div class="tile-header">
+            <app-badge variant="success" size="sm">Patron 4</app-badge>
+            <app-text variant="h4" weight="bold">Accion Compacta en Alertas</app-text>
+          </div>
+          <app-text variant="body-sm" color="secondary">
+            Control de 24 CSS unidades empaquetado en app-alert para descartar mensajes en linea.
+          </app-text>
+          <div class="tile-stage tile-stage--column">
+            <div class="table-action-showcase">
+              <app-text variant="caption" weight="bold">Standalone:</app-text>
+              <app-table-action
+                action="custom"
+                iconClass="fa-xmark"
+                label="Descartar elemento"
+                tone="neutral"
+                size="sm"
+                (triggered)="onTableActionTrigger()"
+              />
+            </div>
+            @if (!alertDismissed()) {
+              <app-alert kind="info" [closable]="true" (closed)="onAlertDismissed()">
+                Informacion de servicio con descarte por table-action integrado.
+              </app-alert>
+            } @else {
+              <app-button variant="outline" size="sm" iconClass="fa-solid fa-rotate-left" (buttonClick)="onRestoreAlert()">
+                Restaurar Alerta
+              </app-button>
+            }
+          </div>
+          <div class="tile-code">
+            <code>app-table-action action="custom" iconClass="fa-xmark" / app-alert [closable]="true"</code>
+          </div>
+        </article>
+
+        <!-- Variante 5: Removable Chips -->
+        <article class="variant-tile">
+          <div class="tile-header">
+            <app-badge variant="warning" size="sm">Patron 5</app-badge>
+            <app-text variant="h4" weight="bold">Etiquetas Removibles (Chips)</app-text>
+          </div>
+          <app-text variant="body-sm" color="secondary">
+            Descarte interactivo de criterios de busqueda y parametros mediante aspa accesible.
+          </app-text>
+          <div class="tile-stage">
+            <div class="chip-flow-area">
+              @for (tag of activeTags(); track tag) {
+                <app-chip variant="primary" size="sm" [removable]="true" (remove)="onRemoveTag(tag)">
+                  {{ tag }}
+                </app-chip>
+              }
+              @if (activeTags().length === 0) {
+                <app-text variant="caption" color="secondary">Todos los filtros fueron retirados.</app-text>
+              }
+            </div>
+          </div>
+          <div class="tile-actions">
+            <app-button variant="outline" size="sm" iconClass="fa-solid fa-arrows-rotate" (buttonClick)="onResetTags()">
+              Restablecer Filtros
+            </app-button>
+          </div>
+          <div class="tile-code">
+            <code>app-chip [removable]="true" (remove)="..."</code>
+          </div>
+        </article>
+
+        <!-- Variante 6: File Dismissal + Rich Dropzone -->
+        <article class="variant-tile">
+          <div class="tile-header">
+            <app-badge variant="primary" size="sm">Patron 6</app-badge>
+            <app-text variant="h4" weight="bold">Descarte de Adjuntos y Dropzone</app-text>
+          </div>
+          <app-text variant="body-sm" color="secondary">
+            Zona de carga avanzada con indicador de arrastre y eliminacion individual por archivo.
+          </app-text>
+          <div class="tile-stage tile-stage--column">
+            <app-file-input
+              label="Comprobantes Adjuntos"
+              hint="Arrastre archivos o examine localmente"
+              [multiple]="true"
+              density="compact"
+              (filesChange)="onFilesChanged($event)"
+            />
+            @if (attachedFiles().length > 0) {
+              <div class="attached-files-box">
+                <app-text variant="caption" weight="bold">Item Dismiss Action:</app-text>
+                @for (item of attachedFiles(); track item.name) {
+                  <div class="attached-file-row">
+                    <i class="fa-solid fa-file-pdf attached-file-icon" aria-hidden="true"></i>
+                    <div class="attached-file-info">
+                      <app-text variant="caption" weight="bold">{{ item.name }}</app-text>
+                      <app-text variant="caption" color="secondary">{{ (item.size / 1024).toFixed(0) }} KB</app-text>
+                    </div>
+                    <app-icon-button
+                      variant="ghost"
+                      animation="none"
+                      ariaLabel="Eliminar archivo adjunto"
+                      tooltip="Quitar archivo"
+                      (clicked)="onRemoveAttachedFile(item.name)"
+                    >
+                      <i class="fa-solid fa-xmark"></i>
+                    </app-icon-button>
+                  </div>
+                }
+              </div>
+            } @else {
+              <app-button variant="outline" size="sm" iconClass="fa-solid fa-rotate-left" (buttonClick)="onResetAttachedFiles()">
+                Restaurar archivo de muestra
+              </app-button>
+            }
+          </div>
+          <div class="tile-code">
+            <code>app-file-input [multiple]="true" density="compact"</code>
+          </div>
+        </article>
+
+        <!-- Variante 7: Secondary Outline Button -->
+        <article class="variant-tile">
+          <div class="tile-header">
+            <app-badge variant="secondary" size="sm">Patron 7</app-badge>
+            <app-text variant="h4" weight="bold">Boton Secundario Textual</app-text>
+          </div>
+          <app-text variant="body-sm" color="secondary">
+            Salida segura en pies de dialogo; recibe autofoco por defecto y sincroniza la tecla Escape.
+          </app-text>
+          <div class="tile-stage">
+            <div class="footer-demo-area">
+              <app-button variant="outline" size="md" (buttonClick)="onSecondaryCancelAction()">
+                Cancelar Salida
+              </app-button>
+              <app-button variant="primary" size="md" (buttonClick)="onSecondaryCancelAction()">
+                Procesar
+              </app-button>
+            </div>
+          </div>
+          <div class="tile-code">
+            <code>app-button variant="outline" (buttonClick)="..."</code>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Seccion 3: Garantias de Accesibilidad y Teclado -->
+    <section class="blueprint-block">
+      <div class="block-heading">
+        <app-text variant="h3" weight="bold">3. Reglas de Interaccion y Teclado (Doctrina A11y)</app-text>
+        <app-text variant="body-sm" color="secondary">
+          Mandatos inquebrantables de foco, navegacion y sobriedad interactiva para aplicaciones del ecosistema.
+        </app-text>
+      </div>
+
+      <div class="principles-grid">
+        <div class="principle-card">
+          <app-text variant="h4" weight="bold">Contrato de Escape Unificado</app-text>
+          <app-text variant="body-sm" color="secondary">
+            Presionar la tecla Escape en cualquier superposicion ejecuta exactamente la misma accion que el boton Cancelar secundario. Queda prohibido el cierre mudo o inconcluso.
+          </app-text>
+        </div>
+
+        <div class="principle-card">
+          <app-text variant="h4" weight="bold">Foco en Salida Segura</app-text>
+          <app-text variant="body-sm" color="secondary">
+            En dialogos de confirmacion o eliminacion, el foco inicial se posiciona en el boton Cancelar para prevenir pulsaciones accidentales de la tecla Intro.
+          </app-text>
+        </div>
+
+        <div class="principle-card">
+          <app-text variant="h4" weight="bold">Confinamiento de Foco (Trap)</app-text>
+          <app-text variant="body-sm" color="secondary">
+            La navegacion por tabulador cicla exclusivamente dentro de la ventana modal activa mientras permanezca abierta, restaurando el foco al disparador al cerrar.
+          </app-text>
+        </div>
+
+        <div class="principle-card">
+          <app-text variant="h4" weight="bold">Sobriedad Interactiva</app-text>
+          <app-text variant="body-sm" color="secondary">
+            Prohibida la introduccion de animaciones no canonicas, giros de iconos en hover o desajustes de transicion. Las acciones respetan la identidad visual sobria.
+          </app-text>
+        </div>
+      </div>
+    </section>
+  </div>
+</app-layout-shell>

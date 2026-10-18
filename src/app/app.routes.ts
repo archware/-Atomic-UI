@@ -65,6 +65,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('../blueprints/wizard-page/wizard-page.component').then(m => m.WizardPageComponent),
   },
+  {
+    path: 'dialogs',
+    loadComponent: () =>
+      import('../blueprints/dialogs-page/dialogs-page.component').then(m => m.DialogsPageComponent),
+  },
 
   // ===================================================
   // Rutas de ERROR
