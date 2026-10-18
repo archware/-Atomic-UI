@@ -2,8 +2,6 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { applicationConfig } from '@storybook/angular';
 import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import { importProvidersFrom } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CrudTableComponent } from '../blueprints/crud-table/crud-table.component';
 
 const meta: Meta<CrudTableComponent> = {
@@ -14,8 +12,7 @@ const meta: Meta<CrudTableComponent> = {
     applicationConfig({
       providers: [
         provideHttpClient(),
-        provideRouter([]),
-        importProvidersFrom(BrowserAnimationsModule)
+        provideRouter([])
       ],
     }),
   ],

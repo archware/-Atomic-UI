@@ -2,8 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { applicationConfig } from '@storybook/angular';
 import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import { importProvidersFrom, signal } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { signal } from '@angular/core';
 import { AnalyticsPageComponent } from '../blueprints/analytics-page/analytics-page.component';
 
 /*
@@ -55,8 +54,7 @@ const meta: Meta<AnalyticsPageComponent> = {
     applicationConfig({
       providers: [
         provideHttpClient(),
-        provideRouter([{ path: '**', children: [] }]),
-        importProvidersFrom(BrowserAnimationsModule),
+        provideRouter([{ path: '**', children: [] }])
       ],
     }),
   ],

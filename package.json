@@ -12,7 +12,6 @@
     "build:prod": "ng build --configuration production --base-href /-Atomic-UI/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:angular-scrollable-table": "node dist/angular-scrollable-table/server/server.mjs",
     "lint": "ng lint",
     "storybook": "ng run angular-scrollable-table:storybook",
     "build-storybook": "ng run angular-scrollable-table:build-storybook",

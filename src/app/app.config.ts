@@ -1,6 +1,6 @@
 import '@angular/compiler';
 import { ApplicationConfig, ErrorHandler, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, importProvidersFrom } from '@angular/core';
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { PreloadAllModules, provideRouter, withPreloading, withInMemoryScrolling } from '@angular/router';
 import { TranslateLoader, TranslateModule, TranslationObject } from '@ngx-translate/core';
 import { Observable } from 'rxjs';

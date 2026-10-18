@@ -2,8 +2,6 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { applicationConfig } from '@storybook/angular';
 import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import { importProvidersFrom } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorPagesComponent } from '../blueprints/error-pages/error-pages.component';
 
 /*
@@ -30,8 +28,7 @@ const meta: Meta<ErrorPagesComponent> = {
     applicationConfig({
       providers: [
         provideHttpClient(),
-        provideRouter([{ path: '**', children: [] }]),
-        importProvidersFrom(BrowserAnimationsModule),
+        provideRouter([{ path: '**', children: [] }])
       ],
     }),
   ],

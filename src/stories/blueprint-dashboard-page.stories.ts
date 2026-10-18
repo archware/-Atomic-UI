@@ -2,8 +2,6 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { applicationConfig } from '@storybook/angular';
 import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import { importProvidersFrom } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardPageComponent } from '../blueprints/dashboard-page/dashboard-page.component';
 
 const meta: Meta<DashboardPageComponent> = {
@@ -14,8 +12,7 @@ const meta: Meta<DashboardPageComponent> = {
     applicationConfig({
       providers: [
         provideHttpClient(),
-        provideRouter([]),
-        importProvidersFrom(BrowserAnimationsModule)
+        provideRouter([])
       ],
     }),
   ],

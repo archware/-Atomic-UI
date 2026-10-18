@@ -2,9 +2,8 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { applicationConfig } from '@storybook/angular';
 import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import { importProvidersFrom, signal } from '@angular/core';
+import { signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { userEvent, within } from 'storybook/test';
 import { SettingsPageComponent } from '../blueprints/settings-page/settings-page.component';
 
@@ -54,8 +53,7 @@ const meta: Meta<SettingsPageComponent> = {
     applicationConfig({
       providers: [
         provideHttpClient(),
-        provideRouter([{ path: '**', children: [] }]),
-        importProvidersFrom(BrowserAnimationsModule),
+        provideRouter([{ path: '**', children: [] }])
       ],
     }),
   ],

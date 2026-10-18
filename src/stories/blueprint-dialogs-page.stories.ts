@@ -2,8 +2,6 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { applicationConfig } from '@storybook/angular';
 import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import { importProvidersFrom } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogsPageComponent } from '../blueprints/dialogs-page/dialogs-page.component';
 
 const meta: Meta<DialogsPageComponent> = {
@@ -14,8 +12,7 @@ const meta: Meta<DialogsPageComponent> = {
     applicationConfig({
       providers: [
         provideHttpClient(),
-        provideRouter([]),
-        importProvidersFrom(BrowserAnimationsModule),
+        provideRouter([])
       ],
     }),
   ],
