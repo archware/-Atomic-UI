@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
 
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -85,17 +84,6 @@ interface ForgotPasswordResponse {
     FormRowComponent,
     DividerComponent,
     FooterComponent
-],
-  animations: [
-    trigger('fadeSlide', [
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(16px)' }),
-        animate('250ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
-      ]),
-      transition(':leave', [
-        animate('150ms ease-in', style({ opacity: 0, transform: 'translateY(-8px)' }))
-      ])
-    ])
   ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css'

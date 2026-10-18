@@ -116,3 +116,20 @@
   color: var(--text-color-secondary);
   line-height: 1.6;
 }
+
+.auth-card-panel {
+  display: block;
+  animation: auth-fade-slide 250ms ease-out;
+}
+
+@keyframes auth-fade-slide {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-4));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

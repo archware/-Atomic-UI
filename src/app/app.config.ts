@@ -1,7 +1,5 @@
 import '@angular/compiler';
 import { ApplicationConfig, ErrorHandler, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, importProvidersFrom } from '@angular/core';
-import { provideClientHydration } from '@angular/platform-browser';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { PreloadAllModules, provideRouter, withPreloading, withInMemoryScrolling } from '@angular/router';
 import { TranslateLoader, TranslateModule, TranslationObject } from '@ngx-translate/core';
@@ -49,8 +47,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withPreloading(PreloadAllModules), withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })),
     provideHttpClient(withInterceptors([authInterceptor, cacheInterceptor])),
     { provide: XhrFactory, useClass: MyXhrFactory },
-    provideAnimationsAsync(),
-    provideClientHydration(),
     { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),

@@ -31,7 +31,7 @@
     <!-- LOGIN FORM -->
     <!-- ============================================ -->
     @if (activeView() === 'login') {
-    <app-panel padding="lg" @fadeSlide>
+    <app-panel padding="lg" class="auth-card-panel">
       <app-text variant="h2" align="center" class="mb-2">Iniciar Sesión</app-text>
       <app-text variant="body-sm" color="muted" align="center" class="mb-6">Ingresa tus credenciales para
         continuar</app-text>
@@ -87,7 +87,7 @@
     <!-- REGISTER FORM -->
     <!-- ============================================ -->
     @if (activeView() === 'register') {
-    <app-panel padding="lg" @fadeSlide>
+    <app-panel padding="lg" class="auth-card-panel">
       <app-text variant="h2" align="center" class="mb-2">Crear Cuenta</app-text>
       <app-text variant="body-sm" color="muted" align="center" class="mb-6">Completa el formulario para
         registrarte</app-text>
@@ -157,7 +157,7 @@
     <!-- FORGOT PASSWORD FORM -->
     <!-- ============================================ -->
     @if (activeView() === 'forgot') {
-    <app-panel padding="lg" @fadeSlide>
+    <app-panel padding="lg" class="auth-card-panel">
       <app-text variant="h2" align="center" class="mb-2">Recuperar Contraseña</app-text>
       <app-text variant="body-sm" color="muted" align="center" class="mb-6">Ingresa tu correo para recibir
         instrucciones</app-text>
