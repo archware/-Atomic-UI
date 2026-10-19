@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "d1365d817e2e5f277acef4c82344b04dbdbd57aff88816d385065bc46a652454",
+  "sourceTreeSha256": "a2388115d5f29e02acfeff69925309220193a4118ea06403eb0db3a3a2b9e05b",
   "fileCount": 326,
   "files": [
     {
@@ -1340,8 +1340,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.css",
-      "bytes": 5677,
-      "sha256": "60604210dae058451ffa0bd98339a858c39063c9db421834092627c6d723f45b"
+      "bytes": 5729,
+      "sha256": "45b12f325c13c14c460fa573fa93824c004c55283056c6b592c659acc21c0144"
     },
     {
       "path": "src/app/shared/ui/organisms/topbar/topbar.component.html",
@@ -1490,8 +1490,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.css",
-      "bytes": 2914,
-      "sha256": "37e1c77351a0ecd297bec4c66e731eba21e58c51185254615ecf8c4bf4da6015"
+      "bytes": 2990,
+      "sha256": "dff96adf30e5e283d99dc2552fe27f43afc60912249526875b9d056bf3ba3e36"
     },
     {
       "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.html",
@@ -1635,8 +1635,8 @@
     },
     {
       "path": "src/styles/themes/index.css",
-      "bytes": 11099,
-      "sha256": "5091383e0d6416b5e39d0c31ef1e0334efc246c8bf5c6753628048c9755648fc"
+      "bytes": 11267,
+      "sha256": "a48c2c362fd7aa5fc55852abfe2cb62634da28ad5230d3d45007b1e336c1de6d"
     },
     {
       "path": "src/styles/themes/tokens.css",

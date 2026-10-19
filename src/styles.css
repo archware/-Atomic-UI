@@ -38,6 +38,21 @@
 /* Directivas compartidas */
 @import './app/shared/ui/atoms/tooltip/tooltip.css';
 
+/* =============================================================================
+   RESET CANONICO UNIVERSAL
+   ============================================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
 app-icon-button.is-hanging-close {
   position: absolute;
   top: -12px;
