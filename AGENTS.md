@@ -2,13 +2,13 @@
 title: "Reglas obligatorias del repositorio Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-09-30"
+last_updated: "2026-10-18"
 document_type: "instrucción para agentes"
 status: "vigente"
 version: "1.2.0"
 change_id: "ATOMIC-20260930-008"
-canonical_doctrine: "C:\\Users\\cotaha\\Documents\\Repos2\\DOCTRINA_MAESTRA_UNIFICADA.md"
-document_standard: "C:\\Users\\cotaha\\Documents\\Repos2\\ESTANDAR_DOCUMENTAL_AGENTES.md"
+canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
+document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 continuity_document: "docs/CONTINUIDAD_AGENTES.md"
 ---
 
@@ -59,12 +59,12 @@ qué confirmarías y por qué, y deja los ficheros donde están.
 Antes de cualquier auditoría o modificación se deben leer, en este orden:
 
 1. las restricciones de sistema, seguridad y autorización de la sesión;
-2. la [doctrina maestra unificada](C:/Users/cotaha/Documents/Repos2/DOCTRINA_MAESTRA_UNIFICADA.md),
+2. la [doctrina maestra unificada](C:/Users/cotaha/source/repos/.agent/doctrinas/DOCTRINA_MAESTRA_UNIFICADA.md),
    ubicada en
-   `C:\Users\cotaha\Documents\Repos2\DOCTRINA_MAESTRA_UNIFICADA.md`;
-3. el [estándar documental para continuidad de agentes](C:/Users/cotaha/Documents/Repos2/ESTANDAR_DOCUMENTAL_AGENTES.md),
+   `C:\Users\cotaha\source\repos\.agent\doctrinas\DOCTRINA_MAESTRA_UNIFICADA.md`;
+3. el [estándar documental para continuidad de agentes](C:/Users/cotaha/source/repos/.agent/doctrinas/ESTANDAR_DOCUMENTAL_AGENTES.md),
    ubicado en
-   `C:\Users\cotaha\Documents\Repos2\ESTANDAR_DOCUMENTAL_AGENTES.md`;
+   `C:\Users\cotaha\source\repos\.agent\doctrinas\ESTANDAR_DOCUMENTAL_AGENTES.md`;
 4. los `AGENTS.md` de la raíz y del presente repositorio;
 5. [Continuidad para agentes](./docs/CONTINUIDAD_AGENTES.md);
 6. el gobierno, el flujo del ecosistema, la doctrina de interfaz, la guía o
@@ -145,7 +145,7 @@ sitio, por qué rechazar una entrada obliga a borrar la anterior, y por qué
 ## Ciclo documental obligatorio
 
 1. Antes de editar se crea o actualiza una hoja de ruta bajo
-   `.agents/roadmaps/` con identificador, baseline, alcance, exclusiones,
+   `.agent/roadmaps/` con identificador, baseline, alcance, exclusiones,
    aceptación, validación y rollback.
 2. La unidad se implementa primero en esta fuente, se cataloga, prueba y valida;
    después se propaga con procedencia exacta o adaptación decidida.

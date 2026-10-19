@@ -13,7 +13,9 @@ export type SpinnerVariant = 'primary' | 'secondary' | 'white' | 'current';
  * ```html
  * <!-- En un botón -->
  * <app-button [disabled]="loading">
- *   <app-spinner *ngIf="loading" size="sm" variant="white"></app-spinner>
+ *   @if (loading) {
+ *     <app-spinner size="sm" variant="white"></app-spinner>
+ *   }
  *   {{ loading ? 'Guardando…' : 'Guardar' }}
  * </app-button>
  *

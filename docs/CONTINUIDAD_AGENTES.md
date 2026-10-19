@@ -2,13 +2,13 @@
 title: "Continuidad para agentes de Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-10-01"
+last_updated: "2026-10-18"
 document_type: "manual de continuidad"
 status: "vigente"
 version: "1.4.0"
 change_id: "ATOMIC-20261001-002"
-canonical_doctrine: "C:\\Users\\cotaha\\Documents\\Repos2\\DOCTRINA_MAESTRA_UNIFICADA.md"
-document_standard: "C:\\Users\\cotaha\\Documents\\Repos2\\ESTANDAR_DOCUMENTAL_AGENTES.md"
+canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
+document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
 
 # Continuidad para agentes de Atomic UI
@@ -161,17 +161,17 @@ IPC, estado y reglas de negocio; esas responsabilidades no se trasladan al ADN
 visual.
 
 La autoridad superior es la
-[Doctrina maestra unificada](C:/Users/cotaha/Documents/Repos2/DOCTRINA_MAESTRA_UNIFICADA.md),
+[Doctrina maestra unificada](C:/Users/cotaha/source/repos/.agent/doctrinas/DOCTRINA_MAESTRA_UNIFICADA.md),
 ubicada en
-`C:\Users\cotaha\Documents\Repos2\DOCTRINA_MAESTRA_UNIFICADA.md`. El paquete
+`C:\Users\cotaha\source\repos\.agent\doctrinas\DOCTRINA_MAESTRA_UNIFICADA.md`. El paquete
 documental se rige por el
-[Estándar documental para continuidad de agentes](C:/Users/cotaha/Documents/Repos2/ESTANDAR_DOCUMENTAL_AGENTES.md),
+[Estándar documental para continuidad de agentes](C:/Users/cotaha/source/repos/.agent/doctrinas/ESTANDAR_DOCUMENTAL_AGENTES.md),
 ubicado en
-`C:\Users\cotaha\Documents\Repos2\ESTANDAR_DOCUMENTAL_AGENTES.md`.
+`C:\Users\cotaha\source\repos\.agent\doctrinas\ESTANDAR_DOCUMENTAL_AGENTES.md`.
 El trabajo se asigna mediante el
-[Prompt maestro para continuidad de agentes](C:/Users/cotaha/Documents/Repos2/PROMPT_MAESTRO_CONTINUIDAD_AGENTES.md),
+[Prompt maestro para continuidad de agentes](C:/Users/cotaha/source/repos/.agent/guias/PROMPT_MAESTRO_CONTINUIDAD_AGENTES.md),
 ubicado en
-`C:\Users\cotaha\Documents\Repos2\PROMPT_MAESTRO_CONTINUIDAD_AGENTES.md`.
+`C:\Users\cotaha\source\repos\.agent\guias\PROMPT_MAESTRO_CONTINUIDAD_AGENTES.md`.
 
 ## Orden obligatorio de lectura
 

@@ -2,7 +2,7 @@
 title: 'Registro de cambios de Atomic UI'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-08-23'
-last_updated: '2026-10-01'
+last_updated: '2026-10-18'
 document_type: 'changelog'
 version: '5.22.0'
 status: 'vigente'
@@ -11,6 +11,12 @@ owner: 'COTAHA'
 ---
 
 # Registro de cambios
+
+## DOC-20261018-002 — referencias vigentes de gobierno
+
+Se corrigen las remisiones a doctrina, estándar y prompt en AGENTS y continuidad, y la ubicación para crear roadmaps nuevos. Se conservan los enlaces históricos y el congelamiento de publicación. No cambian componentes, catálogo, contratos, versión de paquete, dependencias ni procedencia.
+
+La validación documental y sus límites quedan en el [roadmap local](.agent/roadmaps/ROADMAP_DOC-20261018-002_referencias.md) y en la evidencia de la asignación de raíz. No se atribuye compilación o validación funcional a una corrección de enlaces. El rollback restituirá solo las sustituciones y entradas de esta unidad, preservando cambios concurrentes.
 
 ## ATOMIC-20261001-002 — calendario y selector en formularios
 

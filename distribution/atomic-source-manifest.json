@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "a2388115d5f29e02acfeff69925309220193a4118ea06403eb0db3a3a2b9e05b",
+  "sourceTreeSha256": "d8f16f276ef75087621b6d13898f4286aaeddc5da6b636236511adbfd6e9c903",
   "fileCount": 326,
   "files": [
     {
@@ -450,8 +450,8 @@
     },
     {
       "path": "src/app/shared/ui/atoms/spinner/spinner.component.ts",
-      "bytes": 1093,
-      "sha256": "10c5d79754247a55899f4cd0d2772051644727228e234b8063c84b6dde5c2a16"
+      "bytes": 1107,
+      "sha256": "95bf68a61c3038f691a5a0284d8bf6659d0a3e5779f6621a604006d54f180334"
     },
     {
       "path": "src/app/shared/ui/atoms/status-badge/status-badge.component.css",

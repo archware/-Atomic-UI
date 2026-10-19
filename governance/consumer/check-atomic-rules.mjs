@@ -42,6 +42,7 @@ import { join, relative, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 import signals from '../../tools/check-angular-signals.cjs';
+import controlFlow from '../../tools/check-angular-control-flow.cjs';
 import selectores from '../../tools/check-selector-prefixes.cjs';
 import valoresCss from '../../tools/check-invalid-css-values.js';
 import { auditarArbol as auditarEstilosExternos } from '../../tools/check-external-angular-styles.mjs';
@@ -83,6 +84,15 @@ export function auditarConsumidor(consumerRoot, { uiRoot, srcRoot }) {
       archivo: rel(item.rutaArchivo),
       linea: item.linea,
       detalle: `importa ${item.simbolo}; use input() y output()`,
+    });
+  }
+
+  for (const item of controlFlow.auditarArbol(rutaSrc)) {
+    hallazgos.push({
+      regla: 'control-flow',
+      archivo: rel(item.rutaArchivo),
+      linea: item.linea,
+      detalle: `directiva estructural ${item.directiva} prohibida; use control flow nativo (@if, @for, @switch)`,
     });
   }
 

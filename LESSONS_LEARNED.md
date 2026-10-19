@@ -4,7 +4,7 @@ author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
 document_type: "registro técnico"
 status: "en revisión"
-last_updated: "2026-10-01"
+last_updated: "2026-10-18"
 version: "1.4.0"
 last_change_id: "ATOMIC-20261001-002"
 owners:
@@ -12,6 +12,12 @@ owners:
 ---
 
 # Lecciones aprendidas de Atomic UI
+
+## DOC-20261018-002 — la referencia de doctrina también requiere procedencia
+
+- **Evidencia:** Las entradas AGENTS y continuidad seguían dirigiendo a la raíz antigua pese a existir una autoridad canónica diferente.
+- **Decisión:** Se corrigen solo los punteros vigentes y la ubicación de roadmaps nuevos, conservando los destinos históricos existentes.
+- **Prevención y límites:** La revisión documental de la asignación comprueba destinos y preservación. No certifica el código Atomic ni autoriza publicar, migrar consumidores o sustituir un contrato visual.
 
 La continuidad documental se rige por ECO-20260823-003; cada corte registra
 evidencia propia sin convertir pruebas parciales en certificación global.

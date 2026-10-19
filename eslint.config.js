@@ -84,6 +84,7 @@ export default tseslint.config(
       "no-unused-disable": "off",
       "@angular-eslint/template/click-events-have-key-events": "warn",
       "@angular-eslint/template/interactive-supports-focus": "warn",
+      "@angular-eslint/template/prefer-control-flow": "error",
     },
   }
 );

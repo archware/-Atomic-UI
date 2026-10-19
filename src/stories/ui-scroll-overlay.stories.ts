@@ -39,9 +39,11 @@ export const NativeViewport: Story = {
         [resetKey]="resetKey"
       >
         <div style="width: calc(var(--space-8) * 20); padding: var(--space-4);">
-          <p *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">
-            Resultado {{ i }} con contenido horizontal verificable.
-          </p>
+          @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
+            <p>
+              Resultado {{ i }} con contenido horizontal verificable.
+            </p>
+          }
         </div>
       </app-scroll-overlay>
     `,
@@ -73,12 +75,14 @@ export const Default: Story = {
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">
-              <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">{{i}}</td>
-              <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">Usuario {{i}}</td>
-              <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">usuario{{i}}@ejemplo.com</td>
-              <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">Activo</td>
-            </tr>
+            @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
+              <tr>
+                <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">{{i}}</td>
+                <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">Usuario {{i}}</td>
+                <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">usuario{{i}}@ejemplo.com</td>
+                <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">Activo</td>
+              </tr>
+            }
           </tbody>
         </table>
       </app-scroll-overlay>
@@ -109,12 +113,14 @@ export const WithColumnTemplate: Story = {
             </tr>
           </thead>
           <tbody class="rtc-body">
-            <tr class="rtc-row" *ngFor="let i of [1,2,3,4,5,6,7,8]">
-              <td>{{i}}</td>
-              <td>Usuario {{i}}</td>
-              <td>usuario{{i}}@ejemplo.com</td>
-              <td>Activo</td>
-            </tr>
+            @for (i of [1,2,3,4,5,6,7,8]; track i) {
+              <tr class="rtc-row">
+                <td>{{i}}</td>
+                <td>Usuario {{i}}</td>
+                <td>usuario{{i}}@ejemplo.com</td>
+                <td>Activo</td>
+              </tr>
+            }
           </tbody>
         </table>
       </app-scroll-overlay>
@@ -131,9 +137,11 @@ export const SmallHeight: Story = {
     template: `
       <app-scroll-overlay [maxBodyHeight]="maxBodyHeight">
         <div style="padding: 1rem;">
-          <p *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]" style="margin-bottom: 1rem;">
-            Párrafo {{i}}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </p>
+          @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
+            <p style="margin-bottom: 1rem;">
+              Párrafo {{i}}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          }
         </div>
       </app-scroll-overlay>
     `,
