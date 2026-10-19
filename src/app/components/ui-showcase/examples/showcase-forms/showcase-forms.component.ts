@@ -2,7 +2,13 @@ import { Component } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { FloatingInputComponent } from '../../../../shared/ui/atoms/floating-input/floating-input.component';
+import { InputComponent } from '../../../../shared/ui/atoms/input/input.component';
+import { SelectComponent } from '../../../../shared/ui/atoms/select/select.component';
+import { TextareaComponent } from '../../../../shared/ui/atoms/textarea/textarea.component';
+import { NumberInputComponent } from '../../../../shared/ui/atoms/number-input/number-input.component';
 import { Select2Component, Select2Option } from '../../../../shared/ui/molecules/select2/select2.component';
+import { ComboboxComponent } from '../../../../shared/ui/molecules/combobox/combobox.component';
+import { TagInputComponent } from '../../../../shared/ui/molecules/tag-input/tag-input.component';
 import { DatepickerComponent } from '../../../../shared/ui/molecules/datepicker/datepicker.component';
 import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
 import { DropdownComponent, DropdownOption } from '../../../../shared/ui/molecules/dropdown/dropdown.component';
@@ -18,7 +24,13 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
   imports: [
     FormsModule,
     FloatingInputComponent,
+    InputComponent,
+    SelectComponent,
+    TextareaComponent,
+    NumberInputComponent,
     Select2Component,
+    ComboboxComponent,
+    TagInputComponent,
     DatepickerComponent,
     RowComponent,
     DropdownComponent,
@@ -29,6 +41,60 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
     QueryToolbar
 ],
   template: `
+    <!-- MODOS DE ETIQUETA CANONICOS (standard | floating | floating-value) -->
+    <section class="showcase-section">
+      <h3 class="section-title">Modos de Etiqueta Unificados (standard · floating · floating-value)</h3>
+      <div class="input-variants-grid">
+        <app-input
+          label="Razón social (standard)"
+          variant="standard"
+          placeholder="Ej. Corporación Andina"
+          hint="Etiqueta superior fija"
+        />
+        <app-input
+          label="Razón social (floating)"
+          variant="floating"
+          placeholder="Ej. Corporación Andina"
+          hint="Sube al enfocar o con valor"
+        />
+        <app-input
+          label="Razón social (floating-value)"
+          variant="floating-value"
+          placeholder="Ej. Corporación Andina"
+          hint="Sube solo cuando hay valor"
+        />
+        <app-select
+          label="Moneda (floating)"
+          variant="floating"
+          placeholder="Seleccione moneda"
+          [options]="formCountryOptions"
+        />
+        <app-textarea
+          label="Observaciones (floating)"
+          variant="floating"
+          placeholder="Detalle de la operación"
+          [rows]="2"
+        />
+        <app-combobox
+          label="País (floating)"
+          variant="floating"
+          placeholder="Buscar país..."
+          [options]="formCountryOptions"
+        />
+        <app-tag-input
+          label="Etiquetas (floating)"
+          variant="floating"
+          placeholder="Agregar etiqueta..."
+        />
+        <app-number-input
+          label="Cantidad (floating)"
+          variant="floating"
+          [min]="0"
+          [max]="99"
+        />
+      </div>
+    </section>
+
     <!-- FLOATING INPUTS -->
     <form class="showcase-section" (submit)="$event.preventDefault()">
       <h3 class="section-title">Floating Inputs</h3>
@@ -209,8 +275,10 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
       <h3 class="section-title">Select2 (Búsqueda + Tags)</h3>
       <div class="input-variants-grid">
         <div>
-          <h4 class="subsection-title">Simple con búsqueda</h4>
+          <h4 class="subsection-title">Simple con búsqueda (etiqueta superior)</h4>
           <app-select2 
+            label="País de origen"
+            variant="standard"
             [options]="select2Options" 
             [(ngModel)]="select2Value"
             placeholder="Buscar país..."
@@ -219,8 +287,10 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
         </div>
 
         <div>
-          <h4 class="subsection-title">Multi-select con tags</h4>
+          <h4 class="subsection-title">Multi-select con tags (etiqueta flotante)</h4>
           <app-select2 
+            label="Países autorizados"
+            variant="floating"
             [options]="select2Options" 
             [(ngModel)]="select2MultiValue"
             [multiple]="true"
@@ -233,11 +303,22 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
     <!-- DROPDOWN -->
     <section class="showcase-section">
       <h3 class="section-title">Dropdown</h3>
-      <app-dropdown 
-        [options]="countryOptions" 
-        [(value)]="selectedCountry"
-        placeholder="Selecciona un país">
-      </app-dropdown>
+      <div class="input-variants-grid">
+        <app-dropdown 
+          label="País (standard)"
+          variant="standard"
+          [options]="countryOptions" 
+          [(value)]="selectedCountry"
+          placeholder="Selecciona un país">
+        </app-dropdown>
+        <app-dropdown 
+          label="País (floating)"
+          variant="floating"
+          [options]="countryOptions" 
+          [(value)]="selectedCountry"
+          placeholder="Selecciona un país">
+        </app-dropdown>
+      </div>
       <p class="mt-2 text-sm">Seleccionado: {{ selectedCountry || 'Ninguno' }}</p>
     </section>
 
@@ -272,11 +353,15 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
         <app-query-toolbar accessibleLabel="Búsqueda en cascada">
           <div query-filters style="display: flex; gap: 0.5rem; width: 100%; align-items: center; flex-wrap: wrap;">
             <app-select2 
+              label="Buscar por"
+              variant="floating"
               [options]="[{value: 'name', label: 'Nombre'}, {value: 'status', label: 'Estado'}]" 
               placeholder="Buscar por..."
               width="180px"
             ></app-select2>
             <app-select2 
+              label="Estado"
+              variant="floating"
               [options]="[{value: 'active', label: 'Activo'}, {value: 'inactive', label: 'Inactivo'}]" 
               placeholder="Valor"
               width="200px"

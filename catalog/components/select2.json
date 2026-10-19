@@ -1,0 +1,138 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "select2",
+  "layer": "molecule",
+  "selector": "app-select2",
+  "export": "Select2Component",
+  "source": "src/app/shared/ui/molecules/select2/select2.component.ts",
+  "purpose": "Selector enriquecido con búsqueda, selección simple o múltiple, modos de etiqueta superior o flotante y soporte CVA.",
+  "variants": [
+    {
+      "name": "label-mode",
+      "appliesWhen": "hay label",
+      "values": [
+        { "value": "standard", "meaning": "Etiqueta superior fija sobre el disparador; el marcador siempre se ve.", "default": true },
+        { "value": "floating", "meaning": "Etiqueta dentro del disparador que sube al enfocar, al abrir o con selección; el marcador permanece oculto mientras reposa." },
+        { "value": "floating-value", "meaning": "Etiqueta dentro del disparador que sube solo cuando hay selección activa." }
+      ]
+    },
+    {
+      "name": "selection-mode",
+      "values": [
+        { "value": false, "meaning": "Selección única.", "default": true },
+        { "value": true, "meaning": "Selección múltiple con etiquetas (tags) removibles." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "options", "type": "Select2Option[]", "default": [], "meaning": "Opciones disponibles con value, label y disabled opcional." },
+    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible del selector." },
+    { "name": "variant", "type": "'standard' | 'floating' | 'floating-value'", "default": "standard", "meaning": "Modo de etiqueta común a los controles de formulario." },
+    { "name": "ariaLabel", "type": "string", "default": "", "meaning": "Nombre accesible cuando no hay etiqueta visible." },
+    { "name": "placeholder", "type": "string", "default": "Seleccione...", "meaning": "Texto guía cuando no hay selección; oculto mientras la etiqueta flotante reposa." },
+    { "name": "searchLabel", "type": "string", "default": "Buscar opciones", "meaning": "Nombre accesible del campo de búsqueda interno." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Deshabilita el selector." },
+    { "name": "searchable", "type": "boolean", "default": true, "meaning": "Muestra u oculta el buscador dentro del menú desplegable." },
+    { "name": "multiple", "type": "boolean", "default": false, "meaning": "Habilita selección múltiple." },
+    { "name": "width", "type": "string", "default": "100%", "meaning": "Ancho CSS aplicado mediante variable local." }
+  ],
+  "outputs": [
+    { "name": "valueChange", "type": "string | number | null | (string | number | null)[]", "meaning": "Emite el nuevo valor o arreglo de valores al cambiar la selección." }
+  ],
+  "behavior": [
+    "Implementa ControlValueAccessor para selección simple o múltiple.",
+    "Oculta el placeholder mientras la etiqueta flotante reposa dentro del disparador.",
+    "Soporta navegación completa por teclado (ArrowDown, ArrowUp, Enter, Escape, Home, End)."
+  ],
+  "states": [
+    { "name": "closed", "meaning": "Menú cerrado." },
+    { "name": "open", "meaning": "Menú desplegado con lista y buscador opcional." },
+    { "name": "floating-resting", "meaning": "Etiqueta flotante en reposo dentro del disparador." },
+    { "name": "floating-elevated", "meaning": "Etiqueta flotante elevada sobre el borde superior." },
+    { "name": "disabled", "meaning": "Sin interacción." }
+  ],
+  "a11y": [
+    "El disparador expone role=combobox, aria-expanded, aria-haspopup=listbox y aria-labelledby hacia la etiqueta.",
+    "La lista expone role=listbox y cada opción role=option con aria-selected."
+  ],
+  "responsive": [
+    "Se adapta al ancho del contenedor mediante --select2-width."
+  ],
+  "tokens": [
+    "--control-height",
+    "--dropdown-bg",
+    "--dropdown-border",
+    "--dropdown-item-hover",
+    "--dropdown-item-selected",
+    "--dropdown-text",
+    "--field-label-color",
+    "--field-label-color-error",
+    "--field-label-color-floated",
+    "--field-label-duration",
+    "--field-label-floated-font-size",
+    "--field-label-floated-font-weight",
+    "--field-label-font-size",
+    "--field-label-font-weight",
+    "--field-label-gap",
+    "--field-label-inset",
+    "--field-label-line-height",
+    "--field-label-padding",
+    "--font-weight-body",
+    "--info-color-lighter",
+    "--info-color-text",
+    "--input-bg",
+    "--input-border",
+    "--input-border-focus",
+    "--input-border-hover",
+    "--input-border-width",
+    "--input-disabled-bg",
+    "--input-disabled-text",
+    "--input-placeholder",
+    "--input-shadow",
+    "--input-shadow-focus",
+    "--input-shadow-hover",
+    "--input-text",
+    "--radius-full",
+    "--radius-md",
+    "--radius-sm",
+    "--scrollbar-thumb",
+    "--scrollbar-thumb-hover",
+    "--scrollbar-track",
+    "--select2-min-width",
+    "--select2-width",
+    "--shadow-lg",
+    "--shadow-sm",
+    "--shadow-xs",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-7",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-secondary",
+    "--text-md",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-select2.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/molecules/select2/select2-variant.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Selector enriquecido canónico para filtros de barra de herramientas y selección con búsqueda."
+    ]
+  },
+  "canonicalFor": [
+    "select2",
+    "searchable-select",
+    "multi-select"
+  ]
+}

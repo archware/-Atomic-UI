@@ -1,0 +1,109 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "combobox",
+  "layer": "molecule",
+  "selector": "app-combobox",
+  "export": "ComboboxComponent",
+  "source": "src/app/shared/ui/molecules/combobox/combobox.component.ts",
+  "purpose": "Campo de autocompletado con filtrado libre normalizado, etiqueta superior o flotante, error y soporte CVA.",
+  "variants": [
+    {
+      "name": "label-mode",
+      "appliesWhen": "hay label",
+      "values": [
+        { "value": "standard", "meaning": "Etiqueta superior fija sobre el campo.", "default": true },
+        { "value": "floating", "meaning": "Etiqueta dentro del campo que sube al enfocar o cuando hay texto; el marcador se oculta mientras reposa." },
+        { "value": "floating-value", "meaning": "Etiqueta dentro del campo que sube solo cuando hay texto." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "options", "type": "ComboboxOption[]", "default": [], "meaning": "Lista de opciones con label, value, group, icon y disabled opcionales." },
+    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible asociada al input." },
+    { "name": "variant", "type": "'standard' | 'floating' | 'floating-value'", "default": "standard", "meaning": "Modo de etiqueta común a los controles de formulario." },
+    { "name": "ariaLabel", "type": "string", "default": "", "meaning": "Nombre accesible cuando no hay label visible." },
+    { "name": "placeholder", "type": "string", "default": "Buscar...", "meaning": "Marcador del campo; oculto mientras la etiqueta flotante reposa." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Deshabilita el control." },
+    { "name": "clearable", "type": "boolean", "default": true, "meaning": "Muestra botón para limpiar la búsqueda y la selección." },
+    { "name": "error", "type": "string", "default": "", "meaning": "Mensaje de error anunciado con role=alert." }
+  ],
+  "outputs": [
+    { "name": "optionSelected", "type": "ComboboxOption", "meaning": "Emite la opción elegida de la lista." },
+    { "name": "inputChange", "type": "string", "meaning": "Emite el texto tecleado durante la búsqueda." }
+  ],
+  "behavior": [
+    "Implementa ControlValueAccessor y vacía el texto visible cuando writeValue recibe null.",
+    "La etiqueta flotante vive dentro de .fl-control para centrarse únicamente respecto a la caja del input."
+  ],
+  "states": [
+    { "name": "closed", "meaning": "Lista de sugerencias cerrada." },
+    { "name": "open", "meaning": "Lista de sugerencias desplegada." },
+    { "name": "floating-resting", "meaning": "Etiqueta flotante en reposo sin foco ni texto." },
+    { "name": "floating-elevated", "meaning": "Etiqueta flotante sobre el borde superior." },
+    { "name": "error", "meaning": "Muestra mensaje de error y aria-invalid." },
+    { "name": "disabled", "meaning": "Bloqueado." }
+  ],
+  "a11y": [
+    "Implementa el patrón WAI-ARIA Combobox con role=combobox, aria-autocomplete=list, aria-controls y aria-activedescendant.",
+    "Asocia el error mediante aria-describedby y aria-errormessage."
+  ],
+  "responsive": [
+    "Ocupa el 100% del ancho disponible."
+  ],
+  "tokens": [
+    "--border-color",
+    "--control-height",
+    "--danger-color-text",
+    "--field-label-color",
+    "--field-label-color-error",
+    "--field-label-color-floated",
+    "--field-label-duration",
+    "--field-label-floated-font-size",
+    "--field-label-floated-font-weight",
+    "--field-label-font-size",
+    "--field-label-font-weight",
+    "--field-label-gap",
+    "--field-label-inset",
+    "--field-label-line-height",
+    "--field-label-padding",
+    "--font-weight-body",
+    "--input-bg",
+    "--input-border-focus",
+    "--input-disabled-bg",
+    "--input-disabled-text",
+    "--input-placeholder",
+    "--input-shadow-focus",
+    "--primary-color",
+    "--radius-md",
+    "--shadow-lg",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-8",
+    "--surface-background",
+    "--surface-hover",
+    "--text-color",
+    "--text-color-muted",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-combobox.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/molecules/combobox/combobox-variant.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Componente canónico de autocompletado con texto libre y lista filtrada."
+    ]
+  },
+  "canonicalFor": [
+    "combobox",
+    "autocomplete"
+  ]
+}

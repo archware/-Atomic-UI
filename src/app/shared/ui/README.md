@@ -983,10 +983,36 @@ permanece en la acción después del cambio de visibilidad. En WebView2 se
 suprimen `::-ms-reveal` y `::-ms-clear` dentro del propio componente para evitar
 controles duplicados aunque la hoja global de formularios no esté disponible.
 
+#### `InputComponent` y `SelectComponent` (modos de etiqueta unificados)
+
+```html
+<app-input label="Razón social" variant="standard" placeholder="Ej. Corporación Andina" />
+<app-input label="Razón social" variant="floating" placeholder="Ej. Corporación Andina" />
+<app-select label="Moneda" variant="floating-value" [options]="monedas" />
+```
+
+La familia canónica de entrada y selección simple es `InputComponent` (`app-input`) y
+`SelectComponent` (`app-select`); las exportaciones `Input` y `Select` y los selectores
+`prest-input`, `app-form-input`, `prest-select` y `app-form-select` permanecen como alias de
+compatibilidad hacia la misma implementación.
+
+Todos los controles con etiqueta (`InputComponent`, `SelectComponent`, `Select2Component`,
+`TextareaComponent`, `FloatingInputComponent`, `DatepickerComponent`, `ComboboxComponent`,
+`TagInputComponent`, `NumberInputComponent` y `DropdownComponent`) comparten el contrato
+`variant: 'standard' | 'floating' | 'floating-value'`:
+
+- `standard` (por defecto): etiqueta fija encima del control; el marcador (`placeholder`) siempre se ve.
+- `floating`: la etiqueta reposa dentro del control y sube al borde superior al enfocar o cuando hay valor; mientras reposa, el marcador permanece oculto para no superponerse.
+- `floating-value`: la etiqueta reposa dentro del control y sube únicamente cuando existe valor.
+
+La geometría de la etiqueta flotante se ancla a `.fl-control` (la caja del control) y su tipografía
+se gobierna exclusivamente mediante tokens `--field-label-*` verificados por `npm run check:field-labels`.
+
 #### `FormErrorComponent`
 
 ```html
 <app-form-error [control]="form.get('email')"></app-form-error>
+<app-form-error [customMessage]="error()" [messageId]="id() + '-error'"></app-form-error>
 ```
 
 #### `LanguageSwitcherComponent`

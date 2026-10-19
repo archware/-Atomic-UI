@@ -4,14 +4,20 @@ author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
 document_type: "registro técnico"
 status: "en revisión"
-last_updated: "2026-10-18"
+last_updated: "2026-10-19"
 version: "1.4.0"
-last_change_id: "ATOMIC-20261001-002"
+last_change_id: "ATOMIC-20261019-001"
 owners:
   - "COTAHA"
 ---
 
 # Lecciones aprendidas de Atomic UI
+
+## ATOMIC-20261019-001 — modos de etiqueta, reactividad CVA y geometría de etiqueta flotante
+
+- **Evidencia:** coexistían dos implementaciones para `app-input` (`InputComponent` e `Input`), tres modos de etiqueta inconexos, superposición entre etiqueta flotante en reposo y `placeholder`, desplazamiento vertical de la etiqueta flotante cuando aparecían mensajes de ayuda o error debajo del control, y falta de reactividad en `TextareaComponent` cuando `writeValue` llegaba desde `ngModel` o `FormControl`.
+- **Decisión:** consolidar `InputComponent` y `SelectComponent` como familia canónica (manteniendo `Input` y `Select` como alias de compatibilidad), compartir `FieldLabelVariant` (`standard` | `floating` | `floating-value`) y `field-label.css`, ocultar el marcador mientras la etiqueta flotante reposa, y anclar la etiqueta a `.fl-control`.
+- **Prevención:** la compuerta `scripts/check-field-label-tokens.mjs` descubre por barrido todo control con `NG_VALUE_ACCESSOR` y rechaza tamaños o posiciones literales (`px`, `rem`, `em`), `uppercase` y pesos numéricos en reglas de etiqueta, verificada con prueba negativa en `tools/test-field-label-gate.mjs`.
 
 ## DOC-20261018-002 — la referencia de doctrina también requiere procedencia
 

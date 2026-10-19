@@ -1,0 +1,55 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "form-error",
+  "layer": "atom",
+  "selector": "app-form-error",
+  "export": "FormErrorComponent",
+  "source": "src/app/shared/ui/atoms/form-error/form-error.component.ts",
+  "purpose": "Mensaje de validación centralizado para controles de formulario con soporte de AbstractControl o mensaje directo.",
+  "variants": [],
+  "inputs": [
+    { "name": "control", "type": "AbstractControl | null | undefined", "default": null, "meaning": "Control reactivo del que se extraen errores estándar (required, email, minlength, maxlength, min, max, pattern)." },
+    { "name": "customMessage", "type": "string | undefined", "default": null, "meaning": "Mensaje explícito de error que prevalece o se usa sin AbstractControl." },
+    { "name": "messageId", "type": "string | null", "default": null, "meaning": "Id del nodo de error para enlazar aria-describedby o aria-errormessage desde el control." },
+    { "name": "showOnTouched", "type": "boolean", "default": true, "meaning": "Si es true, exige que el control esté touched o dirty antes de mostrar errores del AbstractControl." }
+  ],
+  "outputs": [],
+  "states": [
+    { "name": "hidden", "meaning": "Sin errores visibles." },
+    { "name": "visible", "meaning": "Muestra icono y texto de validación con role=alert." }
+  ],
+  "a11y": [
+    "Emite role=alert y aria-live=polite cuando hay mensaje visible.",
+    "Permite enlazar el id mediante messageId con aria-describedby del campo."
+  ],
+  "responsive": [
+    "Fluye al ancho del campo contenedor y ajusta líneas largas."
+  ],
+  "tokens": [
+    "--danger-color-text",
+    "--form-error-gap",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-form-error.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/form-error/form-error.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Adoptado como pieza central de error en InputComponent, SelectComponent y TextareaComponent."
+    ]
+  },
+  "canonicalFor": [
+    "form-error",
+    "field-validation-message"
+  ]
+}

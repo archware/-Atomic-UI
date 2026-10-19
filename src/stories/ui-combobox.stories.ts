@@ -13,6 +13,11 @@ const meta: Meta<ComboboxComponent> = {
   tags: ['autodocs'],
   argTypes: {
     label: { control: 'text' },
+    variant: {
+      control: 'select',
+      options: ['standard', 'floating', 'floating-value'],
+      description: 'Modo de etiqueta: superior fija, flotante al enfocar o con valor, o flotante solo con valor',
+    },
     placeholder: { control: 'text' },
     disabled: { control: 'boolean' },
     clearable: { control: 'boolean' },
@@ -37,10 +42,24 @@ const FRUITS = [
 export const Default: Story = {
   args: {
     label: 'Selecciona una fruta',
+    variant: 'standard',
     placeholder: 'Escribe para buscar...',
     options: FRUITS,
     clearable: true,
   },
+};
+
+export const LabelModes: Story = {
+  render: () => ({
+    props: { options: FRUITS },
+    template: `
+      <div style="display:flex; flex-direction:column; gap:1rem; max-width:360px;">
+        <app-combobox label="Fruta (standard)" variant="standard" placeholder="Buscar fruta..." [options]="options"></app-combobox>
+        <app-combobox label="Fruta (floating)" variant="floating" placeholder="Buscar fruta..." [options]="options"></app-combobox>
+        <app-combobox label="Fruta (floating-value)" variant="floating-value" placeholder="Buscar fruta..." [options]="options"></app-combobox>
+      </div>
+    `,
+  }),
 };
 
 export const WithGroupedOptions: Story = {

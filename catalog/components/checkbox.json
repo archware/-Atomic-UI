@@ -1,0 +1,62 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "checkbox",
+  "layer": "atom",
+  "selector": "app-checkbox",
+  "export": "CheckboxComponent",
+  "source": "src/app/shared/ui/atoms/checkbox/checkbox.component.ts",
+  "purpose": "Casilla de verificación con soporte ControlValueAccessor para formularios reactivos o ngModel.",
+  "variants": [],
+  "inputs": [
+    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible asociada al checkbox." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Deshabilita la interacción." }
+  ],
+  "outputs": [],
+  "states": [
+    { "name": "unchecked", "meaning": "Casilla desmarcada." },
+    { "name": "checked", "meaning": "Casilla marcada." },
+    { "name": "disabled", "meaning": "Sin interacción." }
+  ],
+  "a11y": [
+    "Envuelve un input type=checkbox nativo dentro de un label accesible.",
+    "Conserva navegación por teclado (Espacio) y foco visible."
+  ],
+  "responsive": [
+    "Elemento en línea adaptable al contenedor."
+  ],
+  "tokens": [
+    "--border-color",
+    "--checkbox-icon-size",
+    "--checkbox-size",
+    "--input-disabled-bg",
+    "--input-disabled-text",
+    "--input-shadow-focus",
+    "--primary-color",
+    "--radius-md",
+    "--space-1",
+    "--space-3",
+    "--space-5",
+    "--surface-background",
+    "--text-color",
+    "--text-color-on-primary",
+    "--text-sm"
+  ],
+  "story": {
+    "path": "src/stories/ui-checkbox.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/checkbox/checkbox.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementa ControlValueAccessor; para elección controlada sin CVA existe ChoiceControl."
+    ]
+  },
+  "canonicalFor": [
+    "cva-checkbox"
+  ]
+}

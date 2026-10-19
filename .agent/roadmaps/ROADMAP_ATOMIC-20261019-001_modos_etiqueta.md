@@ -4,7 +4,7 @@ author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-10-19"
 last_updated: "2026-10-19"
 document_type: "roadmap de implementación"
-status: "en revisión"
+status: "vigente"
 version: "1.0.0"
 change_id: "ATOMIC-20261019-001"
 ---
@@ -45,10 +45,10 @@ Sin publicación, sin push, sin cambio de versión del paquete.
 - [x] Compuerta que rechaza tamaños literales en etiquetas de campo, con prueba negativa.
 
 ### P2 — documentación y evidencia
-- [ ] `var(--font-medium, 500)` retirado de `number-input` y `tag-input`.
-- [ ] Catálogo de los controles sin entrada.
-- [ ] Historias de Storybook y showcase con ambos modos.
-- [ ] CHANGELOG, LESSONS_LEARNED, CONTINUIDAD_AGENTES y README de UI.
+- [x] `var(--font-medium, 500)` retirado de `number-input` y `tag-input`.
+- [x] Catálogo de los controles sin entrada.
+- [x] Historias de Storybook y showcase con ambos modos.
+- [x] CHANGELOG, LESSONS_LEARNED, CONTINUIDAD_AGENTES y README de UI.
 
 ## Rollback
 
@@ -59,4 +59,6 @@ de Git (commit anterior a `ATOMIC-20261019-001`).
 
 ## Evidencia
 
-Se completa al cierre de cada fase en el informe de la asignación.
+- **P0 (`829a21a`):** `field-label.ts` / `field-label.css` creados; `InputComponent`, `SelectComponent`, `Select2Component` y `TextareaComponent` unificados bajo `variant: 'standard' | 'floating' | 'floating-value'`; `Input` y `Select` conservados como alias; 51 pruebas unitarias en verde.
+- **P1 (`1187463`):** `FloatingInputComponent`, `DatepickerComponent`, `ComboboxComponent`, `TagInputComponent`, `NumberInputComponent` y `DropdownComponent` alineados con `variant` y `field-label.css`; `FormErrorComponent` adoptado en `InputComponent`, `SelectComponent` y `TextareaComponent`; `scripts/check-field-label-tokens.mjs` + `tools/test-field-label-gate.mjs` en verde (17 hojas descubiertas, 0 literales); 11 suites / 86 pruebas unitarias en verde.
+- **P2:** 11 entradas nuevas en `catalog/components/` (`textarea`, `floating-textarea`, `form-error`, `checkbox`, `radio`, `toggle`, `rating`, `select2`, `combobox`, `tag-input`, `dropdown`); `catalog:check` (56 entradas) y `check:catalog-api` (43 componentes, 375 inputs) en verde; historias de Storybook y `showcase-forms.component.ts` actualizados con los tres modos de etiqueta; `npx ng build` y `npm run governance:check` en verde.

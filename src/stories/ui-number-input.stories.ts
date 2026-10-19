@@ -8,6 +8,7 @@ const meta: Meta<NumberInputComponent> = {
   tags: ['autodocs'],
   argTypes: {
     label:    { control: 'text' },
+    variant:  { control: 'select', options: ['standard', 'floating', 'floating-value'] },
     min:      { control: 'number' },
     max:      { control: 'number' },
     step:     { control: 'number' },
@@ -26,6 +27,21 @@ export const Default: Story = {
       props: { value: 5 },
       moduleMetadata: { imports: [FormsModule] },
       template: `<app-number-input label="Cantidad" [min]="0" [max]="100" [step]="1" [(ngModel)]="value"></app-number-input><p style="margin-top:.5rem;font-size:.85rem;color:var(--text-color-secondary)">Valor: {{ value }}</p>`,
+      imports: [NumberInputComponent, FormsModule],
+    }),
+  ],
+};
+
+export const LabelModes: Story = {
+  decorators: [
+    () => ({
+      props: { value: 10 },
+      template: `
+        <div style="display:flex; flex-direction:column; gap:1rem; max-width:260px;">
+          <app-number-input label="Cantidad (standard)" variant="standard" [min]="0" [max]="100" [(ngModel)]="value"></app-number-input>
+          <app-number-input label="Cantidad (floating)" variant="floating" [min]="0" [max]="100" [(ngModel)]="value"></app-number-input>
+        </div>
+      `,
       imports: [NumberInputComponent, FormsModule],
     }),
   ],

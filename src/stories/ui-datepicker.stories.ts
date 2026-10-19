@@ -12,6 +12,13 @@ const meta: Meta<DatepickerComponent> = {
     }),
   ],
   tags: ['autodocs'],
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['standard', 'floating', 'floating-value', 'outline', 'material', 'underline'],
+      description: 'Modo de etiqueta: standard (superior), floating o floating-value',
+    },
+  },
 };
 
 export default meta;
@@ -20,6 +27,18 @@ type Story = StoryObj<DatepickerComponent>;
 export const Default: Story = {
   render: () => ({
     template: `<app-datepicker label="Fecha"></app-datepicker>`,
+  }),
+};
+
+export const LabelModes: Story = {
+  render: () => ({
+    template: `
+      <div style="max-width: 320px; display: flex; flex-direction: column; gap: 1rem;">
+        <app-datepicker label="Fecha (standard)" variant="standard"></app-datepicker>
+        <app-datepicker label="Fecha (floating)" variant="floating"></app-datepicker>
+        <app-datepicker label="Fecha (floating-value)" variant="floating-value"></app-datepicker>
+      </div>
+    `,
   }),
 };
 

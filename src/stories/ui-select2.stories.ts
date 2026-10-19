@@ -13,6 +13,13 @@ const meta: Meta<Select2Component> = {
     }),
   ],
   tags: ['autodocs'],
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['standard', 'floating', 'floating-value'],
+      description: 'Modo de etiqueta: superior fija, flotante al enfocar/abrir o con valor, o flotante solo con valor',
+    },
+  },
 };
 
 export default meta;
@@ -38,9 +45,23 @@ export const Default: Story = {
   args: {
     options: countryOptions,
     label: 'País',
+    variant: 'standard',
     placeholder: 'Seleccionar país...',
     searchable: true,
   },
+};
+
+export const LabelModes: Story = {
+  render: () => ({
+    props: { options: countryOptions },
+    template: `
+      <div style="display:flex; flex-direction:column; gap:1rem; max-width:360px;">
+        <app-select2 label="País (standard)" variant="standard" placeholder="Seleccionar país..." [options]="options"></app-select2>
+        <app-select2 label="País (floating)" variant="floating" placeholder="Seleccionar país..." [options]="options"></app-select2>
+        <app-select2 label="País (floating-value)" variant="floating-value" placeholder="Seleccionar país..." [options]="options"></app-select2>
+      </div>
+    `,
+  }),
 };
 
 export const WithoutLabel: Story = {

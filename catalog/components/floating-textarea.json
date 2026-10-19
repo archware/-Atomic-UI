@@ -1,0 +1,103 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "floating-textarea",
+  "layer": "atom",
+  "selector": "app-floating-textarea",
+  "export": "FloatingTextareaComponent",
+  "source": "src/app/shared/ui/atoms/floating-textarea/floating-textarea.component.ts",
+  "purpose": "Área de texto con etiqueta flotante dedicada y variantes de elevación al enfocar o al escribir.",
+  "variants": [
+    {
+      "name": "variant",
+      "values": [
+        { "value": "floating", "meaning": "Etiqueta flotante que sube al enfocar o con valor.", "default": true },
+        { "value": "floating-value", "meaning": "Etiqueta flotante que sube únicamente cuando existe valor." },
+        { "value": "outline", "meaning": "Caja delineada con marcador directo sin etiqueta flotante." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "variant", "type": "FloatingTextareaVariant", "default": "floating", "meaning": "Variante de etiqueta flotante o caja delineada." },
+    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible del control." },
+    { "name": "placeholder", "type": "string", "default": "", "meaning": "Texto guía cuando el marcador es visible." },
+    { "name": "error", "type": "string", "default": "", "meaning": "Mensaje de error asociado al control." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Deshabilita la interacción." },
+    { "name": "readonly", "type": "boolean", "default": false, "meaning": "Activa el modo de solo lectura." },
+    { "name": "width", "type": "string", "default": "100%", "meaning": "Ancho CSS asignado mediante token local." },
+    { "name": "rows", "type": "number", "default": 3, "meaning": "Filas visibles iniciales." },
+    { "name": "clearable", "type": "boolean", "default": false, "meaning": "Muestra botón para limpiar el texto." },
+    { "name": "value", "type": "string", "default": "", "meaning": "Valor controlado bidireccional (model)." }
+  ],
+  "outputs": [
+    { "name": "clear", "type": "void", "meaning": "Se emite al limpiar el contenido mediante el botón clear." }
+  ],
+  "states": [
+    { "name": "resting", "meaning": "Sin foco ni valor; la etiqueta reposa dentro del área." },
+    { "name": "floated", "meaning": "Etiqueta elevada sobre el borde superior." },
+    { "name": "error", "meaning": "Estado inválido con borde de peligro." },
+    { "name": "disabled", "meaning": "Control bloqueado." }
+  ],
+  "a11y": [
+    "Vincula label y textarea con for e id único.",
+    "El botón limpiar expone aria-label descriptivo."
+  ],
+  "responsive": [
+    "Se adapta al ancho del contenedor mediante --floating-textarea-width."
+  ],
+  "tokens": [
+    "--control-height",
+    "--danger-color",
+    "--danger-color-text",
+    "--fi-min-width",
+    "--field-label-floated-font-size",
+    "--field-label-font-size",
+    "--field-label-inset",
+    "--floating-textarea-icon-cursor",
+    "--floating-textarea-width",
+    "--font-weight-body",
+    "--font-weight-emphasis",
+    "--hover-background-subtle",
+    "--info-color",
+    "--info-color-text",
+    "--input-bg",
+    "--input-border",
+    "--input-border-focus",
+    "--input-border-hover",
+    "--input-border-width",
+    "--input-disabled-bg",
+    "--input-disabled-text",
+    "--input-placeholder",
+    "--input-shadow",
+    "--input-shadow-focus",
+    "--input-shadow-hover",
+    "--input-text",
+    "--primary-color",
+    "--radius-md",
+    "--shadow-focus-primary",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-5",
+    "--space-7",
+    "--space-8",
+    "--text-color-secondary"
+  ],
+  "story": {
+    "path": null,
+    "status": "missing"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/floating-textarea/floating-textarea.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "legacy",
+    "notes": [
+      "Se recomienda TextareaComponent con variant='floating' o 'floating-value' para nuevos desarrollos."
+    ]
+  },
+  "canonicalFor": [
+    "floating-textarea"
+  ]
+}

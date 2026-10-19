@@ -1,0 +1,104 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "dropdown",
+  "layer": "molecule",
+  "selector": "app-dropdown",
+  "export": "DropdownComponent",
+  "source": "src/app/shared/ui/molecules/dropdown/dropdown.component.ts",
+  "purpose": "Menú desplegable de selección con soporte de iconos por opción, etiqueta superior o flotante y ControlValueAccessor.",
+  "variants": [
+    {
+      "name": "label-mode",
+      "appliesWhen": "hay label",
+      "values": [
+        { "value": "standard", "meaning": "Etiqueta superior fija sobre el botón disparador.", "default": true },
+        { "value": "floating", "meaning": "Etiqueta dentro del disparador que sube al enfocar, al abrir o cuando hay opción elegida." },
+        { "value": "floating-value", "meaning": "Etiqueta dentro del disparador que sube solo cuando hay opción elegida." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "options", "type": "DropdownOption[]", "default": [], "meaning": "Opciones value/label con icon y disabled opcionales." },
+    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible del control." },
+    { "name": "variant", "type": "'standard' | 'floating' | 'floating-value'", "default": "standard", "meaning": "Modo de etiqueta común a los controles de formulario." },
+    { "name": "ariaLabel", "type": "string", "default": "", "meaning": "Nombre accesible cuando no hay etiqueta visible." },
+    { "name": "value", "type": "string | number | undefined", "default": null, "meaning": "Valor seleccionado (model bidireccional)." },
+    { "name": "placeholder", "type": "string", "default": "Seleccionar...", "meaning": "Texto cuando no hay opción activa; oculto mientras la etiqueta flotante reposa." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Deshabilita el menú desplegable." }
+  ],
+  "outputs": [],
+  "behavior": [
+    "Implementa ControlValueAccessor además del model value.",
+    "Enlaza el botón disparador con la etiqueta mediante aria-labelledby o usa ariaLabel cuando no hay label."
+  ],
+  "states": [
+    { "name": "closed", "meaning": "Lista cerrada." },
+    { "name": "open", "meaning": "Lista desplegada." },
+    { "name": "floating-resting", "meaning": "Etiqueta flotante en reposo dentro del disparador." },
+    { "name": "floating-elevated", "meaning": "Etiqueta flotante sobre el borde superior." },
+    { "name": "disabled", "meaning": "Bloqueado." }
+  ],
+  "a11y": [
+    "El disparador expone aria-haspopup=listbox, aria-expanded y aria-labelledby hacia la etiqueta.",
+    "La lista expone role=listbox y cada elemento role=option con aria-selected."
+  ],
+  "responsive": [
+    "Ocupa el 100% del ancho de su contenedor."
+  ],
+  "tokens": [
+    "--border-color",
+    "--control-height",
+    "--field-label-color",
+    "--field-label-color-error",
+    "--field-label-color-floated",
+    "--field-label-duration",
+    "--field-label-floated-font-size",
+    "--field-label-floated-font-weight",
+    "--field-label-font-size",
+    "--field-label-font-weight",
+    "--field-label-gap",
+    "--field-label-inset",
+    "--field-label-line-height",
+    "--field-label-padding",
+    "--font-weight-body",
+    "--input-bg",
+    "--input-border-focus",
+    "--input-border-hover",
+    "--input-disabled-bg",
+    "--input-disabled-text",
+    "--input-placeholder",
+    "--input-shadow-focus",
+    "--primary-color",
+    "--primary-color-lighter",
+    "--radius-md",
+    "--shadow-lg",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--surface-background",
+    "--surface-hover",
+    "--text-color",
+    "--text-color-muted",
+    "--text-md",
+    "--text-sm"
+  ],
+  "story": {
+    "path": "src/stories/ui-dropdown.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/molecules/dropdown/dropdown-variant.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Soporta opciones con icono y los tres modos de etiqueta del ecosistema."
+    ]
+  },
+  "canonicalFor": [
+    "dropdown",
+    "icon-option-dropdown"
+  ]
+}

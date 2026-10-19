@@ -1,0 +1,114 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "textarea",
+  "layer": "atom",
+  "selector": "app-textarea",
+  "export": "TextareaComponent",
+  "source": "src/app/shared/ui/atoms/textarea/textarea.component.ts",
+  "purpose": "Campo de texto multilínea con etiqueta superior o flotante, contador de caracteres, ayuda, error y soporte CVA.",
+  "variants": [
+    {
+      "name": "label-mode",
+      "appliesWhen": "hay label",
+      "values": [
+        { "value": "standard", "meaning": "Etiqueta superior fija sobre el control; el marcador siempre se ve.", "default": true },
+        { "value": "floating", "meaning": "Etiqueta dentro del control que sube al enfocar o cuando hay valor; el marcador se oculta mientras la etiqueta reposa." },
+        { "value": "floating-value", "meaning": "Etiqueta dentro del control que sube solo cuando hay valor; enfocar un campo vacío no la mueve." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible del campo multilínea." },
+    { "name": "placeholder", "type": "string", "default": "", "meaning": "Texto guía cuando el campo está vacío; en modo flotante permanece oculto mientras la etiqueta reposa." },
+    { "name": "variant", "type": "TextareaVariant", "default": "standard", "meaning": "Modo de etiqueta común (standard | floating | floating-value) o alias históricos (outline | material)." },
+    { "name": "rows", "type": "number", "default": 4, "meaning": "Número inicial de filas visibles." },
+    { "name": "maxlength", "type": "number | null", "default": null, "meaning": "Límite máximo de caracteres permitidos." },
+    { "name": "showCounter", "type": "boolean", "default": false, "meaning": "Muestra el contador de caracteres cuando hay maxlength." },
+    { "name": "error", "type": "string", "default": "", "meaning": "Mensaje de validación renderizado con FormErrorComponent." },
+    { "name": "hint", "type": "string", "default": "", "meaning": "Texto de ayuda debajo del control cuando no hay error." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Deshabilita el control desde input además del estado CVA." },
+    { "name": "readonly", "type": "boolean", "default": false, "meaning": "Permite lectura y enfoque sin edición." }
+  ],
+  "outputs": [],
+  "behavior": [
+    "Implementa ControlValueAccessor con estado reactivo basado en señales para ngModel y FormControl.",
+    "La etiqueta flotante se posiciona respecto a la caja del textarea (.fl-control) sin desplazarse cuando aparece ayuda o error.",
+    "Oculta el placeholder nativo mientras la etiqueta flotante permanece en reposo."
+  ],
+  "states": [
+    { "name": "default", "meaning": "Editable en reposo." },
+    { "name": "focused", "meaning": "Con foco activo y anillo de enfoque." },
+    { "name": "floating-resting", "meaning": "Etiqueta flotante dentro del textarea sin valor ni foco; placeholder oculto." },
+    { "name": "floating-elevated", "meaning": "Etiqueta flotante elevada sobre el borde superior." },
+    { "name": "error", "meaning": "Muestra borde de peligro y mensaje mediante app-form-error." },
+    { "name": "disabled", "meaning": "Sin interacción por input o CVA." },
+    { "name": "readonly", "meaning": "Solo lectura." }
+  ],
+  "a11y": [
+    "Asocia label y textarea mediante for e id único por instancia.",
+    "Expone aria-invalid y aria-describedby hacia el mensaje de error o ayuda.",
+    "El mensaje de error utiliza app-form-error con role=alert."
+  ],
+  "responsive": [
+    "Ocupa el 100% del contenedor padre y permite redimensionamiento vertical."
+  ],
+  "tokens": [
+    "--border-color",
+    "--control-height",
+    "--danger-color",
+    "--danger-color-light",
+    "--field-label-color",
+    "--field-label-color-error",
+    "--field-label-color-floated",
+    "--field-label-duration",
+    "--field-label-floated-font-size",
+    "--field-label-floated-font-weight",
+    "--field-label-font-size",
+    "--field-label-font-weight",
+    "--field-label-gap",
+    "--field-label-inset",
+    "--field-label-line-height",
+    "--field-label-padding",
+    "--input-bg",
+    "--input-border",
+    "--input-border-focus",
+    "--input-border-hover",
+    "--input-border-width",
+    "--input-disabled-bg",
+    "--input-disabled-text",
+    "--input-placeholder",
+    "--input-shadow",
+    "--input-shadow-focus",
+    "--input-shadow-hover",
+    "--input-text",
+    "--primary-color",
+    "--radius-md",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--text-color-muted",
+    "--text-md",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-textarea.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/textarea/textarea.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Componente canónico para texto multilínea en formularios Atomic."
+    ]
+  },
+  "canonicalFor": [
+    "textarea",
+    "multiline-text",
+    "notes-field"
+  ]
+}

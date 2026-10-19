@@ -2,7 +2,7 @@
 title: 'Registro de cambios de Atomic UI'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-08-23'
-last_updated: '2026-10-18'
+last_updated: '2026-10-19'
 document_type: 'changelog'
 version: '5.22.0'
 status: 'vigente'
@@ -11,6 +11,10 @@ owner: 'COTAHA'
 ---
 
 # Registro de cambios
+
+## ATOMIC-20261019-001 — modos de etiqueta unificados (superior y flotante) en formularios
+
+Se unifica el contrato `variant` (`standard` | `floating` | `floating-value`) y la hoja compartida `atoms/form-field/field-label.css` con tokens `--field-label-*` en los controles con etiqueta (`InputComponent`, `SelectComponent`, `Select2Component`, `TextareaComponent`, `FloatingInputComponent`, `DatepickerComponent`, `ComboboxComponent`, `TagInputComponent`, `NumberInputComponent` y `DropdownComponent`). Se resuelve la colisión del selector `app-input` consolidando `InputComponent` y `SelectComponent` como familia canónica y conservando `Input` y `Select` como alias de compatibilidad. En modo flotante el marcador (`placeholder`) permanece oculto mientras la etiqueta reposa dentro del control, `TextareaComponent` reacciona a `ngModel` y `FormControl` mediante señal, la etiqueta flotante se centra respecto a `.fl-control` sin desplazarse con ayuda o error, y `FormErrorComponent` centraliza el mensaje de error. Se incorpora la compuerta `scripts/check-field-label-tokens.mjs` con su prueba negativa `tools/test-field-label-gate.mjs` y se completan 11 entradas del catálogo (`catalog/components/`). Consultar el [roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261019-001_modos_etiqueta.md).
 
 ## DOC-20261018-002 — referencias vigentes de gobierno
 

@@ -1,0 +1,65 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "toggle",
+  "layer": "atom",
+  "selector": "app-toggle",
+  "export": "ToggleComponent",
+  "source": "src/app/shared/ui/atoms/toggle/toggle.component.ts",
+  "purpose": "Interruptor binario (switch) con soporte ControlValueAccessor y semántica accesible role=switch.",
+  "variants": [],
+  "inputs": [
+    { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible junto al interruptor." },
+    { "name": "ariaLabel", "type": "string", "default": "", "meaning": "Nombre accesible cuando no se muestra etiqueta." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Deshabilita el interruptor." }
+  ],
+  "outputs": [],
+  "states": [
+    { "name": "off", "meaning": "Interruptor desactivado (aria-checked=false)." },
+    { "name": "on", "meaning": "Interruptor activado (aria-checked=true)." },
+    { "name": "disabled", "meaning": "Sin interacción." }
+  ],
+  "a11y": [
+    "Expone role=switch y aria-checked sincronizado con el estado.",
+    "Usa aria-labelledby cuando hay label visible o aria-label como respaldo."
+  ],
+  "responsive": [
+    "Se alinea en fila con su etiqueta sin quiebres de viewport propios."
+  ],
+  "tokens": [
+    "--border-color",
+    "--input-disabled-text",
+    "--input-shadow-focus",
+    "--primary-color",
+    "--radius-xl",
+    "--shadow-sm",
+    "--space-0",
+    "--space-1",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--space-8",
+    "--surface-background",
+    "--text-color",
+    "--text-color-secondary",
+    "--text-sm"
+  ],
+  "story": {
+    "path": "src/stories/ui-toggle.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/toggle/toggle.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Conserva el selector prest-toggle como alias transitorio."
+    ]
+  },
+  "canonicalFor": [
+    "toggle",
+    "boolean-switch"
+  ]
+}

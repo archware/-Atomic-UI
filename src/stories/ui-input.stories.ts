@@ -19,6 +19,11 @@ const meta: Meta<InputComponent> = {
       description: 'HTML input type',
     },
     label: { control: 'text', description: 'Label del campo' },
+    variant: {
+      control: 'select',
+      options: ['standard', 'floating', 'floating-value'],
+      description: 'Modo de etiqueta: superior fija, flotante al enfocar o con valor, o flotante solo con valor',
+    },
     placeholder: { control: 'text', description: 'Placeholder del input' },
     error: { control: 'text', description: 'Mensaje de error' },
     disabled: { control: 'boolean', description: 'Deshabilitar input' },
@@ -29,10 +34,22 @@ export default meta;
 type Story = StoryObj<InputComponent>;
 
 export const Default: Story = {
-  args: { label: 'Nombre completo', placeholder: 'Ingrese su nombre', type: 'text' },
+  args: { label: 'Nombre completo', placeholder: 'Ingrese su nombre', type: 'text', variant: 'standard' },
   render: (args) => ({
     props: args,
-    template: `<app-input [label]="label" [placeholder]="placeholder" [type]="type" [disabled]="disabled"></app-input>`,
+    template: `<app-input [label]="label" [variant]="variant" [placeholder]="placeholder" [type]="type" [disabled]="disabled"></app-input>`,
+  }),
+};
+
+export const LabelModes: Story = {
+  render: () => ({
+    template: `
+      <div style="display:flex; flex-direction:column; gap:1rem; max-width:400px;">
+        <app-input label="Etiqueta superior (standard)" variant="standard" placeholder="Siempre visible" hint="Modo por defecto"></app-input>
+        <app-input label="Flotante al enfocar (floating)" variant="floating" placeholder="Aparece al subir" hint="Oculta el marcador en reposo"></app-input>
+        <app-input label="Flotante solo con valor (floating-value)" variant="floating-value" placeholder="Aparece al escribir" hint="Enfocar vacío no eleva la etiqueta"></app-input>
+      </div>
+    `,
   }),
 };
 

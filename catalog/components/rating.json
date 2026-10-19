@@ -1,0 +1,71 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "rating",
+  "layer": "atom",
+  "selector": "app-rating",
+  "export": "RatingComponent",
+  "source": "src/app/shared/ui/atoms/rating/rating.component.ts",
+  "purpose": "Calificación por estrellas con soporte de medias estrellas, teclado y ControlValueAccessor.",
+  "variants": [
+    {
+      "name": "size",
+      "values": [
+        { "value": "sm", "meaning": "Estrellas compactas." },
+        { "value": "md", "meaning": "Tamaño estándar.", "default": true },
+        { "value": "lg", "meaning": "Estrellas destacadas." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "value", "type": "number", "default": 0, "meaning": "Puntuación actual (model bidireccional)." },
+    { "name": "max", "type": "number", "default": 5, "meaning": "Número total de estrellas." },
+    { "name": "size", "type": "'sm' | 'md' | 'lg'", "default": "md", "meaning": "Escala visual de las estrellas." },
+    { "name": "readonly", "type": "boolean", "default": false, "meaning": "Muestra la puntuación sin permitir cambios." },
+    { "name": "allowHalf", "type": "boolean", "default": false, "meaning": "Habilita incrementos de 0.5." },
+    { "name": "showValue", "type": "boolean", "default": false, "meaning": "Muestra el texto numérico junto a las estrellas." }
+  ],
+  "outputs": [],
+  "states": [
+    { "name": "interactive", "meaning": "Permite seleccionar o previsualizar con el cursor y el teclado." },
+    { "name": "readonly", "meaning": "Solo lectura." },
+    { "name": "disabled", "meaning": "Deshabilitado por CVA." }
+  ],
+  "a11y": [
+    "Cada estrella es un botón con role=radio y aria-label con el puntaje.",
+    "Soporta flechas izquierda/derecha/arriba/abajo para ajustar el valor."
+  ],
+  "responsive": [
+    "Contenedor inline-flex adaptable."
+  ],
+  "tokens": [
+    "--font-weight-body",
+    "--rating-star-empty",
+    "--rating-star-filled",
+    "--rating-star-hover",
+    "--space-1",
+    "--space-2",
+    "--space-4",
+    "--space-5",
+    "--space-6",
+    "--text-color-secondary",
+    "--text-sm"
+  ],
+  "story": {
+    "path": "src/stories/ui-rating.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Expone model(value) y ControlValueAccessor."
+    ]
+  },
+  "canonicalFor": [
+    "star-rating"
+  ]
+}

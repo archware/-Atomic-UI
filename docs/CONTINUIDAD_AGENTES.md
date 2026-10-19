@@ -2,11 +2,11 @@
 title: "Continuidad para agentes de Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-10-18"
+last_updated: "2026-10-19"
 document_type: "manual de continuidad"
 status: "vigente"
 version: "1.4.0"
-change_id: "ATOMIC-20261001-002"
+change_id: "ATOMIC-20261019-001"
 canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
@@ -15,6 +15,12 @@ document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDA
 
 Se mantiene el contrato documental ECO-20260823-003. Las unidades candidatas
 inferiores no equivalen a una nueva publicación del ADN.
+
+## Corte vigente ATOMIC-20261019-001
+
+`ATOMIC-20261019-001` unifica los modos de etiqueta (`variant`: `standard` | `floating` | `floating-value`) y los tokens `--field-label-*` en `InputComponent`, `SelectComponent`, `Select2Component`, `TextareaComponent`, `FloatingInputComponent`, `DatepickerComponent`, `ComboboxComponent`, `TagInputComponent`, `NumberInputComponent` y `DropdownComponent`. `InputComponent` y `SelectComponent` quedan como implementaciones únicas de `app-input` y `app-select`, mientras `Input` y `Select` se reexportan como alias de compatibilidad. En modo flotante el `placeholder` se oculta mientras la etiqueta reposa dentro de `.fl-control`.
+
+86 pruebas unitarias en 11 suites de variantes de formulario, la prueba negativa `tools/test-field-label-gate.mjs` y todas las compuertas de `npm run governance:check` pasan en verde. Sin publicación ni push. Evidencia y rollback en el [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261019-001_modos_etiqueta.md).
 
 ## Calendario y selector candidatos
 

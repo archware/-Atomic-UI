@@ -21,6 +21,11 @@ const meta: Meta<SelectComponent> = {
   ],
   argTypes: {
     label: { control: 'text', description: 'Label del select' },
+    variant: {
+      control: 'select',
+      options: ['standard', 'floating', 'floating-value'],
+      description: 'Modo de etiqueta: superior fija, flotante al enfocar o con valor, o flotante solo con valor',
+    },
     placeholder: { control: 'text', description: 'Opción vacía inicial' },
     error: { control: 'text', description: 'Mensaje de error' },
     disabled: { control: 'boolean', description: 'Deshabilitar select' },
@@ -31,10 +36,23 @@ export default meta;
 type Story = StoryObj<SelectComponent>;
 
 export const Default: Story = {
-  args: { label: 'Estado', placeholder: 'Seleccione un estado', options: SAMPLE_OPTIONS },
+  args: { label: 'Estado', variant: 'standard', placeholder: 'Seleccione un estado', options: SAMPLE_OPTIONS },
   render: (args) => ({
     props: args,
-    template: `<app-select [label]="label" [placeholder]="placeholder" [options]="options"></app-select>`,
+    template: `<app-select [label]="label" [variant]="variant" [placeholder]="placeholder" [options]="options"></app-select>`,
+  }),
+};
+
+export const LabelModes: Story = {
+  render: () => ({
+    props: { options: SAMPLE_OPTIONS },
+    template: `
+      <div style="display:flex; flex-direction:column; gap:1rem; max-width:360px;">
+        <app-select label="Estado (standard)" variant="standard" placeholder="Seleccione un estado" [options]="options"></app-select>
+        <app-select label="Estado (floating)" variant="floating" placeholder="Seleccione un estado" [options]="options"></app-select>
+        <app-select label="Estado (floating-value)" variant="floating-value" placeholder="Seleccione un estado" [options]="options"></app-select>
+      </div>
+    `,
   }),
 };
 

@@ -15,8 +15,8 @@ const meta: Meta<TextareaComponent> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'outline', 'filled'],
-      description: 'Visual variant',
+      options: ['standard', 'floating', 'floating-value', 'outline', 'material'],
+      description: 'Modo de etiqueta: standard (superior), floating, floating-value',
     },
     label: { control: 'text' },
     placeholder: { control: 'text' },
@@ -32,10 +32,22 @@ export default meta;
 type Story = StoryObj<TextareaComponent>;
 
 export const Default: Story = {
-  args: { label: 'Descripción', placeholder: 'Ingrese una descripción...', rows: 4 },
+  args: { label: 'Descripción', variant: 'standard', placeholder: 'Ingrese una descripción...', rows: 4 },
   render: (args) => ({
     props: args,
-    template: `<app-textarea [label]="label" [placeholder]="placeholder" [rows]="rows"></app-textarea>`,
+    template: `<app-textarea [label]="label" [variant]="variant" [placeholder]="placeholder" [rows]="rows"></app-textarea>`,
+  }),
+};
+
+export const LabelModes: Story = {
+  render: () => ({
+    template: `
+      <div style="display:flex; flex-direction:column; gap:1rem; max-width:420px;">
+        <app-textarea label="Descripción (standard)" variant="standard" placeholder="Siempre visible" [rows]="3"></app-textarea>
+        <app-textarea label="Descripción (floating)" variant="floating" placeholder="Aparece al enfocar" [rows]="3"></app-textarea>
+        <app-textarea label="Descripción (floating-value)" variant="floating-value" placeholder="Aparece al escribir" [rows]="3"></app-textarea>
+      </div>
+    `,
   }),
 };
 

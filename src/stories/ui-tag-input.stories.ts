@@ -8,6 +8,7 @@ const meta: Meta<TagInputComponent> = {
   tags: ['autodocs'],
   argTypes: {
     label:       { control: 'text' },
+    variant:     { control: 'select', options: ['standard', 'floating', 'floating-value'] },
     placeholder: { control: 'text' },
     maxTags:     { control: 'number' },
     disabled:    { control: 'boolean' },
@@ -31,6 +32,22 @@ export const Default: Story = {
         <p style="margin-top:.5rem;font-size:.85rem;color:var(--text-color-secondary)">
           Tags: {{ tags | json }}
         </p>
+      `,
+      imports: [TagInputComponent, FormsModule],
+    }),
+  ],
+};
+
+export const LabelModes: Story = {
+  decorators: [
+    () => ({
+      props: { tags: [] },
+      template: `
+        <div style="display:flex; flex-direction:column; gap:1rem; max-width:400px;">
+          <app-tag-input label="Etiquetas (standard)" variant="standard" placeholder="Escribe y presiona Enter"></app-tag-input>
+          <app-tag-input label="Etiquetas (floating)" variant="floating" placeholder="Escribe y presiona Enter"></app-tag-input>
+          <app-tag-input label="Etiquetas (floating-value)" variant="floating-value" placeholder="Escribe y presiona Enter"></app-tag-input>
+        </div>
       `,
       imports: [TagInputComponent, FormsModule],
     }),

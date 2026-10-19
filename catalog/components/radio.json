@@ -1,0 +1,77 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "radio",
+  "layer": "atom",
+  "selector": "app-radio",
+  "export": "RadioComponent",
+  "source": "src/app/shared/ui/atoms/radio/radio.component.ts",
+  "purpose": "Grupo de botones de opción (radio group) con orientación horizontal o vertical y soporte CVA.",
+  "variants": [
+    {
+      "name": "direction",
+      "values": [
+        { "value": "vertical", "meaning": "Apila las opciones verticalmente.", "default": true },
+        { "value": "horizontal", "meaning": "Distribuye las opciones en fila." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "name", "type": "string", "default": "radio-group-...", "meaning": "Atributo name compartido por los radios del grupo." },
+    { "name": "label", "type": "string", "default": "", "meaning": "Leyenda visible del grupo de opciones." },
+    { "name": "options", "type": "RadioOption[]", "default": [], "meaning": "Lista de opciones value/label/disabled." },
+    { "name": "direction", "type": "'horizontal' | 'vertical'", "default": "vertical", "meaning": "Orientación visual del grupo." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Deshabilita todo el grupo." }
+  ],
+  "outputs": [
+    { "name": "valueChange", "type": "string | number", "meaning": "Emite el valor seleccionado al cambiar de opción." }
+  ],
+  "states": [
+    { "name": "unselected", "meaning": "Ninguna opción activa." },
+    { "name": "selected", "meaning": "Una opción del grupo está activa." },
+    { "name": "disabled", "meaning": "Grupo u opción individual bloqueada." }
+  ],
+  "a11y": [
+    "Agrupa los radios bajo un contenedor role=radiogroup.",
+    "Usa inputs type=radio nativos asociados a su etiqueta."
+  ],
+  "responsive": [
+    "Permite salto de línea cuando la dirección es horizontal en pantallas estrechas."
+  ],
+  "tokens": [
+    "--border-color",
+    "--checkbox-size",
+    "--font-weight-body",
+    "--input-disabled-bg",
+    "--input-disabled-text",
+    "--input-shadow-focus",
+    "--primary-color",
+    "--radius-full",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--surface-background",
+    "--text-color",
+    "--text-color-on-primary",
+    "--text-sm"
+  ],
+  "story": {
+    "path": "src/stories/ui-radio.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/radio/radio.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementa ControlValueAccessor para selección exclusiva en grupo."
+    ]
+  },
+  "canonicalFor": [
+    "radio-group"
+  ]
+}
