@@ -38,11 +38,11 @@ Sin publicación, sin push, sin cambio de versión del paquete.
 - [x] Pruebas TestBed por modo, por reactividad, por geometría y por accesibilidad.
 
 ### P1 — consistencia
-- [ ] Tipografía de etiqueta por tokens `--field-label-*` en todos los controles.
-- [ ] `variant` en Datepicker/FloatingInput, Combobox, TagInput, NumberInput y Dropdown.
-- [ ] `FormErrorComponent` adoptado como mensaje de error central.
-- [ ] Blueprints (`crud-table`, `login-page`, `settings-page`, `pagina-crud`) verificados.
-- [ ] Compuerta que rechaza tamaños literales en etiquetas de campo, con prueba negativa.
+- [x] Tipografía de etiqueta por tokens `--field-label-*` en todos los controles.
+- [x] `variant` en Datepicker/FloatingInput, Combobox, TagInput, NumberInput y Dropdown.
+- [x] `FormErrorComponent` adoptado como mensaje de error central.
+- [x] Blueprints (`crud-table`, `login-page`, `settings-page`, `pagina-crud`) verificados.
+- [x] Compuerta que rechaza tamaños literales en etiquetas de campo, con prueba negativa.
 
 ### P2 — documentación y evidencia
 - [ ] `var(--font-medium, 500)` retirado de `number-input` y `tag-input`.

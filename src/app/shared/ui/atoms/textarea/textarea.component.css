@@ -92,10 +92,6 @@
   color: var(--text-color-muted);
 }
 
-.textarea-message--error {
-  color: var(--danger-color-text);
-}
-
 /* Character counter */
 .textarea-counter {
   position: absolute;

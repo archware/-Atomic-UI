@@ -43,6 +43,7 @@
                 <app-number-input
                   [inputId]="id() + '-' + row.code"
                   [label]="'Cantidad de ' + row.label"
+                  [labelHidden]="true"
                   [min]="0"
                   [max]="maxQuantity"
                   [step]="1"

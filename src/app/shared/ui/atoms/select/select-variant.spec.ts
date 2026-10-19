@@ -182,7 +182,7 @@ describe('SelectComponent - modos de etiqueta', () => {
       const raiz: HTMLElement = fixture.nativeElement;
 
       const etiqueta = etiquetaFlotante(raiz);
-      const mensaje = raiz.querySelector('.field__message--error');
+      const mensaje = raiz.querySelector('.form-error');
       expect(etiqueta?.parentElement?.classList.contains('fl-control')).toBe(true);
       expect(mensaje?.closest('.fl-control')).toBeNull();
       expect(nativo(raiz).getAttribute('aria-describedby')).toBe(mensaje?.id);
@@ -195,7 +195,7 @@ describe('SelectComponent - modos de etiqueta', () => {
       fixture.componentInstance.ayuda = 'Estado del registro';
       await fixture.whenStable();
       const ayuda = fixture.nativeElement.querySelector(
-        '.field__message:not(.field__message--error)',
+        '.field__message',
       );
       expect(ayuda?.textContent?.trim()).toBe('Estado del registro');
       expect(ayuda?.closest('.fl-control')).toBeNull();

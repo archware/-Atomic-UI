@@ -69,7 +69,7 @@
     }
   </div>
   @if (error()) {
-    <span class="field__message field__message--error" [id]="id() + '-error'">{{ error() }}</span>
+    <app-form-error [customMessage]="error() ?? undefined" [messageId]="id() + '-error'" />
   } @else if (hint()) {
     <span class="field__message" [id]="id() + '-hint'">{{ hint() }}</span>
   }

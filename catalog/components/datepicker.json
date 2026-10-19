@@ -9,18 +9,20 @@
   "purpose": "Selección de una fecha mediante calendario emergente con navegación por día, mes y año.",
   "variants": [
     {
-      "name": "input-variant",
+      "name": "label-mode",
       "values": [
-        { "value": "floating", "meaning": "Etiqueta flotante.", "default": true },
-        { "value": "underline", "meaning": "Control con línea inferior." },
-        { "value": "material", "meaning": "Tratamiento material del FloatingInput." },
-        { "value": "outline", "meaning": "Control delimitado." }
+        { "value": "standard", "meaning": "Etiqueta superior fija sobre el control; el marcador siempre se ve.", "default": true },
+        { "value": "floating", "meaning": "Etiqueta dentro del control que sube al enfocar o cuando hay valor; el marcador se oculta mientras la etiqueta reposa." },
+        { "value": "floating-value", "meaning": "Etiqueta dentro del control que sube solo cuando hay valor; enfocar un campo vacio no la mueve." },
+        { "value": "underline", "meaning": "Forma historica del modo flotante con subrayado." },
+        { "value": "material", "meaning": "Forma historica del modo flotante estilo Material." },
+        { "value": "outline", "meaning": "Forma historica del modo flotante con borde completo." }
       ]
     }
   ],
   "inputs": [
     { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta del FloatingInput interno." },
-    { "name": "variant", "type": "FloatingInputVariant", "default": "floating", "meaning": "Variante visual del disparador." },
+    { "name": "variant", "type": "FloatingInputVariant", "default": "standard", "meaning": "Modo de etiqueta comun (standard | floating | floating-value) mas las formas historicas del campo flotante. Por defecto standard." },
     { "name": "error", "type": "string", "default": "", "meaning": "Error presentado por el FloatingInput." },
     { "name": "disabled", "type": "boolean", "default": false, "meaning": "Bloquea apertura; CVA también puede establecerlo." }
   ],
@@ -28,7 +30,8 @@
   "behavior": [
     "Implementa ControlValueAccessor: writeValue acepta Date, string o null y onChange entrega Date o null.",
     "Presenta el valor como dd/MM/yyyy y cierra al seleccionar día o hacer clic fuera.",
-    "El flujo de selección es año, mes y día; prev/next cambia mes, año o bloque de 12 años según la vista."
+    "El flujo de selección es año, mes y día; prev/next cambia mes, año o bloque de 12 años según la vista.",
+    "En standard la etiqueta superior vive fuera de la caja del campo, de modo que el icono del calendario no se desplaza."
   ],
   "states": [
     { "name": "closed", "meaning": "Solo se presenta el disparador readonly." },
@@ -49,8 +52,21 @@
   ],
   "tokens": [
     "--border-color",
+    "--field-label-color",
+    "--field-label-color-error",
+    "--field-label-color-floated",
+    "--field-label-duration",
+    "--field-label-floated-font-size",
+    "--field-label-floated-font-weight",
+    "--field-label-font-size",
+    "--field-label-font-weight",
+    "--field-label-gap",
+    "--field-label-inset",
+    "--field-label-line-height",
+    "--field-label-padding",
     "--hover-background",
     "--hover-background-subtle",
+    "--input-placeholder",
     "--primary-color",
     "--radius-lg",
     "--radius-md",
@@ -70,11 +86,23 @@
     "--text-sm",
     "--text-xs"
   ],
-  "story": { "path": "src/stories/ui-datepicker.stories.ts", "status": "available" },
-  "test": { "path": "src/app/shared/ui/molecules/datepicker/datepicker.component.spec.ts", "status": "available" },
+  "story": {
+    "path": "src/stories/ui-datepicker.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/molecules/datepicker/datepicker-variant.spec.ts",
+    "status": "available"
+  },
   "stability": {
     "status": "candidate",
-    "notes": ["Usa OnPush; prueba fecha civil, bloqueo, navegación y botones sin submit. CVA entrega Date local: el consumidor debe adaptar a fecha civil ISO para su API.", "No expone min, max, required ni controlId y el popup fijo puede desbordar pantallas estrechas."]
+    "notes": [
+      "Usa OnPush; prueba fecha civil, bloqueo, navegación y botones sin submit. CVA entrega Date local: el consumidor debe adaptar a fecha civil ISO para su API.",
+      "No expone min, max, required ni controlId y el popup fijo puede desbordar pantallas estrechas."
+    ]
   },
-  "canonicalFor": ["date-input", "calendar-selection"]
+  "canonicalFor": [
+    "date-input",
+    "calendar-selection"
+  ]
 }

@@ -8,8 +8,10 @@ const path = require('node:path');
 // senal de que se dejo de migrar marcado y se empezo a normalizar la excepcion.
 const ALIAS_TRANSITORIOS_DEL_ADN = new Set([
   'atoms/choice-control/choice-control.ts',
-  'atoms/form-input/input.ts',
-  'atoms/form-select/select.ts',
+  // ATOMIC-20261019-001: form-input/input.ts y form-select/select.ts se unificaron en
+  // InputComponent y SelectComponent; los dos aliases prest-* son los mismos, no nuevos.
+  'atoms/input/input.component.ts',
+  'atoms/select/select.component.ts',
   'atoms/table-action/table-action.ts',
   'atoms/toggle/toggle.component.ts',
   'molecules/action-group/action-group.component.ts',

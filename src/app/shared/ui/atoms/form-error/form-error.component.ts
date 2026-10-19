@@ -32,6 +32,9 @@ export class FormErrorComponent {
   /** Custom error message (overrides automatic message) */
   readonly customMessage = input<string>();
 
+  /** Id del mensaje, para que el control lo relacione con `aria-describedby`. */
+  readonly messageId = input<string | null>(null);
+
   /** Whether to show error only when touched (default: true) */
   readonly showOnTouched = input(true);
 

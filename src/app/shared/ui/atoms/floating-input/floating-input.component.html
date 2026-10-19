@@ -1,6 +1,10 @@
+@if (variant() === 'standard' && tieneEtiqueta()) {
+  <label class="fl-label floating-input-top-label" [attr.for]="inputId()">{{ label() }}</label>
+}
 <div
       class="floating-input-wrapper"
-      [class]="'variant-' + variant()"
+      [class]="'variant-' + claseVisual()"
+      [class.label-solo-valor]="soloValor()"
       [class.focused]="isFocused()"
       [class.has-value]="hasValue()"
       [class.has-error]="error()"
@@ -21,9 +25,11 @@
         (input)="onInput($event)"
         (focus)="onFocus()"
         (blur)="onBlur()"
-        [attr.placeholder]="variant() === 'floating' || variant() === 'material' ? ' ' : placeholder()"
+        [attr.placeholder]="marcador()"
       />
-      <label class="floating-label" [attr.for]="inputId()">{{ label() }}</label>
+      @if (flotante()) {
+        <label class="floating-label" [attr.for]="inputId()">{{ label() }}</label>
+      }
       <span class="input-line"></span>
 
       <!-- Icon button (password toggle or custom icon) -->

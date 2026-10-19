@@ -43,7 +43,7 @@
   </div>
 
   @if (error()) {
-    <span class="textarea-message textarea-message--error" [id]="textareaId() + '-error'">{{ error() }}</span>
+    <app-form-error [customMessage]="error()" [messageId]="textareaId() + '-error'" />
   } @else if (hint()) {
     <span class="textarea-message" [id]="textareaId() + '-hint'">{{ hint() }}</span>
   }

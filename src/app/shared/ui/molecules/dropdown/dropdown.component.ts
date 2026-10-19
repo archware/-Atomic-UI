@@ -1,9 +1,16 @@
 import {
-  Component, signal, HostListener, model,
+  Component, signal, computed, HostListener, model,
   ElementRef, ChangeDetectionStrategy, forwardRef, OnChanges, SimpleChanges, inject,
   input
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  FIELD_LABEL_VARIANT_DEFAULT,
+  FieldLabelVariant,
+  esEtiquetaElevada,
+  esEtiquetaFlotante,
+  esMarcadorVisible,
+} from '../../atoms/form-field/field-label';
 
 export interface DropdownOption {
   value: string | number;
@@ -22,9 +29,25 @@ export interface DropdownOption {
     multi: true
   }],
   template: `
-    <div class="dropdown" [class.open]="isOpen()" [class.disabled]="isDisabled()">
+    <div class="dropdown fl-field" [class.fl-field--floating]="flotante()" [class.open]="isOpen()" [class.disabled]="isDisabled()">
+      @if (label() && !flotante()) {
+        <span class="fl-label" [id]="labelId">{{ label() }}</span>
+      }
+      <div class="fl-control dropdown-box">
+      @if (flotante()) {
+        <span
+          class="fl-label fl-label--floating"
+          [class.fl-label--floated]="elevada()"
+          [class.fl-label--disabled]="isDisabled()"
+          [id]="labelId"
+        >{{ label() }}</span>
+      }
       <button type="button"
         class="dropdown-trigger"
+        [attr.aria-labelledby]="label() ? labelId : null"
+        [attr.aria-label]="label() ? null : ariaLabel()"
+        (focus)="triggerFocused.set(true)"
+        (blur)="triggerFocused.set(false)"
         (click)="toggleDropdown()"
         (keydown.enter)="toggleDropdown()"
         (keydown.space)="toggleDropdown()"
@@ -38,7 +61,7 @@ export interface DropdownOption {
               <span class="option-icon">{{ selectedOption()!.icon }}</span>
             }
             {{ selectedOption()!.label }}
-          } @else {
+          } @else if (marcadorVisible()) {
             <span class="placeholder">{{ placeholder() }}</span>
           }
         </span>
@@ -48,6 +71,7 @@ export interface DropdownOption {
           </svg>
         </span>
       </button>
+      </div>
 
       @if (isOpen()) {
         <div class="dropdown-menu" role="listbox">
@@ -75,10 +99,15 @@ export interface DropdownOption {
       }
     </div>
   `,
-  styleUrl: './dropdown.component.css'
+  styleUrls: ['./dropdown.component.css', '../../atoms/form-field/field-label.css']
 })
 export class DropdownComponent implements OnChanges, ControlValueAccessor {
   readonly options = input<DropdownOption[]>([]);
+  readonly label = input('');
+  /** Modo de etiqueta comun: standard | floating | floating-value. */
+  readonly variant = input<FieldLabelVariant>(FIELD_LABEL_VARIANT_DEFAULT);
+  /** Nombre accesible cuando no hay etiqueta visible. */
+  readonly ariaLabel = input('');
   readonly value = model<string | number | undefined>(undefined);
   readonly placeholder = input('Seleccionar...');
   readonly disabled = input(false);
@@ -90,6 +119,25 @@ export class DropdownComponent implements OnChanges, ControlValueAccessor {
 
   isOpen = signal(false);
   selectedOption = signal<DropdownOption | null>(null);
+  readonly triggerFocused = signal(false);
+
+  private static labelCounter = 0;
+  protected readonly labelId = `dropdown-label-${++DropdownComponent.labelCounter}`;
+  protected readonly tieneEtiqueta = computed(() => this.label().length > 0);
+  protected readonly flotante = computed(() =>
+    esEtiquetaFlotante(this.variant(), this.tieneEtiqueta()),
+  );
+  protected readonly elevada = computed(() =>
+    esEtiquetaElevada(
+      this.variant(),
+      this.tieneEtiqueta(),
+      this.isOpen() || this.triggerFocused(),
+      this.selectedOption() !== null,
+    ),
+  );
+  protected readonly marcadorVisible = computed(() =>
+    esMarcadorVisible(this.variant(), this.tieneEtiqueta(), this.elevada()),
+  );
 
   // ControlValueAccessor
   private onChange: (value: string | number) => void = () => { /* noop */ };

@@ -109,6 +109,3 @@
   font-size: var(--text-xs);
 }
 
-.field__message--error {
-  color: var(--danger-color-text);
-}

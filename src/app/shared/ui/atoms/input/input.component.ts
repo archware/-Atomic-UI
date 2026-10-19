@@ -17,6 +17,7 @@ import {
   esEtiquetaFlotante,
   esMarcadorVisible,
 } from '../form-field/field-label';
+import { FormErrorComponent } from '../form-error/form-error.component';
 
 export type InputType = 'text' | 'password' | 'email' | 'tel' | 'date' | 'search' | 'number';
 export type InputMode = 'text' | 'numeric' | 'email' | 'tel' | 'search' | 'decimal';
@@ -34,6 +35,7 @@ export type InputMode = 'text' | 'numeric' | 'email' | 'tel' | 'search' | 'decim
 @Component({
   selector: 'app-input, prest-input, app-form-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormErrorComponent],
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css', '../form-field/field-label.css'],
   providers: [

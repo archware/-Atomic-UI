@@ -11,10 +11,12 @@
     {
       "name": "variant",
       "values": [
-        { "value": "floating", "meaning": "Etiqueta flotante sobre un control delimitado.", "default": true },
-        { "value": "underline", "meaning": "Control con línea inferior." },
-        { "value": "material", "meaning": "Control sin borde con etiqueta material." },
-        { "value": "outline", "meaning": "Control delimitado con etiqueta sobre el borde." }
+        { "value": "standard", "meaning": "Etiqueta superior fija sobre el control; el marcador siempre se ve." },
+        { "value": "floating", "meaning": "Etiqueta dentro del control que sube al enfocar o cuando hay valor; el marcador se oculta mientras la etiqueta reposa.", "default": true },
+        { "value": "floating-value", "meaning": "Etiqueta dentro del control que sube solo cuando hay valor; enfocar un campo vacio no la mueve." },
+        { "value": "underline", "meaning": "Forma historica del modo flotante con subrayado." },
+        { "value": "material", "meaning": "Forma historica del modo flotante estilo Material." },
+        { "value": "outline", "meaning": "Forma historica del modo flotante con borde completo." }
       ]
     },
     {
@@ -33,7 +35,7 @@
   ],
   "inputs": [
     { "name": "type", "type": "FloatingInputType", "default": "text", "meaning": "Tipo del input nativo." },
-    { "name": "variant", "type": "FloatingInputVariant", "default": "floating", "meaning": "Tratamiento visual del campo." },
+    { "name": "variant", "type": "FloatingInputVariant", "default": "floating", "meaning": "Modo de etiqueta comun (standard | floating | floating-value) mas las formas historicas underline, material y outline. Por defecto floating: es la identidad del componente." },
     { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible asociada por for e id." },
     { "name": "placeholder", "type": "string", "default": "", "meaning": "Texto auxiliar para variantes que no flotan." },
     { "name": "icon", "type": "string", "default": "", "meaning": "Contenido iconográfico compatible con consumidores existentes." },
@@ -58,7 +60,9 @@
     "Implementa ControlValueAccessor y mantiene las entradas y salidas históricas para consumidores basados en copia exacta.",
     "El control de contraseña usa un button nativo y conserva el foco al alternar el tipo del input.",
     "El estado de revelado no altera el valor, el evento onChange ni el propósito de autocomplete.",
-    "La fuente del componente suprime ::-ms-reveal y ::-ms-clear de forma scoped para evitar controles duplicados en WebView2 aunque el consumidor no cargue la regla global de formularios."
+    "La fuente del componente suprime ::-ms-reveal y ::-ms-clear de forma scoped para evitar controles duplicados en WebView2 aunque el consumidor no cargue la regla global de formularios.",
+    "El marcador solo se ve cuando la etiqueta ya subio; en reposo permanece oculto para no superponerse.",
+    "standard dibuja una etiqueta superior fuera de la caja y no crea etiqueta flotante."
   ],
   "states": [
     { "name": "empty", "meaning": "El campo no contiene valor y la etiqueta permanece en reposo." },
@@ -83,6 +87,18 @@
     "--control-height",
     "--danger-color",
     "--fi-min-width",
+    "--field-label-color",
+    "--field-label-color-error",
+    "--field-label-color-floated",
+    "--field-label-duration",
+    "--field-label-floated-font-size",
+    "--field-label-floated-font-weight",
+    "--field-label-font-size",
+    "--field-label-font-weight",
+    "--field-label-gap",
+    "--field-label-inset",
+    "--field-label-line-height",
+    "--field-label-padding",
     "--hover-background-subtle",
     "--info-color",
     "--input-bg",
@@ -108,11 +124,22 @@
     "--text-color-muted",
     "--text-color-secondary"
   ],
-  "story": { "path": "src/stories/ui-floating-input.stories.ts", "status": "available" },
-  "test": { "path": "src/app/shared/ui/atoms/floating-input/floating-input.component.spec.ts", "status": "available" },
+  "story": {
+    "path": "src/stories/ui-floating-input.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/floating-input/floating-input-variant.spec.ts",
+    "status": "available"
+  },
   "stability": {
     "status": "stable",
-    "notes": ["La API histórica se conserva para las aplicaciones que sincronizan el componente por procedencia exacta."]
+    "notes": [
+      "La API histórica se conserva para las aplicaciones que sincronizan el componente por procedencia exacta."
+    ]
   },
-  "canonicalFor": ["floating-form-control", "floating-password-control"]
+  "canonicalFor": [
+    "floating-form-control",
+    "floating-password-control"
+  ]
 }

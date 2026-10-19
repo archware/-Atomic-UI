@@ -14,6 +14,7 @@ import {
   esEtiquetaFlotante,
   esMarcadorVisible,
 } from '../form-field/field-label';
+import { FormErrorComponent } from '../form-error/form-error.component';
 
 /**
  * Modo de etiqueta del Textarea.
@@ -38,7 +39,7 @@ export type TextareaVariant = FieldLabelVariant | 'outline' | 'material';
 @Component({
   selector: 'app-textarea',
   standalone: true,
-  imports: [],
+  imports: [FormErrorComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {

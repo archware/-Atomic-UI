@@ -1,7 +1,16 @@
-<div class="number-input-wrapper" [class.number-input--disabled]="isDisabled()">
-      @if (label()) {
-        <label class="number-input__label" [attr.for]="inputId()">{{ label() }}</label>
+<div
+      class="number-input-wrapper fl-field"
+      [class.fl-field--floating]="flotante()"
+      [class.number-input--disabled]="isDisabled()"
+    >
+      @if (label() && !flotante()) {
+        <label
+          class="fl-label number-input__label"
+          [class.number-input__label--hidden]="labelHidden()"
+          [attr.for]="inputId()"
+        >{{ label() }}</label>
       }
+      <div class="fl-control">
       <div class="number-input__control">
         <button
           type="button"
@@ -39,6 +48,15 @@
         >
           <i class="fa-solid fa-plus" aria-hidden="true"></i>
         </button>
+      </div>
+      @if (flotante()) {
+        <label
+          class="fl-label fl-label--floating fl-label--floated"
+          [class.fl-label--error]="error()"
+          [class.fl-label--disabled]="isDisabled()"
+          [attr.for]="inputId()"
+        >{{ label() }}</label>
+      }
       </div>
       @if (hint()) {
         <span class="number-input__hint" [id]="inputId() + '-hint'">{{ hint() }}</span>

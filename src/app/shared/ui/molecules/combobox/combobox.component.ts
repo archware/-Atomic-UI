@@ -7,6 +7,13 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import {
+  FIELD_LABEL_VARIANT_DEFAULT,
+  FieldLabelVariant,
+  esEtiquetaElevada,
+  esEtiquetaFlotante,
+  esMarcadorVisible,
+} from '../../atoms/form-field/field-label';
 
 export interface ComboboxOption {
   value: string | number;
@@ -63,16 +70,16 @@ function normalizeSearch(value: string): string {
   ],
   template: `
     <div class="combobox" [class.combobox-open]="isOpen()" [class.combobox-disabled]="disabled">
-      @if (label()) {
-        <label class="combobox-label" [for]="inputId">{{ label() }}</label>
+      @if (label() && !flotante()) {
+        <label class="fl-label combobox-label" [for]="inputId">{{ label() }}</label>
       }
-      <div class="combobox-control" #controlRef>
+      <div class="fl-control combobox-control" #controlRef>
         <input
           #inputRef
           [id]="inputId"
           class="combobox-input"
           type="text"
-          [placeholder]="placeholder()"
+          [attr.placeholder]="marcador()"
           [disabled]="disabled"
           [value]="inputValue()"
           (input)="onInput($event)"
@@ -90,6 +97,15 @@ function normalizeSearch(value: string): string {
           [attr.aria-errormessage]="error() ? errorId : null"
           aria-haspopup="listbox"
         />
+        @if (flotante()) {
+          <label
+            class="fl-label fl-label--floating"
+            [class.fl-label--floated]="elevada()"
+            [class.fl-label--error]="error()"
+            [class.fl-label--disabled]="disabled"
+            [for]="inputId"
+          >{{ label() }}</label>
+        }
         @if (inputValue() && !disabled && clearable()) {
           <button
             type="button"
@@ -138,7 +154,7 @@ function normalizeSearch(value: string): string {
       }
     </div>
   `,
-  styleUrl: './combobox.component.css'
+  styleUrls: ['./combobox.component.css', '../../atoms/form-field/field-label.css']
 })
 export class ComboboxComponent implements ControlValueAccessor {
   private readonly platformId = inject(PLATFORM_ID);
@@ -159,6 +175,8 @@ export class ComboboxComponent implements ControlValueAccessor {
     return this._options;
   }
   readonly label = input('');
+  /** Modo de etiqueta comun: standard | floating | floating-value. */
+  readonly variant = input<FieldLabelVariant>(FIELD_LABEL_VARIANT_DEFAULT);
   readonly ariaLabel = input('');
   readonly placeholder = input('Buscar...');
   // El alias permite combinar el estado del binding con el estado entregado por ControlValueAccessor.
@@ -182,6 +200,8 @@ export class ComboboxComponent implements ControlValueAccessor {
 
   value: string | number | null = null;
   inputValue = signal('');
+  /** El campo de texto tiene el foco del teclado. */
+  readonly enfocado = signal(false);
   isOpen = signal(false);
   highlightedIndex = signal(-1);
   private _options: ComboboxOption[] = [];
@@ -230,6 +250,19 @@ export class ComboboxComponent implements ControlValueAccessor {
     );
   });
 
+  protected readonly tieneEtiqueta = computed(() => this.label().length > 0);
+  protected readonly flotante = computed(() =>
+    esEtiquetaFlotante(this.variant(), this.tieneEtiqueta()),
+  );
+  protected readonly elevada = computed(() =>
+    esEtiquetaElevada(this.variant(), this.tieneEtiqueta(), this.enfocado(), this.inputValue().length > 0),
+  );
+  protected readonly marcador = computed(() =>
+    esMarcadorVisible(this.variant(), this.tieneEtiqueta(), this.elevada())
+      ? this.placeholder() || null
+      : null,
+  );
+
   activeOptionId = computed(() => {
     const index = this.highlightedIndex();
     return this.isOpen() && index >= 0 ? this.optionId(index) : null;
@@ -240,6 +273,9 @@ export class ComboboxComponent implements ControlValueAccessor {
 
   writeValue(val: string | number | null): void {
     this.value = val;
+    // Un reset del formulario (null) tambien tiene que vaciar el texto que ya se ve:
+    // reconcileSelection() no hace nada con null para no borrar lo que la persona teclea.
+    if (val === null) this.inputValue.set('');
     this.reconcileSelection();
   }
 
@@ -263,11 +299,13 @@ export class ComboboxComponent implements ControlValueAccessor {
 
   onFocus(): void {
     if (this.disabled) return;
+    this.enfocado.set(true);
     this.isOpen.set(true);
     this.ensureEnabledHighlight();
   }
 
   onBlur(): void {
+    this.enfocado.set(false);
     this.onTouched();
     setTimeout(() => this.isOpen.set(false), 150);
   }

@@ -2,6 +2,7 @@ import { Component, ChangeDetectionStrategy, forwardRef, signal, computed, Eleme
 import { CommonModule, DatePipe } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FloatingInputComponent, FloatingInputVariant } from '../../atoms/floating-input/floating-input.component';
+import { FIELD_LABEL_VARIANT_DEFAULT } from '../../atoms/form-field/field-label';
 
 @Component({
   selector: 'app-datepicker',
@@ -17,11 +18,12 @@ import { FloatingInputComponent, FloatingInputVariant } from '../../atoms/floati
     DatePipe
   ],
   templateUrl: './datepicker.component.html',
-  styleUrls: ['./datepicker.component.css']
+  styleUrls: ['./datepicker.component.css', '../../atoms/form-field/field-label.css']
 })
 export class DatepickerComponent implements ControlValueAccessor {
   readonly label = input('');
-  readonly variant = input<FloatingInputVariant>('floating');
+  /** Modo de etiqueta comun: standard (superior) | floating | floating-value; admite ademas las formas historicas. */
+  readonly variant = input<FloatingInputVariant>(FIELD_LABEL_VARIANT_DEFAULT);
   readonly error = input('');
   readonly disabled = input(false);
   private readonly disabledByForm = signal(false);
@@ -29,6 +31,13 @@ export class DatepickerComponent implements ControlValueAccessor {
   isDisabled(): boolean {
     return this.disabled() || this.disabledByForm();
   }
+
+  private static labelCounter = 0;
+  readonly labelId = `datepicker-label-${++DatepickerComponent.labelCounter}`;
+  protected readonly flotante = computed(() => this.label().length > 0 && this.variant() !== 'standard');
+  /** En modo standard el campo interno se dibuja como caja sin etiqueta propia. */
+  protected readonly variantInterna = computed<FloatingInputVariant>(() => this.flotante() ? this.variant() : 'outline');
+  protected readonly etiquetaInterna = computed(() => this.flotante() ? this.label() : '');
 
   // State
   isOpen = signal(false);

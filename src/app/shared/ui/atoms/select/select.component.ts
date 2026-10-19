@@ -20,6 +20,7 @@ import {
   esEtiquetaElevada,
   esEtiquetaFlotante,
 } from '../form-field/field-label';
+import { FormErrorComponent } from '../form-error/form-error.component';
 
 export interface SelectOption {
   readonly value: string | number;
@@ -41,7 +42,7 @@ export interface SelectOption {
 @Component({
   selector: 'app-select, prest-select, app-form-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TranslateModule],
+  imports: [TranslateModule, FormErrorComponent],
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.css', '../form-field/field-label.css'],
   providers: [

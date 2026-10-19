@@ -181,7 +181,7 @@ describe('InputComponent - modos de etiqueta', () => {
       const raiz: HTMLElement = fixture.nativeElement;
 
       const etiqueta = etiquetaFlotante(raiz);
-      const mensaje = raiz.querySelector('.field__message--error');
+      const mensaje = raiz.querySelector('.form-error');
       expect(etiqueta?.parentElement?.classList.contains('fl-control')).toBe(true);
       expect(mensaje?.closest('.fl-control')).toBeNull();
       expect(campo(raiz).getAttribute('aria-describedby')).toBe(mensaje?.id);
@@ -194,7 +194,7 @@ describe('InputComponent - modos de etiqueta', () => {
       fixture.componentInstance.ayuda = 'Como figura en su DNI';
       await fixture.whenStable();
       const raiz: HTMLElement = fixture.nativeElement;
-      const ayuda = raiz.querySelector('.field__message:not(.field__message--error)');
+      const ayuda = raiz.querySelector('.field__message');
 
       expect(ayuda?.textContent?.trim()).toBe('Como figura en su DNI');
       expect(ayuda?.closest('.fl-control')).toBeNull();

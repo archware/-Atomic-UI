@@ -7,9 +7,21 @@
   "export": "NumberInputComponent",
   "source": "src/app/shared/ui/atoms/number-input/number-input.component.ts",
   "purpose": "Entrada numérica con escritura directa, botones de incremento y decremento, límites y soporte CVA.",
-  "variants": [],
+  "variants": [
+    {
+      "name": "label-mode",
+      "appliesWhen": "hay label",
+      "values": [
+        { "value": "standard", "meaning": "Etiqueta superior fija sobre el control; el marcador siempre se ve.", "default": true },
+        { "value": "floating", "meaning": "Etiqueta dentro del control que sube al enfocar o cuando hay valor; el marcador se oculta mientras la etiqueta reposa." },
+        { "value": "floating-value", "meaning": "Etiqueta dentro del control que sube solo cuando hay valor; enfocar un campo vacio no la mueve." }
+      ]
+    }
+  ],
   "inputs": [
     { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible y nombre accesible del campo." },
+    { "name": "variant", "type": "'standard' | 'floating' | 'floating-value'", "default": "standard", "meaning": "Modo de etiqueta comun. Un campo numerico siempre contiene un valor, por lo que en los modos flotantes la etiqueta queda elevada sobre el borde." },
+    { "name": "labelHidden", "type": "boolean", "default": false, "meaning": "Oculta la etiqueta visualmente y la conserva como nombre accesible; sustituye a ocultarla con ::ng-deep desde el consumidor." },
     { "name": "hint", "type": "string", "default": "", "meaning": "Ayuda visible bajo el control." },
     { "name": "error", "type": "string", "default": "", "meaning": "Error visible anunciado con role=alert." },
     { "name": "min", "type": "number", "default": 0, "meaning": "Límite inferior y condición que deshabilita Decrementar." },
@@ -24,7 +36,8 @@
   "behavior": [
     "Implementa ControlValueAccessor; writeValue convierte null o undefined en cero.",
     "increment y decrement limitan el resultado con max y min antes de notificar CVA y valueChange.",
-    "La escritura directa ignora texto no numérico y limita un número válido al intervalo min/max."
+    "La escritura directa ignora texto no numérico y limita un número válido al intervalo min/max.",
+    "Los modos flotantes dibujan la etiqueta sobre el borde de la caja que contiene los botones y el campo, fuera del recorte de la caja interna."
   ],
   "states": [
     { "name": "normal", "meaning": "Permite escritura y ambos ajustes cuando está dentro de límites." },
@@ -46,7 +59,20 @@
   "tokens": [
     "--border-color",
     "--danger-color",
+    "--field-label-color",
+    "--field-label-color-error",
+    "--field-label-color-floated",
+    "--field-label-duration",
+    "--field-label-floated-font-size",
+    "--field-label-floated-font-weight",
+    "--field-label-font-size",
+    "--field-label-font-weight",
+    "--field-label-gap",
+    "--field-label-inset",
+    "--field-label-line-height",
+    "--field-label-padding",
     "--font-medium",
+    "--input-placeholder",
     "--primary-color",
     "--radius-md",
     "--space-1",
@@ -57,17 +83,29 @@
     "--surface-hover",
     "--surface-section",
     "--text-color",
-    "--text-color-on-primary",
     "--text-color-muted",
+    "--text-color-on-primary",
     "--text-color-secondary",
     "--text-sm",
     "--text-xs"
   ],
-  "story": { "path": "src/stories/ui-number-input.stories.ts", "status": "available" },
-  "test": { "path": "src/app/shared/ui/atoms/number-input/number-input.component.spec.ts", "status": "available" },
+  "story": {
+    "path": "src/stories/ui-number-input.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/number-input/number-input-variant.spec.ts",
+    "status": "available"
+  },
   "stability": {
     "status": "stable",
-    "notes": ["Está exportado por el barrel y es el control numérico usado por el generador."]
+    "notes": [
+      "Está exportado por el barrel y es el control numérico usado por el generador."
+    ]
   },
-  "canonicalFor": ["number-input", "bounded-number", "quantity-stepper"]
+  "canonicalFor": [
+    "number-input",
+    "bounded-number",
+    "quantity-stepper"
+  ]
 }

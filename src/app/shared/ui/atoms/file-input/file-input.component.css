@@ -2,12 +2,15 @@
   display: block;
 }
 
+/* La zona de arrastre no tiene modo flotante (la etiqueta nombra un area, no un campo de texto);
+   comparte la tipografia de etiqueta de todos los controles. */
 .file-label {
   display: block;
-  margin-bottom: var(--space-2);
-  font-size: var(--text-sm);
-  font-weight: var(--font-weight-body);
-  color: var(--text-color);
+  margin-bottom: var(--field-label-gap);
+  color: var(--field-label-color);
+  font-size: var(--field-label-font-size);
+  font-weight: var(--field-label-font-weight);
+  line-height: var(--field-label-line-height);
 }
 
 .drop-zone {

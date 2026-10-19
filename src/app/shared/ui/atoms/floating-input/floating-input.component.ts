@@ -1,10 +1,23 @@
-import { Component, forwardRef, signal, ChangeDetectionStrategy, input, output, model } from '@angular/core';
+import { Component, forwardRef, signal, computed, ChangeDetectionStrategy, input, output, model } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
+import {
+  FieldLabelVariant,
+  esEtiquetaElevada,
+  esEtiquetaFlotante,
+  esMarcadorVisible,
+} from '../form-field/field-label';
 
 export type FloatingInputType = 'text' | 'search' | 'date' | 'number' | 'password' | 'email' | 'tel' | 'datetime-local' | 'time';
-export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outline';
+/**
+ * Modo de etiqueta del campo flotante.
+ *
+ * Comparte el contrato FieldLabelVariant (standard | floating | floating-value) con el resto de
+ * controles. underline, material y outline son formas visuales historicas del modo flotante.
+ * El valor por defecto sigue siendo floating: es la identidad de este componente.
+ */
+export type FloatingInputVariant = FieldLabelVariant | 'underline' | 'material' | 'outline';
 
 @Component({
   selector: 'app-floating-input',
@@ -19,7 +32,7 @@ export type FloatingInputVariant = 'floating' | 'underline' | 'material' | 'outl
     }
   ],
   templateUrl: './floating-input.component.html',
-  styleUrl: './floating-input.component.css'
+  styleUrls: ['./floating-input.component.css', '../form-field/field-label.css']
 })
 export class FloatingInputComponent implements ControlValueAccessor {
   readonly type = input<FloatingInputType>('text');
@@ -45,6 +58,35 @@ export class FloatingInputComponent implements ControlValueAccessor {
   }
   isFocused = signal(false);
   showPassword = signal(false);
+
+  /** Las formas historicas se reducen a su comportamiento de etiqueta: suben con enfoque o valor. */
+  private readonly modoEtiqueta = computed<FieldLabelVariant>(() => {
+    const variant = this.variant();
+    return variant === 'standard' || variant === 'floating-value' ? variant : 'floating';
+  });
+  /** Clase visual: floating-value dibuja la caja flotante y solo cambia el momento de la subida. */
+  protected readonly claseVisual = computed(() =>
+    this.variant() === 'floating-value' ? 'floating' : this.variant(),
+  );
+  protected readonly tieneEtiqueta = computed(() => this.label().length > 0);
+  protected readonly flotante = computed(() =>
+    esEtiquetaFlotante(this.modoEtiqueta(), this.tieneEtiqueta()),
+  );
+  /** Con floating-value el enfoque no sube la etiqueta: solo el valor. */
+  protected readonly soloValor = computed(() => this.variant() === 'floating-value');
+  protected readonly elevada = computed(() =>
+    esEtiquetaElevada(
+      this.modoEtiqueta(),
+      this.tieneEtiqueta(),
+      this.isFocused(),
+      this.hasValue(),
+    ),
+  );
+  protected readonly marcador = computed(() =>
+    esMarcadorVisible(this.modoEtiqueta(), this.tieneEtiqueta(), this.elevada())
+      ? this.placeholder() || null
+      : null,
+  );
 
   // Generate unique ID for accessibility (label-for association)
   private static instanceCounter = 0;

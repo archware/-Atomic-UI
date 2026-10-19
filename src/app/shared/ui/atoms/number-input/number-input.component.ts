@@ -6,11 +6,19 @@ import {
   forwardRef,
   ChangeDetectionStrategy,
   signal,
+  computed,
   input,
   output
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  FIELD_LABEL_VARIANT_DEFAULT,
+  FieldLabelVariant,
+  esEtiquetaElevada,
+  esEtiquetaFlotante,
+  esMarcadorVisible,
+} from '../form-field/field-label';
 
 /**
  * NumberInputComponent — Input numérico con botones de incremento/decremento.
@@ -34,12 +42,20 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     },
   ],
   templateUrl: './number-input.component.html',
-  styleUrl: './number-input.component.css',
+  styleUrls: ['./number-input.component.css', '../form-field/field-label.css'],
 })
 export class NumberInputComponent implements ControlValueAccessor, AfterViewInit {
   private static nextId = 0;
 
   readonly label = input('');
+  /**
+   * Modo de etiqueta comun: standard | floating | floating-value.
+   * Un campo numerico siempre contiene un valor, de modo que en los modos flotantes la etiqueta
+   * permanece elevada sobre el borde y no hay etiqueta en reposo ni marcador que superponer.
+   */
+  readonly variant = input<FieldLabelVariant>(FIELD_LABEL_VARIANT_DEFAULT);
+  /** Oculta la etiqueta visualmente y la conserva como nombre accesible (p. ej. filas repetidas). */
+  readonly labelHidden = input(false);
   readonly hint = input('');
   readonly error = input('');
   readonly min = input(0);
@@ -56,6 +72,9 @@ export class NumberInputComponent implements ControlValueAccessor, AfterViewInit
   readonly valueChange = output<number>();
 
   protected value = signal<number>(0);
+  protected readonly flotante = computed(() =>
+    esEtiquetaFlotante(this.variant(), this.label().length > 0),
+  );
   /** Lo que se ajusto de lo tecleado, para poder decirlo. */
   protected readonly adjustment = signal<string | null>(null);
 

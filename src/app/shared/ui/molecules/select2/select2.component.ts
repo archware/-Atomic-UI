@@ -250,7 +250,7 @@ export class Select2Component implements ControlValueAccessor {
   protected readonly flotante = computed(() =>
     esEtiquetaFlotante(this.variant(), this.tieneEtiqueta()),
   );
-  /** Con la lista abierta o el disparador enfocado, la etiqueta loating sube. */
+  /** Con la lista abierta o el disparador enfocado, la etiqueta flotante (floating) sube. */
   protected readonly elevada = computed(() =>
     esEtiquetaElevada(
       this.variant(),

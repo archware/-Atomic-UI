@@ -28,6 +28,11 @@
   margin-top: var(--space-3);
 }
 
+/* El mensaje de error lo dibuja app-form-error: la rejilla ya separa, asi que no suma su propio margen. */
+.fl-field > app-form-error {
+  --form-error-gap: 0;
+}
+
 .fl-control {
   position: relative;
   min-width: 0;

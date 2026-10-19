@@ -216,7 +216,7 @@ describe('TextareaComponent - modos de etiqueta', () => {
       const raiz: HTMLElement = fixture.nativeElement;
 
       const etiqueta = etiquetaFlotante(raiz);
-      const mensaje = raiz.querySelector('.textarea-message--error');
+      const mensaje = raiz.querySelector('.form-error');
       expect(etiqueta).not.toBeNull();
       expect(mensaje?.textContent?.trim()).toBe('Campo obligatorio');
       // Centrado correcto: `top` se mide contra `.fl-control`, que NO contiene el mensaje.
@@ -234,7 +234,7 @@ describe('TextareaComponent - modos de etiqueta', () => {
       fixture.componentRef.setInput('hint', 'Maximo 200 caracteres');
       await fixture.whenStable();
       const raiz: HTMLElement = fixture.nativeElement;
-      const ayuda = raiz.querySelector('.textarea-message:not(.textarea-message--error)');
+      const ayuda = raiz.querySelector('.textarea-message');
 
       expect(ayuda?.textContent?.trim()).toBe('Maximo 200 caracteres');
       expect(ayuda?.closest('.fl-control')).toBeNull();

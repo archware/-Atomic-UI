@@ -15,6 +15,15 @@
   margin-top: var(--space-3);
 }
 
+/* variant="standard": la etiqueta superior ocupa el espacio que reserva el modo flotante. */
+.datepicker-wrapper--standard {
+  margin-top: 0;
+}
+
+.datepicker-top-label {
+  margin-bottom: var(--field-label-gap);
+}
+
 ::ng-deep .datepicker-trigger app-floating-input .floating-input-wrapper {
   margin-top: 0;
 }
@@ -126,6 +135,7 @@
 }
 
 .weekday-label {
+  /* gate-etiqueta-exento: cabecera de columna de dias del calendario, no es la etiqueta de un campo. */
   font-size: var(--text-xs);
   font-weight: var(--font-weight-emphasis);
   color: var(--text-color-muted);

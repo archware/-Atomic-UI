@@ -1,5 +1,6 @@
 import {
   Component,
+  computed,
   forwardRef,
   signal,
   ChangeDetectionStrategy,
@@ -9,6 +10,13 @@ import {
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { ChipComponent } from '../../atoms/chip/chip.component';
+import {
+  FIELD_LABEL_VARIANT_DEFAULT,
+  FieldLabelVariant,
+  esEtiquetaElevada,
+  esEtiquetaFlotante,
+  esMarcadorVisible,
+} from '../../atoms/form-field/field-label';
 
 export interface TagInputOption {
   label: string;
@@ -43,10 +51,19 @@ export interface TagInputOption {
   ],
   template: `
     <div class="tag-input-wrapper" [class.tag-input--disabled]="isDisabled()" [class.tag-input--focused]="focused()">
-      @if (label()) {
-        <label class="tag-input__label" [for]="inputId">{{ label() }}</label>
+      @if (label() && !flotante()) {
+        <label class="fl-label tag-input__label" [for]="inputId">{{ label() }}</label>
       }
-      <div class="tag-input__field">
+      <div class="fl-control tag-input__field">
+        @if (flotante()) {
+          <label
+            class="fl-label fl-label--floating"
+            [class.fl-label--floated]="elevada()"
+            [class.fl-label--error]="error()"
+            [class.fl-label--disabled]="isDisabled()"
+            [for]="inputId"
+          >{{ label() }}</label>
+        }
         <!-- Tags -->
         @for (tag of tags(); track tag) {
           <app-chip
@@ -63,7 +80,7 @@ export interface TagInputOption {
             #inputEl
             [id]="inputId"
             class="tag-input__input"
-            [placeholder]="tags().length === 0 ? placeholder() : ''"
+            [attr.placeholder]="tags().length === 0 ? marcador() : null"
             [disabled]="isDisabled()"
             [(ngModel)]="inputValue"
             (keydown)="onKeydown($event)"
@@ -82,12 +99,14 @@ export interface TagInputOption {
       }
     </div>
   `,
-  styleUrl: './tag-input.component.css',
+  styleUrls: ['./tag-input.component.css', '../../atoms/form-field/field-label.css'],
 })
 export class TagInputComponent implements ControlValueAccessor {
   readonly inputId = 'tag-input-' + Math.random().toString(36).slice(2, 8);
 
   readonly label = input('');
+  /** Modo de etiqueta comun: standard | floating | floating-value. */
+  readonly variant = input<FieldLabelVariant>(FIELD_LABEL_VARIANT_DEFAULT);
   readonly placeholder = input('Agregar etiqueta…');
   readonly hint = input('');
   readonly error = input('');
@@ -106,7 +125,32 @@ export class TagInputComponent implements ControlValueAccessor {
 
   protected tags = signal<string[]>([]);
   protected focused = signal(false);
-  protected inputValue = '';
+  /** Texto en edicion: senal, para que la etiqueta flotante reaccione mientras se escribe. */
+  private readonly textoEscrito = signal('');
+  protected get inputValue(): string {
+    return this.textoEscrito();
+  }
+  protected set inputValue(valor: string) {
+    this.textoEscrito.set(valor);
+  }
+
+  protected readonly tieneEtiqueta = computed(() => this.label().length > 0);
+  protected readonly flotante = computed(() =>
+    esEtiquetaFlotante(this.variant(), this.tieneEtiqueta()),
+  );
+  protected readonly elevada = computed(() =>
+    esEtiquetaElevada(
+      this.variant(),
+      this.tieneEtiqueta(),
+      this.focused(),
+      this.tags().length > 0 || this.textoEscrito().length > 0,
+    ),
+  );
+  protected readonly marcador = computed(() =>
+    esMarcadorVisible(this.variant(), this.tieneEtiqueta(), this.elevada())
+      ? this.placeholder() || null
+      : null,
+  );
 
   private onChange: (value: string[]) => void = () => {};
   private onTouched: () => void = () => {};
