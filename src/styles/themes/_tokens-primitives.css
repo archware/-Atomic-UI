@@ -310,4 +310,23 @@
    /* 46px - Default (actual --control-height) */
    --control-height-lg: 3.5rem;
    /* 56px - Prominent CTAs */
+
+   /* ─────────────────────────────────────────────────────────────────────────
+      ETIQUETA DE CAMPO (Input, Select, Select2, Textarea, Datepicker, ...)
+      Un solo contrato tipografico para la etiqueta superior y la flotante.
+      Peso 600 porque la escala tipografica lo reserva a "etiquetas" y es una
+      cara real de la familia del sistema (no se resuelve a un vecino).
+      ───────────────────────────────────────────────────────────────────────── */
+   --field-label-font-size: var(--text-sm);
+   --field-label-font-weight: var(--font-weight-emphasis);
+   --field-label-line-height: 1.25;
+   --field-label-gap: var(--space-1);
+   /* Separacion entre etiqueta superior y control. */
+   --field-label-inset: var(--space-3);
+   /* Sangria horizontal de la etiqueta flotante dentro del control. */
+   --field-label-padding: 0 var(--space-2);
+   /* Recorte del borde bajo la etiqueta flotante. */
+   --field-label-floated-font-size: var(--text-xs);
+   --field-label-floated-font-weight: var(--font-weight-emphasis);
+   --field-label-duration: 200ms;
 }

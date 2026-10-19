@@ -161,6 +161,9 @@ class AtomicColoresClaro {
   static const Color dropdownBorder = Color(0xFFD1D5DB);
   static const Color dropdownItemHover = Color(0xFFF3F4F6);
   static const Color dropdownItemSelected = Color(0xFFE8F0FE);
+  static const Color fieldLabelColor = Color(0xFF1F2937);
+  static const Color fieldLabelColorError = Color(0xFF991B1B);
+  static const Color fieldLabelColorFloated = Color(0xFF1E3A8A);
   static const Color focusRingColor = Color(0xFF5F295C);
   static const Color gray0 = Color(0xFFFFFFFF);
   static const Color gray100 = Color(0xFFF3F4F6);
@@ -590,6 +593,9 @@ class AtomicColoresOscuro {
   static const Color dropdownBorder = Color(0xFF374151);
   static const Color dropdownItemHover = Color(0xFF252525);
   static const Color dropdownItemSelected = Color(0xFF2D2D2D);
+  static const Color fieldLabelColor = Color(0xFFF9FAFB);
+  static const Color fieldLabelColorError = Color(0xFFFF453A);
+  static const Color fieldLabelColorFloated = Color(0xFF0A84FF);
   static const Color focusRingColor = Color(0xFFBB6BBB);
   static const Color gray0 = Color(0xFFFFFFFF);
   static const Color gray100 = Color(0xFFF3F4F6);
@@ -1019,6 +1025,9 @@ class AtomicColoresMarcaOscuro {
   static const Color dropdownBorder = Color(0xFF374151);
   static const Color dropdownItemHover = Color(0xFF252525);
   static const Color dropdownItemSelected = Color(0xFF2D2D2D);
+  static const Color fieldLabelColor = Color(0xFFF9FAFB);
+  static const Color fieldLabelColorError = Color(0xFFFF453A);
+  static const Color fieldLabelColorFloated = Color(0xFF0A84FF);
   static const Color focusRingColor = Color(0xFFBB6BBB);
   static const Color gray0 = Color(0xFFFFFFFF);
   static const Color gray100 = Color(0xFFF3F4F6);

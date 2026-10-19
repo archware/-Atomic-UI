@@ -1,26 +1,76 @@
-<div class="form-group" [class.has-error]="error()" [class.disabled]="isDisabled()">
-      @if (label()) {
-        <label class="form-label" [attr.for]="inputId">{{ label() }}</label>
+<div
+  class="fl-field field"
+  [class.fl-field--floating]="flotante()"
+  [class.field--error]="error()"
+  [class.field--disabled]="effectiveDisabled()"
+>
+  @if (tieneEtiqueta() && !flotante()) {
+    <label class="fl-label" [for]="id()">
+      {{ label() }}
+      @if (required()) {
+        <span class="field__required" aria-hidden="true">*</span>
       }
-      <div class="input-container">
-        @if (iconClass()) {
-          <i [class]="'input-icon ' + iconClass()"></i>
-        } @else if (icon()) {
-          <span class="input-icon">{{ icon() }}</span>
+    </label>
+  }
+  <div class="fl-control field__control" [class.field__control--icon]="iconClass() || icon()">
+    @if (iconClass()) {
+      <i [class]="'input-icon ' + iconClass()" aria-hidden="true"></i>
+    } @else if (icon()) {
+      <span class="input-icon" aria-hidden="true">{{ icon() }}</span>
+    }
+    <input
+      [id]="id()"
+      class="field__input"
+      [type]="effectiveType()"
+      [value]="value()"
+      [attr.data-clipboard-policy]="type() === 'password' ? 'paste-only' : null"
+      [attr.placeholder]="marcador()"
+      [autocomplete]="autocomplete()"
+      [inputMode]="inputMode()"
+      [attr.maxlength]="maxLength()"
+      [attr.minlength]="minLength()"
+      [attr.min]="min()"
+      [attr.max]="max()"
+      [attr.step]="step()"
+      [disabled]="effectiveDisabled()"
+      [readOnly]="readonly()"
+      [required]="required()"
+      [attr.aria-required]="required() ? 'true' : null"
+      [attr.aria-invalid]="!!error()"
+      [attr.aria-describedby]="descritoPor()"
+      (input)="handleInput($event)"
+      (focus)="handleFocus()"
+      (blur)="handleBlur()"
+    />
+    @if (flotante()) {
+      <label
+        class="fl-label fl-label--floating"
+        [class.fl-label--floated]="elevada()"
+        [class.fl-label--error]="error()"
+        [class.fl-label--disabled]="effectiveDisabled()"
+        [for]="id()"
+      >
+        {{ label() }}
+        @if (required()) {
+          <span class="field__required" aria-hidden="true">*</span>
         }
-        <input
-          [id]="inputId"
-          class="form-input"
-          [type]="type()"
-          [placeholder]="placeholder()"
-          [disabled]="isDisabled()"
-          [value]="value"
-          [attr.data-clipboard-policy]="type() === 'password' ? 'paste-only' : null"
-          (input)="onInput($event)"
-          (blur)="onTouched()"
-        />
-      </div>
-      @if (error()) {
-        <span class="input-error">{{ error() }}</span>
-      }
-    </div>
+      </label>
+    }
+    @if (type() === 'password' && revealable()) {
+      <button
+        class="field__reveal"
+        type="button"
+        [disabled]="effectiveDisabled()"
+        [attr.aria-label]="revealed() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+        (click)="toggleReveal()"
+      >
+        {{ revealed() ? 'Ocultar' : 'Mostrar' }}
+      </button>
+    }
+  </div>
+  @if (error()) {
+    <span class="field__message field__message--error" [id]="id() + '-error'">{{ error() }}</span>
+  } @else if (hint()) {
+    <span class="field__message" [id]="id() + '-hint'">{{ hint() }}</span>
+  }
+</div>

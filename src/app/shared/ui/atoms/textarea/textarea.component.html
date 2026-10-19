@@ -1,34 +1,50 @@
-<div 
-      class="textarea-wrapper"
-      [class]="'variant-' + variant()"
-      [class.focused]="isFocused()"
-      [class.has-value]="hasValue()"
-      [class.has-error]="error()"
-      [class.disabled]="isDisabled()"
-    >
-      <textarea
-        class="textarea-input"
-        [id]="textareaId()"
-        [rows]="rows()"
-        [disabled]="isDisabled()"
-        [readonly]="readonly()"
-        [value]="value"
-        [attr.maxlength]="maxlength()"
-        [attr.placeholder]="variant() === 'floating' || variant() === 'material' ? ' ' : placeholder()"
-        (input)="onInput($event)"
-        (focus)="onFocus()"
-        (blur)="onBlur()"
-      ></textarea>
-      <label class="textarea-label" [attr.for]="textareaId()">{{ label() }}</label>
-      <span class="textarea-line"></span>
-
-      <!-- Character counter -->
-      @if (maxlength() && showCounter()) {
-        <span class="textarea-counter">{{ value.length }} / {{ maxlength() }}</span>
-      }
-    </div>
-
-    <!-- Error message -->
-    @if (error()) {
-      <span class="textarea-error">{{ error() }}</span>
+<div class="fl-field" [class.fl-field--floating]="flotante()">
+  @if (tieneEtiqueta() && !flotante()) {
+    <label class="fl-label" [attr.for]="textareaId()">{{ label() }}</label>
+  }
+  <div
+    class="fl-control textarea-control"
+    [class]="'variant-' + variant()"
+    [class.focused]="isFocused()"
+    [class.has-value]="hasValue()"
+    [class.has-error]="error()"
+    [class.disabled]="isDisabled()"
+  >
+    <textarea
+      class="textarea-input"
+      [id]="textareaId()"
+      [rows]="rows()"
+      [disabled]="isDisabled()"
+      [readOnly]="readonly()"
+      [value]="valor()"
+      [attr.maxlength]="maxlength()"
+      [attr.placeholder]="marcador()"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-describedby]="descritoPor()"
+      (input)="onInput($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+    ></textarea>
+    @if (flotante()) {
+      <label
+        class="fl-label fl-label--floating"
+        [class.fl-label--floated]="elevada()"
+        [class.fl-label--error]="error()"
+        [class.fl-label--disabled]="isDisabled()"
+        [attr.for]="textareaId()"
+        >{{ label() }}</label
+      >
     }
+    <span class="textarea-line"></span>
+
+    @if (maxlength() && showCounter()) {
+      <span class="textarea-counter">{{ valor().length }} / {{ maxlength() }}</span>
+    }
+  </div>
+
+  @if (error()) {
+    <span class="textarea-message textarea-message--error" [id]="textareaId() + '-error'">{{ error() }}</span>
+  } @else if (hint()) {
+    <span class="textarea-message" [id]="textareaId() + '-hint'">{{ hint() }}</span>
+  }
+</div>

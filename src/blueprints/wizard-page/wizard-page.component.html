@@ -53,12 +53,14 @@
                 <app-select2
                   formControlName="gender"
                   label="Género"
+                  variant="floating"
                   [options]="genderOptions"
                   placeholder="Seleccione..."
                 />
                 <app-textarea
                   formControlName="address"
                   label="Dirección Completa"
+                  variant="floating"
                   placeholder="Avenida, Calle, Nro, Distrito..."
                   [rows]="3"
                   [error]="form.controls.address.touched && form.controls.address.invalid ? 'Campo requerido' : ''"
@@ -77,12 +79,14 @@
               <app-select2
                 formControlName="country"
                 label="País de Residencia"
+                variant="floating"
                 [options]="countryOptions"
                 placeholder="Seleccione país..."
               />
               <app-select2
                 formControlName="state"
                 label="Estado / Departamento"
+                variant="floating"
                 [options]="stateOptions"
                 placeholder="Seleccione estado..."
               />
@@ -123,11 +127,13 @@
               <app-datepicker
                 formControlName="birthDate"
                 label="Fecha de Nacimiento"
+                variant="floating"
                 [error]="form.controls.birthDate.touched && form.controls.birthDate.invalid ? 'Campo requerido' : ''"
               ></app-datepicker>
               <app-select2
                 formControlName="maritalStatus"
                 label="Estado Civil"
+                variant="floating"
                 [options]="maritalStatusOptions"
                 placeholder="Seleccione..."
               />

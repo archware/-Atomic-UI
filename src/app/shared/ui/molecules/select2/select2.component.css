@@ -61,28 +61,13 @@
   padding: var(--space-1) var(--space-3);
 }
 
-/* === FLOATING LABEL === */
-.floating-label {
-  position: absolute;
-  left: var(--space-3);
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: var(--text-sm);
-  color: var(--input-placeholder);
-  pointer-events: none;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  background: var(--input-bg);
-  padding: 0 var(--space-2);
-  white-space: nowrap;
-}
+/* === FLOATING LABEL ===
+   La etiqueta (reposo y elevada) vive en ../../atoms/form-field/field-label.css. El disparador es la
+   caja del control (position: relative y sin la ayuda), asi que el centrado no depende de nada mas. */
 
-.select2-wrapper.focused .floating-label,
-.select2-wrapper.has-value .floating-label {
-  top: -0.625rem;
-  transform: translateY(0);
-  font-size: var(--text-xs);
-  font-weight: var(--font-weight-body);
-  color: var(--info-color-text);
+/* Etiqueta superior (variant="standard"): separacion uniforme respecto del disparador. */
+.select2-wrapper > .fl-label {
+  margin-bottom: var(--field-label-gap);
 }
 
 /* === MULTI-SELECT FIX === */

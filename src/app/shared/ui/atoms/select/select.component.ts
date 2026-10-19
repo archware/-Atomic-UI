@@ -1,88 +1,176 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, forwardRef, input, signal } from '@angular/core';
-
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  afterRenderEffect,
+  computed,
+  forwardRef,
+  inject,
+  input,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import {
+  FIELD_LABEL_VARIANT_DEFAULT,
+  FieldLabelVariant,
+  esEtiquetaElevada,
+  esEtiquetaFlotante,
+} from '../form-field/field-label';
 
 export interface SelectOption {
-  value: string | number;
-  label: string;
+  readonly value: string | number;
+  readonly label: string;
+  readonly disabled?: boolean;
 }
 
+/**
+ * Seleccion canonica de Atomic UI (`SelectComponent`).
+ *
+ * Unifica `atoms/select` y `atoms/form-select`: conserva los selectores `app-select`,
+ * `prest-select` y `app-form-select`; el alias `Select` se mantiene exportado desde
+ * `atoms/form-select/select`.
+ *
+ * `variant` sigue el contrato comun de etiqueta (`standard` | `floating` | `floating-value`).
+ * Un `<select>` nativo siempre muestra el texto de la opcion elegida; con etiqueta flotante en
+ * reposo, ese texto (marcador) se hace transparente para no superponerse a la etiqueta.
+ */
 @Component({
-  selector: 'app-select',
-  standalone: true,
-  imports: [],
+  selector: 'app-select, prest-select, app-form-select',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [TranslateModule],
+  templateUrl: './select.component.html',
+  styleUrls: ['./select.component.css', '../form-field/field-label.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => SelectComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  templateUrl: './select.component.html',
-  styleUrl: './select.component.css'
 })
-export class SelectComponent implements ControlValueAccessor, AfterViewInit {
-  readonly options = input<SelectOption[]>([]);
+export class SelectComponent implements ControlValueAccessor {
+  private static nextId = 0;
+  private readonly changeDetector = inject(ChangeDetectorRef);
+  private readonly generatedId = `prest-select-${++SelectComponent.nextId}`;
+
+  readonly options = input<readonly SelectOption[]>([]);
+  readonly selected = input<string | number | null>(null);
   readonly label = input('');
-  readonly placeholder = input('');
-  readonly error = input('');
+  readonly variant = input<FieldLabelVariant>(FIELD_LABEL_VARIANT_DEFAULT);
+  readonly ariaLabel = input<string | null>(null);
+  readonly placeholder = input('Seleccione');
+  readonly error = input<string | null>(null);
+  readonly hint = input<string | null>(null);
   readonly disabled = input(false);
-  private readonly disabledByForm = signal(false);
-  private static idCounter = 0;
-  readonly selectId = `app-select-${++SelectComponent.idCounter}`;
+  readonly required = input(false);
+  readonly controlId = input<string | null>(null);
 
-  isDisabled(): boolean {
-    return this.disabled() || this.disabledByForm();
-  }
+  readonly selectionChange = output<string>();
 
-  @ViewChild('nativeSelect') private nativeSelect?: ElementRef<HTMLSelectElement>;
+  private readonly nativeSelect = viewChild<ElementRef<HTMLSelectElement>>('nativeSelect');
 
-  value: string | number = '';
-  onChange: (value: string | number) => void = () => { /* noop */ };
-  onTouched: () => void = () => { /* noop */ };
-
-  ngAfterViewInit(): void {
-    this.syncNativeValue();
-  }
-
-  onSelectChange(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    this.value = target.value;
-    this.onChange(this.value);
-  }
-
-  writeValue(value: string | number): void {
-    this.value = value ?? '';
+  constructor() {
     /*
     RECHAZAR UNA ELECCION TAMBIEN TIENE QUE RETIRARLA DE LA PANTALLA.
 
-    Cuando el padre rechaza lo elegido y repone SU valor —el mismo que ya tenia—
-    llega aqui un `writeValue` con un valor que no cambia. El binding `[value]`
-    compara contra lo ultimo que escribio, ve que es identico y no toca el DOM.
-    El navegador, en cambio, ya movio el `<select>` al hacer clic la persona.
+    En modo gobernado —`[selected]` atado a una señal del padre mas
+    `(selectionChange)`— `value()` ignora `formValue()` mientras `selected()` no
+    sea nulo. Si el padre rechaza lo elegido y deja su señal como estaba,
+    `value()` devuelve lo mismo que antes, las expresiones `[selected]` de las
+    `<option>` no cambian, Angular no escribe nada, y el `<select>` se queda
+    mostrando la opcion que marco el navegador con el clic.
 
-    Resultado: lo que se ve deja de ser lo que se envia, y ni el padre ni el
-    consumidor tienen forma de arreglarlo desde fuera.
+    Lo que se ve deja de ser lo que se envia, y desde el consumidor no hay forma
+    de arreglarlo: es la causa raiz de los rechazos mudos de pantalla.
 
-    La mitad olvidada del capitulo 4: la reconciliacion del DOM es parte del
-    rechazo, no un extra. Se escribe siempre; si ya coincide, no cuesta nada.
+    El efecto SI se vuelve a ejecutar aunque `selected()` no cambie, porque
+    `handleChange` escribe `formValue` en cada interaccion. Es el mismo patron
+    «señal gobernada + effect» que ya usa `file-input`.
     */
-    this.syncNativeValue();
+    afterRenderEffect(() => {
+      const esperado = this.value();
+      // Dependencia explicita: sin leerla, una eleccion rechazada dos veces
+      // seguidas no volveria a disparar el efecto.
+      this.formValue();
+      const element = this.nativeSelect()?.nativeElement;
+      if (element && element.value !== esperado) {
+        element.value = esperado;
+      }
+    });
   }
 
-  private syncNativeValue(): void {
-    const element = this.nativeSelect?.nativeElement;
-    if (!element) {
-      // Todavia sin vista: el binding `[value]` pinta el primer estado.
-      return;
+  protected readonly formValue = signal('');
+  protected readonly enfocado = signal(false);
+  protected readonly controlDisabled = signal(false);
+  protected readonly id = computed(() => this.controlId() ?? this.generatedId);
+  protected readonly effectiveDisabled = computed(() => this.disabled() || this.controlDisabled());
+  protected readonly value = computed(() => {
+    const selected = this.selected();
+    return selected == null ? this.formValue() : String(selected);
+  });
+  protected readonly legacyOption = computed<SelectOption | null>(() => {
+    const value = this.value();
+    if (!value || this.options().some((option) => String(option.value) === value)) {
+      return null;
     }
-    const expected = this.value === null || this.value === undefined ? '' : String(this.value);
-    if (element.value !== expected) {
-      element.value = expected;
-    }
+    return { value, label: value };
+  });
+
+  protected readonly tieneEtiqueta = computed(() => this.label().length > 0);
+  protected readonly flotante = computed(() =>
+    esEtiquetaFlotante(this.variant(), this.tieneEtiqueta()),
+  );
+  protected readonly elevada = computed(() =>
+    esEtiquetaElevada(this.variant(), this.tieneEtiqueta(), this.enfocado(), this.value() !== ''),
+  );
+  /** Etiqueta flotante en reposo y sin valor: el texto del marcador se oculta (no se superpone). */
+  protected readonly marcadorOculto = computed(() => this.flotante() && !this.elevada());
+  protected readonly descritoPor = computed(() => {
+    if (this.error()) return `${this.id()}-error`;
+    if (this.hint()) return `${this.id()}-hint`;
+    return null;
+  });
+
+  private onChange: (value: unknown) => void = () => undefined;
+  private onTouched: () => void = () => undefined;
+
+  /** Compatibilidad con el `SelectComponent` historico. */
+  get selectId(): string {
+    return this.id();
   }
 
-  registerOnChange(fn: (value: string | number) => void): void {
+  /** Compatibilidad con el `SelectComponent` historico. */
+  isDisabled(): boolean {
+    return this.effectiveDisabled();
+  }
+
+  protected handleChange(event: Event): void {
+    const value = (event.target as HTMLSelectElement).value;
+    const selectedOption = this.options().find((option) => String(option.value) === value);
+    this.formValue.set(value);
+    this.onChange(selectedOption?.value ?? value);
+    this.selectionChange.emit(value);
+  }
+
+  protected handleFocus(): void {
+    this.enfocado.set(true);
+  }
+
+  protected handleBlur(): void {
+    this.enfocado.set(false);
+    this.onTouched();
+  }
+
+  writeValue(value: unknown): void {
+    this.formValue.set(value == null ? '' : String(value));
+    this.changeDetector.markForCheck();
+  }
+
+  registerOnChange(fn: (value: unknown) => void): void {
     this.onChange = fn;
   }
 
@@ -90,7 +178,8 @@ export class SelectComponent implements ControlValueAccessor, AfterViewInit {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this.disabledByForm.set(isDisabled);
+  setDisabledState(disabled: boolean): void {
+    this.controlDisabled.set(disabled);
+    this.changeDetector.markForCheck();
   }
 }

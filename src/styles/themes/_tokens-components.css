@@ -161,6 +161,9 @@
    /* Igual que select2: hover usa color primario para look&feel uniforme */
    --input-border-focus: var(--info-color);
    --input-placeholder: var(--text-color-placeholder);
+   --field-label-color: var(--text-color);
+   --field-label-color-floated: var(--info-color-text);
+   --field-label-color-error: var(--danger-color-text);
    --input-text: var(--text-color);
    --input-shadow: var(--shadow-sm);
    /* LIGHT: drop shadow clásico (profundidad) */
@@ -465,6 +468,9 @@ html.dark {
    /* Igual que select2: hover usa color primario para look&feel uniforme */
    --input-border-focus: var(--info-color);
    --input-placeholder: var(--text-color-placeholder);
+   --field-label-color: var(--text-color);
+   --field-label-color-floated: var(--info-color-text);
+   --field-label-color-error: var(--danger-color-text);
    --input-text: var(--text-color);
    --input-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 2px 6px rgba(0, 0, 0, 0.40);
    /* DARK: anillo blanco nítido + sombra oscura — visible sobre fondos oscuros */
@@ -722,6 +728,9 @@ html.dark {
    /* Igual que select2: hover usa color primario */
    --input-border-focus: var(--info-color);
    --input-placeholder: var(--text-color-placeholder);
+   --field-label-color: var(--text-color);
+   --field-label-color-floated: var(--info-color-text);
+   --field-label-color-error: var(--danger-color-text);
    --input-text: var(--text-color);
    --input-shadow: 0 0 0 1px rgba(188, 154, 187, 0.18), 0 2px 6px rgba(0, 0, 0, 0.50);
    /* BRAND-DARK: glow de marca (primary violeta) + sombra profunda */

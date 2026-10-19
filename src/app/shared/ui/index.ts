@@ -78,9 +78,18 @@ export { FormRowComponent } from './atoms/form-row/form-row.component';
 export { IconButtonComponent } from './atoms/icon-button/icon-button.component';
 
 export { InputComponent } from './atoms/input/input.component';
-
+export type { InputMode, InputType } from './atoms/input/input.component';
+/** Alias de compatibilidad de `InputComponent` (ver atoms/form-input/input.ts). */
 export { Input } from './atoms/form-input/input';
-export type { InputMode, InputType } from './atoms/form-input/input';
+
+export {
+  FIELD_LABEL_VARIANT_DEFAULT,
+  FIELD_LABEL_VARIANTS,
+  esEtiquetaElevada,
+  esEtiquetaFlotante,
+  esMarcadorVisible,
+} from './atoms/form-field/field-label';
+export type { FieldLabelVariant } from './atoms/form-field/field-label';
 
 export { LanguageSwitcherComponent } from './atoms/language-switcher/language-switcher.component';
 export type { Language } from './atoms/language-switcher/language-switcher.component';
@@ -93,9 +102,9 @@ export { RatingComponent } from './atoms/rating/rating.component';
 export { RowComponent } from './atoms/row/row.component';
 
 export { SelectComponent } from './atoms/select/select.component';
-
+export type { SelectOption } from './atoms/select/select.component';
+/** Alias de compatibilidad de `SelectComponent` (ver atoms/form-select/select.ts). */
 export { Select } from './atoms/form-select/select';
-export type { SelectOption } from './atoms/form-select/select';
 
 export { ChoiceControl } from './atoms/choice-control/choice-control';
 export type { ChoiceControlType } from './atoms/choice-control/choice-control';

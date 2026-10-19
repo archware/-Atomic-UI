@@ -1,0 +1,99 @@
+/*
+  Estilos compartidos de la etiqueta de campo (contrato `variant`: standard | floating | floating-value).
+
+  Se incluyen en cada control con `styleUrls: ['./x.css', '../form-field/field-label.css']`, de modo
+  que la tipografia, el color y la geometria de la etiqueta salen de UN solo lugar y de tokens
+  `--field-label-*`: nada de rem literales ni `uppercase` en los controles.
+
+  Geometria de la etiqueta flotante
+  ---------------------------------
+  `.fl-control` es la CAJA del control y solo contiene el control. La ayuda y el error viven FUERA
+  de ella. Si la etiqueta se anclara al contenedor que tambien lleva la ayuda, `top: 50%` caeria
+  en el centro de caja + ayuda y la etiqueta quedaria desplazada hacia abajo cuando hay mensaje.
+
+  - Reposo:  centrada en la mitad de `--control-height` (primera linea en controles multilinea).
+  - Elevada: centrada sobre el borde superior (`top: 0` + `translateY(-50%)`), con el fondo del
+             campo recortando el borde. Como el centrado es relativo al propio texto, no depende
+             del tamano de fuente.
+*/
+
+.fl-field {
+  display: grid;
+  min-width: 0;
+  gap: var(--field-label-gap);
+}
+
+/* Reserva el espacio que ocupa la etiqueta elevada sobre el borde superior del control. */
+.fl-field--floating {
+  margin-top: var(--space-3);
+}
+
+.fl-control {
+  position: relative;
+  min-width: 0;
+}
+
+/* Etiqueta superior (variant="standard"). */
+.fl-label {
+  display: block;
+  color: var(--field-label-color);
+  font-size: var(--field-label-font-size);
+  font-weight: var(--field-label-font-weight);
+  line-height: var(--field-label-line-height);
+}
+
+.field__required {
+  color: var(--field-label-color-error);
+}
+
+/* Etiqueta flotante (variant="floating" | "floating-value"): reposo. */
+.fl-label--floating {
+  position: absolute;
+  top: calc(var(--control-height) / 2);
+  left: var(--field-label-inset);
+  z-index: 1;
+  max-width: calc(100% - (2 * var(--field-label-inset)));
+  overflow: hidden;
+  padding: var(--field-label-padding);
+  background: transparent;
+  color: var(--input-placeholder);
+  font-size: var(--field-label-font-size);
+  font-weight: var(--field-label-font-weight);
+  line-height: var(--field-label-line-height);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition:
+    top var(--field-label-duration) ease,
+    color var(--field-label-duration) ease,
+    font-size var(--field-label-duration) ease;
+}
+
+/* Etiqueta flotante: elevada sobre el borde superior. */
+.fl-label--floating.fl-label--floated {
+  top: 0;
+  background: var(--input-bg);
+  color: var(--field-label-color-floated);
+  font-size: var(--field-label-floated-font-size);
+  font-weight: var(--field-label-floated-font-weight);
+}
+
+.fl-label--floating.fl-label--disabled {
+  color: var(--input-disabled-text);
+}
+
+.fl-label--floating.fl-label--floated.fl-label--disabled {
+  background: var(--input-disabled-bg);
+}
+
+.fl-label--floating.fl-label--error,
+.fl-label--floating.fl-label--floated.fl-label--error {
+  color: var(--field-label-color-error);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fl-label--floating {
+    transition: none;
+  }
+}

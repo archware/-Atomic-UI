@@ -1,5 +1,5 @@
 import {
-  Component, signal, HostListener, effect, untracked,
+  Component, signal, computed, HostListener, effect, untracked,
   ElementRef, forwardRef, inject, ChangeDetectionStrategy,
   input,
   output
@@ -8,6 +8,13 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
+import {
+  FIELD_LABEL_VARIANT_DEFAULT,
+  FieldLabelVariant,
+  esEtiquetaElevada,
+  esEtiquetaFlotante,
+  esMarcadorVisible,
+} from '../../atoms/form-field/field-label';
 
 
 export interface Select2Option {
@@ -31,21 +38,23 @@ export interface Select2Option {
   template: `
     <div
       class="select2-wrapper"
-      [class.variant-standard]="variant() === 'standard'"
+      [class.variant-standard]="!flotante()"
       [class.open]="isOpen()"
       [class.disabled]="disabled"
       [class.focused]="isOpen()"
       [class.has-value]="hasValue()"
       [class.multiple]="multiple()"
-      [class.has-label]="label() && variant() === 'floating'"
+      [class.has-label]="flotante()"
       [appVariablesCss]="{ '--select2-width': width() || null }"
     >
-      @if (label() && variant() === 'standard') {
-        <label class="form-label" [id]="selectId()">{{ label() }}</label>
+      @if (label() && !flotante()) {
+        <label class="fl-label" [id]="selectId()">{{ label() }}</label>
       }
       <div class="select2-trigger"
         (click)="$event.stopPropagation(); toggleDropdown()"
         (keydown)="handleKeydown($event)"
+        (focus)="triggerFocused.set(true)"
+        (blur)="triggerFocused.set(false)"
         [attr.aria-labelledby]="label() ? selectId() : null"
         [attr.aria-label]="label() ? null : ariaLabel() || placeholder()"
         [attr.aria-controls]="listboxId()"
@@ -56,8 +65,14 @@ export interface Select2Option {
         [attr.aria-expanded]="isOpen()"
         aria-haspopup="listbox"
       >
-        @if (label() && variant() === 'floating') {
-          <span class="floating-label" [id]="selectId()">{{ label() }}</span>
+        @if (flotante()) {
+          <span
+            class="fl-label fl-label--floating"
+            [class.fl-label--floated]="elevada()"
+            [class.fl-label--disabled]="disabled"
+            [id]="selectId()"
+            >{{ label() }}</span
+          >
         }
         <!-- Single value display -->
         @if (!multiple()) {
@@ -67,7 +82,7 @@ export interface Select2Option {
                 <span class="option-icon">{{ selectedOption()!.icon }}</span>
               }
               {{ selectedOption()!.label | translate }}
-            } @else if (!label() || variant() === 'standard') {
+            } @else if (marcadorVisible()) {
               <span class="placeholder">{{ placeholder() }}</span>
             }
           </span>
@@ -87,7 +102,7 @@ export interface Select2Option {
                   (click)="removeTag(opt, $event)">×</button>
               </span>
             }
-            @if (selectedOptions().length === 0 && (!label() || variant() === 'standard')) {
+            @if (selectedOptions().length === 0 && marcadorVisible()) {
               <span class="placeholder">{{ placeholder() }}</span>
             }
           </div>
@@ -156,7 +171,7 @@ export interface Select2Option {
       }
     </div>
   `,
-  styleUrl: './select2.component.css'
+  styleUrls: ['./select2.component.css', '../../atoms/form-field/field-label.css']
 })
 export class Select2Component implements ControlValueAccessor {
   // La señal interna conserva el contrato público histórico `options` mientras se adapta su setter.
@@ -172,7 +187,8 @@ export class Select2Component implements ControlValueAccessor {
     return this._options;
   }
   readonly label = input('');
-  readonly variant = input<'floating' | 'standard'>('floating');
+  /** Modo de etiqueta comun a todos los controles: standard | floating | floating-value. */
+  readonly variant = input<FieldLabelVariant>(FIELD_LABEL_VARIANT_DEFAULT);
   readonly ariaLabel = input('');
   readonly placeholder = input('Seleccionar...');
   readonly searchLabel = input('Buscar opciones');
@@ -197,6 +213,8 @@ export class Select2Component implements ControlValueAccessor {
   readonly valueChange = output<string | number | null | (string | number | null)[]>();
 
   isOpen = signal(false);
+  /** El disparador tiene el foco del teclado (con la lista cerrada). */
+  readonly triggerFocused = signal(false);
   searchTerm = signal('');
   selectedOption = signal<Select2Option | null>(null);
   selectedOptions = signal<Select2Option[]>([]);
@@ -227,6 +245,23 @@ export class Select2Component implements ControlValueAccessor {
   private readonly elementRef = inject(ElementRef);
   private onChange: (value: unknown) => void = () => { /* noop */ };
   private onTouched: () => void = () => { /* noop */ };
+
+  protected readonly tieneEtiqueta = computed(() => this.label().length > 0);
+  protected readonly flotante = computed(() =>
+    esEtiquetaFlotante(this.variant(), this.tieneEtiqueta()),
+  );
+  /** Con la lista abierta o el disparador enfocado, la etiqueta loating sube. */
+  protected readonly elevada = computed(() =>
+    esEtiquetaElevada(
+      this.variant(),
+      this.tieneEtiqueta(),
+      this.isOpen() || this.triggerFocused(),
+      this.hasValue(),
+    ),
+  );
+  protected readonly marcadorVisible = computed(() =>
+    esMarcadorVisible(this.variant(), this.tieneEtiqueta(), this.elevada()),
+  );
 
   hasValue(): boolean {
     return this.multiple() ? this.selectedOptions().length > 0 : this.selectedOption() !== null;

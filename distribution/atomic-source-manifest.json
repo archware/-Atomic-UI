@@ -10,8 +10,8 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "d8f16f276ef75087621b6d13898f4286aaeddc5da6b636236511adbfd6e9c903",
-  "fileCount": 326,
+  "sourceTreeSha256": "80824cb78b31afd4ccb87847ee6fc463f1a5688b0c5cdb07850df8f50077d93c",
+  "fileCount": 324,
   "files": [
     {
       "path": "projects/atomic-ui/ng-package.json",
@@ -214,19 +214,19 @@
       "sha256": "012f45939ed60f3fded9c2b5b3eb2afe0ef729adb26951d02282952cf2029331"
     },
     {
-      "path": "src/app/shared/ui/atoms/form-input/input.html",
-      "bytes": 1923,
-      "sha256": "f415699c18463287f4433f26e088e8a1f2c8d86a722eae4d795e181d2d100bee"
+      "path": "src/app/shared/ui/atoms/form-field/field-label.css",
+      "bytes": 3155,
+      "sha256": "a1a09d422eb459d8bf649817db29d0780fcc60f49f5d68f6b6bffd5ff06ad937"
     },
     {
-      "path": "src/app/shared/ui/atoms/form-input/input.scss",
-      "bytes": 3193,
-      "sha256": "6bac859c848f54d898d2386895f9865e1790c6670b94a61e4e0b5dbe0ea7589e"
+      "path": "src/app/shared/ui/atoms/form-field/field-label.ts",
+      "bytes": 2227,
+      "sha256": "3d37f2c14fdfeb4065e6ddc7412ddb85bdca90709101627c95c8e22a0084f1d0"
     },
     {
       "path": "src/app/shared/ui/atoms/form-input/input.ts",
-      "bytes": 3290,
-      "sha256": "5d48298e25e5e2acfa25f6d5f50ccfd8f52f0a97ed58ed1124e9d3aeb5073bc1"
+      "bytes": 436,
+      "sha256": "eb52aba03e482f71041344b04024ea27804e04b9a166ced74162df6bda806cec"
     },
     {
       "path": "src/app/shared/ui/atoms/form-row/form-row.component.css",
@@ -244,19 +244,9 @@
       "sha256": "7e368a1f3333b3fc7149f94c553cadf8e6acd5614f671d8b596f67af0f2f3b61"
     },
     {
-      "path": "src/app/shared/ui/atoms/form-select/select.html",
-      "bytes": 1745,
-      "sha256": "eb5ca5e3f52a8c8a0ac4f5dd3832bdd02366391b218c52bad45eeeedf5674b6e"
-    },
-    {
-      "path": "src/app/shared/ui/atoms/form-select/select.scss",
-      "bytes": 2409,
-      "sha256": "41d7dc103aae118061d273c0bdf6413e9872cf2112209a324865052d12e43431"
-    },
-    {
       "path": "src/app/shared/ui/atoms/form-select/select.ts",
-      "bytes": 4630,
-      "sha256": "dd8056f445c24d3fe5a2be9c35fc73385ee832dce3e1add4b63b7d53eaea9805"
+      "bytes": 446,
+      "sha256": "5602fe16debb9edce02b90e7d59337d7e72fbe3b4fd46b4df09cfaffef85508f"
     },
     {
       "path": "src/app/shared/ui/atoms/icon-button/icon-button.component.css",
@@ -275,18 +265,18 @@
     },
     {
       "path": "src/app/shared/ui/atoms/input/input.component.css",
-      "bytes": 1639,
-      "sha256": "fc7e83a198245cdb2bd46de8da142bf53adb5c5cb871bfae6c5010fff2620a85"
+      "bytes": 2921,
+      "sha256": "096919b83fbf895bc130683cf8fa48888f76eda7d7511386cab7bf6fbec224c7"
     },
     {
       "path": "src/app/shared/ui/atoms/input/input.component.html",
-      "bytes": 876,
-      "sha256": "1be9f6c69baf6f816ba6f44f3ff1e8108a20c41eb31d029a32fefced77f6a7b8"
+      "bytes": 2451,
+      "sha256": "4f4cde42afcbd99561cd5db0222aa2e6db28b328063afb27f45def344122ddf2"
     },
     {
       "path": "src/app/shared/ui/atoms/input/input.component.ts",
-      "bytes": 1773,
-      "sha256": "7eb30632c227ee25115661546d3bb999c90ca0de834204311f9f3c0007bb0f00"
+      "bytes": 5368,
+      "sha256": "2ef1eeeb95c044f6c35576e730552070852401a605c7351e93399bde3089dbe0"
     },
     {
       "path": "src/app/shared/ui/atoms/language-switcher/language-switcher.component.css",
@@ -410,18 +400,18 @@
     },
     {
       "path": "src/app/shared/ui/atoms/select/select.component.css",
-      "bytes": 386,
-      "sha256": "da8987fcdafb89b2bc3bbd5bda117a9fa7ecf0d3eb9b042f00214bf42773f3f6"
+      "bytes": 2771,
+      "sha256": "b43d7948a8825faa7d686695f11445477c4da0981d3a446eab21b248879e5454"
     },
     {
       "path": "src/app/shared/ui/atoms/select/select.component.html",
-      "bytes": 937,
-      "sha256": "c15ccdd519af1679cb8e86fb46c755a2f4cc94bcf6a2845096cb9090c46fabea"
+      "bytes": 2274,
+      "sha256": "1484ac6336441501b640d93893455a2c8fa373d2170a530abf264e027493689b"
     },
     {
       "path": "src/app/shared/ui/atoms/select/select.component.ts",
-      "bytes": 2951,
-      "sha256": "5eaf35ebe3339077e77455088d2cd6a6d8434988e6c2dd4391e57e0c9fdd4f32"
+      "bytes": 6503,
+      "sha256": "e288ef010750c74ce37e31bb58e746440ccdbaba153ef6db02618000f7ab1931"
     },
     {
       "path": "src/app/shared/ui/atoms/skeleton/skeleton.component.css",
@@ -575,18 +565,18 @@
     },
     {
       "path": "src/app/shared/ui/atoms/textarea/textarea.component.css",
-      "bytes": 3025,
-      "sha256": "6fea2483f36971dd3a37999c1a234b39fcacff47dab424dd1c2a7d95f0fffb33"
+      "bytes": 2308,
+      "sha256": "b3e91d61f793b0d9cceb5cc4bff6aacd1b4fb7207420899b307ae831c038ed5d"
     },
     {
       "path": "src/app/shared/ui/atoms/textarea/textarea.component.html",
-      "bytes": 1083,
-      "sha256": "5753858c05cce5cc00d88207ab29a0fa88ad051e2bc0fae236b43b8ebb85c0a3"
+      "bytes": 1586,
+      "sha256": "a09039e77c75750d8709d3036427928367b70d03420d16bafe32c6d95a7f1e8e"
     },
     {
       "path": "src/app/shared/ui/atoms/textarea/textarea.component.ts",
-      "bytes": 2291,
-      "sha256": "1429d8c9b4740f24cba086ebdeb74fd9fc9390c53b5aad5b2e3a1a9a0aaf3518"
+      "bytes": 4530,
+      "sha256": "fab54b40f030c23c7c800ce3297398c30ce85269c1bbd7adda25e8b26977477e"
     },
     {
       "path": "src/app/shared/ui/atoms/toggle/toggle.component.css",
@@ -655,8 +645,8 @@
     },
     {
       "path": "src/app/shared/ui/index.ts",
-      "bytes": 16181,
-      "sha256": "e85200faba49d3de6554f836eb5be1d8680264f79d0781b2e981101926e2e68a"
+      "bytes": 16603,
+      "sha256": "56aa3f7cbc5af7e54101a81eff89dfaa2f899fdcec4145989d2daca9468c08f5"
     },
     {
       "path": "src/app/shared/ui/interceptors/auth.interceptor.ts",
@@ -885,13 +875,13 @@
     },
     {
       "path": "src/app/shared/ui/molecules/select2/select2.component.css",
-      "bytes": 7772,
-      "sha256": "03840297f41de3bb808e9d6cc31a04ec95a6da9f5eb5ef7e2bdaa241800b7ae5"
+      "bytes": 7569,
+      "sha256": "0359b4fafa6369730c55ad3b7d70337c6b94cb42b1fdad6a269d98bb26274ca5"
     },
     {
       "path": "src/app/shared/ui/molecules/select2/select2.component.ts",
-      "bytes": 16846,
-      "sha256": "a432d0d9c65e877d267022375c1069502a4eab1329dbc8b92c4115eb7922f03a"
+      "bytes": 18032,
+      "sha256": "68f8a5d27b75bf73b73a1e3a9b42d19ded8baa771a6adcb4a355be42d8fb36a2"
     },
     {
       "path": "src/app/shared/ui/molecules/setting-item/setting-item.component.css",
@@ -1615,13 +1605,13 @@
     },
     {
       "path": "src/styles/themes/_tokens-components.css",
-      "bytes": 38898,
-      "sha256": "db97099e1fbc90e39fa035989dd05ac1f13d3413364fdc7329a16469588fc047"
+      "bytes": 39363,
+      "sha256": "552f6a19016cae44ec664f62e9445839815d3d7f8777681587e6bd6e7abd0408"
     },
     {
       "path": "src/styles/themes/_tokens-primitives.css",
-      "bytes": 13645,
-      "sha256": "6024858e8eb3ee734cb8d9172aeda0112b79cafa069d44e213ce61356131a372"
+      "bytes": 14998,
+      "sha256": "f52bebffb6a7f9ca816e1e0cd6eb18e83beed864460003dfc22769f7c53ae8fd"
     },
     {
       "path": "src/styles/themes/_tokens-semantic.css",

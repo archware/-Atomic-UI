@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { SelectComponent } from './select.component';
 
@@ -32,7 +33,7 @@ describe('SelectComponent: el rechazo se ve', () => {
   let native: HTMLSelectElement;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [HostComponent] }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [HostComponent, TranslateModule.forRoot()] }).compileComponents();
     fixture = TestBed.createComponent(HostComponent);
     fixture.detectChanges();
     native = fixture.nativeElement.querySelector('select') as HTMLSelectElement;

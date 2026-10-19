@@ -3,21 +3,20 @@
   width: 100%;
 }
 
-.textarea-wrapper {
-  position: relative;
+.textarea-control {
   display: flex;
   flex-direction: column;
 }
 
 /* Base textarea styles */
 .textarea-input {
+  box-sizing: border-box;
   width: 100%;
-  min-height: var(--space-20, 5rem);
-  padding: var(--space-4);
-  padding-top: var(--space-6);
+  min-height: calc(var(--control-height) * 2);
+  padding: var(--space-3) var(--space-4);
   font-size: var(--text-md);
   font-family: inherit;
-  color: var(--text-color);
+  color: var(--input-text);
   background: var(--input-bg);
   border: var(--input-border-width, 1.5px) solid var(--input-border);
   border-radius: var(--radius-md);
@@ -27,7 +26,12 @@
 }
 
 .textarea-input::placeholder {
-  color: var(--text-color-muted);
+  color: var(--input-placeholder);
+}
+
+.textarea-input:hover:not(:disabled):not(:focus) {
+  border-color: var(--input-border-hover);
+  box-shadow: var(--input-shadow-hover);
 }
 
 .textarea-input:focus {
@@ -42,31 +46,7 @@
   color: var(--input-disabled-text);
 }
 
-/* Floating label */
-.textarea-label {
-  position: absolute;
-  left: var(--space-4);
-  top: var(--space-4);
-  font-size: var(--text-md);
-  color: var(--text-color-muted);
-  pointer-events: none;
-  transition: all 200ms ease;
-  background: transparent;
-}
-
-/* Label animation */
-.variant-floating .textarea-input:focus + .textarea-label,
-.variant-floating.has-value .textarea-label,
-.variant-material .textarea-input:focus + .textarea-label,
-.variant-material.has-value .textarea-label {
-  top: var(--space-1);
-  font-size: var(--text-xs);
-  color: var(--primary-color);
-  background: var(--input-bg);
-  padding: 0 var(--space-1);
-}
-
-/* Material variant */
+/* Variante historica `material`: subrayado de enfoque. */
 .variant-material .textarea-input {
   border-radius: var(--radius-md) var(--radius-md) 0 0;
   border-bottom: var(--space-1) solid var(--border-color);
@@ -76,32 +56,25 @@
   border-bottom-color: var(--primary-color);
 }
 
+.textarea-line {
+  display: none;
+}
+
 .variant-material .textarea-line {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+  display: block;
   height: var(--space-1);
   background: var(--primary-color);
   transform: scaleX(0);
   transition: transform 200ms ease;
+  pointer-events: none;
 }
 
 .variant-material.focused .textarea-line {
   transform: scaleX(1);
-}
-
-/* Outline variant - label always visible */
-.variant-outline .textarea-label {
-  top: calc(-1 * var(--space-2) - var(--space-1));
-  font-size: var(--text-xs);
-  color: var(--text-color-secondary);
-  background: var(--input-bg);
-  padding: 0 var(--space-1);
-}
-
-.variant-outline .textarea-input {
-  padding-top: var(--space-4);
 }
 
 /* Error state */
@@ -113,14 +86,13 @@
   box-shadow: 0 0 0 3px var(--danger-color-light);
 }
 
-.has-error .textarea-label {
-  color: var(--danger-color-text);
+.textarea-message {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--text-color-muted);
 }
 
-.textarea-error {
-  display: block;
-  margin-top: var(--space-1);
-  font-size: var(--text-xs);
+.textarea-message--error {
   color: var(--danger-color-text);
 }
 
@@ -131,4 +103,5 @@
   right: var(--space-3);
   font-size: var(--text-xs);
   color: var(--text-color-muted);
+  pointer-events: none;
 }
