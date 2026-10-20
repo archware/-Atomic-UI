@@ -5,8 +5,8 @@ date: "2026-08-23"
 last_updated: "2026-10-19"
 document_type: "manual de continuidad"
 status: "vigente"
-version: "1.4.0"
-change_id: "ATOMIC-20261019-001"
+version: "1.4.1"
+change_id: "ATOMIC-20261019-002"
 canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
@@ -16,7 +16,11 @@ document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDA
 Se mantiene el contrato documental ECO-20260823-003. Las unidades candidatas
 inferiores no equivalen a una nueva publicación del ADN.
 
-## Corte vigente ATOMIC-20261019-001
+## Corte vigente ATOMIC-20261019-002
+
+`ATOMIC-20261019-002` alinea `--field-label-font-weight` a `var(--font-weight-title)` (700) en `src/styles/themes/_tokens-primitives.css` y añade el input `required` (`false` por defecto) a `Select2Component`, mostrando `.field__required` en las tres variantes (`standard`, `floating`, `floating-value`) y `aria-required="true"` en el disparador. Evidencia y rollback en el [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261019-002_select2_etiqueta_obligatoria.md).
+
+## Corte ATOMIC-20261019-001
 
 `ATOMIC-20261019-001` unifica los modos de etiqueta (`variant`: `standard` | `floating` | `floating-value`) y los tokens `--field-label-*` en `InputComponent`, `SelectComponent`, `Select2Component`, `TextareaComponent`, `FloatingInputComponent`, `FloatingTextareaComponent`, `DatepickerComponent`, `ComboboxComponent`, `TagInputComponent`, `NumberInputComponent`, `DropdownComponent` y `.form-label` (`_forms.css`). `InputComponent` y `SelectComponent` quedan como implementaciones únicas de `app-input` y `app-select`, mientras `Input` y `Select` se reexportan como alias de compatibilidad. En modo flotante el `placeholder` se oculta mientras la etiqueta reposa dentro de `.fl-control`.
 

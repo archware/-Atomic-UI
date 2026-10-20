@@ -188,4 +188,44 @@ describe('Select2Component - modos de etiqueta', () => {
     expect(id).toBeTruthy();
     expect(raiz.querySelector('#' + id)?.textContent?.trim()).toBe('Region');
   });
+
+  it('required: standard muestra el asterisco decorativo en la etiqueta superior y aria-required', async () => {
+    const fixture = TestBed.createComponent(Select2Component);
+    fixture.componentRef.setInput('label', 'Region');
+    fixture.componentRef.setInput('options', OPCIONES);
+    fixture.componentRef.setInput('required', true);
+    await fixture.whenStable();
+    const raiz: HTMLElement = fixture.nativeElement;
+    const etiqueta = raiz.querySelector('label.fl-label') as HTMLElement;
+    const asterisco = etiqueta.querySelector('.field__required');
+    expect(asterisco?.textContent).toBe('*');
+    expect(asterisco?.getAttribute('aria-hidden')).toBe('true');
+    expect(disparador(raiz).getAttribute('aria-required')).toBe('true');
+    expect(disparador(raiz).getAttribute('aria-labelledby')).toBe(etiqueta.id);
+  });
+
+  it('required: floating y floating-value muestran el asterisco en la etiqueta flotante', async () => {
+    for (const variante of ['floating', 'floating-value'] as const) {
+      const fixture = TestBed.createComponent(Select2Component);
+      fixture.componentRef.setInput('label', 'Region');
+      fixture.componentRef.setInput('options', OPCIONES);
+      fixture.componentRef.setInput('variant', variante);
+      fixture.componentRef.setInput('required', true);
+      await fixture.whenStable();
+      const raiz: HTMLElement = fixture.nativeElement;
+      expect(etiquetaFlotante(raiz)?.querySelector('.field__required')?.textContent).toBe('*');
+      expect(disparador(raiz).getAttribute('aria-required')).toBe('true');
+    }
+  });
+
+  it('sin required no hay asterisco ni aria-required', async () => {
+    const fixture = TestBed.createComponent(Select2Component);
+    fixture.componentRef.setInput('label', 'Region');
+    fixture.componentRef.setInput('options', OPCIONES);
+    await fixture.whenStable();
+    const raiz: HTMLElement = fixture.nativeElement;
+    expect(fixture.componentInstance.required()).toBe(false);
+    expect(raiz.querySelector('.field__required')).toBeNull();
+    expect(disparador(raiz).hasAttribute('aria-required')).toBe(false);
+  });
 });

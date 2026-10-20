@@ -5,13 +5,19 @@ date: "2026-08-23"
 document_type: "registro técnico"
 status: "en revisión"
 last_updated: "2026-10-19"
-version: "1.4.0"
-last_change_id: "ATOMIC-20261019-001"
+version: "1.4.1"
+last_change_id: "ATOMIC-20261019-002"
 owners:
   - "COTAHA"
 ---
 
 # Lecciones aprendidas de Atomic UI
+
+## ATOMIC-20261019-002 — paridad tipográfica de etiqueta superior y campo obligatorio en Select2
+
+- **Evidencia:** en los formularios consumidores (como políticas de crédito en `ventas-cxc`), `app-input` mostraba etiqueta superior en negrita (700) y asterisco rojo cuando era obligatorio, mientras `app-select2` carecía del input `required` y el token `--field-label-font-weight` apuntaba a 600.
+- **Decisión:** alinear `--field-label-font-weight` a `--font-weight-title` (700) manteniendo `--field-label-floated-font-weight` en 600, e incorporar `required = input(false)` en `Select2Component` con asterisco `.field__required` (`aria-hidden="true"`) y `aria-required` en el disparador `combobox`.
+- **Prevención:** `select2-variant.spec.ts` verifica el asterisco y `aria-required` en las tres variantes (`standard`, `floating`, `floating-value`) y su ausencia cuando `required` es `false`.
 
 ## ATOMIC-20261019-001 — modos de etiqueta, reactividad CVA y geometría de etiqueta flotante
 

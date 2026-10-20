@@ -242,6 +242,11 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
           [options]="select2Options" 
           placeholder="auto (default)"
         ></app-select2>
+        <app-select2
+          label="Select2 requerido (standard)"
+          [required]="true"
+          [options]="select2Options"
+        ></app-select2>
       </app-row>
 
       <h4 class="subsection-title" style="margin-top: 1.5rem;">Anchos en Porcentaje</h4>

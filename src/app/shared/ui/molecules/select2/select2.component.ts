@@ -48,7 +48,12 @@ export interface Select2Option {
       [appVariablesCss]="{ '--select2-width': width() || null }"
     >
       @if (label() && !flotante()) {
-        <label class="fl-label" [id]="selectId()">{{ label() }}</label>
+        <label class="fl-label" [id]="selectId()">
+          {{ label() }}
+          @if (required()) {
+            <span class="field__required" aria-hidden="true">*</span>
+          }
+        </label>
       }
       <div class="select2-trigger"
         (click)="$event.stopPropagation(); toggleDropdown()"
@@ -57,6 +62,7 @@ export interface Select2Option {
         (blur)="triggerFocused.set(false)"
         [attr.aria-labelledby]="label() ? selectId() : null"
         [attr.aria-label]="label() ? null : ariaLabel() || placeholder()"
+        [attr.aria-required]="required() ? 'true' : null"
         [attr.aria-controls]="listboxId()"
         [attr.aria-activedescendant]="isOpen() && highlightedIndex() >= 0 ? optionId(highlightedIndex()) : null"
         [attr.aria-disabled]="disabled ? 'true' : 'false'"
@@ -71,7 +77,10 @@ export interface Select2Option {
             [class.fl-label--floated]="elevada()"
             [class.fl-label--disabled]="disabled"
             [id]="selectId()"
-            >{{ label() }}</span
+            >{{ label() }}
+            @if (required()) {
+              <span class="field__required" aria-hidden="true">*</span>
+            }</span
           >
         }
         <!-- Single value display -->
@@ -189,6 +198,8 @@ export class Select2Component implements ControlValueAccessor {
   readonly label = input('');
   /** Modo de etiqueta comun a todos los controles: standard | floating | floating-value. */
   readonly variant = input<FieldLabelVariant>(FIELD_LABEL_VARIANT_DEFAULT);
+  /** Campo obligatorio: muestra el asterisco en la etiqueta y expone aria-required en el disparador. */
+  readonly required = input(false);
   readonly ariaLabel = input('');
   readonly placeholder = input('Seleccionar...');
   readonly searchLabel = input('Buscar opciones');

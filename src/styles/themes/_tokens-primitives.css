@@ -314,11 +314,11 @@
    /* ─────────────────────────────────────────────────────────────────────────
       ETIQUETA DE CAMPO (Input, Select, Select2, Textarea, Datepicker, ...)
       Un solo contrato tipografico para la etiqueta superior y la flotante.
-      Peso 600 porque la escala tipografica lo reserva a "etiquetas" y es una
-      cara real de la familia del sistema (no se resuelve a un vecino).
+      Peso 700 (--font-weight-title) en la etiqueta superior, igual que el formulario de referencia;
+      la flotante elevada conserva 600 (--font-weight-emphasis).
       ───────────────────────────────────────────────────────────────────────── */
    --field-label-font-size: var(--text-sm);
-   --field-label-font-weight: var(--font-weight-emphasis);
+   --field-label-font-weight: var(--font-weight-title);
    --field-label-line-height: 1.25;
    --field-label-gap: var(--space-1);
    /* Separacion entre etiqueta superior y control. */

@@ -29,6 +29,7 @@
     { "name": "options", "type": "Select2Option[]", "default": [], "meaning": "Opciones disponibles con value, label y disabled opcional." },
     { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible del selector." },
     { "name": "variant", "type": "'standard' | 'floating' | 'floating-value'", "default": "standard", "meaning": "Modo de etiqueta común a los controles de formulario." },
+    { "name": "required", "type": "boolean", "default": false, "meaning": "Marca el campo como obligatorio: asterisco en la etiqueta (superior o flotante) y aria-required en el disparador." },
     { "name": "ariaLabel", "type": "string", "default": "", "meaning": "Nombre accesible cuando no hay etiqueta visible." },
     { "name": "placeholder", "type": "string", "default": "Seleccione...", "meaning": "Texto guía cuando no hay selección; oculto mientras la etiqueta flotante reposa." },
     { "name": "searchLabel", "type": "string", "default": "Buscar opciones", "meaning": "Nombre accesible del campo de búsqueda interno." },
@@ -54,6 +55,7 @@
   ],
   "a11y": [
     "El disparador expone role=combobox, aria-expanded, aria-haspopup=listbox y aria-labelledby hacia la etiqueta.",
+    "Con required, el disparador expone aria-required=true y el asterisco es decorativo (aria-hidden).",
     "La lista expone role=listbox y cada opción role=option con aria-selected."
   ],
   "responsive": [

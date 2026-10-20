@@ -14,6 +14,10 @@ const meta: Meta<Select2Component> = {
   ],
   tags: ['autodocs'],
   argTypes: {
+    required: {
+      control: 'boolean',
+      description: 'Campo obligatorio: asterisco en la etiqueta y aria-required en el disparador',
+    },
     variant: {
       control: 'select',
       options: ['standard', 'floating', 'floating-value'],
@@ -59,6 +63,19 @@ export const LabelModes: Story = {
         <app-select2 label="País (standard)" variant="standard" placeholder="Seleccionar país..." [options]="options"></app-select2>
         <app-select2 label="País (floating)" variant="floating" placeholder="Seleccionar país..." [options]="options"></app-select2>
         <app-select2 label="País (floating-value)" variant="floating-value" placeholder="Seleccionar país..." [options]="options"></app-select2>
+      </div>
+    `,
+  }),
+};
+
+export const Required: Story = {
+  render: () => ({
+    props: { options: countryOptions },
+    template: `
+      <div style="display:flex; flex-direction:column; gap:1rem; max-width:360px;">
+        <app-select2 label="Pais (standard, requerido)" variant="standard" [required]="true" [options]="options"></app-select2>
+        <app-select2 label="Pais (floating, requerido)" variant="floating" [required]="true" [options]="options"></app-select2>
+        <app-select2 label="Pais (floating-value, requerido)" variant="floating-value" [required]="true" [options]="options"></app-select2>
       </div>
     `,
   }),

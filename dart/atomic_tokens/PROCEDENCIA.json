@@ -30,7 +30,7 @@
   "fuente": [
     {
       "archivo": "src/styles/themes/_tokens-primitives.css",
-      "sha256": "f52bebffb6a7f9ca816e1e0cd6eb18e83beed864460003dfc22769f7c53ae8fd"
+      "sha256": "e46699338f53babe45830693a6012d1e64b6e3319be02c19d38301d6c5af5e6c"
     },
     {
       "archivo": "src/styles/themes/_tokens-brand.css",

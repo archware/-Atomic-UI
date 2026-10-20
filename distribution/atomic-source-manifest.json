@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "5ca4d333d87a326ab653c29b7967a4135a1258d8642384d3fefe4d3ed8c13793",
+  "sourceTreeSha256": "1f17cd369785619e3e0462ad744d2255bd7d14944396eb0e14ea9f687d168042",
   "fileCount": 324,
   "files": [
     {
@@ -880,8 +880,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/select2/select2.component.ts",
-      "bytes": 18043,
-      "sha256": "f1bea7fff08110f825b04568654b8b75cbb41fdd5f95e647cc2ee74091b48aea"
+      "bytes": 18490,
+      "sha256": "f6b25a1597466be25aaf7a347aedf12400925c8b25db33dd46f8e81e52953b39"
     },
     {
       "path": "src/app/shared/ui/molecules/setting-item/setting-item.component.css",
@@ -1610,8 +1610,8 @@
     },
     {
       "path": "src/styles/themes/_tokens-primitives.css",
-      "bytes": 14998,
-      "sha256": "f52bebffb6a7f9ca816e1e0cd6eb18e83beed864460003dfc22769f7c53ae8fd"
+      "bytes": 15011,
+      "sha256": "e46699338f53babe45830693a6012d1e64b6e3319be02c19d38301d6c5af5e6c"
     },
     {
       "path": "src/styles/themes/_tokens-semantic.css",
