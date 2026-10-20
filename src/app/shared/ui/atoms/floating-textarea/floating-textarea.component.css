@@ -32,7 +32,7 @@
 }
 
 .floating-textarea::placeholder {
-  color: transparent;
+  color: var(--input-placeholder);
 }
 
 .floating-textarea::-ms-reveal,
@@ -266,4 +266,42 @@
   margin-top: var(--space-2);
   font-size: 0.8125rem;
   color: var(--danger-color-text);
+}
+
+/* === VARIANT: STANDARD (etiqueta superior fija) === */
+.floating-textarea-top-label {
+  margin-bottom: var(--field-label-gap);
+}
+
+.variant-standard {
+  margin-top: 0;
+}
+
+.variant-standard .floating-textarea {
+  border: var(--input-border-width, 1.5px) solid var(--input-border);
+  border-radius: var(--radius-md);
+  background: var(--input-bg);
+  box-shadow: var(--input-shadow);
+}
+
+.variant-standard.focused .floating-textarea {
+  border-color: var(--input-border-focus);
+  box-shadow: var(--input-shadow-focus);
+}
+
+.variant-standard .textarea-line {
+  display: none;
+}
+
+.variant-standard:not(.focused) .floating-textarea:hover {
+  border-color: var(--input-border-hover);
+  box-shadow: var(--input-shadow-hover);
+}
+
+/* === MOMENTO DE LA ETIQUETA: floating-value === */
+.label-solo-valor.focused:not(.has-value) .floating-label {
+  top: calc(var(--control-height) / 2);
+  transform: translateY(-50%);
+  font-size: var(--field-label-font-size);
+  color: var(--input-placeholder);
 }

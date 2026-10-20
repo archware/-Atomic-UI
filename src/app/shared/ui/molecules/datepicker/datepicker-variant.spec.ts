@@ -43,14 +43,32 @@ describe('DatepickerComponent - modos de etiqueta', () => {
     );
   });
 
-  it('floating: la etiqueta la dibuja el campo interno y sube con el valor', async () => {
+  it('floating: la etiqueta la dibuja el campo interno y sube al enfocar/abrir el disparador o con valor', async () => {
     const fixture = TestBed.createComponent(Anfitrion);
     fixture.componentInstance.variante.set('floating');
     await fixture.whenStable();
     const raiz: HTMLElement = fixture.nativeElement;
+    const disparador = raiz.querySelector('.datepicker-trigger') as HTMLElement;
     expect(raiz.querySelector('.datepicker-top-label')).toBeNull();
     expect(interno(raiz).querySelector('.floating-label')?.textContent?.trim()).toBe('Nacimiento');
+    expect(caja(raiz).classList.contains('focused')).toBe(false);
     expect(caja(raiz).classList.contains('has-value')).toBe(false);
+
+    disparador.dispatchEvent(new Event('focus'));
+    await fixture.whenStable();
+    expect(caja(raiz).classList.contains('focused')).toBe(true);
+
+    disparador.dispatchEvent(new Event('blur'));
+    await fixture.whenStable();
+    expect(caja(raiz).classList.contains('focused')).toBe(false);
+
+    disparador.click();
+    await fixture.whenStable();
+    expect(caja(raiz).classList.contains('focused')).toBe(true);
+
+    disparador.click();
+    await fixture.whenStable();
+    expect(caja(raiz).classList.contains('focused')).toBe(false);
 
     fixture.componentInstance.control.setValue(new Date(2000, 0, 15));
     await fixture.whenStable();

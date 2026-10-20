@@ -118,7 +118,13 @@ export class DropdownComponent implements OnChanges, ControlValueAccessor {
   }
 
   isOpen = signal(false);
-  selectedOption = signal<DropdownOption | null>(null);
+  readonly selectedOption = computed<DropdownOption | null>(() => {
+    const val = this.value();
+    if (val === undefined || val === null) {
+      return null;
+    }
+    return this.options().find(o => o.value === val) || null;
+  });
   readonly triggerFocused = signal(false);
 
   private static labelCounter = 0;
@@ -145,15 +151,12 @@ export class DropdownComponent implements OnChanges, ControlValueAccessor {
 
   private readonly elementRef = inject(ElementRef);
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['value'] || changes['options']) {
-      this.updateSelectedOption();
-    }
+  ngOnChanges(_changes: SimpleChanges) {
+    // selectedOption es ahora computed a partir de value() y options()
   }
 
   writeValue(value: string | number): void {
     this.value.set(value);
-    this.updateSelectedOption();
   }
 
   registerOnChange(fn: (value: string | number) => void): void {
@@ -168,15 +171,6 @@ export class DropdownComponent implements OnChanges, ControlValueAccessor {
     this.disabledByForm.set(isDisabled);
   }
 
-  private updateSelectedOption() {
-    if (this.value() !== undefined) {
-      const option = this.options().find(o => o.value === this.value());
-      this.selectedOption.set(option || null);
-    } else {
-      this.selectedOption.set(null);
-    }
-  }
-
   toggleDropdown() {
     if (!this.isDisabled()) {
       this.isOpen.update(v => !v);
@@ -186,7 +180,6 @@ export class DropdownComponent implements OnChanges, ControlValueAccessor {
 
   selectOption(option: DropdownOption) {
     this.value.set(option.value);
-    this.selectedOption.set(option);
     this.onChange(option.value);
     this.isOpen.set(false);
   }

@@ -1,6 +1,10 @@
+@if (variant() === 'standard' && tieneEtiqueta()) {
+  <label class="fl-label floating-textarea-top-label" [attr.for]="textareaId()">{{ label() }}</label>
+}
 <div
       class="floating-textarea-wrapper"
-      [class]="'variant-' + variant()"
+      [class]="'variant-' + claseVisual()"
+      [class.label-solo-valor]="soloValor()"
       [class.focused]="isFocused()"
       [class.has-value]="hasValue()"
       [class.has-error]="error()"
@@ -18,9 +22,11 @@
         (input)="onInput($event)"
         (focus)="onFocus()"
         (blur)="onBlur()"
-        [attr.placeholder]="variant() === 'floating' || variant() === 'material' ? ' ' : placeholder()"
+        [attr.placeholder]="marcador()"
       ></textarea>
-      <label class="floating-label" [attr.for]="textareaId()">{{ label() }}</label>
+      @if (flotante()) {
+        <label class="floating-label" [attr.for]="textareaId()">{{ label() }}</label>
+      }
       <span class="textarea-line"></span>
 
       @if (clearable()) {

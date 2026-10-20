@@ -18,9 +18,9 @@ inferiores no equivalen a una nueva publicación del ADN.
 
 ## Corte vigente ATOMIC-20261019-001
 
-`ATOMIC-20261019-001` unifica los modos de etiqueta (`variant`: `standard` | `floating` | `floating-value`) y los tokens `--field-label-*` en `InputComponent`, `SelectComponent`, `Select2Component`, `TextareaComponent`, `FloatingInputComponent`, `DatepickerComponent`, `ComboboxComponent`, `TagInputComponent`, `NumberInputComponent` y `DropdownComponent`. `InputComponent` y `SelectComponent` quedan como implementaciones únicas de `app-input` y `app-select`, mientras `Input` y `Select` se reexportan como alias de compatibilidad. En modo flotante el `placeholder` se oculta mientras la etiqueta reposa dentro de `.fl-control`.
+`ATOMIC-20261019-001` unifica los modos de etiqueta (`variant`: `standard` | `floating` | `floating-value`) y los tokens `--field-label-*` en `InputComponent`, `SelectComponent`, `Select2Component`, `TextareaComponent`, `FloatingInputComponent`, `FloatingTextareaComponent`, `DatepickerComponent`, `ComboboxComponent`, `TagInputComponent`, `NumberInputComponent`, `DropdownComponent` y `.form-label` (`_forms.css`). `InputComponent` y `SelectComponent` quedan como implementaciones únicas de `app-input` y `app-select`, mientras `Input` y `Select` se reexportan como alias de compatibilidad. En modo flotante el `placeholder` se oculta mientras la etiqueta reposa dentro de `.fl-control`.
 
-86 pruebas unitarias en 11 suites de variantes de formulario, la prueba negativa `tools/test-field-label-gate.mjs` y todas las compuertas de `npm run governance:check` pasan en verde. Sin publicación ni push. Evidencia y rollback en el [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261019-001_modos_etiqueta.md).
+102 pruebas unitarias en 16 suites de controles de formulario, la prueba negativa `tools/test-field-label-gate.mjs` (18 hojas descubiertas, 0 literales) y todas las compuertas de `npm run governance:check` pasan en verde. Sin publicación ni push. Evidencia y rollback en el [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261019-001_modos_etiqueta.md).
 
 ## Calendario y selector candidatos
 

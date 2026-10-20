@@ -11,21 +11,24 @@
     {
       "name": "variant",
       "values": [
-        { "value": "floating", "meaning": "Etiqueta flotante que sube al enfocar o con valor.", "default": true },
+        { "value": "standard", "meaning": "Etiqueta superior fija sobre el control; el marcador siempre se ve." },
+        { "value": "floating", "meaning": "Etiqueta flotante que sube al enfocar o con valor; el marcador se oculta mientras la etiqueta reposa.", "default": true },
         { "value": "floating-value", "meaning": "Etiqueta flotante que sube únicamente cuando existe valor." },
-        { "value": "outline", "meaning": "Caja delineada con marcador directo sin etiqueta flotante." }
+        { "value": "underline", "meaning": "Forma histórica del modo flotante con subrayado." },
+        { "value": "material", "meaning": "Forma histórica del modo flotante estilo Material." },
+        { "value": "outline", "meaning": "Forma histórica del modo flotante con borde completo." }
       ]
     }
   ],
   "inputs": [
-    { "name": "variant", "type": "FloatingTextareaVariant", "default": "floating", "meaning": "Variante de etiqueta flotante o caja delineada." },
+    { "name": "variant", "type": "FloatingTextareaVariant", "default": "floating", "meaning": "Modo de etiqueta común (standard | floating | floating-value) más las formas históricas underline, material y outline." },
     { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta visible del control." },
     { "name": "placeholder", "type": "string", "default": "", "meaning": "Texto guía cuando el marcador es visible." },
     { "name": "error", "type": "string", "default": "", "meaning": "Mensaje de error asociado al control." },
     { "name": "disabled", "type": "boolean", "default": false, "meaning": "Deshabilita la interacción." },
     { "name": "readonly", "type": "boolean", "default": false, "meaning": "Activa el modo de solo lectura." },
     { "name": "width", "type": "string", "default": "100%", "meaning": "Ancho CSS asignado mediante token local." },
-    { "name": "rows", "type": "number", "default": 3, "meaning": "Filas visibles iniciales." },
+    { "name": "rows", "type": "number", "default": 4, "meaning": "Filas visibles iniciales." },
     { "name": "clearable", "type": "boolean", "default": false, "meaning": "Muestra botón para limpiar el texto." },
     { "name": "value", "type": "string", "default": "", "meaning": "Valor controlado bidireccional (model)." }
   ],
@@ -50,9 +53,18 @@
     "--danger-color",
     "--danger-color-text",
     "--fi-min-width",
+    "--field-label-color",
+    "--field-label-color-error",
+    "--field-label-color-floated",
+    "--field-label-duration",
     "--field-label-floated-font-size",
+    "--field-label-floated-font-weight",
     "--field-label-font-size",
+    "--field-label-font-weight",
+    "--field-label-gap",
     "--field-label-inset",
+    "--field-label-line-height",
+    "--field-label-padding",
     "--floating-textarea-icon-cursor",
     "--floating-textarea-width",
     "--font-weight-body",

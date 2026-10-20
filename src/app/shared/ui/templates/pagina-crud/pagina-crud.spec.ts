@@ -193,4 +193,21 @@ describe('PaginaCrud: catálogo compatible', () => {
     expect(fixture.componentInstance.tamanioPagina()).toBe(25);
     expect(pagina).toHaveBeenCalledWith({ pagina: 2, tamano: 25, busqueda: 'Café' });
   });
+
+  it('el buscador flotante oculta el marcador en reposo y lo muestra al enfocar', () => {
+    const campoBusqueda = fixture.nativeElement.querySelector(
+      'app-query-toolbar app-input input.field__input',
+    ) as HTMLInputElement;
+    const etiquetaFlotante = fixture.nativeElement.querySelector(
+      'app-query-toolbar app-input label.fl-label--floating',
+    ) as HTMLLabelElement;
+    expect(etiquetaFlotante).not.toBeNull();
+    expect(etiquetaFlotante.classList.contains('fl-label--floated')).toBeFalse();
+    expect(campoBusqueda.hasAttribute('placeholder')).toBeFalse();
+
+    campoBusqueda.dispatchEvent(new Event('focus'));
+    fixture.detectChanges();
+    expect(etiquetaFlotante.classList.contains('fl-label--floated')).toBeTrue();
+    expect(campoBusqueda.getAttribute('placeholder')).toBeTruthy();
+  });
 });

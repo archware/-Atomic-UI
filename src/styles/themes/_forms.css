@@ -192,10 +192,11 @@ html.dark .form-select {
    ───────────────────────────────────────────────────────────────────────────── */
 .form-label {
   display: block;
-  margin-bottom: 0.5rem;
-  font-size: 0.9375rem;
-  font-weight: var(--font-weight-body);
-  color: var(--info-color-text);
+  margin-bottom: var(--field-label-gap);
+  font-size: var(--field-label-font-size);
+  font-weight: var(--field-label-font-weight);
+  line-height: var(--field-label-line-height);
+  color: var(--field-label-color);
 }
 
 .form-group {

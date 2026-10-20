@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, forwardRef, signal, computed, ElementRef, HostListener, inject, input } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { Component, ChangeDetectionStrategy, forwardRef, signal, computed, effect, viewChild, ElementRef, HostListener, inject, input } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FloatingInputComponent, FloatingInputVariant } from '../../atoms/floating-input/floating-input.component';
 import { FIELD_LABEL_VARIANT_DEFAULT } from '../../atoms/form-field/field-label';
@@ -8,7 +8,7 @@ import { FIELD_LABEL_VARIANT_DEFAULT } from '../../atoms/form-field/field-label'
   selector: 'app-datepicker',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, FloatingInputComponent, DatePipe],
+  imports: [FloatingInputComponent, DatePipe],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -38,6 +38,12 @@ export class DatepickerComponent implements ControlValueAccessor {
   /** En modo standard el campo interno se dibuja como caja sin etiqueta propia. */
   protected readonly variantInterna = computed<FloatingInputVariant>(() => this.flotante() ? this.variant() : 'outline');
   protected readonly etiquetaInterna = computed(() => this.flotante() ? this.label() : '');
+  private readonly campoInterno = viewChild(FloatingInputComponent);
+  readonly triggerFocused = signal(false);
+  private readonly sincronizarFocoInterno = effect(() => {
+    const activo = this.isOpen() || this.triggerFocused();
+    this.campoInterno()?.isFocused.set(activo);
+  });
 
   // State
   isOpen = signal(false);

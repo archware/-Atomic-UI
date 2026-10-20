@@ -69,7 +69,7 @@ function normalizeSearch(value: string): string {
     }
   ],
   template: `
-    <div class="combobox" [class.combobox-open]="isOpen()" [class.combobox-disabled]="disabled">
+    <div class="combobox" [class.fl-field--floating]="flotante()" [class.combobox-open]="isOpen()" [class.combobox-disabled]="disabled">
       @if (label() && !flotante()) {
         <label class="fl-label combobox-label" [for]="inputId">{{ label() }}</label>
       }

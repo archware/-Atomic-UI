@@ -97,8 +97,20 @@ try {
   r = ejecutar(origen);
   assert.equal(r.codigo, 0, `revertido el defecto debe volver a pasar:\n${r.salida}`);
 
-  // 8. Una hoja que NO es de un control (sin NG_VALUE_ACCESSOR) no se descubre: sin entrada, la
-  //    guarda falla (codigo 2, arnes) en vez de certificar en vacio.
+  // 8. Un control que consume el contrato field-label sin NG_VALUE_ACCESSOR tambien se descubre.
+  writeFileSync(
+    join(control, 'demo.component.ts'),
+    "import { FieldLabelVariant } from '../form-field/field-label';\nexport type Variante = FieldLabelVariant;\n",
+  );
+  writeFileSync(hoja, `${limpia}.demo__label {\n  font-size: 0.9375rem;\n}\n`);
+  r = ejecutar(origen);
+  assert.equal(r.codigo, 1, 'un control con field-label sin NG_VALUE_ACCESSOR tambien se audita');
+  writeFileSync(hoja, limpia);
+  r = ejecutar(origen);
+  assert.equal(r.codigo, 0);
+
+  // 9. Una hoja que NO es de un control (sin NG_VALUE_ACCESSOR ni field-label) no se descubre:
+  //    sin entrada, la guarda falla (codigo 2, arnes) en vez de certificar en vacio.
   const sinControl = join(temporal, 'vacio', 'atoms', 'adorno');
   mkdirSync(sinControl, { recursive: true });
   writeFileSync(join(sinControl, 'adorno.component.ts'), 'export class Adorno {}\n');
@@ -107,7 +119,7 @@ try {
   assert.equal(r.codigo, 2, `un barrido vacio debe fallar:\n${r.salida}`);
   assert.match(r.salida, /no descubrio ningun control/u);
 
-  // 9. El arbol real pasa.
+  // 10. El arbol real pasa.
   r = ejecutar(join(raiz, 'src', 'app', 'shared', 'ui'));
   assert.equal(r.codigo, 0, `el arbol real debe pasar:\n${r.salida}`);
 

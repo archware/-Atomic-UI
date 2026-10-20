@@ -50,7 +50,7 @@ export interface TagInputOption {
     },
   ],
   template: `
-    <div class="tag-input-wrapper" [class.tag-input--disabled]="isDisabled()" [class.tag-input--focused]="focused()">
+    <div class="tag-input-wrapper" [class.fl-field--floating]="flotante()" [class.tag-input--disabled]="isDisabled()" [class.tag-input--focused]="focused()">
       @if (label() && !flotante()) {
         <label class="fl-label tag-input__label" [for]="inputId">{{ label() }}</label>
       }

@@ -84,16 +84,16 @@ function recolectar(directorio, extensiones) {
   return encontrados;
 }
 
-/** Un control de formulario implementa ControlValueAccessor: lo dice su componente hermano. */
+/** Un control de formulario implementa ControlValueAccessor o consume el contrato field-label. */
 function esControlDeFormulario(rutaEstilo) {
   const carpeta = dirname(rutaEstilo);
-  return readdirSync(carpeta).some(
-    (nombre) =>
-      nombre.endsWith('.ts') &&
-      !nombre.endsWith('.spec.ts') &&
-      !nombre.endsWith('.stories.ts') &&
-      readFileSync(join(carpeta, nombre), 'utf8').includes('NG_VALUE_ACCESSOR'),
-  );
+  return readdirSync(carpeta).some((nombre) => {
+    if (!nombre.endsWith('.ts') || nombre.endsWith('.spec.ts') || nombre.endsWith('.stories.ts')) {
+      return false;
+    }
+    const fuente = readFileSync(join(carpeta, nombre), 'utf8');
+    return fuente.includes('NG_VALUE_ACCESSOR') || fuente.includes('field-label');
+  });
 }
 
 function quitarComentarios(texto) {
@@ -126,6 +126,10 @@ export function auditarEtiquetasDeCampo(origen = origenPorDefecto, raizRelativa 
   const estilos = recolectar(origen, new Set(['.css', '.scss'])).filter(
     (ruta) => esControlDeFormulario(ruta) || ruta.endsWith('field-label.css'),
   );
+  const hojaFormulariosTema = resolve(origen, '../../../styles/themes/_forms.css');
+  if (existsSync(hojaFormulariosTema)) {
+    estilos.push(hojaFormulariosTema);
+  }
   const hallazgos = [];
 
   for (const ruta of estilos) {

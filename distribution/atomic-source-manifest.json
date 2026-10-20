@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "e0a758ee2039865b61352e269ef90433eb6a549a31ceb91acff7750a6b5d119e",
+  "sourceTreeSha256": "5ca4d333d87a326ab653c29b7967a4135a1258d8642384d3fefe4d3ed8c13793",
   "fileCount": 324,
   "files": [
     {
@@ -185,18 +185,18 @@
     },
     {
       "path": "src/app/shared/ui/atoms/floating-textarea/floating-textarea.component.css",
-      "bytes": 6219,
-      "sha256": "3ce1cc2237723ddf54ee131f34fefcd29aeb3f97b4ca3971d6db9c7f53ed3176"
+      "bytes": 7217,
+      "sha256": "7a66c5720e9a31d758733eb34b6cfdee2221600d9d41b34bafe3fc74c082cf04"
     },
     {
       "path": "src/app/shared/ui/atoms/floating-textarea/floating-textarea.component.html",
-      "bytes": 1595,
-      "sha256": "8985c1d3d1917caddec2de42410c2cfef4f9ea0d4ce526d152d2538620757418"
+      "bytes": 1771,
+      "sha256": "ee15e75aba3888d7a09584aa1d58786f0af9575db88c119d05a7d1ada391764e"
     },
     {
       "path": "src/app/shared/ui/atoms/floating-textarea/floating-textarea.component.ts",
-      "bytes": 2940,
-      "sha256": "ddf11e7aa2b78ba1f15add3dbcea8016475d11d123ee4d55a20933b5714e792f"
+      "bytes": 4100,
+      "sha256": "2cddbe897f23e472b0e499d9302c2264879e4cf9c95bb07c6e4ce31c431792b0"
     },
     {
       "path": "src/app/shared/ui/atoms/form-error/form-error.component.css",
@@ -735,8 +735,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/combobox/combobox.component.ts",
-      "bytes": 14257,
-      "sha256": "12d090bf0c07c8ae048a78c6fbde9c2e67c6e8971c5620c5c44e70a1492742d1"
+      "bytes": 14297,
+      "sha256": "5c0659a2a101634cc8554bd6f95550e21d9a3266286a2e0e3dd1202b7b92647d"
     },
     {
       "path": "src/app/shared/ui/molecules/comparison-chart/comparison-chart.component.scss",
@@ -775,13 +775,13 @@
     },
     {
       "path": "src/app/shared/ui/molecules/datepicker/datepicker.component.html",
-      "bytes": 4663,
-      "sha256": "609181f9460206b254e34e1eec5f6af46b9f5623f054525ca1c27a9545d6e6d9"
+      "bytes": 4733,
+      "sha256": "a0f331fe53b05b52493fa39b9ab60815904735579617e2c81d0e124f573273e2"
     },
     {
       "path": "src/app/shared/ui/molecules/datepicker/datepicker.component.ts",
-      "bytes": 12222,
-      "sha256": "4fea0132b40a454b452d785d0f5d1ccb1dce1a4757ed7fb1645c6fcd604ba0e0"
+      "bytes": 12497,
+      "sha256": "dacd252649ed254ee91b7c73a9d16223755a7d28dcf35b4197e246969f8e7b42"
     },
     {
       "path": "src/app/shared/ui/molecules/dropdown/dropdown.component.css",
@@ -790,8 +790,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/dropdown/dropdown.component.ts",
-      "bytes": 6466,
-      "sha256": "5c30507abb07d598d0de1210f08909211cd7cab63e0fe67eb0154006e8b62954"
+      "bytes": 6304,
+      "sha256": "1f80a580fbe89c8b218c74cf1e6e7e03b9561a669ea179357c94727c8f78dd5e"
     },
     {
       "path": "src/app/shared/ui/molecules/form-actions/form-actions.component.css",
@@ -930,8 +930,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/tag-input/tag-input.component.ts",
-      "bytes": 6221,
-      "sha256": "126064d571a5599e2a95198f79f89d21360244fed6b3043a928b1d50d0c893d6"
+      "bytes": 6261,
+      "sha256": "be47c465ed685e8f0079d0d09732e5fae751fd24bcc6ebbc357c80e13bcd529c"
     },
     {
       "path": "src/app/shared/ui/molecules/timeline/timeline.component.css",
@@ -1595,8 +1595,8 @@
     },
     {
       "path": "src/styles/themes/_forms.css",
-      "bytes": 10489,
-      "sha256": "8c4658f5abeaa19d9fd864aa38e9e4cbd941f5cc3d2c2311be83c671a8bf0761"
+      "bytes": 10580,
+      "sha256": "543fc98acc057fcefbaaaf9f533cd5040a38ab6b071e50b95e91a9d7e491a805"
     },
     {
       "path": "src/styles/themes/_tokens-brand.css",

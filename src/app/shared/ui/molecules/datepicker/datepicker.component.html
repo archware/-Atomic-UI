@@ -5,7 +5,7 @@
   }
 
   <!-- Trigger Input -->
-  <div class="datepicker-trigger" (click)="toggle()" (keydown)="onKeyDown($event)" [attr.tabindex]="isDisabled() ? -1 : 0" role="button"
+  <div class="datepicker-trigger" (click)="toggle()" (keydown)="onKeyDown($event)" (focus)="triggerFocused.set(true)" (blur)="triggerFocused.set(false)" [attr.tabindex]="isDisabled() ? -1 : 0" role="button"
     aria-haspopup="grid" [attr.aria-disabled]="isDisabled()" [attr.aria-expanded]="isOpen()" [attr.aria-label]="label() ? 'Abrir calendario: ' + label() : 'Abrir calendario'">
     <div class="datepicker-wrapper" [class.datepicker-wrapper--standard]="!flotante()">
       <app-floating-input [label]="etiquetaInterna()" [value]="formattedValue()" [variant]="variantInterna()" [disabled]="isDisabled()"

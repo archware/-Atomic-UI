@@ -1,8 +1,14 @@
-import { Component, forwardRef, signal, ChangeDetectionStrategy, input, output, model } from '@angular/core';
+import { Component, forwardRef, signal, computed, ChangeDetectionStrategy, input, output, model } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
+import {
+  FieldLabelVariant,
+  esEtiquetaElevada,
+  esEtiquetaFlotante,
+  esMarcadorVisible,
+} from '../form-field/field-label';
 
-export type FloatingTextareaVariant = 'floating' | 'underline' | 'material' | 'outline';
+export type FloatingTextareaVariant = FieldLabelVariant | 'underline' | 'material' | 'outline';
 
 @Component({
   selector: 'app-floating-textarea',
@@ -17,7 +23,7 @@ export type FloatingTextareaVariant = 'floating' | 'underline' | 'material' | 'o
     }
   ],
   templateUrl: './floating-textarea.component.html',
-  styleUrl: './floating-textarea.component.css'
+  styleUrls: ['./floating-textarea.component.css', '../form-field/field-label.css']
 })
 export class FloatingTextareaComponent implements ControlValueAccessor {
   readonly variant = input<FloatingTextareaVariant>('floating');
@@ -39,6 +45,32 @@ export class FloatingTextareaComponent implements ControlValueAccessor {
     return this.disabled() || this.disabledByForm();
   }
   isFocused = signal(false);
+
+  private readonly modoEtiqueta = computed<FieldLabelVariant>(() => {
+    const variant = this.variant();
+    return variant === 'standard' || variant === 'floating-value' ? variant : 'floating';
+  });
+  protected readonly claseVisual = computed(() =>
+    this.variant() === 'floating-value' ? 'floating' : this.variant(),
+  );
+  protected readonly tieneEtiqueta = computed(() => this.label().length > 0);
+  protected readonly flotante = computed(() =>
+    esEtiquetaFlotante(this.modoEtiqueta(), this.tieneEtiqueta()),
+  );
+  protected readonly soloValor = computed(() => this.variant() === 'floating-value');
+  protected readonly elevada = computed(() =>
+    esEtiquetaElevada(
+      this.modoEtiqueta(),
+      this.tieneEtiqueta(),
+      this.isFocused(),
+      this.hasValue(),
+    ),
+  );
+  protected readonly marcador = computed(() =>
+    esMarcadorVisible(this.modoEtiqueta(), this.tieneEtiqueta(), this.elevada())
+      ? this.placeholder() || null
+      : null,
+  );
 
   private static instanceCounter = 0;
   private readonly _textareaId = `floating-textarea-${++FloatingTextareaComponent.instanceCounter}`;
