@@ -1,0 +1,151 @@
+
+    <div
+      class="select2-wrapper"
+      [class.variant-standard]="!flotante()"
+      [class.open]="isOpen()"
+      [class.disabled]="disabled"
+      [class.focused]="isOpen()"
+      [class.has-value]="hasValue()"
+      [class.multiple]="multiple()"
+      [class.has-label]="flotante()"
+      [appVariablesCss]="{ '--select2-width': width() || null }"
+    >
+      @if (label() && !flotante()) {
+        <label class="fl-label" [id]="selectId()">
+          {{ label() }}
+          @if (required()) {
+            <span class="field__required fl-label__required" aria-hidden="true">*</span>
+          }
+        </label>
+      }
+      <div #disparador class="select2-trigger"
+        (click)="$event.stopPropagation(); toggleDropdown()"
+        (keydown)="handleKeydown($event)"
+        (focus)="triggerFocused.set(true)"
+        (blur)="triggerFocused.set(false)"
+        [attr.aria-labelledby]="label() ? selectId() : null"
+        [attr.aria-label]="label() ? null : ariaLabel() || placeholder()"
+        [attr.aria-required]="required() ? 'true' : null"
+        [attr.aria-controls]="listboxId()"
+        [attr.aria-activedescendant]="isOpen() && highlightedIndex() >= 0 ? optionId(highlightedIndex()) : null"
+        [attr.aria-disabled]="disabled ? 'true' : 'false'"
+        [attr.tabindex]="disabled ? -1 : 0"
+        role="combobox"
+        [attr.aria-expanded]="isOpen()"
+        aria-haspopup="listbox"
+      >
+        @if (flotante()) {
+          <span
+            class="fl-label fl-label--floating"
+            [class.fl-label--floated]="elevada()"
+            [class.fl-label--disabled]="disabled"
+            [id]="selectId()"
+            >{{ label() }}
+            @if (required()) {
+              <span class="field__required fl-label__required" aria-hidden="true">*</span>
+            }</span
+          >
+        }
+        <!-- Single value display -->
+        @if (!multiple()) {
+          <span class="select2-value">
+            @if (selectedOption()) {
+              @if (selectedOption()!.icon) {
+                <span class="option-icon">{{ selectedOption()!.icon }}</span>
+              }
+              {{ selectedOption()!.label | translate }}
+            } @else if (marcadorVisible()) {
+              <span class="placeholder">{{ placeholder() }}</span>
+            }
+          </span>
+        }
+
+        <!-- Multiple values as tags -->
+        @if (multiple()) {
+          <div class="select2-tags">
+            @for (opt of selectedOptions(); track opt.value) {
+              <span class="select2-tag">
+                {{ opt.label | translate }}
+                <button
+                  type="button"
+                  class="tag-remove"
+                  [disabled]="disabled"
+                  [attr.aria-label]="removeTagLabel(opt)"
+                  (click)="removeTag(opt, $event)">×</button>
+              </span>
+            }
+            @if (selectedOptions().length === 0 && marcadorVisible()) {
+              <span class="placeholder">{{ placeholder() }}</span>
+            }
+          </div>
+        }
+
+        <span class="select2-arrow">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
+            <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+
+      <span #metricas class="select2-metricas" aria-hidden="true"></span>
+      @if (isOpen()) {
+        <div #capa class="select2-dropdown" popover="manual"
+          [class.capa-posicionada]="posicionCapa() !== null"
+          [appVariablesCss]="variablesCapa()"
+          (toggle)="alCambiarCapa($event)"
+          (mousedown)="$event.stopPropagation()">
+          <!-- Search box -->
+          @if (searchable()) {
+            <div class="select2-search">
+              <input
+                type="text"
+                class="search-input"
+                placeholder="Buscar..."
+                [ngModel]="searchTerm()"
+                (ngModelChange)="onSearchTermChange($event)"
+                (click)="$event.stopPropagation()"
+                (keydown)="handleKeydown($event)"
+                [attr.aria-label]="searchLabel()"
+                autocomplete="off"
+              />
+              <span class="search-icon" aria-hidden="true">🔍</span>
+            </div>
+          }
+
+          <!-- Options list -->
+          <div
+            class="select2-options"
+            role="listbox"
+            tabindex="-1"
+            (keydown)="alTecladoLista($event)"
+            [id]="listboxId()"
+            [attr.aria-multiselectable]="multiple() ? 'true' : null">
+            @for (option of filteredOptions(); track option.value; let i = $index) {
+              <div
+                [id]="optionId(i)"
+                class="select2-option"
+                [class.selected]="isSelected(option)"
+                [class.highlighted]="highlightedIndex() === i"
+                [class.disabled]="option.disabled"
+                (mousedown)="$event.stopPropagation(); $event.preventDefault(); !option.disabled && selectOption(option)"
+                (keydown)="handleKeydown($event)"
+                tabindex="-1"
+                role="option"
+                [attr.aria-selected]="isSelected(option)"
+                [attr.aria-disabled]="option.disabled ? 'true' : null"
+              >
+                @if (option.icon) {
+                  <span class="option-icon" aria-hidden="true">{{ option.icon }}</span>
+                }
+                <span class="option-label">{{ option.label | translate }}</span>
+                @if (isSelected(option)) {
+                  <span class="check-icon" aria-hidden="true">✓</span>
+                }
+              </div>
+            } @empty {
+              <div class="select2-no-results" role="status">No hay resultados</div>
+            }
+          </div>
+        </div>
+      }
+    </div>

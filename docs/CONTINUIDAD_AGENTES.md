@@ -5,8 +5,8 @@ date: "2026-08-23"
 last_updated: "2026-10-20"
 document_type: "manual de continuidad"
 status: "vigente"
-version: "1.4.2"
-change_id: "ATOMIC-20261020-001"
+version: "1.4.3"
+change_id: "ATOMIC-20261020-002"
 canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
@@ -16,7 +16,16 @@ document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDA
 Se mantiene el contrato documental ECO-20260823-003. Las unidades candidatas
 inferiores no equivalen a una nueva publicación del ADN.
 
-## Corte vigente ATOMIC-20261020-001
+## Unidad Select2 ATOMIC-20261020-002
+
+La corrección de Select2 se limita a su capa flotante, pruebas y catálogo.
+No se deben modificar los contenedores de formularios para compensar el
+recorte ni sincronizar masivamente el ADN del consumidor. El commit local
+acotado fue autorizado expresamente, después de revisión, sin publicación.
+El estado comprobado, límites del ensayo y rollback viven en el
+[roadmap de Select2](../.agent/roadmaps/ROADMAP_ATOMIC-20261020-002_select2_capa_flotante.md).
+
+## Corte previo ATOMIC-20261020-001
 
 `ATOMIC-20261020-001` incorpora la variante `variant="dropzone"` en `FileInputComponent` (`atoms/file-input`) con soporte para título/subtítulo personalizables, insignia (`badgeHint`), cabecera de lista con contador (`showHeader`, `headerTitle`), vaciado total (`allowClearAll`, `clearAllLabel`, `cleared`), acción contextual por fila (`itemActionIcon`, `itemActionLabel`, `fileAction`, `fileRemoved`) y protecciones contra arrastre fantasma en WebView2/escritorio. Asimismo, homologa el input `[required]` (`false` por defecto), el asterisco `.field__required.fl-label__required` (`aria-hidden="true"`) en modos `standard`, `floating` y `floating-value`, y `aria-required="true"` en `FloatingInputComponent`, `DatepickerComponent`, `ComboboxComponent`, `TagInputComponent` y `NumberInputComponent`. Evidencia y rollback en el [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261020-001_dropzone_y_required.md).
 

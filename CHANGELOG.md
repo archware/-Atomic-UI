@@ -12,6 +12,16 @@ owner: 'COTAHA'
 
 # Registro de cambios
 
+## ATOMIC-20261020-002 — Select2 en capa flotante
+
+Se corrige el recorte de Select2 mediante un popover manual
+anclado al disparador y mantenido en el DOM del componente. La posición se
+ajusta al espacio disponible y al viewport; el cierre centraliza Escape, foco
+y limpieza de recursos. Se conservan las etiquetas, tokens y contrato CVA.
+El estado de validación y adopción se registra en el
+[roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261020-002_select2_capa_flotante.md).
+La autorización se limita a un commit local revisado de esta unidad, sin push.
+
 ## ATOMIC-20261020-001 — Variante `dropzone` en `FileInputComponent` y homologación de `[required]` en controles compuestos
 
 Se promueve al canon (`src/app/shared/ui/atoms/file-input/`) la variante `variant="dropzone"` de `FileInputComponent`, rescatando el patrón de zona de arrastre enriquecida de `pdf-tool` con tokens semánticos puros (`var(--...)`), unidades relativas (`rem`), protección contra arrastre nativo de escritorio (`draggable="false"`, bloqueo de selección en `mousedown`/`dragstart`), insignia `badgeHint`, cabecera de lista con contador (`showHeader`, `headerTitle`), acción de vaciado total (`allowClearAll`, `clearAllLabel`, output `cleared`) y acción contextual por fila (`itemActionIcon`, `itemActionLabel`, outputs `fileAction` y `fileRemoved`). Simultáneamente, se homologa el input `[required]` (`false` por defecto), el asterisco `.field__required.fl-label__required` (`aria-hidden="true"`) en modos `standard`, `floating` y `floating-value`, y el atributo `aria-required="true"` en `FloatingInputComponent`, `DatepickerComponent`, `ComboboxComponent`, `TagInputComponent` y `NumberInputComponent`. Se incorporan además mejoras complementarias de superficie en `ButtonComponent` (`appearance="flat" | "gradient"`, `tone="secondary"`), `IconButtonComponent` (`variant="close-soft"`, `size`, `icon`, `title`) y `ScrollOverlayComponent` (observación de hijos y posicionamiento directo en pista). Se actualizan las entradas de `catalog/components/`, las historias de Storybook, `showcase-forms.component.ts`, `showcase-actions.component.ts`, `dialogs-page` y las suites de prueba (`file-input.component.spec.ts`, `datepicker-variant.spec.ts`, `combobox-variant.spec.ts`, `tag-input-variant.spec.ts`, `number-input-variant.spec.ts` y `button.component.spec.ts`). Consultar el [roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261020-001_dropzone_y_required.md).

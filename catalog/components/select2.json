@@ -44,7 +44,10 @@
   "behavior": [
     "Implementa ControlValueAccessor para selección simple o múltiple.",
     "Oculta el placeholder mientras la etiqueta flotante reposa dentro del disparador.",
-    "Soporta navegación completa por teclado (ArrowDown, ArrowUp, Enter, Escape, Home, End)."
+    "Navega con ArrowDown, ArrowUp, Enter y espacio; omite opciones deshabilitadas.",
+    "Abre el panel en la capa superior mediante popover manual, conservando el nodo dentro del selector y del diálogo modal. Sin Popover API utiliza posición fija; ese respaldo no garantiza salir de ancestros transformados.",
+    "Recalcula posición al desplazar ancestros, cambiar tamaño o viewport visual y actualizar contenido. El desplazamiento interno de opciones permanece local.",
+    "Escape cierra la lista y devuelve foco al disparador sin cerrar el formulario. Tab y ShiftTab cierran sin impedir el recorrido."
   ],
   "states": [
     { "name": "closed", "meaning": "Menú cerrado." },
@@ -56,10 +59,14 @@
   "a11y": [
     "El disparador expone role=combobox, aria-expanded, aria-haspopup=listbox y aria-labelledby hacia la etiqueta.",
     "Con required, el disparador expone aria-required=true y el asterisco es decorativo (aria-hidden).",
-    "La lista expone role=listbox y cada opción role=option con aria-selected."
+    "La lista expone role=listbox y cada opción role=option con aria-selected.",
+    "El panel flotante permanece en el DOM del componente para conservar el foco dentro del diálogo modal; la selección simple y Escape restauran el foco sin desplazar la página.",
+    "El cierre, la deshabilitación, el cierre del diálogo ancestro y la destrucción liberan la capa y sus observadores y escuchas."
   ],
   "responsive": [
-    "Se adapta al ancho del contenedor mediante --select2-width."
+    "Se adapta al ancho del contenedor mediante --select2-width.",
+    "Limita ancho, altura y coordenadas al viewport visual con márgenes Atomic; abre arriba si abajo no cabe y arriba ofrece más espacio.",
+    "El buscador y los bordes cuentan en la altura máxima; conserva el límite y desplazamiento de opciones."
   ],
   "tokens": [
     "--control-height",
@@ -102,6 +109,10 @@
     "--scrollbar-thumb-hover",
     "--scrollbar-track",
     "--select2-min-width",
+    "--select2-capa-izquierda",
+    "--select2-capa-superior",
+    "--select2-capa-ancho",
+    "--select2-capa-alto-maximo",
     "--select2-width",
     "--shadow-lg",
     "--shadow-sm",

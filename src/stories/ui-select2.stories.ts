@@ -2,6 +2,10 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { FormsModule } from '@angular/forms';
 import { Select2Component } from '../app/shared/ui/molecules/select2/select2.component';
+import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
+import { Input } from '../app/shared/ui/atoms/form-input/input';
+import { FormDialog, FormDialogActions } from '../app/shared/ui/organisms/form-dialog/form-dialog';
+import { ThemeSwitcherComponent } from '../app/shared/ui/organisms/theme-switcher/theme-switcher.component';
 
 const meta: Meta<Select2Component> = {
   id: 'molecules-select2',
@@ -9,11 +13,13 @@ const meta: Meta<Select2Component> = {
   component: Select2Component,
   decorators: [
     moduleMetadata({
-      imports: [FormsModule],
+      imports: [FormsModule, ButtonComponent, Input, FormDialog, FormDialogActions, ThemeSwitcherComponent],
     }),
   ],
   tags: ['autodocs'],
   argTypes: {
+    searchable: { control: 'boolean' },
+    multiple: { control: 'boolean' },
     required: {
       control: 'boolean',
       description: 'Campo obligatorio: asterisco en la etiqueta y aria-required en el disparador',
@@ -156,4 +162,34 @@ export const AccessibleWithoutVisibleLabel: Story = {
     ariaLabel: 'Estado de la solicitud',
     placeholder: 'Seleccionar estado...',
   },
+};
+
+export const EnPopupConRecorte: Story = {
+  args: { searchable: true, multiple: false },
+  render: args => ({
+    props: {
+      ...args,
+      abierto: false,
+      seleccion: null,
+      opciones: Array.from({ length: 45 }, (_, indice) => ({
+        value: indice,
+        label: indice % 5 === 0
+          ? `Opción ${indice + 1}: etiqueta extensa para comprobar el ajuste de texto en pantallas estrechas`
+          : `Opción ${indice + 1}`,
+        disabled: indice === 2,
+      })),
+    },
+    template: `
+      <app-theme-switcher />
+      <app-button (buttonClick)="abierto = true">Abrir formulario con Select2</app-button>
+      <app-form-dialog title="Selección dentro del formulario" size="sm" [(opened)]="abierto" (cancelled)="abierto = false">
+        <app-button dialog-close variant="ghost" (buttonClick)="abierto = false">Cerrar</app-button>
+        <app-input label="Campo anterior" placeholder="Recorra el formulario con Tab" />
+        <app-select2 label="Opciones" [options]="opciones" [searchable]="searchable" [multiple]="multiple" [(ngModel)]="seleccion" />
+        <app-form-dialog-actions>
+          <app-button variant="outline" (buttonClick)="abierto = false">Cerrar</app-button>
+        </app-form-dialog-actions>
+      </app-form-dialog>
+    `,
+  }),
 };

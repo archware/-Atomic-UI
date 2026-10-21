@@ -10,8 +10,8 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "18fd46c33c05cac56b351addbf8f06e6b5b30a9f3793a66b4ca781d2be063c19",
-  "fileCount": 324,
+  "sourceTreeSha256": "a6cff2c30a25a7f5066abdd693ef3666e88dacdefc632bdbf3c1c92934f2fad7",
+  "fileCount": 326,
   "files": [
     {
       "path": "projects/atomic-ui/ng-package.json",
@@ -874,14 +874,24 @@
       "sha256": "b371a5f6da7df741bb7acaac9f89824af792badec454549ab8c02cc37df6baf4"
     },
     {
+      "path": "src/app/shared/ui/molecules/select2/select2-posicion.ts",
+      "bytes": 1894,
+      "sha256": "c236dff617dc55b1c8676027e9cd797733315c7d739d8b31cfce3fc31f8bbc06"
+    },
+    {
       "path": "src/app/shared/ui/molecules/select2/select2.component.css",
-      "bytes": 7569,
-      "sha256": "0359b4fafa6369730c55ad3b7d70337c6b94cb42b1fdad6a269d98bb26274ca5"
+      "bytes": 7879,
+      "sha256": "14823ebb7e88eb71a9590e614f31b623b7ff057015e69750ea3c073702a62f89"
+    },
+    {
+      "path": "src/app/shared/ui/molecules/select2/select2.component.html",
+      "bytes": 5893,
+      "sha256": "c0f2dcf35fca5abfa4f6e0f1bf24e5cb391ac8b8d64c6dece559c3837d5d94a6"
     },
     {
       "path": "src/app/shared/ui/molecules/select2/select2.component.ts",
-      "bytes": 18528,
-      "sha256": "54ad20e01cbd0fdf9bd67f1604c96386da60fdc7969f2b2364fb907a5fcf88c8"
+      "bytes": 25371,
+      "sha256": "a991294e9b038d61068d7803ec8c8abadae9dce4582175aa26e18425c26c8967"
     },
     {
       "path": "src/app/shared/ui/molecules/setting-item/setting-item.component.css",

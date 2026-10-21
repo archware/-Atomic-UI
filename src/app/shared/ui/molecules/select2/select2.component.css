@@ -2,21 +2,12 @@
   display: block;
   width: 100%;
   position: relative;
-  z-index: 1;
-}
-
-:host:has(.select2-wrapper.open) {
-  z-index: 9999 !important;
 }
 
 .select2-wrapper {
   position: relative;
   width: var(--select2-width, 100%);
   min-width: var(--select2-min-width, 15rem);
-}
-
-.select2-wrapper.open {
-  z-index: 9999 !important;
 }
 
 .select2-wrapper.disabled {
@@ -174,13 +165,23 @@
 
 /* === DROPDOWN === */
 .select2-dropdown {
+  /* Geometria local inicial; la directiva la sustituye antes de mostrar la capa. */
+  --select2-capa-izquierda: 0;
+  --select2-capa-superior: 0;
+  --select2-capa-ancho: 0;
+  --select2-capa-alto-maximo: 0;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  padding: 0;
+  top: var(--select2-capa-superior);
+  left: var(--select2-capa-izquierda);
+  width: var(--select2-capa-ancho);
+  max-height: var(--select2-capa-alto-maximo);
+  visibility: hidden;
   background: var(--dropdown-bg);
   border: 1px solid var(--dropdown-border);
   border-radius: var(--radius-md);
@@ -191,16 +192,21 @@
     del fondo; la lista quedaba mas plana que el campo que la abre.
   */
   box-shadow: var(--shadow-lg);
-  z-index: 9999 !important;
-  animation: dropdownSlide 200ms ease;
   overflow: hidden;
   /* FIXED: Permitir clics en Wails */
   --wails-draggable: no-drag;
 }
 
-@keyframes dropdownSlide {
-  from { opacity: 0; transform: translateY(calc(-1 * var(--space-2))); }
-  to { opacity: 1; transform: translateY(0); }
+.select2-dropdown.capa-posicionada {
+  visibility: visible;
+}
+
+.select2-metricas {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  width: var(--space-2);
+  height: var(--space-1);
 }
 
 /* === SEARCH === */
@@ -222,7 +228,7 @@
   color: var(--input-text);
   outline: none;
   box-shadow: var(--shadow-xs);
-  transition: all 150ms ease;
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
 }
 
 .search-input:hover:not(:focus) {

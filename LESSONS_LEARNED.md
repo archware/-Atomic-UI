@@ -5,13 +5,50 @@ date: "2026-08-23"
 document_type: "registro técnico"
 status: "en revisión"
 last_updated: "2026-10-20"
-version: "1.4.2"
-last_change_id: "ATOMIC-20261020-001"
+version: "1.4.3"
+last_change_id: "ATOMIC-20261020-002"
 owners:
   - "COTAHA"
 ---
 
 # Lecciones aprendidas de Atomic UI
+
+## ATOMIC-20261020-002 — el apilamiento no elimina el recorte
+
+- **Evidencia:** Select2 abría con posición absoluta y `z-index: 9999`, pero
+  el desplazador del formulario seguía recortando sus opciones. Aumentar el
+  índice de apilamiento no modifica el recorte de un ancestro.
+- **Decisión:** la lista utiliza la capa superior nativa sin separarse del
+  DOM del control; se conserva su pertenencia al diálogo y la herencia de
+  tokens. El componente calcula el lado disponible y limita tamaño y posición.
+- **Prevención:** la regresión debe comprobar un popover real en navegador,
+  no solo el valor CSS del z-index. Escape debe cancelar su acción nativa antes
+  de cerrar la lista para no cerrar también el formulario. El scroll de la
+  opción activa debe mover únicamente la lista, no los ancestros.
+- **Foco comprobable:** una clase de posicionamiento no acredita que las
+  medidas ya estén aplicadas. El enfoque se solicita tras render y se confirma
+  con `activeElement`; Tab conserva su recorrido nativo antes de retirar el
+  buscador. Las pruebas no deben enfocar manualmente para ocultar un fallo.
+- **Visibilidad:** ResizeObserver no detecta todos los cambios de visibilidad.
+  Deben observarse los atributos pertinentes del disparador y sus ancestros,
+  contemplando las transiciones existentes y liberando recursos al cerrar.
+- **Custodia:** un enlace de dependencias hacia otro proyecto no es una
+  instalación aislada. Los ensayos se realizan en una copia independiente; la
+  propagación modifica solo la pieza aprobada y conserva snapshots ajenos.
+- **Teclado y ratón:** Chromium puede enfocar un contenedor desplazable. El
+  listbox conserva tabindex=-1 para no añadir una parada a Tab, pero también
+  atiende Tab/Escape cuando el ratón enfoca su barra. La guarda
+  target===currentTarget evita procesar dos veces los eventos de opciones.
+- **Secuencia de validación:** los recorridos nativos de Tab, Escape y clic
+  en scrollbar deben probarse antes de cerrar el candidato, junto con la
+  selección al final de una lista larga. Descubrirlos después de cada revisión
+  parcial multiplica compilaciones y traspasos de custodia. El ensayo visual
+  inicial no reemplaza las pruebas, pero permite agrupar correcciones antes
+  del juicio final. Una vía abreviada de gobierno requiere autorización
+  separada; esta lección no modifica la doctrina global.
+
+La base de plataforma se documenta en
+[Popover de MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/popover).
 
 ## ATOMIC-20261020-001 — rescate upstream-first de Dropzone y cierre de paridad `[required]` en controles con etiqueta
 

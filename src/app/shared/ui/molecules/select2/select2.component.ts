@@ -1,13 +1,14 @@
 import {
   Component, signal, computed, HostListener, effect, untracked,
   ElementRef, forwardRef, inject, ChangeDetectionStrategy,
-  input,
+  input, viewChild, afterRenderEffect, DestroyRef,
   output
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
+import { calcularPosicionCapaSelect2, PosicionCapaSelect2 } from './select2-posicion';
 import {
   FIELD_LABEL_VARIANT_DEFAULT,
   FieldLabelVariant,
@@ -35,151 +36,7 @@ export interface Select2Option {
     useExisting: forwardRef(() => Select2Component),
     multi: true
   }],
-  template: `
-    <div
-      class="select2-wrapper"
-      [class.variant-standard]="!flotante()"
-      [class.open]="isOpen()"
-      [class.disabled]="disabled"
-      [class.focused]="isOpen()"
-      [class.has-value]="hasValue()"
-      [class.multiple]="multiple()"
-      [class.has-label]="flotante()"
-      [appVariablesCss]="{ '--select2-width': width() || null }"
-    >
-      @if (label() && !flotante()) {
-        <label class="fl-label" [id]="selectId()">
-          {{ label() }}
-          @if (required()) {
-            <span class="field__required fl-label__required" aria-hidden="true">*</span>
-          }
-        </label>
-      }
-      <div class="select2-trigger"
-        (click)="$event.stopPropagation(); toggleDropdown()"
-        (keydown)="handleKeydown($event)"
-        (focus)="triggerFocused.set(true)"
-        (blur)="triggerFocused.set(false)"
-        [attr.aria-labelledby]="label() ? selectId() : null"
-        [attr.aria-label]="label() ? null : ariaLabel() || placeholder()"
-        [attr.aria-required]="required() ? 'true' : null"
-        [attr.aria-controls]="listboxId()"
-        [attr.aria-activedescendant]="isOpen() && highlightedIndex() >= 0 ? optionId(highlightedIndex()) : null"
-        [attr.aria-disabled]="disabled ? 'true' : 'false'"
-        [attr.tabindex]="disabled ? -1 : 0"
-        role="combobox"
-        [attr.aria-expanded]="isOpen()"
-        aria-haspopup="listbox"
-      >
-        @if (flotante()) {
-          <span
-            class="fl-label fl-label--floating"
-            [class.fl-label--floated]="elevada()"
-            [class.fl-label--disabled]="disabled"
-            [id]="selectId()"
-            >{{ label() }}
-            @if (required()) {
-              <span class="field__required fl-label__required" aria-hidden="true">*</span>
-            }</span
-          >
-        }
-        <!-- Single value display -->
-        @if (!multiple()) {
-          <span class="select2-value">
-            @if (selectedOption()) {
-              @if (selectedOption()!.icon) {
-                <span class="option-icon">{{ selectedOption()!.icon }}</span>
-              }
-              {{ selectedOption()!.label | translate }}
-            } @else if (marcadorVisible()) {
-              <span class="placeholder">{{ placeholder() }}</span>
-            }
-          </span>
-        }
-
-        <!-- Multiple values as tags -->
-        @if (multiple()) {
-          <div class="select2-tags">
-            @for (opt of selectedOptions(); track opt.value) {
-              <span class="select2-tag">
-                {{ opt.label | translate }}
-                <button
-                  type="button"
-                  class="tag-remove"
-                  [disabled]="disabled"
-                  [attr.aria-label]="removeTagLabel(opt)"
-                  (click)="removeTag(opt, $event)">×</button>
-              </span>
-            }
-            @if (selectedOptions().length === 0 && marcadorVisible()) {
-              <span class="placeholder">{{ placeholder() }}</span>
-            }
-          </div>
-        }
-
-        <span class="select2-arrow">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
-            <path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </span>
-      </div>
-
-      @if (isOpen()) {
-        <div class="select2-dropdown" (mousedown)="$event.stopPropagation()">
-          <!-- Search box -->
-          @if (searchable()) {
-            <div class="select2-search">
-              <input
-                type="text"
-                class="search-input"
-                placeholder="Buscar..."
-                [ngModel]="searchTerm()"
-                (ngModelChange)="onSearchTermChange($event)"
-                (click)="$event.stopPropagation()"
-                (keydown)="handleKeydown($event)"
-                [attr.aria-label]="searchLabel()"
-                autocomplete="off"
-              />
-              <span class="search-icon" aria-hidden="true">🔍</span>
-            </div>
-          }
-
-          <!-- Options list -->
-          <div
-            class="select2-options"
-            role="listbox"
-            [id]="listboxId()"
-            [attr.aria-multiselectable]="multiple() ? 'true' : null">
-            @for (option of filteredOptions(); track option.value; let i = $index) {
-              <div
-                [id]="optionId(i)"
-                class="select2-option"
-                [class.selected]="isSelected(option)"
-                [class.highlighted]="highlightedIndex() === i"
-                [class.disabled]="option.disabled"
-                (mousedown)="$event.stopPropagation(); $event.preventDefault(); !option.disabled && selectOption(option)"
-                (keydown)="handleKeydown($event)"
-                tabindex="-1"
-                role="option"
-                [attr.aria-selected]="isSelected(option)"
-                [attr.aria-disabled]="option.disabled ? 'true' : null"
-              >
-                @if (option.icon) {
-                  <span class="option-icon" aria-hidden="true">{{ option.icon }}</span>
-                }
-                <span class="option-label">{{ option.label | translate }}</span>
-                @if (isSelected(option)) {
-                  <span class="check-icon" aria-hidden="true">✓</span>
-                }
-              </div>
-            } @empty {
-              <div class="select2-no-results" role="status">No hay resultados</div>
-            }
-          </div>
-        </div>
-      }
-    </div>
-  `,
+  templateUrl: './select2.component.html',
   styleUrls: ['./select2.component.css', '../../atoms/form-field/field-label.css']
 })
 export class Select2Component implements ControlValueAccessor {
@@ -191,6 +48,7 @@ export class Select2Component implements ControlValueAccessor {
     this._options = [...(value || [])];
     this.reconcilePendingValue();
     this.ensureEnabledHighlight();
+    this.programarPosicionCapa();
   }
   get options(): readonly Select2Option[] {
     return this._options;
@@ -210,9 +68,7 @@ export class Select2Component implements ControlValueAccessor {
   set disabled(value: boolean) {
     this.disabledState.set(value);
     if (value) {
-      this.isOpen.set(false);
-      this.searchTerm.set('');
-      this.highlightedIndex.set(-1);
+      this.cerrarDesplegable(false, false);
     }
   }
   get disabled(): boolean {
@@ -254,6 +110,261 @@ export class Select2Component implements ControlValueAccessor {
   readonly optionId = (index: number) => `select2-option-${this._instanceId}-${index}`;
 
   private readonly elementRef = inject(ElementRef);
+  private readonly destruir = inject(DestroyRef);
+  private readonly capa = viewChild<ElementRef<HTMLElement>>('capa');
+  private readonly disparador = viewChild<ElementRef<HTMLElement>>('disparador');
+  private readonly metricas = viewChild<ElementRef<HTMLElement>>('metricas');
+  protected readonly posicionCapa = signal<PosicionCapaSelect2 | null>(null);
+  protected readonly variablesCapa = computed(() => {
+    const posicion = this.posicionCapa();
+    return {
+      '--select2-capa-izquierda': posicion ? `${posicion.izquierda}px` : null,
+      '--select2-capa-superior': posicion ? `${posicion.superior}px` : null,
+      '--select2-capa-ancho': posicion ? `${posicion.ancho}px` : null,
+      '--select2-capa-alto-maximo': posicion ? `${posicion.altoMaximo}px` : null,
+    };
+  });
+  private panelActivo: HTMLElement | null = null;
+  private ventanaActiva: Window | null = null;
+  private cuadroPendiente: number | null = null;
+  private cuadroFocoPendiente: number | null = null;
+  private cierreTabPendiente: number | null = null;
+  private limpiarEscuchas: (() => void)[] = [];
+  private enfocarBusquedaPendiente = false;
+  private desplazamientoInicialPendiente = false;
+
+  constructor() {
+    afterRenderEffect(() => {
+      const panel = this.capa()?.nativeElement;
+      const abierto = this.isOpen();
+      this.posicionCapa();
+      this.searchable();
+      this.multiple();
+      this.width();
+      this.entradaOpciones();
+      this.searchTerm();
+      if (!abierto || !panel || this.disabled) {
+        this.liberarCapa();
+        return;
+      }
+      if (panel !== this.panelActivo) this.activarCapa(panel);
+      this.actualizarPosicionCapa();
+      if ((this.enfocarBusquedaPendiente || this.desplazamientoInicialPendiente) &&
+          panel.classList.contains('capa-posicionada')) {
+        this.programarFocoBusqueda();
+      }
+    });
+    this.destruir.onDestroy(() => this.liberarCapa());
+  }
+
+  private activarCapa(panel: HTMLElement): void {
+    this.liberarCapa();
+    this.panelActivo = panel;
+    const documento = panel.ownerDocument;
+    const ventana = documento.defaultView;
+    if (!ventana) return;
+    this.ventanaActiva = ventana;
+    // El nodo permanece dentro de su dialogo y conserva herencia y foco modal.
+    if (typeof panel.showPopover === 'function' && typeof panel.hidePopover === 'function') {
+      panel.showPopover();
+    }
+    const escuchar = (objetivo: EventTarget, tipo: string, accion: EventListener, captura = false) => {
+      objetivo.addEventListener(tipo, accion, captura);
+      this.limpiarEscuchas.push(() => objetivo.removeEventListener(tipo, accion, captura));
+    };
+    const reposicionar = () => this.programarPosicionCapa();
+    escuchar(documento, 'scroll', evento => {
+      if (!(evento.target instanceof Node) || !panel.contains(evento.target)) reposicionar();
+    }, true);
+    escuchar(ventana, 'resize', reposicionar);
+    if (ventana.visualViewport) {
+      escuchar(ventana.visualViewport, 'resize', reposicionar);
+      escuchar(ventana.visualViewport, 'scroll', reposicionar);
+    }
+    escuchar(documento, 'pointerdown', evento => {
+      if (!this.elementRef.nativeElement.contains(evento.target)) this.cerrarDesplegable(false, true);
+    }, true);
+    if (typeof ResizeObserver !== 'undefined') {
+      const observador = new ResizeObserver(reposicionar);
+      const disparador = this.disparador()?.nativeElement;
+      if (disparador) observador.observe(disparador);
+      observador.observe(panel);
+      panel.querySelectorAll('.select2-options, .select2-search').forEach(elemento => observador.observe(elemento));
+      this.limpiarEscuchas.push(() => observador.disconnect());
+    }
+    const observadorVisibilidad = new MutationObserver(reposicionar);
+    const elementosObservados = new Set<HTMLElement>();
+    for (let ancestro: HTMLElement | null = this.disparador()?.nativeElement ?? null;
+         ancestro; ancestro = ancestro.parentElement) {
+      elementosObservados.add(ancestro);
+      observadorVisibilidad.observe(ancestro, {
+        attributes: true, attributeFilter: ['style', 'class', 'hidden'],
+      });
+    }
+    this.limpiarEscuchas.push(() => observadorVisibilidad.disconnect());
+    const alTerminarVisibilidad: EventListener = evento => {
+      if ((evento as TransitionEvent).propertyName === 'visibility' &&
+          elementosObservados.has(evento.target as HTMLElement)) reposicionar();
+    };
+    escuchar(documento, 'transitionend', alTerminarVisibilidad, true);
+    escuchar(documento, 'transitioncancel', alTerminarVisibilidad, true);
+    const dialogo = panel.closest('dialog');
+    if (dialogo) {
+      const cerrar = () => this.cerrarDesplegable(false, true);
+      escuchar(dialogo, 'close', cerrar);
+      const observador = new MutationObserver(() => { if (!dialogo.open) cerrar(); });
+      observador.observe(dialogo, { attributes: true, attributeFilter: ['open'] });
+      this.limpiarEscuchas.push(() => observador.disconnect());
+    }
+    this.enfocarBusquedaPendiente = this.searchable();
+    this.desplazamientoInicialPendiente = true;
+    this.programarPosicionCapa();
+  }
+
+  private actualizarPosicionCapa(): void {
+    const panel = this.panelActivo;
+    const disparador = this.disparador()?.nativeElement;
+    const ventana = this.ventanaActiva;
+    if (!panel || !disparador || !ventana || !this.isOpen()) return;
+    const rectangulo = disparador.getBoundingClientRect();
+    const estilo = ventana.getComputedStyle(disparador);
+    const dialogo = panel.closest('dialog');
+    if (!disparador.isConnected || !disparador.getClientRects().length ||
+        estilo.visibility === 'hidden' || estilo.visibility === 'collapse' ||
+        rectangulo.width <= 0 || rectangulo.height <= 0 || (dialogo && !dialogo.open)) {
+      this.cerrarDesplegable(false, true);
+      return;
+    }
+    const visual = ventana.visualViewport;
+    const documento = panel.ownerDocument.documentElement;
+    const metrica = this.metricas()?.nativeElement.getBoundingClientRect();
+    const opciones = panel.querySelector<HTMLElement>('.select2-options');
+    const busqueda = panel.querySelector<HTMLElement>('.select2-search');
+    const estiloPanel = ventana.getComputedStyle(panel);
+    const limiteOpciones = opciones ? parseFloat(ventana.getComputedStyle(opciones).maxHeight) : 0;
+    // scrollHeight recupera el contenido natural incluso cuando flex ya recorto la lista.
+    const altoNatural = (busqueda?.getBoundingClientRect().height ?? 0) +
+      (opciones ? Math.min(opciones.scrollHeight, limiteOpciones || opciones.scrollHeight) : 0) +
+      parseFloat(estiloPanel.borderTopWidth) + parseFloat(estiloPanel.borderBottomWidth);
+    const posicion = calcularPosicionCapaSelect2({
+      disparador: { izquierda: rectangulo.left, superior: rectangulo.top, ancho: rectangulo.width, alto: rectangulo.height },
+      ventana: { izquierda: visual?.offsetLeft ?? 0, superior: visual?.offsetTop ?? 0,
+        ancho: visual?.width ?? (documento.clientWidth || ventana.innerWidth),
+        alto: visual?.height ?? (documento.clientHeight || ventana.innerHeight) },
+      altoNatural, margen: metrica?.width ?? 0, separacion: metrica?.height ?? 0,
+    });
+    const anterior = this.posicionCapa();
+    if (!anterior || anterior.izquierda !== posicion.izquierda || anterior.superior !== posicion.superior ||
+        anterior.ancho !== posicion.ancho || anterior.altoMaximo !== posicion.altoMaximo || anterior.lado !== posicion.lado) {
+      this.posicionCapa.set(posicion);
+    }
+  }
+
+  private programarPosicionCapa(): void {
+    if (!this.isOpen() || !this.ventanaActiva || this.cuadroPendiente !== null) return;
+    this.cuadroPendiente = this.ventanaActiva.requestAnimationFrame(() => {
+      this.cuadroPendiente = null;
+      this.actualizarPosicionCapa();
+    });
+  }
+
+  private liberarCapa(): void {
+    if (this.cuadroFocoPendiente !== null) this.ventanaActiva?.cancelAnimationFrame(this.cuadroFocoPendiente);
+    this.cuadroFocoPendiente = null;
+    if (this.cierreTabPendiente !== null) this.ventanaActiva?.clearTimeout(this.cierreTabPendiente);
+    this.cierreTabPendiente = null;
+    if (this.cuadroPendiente !== null) this.ventanaActiva?.cancelAnimationFrame(this.cuadroPendiente);
+    this.cuadroPendiente = null;
+    this.limpiarEscuchas.forEach(limpiar => limpiar());
+    this.limpiarEscuchas = [];
+    const panel = this.panelActivo;
+    this.panelActivo = null;
+    this.ventanaActiva = null;
+    this.enfocarBusquedaPendiente = false;
+    this.desplazamientoInicialPendiente = false;
+    if (panel && typeof panel.hidePopover === 'function' && panel.matches(':popover-open')) panel.hidePopover();
+    if (this.posicionCapa() !== null) this.posicionCapa.set(null);
+  }
+
+  private programarFocoBusqueda(reintentos = 1): void {
+    const panel = this.panelActivo;
+    const ventana = this.ventanaActiva;
+    if (!panel || !ventana || (!this.enfocarBusquedaPendiente && !this.desplazamientoInicialPendiente) ||
+        this.cuadroFocoPendiente !== null) return;
+    this.cuadroFocoPendiente = ventana.requestAnimationFrame(() => {
+      this.cuadroFocoPendiente = null;
+      if (this.panelActivo !== panel || !this.isOpen() || this.disabled ||
+          (!this.enfocarBusquedaPendiente && !this.desplazamientoInicialPendiente)) return;
+      const utilizaPopover = typeof panel.showPopover === 'function' && typeof panel.hidePopover === 'function';
+      const estiloPanel = ventana.getComputedStyle(panel);
+      const panelVisible = panel.isConnected && panel.classList.contains('capa-posicionada') &&
+        estiloPanel.display !== 'none' && estiloPanel.visibility !== 'hidden' && estiloPanel.visibility !== 'collapse' &&
+        (!utilizaPopover || panel.matches(':popover-open'));
+      const lista = panel.querySelector<HTMLElement>('.select2-options');
+      if (panelVisible && this.desplazamientoInicialPendiente && lista?.isConnected && lista.clientHeight > 0) {
+        this.scrollToHighlighted();
+        this.desplazamientoInicialPendiente = false;
+      }
+      const buscador = panel.querySelector<HTMLInputElement>('.search-input');
+      const estilo = buscador ? ventana.getComputedStyle(buscador) : null;
+      const rectangulo = buscador?.getBoundingClientRect();
+      if (panelVisible && this.searchable() && this.enfocarBusquedaPendiente &&
+          buscador?.isConnected && buscador.getClientRects().length &&
+          rectangulo && rectangulo.width > 0 && rectangulo.height > 0 &&
+          estilo?.display !== 'none' && estilo?.visibility !== 'hidden' && estilo?.visibility !== 'collapse') {
+        buscador.focus({ preventScroll: true });
+        if (panel.ownerDocument.activeElement === buscador) {
+          this.enfocarBusquedaPendiente = false;
+        }
+      }
+      if (reintentos > 0 && (this.enfocarBusquedaPendiente || this.desplazamientoInicialPendiente)) {
+        this.programarFocoBusqueda(reintentos - 1);
+      }
+    });
+  }
+
+  private programarCierrePorTab(evento: KeyboardEvent): void {
+    const panel = this.panelActivo;
+    const ventana = this.ventanaActiva;
+    if (!panel || !ventana) return;
+    if (this.cierreTabPendiente !== null) ventana.clearTimeout(this.cierreTabPendiente);
+    this.enfocarBusquedaPendiente = false;
+    this.desplazamientoInicialPendiente = false;
+    if (this.cuadroFocoPendiente !== null) ventana.cancelAnimationFrame(this.cuadroFocoPendiente);
+    this.cuadroFocoPendiente = null;
+    // El navegador debe resolver el destino nativo antes de retirar el buscador enfocado.
+    this.cierreTabPendiente = ventana.setTimeout(() => {
+      this.cierreTabPendiente = null;
+      if (this.panelActivo === panel && this.isOpen() && !evento.defaultPrevented &&
+          !panel.contains(panel.ownerDocument.activeElement)) {
+        this.cerrarDesplegable(false, true);
+      }
+    }, 0);
+  }
+
+  private cerrarDesplegable(restaurarFoco: boolean, notificarTocado: boolean): void {
+    const estabaAbierto = this.isOpen();
+    this.isOpen.set(false);
+    this.searchTerm.set('');
+    this.highlightedIndex.set(-1);
+    this.liberarCapa();
+    if (estabaAbierto && notificarTocado) this.onTouched();
+    if (estabaAbierto && restaurarFoco && !this.disabled) {
+      this.disparador()?.nativeElement.focus({ preventScroll: true });
+    }
+  }
+
+  protected alCambiarCapa(evento: Event): void {
+    if ((evento as ToggleEvent).newState === 'closed' && this.isOpen() &&
+        this.panelActivo === evento.target && !this.panelActivo?.matches(':popover-open')) {
+      this.cerrarDesplegable(false, true);
+    }
+  }
+
+  protected alTecladoLista(evento: KeyboardEvent): void {
+    if (evento.target !== evento.currentTarget || (evento.key !== 'Tab' && evento.key !== 'Escape')) return;
+    this.handleKeydown(evento);
+  }
   private onChange: (value: unknown) => void = () => { /* noop */ };
   private onTouched: () => void = () => { /* noop */ };
 
@@ -292,28 +403,11 @@ export class Select2Component implements ControlValueAccessor {
   }
 
   toggleDropdown(): void {
-    if (!this.disabled) {
-      this.isOpen.update(v => !v);
-      if (this.isOpen()) {
-        this.ensureEnabledHighlight();
-
-        // Focus search input if searchable
-        if (this.searchable()) {
-          setTimeout(() => {
-            const searchInput = this.elementRef.nativeElement.querySelector('.search-input');
-            if (searchInput) searchInput.focus();
-            this.scrollToHighlighted();
-          }, 0);
-        } else {
-          setTimeout(() => {
-            this.scrollToHighlighted();
-          }, 0);
-        }
-      } else {
-        this.searchTerm.set('');
-        this.highlightedIndex.set(-1);
-        this.onTouched();
-      }
+    if (this.disabled) return;
+    if (this.isOpen()) this.cerrarDesplegable(false, true);
+    else {
+      this.isOpen.set(true);
+      this.ensureEnabledHighlight();
     }
   }
 
@@ -357,28 +451,27 @@ export class Select2Component implements ControlValueAccessor {
         break;
       case 'Escape':
         if (this.isOpen()) {
+          event.preventDefault();
           event.stopPropagation();
-          this.isOpen.set(false);
-          this.searchTerm.set('');
-          this.highlightedIndex.set(-1);
-          this.elementRef.nativeElement.querySelector('.select2-trigger')?.focus();
+          this.cerrarDesplegable(true, true);
         }
         break;
       case 'Tab':
         if (this.isOpen()) {
-          this.isOpen.set(false);
-          this.searchTerm.set('');
-          this.highlightedIndex.set(-1);
+          this.programarCierrePorTab(event);
         }
         break;
     }
   }
 
   private scrollToHighlighted(): void {
-    const listbox = this.elementRef.nativeElement.querySelector('.select2-options');
-    const highlighted = listbox?.querySelectorAll('.select2-option')[this.highlightedIndex()];
-    if (highlighted) {
-      highlighted.scrollIntoView({ block: 'nearest' });
+    const listbox = this.panelActivo?.querySelector<HTMLElement>('.select2-options');
+    const highlighted = listbox?.querySelectorAll<HTMLElement>('.select2-option')[this.highlightedIndex()];
+    if (highlighted && listbox) {
+      const caja = listbox.getBoundingClientRect();
+      const opcion = highlighted.getBoundingClientRect();
+      if (opcion.top < caja.top) listbox.scrollTop -= caja.top - opcion.top;
+      else if (opcion.bottom > caja.bottom) listbox.scrollTop += opcion.bottom - caja.bottom;
     }
   }
 
@@ -395,14 +488,13 @@ export class Select2Component implements ControlValueAccessor {
       this.onChange(values);
       this.valueChange.emit(values);
       this.onTouched();
+      this.programarPosicionCapa();
     } else {
       this.selectedOption.set(option);
       this.onChange(option.value);
       this.valueChange.emit(option.value);
 
-      this.isOpen.set(false);
-      this.searchTerm.set('');
-      this.highlightedIndex.set(-1);
+      this.cerrarDesplegable(true, false);
       this.onTouched();
     }
   }
@@ -416,16 +508,14 @@ export class Select2Component implements ControlValueAccessor {
     this.onChange(values);
     this.valueChange.emit(values);
     this.onTouched();
+    this.programarPosicionCapa();
   }
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event): void {
     if (!this.elementRef.nativeElement.contains(event.target)) {
       if (this.isOpen()) {
-        this.isOpen.set(false);
-        this.searchTerm.set('');
-        this.highlightedIndex.set(-1);
-        this.onTouched();
+        this.cerrarDesplegable(false, true);
       }
     }
   }
@@ -455,6 +545,7 @@ export class Select2Component implements ControlValueAccessor {
   onSearchTermChange(value: string): void {
     this.searchTerm.set(value);
     this.highlightedIndex.set(this.nextEnabledIndex(this.filteredOptions(), -1, 1));
+    this.programarPosicionCapa();
   }
 
   removeTagLabel(option: Select2Option): string {
