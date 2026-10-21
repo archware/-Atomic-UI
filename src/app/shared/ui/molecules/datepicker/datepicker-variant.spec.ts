@@ -91,4 +91,30 @@ describe('DatepickerComponent - modos de etiqueta', () => {
     expect(raiz.querySelector('.datepicker-top-label')).toBeNull();
     expect(caja(raiz).classList.contains('variant-outline')).toBe(true);
   });
+
+  it('muestra asterisco de obligatoriedad y aria-required en modos standard, floating y floating-value cuando required es true, y los omite por defecto', async () => {
+    const fixture = TestBed.createComponent(DatepickerComponent);
+    fixture.componentRef.setInput('label', 'Nacimiento');
+    await fixture.whenStable();
+    const raiz: HTMLElement = fixture.nativeElement;
+
+    expect(raiz.querySelector('.fl-label__required')).toBeNull();
+    expect(raiz.querySelector('.datepicker-trigger')?.hasAttribute('aria-required')).toBe(false);
+
+    fixture.componentRef.setInput('required', true);
+    await fixture.whenStable();
+
+    expect(raiz.querySelector('.datepicker-top-label .fl-label__required')?.textContent).toBe('*');
+    expect(raiz.querySelector('.datepicker-trigger')?.getAttribute('aria-required')).toBe('true');
+
+    for (const variante of ['floating', 'floating-value'] as const) {
+      fixture.componentRef.setInput('variant', variante);
+      await fixture.whenStable();
+      expect(interno(raiz).querySelector('.floating-label .fl-label__required')?.textContent).toBe(
+        '*',
+      );
+      expect(raiz.querySelector('.datepicker-trigger')?.getAttribute('aria-required')).toBe('true');
+    }
+  });
 });
+

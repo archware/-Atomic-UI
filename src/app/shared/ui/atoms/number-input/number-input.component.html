@@ -8,7 +8,12 @@
           class="fl-label number-input__label"
           [class.number-input__label--hidden]="labelHidden()"
           [attr.for]="inputId()"
-        >{{ label() }}</label>
+        >
+          {{ label() }}
+          @if (required()) {
+            <span class="field__required fl-label__required" aria-hidden="true">*</span>
+          }
+        </label>
       }
       <div class="fl-control">
       <div class="number-input__control">
@@ -30,6 +35,8 @@
           [min]="min()"
           [max]="max()"
           [step]="step()"
+          [required]="required()"
+          [attr.aria-required]="required() ? 'true' : null"
           [disabled]="isDisabled()"
           [value]="value()"
           (input)="onInput($event)"
@@ -55,7 +62,12 @@
           [class.fl-label--error]="error()"
           [class.fl-label--disabled]="isDisabled()"
           [attr.for]="inputId()"
-        >{{ label() }}</label>
+        >
+          {{ label() }}
+          @if (required()) {
+            <span class="field__required fl-label__required" aria-hidden="true">*</span>
+          }
+        </label>
       }
       </div>
       @if (hint()) {

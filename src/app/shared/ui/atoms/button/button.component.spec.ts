@@ -69,8 +69,30 @@ describe('ButtonComponent', () => {
     });
   });
 
+  describe('appearance classes', () => {
+    it('should remain flat by default without btn-gradient class', () => {
+      const button = fixture.nativeElement.querySelector('button');
+      expect(button.classList.contains('btn-gradient')).toBeFalse();
+    });
+
+    it('should apply btn-gradient class when appearance is gradient', () => {
+      setInput('appearance', 'gradient');
+
+      const button = fixture.nativeElement.querySelector('button');
+      expect(button.classList.contains('btn-gradient')).toBeTrue();
+    });
+  });
+
   describe('semantic tones', () => {
-    const tones: ButtonTone[] = ['neutral', 'primary', 'success', 'warning', 'danger', 'info'];
+    const tones: ButtonTone[] = [
+      'neutral',
+      'primary',
+      'secondary',
+      'success',
+      'warning',
+      'danger',
+      'info',
+    ];
 
     tones.forEach((tone) => {
       it(`should apply btn-tone-${tone} when tone is ${tone}`, () => {

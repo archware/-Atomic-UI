@@ -101,4 +101,28 @@ describe('TagInputComponent - modos de etiqueta', () => {
     expect(raiz.querySelector('.tag-input__error')?.closest('.fl-control')).toBeNull();
     expect(flotante(raiz)?.classList.contains('fl-label--error')).toBe(true);
   });
+
+  it('muestra asterisco de obligatoriedad y aria-required en modos standard, floating y floating-value cuando required es true, y los omite por defecto', async () => {
+    const fixture = TestBed.createComponent(TagInputComponent);
+    fixture.componentRef.setInput('label', 'Etiquetas');
+    await fixture.whenStable();
+    const raiz: HTMLElement = fixture.nativeElement;
+
+    expect(raiz.querySelector('.fl-label__required')).toBeNull();
+    expect(campo(raiz).hasAttribute('aria-required')).toBe(false);
+
+    fixture.componentRef.setInput('required', true);
+    await fixture.whenStable();
+
+    expect(raiz.querySelector('.tag-input__label .fl-label__required')?.textContent).toBe('*');
+    expect(campo(raiz).getAttribute('aria-required')).toBe('true');
+
+    for (const variante of ['floating', 'floating-value'] as const) {
+      fixture.componentRef.setInput('variant', variante);
+      await fixture.whenStable();
+      expect(flotante(raiz)?.querySelector('.fl-label__required')?.textContent).toBe('*');
+      expect(campo(raiz).getAttribute('aria-required')).toBe('true');
+    }
+  });
 });
+

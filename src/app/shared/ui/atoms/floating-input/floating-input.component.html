@@ -1,5 +1,10 @@
 @if (variant() === 'standard' && tieneEtiqueta()) {
-  <label class="fl-label floating-input-top-label" [attr.for]="inputId()">{{ label() }}</label>
+  <label class="fl-label floating-input-top-label" [attr.for]="inputId()">
+    {{ label() }}
+    @if (required()) {
+      <span class="field__required fl-label__required" aria-hidden="true">*</span>
+    }
+  </label>
 }
 <div
       class="floating-input-wrapper"
@@ -17,6 +22,8 @@
         class="floating-input"
         [id]="inputId()"
         [type]="actualType()"
+        [required]="required()"
+        [attr.aria-required]="required() ? 'true' : null"
         [disabled]="isDisabled()"
         [readonly]="readonly()"
         [value]="value()"
@@ -28,7 +35,12 @@
         [attr.placeholder]="marcador()"
       />
       @if (flotante()) {
-        <label class="floating-label" [attr.for]="inputId()">{{ label() }}</label>
+        <label class="floating-label" [attr.for]="inputId()">
+          {{ label() }}
+          @if (required()) {
+            <span class="field__required fl-label__required" aria-hidden="true">*</span>
+          }
+        </label>
       }
       <span class="input-line"></span>
 

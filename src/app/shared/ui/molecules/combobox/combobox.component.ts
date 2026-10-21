@@ -71,7 +71,12 @@ function normalizeSearch(value: string): string {
   template: `
     <div class="combobox" [class.fl-field--floating]="flotante()" [class.combobox-open]="isOpen()" [class.combobox-disabled]="disabled">
       @if (label() && !flotante()) {
-        <label class="fl-label combobox-label" [for]="inputId">{{ label() }}</label>
+        <label class="fl-label combobox-label" [for]="inputId">
+          {{ label() }}
+          @if (required()) {
+            <span class="field__required fl-label__required" aria-hidden="true">*</span>
+          }
+        </label>
       }
       <div class="fl-control combobox-control" #controlRef>
         <input
@@ -80,6 +85,8 @@ function normalizeSearch(value: string): string {
           class="combobox-input"
           type="text"
           [attr.placeholder]="marcador()"
+          [required]="required()"
+          [attr.aria-required]="required() ? 'true' : null"
           [disabled]="disabled"
           [value]="inputValue()"
           (input)="onInput($event)"
@@ -104,7 +111,12 @@ function normalizeSearch(value: string): string {
             [class.fl-label--error]="error()"
             [class.fl-label--disabled]="disabled"
             [for]="inputId"
-          >{{ label() }}</label>
+          >
+            {{ label() }}
+            @if (required()) {
+              <span class="field__required fl-label__required" aria-hidden="true">*</span>
+            }
+          </label>
         }
         @if (inputValue() && !disabled && clearable()) {
           <button
@@ -192,6 +204,7 @@ export class ComboboxComponent implements ControlValueAccessor {
   }
   readonly clearable = input(true);
   readonly error = input('');
+  readonly required = input(false);
 
   readonly optionSelected = output<ComboboxOption>();
   readonly inputChange = output<string>();

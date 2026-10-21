@@ -98,12 +98,14 @@ shared/ui/
 │   ├── button/         # Botón con variantes y tamaños
 │   ├── checkbox/       # Checkbox con label
 │   ├── chip/           # Badge/Tag con variantes
+│   ├── file-input/     # Carga de archivos (standard y dropzone)
 │   ├── floating-input/ # Input con label flotante
 │   ├── form-error/     # Mensajes de error de validación
 │   ├── icon-button/    # Botón solo icono
 │   ├── input/          # Input básico
 │   ├── language-switcher/ # Selector de idioma (i18n)
 │   ├── loader/         # Spinners y skeleton
+│   ├── number-input/   # Input numérico con incremento/decremento
 │   ├── rating/         # Estrellas de calificación
 │   ├── row/            # Layout wrapper
 │   ├── select/         # Select básico

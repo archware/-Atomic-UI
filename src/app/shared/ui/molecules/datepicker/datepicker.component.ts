@@ -25,6 +25,7 @@ export class DatepickerComponent implements ControlValueAccessor {
   /** Modo de etiqueta comun: standard (superior) | floating | floating-value; admite ademas las formas historicas. */
   readonly variant = input<FloatingInputVariant>(FIELD_LABEL_VARIANT_DEFAULT);
   readonly error = input('');
+  readonly required = input(false);
   readonly disabled = input(false);
   private readonly disabledByForm = signal(false);
 

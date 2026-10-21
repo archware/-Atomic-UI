@@ -4,14 +4,20 @@ author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
 document_type: "registro técnico"
 status: "en revisión"
-last_updated: "2026-10-19"
-version: "1.4.1"
-last_change_id: "ATOMIC-20261019-002"
+last_updated: "2026-10-20"
+version: "1.4.2"
+last_change_id: "ATOMIC-20261020-001"
 owners:
   - "COTAHA"
 ---
 
 # Lecciones aprendidas de Atomic UI
+
+## ATOMIC-20261020-001 — rescate upstream-first de Dropzone y cierre de paridad `[required]` en controles con etiqueta
+
+- **Evidencia:** `pdf-tool` implementaba una zona de arrastre enriquecida con estilos ad-hoc y valores hexadecimales porque `FileInputComponent` solo ofrecía la vista estándar; además, `DatepickerComponent`, `ComboboxComponent`, `TagInputComponent`, `NumberInputComponent` y `FloatingInputComponent` carecían del input `[required]` que ya exponían `InputComponent`, `SelectComponent` y `Select2Component`.
+- **Decisión:** incorporar `variant="dropzone"` en `FileInputComponent` usando exclusivamente tokens semánticos (`var(--...)`), unidades relativas (`rem`) y las guardas de arrastre de escritorio (`draggable="false"`, `preventDefault()` en `mousedown`/`dragstart`, filtro de `Files` en `dragover` y guarda de `relatedTarget` en `dragleave`), y homologar `required = input(false)` con `.field__required.fl-label__required` y `aria-required="true"` en los controles restantes.
+- **Prevención:** cualquier selector CSS en un control con `NG_VALUE_ACCESSOR` cuyo nombre contenga la subcadena `label` es auditado por `check-field-label-tokens.mjs` como etiqueta de campo; las clases auxiliares de insignias o cabeceras no deben contener `label` en su nombre, y todos los pesos tipográficos deben expresarse mediante `var(--font-weight-*)` para cumplir `check-typography-scale.mjs`.
 
 ## ATOMIC-20261019-002 — paridad tipográfica de etiqueta superior y campo obligatorio en Select2
 

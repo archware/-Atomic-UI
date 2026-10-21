@@ -66,13 +66,13 @@ hace lo mismo y se puede pedir desde cualquier sitio.
   display: none;
 }
 
-/* Apply margin only when slot has content */
+/* El contenedor .btn ya define gap: 0.5rem; evitamos duplicar el margen en los wrappers de icono */
 .btn-icon-wrapper--left:has(*) {
-  margin-right: var(--space-2);
+  margin-right: 0;
 }
 
 .btn-icon-wrapper--right:has(*) {
-  margin-left: var(--space-2);
+  margin-left: 0;
 }
 
 /* Size-specific icon adjustments */

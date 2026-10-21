@@ -23,8 +23,18 @@ export type ButtonVariant =
   | 'ghost'
   | 'link';
 
+/** Surface appearance for solid button variants. */
+export type ButtonAppearance = 'flat' | 'gradient';
+
 /** Semantic tone used by subtle and outlined actions. */
-export type ButtonTone = 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+export type ButtonTone =
+  | 'neutral'
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'info';
 
 /** Button size options */
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -58,6 +68,13 @@ export class ButtonComponent {
    * @default 'primary'
    */
   readonly variant = input<ButtonVariant>('primary');
+
+  /**
+   * Surface appearance for solid button variants (`primary`, `secondary`, `success`, `warning`, `danger`).
+   * `'flat'` renders a solid flat fill; `'gradient'` renders a diagonal gradient with semantic glow shadow.
+   * @default 'flat'
+   */
+  readonly appearance = input<ButtonAppearance>('flat');
 
   /**
    * Semantic emphasis for subtle and outlined actions.
@@ -192,6 +209,10 @@ export class ButtonComponent {
   /** @internal */
   get buttonClasses(): string {
     const classes = ['btn', `btn-${this.variant()}`, `btn-tone-${this.tone()}`];
+
+    if (this.appearance() === 'gradient') {
+      classes.push('btn-gradient');
+    }
 
     const size = this.size();
     if (size !== 'md') {

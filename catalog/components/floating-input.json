@@ -42,6 +42,7 @@
     { "name": "iconClass", "type": "string", "default": "", "meaning": "Clases del icono configurado." },
     { "name": "clearable", "type": "boolean", "default": false, "meaning": "Convierte la acción iconográfica en limpieza cuando existe valor." },
     { "name": "error", "type": "string", "default": "", "meaning": "Mensaje de validación visible." },
+    { "name": "required", "type": "boolean", "default": false, "meaning": "Muestra indicador de obligatoriedad (*) en la etiqueta y activa required/aria-required en el input." },
     { "name": "disabled", "type": "boolean", "default": false, "meaning": "Deshabilita el input y sus acciones; CVA también puede establecerlo." },
     { "name": "readonly", "type": "boolean", "default": false, "meaning": "Conserva el valor legible sin permitir edición." },
     { "name": "width", "type": "string", "default": "", "meaning": "Ancho compatible; los consumidores deben proporcionar porcentajes o tokens estructurales." },

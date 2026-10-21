@@ -41,6 +41,7 @@ export class FloatingInputComponent implements ControlValueAccessor {
   readonly placeholder = input('');
   readonly icon = input('');
   readonly error = input('');
+  readonly required = input(false);
   readonly disabled = input(false);
   private readonly disabledByForm = signal(false);
   readonly readonly = input(false);

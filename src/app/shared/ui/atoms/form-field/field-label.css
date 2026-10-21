@@ -47,7 +47,8 @@
   line-height: var(--field-label-line-height);
 }
 
-.field__required {
+.field__required,
+.fl-label__required {
   color: var(--field-label-color-error);
 }
 

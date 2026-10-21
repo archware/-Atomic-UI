@@ -51,7 +51,7 @@ export interface Select2Option {
         <label class="fl-label" [id]="selectId()">
           {{ label() }}
           @if (required()) {
-            <span class="field__required" aria-hidden="true">*</span>
+            <span class="field__required fl-label__required" aria-hidden="true">*</span>
           }
         </label>
       }
@@ -79,7 +79,7 @@ export interface Select2Option {
             [id]="selectId()"
             >{{ label() }}
             @if (required()) {
-              <span class="field__required" aria-hidden="true">*</span>
+              <span class="field__required fl-label__required" aria-hidden="true">*</span>
             }</span
           >
         }

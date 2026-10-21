@@ -4,6 +4,7 @@
       [class.drag-over]="isDragging()"
       [class.invalid]="visibleError"
       [class.compact]="density() === 'compact'"
+      [class.variant-dropzone]="variant() === 'dropzone'"
     >
       @if (label()) {
         <label class="file-label" [for]="inputId">{{ label() }}</label>
@@ -13,12 +14,15 @@
       }
       <div
         class="drop-zone"
+        draggable="false"
+        (mousedown)="$event.preventDefault()"
+        (dragstart)="$event.preventDefault()"
         (click)="openFileDialog()"
         (dragover)="onDragOver($event)"
-        (dragleave)="isDragging.set(false)"
+        (dragleave)="onDragLeave($event)"
         (drop)="onDrop($event)"
         (blur)="onTouched()"
-        (keydown.enter)="openFileDialog()"
+        (keydown.enter)="openFileDialog(); $event.preventDefault()"
         (keydown.space)="openFileDialog(); $event.preventDefault()"
         [attr.tabindex]="isDisabled() ? -1 : 0"
         role="button"
@@ -29,16 +33,46 @@
         "
         aria-label="Seleccionar archivo"
       >
-        <i class="fa-solid fa-cloud-arrow-up drop-icon" aria-hidden="true"></i>
-        <div class="drop-copy">
-          <p class="drop-text"><strong>Haz clic</strong> o arrastra archivos aquí</p>
-          @if (accept()) {
-            <p class="drop-hint">Formatos: {{ accept() }}</p>
-          }
-          @if (maxSizeMB()) {
-            <p class="drop-hint">Máximo {{ maxSizeMB() }} MB por archivo</p>
-          }
-        </div>
+        @if (variant() === 'dropzone') {
+          <div class="drop-icon-container" aria-hidden="true">
+            <i class="fa-solid fa-cloud-arrow-up drop-icon"></i>
+          </div>
+          <div class="drop-copy">
+            <p class="drop-title">{{ dropzoneTitle() }}</p>
+            @if (dropzoneSubtitle()) {
+              <p class="drop-subtitle">{{ dropzoneSubtitle() }}</p>
+            }
+            @if (accept() && !badgeHint()) {
+              <p class="drop-hint">Formatos: {{ accept() }}</p>
+            }
+            @if (maxSizeMB()) {
+              <p class="drop-hint">Máximo {{ maxSizeMB() }} MB por archivo</p>
+            }
+            @if (badgeHint()) {
+              <div class="drop-badge-hint">
+                <i class="fa-solid fa-circle-check drop-badge-icon" aria-hidden="true"></i>
+                <span>{{ badgeHint() }}</span>
+              </div>
+            }
+          </div>
+        } @else {
+          <i class="fa-solid fa-cloud-arrow-up drop-icon" aria-hidden="true"></i>
+          <div class="drop-copy">
+            <p class="drop-text"><strong>Haz clic</strong> o arrastra archivos aquí</p>
+            @if (accept()) {
+              <p class="drop-hint">Formatos: {{ accept() }}</p>
+            }
+            @if (maxSizeMB()) {
+              <p class="drop-hint">Máximo {{ maxSizeMB() }} MB por archivo</p>
+            }
+            @if (badgeHint()) {
+              <div class="drop-badge-hint">
+                <i class="fa-solid fa-circle-check drop-badge-icon" aria-hidden="true"></i>
+                <span>{{ badgeHint() }}</span>
+              </div>
+            }
+          </div>
+        }
       </div>
 
       <input
@@ -65,25 +99,62 @@
       }
 
       @if (files().length > 0) {
+        @if (showHeader() || allowClearAll()) {
+          <div class="file-list-header">
+            <div class="file-list-heading">
+              <i class="fa-solid fa-folder-open file-list-folder-icon" aria-hidden="true"></i>
+              <strong class="file-list-title">{{ headerTitle() }}</strong>
+              <span class="file-list-count">{{ files().length }}</span>
+            </div>
+            @if (allowClearAll() && !isDisabled()) {
+              <button
+                type="button"
+                class="file-clear-all"
+                (click)="clearFiles()"
+              >
+                <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                <span>{{ clearAllLabel() }}</span>
+              </button>
+            }
+          </div>
+        }
         <ul class="file-list" aria-label="Archivos seleccionados">
           @for (f of files(); track f.file) {
             <li class="file-item">
               @if (f.preview) {
                 <img class="file-preview" [src]="f.preview" alt="" />
+              } @else if (variant() === 'dropzone') {
+                <span class="file-icon-box" aria-hidden="true">
+                  <i class="fa-solid fa-file-lines file-icon"></i>
+                </span>
               } @else {
                 <i class="fa-solid fa-file file-icon" aria-hidden="true"></i>
               }
-              <span class="file-name" [title]="f.name">{{ f.name }}</span>
-              <span class="file-size">{{ formatSize(f.size) }}</span>
+              <div class="file-details">
+                <span class="file-name" [title]="f.name">{{ f.name }}</span>
+                <span class="file-size">{{ formatSize(f.size) }}</span>
+              </div>
               @if (!isDisabled()) {
-                <button
-                  type="button"
-                  class="file-remove"
-                  (click)="removeFile(f)"
-                  [attr.aria-label]="'Eliminar ' + f.name"
-                >
-                  <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-                </button>
+                <div class="file-actions">
+                  @if (itemActionIcon()) {
+                    <button
+                      type="button"
+                      class="file-action"
+                      (click)="onFileAction(f)"
+                      [attr.aria-label]="itemActionLabel() + ' ' + f.name"
+                    >
+                      <i [class]="itemActionIcon()" aria-hidden="true"></i>
+                    </button>
+                  }
+                  <button
+                    type="button"
+                    class="file-remove"
+                    (click)="removeFile(f)"
+                    [attr.aria-label]="'Eliminar ' + f.name"
+                  >
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                  </button>
+                </div>
               }
             </li>
           }

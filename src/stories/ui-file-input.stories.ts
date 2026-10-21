@@ -13,7 +13,17 @@ const meta: Meta<FileInputComponent> = {
     hint: { control: 'text' },
     disabled: { control: 'boolean' },
     error: { control: 'text' },
+    variant: { control: 'inline-radio', options: ['standard', 'dropzone'] },
     density: { control: 'inline-radio', options: ['comfortable', 'compact'] },
+    dropzoneTitle: { control: 'text' },
+    dropzoneSubtitle: { control: 'text' },
+    badgeHint: { control: 'text' },
+    showHeader: { control: 'boolean' },
+    headerTitle: { control: 'text' },
+    allowClearAll: { control: 'boolean' },
+    clearAllLabel: { control: 'text' },
+    itemActionIcon: { control: 'text' },
+    itemActionLabel: { control: 'text' },
   },
 };
 
@@ -27,6 +37,25 @@ export const Default: Story = {
     accept: '.pdf,.png,.jpg,.jpeg',
     maxSizeMB: 5,
     multiple: false,
+  },
+};
+
+export const Dropzone: Story = {
+  args: {
+    label: 'Expediente PDF',
+    variant: 'dropzone',
+    dropzoneTitle: 'Arrastra tus archivos PDF aquí',
+    dropzoneSubtitle: 'o haz clic para seleccionarlos desde tu equipo',
+    badgeHint: 'Soporta múltiples archivos PDF',
+    accept: '.pdf,application/pdf',
+    multiple: true,
+    maxSizeMB: 25,
+    showHeader: true,
+    headerTitle: 'Documentos cargados',
+    allowClearAll: true,
+    clearAllLabel: 'Limpiar lista',
+    itemActionIcon: 'fa-solid fa-wand-magic-sparkles',
+    itemActionLabel: 'Extraer páginas',
   },
 };
 
@@ -63,3 +92,20 @@ export const CompactoParaDialogos: Story = {
     density: 'compact',
   },
 };
+
+export const DropzoneCompact: Story = {
+  args: {
+    label: 'Expediente PDF compacto',
+    variant: 'dropzone',
+    density: 'compact',
+    dropzoneTitle: 'Arrastra tus archivos PDF aquí',
+    dropzoneSubtitle: 'o haz clic para seleccionarlos',
+    badgeHint: 'Múltiples PDF',
+    accept: '.pdf,application/pdf',
+    multiple: true,
+    maxSizeMB: 25,
+    showHeader: true,
+    allowClearAll: true,
+  },
+};
+

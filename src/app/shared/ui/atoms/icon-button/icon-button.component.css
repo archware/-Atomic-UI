@@ -19,6 +19,18 @@
   position: relative;
 }
 
+.icon-btn--sm {
+  width: var(--control-height-sm);
+  height: var(--control-height-sm);
+  border-radius: var(--radius-sm);
+}
+
+.icon-btn--lg {
+  width: var(--control-height-lg);
+  height: var(--control-height-lg);
+  border-radius: var(--radius-lg);
+}
+
 .icon-btn:hover { background: var(--surface-hover); color: var(--primary-color); transform: translateY(-2px) scale(1.05); box-shadow: var(--shadow-md); filter: brightness(1.1); }
 
 .icon-btn:active {
@@ -30,6 +42,18 @@
   background: transparent;
   color: var(--text-color-secondary);
   transform: none !important;
+}
+
+.icon-btn:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.icon-btn--close:focus-visible,
+.icon-btn--close-soft:focus-visible,
+.icon-btn--hanging-close:focus-visible {
+  outline: 2px solid var(--danger-color);
+  outline-offset: 2px;
 }
 
 /* Ghost variant - más sutil */
@@ -137,16 +161,43 @@
   box-shadow: none;
 }
 
-.icon-btn--close:hover {
-  background-color: var(--danger-color, #ef4444);
-  color: #ffffff;
+.icon-btn--close:hover:not(:disabled) {
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+  color: var(--text-color-on-primary);
   transform: scale(1.1);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-md);
 }
 
-.icon-btn--close:active {
-  background-color: #b91c1c;
+.icon-btn--close:active:not(:disabled) {
+  background-color: var(--danger-color-dark);
+  border-color: var(--danger-color-dark);
   transform: scale(0.9);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Close-soft variant - círculo suave peligro en reposo y sólido en hover */
+.icon-btn--close-soft {
+  background-color: var(--danger-color-lighter);
+  border: 1px solid var(--danger-color-light);
+  color: var(--danger-color-text);
+  border-radius: var(--radius-full, 50%);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none;
+}
+
+.icon-btn--close-soft:hover:not(:disabled) {
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+  color: var(--text-color-on-primary);
+  transform: scale(1.1);
+  box-shadow: var(--shadow-md);
+}
+
+.icon-btn--close-soft:active:not(:disabled) {
+  background-color: var(--danger-color-dark);
+  border-color: var(--danger-color-dark);
+  transform: scale(0.92);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -163,7 +214,7 @@
 .icon-btn--hanging-close {
   background-color: var(--surface-background);
   border: 1px solid var(--border-color);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-md);
   color: var(--text-color);
   width: 100%;
   height: 100%;
@@ -171,16 +222,16 @@
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.icon-btn--hanging-close:hover {
-  background-color: var(--danger-color, #ef4444) !important;
-  border-color: var(--danger-color, #ef4444) !important;
-  color: white !important;
+.icon-btn--hanging-close:hover:not(:disabled) {
+  background-color: var(--danger-color) !important;
+  border-color: var(--danger-color) !important;
+  color: var(--text-color-on-primary) !important;
   transform: scale(1.1);
 }
 
-.icon-btn--hanging-close:active {
+.icon-btn--hanging-close:active:not(:disabled) {
   transform: scale(0.95) !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: var(--shadow-xs) !important;
 }
 
 /* --- EXACT CSS From CodePen (rNPjmg) --- */
@@ -192,6 +243,14 @@
   width: 1em;
   height: 1em;
   overflow: hidden;
+}
+
+.icon-btn--sm .close {
+  font-size: 16px;
+}
+
+.icon-btn--lg .close {
+  font-size: 22px;
 }
 .close::before, .close::after {
   content: "";

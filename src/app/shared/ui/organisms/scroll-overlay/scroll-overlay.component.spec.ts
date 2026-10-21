@@ -417,4 +417,105 @@ describe('ScrollOverlayComponent', () => {
     expect(boundaryWheel.defaultPrevented).toBe(true);
     expect(viewport.scrollTop).toBe(80);
   });
+
+  it('resyncs geometry when projected images finish loading or new content children appear', async () => {
+    const observedElements: Element[] = [];
+    globalThis.ResizeObserver = class {
+      constructor(callback: ResizeObserverCallback) {
+        resizeCallback = callback;
+      }
+      observe(target: Element): void {
+        observedElements.push(target);
+      }
+      unobserve(): void {}
+      disconnect(): void {}
+    };
+
+    const fixture = TestBed.createComponent(ScrollOverlayComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const viewport = host.querySelector('.so-scroll-area') as HTMLElement;
+    const contentBox = document.createElement('div');
+    const img = document.createElement('img');
+    contentBox.append(img);
+    viewport.append(contentBox);
+
+    mutationCallback([], {} as MutationObserver);
+    expect(observedElements).toContain(contentBox);
+
+    const component = fixture.componentInstance as unknown as {
+      syncGeometry: () => void;
+    };
+    const geometrySpy = spyOn(component, 'syncGeometry').and.callThrough();
+    pendingFrame?.(16);
+    geometrySpy.calls.reset();
+
+    img.dispatchEvent(new Event('load'));
+    pendingFrame?.(32);
+    expect(geometrySpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps scrollbar visible when pointer moves from viewport onto rail and jumps on rail click', async () => {
+    const fixture = TestBed.createComponent(ScrollOverlayComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const viewport = host.querySelector('.so-scroll-area') as HTMLElement;
+    const verticalRail = host.querySelector('.so-scrollbar-y') as HTMLElement;
+    setScrollMetrics(viewport, {
+      clientHeight: 200,
+      clientWidth: 300,
+      scrollHeight: 1000,
+      scrollWidth: 300,
+    });
+    setRect(host, 300, 200);
+    setRect(viewport, 300, 200);
+    setRect(verticalRail, 7, 200);
+
+    const component = fixture.componentInstance as unknown as { syncGeometry: () => void };
+    component.syncGeometry();
+
+    host.dispatchEvent(new MouseEvent('mouseenter'));
+    expect(host.classList).toContain('so-scrolling');
+
+    viewport.dispatchEvent(
+      new MouseEvent('mouseleave', {
+        relatedTarget: verticalRail,
+      }),
+    );
+    expect(host.classList).toContain('so-scrolling');
+
+    verticalRail.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        bubbles: true,
+        cancelable: true,
+        clientY: 100,
+        button: 0,
+      }),
+    );
+    expect(viewport.scrollTop).toBeGreaterThan(300);
+  });
+
+  it('does not leak outer overflow state to a nested scroll-overlay rail', async () => {
+    const fixture = TestBed.createComponent(NestedScrollOverlayHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const outerRoot = fixture.nativeElement.querySelector('.outer-overlay') as HTMLElement;
+    const outerVertical = fixture.nativeElement.querySelector('.outer-vertical') as HTMLElement;
+    const innerRoot = fixture.nativeElement.querySelector('.inner-overlay') as HTMLElement;
+    const innerVerticalRail = innerRoot.querySelector(':scope > .so-scrollbar-y') as HTMLElement;
+
+    setScrollMetrics(outerVertical, {
+      clientHeight: 200,
+      scrollHeight: 900,
+    });
+    outerRoot.classList.add('so-has-overflow-y');
+    innerRoot.classList.remove('so-has-overflow-y');
+
+    expect(getComputedStyle(innerVerticalRail).display).toBe('none');
+  });
 });

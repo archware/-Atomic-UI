@@ -3,10 +3,10 @@ title: "Hoja de ruta de Atomic UI 6.0"
 subtitle: "Signals, estilos externos, selector público único y compuertas de doctrina"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-08-23"
+last_updated: "2026-10-20"
 document_type: "hoja de ruta técnica"
 status: "en ejecución"
-version: "1.0.0"
+version: "1.1.0"
 change_id: "ATOMIC-20260823-600"
 canonical_repository: "C:\\Users\\cotaha\\source\\repos\\-Atomic-UI"
 baseline_ref: "00f440bfdfb7fcf660d08d6a55efffc080cc8e57"
@@ -36,15 +36,15 @@ generador, distribución y compuertas. La copia de trabajo situada en
   medidas sin `px`, selector `app-` único y ausencia de Tailwind en Atomic UI.
 - [ ] Se corregirá el generador para que produzca exclusivamente selectores
   `app-`, Signals y estilos externos conformes.
-- [ ] Se resolverán las colisiones públicas de `app-input` y `app-select` con
-  una API canónica inequívoca y pruebas de catálogo/barrel.
+- [x] Se resolverán las colisiones públicas de `app-input` y `app-select` con
+  una API canónica inequívoca y pruebas de catálogo/barrel (resuelto en `ATOMIC-20261019-001`).
 - [x] Se migraron todos los contratos públicos `@Input`/`@Output` a
   `input()`/`output()` y se retiró `EventEmitter` del alcance mantenido.
 - [x] Se extrajeron todos los bloques `styles` embebidos hacia archivos externos.
 - [ ] Se retirarán los alias `prest-*` de código, catálogo, historias,
   generador, fixtures y pruebas canónicas.
 - [ ] Se retirará Tailwind del contrato, dependencias, configuración, estilos
-  globales y composiciones mantenidas.
+  globales y composiciones mantenidas (`tailwind.config.js` y directivas `@tailwind` ya retirados en `6be5a57`; pendiente purga de clases residuales en historias/demos).
 - [ ] Se sustituirán medidas rígidas `px` por tokens o unidades relativas y se
   actualizarán los tokens requeridos.
 - [ ] Se actualizarán versión, manifiestos, contrato de paquete, documentación
@@ -77,8 +77,8 @@ generador, distribución y compuertas. La copia de trabajo situada en
 
 ### Unidad 2: API pública y generador
 
-- [ ] Definir una única implementación para `app-input` y `app-select`.
-- [ ] Actualizar barrel, catálogo, historias y pruebas de resolución.
+- [x] Definir una única implementación para `app-input` y `app-select` (`ATOMIC-20261019-001`).
+- [x] Actualizar barrel, catálogo, historias y pruebas de resolución (`ATOMIC-20261019-001`, `ATOMIC-20261019-002`, `ATOMIC-20261020-001`).
 - [ ] Retirar la generación y aceptación transicional de `prest-*`.
 - [ ] Demostrar determinismo y rechazo de contratos obsoletos del generador.
 
@@ -95,7 +95,7 @@ generador, distribución y compuertas. La copia de trabajo situada en
 ### Unidad 4: Tailwind y distribución
 
 - [ ] Sustituir utilidades Tailwind mantenidas por clases semánticas Atomic.
-- [ ] Retirar directivas, configuración y dependencias Tailwind.
+- [x] Retirar directivas, configuración y dependencias Tailwind (`6be5a57`).
 - [ ] Elevar la versión a 6.0.0 y regenerar manifiestos canónicos.
 
 ### Unidad 5: cierre verificable

@@ -16,6 +16,7 @@ import {
   ChipComponent,
   FileInputComponent,
   FileInputFile,
+  FloatingInputComponent,
   BadgeComponent,
   ModalService,
   PopupService,
@@ -39,6 +40,7 @@ import {
     Alert,
     ChipComponent,
     FileInputComponent,
+    FloatingInputComponent,
     BadgeComponent,
   ],
   templateUrl: './dialogs-page.component.html',
@@ -82,6 +84,22 @@ export class DialogsPageComponent {
       size: 245760,
       type: 'application/pdf',
       file: new File([], 'documento_autorizacion.pdf', { type: 'application/pdf' }),
+    },
+  ]);
+
+  // Archivos interactivos de demostracion del patron de fila PDF (Seccion 4)
+  readonly pdfDemoFiles = signal<Array<{ id: string; name: string; meta: string; pages: string }>>([
+    {
+      id: 'pdf-1',
+      name: 'expediente_clinico_2026.pdf',
+      meta: '12 paginas · 1.4 MB',
+      pages: '1-4, 7',
+    },
+    {
+      id: 'pdf-2',
+      name: 'consentimiento_informado.pdf',
+      meta: '3 paginas · 420 KB',
+      pages: '1-3',
     },
   ]);
 
@@ -168,6 +186,38 @@ export class DialogsPageComponent {
 
   onSecondaryCancelAction(): void {
     this.lastInteraction.set('Variante 7 accionada: Salida segura mediante boton outline');
+  }
+
+  onCatalogActionTrigger(description: string): void {
+    this.lastInteraction.set(`Catalogo de acciones: ${description}`);
+  }
+
+  onRemovePdfDemoFile(id: string): void {
+    this.pdfDemoFiles.update((items) => items.filter((item) => item.id !== id));
+    this.lastInteraction.set(`Catalogo de acciones: Documento retirado con close-soft [${id}]`);
+  }
+
+  onClearPdfDemoFiles(): void {
+    this.pdfDemoFiles.set([]);
+    this.lastInteraction.set('Catalogo de acciones: Lista vaciada con boton soft danger');
+  }
+
+  onRestorePdfDemoFiles(): void {
+    this.pdfDemoFiles.set([
+      {
+        id: 'pdf-1',
+        name: 'expediente_clinico_2026.pdf',
+        meta: '12 paginas · 1.4 MB',
+        pages: '1-4, 7',
+      },
+      {
+        id: 'pdf-2',
+        name: 'consentimiento_informado.pdf',
+        meta: '3 paginas · 420 KB',
+        pages: '1-3',
+      },
+    ]);
+    this.lastInteraction.set('Catalogo de acciones: Documentos de demostracion restaurados');
   }
 
   // --- Lanzamiento de overlays reales del chasis ---

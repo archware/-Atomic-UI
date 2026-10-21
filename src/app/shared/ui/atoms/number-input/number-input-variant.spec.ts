@@ -75,4 +75,31 @@ describe('NumberInputComponent - modos de etiqueta', () => {
     const etiqueta = fixture.nativeElement.querySelector('label.number-input__label--hidden');
     expect(etiqueta?.textContent?.trim()).toBe('Cantidad');
   });
+
+  it('muestra asterisco de obligatoriedad y aria-required en modos standard, floating y floating-value cuando required es true, y los omite por defecto', async () => {
+    const fixture = TestBed.createComponent(NumberInputComponent);
+    fixture.componentRef.setInput('label', 'Cantidad');
+    await fixture.whenStable();
+    const raiz: HTMLElement = fixture.nativeElement;
+    const inputEl = raiz.querySelector('input') as HTMLInputElement;
+
+    expect(raiz.querySelector('.fl-label__required')).toBeNull();
+    expect(inputEl.hasAttribute('aria-required')).toBe(false);
+    expect(inputEl.required).toBe(false);
+
+    fixture.componentRef.setInput('required', true);
+    await fixture.whenStable();
+
+    expect(raiz.querySelector('.number-input__label .fl-label__required')?.textContent).toBe('*');
+    expect(inputEl.getAttribute('aria-required')).toBe('true');
+    expect(inputEl.required).toBe(true);
+
+    for (const variante of ['floating', 'floating-value'] as const) {
+      fixture.componentRef.setInput('variant', variante);
+      await fixture.whenStable();
+      expect(flotante(raiz)?.querySelector('.fl-label__required')?.textContent).toBe('*');
+      expect(inputEl.getAttribute('aria-required')).toBe('true');
+    }
+  });
 });
+

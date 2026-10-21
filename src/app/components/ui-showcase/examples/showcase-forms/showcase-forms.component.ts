@@ -6,6 +6,7 @@ import { InputComponent } from '../../../../shared/ui/atoms/input/input.componen
 import { SelectComponent } from '../../../../shared/ui/atoms/select/select.component';
 import { TextareaComponent } from '../../../../shared/ui/atoms/textarea/textarea.component';
 import { NumberInputComponent } from '../../../../shared/ui/atoms/number-input/number-input.component';
+import { FileInputComponent } from '../../../../shared/ui/atoms/file-input/file-input.component';
 import { Select2Component, Select2Option } from '../../../../shared/ui/molecules/select2/select2.component';
 import { ComboboxComponent } from '../../../../shared/ui/molecules/combobox/combobox.component';
 import { TagInputComponent } from '../../../../shared/ui/molecules/tag-input/tag-input.component';
@@ -28,6 +29,7 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
     SelectComponent,
     TextareaComponent,
     NumberInputComponent,
+    FileInputComponent,
     Select2Component,
     ComboboxComponent,
     TagInputComponent,
@@ -79,18 +81,51 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
           label="País (floating)"
           variant="floating"
           placeholder="Buscar país..."
+          [required]="true"
           [options]="formCountryOptions"
         />
         <app-tag-input
           label="Etiquetas (floating)"
           variant="floating"
           placeholder="Agregar etiqueta..."
+          [required]="true"
         />
         <app-number-input
           label="Cantidad (floating)"
           variant="floating"
+          [required]="true"
           [min]="0"
           [max]="99"
+        />
+      </div>
+    </section>
+
+    <!-- FILE INPUT / DROPZONE -->
+    <section class="showcase-section">
+      <h3 class="section-title">Carga de Archivos (standard · dropzone)</h3>
+      <div class="input-variants-grid">
+        <app-file-input
+          label="Adjunto estándar"
+          variant="standard"
+          hint="PDF o imagen hasta 5 MB"
+          accept=".pdf,.png,.jpg"
+          [maxSizeMB]="5"
+        />
+        <app-file-input
+          label="Expediente documental (Dropzone)"
+          variant="dropzone"
+          dropzoneTitle="Arrastra tus archivos PDF aquí"
+          dropzoneSubtitle="o haz clic para seleccionarlos desde tu equipo"
+          badgeHint="Soporta múltiples archivos PDF"
+          accept=".pdf,application/pdf"
+          [multiple]="true"
+          [maxSizeMB]="25"
+          [showHeader]="true"
+          headerTitle="Documentos cargados"
+          [allowClearAll]="true"
+          clearAllLabel="Limpiar lista"
+          itemActionIcon="fa-solid fa-wand-magic-sparkles"
+          itemActionLabel="Extraer páginas"
         />
       </div>
     </section>

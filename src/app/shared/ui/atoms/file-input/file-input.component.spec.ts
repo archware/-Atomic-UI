@@ -193,4 +193,138 @@ describe('FileInputComponent', () => {
       fixture.nativeElement.querySelector('.drop-zone').getAttribute('aria-invalid'),
     ).toBe('true');
   });
+
+  it('renderiza la variante dropzone con título, subtítulo, badgeHint y protecciones de arrastre de escritorio', () => {
+    fixture.componentRef.setInput('variant', 'dropzone');
+    fixture.componentRef.setInput('dropzoneTitle', 'Arrastra tus archivos PDF aquí');
+    fixture.componentRef.setInput('dropzoneSubtitle', 'o haz clic para seleccionarlos');
+    fixture.componentRef.setInput('badgeHint', 'Soporta múltiples archivos PDF');
+    fixture.detectChanges();
+
+    const wrapper = fixture.nativeElement.querySelector('.file-input-wrapper') as HTMLElement;
+    const dropZone = fixture.nativeElement.querySelector('.drop-zone') as HTMLElement;
+    expect(wrapper.classList).toContain('variant-dropzone');
+    expect(dropZone.getAttribute('draggable')).toBe('false');
+    expect(fixture.nativeElement.querySelector('.drop-title')?.textContent).toContain(
+      'Arrastra tus archivos PDF aquí',
+    );
+    expect(fixture.nativeElement.querySelector('.drop-subtitle')?.textContent).toContain(
+      'o haz clic para seleccionarlos',
+    );
+    expect(fixture.nativeElement.querySelector('.drop-badge-hint')?.textContent).toContain(
+      'Soporta múltiples archivos PDF',
+    );
+  });
+
+  it('muestra cabecera de lista con contador, permite limpiar todo y emite cleared, fileRemoved y fileAction', () => {
+    fixture.componentRef.setInput('variant', 'dropzone');
+    fixture.componentRef.setInput('multiple', true);
+    fixture.componentRef.setInput('showHeader', true);
+    fixture.componentRef.setInput('headerTitle', 'Expedientes PDF');
+    fixture.componentRef.setInput('allowClearAll', true);
+    fixture.componentRef.setInput('clearAllLabel', 'Vaciar todo');
+    fixture.componentRef.setInput('itemActionIcon', 'fa-solid fa-wand-magic-sparkles');
+    fixture.componentRef.setInput('itemActionLabel', 'Extraer páginas');
+
+    const clearedSpy = jasmine.createSpy('cleared');
+    const removedSpy = jasmine.createSpy('fileRemoved');
+    const actionSpy = jasmine.createSpy('fileAction');
+    component.cleared.subscribe(clearedSpy);
+    component.fileRemoved.subscribe(removedSpy);
+    component.fileAction.subscribe(actionSpy);
+
+    const first = new File(['%PDF-1.7-a'], 'uno.pdf', { type: 'application/pdf' });
+    const second = new File(['%PDF-1.7-b'], 'dos.pdf', { type: 'application/pdf' });
+    component.onDrop({
+      preventDefault: () => undefined,
+      dataTransfer: { files: [first, second] },
+    } as unknown as DragEvent);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.file-list-title')?.textContent).toContain(
+      'Expedientes PDF',
+    );
+    expect(fixture.nativeElement.querySelector('.file-list-count')?.textContent?.trim()).toBe('2');
+
+    const actionBtn = fixture.nativeElement.querySelector('.file-action') as HTMLButtonElement;
+    expect(actionBtn).not.toBeNull();
+    actionBtn.click();
+    expect(actionSpy).toHaveBeenCalledTimes(1);
+    expect(actionSpy.calls.mostRecent().args[0].name).toBe('uno.pdf');
+
+    const removeBtn = fixture.nativeElement.querySelector('.file-remove') as HTMLButtonElement;
+    removeBtn.click();
+    fixture.detectChanges();
+    expect(removedSpy).toHaveBeenCalledTimes(1);
+    expect(removedSpy.calls.mostRecent().args[0].name).toBe('uno.pdf');
+    expect(component.files()).toHaveSize(1);
+
+    const clearAllBtn = fixture.nativeElement.querySelector('.file-clear-all') as HTMLButtonElement;
+    expect(clearAllBtn?.textContent).toContain('Vaciar todo');
+    clearAllBtn.click();
+    fixture.detectChanges();
+
+    expect(clearedSpy).toHaveBeenCalledTimes(1);
+    expect(component.files()).toEqual([]);
+  });
+
+  it('combina variant="dropzone" con density="compact" e ignora arrastres sin archivos o dragleave hacia nodos hijos', () => {
+    fixture.componentRef.setInput('variant', 'dropzone');
+    fixture.componentRef.setInput('density', 'compact');
+    fixture.detectChanges();
+
+    const wrapper = fixture.nativeElement.querySelector('.file-input-wrapper') as HTMLElement;
+    const dropZone = fixture.nativeElement.querySelector('.drop-zone') as HTMLElement;
+    const iconContainer = dropZone.querySelector('.drop-icon-container') as HTMLElement;
+    expect(wrapper.classList).toContain('variant-dropzone');
+    expect(wrapper.classList).toContain('compact');
+
+    component.onDragOver({
+      preventDefault: () => undefined,
+      dataTransfer: { types: ['text/plain'] },
+    } as unknown as DragEvent);
+    expect(component.isDragging()).toBe(false);
+
+    const transfer = { types: ['Files'], dropEffect: 'none' };
+    component.onDragOver({
+      preventDefault: () => undefined,
+      dataTransfer: transfer,
+    } as unknown as DragEvent);
+    expect(component.isDragging()).toBe(true);
+    expect(transfer.dropEffect).toBe('copy');
+
+    component.onDragLeave({
+      preventDefault: () => undefined,
+      currentTarget: dropZone,
+      relatedTarget: iconContainer,
+    } as unknown as DragEvent);
+    expect(component.isDragging()).toBe(true);
+
+    component.onDragLeave({
+      preventDefault: () => undefined,
+      currentTarget: dropZone,
+      relatedTarget: document.body,
+    } as unknown as DragEvent);
+    expect(component.isDragging()).toBe(false);
+  });
+
+  it('limpia validationError al invocar clearFiles y bloquea Enter/Space cuando disabled es true', () => {
+    const invalid = new File(['texto'], 'invalido.txt', { type: 'text/plain' });
+    component.onFileChange({
+      target: { files: [invalid], value: 'selected' },
+    } as unknown as Event);
+    expect(component.validationError()).not.toBe('');
+
+    component.clearFiles();
+    expect(component.validationError()).toBe('');
+
+    fixture.componentRef.setInput('disabled', true);
+    fixture.detectChanges();
+    const clickSpy = spyOn(component.fileInputRef.nativeElement, 'click');
+    const dropZone = fixture.nativeElement.querySelector('.drop-zone') as HTMLElement;
+    dropZone.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', cancelable: true }));
+    dropZone.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', cancelable: true }));
+    expect(clickSpy).not.toHaveBeenCalled();
+  });
 });
+

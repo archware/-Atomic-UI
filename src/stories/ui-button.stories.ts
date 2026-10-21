@@ -15,8 +15,18 @@ const meta: Meta<ButtonComponent> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'outline', 'ghost'],
+      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'soft', 'outline', 'ghost', 'link'],
       description: 'Visual style variant of the button',
+    },
+    appearance: {
+      control: 'select',
+      options: ['flat', 'gradient'],
+      description: 'Surface appearance for solid button variants (flat vs diagonal gradient with glow)',
+    },
+    tone: {
+      control: 'select',
+      options: ['neutral', 'primary', 'secondary', 'success', 'warning', 'danger', 'info'],
+      description: 'Semantic tone for soft, outline, and ghost variants',
     },
     size: {
       control: 'select',
@@ -211,6 +221,58 @@ export const FullWidth: Story = {
         <app-button [variant]="variant" [fullWidth]="fullWidth">
           Continuar
         </app-button>
+      </div>
+    `,
+  }),
+};
+
+export const GradientVariants: Story = {
+  render: () => ({
+    template: `
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+          <app-button variant="primary" appearance="gradient" iconClass="fa-solid fa-layer-group">Unir PDFs</app-button>
+          <app-button variant="secondary" appearance="gradient" iconClass="fa-solid fa-compress">Comprimir</app-button>
+          <app-button variant="success" appearance="gradient" iconClass="fa-solid fa-check">Confirmar</app-button>
+          <app-button variant="warning" appearance="gradient" iconClass="fa-solid fa-bolt">Optimizar</app-button>
+          <app-button variant="danger" appearance="gradient" iconClass="fa-solid fa-scissors">Eliminar Páginas</app-button>
+        </div>
+      </div>
+    `,
+  }),
+};
+
+export const ContextualTones: Story = {
+  render: () => ({
+    template: `
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+          <app-button variant="soft" tone="neutral" size="sm">Soft Neutral</app-button>
+          <app-button variant="soft" tone="primary" size="sm">Soft Primary</app-button>
+          <app-button variant="soft" tone="secondary" size="sm">Soft Secondary</app-button>
+          <app-button variant="soft" tone="success" size="sm">Soft Success</app-button>
+          <app-button variant="soft" tone="warning" size="sm">Soft Warning</app-button>
+          <app-button variant="soft" tone="danger" size="sm" iconClass="fa-solid fa-trash-can">Vaciar</app-button>
+          <app-button variant="soft" tone="info" size="sm">Soft Info</app-button>
+        </div>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+          <app-button variant="outline" tone="neutral" size="sm">Outline Neutral</app-button>
+          <app-button variant="outline" tone="primary" size="sm">Outline Primary</app-button>
+          <app-button variant="outline" tone="secondary" size="sm">Outline Secondary</app-button>
+          <app-button variant="outline" tone="success" size="sm">Outline Success</app-button>
+          <app-button variant="outline" tone="warning" size="sm">Outline Warning</app-button>
+          <app-button variant="outline" tone="danger" size="sm">Outline Danger</app-button>
+          <app-button variant="outline" tone="info" size="sm">Outline Info</app-button>
+        </div>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+          <app-button variant="ghost" tone="neutral" size="sm">Ghost Neutral</app-button>
+          <app-button variant="ghost" tone="primary" size="sm">Ghost Primary</app-button>
+          <app-button variant="ghost" tone="secondary" size="sm">Ghost Secondary</app-button>
+          <app-button variant="ghost" tone="success" size="sm">Ghost Success</app-button>
+          <app-button variant="ghost" tone="warning" size="sm">Ghost Warning</app-button>
+          <app-button variant="ghost" tone="danger" size="sm">Ghost Danger</app-button>
+          <app-button variant="ghost" tone="info" size="sm">Ghost Info</app-button>
+        </div>
       </div>
     `,
   }),

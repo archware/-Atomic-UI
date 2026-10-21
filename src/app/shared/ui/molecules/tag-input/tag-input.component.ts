@@ -52,7 +52,12 @@ export interface TagInputOption {
   template: `
     <div class="tag-input-wrapper" [class.fl-field--floating]="flotante()" [class.tag-input--disabled]="isDisabled()" [class.tag-input--focused]="focused()">
       @if (label() && !flotante()) {
-        <label class="fl-label tag-input__label" [for]="inputId">{{ label() }}</label>
+        <label class="fl-label tag-input__label" [for]="inputId">
+          {{ label() }}
+          @if (required()) {
+            <span class="field__required fl-label__required" aria-hidden="true">*</span>
+          }
+        </label>
       }
       <div class="fl-control tag-input__field">
         @if (flotante()) {
@@ -62,7 +67,12 @@ export interface TagInputOption {
             [class.fl-label--error]="error()"
             [class.fl-label--disabled]="isDisabled()"
             [for]="inputId"
-          >{{ label() }}</label>
+          >
+            {{ label() }}
+            @if (required()) {
+              <span class="field__required fl-label__required" aria-hidden="true">*</span>
+            }
+          </label>
         }
         <!-- Tags -->
         @for (tag of tags(); track tag) {
@@ -81,6 +91,7 @@ export interface TagInputOption {
             [id]="inputId"
             class="tag-input__input"
             [attr.placeholder]="tags().length === 0 ? marcador() : null"
+            [attr.aria-required]="required() ? 'true' : null"
             [disabled]="isDisabled()"
             [(ngModel)]="inputValue"
             (keydown)="onKeydown($event)"
@@ -110,6 +121,7 @@ export class TagInputComponent implements ControlValueAccessor {
   readonly placeholder = input('Agregar etiqueta…');
   readonly hint = input('');
   readonly error = input('');
+  readonly required = input(false);
   readonly maxTags = input<number | null>(null);
   readonly allowDuplicates = input(false);
   readonly disabled = input(false);

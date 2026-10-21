@@ -348,14 +348,13 @@
                       <app-text variant="caption" color="secondary">{{ (item.size / 1024).toFixed(0) }} KB</app-text>
                     </div>
                     <app-icon-button
-                      variant="ghost"
+                      variant="close-soft"
+                      size="sm"
                       animation="none"
                       ariaLabel="Eliminar archivo adjunto"
                       tooltip="Quitar archivo"
                       (clicked)="onRemoveAttachedFile(item.name)"
-                    >
-                      <i class="fa-solid fa-xmark"></i>
-                    </app-icon-button>
+                    />
                   </div>
                 }
               </div>
@@ -366,7 +365,7 @@
             }
           </div>
           <div class="tile-code">
-            <code>app-file-input [multiple]="true" density="compact"</code>
+            <code>app-file-input [multiple]="true" + app-icon-button variant="close-soft"</code>
           </div>
         </article>
 
@@ -433,6 +432,265 @@
             Prohibida la introduccion de animaciones no canonicas, giros de iconos en hover o desajustes de transicion. Las acciones respetan la identidad visual sobria.
           </app-text>
         </div>
+      </div>
+    </section>
+
+    <!-- Seccion 4: Catalogo Visual de Variantes de Botones y Acciones -->
+    <section class="blueprint-block">
+      <div class="block-heading">
+        <app-text variant="h3" weight="bold">4. Catalogo Visual de Variantes de Botones y Acciones</app-text>
+        <app-text variant="body-sm" color="secondary">
+          Comparativa en vivo de superficies solidas (flat vs. gradient), tonos contextuales (soft, outline, ghost), tamanos y cierres circulares suaves (close-soft).
+        </app-text>
+      </div>
+
+      <div class="catalog-grid">
+        <!-- Sub-bloque A: Superficies Solidas Flat vs Gradient -->
+        <article class="variant-tile">
+          <div class="tile-header">
+            <app-badge variant="primary" size="sm">Apariencia</app-badge>
+            <app-text variant="h4" weight="bold">Solido Uniforme (Flat) vs. Degradado (Gradient)</app-text>
+          </div>
+          <app-text variant="body-sm" color="secondary">
+            La propiedad appearance permite alternar entre el acabado institucional plano y el acabado vibrante con degradado diagonal y sombra de resplandor semantico.
+          </app-text>
+          <div class="tile-stage tile-stage--column">
+            <div class="showcase-group">
+              <app-text variant="caption" weight="bold">Acabado uniforme por defecto (appearance="flat"):</app-text>
+              <div class="showcase-button-row">
+                <app-button variant="primary" appearance="flat" iconClass="fa-solid fa-layer-group" (buttonClick)="onCatalogActionTrigger('Primary Flat')">
+                  Primario
+                </app-button>
+                <app-button variant="secondary" appearance="flat" iconClass="fa-solid fa-sliders" (buttonClick)="onCatalogActionTrigger('Secondary Flat')">
+                  Secundario
+                </app-button>
+                <app-button variant="success" appearance="flat" iconClass="fa-solid fa-check" (buttonClick)="onCatalogActionTrigger('Success Flat')">
+                  Confirmar
+                </app-button>
+                <app-button variant="warning" appearance="flat" iconClass="fa-solid fa-triangle-exclamation" (buttonClick)="onCatalogActionTrigger('Warning Flat')">
+                  Precaucion
+                </app-button>
+                <app-button variant="danger" appearance="flat" iconClass="fa-solid fa-trash-can" (buttonClick)="onCatalogActionTrigger('Danger Flat')">
+                  Eliminar
+                </app-button>
+              </div>
+            </div>
+
+            <div class="showcase-group">
+              <app-text variant="caption" weight="bold">Acabado vibrante con resplandor (appearance="gradient"):</app-text>
+              <div class="showcase-button-row">
+                <app-button variant="primary" appearance="gradient" iconClass="fa-solid fa-layer-group" (buttonClick)="onCatalogActionTrigger('Primary Gradient')">
+                  Unir PDFs
+                </app-button>
+                <app-button variant="secondary" appearance="gradient" iconClass="fa-solid fa-compress" (buttonClick)="onCatalogActionTrigger('Secondary Gradient')">
+                  Comprimir
+                </app-button>
+                <app-button variant="success" appearance="gradient" iconClass="fa-solid fa-check" (buttonClick)="onCatalogActionTrigger('Success Gradient')">
+                  Procesar
+                </app-button>
+                <app-button variant="warning" appearance="gradient" iconClass="fa-solid fa-bolt" (buttonClick)="onCatalogActionTrigger('Warning Gradient')">
+                  Optimizar
+                </app-button>
+                <app-button variant="danger" appearance="gradient" iconClass="fa-solid fa-scissors" (buttonClick)="onCatalogActionTrigger('Danger Gradient')">
+                  Eliminar Paginas
+                </app-button>
+              </div>
+            </div>
+          </div>
+          <div class="tile-code">
+            <code>app-button variant="primary" appearance="gradient" iconClass="fa-solid fa-layer-group"</code>
+          </div>
+        </article>
+
+        <!-- Sub-bloque B: Variantes Contextuales Soft, Outline y Ghost con Tono -->
+        <article class="variant-tile">
+          <div class="tile-header">
+            <app-badge variant="info" size="sm">Tonos</app-badge>
+            <app-text variant="h4" weight="bold">Superficies Sutiles (Soft, Outline y Ghost)</app-text>
+          </div>
+          <app-text variant="body-sm" color="secondary">
+            Combinacion de variant con tone (neutral, primary, secondary, success, warning, danger, info) para acciones secundarias de baja saturacion.
+          </app-text>
+          <div class="tile-stage tile-stage--column">
+            <div class="showcase-group">
+              <app-text variant="caption" weight="bold">Variante Soft (fondo tonal suave y borde semantico):</app-text>
+              <div class="showcase-button-row">
+                <app-button variant="soft" tone="neutral" size="sm" (buttonClick)="onCatalogActionTrigger('Soft Neutral')">Neutral</app-button>
+                <app-button variant="soft" tone="primary" size="sm" (buttonClick)="onCatalogActionTrigger('Soft Primary')">Primario</app-button>
+                <app-button variant="soft" tone="secondary" size="sm" (buttonClick)="onCatalogActionTrigger('Soft Secondary')">Secundario</app-button>
+                <app-button variant="soft" tone="success" size="sm" (buttonClick)="onCatalogActionTrigger('Soft Success')">Exito</app-button>
+                <app-button variant="soft" tone="warning" size="sm" (buttonClick)="onCatalogActionTrigger('Soft Warning')">Alerta</app-button>
+                <app-button variant="soft" tone="danger" size="sm" iconClass="fa-solid fa-trash-can" (buttonClick)="onCatalogActionTrigger('Soft Danger')">Vaciar</app-button>
+                <app-button variant="soft" tone="info" size="sm" (buttonClick)="onCatalogActionTrigger('Soft Info')">Info</app-button>
+              </div>
+            </div>
+
+            <div class="showcase-group">
+              <app-text variant="caption" weight="bold">Variante Outline por tono semantico (neutral, primary, secondary, success, warning, danger, info):</app-text>
+              <div class="showcase-button-row">
+                <app-button variant="outline" tone="neutral" size="sm" (buttonClick)="onCatalogActionTrigger('Outline Neutral')">Neutral</app-button>
+                <app-button variant="outline" tone="primary" size="sm" (buttonClick)="onCatalogActionTrigger('Outline Primary')">Primario</app-button>
+                <app-button variant="outline" tone="secondary" size="sm" (buttonClick)="onCatalogActionTrigger('Outline Secondary')">Secundario</app-button>
+                <app-button variant="outline" tone="success" size="sm" (buttonClick)="onCatalogActionTrigger('Outline Success')">Exito</app-button>
+                <app-button variant="outline" tone="warning" size="sm" (buttonClick)="onCatalogActionTrigger('Outline Warning')">Alerta</app-button>
+                <app-button variant="outline" tone="danger" size="sm" (buttonClick)="onCatalogActionTrigger('Outline Danger')">Peligro</app-button>
+                <app-button variant="outline" tone="info" size="sm" (buttonClick)="onCatalogActionTrigger('Outline Info')">Info</app-button>
+              </div>
+            </div>
+
+            <div class="showcase-group">
+              <app-text variant="caption" weight="bold">Variante Ghost por tono semantico (neutral, primary, secondary, success, warning, danger, info):</app-text>
+              <div class="showcase-button-row">
+                <app-button variant="ghost" tone="neutral" size="sm" (buttonClick)="onCatalogActionTrigger('Ghost Neutral')">Neutral</app-button>
+                <app-button variant="ghost" tone="primary" size="sm" (buttonClick)="onCatalogActionTrigger('Ghost Primary')">Primario</app-button>
+                <app-button variant="ghost" tone="secondary" size="sm" (buttonClick)="onCatalogActionTrigger('Ghost Secondary')">Secundario</app-button>
+                <app-button variant="ghost" tone="success" size="sm" (buttonClick)="onCatalogActionTrigger('Ghost Success')">Exito</app-button>
+                <app-button variant="ghost" tone="warning" size="sm" (buttonClick)="onCatalogActionTrigger('Ghost Warning')">Alerta</app-button>
+                <app-button variant="ghost" tone="danger" size="sm" (buttonClick)="onCatalogActionTrigger('Ghost Danger')">Peligro</app-button>
+                <app-button variant="ghost" tone="info" size="sm" (buttonClick)="onCatalogActionTrigger('Ghost Info')">Info</app-button>
+              </div>
+            </div>
+          </div>
+          <div class="tile-code">
+            <code>app-button variant="soft | outline | ghost" tone="neutral | primary | secondary | success | warning | danger | info"</code>
+          </div>
+        </article>
+
+        <!-- Sub-bloque C: Tamanos y Estados -->
+        <article class="variant-tile">
+          <div class="tile-header">
+            <app-badge variant="success" size="sm">Escala</app-badge>
+            <app-text variant="h4" weight="bold">Alturas Estandarizadas y Estados de Carga</app-text>
+          </div>
+          <app-text variant="body-sm" color="secondary">
+            Escala gobernada por tokens (--control-height-sm 2.25rem, --control-height 2.875rem, --control-height-lg 3.25rem) y superficie accesible para disabled y loading.
+          </app-text>
+          <div class="tile-stage tile-stage--column">
+            <div class="showcase-group">
+              <app-text variant="caption" weight="bold">Escala de tamanos (sm, md, lg):</app-text>
+              <div class="showcase-button-row">
+                <app-button variant="primary" appearance="gradient" size="sm" iconClass="fa-solid fa-plus" (buttonClick)="onCatalogActionTrigger('Size SM')">
+                  Compacto (sm)
+                </app-button>
+                <app-button variant="primary" appearance="gradient" size="md" iconClass="fa-solid fa-plus" (buttonClick)="onCatalogActionTrigger('Size MD')">
+                  Estandar (md)
+                </app-button>
+                <app-button variant="primary" appearance="gradient" size="lg" iconClass="fa-solid fa-plus" (buttonClick)="onCatalogActionTrigger('Size LG')">
+                  Destacado (lg)
+                </app-button>
+              </div>
+            </div>
+
+            <div class="showcase-group">
+              <app-text variant="caption" weight="bold">Estados bloqueados (conservan contraste y anulan degradado):</app-text>
+              <div class="showcase-button-row">
+                <app-button variant="primary" appearance="gradient" [loading]="true">
+                  Procesando
+                </app-button>
+                <app-button variant="danger" appearance="gradient" [disabled]="true" iconClass="fa-solid fa-ban">
+                  Deshabilitado
+                </app-button>
+              </div>
+            </div>
+          </div>
+          <div class="tile-code">
+            <code>app-button size="sm" | size="md" | size="lg" | [loading]="true" | [disabled]="true"</code>
+          </div>
+        </article>
+
+        <!-- Sub-bloque D: Variantes de IconButton, Tamanos, Animaciones y Patron de Fila PDF -->
+        <article class="variant-tile">
+          <div class="tile-header">
+            <app-badge variant="warning" size="sm">IconButton</app-badge>
+            <app-text variant="h4" weight="bold">Botones de Icono, Close-Soft y Patron de Fila PDF</app-text>
+          </div>
+          <app-text variant="body-sm" color="secondary">
+            Comparativa entre las 6 variantes (default, ghost, avatar, close neutro, close-soft con circulo peligro suave y hanging-close), escala (sm, md, lg), animaciones (none, grow, rotate) y tarjeta interactiva de documento PDF.
+          </app-text>
+          <div class="tile-stage tile-stage--column">
+            <div class="showcase-group">
+              <app-text variant="caption" weight="bold">Variantes de app-icon-button (default, ghost, avatar, close, close-soft, hanging-close):</app-text>
+              <div class="showcase-button-row">
+                <app-icon-button variant="default" icon="fa-solid fa-gear" tooltip="Default" ariaLabel="Configuracion" (clicked)="onCatalogActionTrigger('IconButton Default')" />
+                <app-icon-button variant="ghost" icon="fa-solid fa-magnifying-glass-plus" tooltip="Ghost" ariaLabel="Inspeccionar" (clicked)="onCatalogActionTrigger('IconButton Ghost')" />
+                <app-icon-button variant="avatar" icon="fa-solid fa-user" tooltip="Avatar" ariaLabel="Perfil" (clicked)="onCatalogActionTrigger('IconButton Avatar')" />
+                <app-icon-button variant="close" tooltip="Close neutro" ariaLabel="Cerrar neutro" (clicked)="onCatalogActionTrigger('IconButton Close')" />
+                <app-icon-button variant="close-soft" tooltip="Close-soft (reposo peligro suave)" ariaLabel="Quitar elemento" (clicked)="onCatalogActionTrigger('IconButton Close-Soft')" />
+                <div class="hanging-inline-demo">
+                  <app-text variant="caption">Popup</app-text>
+                  <app-icon-button variant="hanging-close" tooltip="Hanging-close exterior" ariaLabel="Cerrar flotante" (clicked)="onCatalogActionTrigger('IconButton Hanging-Close')" />
+                </div>
+              </div>
+            </div>
+
+            <div class="showcase-group">
+              <app-text variant="caption" weight="bold">Escala de tamanos (sm, md, lg) y animaciones configurables (none, grow, rotate):</app-text>
+              <div class="showcase-button-row">
+                <app-icon-button variant="close-soft" size="sm" tooltip="Close-soft sm" ariaLabel="Cerrar compacto" (clicked)="onCatalogActionTrigger('Close-Soft SM')" />
+                <app-icon-button variant="close-soft" size="md" tooltip="Close-soft md" ariaLabel="Cerrar estandar" (clicked)="onCatalogActionTrigger('Close-Soft MD')" />
+                <app-icon-button variant="close-soft" size="lg" tooltip="Close-soft lg" ariaLabel="Cerrar grande" (clicked)="onCatalogActionTrigger('Close-Soft LG')" />
+                <app-icon-button variant="default" size="sm" animation="none" icon="fa-solid fa-sliders" tooltip="Animacion none (sm)" ariaLabel="Sin animacion" (clicked)="onCatalogActionTrigger('Animation None')" />
+                <app-icon-button variant="default" size="md" animation="grow" icon="fa-solid fa-expand" tooltip="Animacion grow (md)" ariaLabel="Animacion grow" (clicked)="onCatalogActionTrigger('Animation Grow')" />
+                <app-icon-button variant="default" size="lg" animation="rotate" icon="fa-solid fa-arrows-rotate" tooltip="Animacion rotate (lg)" ariaLabel="Animacion rotate" (clicked)="onCatalogActionTrigger('Animation Rotate')" />
+              </div>
+            </div>
+
+            <div class="showcase-group">
+              <div class="pdf-card-header">
+                <app-text variant="caption" weight="bold">Patron interactivo de tarjeta de documento PDF (FloatingInput + Close-Soft + Soft Danger):</app-text>
+                @if (pdfDemoFiles().length > 0) {
+                  <app-button
+                    variant="soft"
+                    tone="danger"
+                    size="sm"
+                    iconClass="fa-solid fa-trash-can"
+                    (buttonClick)="onClearPdfDemoFiles()"
+                  >
+                    Vaciar lista
+                  </app-button>
+                } @else {
+                  <app-button
+                    variant="outline"
+                    tone="primary"
+                    size="sm"
+                    iconClass="fa-solid fa-rotate-left"
+                    (buttonClick)="onRestorePdfDemoFiles()"
+                  >
+                    Restaurar documentos
+                  </app-button>
+                }
+              </div>
+
+              @for (doc of pdfDemoFiles(); track doc.id) {
+                <div class="attached-file-row">
+                  <i class="fa-solid fa-file-pdf attached-file-icon" aria-hidden="true"></i>
+                  <div class="attached-file-info">
+                    <app-text variant="caption" weight="bold">{{ doc.name }}</app-text>
+                    <app-text variant="caption" color="secondary">{{ doc.meta }}</app-text>
+                  </div>
+                  <div class="file-row-inline-controls">
+                    <app-floating-input
+                      label="Hojas a incluir"
+                      variant="floating"
+                      [value]="doc.pages"
+                      placeholder="Ej: 1-3, 5"
+                    />
+                    <app-icon-button
+                      variant="close-soft"
+                      size="sm"
+                      tooltip="Quitar de la lista"
+                      ariaLabel="Quitar de la lista"
+                      (clicked)="onRemovePdfDemoFile(doc.id)"
+                    />
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="tile-code">
+            <code>app-floating-input + app-icon-button variant="close-soft" + app-button variant="soft" tone="danger" size="sm"</code>
+          </div>
+        </article>
       </div>
     </section>
   </div>

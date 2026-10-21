@@ -24,6 +24,7 @@
     { "name": "placeholder", "type": "string", "default": "Agregar etiqueta…", "meaning": "Marcador cuando no hay etiquetas; oculto mientras la etiqueta flotante reposa." },
     { "name": "hint", "type": "string", "default": "", "meaning": "Texto de ayuda inferior." },
     { "name": "error", "type": "string", "default": "", "meaning": "Mensaje de validación." },
+    { "name": "required", "type": "boolean", "default": false, "meaning": "Muestra indicador de obligatoriedad (*) en la etiqueta y expone aria-required en el input." },
     { "name": "maxTags", "type": "number", "default": 0, "meaning": "Máximo de etiquetas permitidas (0 = sin límite)." },
     { "name": "allowDuplicates", "type": "boolean", "default": false, "meaning": "Permite repetir etiquetas idénticas." },
     { "name": "disabled", "type": "boolean", "default": false, "meaning": "Deshabilita la captura y eliminación de etiquetas." },

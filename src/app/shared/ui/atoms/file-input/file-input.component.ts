@@ -24,6 +24,7 @@ export interface FileInputFile {
 }
 
 export type FileInputDensity = 'comfortable' | 'compact';
+export type FileInputVariant = 'standard' | 'dropzone';
 
 /**
  * FileInputComponent — Campo de carga de archivos con drag & drop.
@@ -66,7 +67,22 @@ export class FileInputComponent implements ControlValueAccessor {
   private readonly disabledByForm = signal(false);
   readonly error = input('');
 
+  /** Variante visual: `standard` (compacta/clásica) o `dropzone` (zona destacada con insignia y cabecera de lista). */
+  readonly variant = input<FileInputVariant>('standard');
+  readonly dropzoneTitle = input('Arrastra tus archivos aquí');
+  readonly dropzoneSubtitle = input('o haz clic para seleccionarlos desde tu equipo');
+  readonly badgeHint = input('');
+  readonly showHeader = input(false);
+  readonly headerTitle = input('Documentos cargados');
+  readonly allowClearAll = input(false);
+  readonly clearAllLabel = input('Limpiar lista');
+  readonly itemActionIcon = input('');
+  readonly itemActionLabel = input('Acción sobre archivo');
+
   readonly filesChange = output<FileInputFile[]>();
+  readonly cleared = output<void>();
+  readonly fileRemoved = output<FileInputFile>();
+  readonly fileAction = output<FileInputFile>();
 
   /** Densidad visual. `compact` conserva el mismo contrato dentro de formularios modales. */
   readonly density = input<FileInputDensity>('comfortable');
@@ -102,13 +118,36 @@ export class FileInputComponent implements ControlValueAccessor {
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
-    if (!this.isDisabled()) {
-      this.isDragging.set(true);
+    event.stopPropagation?.();
+    if (this.isDisabled()) {
+      this.isDragging.set(false);
+      return;
     }
+    const types = event.dataTransfer?.types;
+    if (types && types.length > 0 && !Array.from(types).includes('Files')) {
+      this.isDragging.set(false);
+      return;
+    }
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = 'copy';
+    }
+    this.isDragging.set(true);
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation?.();
+    const currentTarget = event.currentTarget as HTMLElement | null;
+    const relatedTarget = event.relatedTarget as Node | null;
+    if (currentTarget && relatedTarget && currentTarget.contains(relatedTarget)) {
+      return;
+    }
+    this.isDragging.set(false);
   }
 
   onDrop(event: DragEvent) {
     event.preventDefault();
+    event.stopPropagation?.();
     this.isDragging.set(false);
     if (this.isDisabled()) return;
     const dropped = event.dataTransfer?.files;
@@ -235,10 +274,30 @@ export class FileInputComponent implements ControlValueAccessor {
   }
 
   removeFile(f: FileInputFile) {
+    if (this.isDisabled()) return;
     this.files.update((fs) => fs.filter((x) => x !== f));
     this.onChange(this.files());
     this.filesChange.emit(this.files());
+    this.fileRemoved.emit(f);
     this.onTouched();
+  }
+
+  clearFiles(): void {
+    if (this.isDisabled()) return;
+    this.validationError.set('');
+    this.files.set([]);
+    if (this.fileInputRef?.nativeElement) {
+      this.fileInputRef.nativeElement.value = '';
+    }
+    this.onChange([]);
+    this.filesChange.emit([]);
+    this.cleared.emit();
+    this.onTouched();
+  }
+
+  onFileAction(f: FileInputFile): void {
+    if (this.isDisabled()) return;
+    this.fileAction.emit(f);
   }
 
   formatSize(bytes: number): string {

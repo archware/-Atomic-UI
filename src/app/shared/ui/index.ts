@@ -42,6 +42,8 @@ export type { AvatarSize, AvatarStatus } from './atoms/avatar/avatar.component';
 export {
   ButtonComponent,
   normalizeFontAwesomeIconClass,
+  type ButtonAppearance,
+  type ButtonSize,
   type ButtonTone,
   type ButtonVariant,
 } from './atoms/button/button.component';
@@ -75,7 +77,12 @@ export type {
 export { FormErrorComponent } from './atoms/form-error/form-error.component';
 export { FormRowComponent } from './atoms/form-row/form-row.component';
 
-export { IconButtonComponent } from './atoms/icon-button/icon-button.component';
+export {
+  IconButtonComponent,
+  type IconButtonAnimation,
+  type IconButtonSize,
+  type IconButtonVariant,
+} from './atoms/icon-button/icon-button.component';
 
 export { InputComponent } from './atoms/input/input.component';
 export type { InputMode, InputType } from './atoms/input/input.component';
@@ -137,7 +144,11 @@ export { TableHeaderCellComponent } from './atoms/table/table-header-cell.compon
 export type { SortDirection } from './atoms/table/table-header-cell.component';
 
 export { FileInputComponent } from './atoms/file-input/file-input.component';
-export type { FileInputDensity, FileInputFile } from './atoms/file-input/file-input.component';
+export type {
+  FileInputDensity,
+  FileInputFile,
+  FileInputVariant,
+} from './atoms/file-input/file-input.component';
 
 export { NumberInputComponent } from './atoms/number-input/number-input.component';
 

@@ -2,11 +2,11 @@
 title: "Continuidad para agentes de Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-10-19"
+last_updated: "2026-10-20"
 document_type: "manual de continuidad"
 status: "vigente"
-version: "1.4.1"
-change_id: "ATOMIC-20261019-002"
+version: "1.4.2"
+change_id: "ATOMIC-20261020-001"
 canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
@@ -16,7 +16,11 @@ document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDA
 Se mantiene el contrato documental ECO-20260823-003. Las unidades candidatas
 inferiores no equivalen a una nueva publicación del ADN.
 
-## Corte vigente ATOMIC-20261019-002
+## Corte vigente ATOMIC-20261020-001
+
+`ATOMIC-20261020-001` incorpora la variante `variant="dropzone"` en `FileInputComponent` (`atoms/file-input`) con soporte para título/subtítulo personalizables, insignia (`badgeHint`), cabecera de lista con contador (`showHeader`, `headerTitle`), vaciado total (`allowClearAll`, `clearAllLabel`, `cleared`), acción contextual por fila (`itemActionIcon`, `itemActionLabel`, `fileAction`, `fileRemoved`) y protecciones contra arrastre fantasma en WebView2/escritorio. Asimismo, homologa el input `[required]` (`false` por defecto), el asterisco `.field__required.fl-label__required` (`aria-hidden="true"`) en modos `standard`, `floating` y `floating-value`, y `aria-required="true"` en `FloatingInputComponent`, `DatepickerComponent`, `ComboboxComponent`, `TagInputComponent` y `NumberInputComponent`. Evidencia y rollback en el [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261020-001_dropzone_y_required.md).
+
+## Corte ATOMIC-20261019-002
 
 `ATOMIC-20261019-002` alinea `--field-label-font-weight` a `var(--font-weight-title)` (700) en `src/styles/themes/_tokens-primitives.css` y añade el input `required` (`false` por defecto) a `Select2Component`, mostrando `.field__required` en las tres variantes (`standard`, `floating`, `floating-value`) y `aria-required="true"` en el disparador. Evidencia y rollback en el [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261019-002_select2_etiqueta_obligatoria.md).
 
@@ -242,15 +246,17 @@ Signals y estilos Angular externos en el alcance mantenido. La directiva
 `appVariablesCss` es un adaptador transitorio para propiedades personalizadas;
 se retira cuando cada entrada pueda expresarse mediante tokens o clases cerradas.
 
-La versión 6.0.0 no está completada. Permanecen abiertas estas familias:
+La versión 6.0.0 no está completada. Estado de las seis familias frente a la instantánea inicial:
 
 1. medidas rígidas: una búsqueda de la instantánea encontró 351 líneas con
    `px` en 79 archivos de `src/app/shared/ui`;
-2. Tailwind: dependencias, configuración, directivas globales y documentación
-   todavía forman parte del árbol y deben retirarse sin degradar consumidores;
+2. Tailwind: `[x]` `tailwind.config.js`, directivas `@tailwind` y dependencias
+   fueron retirados en `6be5a57`; permanece pendiente sustituir utilidades
+   residuales en historias y demostraciones sin degradar consumidores;
 3. aliases: permanecen 16 declaraciones de selector que incluyen `prest-*`;
-4. colisiones: `app-input` y `app-select` requieren una implementación pública
-   inequívoca y pruebas de resolución de catálogo y barrel;
+4. colisiones: `[x]` resueltas en `ATOMIC-20261019-001` (`InputComponent` y
+   `SelectComponent` como implementaciones canónicas únicas de `app-input` y
+   `app-select`, con pruebas de catálogo y barrel);
 5. generador: debe producir exclusivamente Signals, estilos externos, tokens y
    selectores `app-`, con pruebas negativas deterministas;
 6. cambio de versión: faltan el salto a 6.0.0, política, manifiestos, contrato de

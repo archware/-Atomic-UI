@@ -58,6 +58,7 @@ export class NumberInputComponent implements ControlValueAccessor, AfterViewInit
   readonly labelHidden = input(false);
   readonly hint = input('');
   readonly error = input('');
+  readonly required = input(false);
   readonly min = input(0);
   readonly max = input(9999);
   readonly step = input(1);

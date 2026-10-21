@@ -8,10 +8,25 @@
   "source": "src/app/shared/ui/atoms/file-input/file-input.component.ts",
   "relatedExports": [
     "FileInputFile",
-    "FileInputDensity"
+    "FileInputDensity",
+    "FileInputVariant"
   ],
-  "purpose": "Control CVA para seleccionar o arrastrar archivos, validar formato y tamaño y presentar la selección.",
+  "purpose": "Control CVA para seleccionar o arrastrar archivos, validar formato y tamaño y presentar la selección en modo estándar o dropzone enriquecido.",
   "variants": [
+    {
+      "name": "variant",
+      "values": [
+        {
+          "value": "standard",
+          "meaning": "Zona de carga clásica compatible con densidad comfortable y compact.",
+          "default": true
+        },
+        {
+          "value": "dropzone",
+          "meaning": "Zona de arrastre destacada con icono en tarjeta, título, subtítulo, insignia y cabecera de lista con contador."
+        }
+      ]
+    },
     {
       "name": "density",
       "values": [
@@ -84,6 +99,66 @@
       "meaning": "Error externo con precedencia sobre el error de validación interno."
     },
     {
+      "name": "variant",
+      "type": "FileInputVariant",
+      "default": "standard",
+      "meaning": "Variante visual de la zona de carga (standard o dropzone)."
+    },
+    {
+      "name": "dropzoneTitle",
+      "type": "string",
+      "default": "Arrastra tus archivos aquí",
+      "meaning": "Título principal mostrado dentro de la variante dropzone."
+    },
+    {
+      "name": "dropzoneSubtitle",
+      "type": "string",
+      "default": "o haz clic para seleccionarlos desde tu equipo",
+      "meaning": "Subtítulo secundario mostrado debajo del título en la variante dropzone."
+    },
+    {
+      "name": "badgeHint",
+      "type": "string",
+      "default": "",
+      "meaning": "Texto opcional en pastilla (badge) debajo del subtítulo en la variante dropzone."
+    },
+    {
+      "name": "showHeader",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Muestra la cabecera con título, contador y acción opcional de limpiar lista sobre los archivos cargados."
+    },
+    {
+      "name": "headerTitle",
+      "type": "string",
+      "default": "Documentos cargados",
+      "meaning": "Título de la cabecera de la lista de archivos seleccionados."
+    },
+    {
+      "name": "allowClearAll",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Muestra el botón para vaciar todos los archivos seleccionados de una vez."
+    },
+    {
+      "name": "clearAllLabel",
+      "type": "string",
+      "default": "Limpiar lista",
+      "meaning": "Texto del botón de vaciado completo de la lista."
+    },
+    {
+      "name": "itemActionIcon",
+      "type": "string",
+      "default": "",
+      "meaning": "Clase de icono FontAwesome para el botón de acción adicional por cada fila de archivo."
+    },
+    {
+      "name": "itemActionLabel",
+      "type": "string",
+      "default": "Acción sobre archivo",
+      "meaning": "Etiqueta accesible del botón de acción adicional por archivo."
+    },
+    {
       "name": "density",
       "type": "FileInputDensity",
       "default": "comfortable",
@@ -107,13 +182,29 @@
       "name": "filesChange",
       "type": "FileInputFile[]",
       "meaning": "Selección completa emitida después de aceptar o eliminar archivos."
+    },
+    {
+      "name": "cleared",
+      "type": "void",
+      "meaning": "Se emite cuando el usuario limpia toda la lista de archivos mediante el botón de vaciado."
+    },
+    {
+      "name": "fileRemoved",
+      "type": "FileInputFile",
+      "meaning": "Se emite con el descriptor del archivo eliminado individualmente."
+    },
+    {
+      "name": "fileAction",
+      "type": "FileInputFile",
+      "meaning": "Se emite cuando el usuario pulsa la acción contextual de una fila de archivo."
     }
   ],
   "behavior": [
     "Implementa ControlValueAccessor y entrega FileInputFile[] al formulario.",
-    "Valida primero el tamaño y después accept; un lote inválido no reemplaza la selección existente.",
+    "Valida primero el tamaño y después accept; un archivo rechazado descarta la selección previa y notifica vacío al formulario.",
     "Genera previews únicamente para imágenes y únicamente en el navegador.",
-    "En modo multiple acumula archivos; en modo simple reemplaza la selección."
+    "En modo multiple acumula archivos; en modo simple reemplaza la selección.",
+    "En variante dropzone presenta icono destacado, título, subtítulo, insignia opcional y cabecera de lista con contador y vaciado total."
   ],
   "states": [
     {
@@ -148,12 +239,38 @@
     "La densidad compacta organiza icono y texto en fila para diálogos; no define quiebres de viewport propios."
   ],
   "tokens": [
+    "--avatar-lg",
+    "--avatar-sm",
     "--border-color",
+    "--border-color-light",
+    "--border-width-medium",
+    "--border-width-thick",
+    "--border-width-thin",
     "--control-height",
     "--danger-color",
+    "--danger-color-light",
+    "--danger-color-lighter",
+    "--danger-color-text",
+    "--field-label-color",
+    "--field-label-font-size",
+    "--field-label-font-weight",
+    "--field-label-gap",
+    "--field-label-line-height",
+    "--font-weight-emphasis",
+    "--font-weight-title",
+    "--icon-md",
     "--input-border-focus",
+    "--input-disabled-text",
+    "--primary-color",
+    "--primary-color-light",
+    "--primary-color-lighter",
+    "--radius-full",
+    "--radius-lg",
     "--radius-md",
     "--radius-sm",
+    "--shadow-focus-primary",
+    "--shadow-sm",
+    "--shadow-xs",
     "--space-1",
     "--space-10",
     "--space-2",
@@ -167,8 +284,10 @@
     "--table-transition-duration",
     "--text-color",
     "--text-color-muted",
+    "--text-color-on-primary",
     "--text-color-secondary",
     "--text-lg",
+    "--text-md",
     "--text-sm",
     "--text-xs"
   ],
@@ -183,7 +302,7 @@
   "stability": {
     "status": "stable",
     "notes": [
-      "La prueba cubre aceptación PDF, rechazo por tipo y tamaño, disabled y densidad compacta."
+      "La prueba cubre aceptación PDF, rechazo por tipo y tamaño con limpieza de selección previa, disabled, densidad compacta y variante dropzone con cabecera, vaciado y acciones por fila."
     ]
   },
   "canonicalFor": [

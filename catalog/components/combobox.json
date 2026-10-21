@@ -26,7 +26,8 @@
     { "name": "placeholder", "type": "string", "default": "Buscar...", "meaning": "Marcador del campo; oculto mientras la etiqueta flotante reposa." },
     { "name": "disabled", "type": "boolean", "default": false, "meaning": "Deshabilita el control." },
     { "name": "clearable", "type": "boolean", "default": true, "meaning": "Muestra botón para limpiar la búsqueda y la selección." },
-    { "name": "error", "type": "string", "default": "", "meaning": "Mensaje de error anunciado con role=alert." }
+    { "name": "error", "type": "string", "default": "", "meaning": "Mensaje de error anunciado con role=alert." },
+    { "name": "required", "type": "boolean", "default": false, "meaning": "Muestra indicador de obligatoriedad (*) en la etiqueta y activa required/aria-required en el input." }
   ],
   "outputs": [
     { "name": "optionSelected", "type": "ComboboxOption", "meaning": "Emite la opción elegida de la lista." },

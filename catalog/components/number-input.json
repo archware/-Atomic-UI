@@ -24,6 +24,7 @@
     { "name": "labelHidden", "type": "boolean", "default": false, "meaning": "Oculta la etiqueta visualmente y la conserva como nombre accesible; sustituye a ocultarla con ::ng-deep desde el consumidor." },
     { "name": "hint", "type": "string", "default": "", "meaning": "Ayuda visible bajo el control." },
     { "name": "error", "type": "string", "default": "", "meaning": "Error visible anunciado con role=alert." },
+    { "name": "required", "type": "boolean", "default": false, "meaning": "Muestra indicador de obligatoriedad (*) en la etiqueta y activa required/aria-required en el input." },
     { "name": "min", "type": "number", "default": 0, "meaning": "Límite inferior y condición que deshabilita Decrementar." },
     { "name": "max", "type": "number", "default": 9999, "meaning": "Límite superior y condición que deshabilita Incrementar." },
     { "name": "step", "type": "number", "default": 1, "meaning": "Incremento aplicado por ambos botones y por el input nativo." },

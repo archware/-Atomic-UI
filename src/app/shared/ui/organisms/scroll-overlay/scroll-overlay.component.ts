@@ -1,4 +1,4 @@
-﻿import {
+import {
   AfterViewInit,
   Component,
   ElementRef,
@@ -242,6 +242,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   private horizontalBarWidth = 0;
   private resizeObserver?: ResizeObserver;
   private mutationObserver?: MutationObserver;
+  private readonly observedContentElements = new Set<Element>();
   private geometryFrameId?: number;
 
   private draggingY = false;
@@ -347,6 +348,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
+    this.observedContentElements.clear();
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
     }
@@ -553,8 +555,8 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
   private attachListeners(): void {
     const host = this.hostEl;
-    const _barY = this.barYRef.nativeElement;
-    const _barX = this.barXRef.nativeElement;
+    const barY = this.barYRef.nativeElement;
+    const barX = this.barXRef.nativeElement;
     const thumbY = this.thumbYRef.nativeElement;
     const thumbX = this.thumbXRef.nativeElement;
 
@@ -581,17 +583,33 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       this.showBar();
     };
 
+    const handleScrollerLeave = (event: Event) => {
+      const related = (event as MouseEvent).relatedTarget;
+      if (related instanceof Node && this.hostEl.contains(related)) {
+        return;
+      }
+      this.hideBar();
+    };
+
     addListener(host, 'mouseenter', handlePointer);
     addListener(host, 'mouseleave', () => this.hideBar());
+    addListener(host, 'load', () => this.scheduleGeometrySync(), {
+      capture: true,
+      passive: true,
+    });
     addListener(host, 'wheel', (event) => this.handleWheel(event as WheelEvent), {
       passive: false,
     });
+
+    if (typeof window !== 'undefined') {
+      addListener(window, 'resize', () => this.scheduleGeometrySync(), { passive: true });
+    }
 
     if (!this.disableVertical && vertical) {
       addListener(vertical, 'scroll', handleScroll, { passive: true });
       addListener(vertical, 'wheel', handlePointer, { passive: true });
       addListener(vertical, 'mouseenter', handlePointer);
-      addListener(vertical, 'mouseleave', () => this.hideBar());
+      addListener(vertical, 'mouseleave', handleScrollerLeave);
       addListener(vertical, 'touchstart', handlePointer, { passive: true });
       addListener(vertical, 'touchmove', handlePointer, { passive: true });
     }
@@ -600,14 +618,16 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       addListener(horizontal, 'scroll', handleScroll, { passive: true });
       addListener(horizontal, 'wheel', handlePointer, { passive: true });
       addListener(horizontal, 'mouseenter', handlePointer);
-      addListener(horizontal, 'mouseleave', () => this.hideBar());
+      addListener(horizontal, 'mouseleave', handleScrollerLeave);
       addListener(horizontal, 'touchstart', handlePointer, { passive: true });
       addListener(horizontal, 'touchmove', handlePointer, { passive: true });
     }
 
     if (!this.disableVertical) {
-      addListener(this.barYRef.nativeElement, 'pointerdown', (event) => this.trackClickY(event as PointerEvent));
-      addListener(_barY, 'pointerdown', (event) => this.trackClickY(event as PointerEvent));
+      addListener(barY, 'mouseenter', handlePointer);
+      addListener(barY, 'pointerdown', (event) =>
+        this.handleTrackPointerDownY(event as PointerEvent),
+      );
       addListener(thumbY, 'pointerdown', (event) => this.startDragY(event as PointerEvent));
       addListener(thumbY, 'pointermove', (event) => this.moveDragY(event as PointerEvent));
       addListener(thumbY, 'pointerup', (event) => this.endDragY(event as PointerEvent));
@@ -615,8 +635,10 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     }
 
     if (!this.disableHorizontal) {
-      addListener(this.barXRef.nativeElement, 'pointerdown', (event) => this.trackClickX(event as PointerEvent));
-      addListener(_barX, 'pointerdown', (event) => this.trackClickX(event as PointerEvent));
+      addListener(barX, 'mouseenter', handlePointer);
+      addListener(barX, 'pointerdown', (event) =>
+        this.handleTrackPointerDownX(event as PointerEvent),
+      );
       addListener(thumbX, 'pointerdown', (event) => this.startDragX(event as PointerEvent));
       addListener(thumbX, 'pointermove', (event) => this.moveDragX(event as PointerEvent));
       addListener(thumbX, 'pointerup', (event) => this.endDragX(event as PointerEvent));
@@ -645,12 +667,116 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       if (this.headerRow) {
         this.resizeObserver.observe(this.headerRow);
       }
+      this.observeScrollerChildren();
     }
 
     if (supportsMutation && this.verticalScroller) {
-      this.mutationObserver = new MutationObserver(() => this.scheduleGeometrySync());
-      this.mutationObserver.observe(this.verticalScroller, { childList: true, subtree: true });
+      this.mutationObserver = new MutationObserver(() => {
+        this.observeScrollerChildren();
+        this.scheduleGeometrySync();
+      });
+      this.mutationObserver.observe(this.verticalScroller, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['src', 'style', 'class', 'hidden'],
+      });
     }
+  }
+
+  private observeScrollerChildren(): void {
+    if (!this.resizeObserver) {
+      return;
+    }
+
+    const nextChildren = new Set<Element>();
+    const collectChildren = (scroller: HTMLElement | undefined) => {
+      if (!scroller) {
+        return;
+      }
+      for (const child of Array.from(scroller.children)) {
+        if (!child.classList.contains('so-scrollbar')) {
+          nextChildren.add(child);
+        }
+      }
+    };
+
+    collectChildren(this.verticalScroller);
+    if (this.horizontalScroller !== this.verticalScroller) {
+      collectChildren(this.horizontalScroller);
+    }
+
+    for (const existing of Array.from(this.observedContentElements)) {
+      if (!nextChildren.has(existing)) {
+        this.resizeObserver.unobserve(existing);
+        this.observedContentElements.delete(existing);
+      }
+    }
+
+    for (const child of nextChildren) {
+      if (!this.observedContentElements.has(child)) {
+        this.resizeObserver.observe(child);
+        this.observedContentElements.add(child);
+      }
+    }
+  }
+
+  private handleTrackPointerDownY(event: PointerEvent): void {
+    const barY = this.barYRef.nativeElement;
+    if (
+      event.target !== barY ||
+      event.button === 1 ||
+      event.button === 2 ||
+      !this.verticalScroller ||
+      this.disableVertical
+    ) {
+      return;
+    }
+
+    const barRect = this.getSafeRect(barY);
+    const trackHeight = this.getVerticalTrackHeight(this.verticalScroller.clientHeight);
+    const maxThumbOffset = Math.max(1, trackHeight - this.verticalThumbSize);
+    const clickOffset = Math.min(
+      maxThumbOffset,
+      Math.max(0, event.clientY - barRect.top - this.verticalThumbSize / 2),
+    );
+    const maxScrollTop = Math.max(
+      1,
+      this.verticalScroller.scrollHeight - this.verticalScroller.clientHeight,
+    );
+    this.verticalScroller.scrollTop = (clickOffset / maxThumbOffset) * maxScrollTop;
+    this.updateThumbs();
+    this.showBar();
+    event.preventDefault();
+  }
+
+  private handleTrackPointerDownX(event: PointerEvent): void {
+    const barX = this.barXRef.nativeElement;
+    if (
+      event.target !== barX ||
+      event.button === 1 ||
+      event.button === 2 ||
+      !this.horizontalScroller ||
+      this.disableHorizontal
+    ) {
+      return;
+    }
+
+    const barRect = this.getSafeRect(barX);
+    const trackWidth = this.getHorizontalTrackWidth(this.horizontalScroller.clientWidth);
+    const maxThumbOffset = Math.max(1, trackWidth - this.horizontalThumbSize);
+    const clickOffset = Math.min(
+      maxThumbOffset,
+      Math.max(0, event.clientX - barRect.left - this.horizontalThumbSize / 2),
+    );
+    const maxScrollLeft = Math.max(
+      1,
+      this.horizontalScroller.scrollWidth - this.horizontalScroller.clientWidth,
+    );
+    this.horizontalScroller.scrollLeft = (clickOffset / maxThumbOffset) * maxScrollLeft;
+    this.updateThumbs();
+    this.showBar();
+    event.preventDefault();
   }
 
   /**
@@ -1428,30 +1554,4 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     this.dragPointerIdX = undefined;
     this.showBar();
   }
-
-  private trackClickY(event: PointerEvent): void {
-    if (!this.verticalScroller || this.disableVertical || event.target === this.thumbYRef.nativeElement) {
-      return;
-    }
-    const thumbRect = this.thumbYRef.nativeElement.getBoundingClientRect();
-    if (event.clientY < thumbRect.top) {
-      this.verticalScroller.scrollBy({ top: -this.verticalScroller.clientHeight, behavior: 'smooth' });
-    } else if (event.clientY > thumbRect.bottom) {
-      this.verticalScroller.scrollBy({ top: this.verticalScroller.clientHeight, behavior: 'smooth' });
-    }
-  }
-
-  private trackClickX(event: PointerEvent): void {
-    if (!this.horizontalScroller || this.disableHorizontal || event.target === this.thumbXRef.nativeElement) {
-      return;
-    }
-    const thumbRect = this.thumbXRef.nativeElement.getBoundingClientRect();
-    if (event.clientX < thumbRect.left) {
-      this.horizontalScroller.scrollBy({ left: -this.horizontalScroller.clientWidth, behavior: 'smooth' });
-    } else if (event.clientX > thumbRect.right) {
-      this.horizontalScroller.scrollBy({ left: this.horizontalScroller.clientWidth, behavior: 'smooth' });
-    }
-  }
-
-
 }

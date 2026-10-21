@@ -24,6 +24,7 @@
     { "name": "label", "type": "string", "default": "", "meaning": "Etiqueta del FloatingInput interno." },
     { "name": "variant", "type": "FloatingInputVariant", "default": "standard", "meaning": "Modo de etiqueta comun (standard | floating | floating-value) mas las formas historicas del campo flotante. Por defecto standard." },
     { "name": "error", "type": "string", "default": "", "meaning": "Error presentado por el FloatingInput." },
+    { "name": "required", "type": "boolean", "default": false, "meaning": "Muestra indicador de obligatoriedad (*) en la etiqueta y expone aria-required en el disparador." },
     { "name": "disabled", "type": "boolean", "default": false, "meaning": "Bloquea apertura; CVA también puede establecerlo." }
   ],
   "outputs": [],
@@ -98,7 +99,7 @@
     "status": "candidate",
     "notes": [
       "Usa OnPush; prueba fecha civil, bloqueo, navegación y botones sin submit. CVA entrega Date local: el consumidor debe adaptar a fecha civil ISO para su API.",
-      "No expone min, max, required ni controlId y el popup fijo puede desbordar pantallas estrechas."
+      "No expone min, max ni controlId y el popup fijo puede desbordar pantallas estrechas."
     ]
   },
   "canonicalFor": [

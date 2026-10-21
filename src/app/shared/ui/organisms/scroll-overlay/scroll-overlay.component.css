@@ -1,4 +1,4 @@
-﻿.so-root {
+.so-root {
   position: relative;
   display: inline-block;
   max-width: 100%;
@@ -8,10 +8,22 @@
      y casi blanco en oscuro, que es la inversion que antes se copiaba a mano en un
      bloque [data-theme] con dos juegos de literales. Los tres pesos -reposo, hover,
      arrastre- son los mismos que habia. */
-  --so-thumb-color-start: color-mix(in srgb, var(--text-color) 30%, transparent);
-  --so-thumb-color-end: color-mix(in srgb, var(--text-color) 30%, transparent);
-  --so-thumb-color-hover: color-mix(in srgb, var(--text-color) 45%, transparent);
-  --so-thumb-color-active: color-mix(in srgb, var(--text-color) 60%, transparent);
+  --so-thumb-color-start: var(
+    --so-custom-thumb-start,
+    color-mix(in srgb, var(--text-color) 30%, transparent)
+  );
+  --so-thumb-color-end: var(
+    --so-custom-thumb-end,
+    color-mix(in srgb, var(--text-color) 30%, transparent)
+  );
+  --so-thumb-color-hover: var(
+    --so-custom-thumb-hover,
+    color-mix(in srgb, var(--text-color) 45%, transparent)
+  );
+  --so-thumb-color-active: var(
+    --so-custom-thumb-active,
+    color-mix(in srgb, var(--text-color) 60%, transparent)
+  );
   --so-track-size: 7px;
   --so-thumb-blur: var(--space-1);
   --so-min-column-width: 140px;
@@ -58,13 +70,13 @@
   height: 0;
 }
 
-/* Agregamos padding al Ã¡rea scrolleable para dar respiro al final y asegurar que el Ãºltimo registro se vea por completo */
+/* Agregamos padding al área scrolleable para dar respiro al final y asegurar que el último registro se vea por completo */
 .so-scroll-area {
   padding-bottom: var(--so-scroll-end-space);
   scroll-padding-bottom: var(--so-scroll-end-space);
 }
 
-.so-root:not(.so-has-overflow-x) .so-scroll-area {
+.so-root:not(.so-has-overflow-x) > .so-scroll-area {
   padding-bottom: 0;
   scroll-padding-bottom: 0;
 }
@@ -75,7 +87,7 @@
 }
 
 /* Cuando hay tabla, el div maneja el scroll */
-.so-root[data-so-table] .so-scroll-area {
+.so-root[data-so-table] > .so-scroll-area {
   overflow-y: auto;
 }
 
@@ -138,22 +150,22 @@
   display: none;
 }
 
-.so-root.so-scrolling .so-scrollbar,
-.so-root:hover .so-scrollbar {
+.so-root.so-scrolling > .so-scrollbar,
+.so-root:hover > .so-scrollbar {
   opacity: 1;
 }
 
-.so-root.so-scrolling .so-scrollbar,
-.so-root:hover .so-scrollbar,
+.so-root.so-scrolling > .so-scrollbar,
+.so-root:hover > .so-scrollbar,
 .so-scrollbar:focus-within {
   pointer-events: auto;
 }
 
-.so-root.so-has-overflow-y .so-scrollbar-y {
+.so-root.so-has-overflow-y > .so-scrollbar-y {
   display: block;
 }
 
-.so-root.so-has-overflow-x .so-scrollbar-x {
+.so-root.so-has-overflow-x > .so-scrollbar-x {
   display: block;
 }
 
@@ -198,7 +210,7 @@
   z-index: 20;
 }
 
-/* Las dimensiones de las barras se controlan dinÃ¡micamente desde TypeScript cuando ambas estÃ¡n activas */
+/* Las dimensiones de las barras se controlan dinámicamente desde TypeScript cuando ambas están activas */
 
 .so-thumb {
   position: absolute;
@@ -243,15 +255,15 @@
   min-height: var(--so-body-height, auto);
 }
 
-.so-root[data-so-max-height]:not([data-so-table]) .so-scroll-area,
-.so-root[data-so-max-height][data-so-table]:not([data-so-sync-columns]) .so-scroll-area {
+.so-root[data-so-max-height]:not([data-so-table]) > .so-scroll-area,
+.so-root[data-so-max-height][data-so-table]:not([data-so-sync-columns]) > .so-scroll-area {
   max-height: var(--so-max-height, 100%);
   height: var(--so-body-height, auto);
   min-height: var(--so-body-height, auto);
 }
 
-.so-root.so-no-vertical .so-scrollbar-y,
-.so-root.so-no-horizontal .so-scrollbar-x {
+.so-root.so-no-vertical > .so-scrollbar-y,
+.so-root.so-no-horizontal > .so-scrollbar-x {
   display: none !important;
 }
 

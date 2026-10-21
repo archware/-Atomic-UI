@@ -1,14 +1,19 @@
 <div class="datepicker-container" (clickOutside)="close()">
 
   @if (label() && !flotante()) {
-    <span class="fl-label datepicker-top-label" [id]="labelId">{{ label() }}</span>
+    <span class="fl-label datepicker-top-label" [id]="labelId">
+      {{ label() }}
+      @if (required()) {
+        <span class="field__required fl-label__required" aria-hidden="true">*</span>
+      }
+    </span>
   }
 
   <!-- Trigger Input -->
   <div class="datepicker-trigger" (click)="toggle()" (keydown)="onKeyDown($event)" (focus)="triggerFocused.set(true)" (blur)="triggerFocused.set(false)" [attr.tabindex]="isDisabled() ? -1 : 0" role="button"
-    aria-haspopup="grid" [attr.aria-disabled]="isDisabled()" [attr.aria-expanded]="isOpen()" [attr.aria-label]="label() ? 'Abrir calendario: ' + label() : 'Abrir calendario'">
+    aria-haspopup="grid" [attr.aria-disabled]="isDisabled()" [attr.aria-expanded]="isOpen()" [attr.aria-required]="required() ? 'true' : null" [attr.aria-label]="label() ? 'Abrir calendario: ' + label() : 'Abrir calendario'">
     <div class="datepicker-wrapper" [class.datepicker-wrapper--standard]="!flotante()">
-      <app-floating-input [label]="etiquetaInterna()" [value]="formattedValue()" [variant]="variantInterna()" [disabled]="isDisabled()"
+      <app-floating-input [label]="etiquetaInterna()" [required]="required()" [value]="formattedValue()" [variant]="variantInterna()" [disabled]="isDisabled()"
         [readonly]="true" [error]="error()" class="pointer-events-none">
       </app-floating-input>
       <!-- Custom Trigger Icon -->

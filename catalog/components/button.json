@@ -56,8 +56,23 @@
       ]
     },
     {
+      "name": "appearance",
+      "appliesWhen": "variant es primary, secondary, success, warning o danger",
+      "values": [
+        {
+          "value": "flat",
+          "meaning": "Superficie sólida uniforme estándar.",
+          "default": true
+        },
+        {
+          "value": "gradient",
+          "meaning": "Degradado diagonal con borde enfatizado y resplandor semántico."
+        }
+      ]
+    },
+    {
       "name": "tone",
-      "appliesWhen": "variant es soft u outline",
+      "appliesWhen": "variant es soft, outline o ghost",
       "values": [
         {
           "value": "neutral",
@@ -67,6 +82,10 @@
         {
           "value": "primary",
           "meaning": "Énfasis de marca."
+        },
+        {
+          "value": "secondary",
+          "meaning": "Énfasis secundario o complementario."
         },
         {
           "value": "success",
@@ -187,6 +206,12 @@
       "type": "ButtonVariant",
       "default": "primary",
       "meaning": "Jerarquía visual."
+    },
+    {
+      "name": "appearance",
+      "type": "ButtonAppearance",
+      "default": "flat",
+      "meaning": "Superficie visual para variantes sólidas (flat o gradient)."
     },
     {
       "name": "tone",
@@ -326,7 +351,11 @@
     "--button-tone-border",
     "--button-tone-text",
     "--control-height",
+    "--control-height-sm",
+    "--control-height-lg",
     "--shadow-focus-primary",
+    "--shadow-glow-primary",
+    "--shadow-glow-success",
     "--icon-xs",
     "--icon-sm",
     "--icon-md",

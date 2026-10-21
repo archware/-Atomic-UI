@@ -2,15 +2,19 @@
 title: 'Registro de cambios de Atomic UI'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-08-23'
-last_updated: '2026-10-19'
+last_updated: '2026-10-20'
 document_type: 'changelog'
-version: '5.22.0'
+version: '5.23.0'
 status: 'vigente'
 updated: '2026-08-25'
 owner: 'COTAHA'
 ---
 
 # Registro de cambios
+
+## ATOMIC-20261020-001 — Variante `dropzone` en `FileInputComponent` y homologación de `[required]` en controles compuestos
+
+Se promueve al canon (`src/app/shared/ui/atoms/file-input/`) la variante `variant="dropzone"` de `FileInputComponent`, rescatando el patrón de zona de arrastre enriquecida de `pdf-tool` con tokens semánticos puros (`var(--...)`), unidades relativas (`rem`), protección contra arrastre nativo de escritorio (`draggable="false"`, bloqueo de selección en `mousedown`/`dragstart`), insignia `badgeHint`, cabecera de lista con contador (`showHeader`, `headerTitle`), acción de vaciado total (`allowClearAll`, `clearAllLabel`, output `cleared`) y acción contextual por fila (`itemActionIcon`, `itemActionLabel`, outputs `fileAction` y `fileRemoved`). Simultáneamente, se homologa el input `[required]` (`false` por defecto), el asterisco `.field__required.fl-label__required` (`aria-hidden="true"`) en modos `standard`, `floating` y `floating-value`, y el atributo `aria-required="true"` en `FloatingInputComponent`, `DatepickerComponent`, `ComboboxComponent`, `TagInputComponent` y `NumberInputComponent`. Se incorporan además mejoras complementarias de superficie en `ButtonComponent` (`appearance="flat" | "gradient"`, `tone="secondary"`), `IconButtonComponent` (`variant="close-soft"`, `size`, `icon`, `title`) y `ScrollOverlayComponent` (observación de hijos y posicionamiento directo en pista). Se actualizan las entradas de `catalog/components/`, las historias de Storybook, `showcase-forms.component.ts`, `showcase-actions.component.ts`, `dialogs-page` y las suites de prueba (`file-input.component.spec.ts`, `datepicker-variant.spec.ts`, `combobox-variant.spec.ts`, `tag-input-variant.spec.ts`, `number-input-variant.spec.ts` y `button.component.spec.ts`). Consultar el [roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261020-001_dropzone_y_required.md).
 
 ## ATOMIC-20261019-002 — Select2 con etiqueta superior alineada (peso 700) y marcador de obligatorio
 
