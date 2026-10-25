@@ -2,11 +2,11 @@
 title: "Continuidad para agentes de Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-10-20"
+last_updated: "2026-10-24"
 document_type: "manual de continuidad"
 status: "vigente"
-version: "1.4.3"
-change_id: "ATOMIC-20261020-002"
+version: "1.4.5"
+change_id: "ATOMIC-20261024-003"
 canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
@@ -15,6 +15,36 @@ document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDA
 
 Se mantiene el contrato documental ECO-20260823-003. Las unidades candidatas
 inferiores no equivalen a una nueva publicación del ADN.
+
+## Unidades CLT-20261024-003 y ATOMIC-20261024-003 — reconciliación CVA en Input y procedencia de acciones
+
+`InputComponent` reconcilia valores nativos en `change`, `focus` y `blur`
+cuando el DOM cambia sin disparar `input`, manteniendo la paridad exacta con la
+copia gobernada de `ventas-cxc`. Asimismo, se consolida la historia `Basic` de
+`ActionGroup` y se actualiza `distribution/atomic-source-manifest.json` en un
+commit local autorizado para certificar `atomicRef` en el consumidor. Véanse los
+roadmaps
+[CLT-20261024-003](../../.agent/roadmaps/ROADMAP_CLT-20261024-003_sincronizacion_formulario_clientes.md)
+y
+[ATOMIC-20261024-003](../../.agent/roadmaps/ROADMAP_ATOMIC-20261024-003_cierre_procedencia_acciones.md).
+
+## Unidad ACC-20261022-001 — estándar de acciones de catálogo
+
+La fuente incorpora `ActionItem.isMenuOnly` y conserva `ActionGroup.maxVisible`
+como límite genérico de acciones directas. `PaginaCrud` aplica la regla física
+del catálogo: Ver, Editar y Más acciones. La papelera de baja queda en el menú;
+una tercera directa contextual solo se acepta con `accionDirectaContextual`, id
+existente, justificación y evidencia no vacías, y nunca para semánticas
+destructivas. No se infieren permisos, frecuencia, endpoints ni contratos de
+negocio desde esa declaración.
+
+La unidad modifica fuente, catálogo, historias, pruebas y documentación del ADN.
+No publica, no actualiza dependencias ni propaga por copia manual: la adopción
+en consumidores requiere la procedencia o adaptación gobernada, sus pruebas y
+la matriz por operación. El antecedente ATOMIC-20260929-003 sobre tercera acción
+contextual se conserva abajo como contexto histórico; esta unidad define su
+presupuesto físico actual. Evidencia, validación y rollback en el
+[roadmap ACC](../../.agent/roadmaps/ROADMAP_ACC-20261022-001_estandar-acciones-catalogo.md).
 
 ## Unidad Select2 ATOMIC-20261020-002
 

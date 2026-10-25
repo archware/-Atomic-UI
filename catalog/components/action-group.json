@@ -72,7 +72,7 @@
     }
   ],
   "inputs": [
-    { "name": "actions", "type": "ActionItem[]", "default": [], "meaning": "Items con id y label obligatorios; icon, action, variant, disabled y loading opcionales." },
+    { "name": "actions", "type": "ActionItem[]", "default": [], "meaning": "Items con id y label obligatorios; icon, action, variant, isMenuOnly, disabled y loading opcionales." },
     { "name": "maxVisible", "type": "number", "default": 3, "meaning": "Cantidad entera no negativa visible antes del overflow." },
     { "name": "direction", "type": "'vertical' | 'horizontal'", "default": "vertical", "meaning": "Orientación y presencia de etiquetas en el menú." },
     { "name": "menuPosition", "type": "'auto' | 'top' | 'bottom' | 'left' | 'right'", "default": "auto", "meaning": "Posición preferida del portal." },
@@ -84,6 +84,8 @@
   ],
   "behavior": [
     "Un ActionItem.action deriva icono y tono de TableAction; icon y variant explícitos prevalecen.",
+    "isMenuOnly mueve la acción al menú aun cuando maxVisible tenga capacidad; las demás conservan su orden relativo entre directas y menú.",
+    "maxVisible limita únicamente las acciones directas; compact conserva todas las acciones dentro del menú.",
     "El menú se monta en document.body y se destruye al cerrar o desmontar el componente."
   ],
   "states": [

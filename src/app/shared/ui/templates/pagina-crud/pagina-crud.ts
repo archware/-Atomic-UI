@@ -31,6 +31,7 @@ import {
   type ModoCrud,
   type ContextoFormularioCrud,
   type SolicitudPagina,
+  type AccionDirectaContextualCatalogo,
   type ConfiguracionConfirmacion,
   CONFIRMACION_BAJA_DEFECTO,
 } from '../modelos-crud';
@@ -180,6 +181,12 @@ export class PaginaCrud<T extends object = any> {
   readonly confirmacionBaja = input<ConfiguracionConfirmacion>(CONFIRMACION_BAJA_DEFECTO);
   /** El consumidor decide permisos y acciones disponibles, nunca el ADN. */
   readonly accionesPorFila = input<((fila: T) => ActionItem[]) | null>(null);
+  /**
+   * Excepción declarada para mostrar una tercera acción directa de catálogo.
+   * Sin evidencia válida, el presupuesto conserva Ver, Editar y el disparador
+   * Más acciones como sus tres controles físicos.
+   */
+  readonly accionDirectaContextual = input<AccionDirectaContextualCatalogo | null>(null);
   /** Opt-in compatible. Finalizar con resolverConfirmacion tras la respuesta real. */
   readonly confirmacionControlada = input(false);
   readonly alAccionFila = output<{ accion: string; entidad: T }>();
@@ -412,13 +419,121 @@ export class PaginaCrud<T extends object = any> {
   }
 
   protected getGridActions(fila: T): ActionItem[] {
+    return this.planAccionesGrid(fila).acciones;
+  }
+
+  /** Presupuesto directo del chasis; ActionGroup sigue siendo genérico. */
+  protected maximoAccionesDirectas(fila: T): 2 | 3 {
+    return this.planAccionesGrid(fila).maximoDirectas;
+  }
+
+  private planAccionesGrid(fila: T): { acciones: ActionItem[]; maximoDirectas: 2 | 3 } {
+    const acciones = this.accionesIniciales(fila).map((accion) => this.accionCatalogo(accion));
+    const accionContextual = this.resolverAccionDirectaContextual(acciones);
+    const directas = [
+      this.primeraAccionDirecta(acciones, (accion) => this.esAccionVer(accion)),
+      this.primeraAccionDirecta(acciones, (accion) => this.esAccionEditar(accion)),
+      accionContextual,
+    ].filter((accion): accion is ActionItem => accion !== undefined && accion !== null);
+
+    return {
+      // El orden de las directas es contractual: Ver, Editar y, solo cuando
+      // corresponde, la excepción contextual. El resto conserva su orden
+      // relativo original dentro de Más acciones.
+      acciones: [
+        ...directas.map((accion) => ({ ...accion, isMenuOnly: false })),
+        ...acciones
+          .filter((accion) => !directas.includes(accion))
+          .map((accion) => ({ ...accion, isMenuOnly: true })),
+      ],
+      maximoDirectas: accionContextual ? 3 : 2,
+    };
+  }
+
+  private accionesIniciales(fila: T): ActionItem[] {
     const declaradas = this.accionesPorFila();
-    if (declaradas) return declaradas(fila).map(accion => this.accionCatalogo(accion));
+    if (declaradas) return declaradas(fila).map((accion) => ({ ...accion }));
+
     const acts: ActionItem[] = [];
-    if (this.accionesResueltas.ver) acts.push(this.accionCatalogo({ id: 'ver', action: 'view', label: 'Ver detalle' }));
-    if (this.accionesResueltas.editar) acts.push(this.accionCatalogo({ id: 'editar', action: 'edit', label: 'Editar' }));
-    if (this.accionesResueltas.eliminar) acts.push(this.accionCatalogo({ id: 'eliminar', action: 'deactivate', label: 'Desactivar' }));
+    if (this.accionesResueltas.ver) acts.push({ id: 'ver', action: 'view', label: 'Ver detalle' });
+    if (this.accionesResueltas.editar) acts.push({ id: 'editar', action: 'edit', label: 'Editar' });
+    if (this.accionesResueltas.eliminar) {
+      acts.push({ id: 'eliminar', action: 'deactivate', label: 'Desactivar', isMenuOnly: true });
+    }
     return acts;
+  }
+
+  private primeraAccionDirecta(
+    acciones: readonly ActionItem[],
+    coincide: (accion: ActionItem) => boolean,
+  ): ActionItem | undefined {
+    return acciones.find((accion) => this.esElegibleAccionDirecta(accion) && coincide(accion));
+  }
+
+  private resolverAccionDirectaContextual(acciones: readonly ActionItem[]): ActionItem | null {
+    const declaracion = this.accionDirectaContextual();
+    if (!declaracion
+      || !declaracion.idAccion.trim()
+      || !declaracion.justificacion.trim()
+      || !declaracion.evidencia.trim()) {
+      return null;
+    }
+
+    const accion = acciones.find((candidata) => candidata.id === declaracion.idAccion);
+    if (!accion
+      || !this.esElegibleAccionDirecta(accion)
+      || this.esAccionVer(accion)
+      || this.esAccionEditar(accion)) {
+      return null;
+    }
+
+    return accion;
+  }
+
+  private esAccionVer(accion: ActionItem): boolean {
+    const identificador = accion.id.trim().toLowerCase();
+    return accion.action === 'view' || identificador === 'ver' || identificador === 'view';
+  }
+
+  private esAccionEditar(accion: ActionItem): boolean {
+    const identificador = accion.id.trim().toLowerCase();
+    return accion.action === 'edit' || identificador === 'editar' || identificador === 'edit';
+  }
+
+  private esAccionDestructiva(accion: ActionItem): boolean {
+    const identificador = accion.id.trim().toLowerCase();
+    return accion.action === 'delete'
+      || accion.action === 'deactivate'
+      || accion.action === 'reverse'
+      || identificador === 'delete'
+      || identificador === 'deactivate'
+      || identificador === 'reverse'
+      || identificador === 'eliminar'
+      || identificador === 'desactivar'
+      || identificador === 'revertir';
+  }
+
+  private esAccionEstado(accion: ActionItem): boolean {
+    const identificador = accion.id.trim().toLowerCase();
+    return accion.action === 'activate'
+      || accion.action === 'deactivate'
+      || identificador === 'activate'
+      || identificador === 'deactivate'
+      || identificador === 'activar'
+      || identificador === 'desactivar';
+  }
+
+  private esElegibleAccionDirecta(accion: ActionItem): boolean {
+    return !accion.isMenuOnly
+      && !this.esAccionContradictoria(accion)
+      && !this.esAccionEstado(accion)
+      && !this.esAccionDestructiva(accion)
+      && accion.variant !== 'danger';
+  }
+
+  /** Una identidad que dice Ver y una semántica que dice Editar no se adivina. */
+  private esAccionContradictoria(accion: ActionItem): boolean {
+    return this.esAccionVer(accion) && this.esAccionEditar(accion);
   }
 
   private accionCatalogo(accion: ActionItem): ActionItem {

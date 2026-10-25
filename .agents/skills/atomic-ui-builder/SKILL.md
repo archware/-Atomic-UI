@@ -23,7 +23,7 @@ Use the repository catalog as the source of truth. Load only the context require
 
 4. Convert the request into explicit fields, actions, states, permissions, responsive priorities, and integration facts. Do not infer endpoints, DTOs, permissions, amounts, dates, status, trends, or business rules.
 5. Select only component variants declared under `catalog/components/`. Use the canonical default unless the requirement provides a semantic reason for another variant.
-6. Apply every matching rule under `catalog/ux-rules/`. Keep one primary action per action region, visible validation, complete async states, keyboard/focus behavior, and the responsive widths required by the rule catalog.
+6. Apply every matching rule under `catalog/ux-rules/`. Keep one primary action per action region, visible validation, complete async states, keyboard/focus behavior, and the responsive widths required by the rule catalog. For `PaginaCrud`, use Ver, Editar and Más acciones as the three physical controls: `maxVisible` counts direct actions, while destructive/state actions use `isMenuOnly`. A third direct contextual action requires a declared `accionDirectaContextual` with an existing id, justification and evidence; never add it for visual symmetry.
    A destructive action must declare its label, permission key and complete
    confirmation copy; never infer deletion, soft-delete or authorization.
 7. Prefer the matching recipe under `catalog/recipes/`. Confirm that the
@@ -82,8 +82,10 @@ Use narrower component tests during iteration, but finish with the applicable re
 ## Catalog lessons — ATOMIC-20260929-004
 
 For an existing catalog, verify the active component/template, not just files
-left in the feature. Apply docs/CONTRATO_CATALOGOS_CRUD.md: reuse the third row
-action for activate/deactivate, never leave a second Save after confirmation.
+left in the feature. Apply docs/CONTRATO_CATALOGOS_CRUD.md: preserve Ver,
+Editar and Más acciones as the physical baseline; activate/deactivate belong in
+the menu with their independent confirmation, never leave a second Save after
+confirmation.
 The consumer supplies real-change validity and close locking. Test both state
 transitions, reverted edits, malformed IDs and refresh failure separately from
 mutation failure. Review-only UX requirements are not automated generator gates.

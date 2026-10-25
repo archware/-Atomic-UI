@@ -4,7 +4,7 @@ import { provideTranslateService } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { Input } from '../../atoms/form-input/input';
 import { DataTable } from '../../organisms/data-table/data-table';
-import { ActionGroupComponent } from '../../molecules/action-group/action-group.component';
+import { ActionGroupComponent, type ActionItem } from '../../molecules/action-group/action-group.component';
 import { ButtonComponent } from '../../atoms/button/button.component';
 
 describe('PaginaCrud: catálogo compatible', () => {
@@ -37,13 +37,21 @@ describe('PaginaCrud: catálogo compatible', () => {
     fixture.detectChanges();
   });
 
-  it('centraliza los tres iconos de catálogo sin botones elevados', () => {
+  it('centraliza Ver, Editar y Más; la papelera de baja queda solo en el menú', () => {
     const grupo: HTMLElement = fixture.nativeElement.querySelector('app-action-group');
     expect(grupo.querySelector('.fa-eye')).not.toBeNull();
     expect(grupo.querySelector('.fa-pen')).not.toBeNull();
-    expect(grupo.querySelector('.fa-trash')).not.toBeNull();
+    expect(grupo.querySelector('.fa-trash')).toBeNull();
     expect(grupo.querySelector('app-button')).toBeNull();
     expect(grupo.querySelectorAll('button').length).toBe(3);
+
+    const trigger = grupo.querySelector('.action-btn--more') as HTMLButtonElement;
+    expect(trigger.getAttribute('aria-label')).toBe('Más acciones');
+    trigger.click();
+
+    const menu = document.body.querySelector('.action-menu-portal') as HTMLElement;
+    expect(menu.querySelector('.fa-trash')).not.toBeNull();
+    expect(menu.querySelector('[aria-label="Desactivar"]')).not.toBeNull();
   });
 
   it('muestra detalle semántico y Cerrar neutro; no proyecta edición', () => {
@@ -62,32 +70,105 @@ describe('PaginaCrud: catálogo compatible', () => {
     expect(modal.querySelector('app-icon-button')?.getAttribute('variant')).toBe('hanging-close');
   });
 
-  it('cambia la tercera acción declarada sin añadir botones ni abrir el editor', () => {
+  it('mantiene una operación de estado en Más y bloquea intentos no permitidos', () => {
     const evento = jasmine.createSpy('evento');
     fixture.componentInstance.alAccionFila.subscribe(evento);
-    for (const activo of [true, false]) {
-      fixture.componentRef.setInput('accionesPorFila', () => [
-        { id: 'ver', action: 'view', label: 'Ver detalle' },
-        { id: 'editar', action: 'edit', label: 'Editar' },
-        { id: 'estado', action: activo ? 'deactivate' : 'activate', label: activo ? 'Desactivar' : 'Activar' },
-      ]);
-      fixture.detectChanges();
-      const botones = fixture.nativeElement.querySelectorAll('app-action-group button');
-      expect(botones.length).toBe(3);
-      expect(botones[2].getAttribute('aria-label')).toBe(activo ? 'Desactivar' : 'Activar');
-      expect(botones[2].querySelector(activo ? '.fa-trash' : '.fa-circle-check')).not.toBeNull();
-      botones[2].click();
-      expect(evento).toHaveBeenCalledWith({ accion: 'estado', entidad: fila });
-      expect(dialogos()[0].open).toBeFalse();
-    }
-    expect(evento).toHaveBeenCalledTimes(2);
+    fixture.componentRef.setInput('accionesPorFila', () => [
+      { id: 'ver', action: 'view', label: 'Ver detalle' },
+      { id: 'editar', action: 'edit', label: 'Editar' },
+      { id: 'estado', action: 'deactivate', label: 'Desactivar' },
+    ]);
+    fixture.detectChanges();
+    const botones = fixture.nativeElement.querySelectorAll('app-action-group button');
+    expect(botones.length).toBe(3);
+    expect(botones[2].getAttribute('aria-label')).toBe('Más acciones');
+    botones[2].click();
+    const menu = document.body.querySelector('.action-menu-portal') as HTMLElement;
+    (menu.querySelector('[aria-label="Desactivar"]') as HTMLButtonElement).click();
+    expect(evento).toHaveBeenCalledOnceWith({ accion: 'estado', entidad: fila });
+    expect(dialogos()[0].open).toBeFalse();
+
     fixture.componentRef.setInput('guardando', true);
     fixture.detectChanges();
     const grupo = fixture.debugElement.query(By.directive(ActionGroupComponent)).componentInstance as ActionGroupComponent;
     // La guarda también bloquea una emisión programática; no depende solo del atributo disabled.
     grupo.actionClick.emit('estado');
     grupo.actionClick.emit('accion-no-declarada');
-    expect(evento).toHaveBeenCalledTimes(2);
+    expect(evento).toHaveBeenCalledOnceWith({ accion: 'estado', entidad: fila });
+  });
+
+  it('muestra una cuarta acción física solo con una declaración contextual válida', () => {
+    const acciones: ActionItem[] = [
+      { id: 'politica-credito', action: 'print', label: 'Política de crédito' },
+      { id: 'estado', action: 'deactivate', label: 'Desactivar' },
+      { id: 'editar', action: 'edit', label: 'Editar' },
+      { id: 'ver', action: 'view', label: 'Ver detalle' },
+    ];
+    fixture.componentRef.setInput('accionesPorFila', () => acciones);
+    fixture.componentRef.setInput('accionDirectaContextual', {
+      idAccion: 'politica-credito',
+      justificacion: 'La consulta de política se realiza durante la gestión cotidiana.',
+      evidencia: 'Validación funcional documentada para el catálogo de clientes.',
+    });
+    fixture.detectChanges();
+
+    const botones = fixture.nativeElement.querySelectorAll('app-action-group button');
+    expect(botones).toHaveSize(4);
+    expect(botones[0].getAttribute('aria-label')).toBe('Ver detalle');
+    expect(botones[1].getAttribute('aria-label')).toBe('Editar');
+    expect(botones[2].getAttribute('aria-label')).toBe('Política de crédito');
+    expect(botones[3].getAttribute('aria-label')).toBe('Más acciones');
+    expect(acciones.every((accion) => accion.isMenuOnly === undefined)).toBeTrue();
+  });
+
+  it('rechaza una declaración contextual inválida y conserva el estado en el menú', () => {
+    fixture.componentRef.setInput('accionesPorFila', () => [
+      { id: 'ver', action: 'view', label: 'Ver detalle' },
+      { id: 'editar', action: 'edit', label: 'Editar' },
+      { id: 'estado', action: 'deactivate', label: 'Desactivar' },
+    ]);
+    fixture.componentRef.setInput('accionDirectaContextual', {
+      idAccion: 'estado',
+      justificacion: 'No puede promoverse una baja lógica.',
+      evidencia: 'La acción usa semántica destructiva.',
+    });
+    fixture.detectChanges();
+
+    const botones = fixture.nativeElement.querySelectorAll('app-action-group button');
+    expect(botones).toHaveSize(3);
+    expect(botones[0].getAttribute('aria-label')).toBe('Ver detalle');
+    expect(botones[1].getAttribute('aria-label')).toBe('Editar');
+    expect(botones[2].getAttribute('aria-label')).toBe('Más acciones');
+  });
+
+  it('fuerza estado, riesgo e identificadores históricos al menú aunque intenten parecer directos', () => {
+    fixture.componentRef.setInput('accionesPorFila', () => [
+      { id: 'ver', action: 'edit', label: 'Acción ambigua' },
+      { id: 'view', action: 'deactivate', label: 'Ver engañoso' },
+      { id: 'ver-detalle', action: 'view', label: 'Ver detalle' },
+      { id: 'editar', action: 'edit', label: 'Editar' },
+      { id: 'activar', action: 'activate', label: 'Activar' },
+      { id: 'eliminar', action: 'view', label: 'Eliminar', variant: 'danger' },
+    ]);
+    fixture.componentRef.setInput('accionDirectaContextual', {
+      idAccion: 'activar',
+      justificacion: 'No debe promoverse un cambio de estado.',
+      evidencia: 'La operación requiere confirmación independiente.',
+    });
+    fixture.detectChanges();
+
+    const botones = fixture.nativeElement.querySelectorAll('app-action-group button');
+    expect(botones).toHaveSize(3);
+    expect(botones[0].getAttribute('aria-label')).toBe('Ver detalle');
+    expect(botones[1].getAttribute('aria-label')).toBe('Editar');
+    expect(botones[2].getAttribute('aria-label')).toBe('Más acciones');
+    (botones[2] as HTMLButtonElement).click();
+    const menus = document.body.querySelectorAll<HTMLElement>('.action-menu-portal');
+    const menu = menus[menus.length - 1]!;
+    expect(menu.querySelector('[aria-label="Acción ambigua"]')).not.toBeNull();
+    expect(menu.querySelector('[aria-label="Ver engañoso"]')).not.toBeNull();
+    expect(menu.querySelector('[aria-label="Activar"]')).not.toBeNull();
+    expect(menu.querySelector('[aria-label="Eliminar"]')).not.toBeNull();
   });
 
   it('solo emite Guardar cuando el consumidor habilita cambios y no hay envío en curso', () => {

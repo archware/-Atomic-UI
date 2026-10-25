@@ -28,6 +28,8 @@ export interface ActionItem {
   label: string;
   /** Variante de color */
   variant?: 'default' | 'primary' | 'secondary' | 'danger' | 'warning' | 'success' | 'info';
+  /** Fuerza la acción al menú, aunque todavía exista espacio para acciones directas. */
+  isMenuOnly?: boolean;
   /** Si la acción está deshabilitada */
   disabled?: boolean;
   /** Presenta carga y bloquea temporalmente la accion. */
@@ -78,7 +80,7 @@ type MenuPosition = 'auto' | 'top' | 'bottom' | 'left' | 'right';
             [attr.aria-label]="action.label"
             [disabled]="action.disabled || action.loading"
             [attr.aria-busy]="action.loading || null"
-            (click)="onActionClick(action)"
+            (click)="onActionClick(action, $event)"
           >
             @if (action.loading) {
               <span class="action-spinner" aria-hidden="true"></span>
@@ -189,18 +191,37 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
   /** Acciones visibles (primeras N) */
   visibleActions(): ActionItem[] {
     if (this.compact()) return [];
-    return this.actions().slice(0, this.visibleLimit());
+    return this.directActions().slice(0, this.visibleLimit());
   }
 
-  /** Acciones en el menú overflow */
+  /**
+   * Acciones en el menú overflow.
+   *
+   * Se recorre el arreglo original para conservar el orden relativo de las
+   * acciones forzadas al menú y de las que exceden el límite directo.
+   */
   menuActions(): ActionItem[] {
     if (this.compact()) return this.actions();
-    return this.actions().slice(this.visibleLimit());
+    let directasMostradas = 0;
+    const limite = this.visibleLimit();
+
+    return this.actions().filter((action) => {
+      if (action.isMenuOnly) return true;
+      if (directasMostradas < limite) {
+        directasMostradas += 1;
+        return false;
+      }
+      return true;
+    });
   }
 
   /** ¿Hay acciones en overflow? */
   hasOverflow(): boolean {
-    return this.actions().length > this.visibleLimit();
+    return this.menuActions().length > 0;
+  }
+
+  private directActions(): ActionItem[] {
+    return this.actions().filter((action) => !action.isMenuOnly);
   }
 
   actionIconClass(action: ActionItem): string {
@@ -344,7 +365,8 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
   }
 
   /** Click en acción visible */
-  onActionClick(action: ActionItem): void {
+  onActionClick(action: ActionItem, event?: Event): void {
+    event?.stopPropagation();
     if (action.disabled || action.loading) return;
     this.actionClick.emit(action.id);
   }

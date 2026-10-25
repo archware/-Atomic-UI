@@ -1,13 +1,13 @@
 ---
 title: 'Doctrina de interfaz de Atomic UI'
 document_type: 'doctrine'
-version: '5.10.0'
+version: '5.11.0'
 status: 'vigente'
-updated: '2026-09-30'
-last_updated: '2026-09-30'
+updated: '2026-10-22'
+last_updated: '2026-10-22'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-09-30'
-change_id: 'ATOMIC-20260930-008'
+change_id: 'ACC-20261022-001'
 owner: 'COTAHA'
 ---
 
@@ -374,8 +374,8 @@ es una confirmación: es que la pantalla diga lo que pasó.
 
 **Catálogos persistidos.** Activar/desactivar puede afectar referencias y
 disponibilidad aunque exista la operación inversa. Cuando su contrato exige
-confirmación, usar una sola desde la tercera acción contextual de la grilla;
-no un interruptor dentro de Editar seguido de otro Guardar. El
+confirmación, usar una sola desde Más acciones; no un interruptor dentro de
+Editar seguido de otro Guardar. El
 [contrato de catálogos](docs/CONTRATO_CATALOGOS_CRUD.md) concreta este caso.
 
 **Y una confirmación no es un permiso.** El capítulo 7 ya lo exige: el permiso se
@@ -505,10 +505,24 @@ rápido en una pantalla que nunca se ha visto. Medido antes de corregirlo: de 19
 botones de alta, **uno solo** llevaba icono. Alguien lo hizo bien una vez y nadie
 lo generalizó, que es el patrón del que advierte el cierre de este documento.
 
-**Cuando ni así cabe, la fila necesita un menú, no letra más pequeña.** Por
-encima de tres o cuatro acciones se agrupan en un desplegable con las frecuentes
-a la vista. Reducir el tamaño para que quepan es empujar el problema al objetivo
+**La fila de catálogo ya tiene un presupuesto antes de desbordar.** Su estándar
+físico es Ver, Editar y Más acciones: dos iconos directos y el disparador del
+menú. `maxVisible` cuenta acciones directas, no el disparador. Activar,
+Desactivar, Eliminar y Revertir permanecen en ese menú, porque una mutación no
+gana prioridad solo por cambiar estado.
+
+**La excepción no se adivina.** Una tercera acción directa contextual se permite
+únicamente cuando el consumidor declara una justificación y evidencia no vacías
+para un id que exista en la fila. No son candidatas Ver, Editar, `isMenuOnly`,
+`delete`, `deactivate`, `reverse` ni `danger`. Si la fila también conserva menú,
+la excepción crea un cuarto control físico; sin esa evidencia, la acción queda
+en Más. Reducir el tamaño para que quepan es empujar el problema al objetivo
 táctil, que tiene su propio mínimo y no se negocia.
+
+**Antecedente conservado — ATOMIC-20260929-004.** La regla anterior agrupaba
+solo al superar tres o cuatro acciones y dejaba frecuente la tercera operación
+de estado. ACC-20261022-001 no borra ese aprendizaje sobre el ancho de la fila:
+lo hace determinista para catálogos, donde el menú ya es el tercer control físico.
 
 **El contenedor pone el hueco; el contenido pone su tipografía.** El cuerpo de un
 panel fijaba color y tamaño de letra, y eso lo hereda todo lo que se meta dentro.

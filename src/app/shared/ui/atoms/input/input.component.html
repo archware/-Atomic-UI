@@ -39,8 +39,9 @@
       [attr.aria-invalid]="!!error()"
       [attr.aria-describedby]="descritoPor()"
       (input)="handleInput($event)"
-      (focus)="handleFocus()"
-      (blur)="handleBlur()"
+      (change)="handleChange($event)"
+      (focus)="handleFocus($event)"
+      (blur)="handleBlur($event)"
     />
     @if (flotante()) {
       <label

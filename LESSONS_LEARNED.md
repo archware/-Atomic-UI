@@ -4,14 +4,38 @@ author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
 document_type: "registro técnico"
 status: "en revisión"
-last_updated: "2026-10-20"
-version: "1.4.3"
-last_change_id: "ATOMIC-20261020-002"
+last_updated: "2026-10-24"
+version: "1.4.5"
+last_change_id: "CLT-20261024-003"
 owners:
   - "COTAHA"
 ---
 
 # Lecciones aprendidas de Atomic UI
+
+## CLT-20261024-003 — reconciliación de valores DOM sin evento input en ControlValueAccessor
+
+- **Evidencia:** la restauración automática del navegador o el autocompletado podían poblar el `<input>` nativo sin emitir el evento `input`, dejando el `FormControl` reactivo vacío o desactualizado al evaluar `puedeGuardar()` en el consumidor.
+- **Decisión:** `InputComponent` reconcilia el valor nativo en `change`, `focus` y `blur` únicamente cuando difiere del valor actual de la señal interna, sin duplicar emisiones de `onChange` ni `valueChange`.
+- **Prevención:** cubrir en pruebas unitarias la mutación directa del valor nativo seguida de `change` o `blur` sin `input`, y regenerar `distribution/atomic-source-manifest.json` antes de certificar procedencia en consumidores.
+
+## ACC-20261022-001 — tres controles físicos no equivalen a tres mutaciones directas
+
+- **Evidencia:** una misma grilla podía mostrar tres iconos en Productos y cuatro
+  en Clientes porque la acción contextual ocupaba una posición directa por
+  costumbre. La papelera, Activar o una política de crédito competían con Ver y
+  Editar sin una prueba de frecuencia, y la apariencia sugería que todas eran
+  igual de prioritarias.
+- **Decisión:** `PaginaCrud` presenta Ver, Editar y Más acciones como base. El
+  menú cuenta como el tercer control físico; `ActionGroup.maxVisible` sigue siendo
+  una capacidad genérica de directas y `isMenuOnly` conserva las mutaciones de
+  estado dentro del menú. La promoción contextual se declara con id,
+  justificación y evidencia, no se infiere por nombre, icono o simetría visual.
+- **Prevención:** probar el orden con una acción `isMenuOnly` al inicio, menú no
+  vacío, teclado/foco, bloqueo y emisión única. Rechazar como tercera directa
+  `delete`, `deactivate`, `reverse`, `danger`, Ver, Editar y cualquier acción ya
+  forzada al menú. La regla visual no acredita permiso, contrato ni seguridad del
+  consumidor; esos controles conservan evidencia por operación.
 
 ## ATOMIC-20261020-002 — el apilamiento no elimina el recorte
 

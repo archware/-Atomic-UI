@@ -2,11 +2,11 @@
 title: "Reglas obligatorias del repositorio Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-10-18"
+last_updated: "2026-10-22"
 document_type: "instrucción para agentes"
 status: "vigente"
-version: "1.2.0"
-change_id: "ATOMIC-20260930-008"
+version: "1.3.0"
+change_id: "ACC-20261022-001"
 canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 continuity_document: "docs/CONTINUIDAD_AGENTES.md"
@@ -92,6 +92,16 @@ El corte ATOMIC-20260929-004 concreta las lecciones de Familias en el contrato
 canónico: tres acciones, un flujo por intención, Guardar por cambios reales y
 recarga independiente. La adopción local expresamente autorizada en ventas-cxc
 no acredita publicación ni elimina las compuertas de fuente/consumidor.
+
+**Presupuesto de acciones de catálogo — ACC-20261022-001.** «Tres acciones» no
+significa tres mutaciones directas: el estándar físico de `PaginaCrud` es Ver,
+Editar y Más acciones. `ActionGroup` conserva `maxVisible` genérico para
+acciones directas, pero `PaginaCrud` deja en el menú toda acción que no sea Ver
+o Editar. Una tercera directa contextual requiere `accionDirectaContextual` con
+id, justificación y evidencia no vacíos; no puede promover `isMenuOnly`,
+`delete`, `deactivate`, `reverse` ni `danger`. Las acciones destructivas siempre
+permanecen en el menú. No inferir esa excepción desde una pantalla ni añadir un
+cuarto icono por simetría visual.
 
 Leer también [Contrato de catálogos y promoción compatible](./docs/CONTRATO_CATALOGOS_CRUD.md).
 Antes de retirar HTML/CSS visual de una feature, trasladar su diseño útil al

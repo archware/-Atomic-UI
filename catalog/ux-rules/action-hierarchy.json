@@ -44,10 +44,9 @@
     },
     {
       "id": "visible-action-limit",
-      "statement": "Mostrar hasta tres acciones contextuales y mover las adicionales al desbordamiento accesible de ActionGroup.",
+      "statement": "ActionGroup cuenta solo acciones directas con maxVisible. PaginaCrud conserva por defecto dos directas (Ver y Editar) y el disparador Más completa el tercer control físico; el resto va al desbordamiento accesible.",
       "enforcedBy": [
         "recipe",
-        "generator",
         "unit",
         "a11y"
       ]
@@ -63,16 +62,28 @@
     },
     {
       "id": "catalog-contextual-state",
-      "statement": "En catálogos con baja lógica declarada, la tercera acción alterna Desactivar/Activar por intención del consumidor; una confirmación desde grilla, sin cuarto botón ni estado editable junto a Guardar.",
+      "statement": "En catálogos con baja lógica declarada, Activar, Desactivar, Eliminar y Revertir usan isMenuOnly y conservan su confirmación independiente; nunca ocupan una acción directa por defecto ni se mezclan con Guardar.",
       "enforcedBy": [
+        "catalog",
+        "unit",
+        "review"
+      ]
+    },
+    {
+      "id": "catalog-contextual-direct-exception",
+      "statement": "Una tercera acción directa contextual requiere id existente, justificación no vacía y evidencia no vacía mediante accionDirectaContextual. No puede ser Ver, Editar, Activar, Desactivar, Eliminar, Revertir, isMenuOnly, delete, deactivate, reverse, danger ni una identidad contradictoria Ver/Editar. Cuando existe desbordamiento, esa excepción crea un cuarto control físico documentado.",
+      "enforcedBy": [
+        "catalog",
+        "unit",
         "review"
       ]
     }
   ],
   "acceptance": [
     "Una barra generada nunca contiene dos acciones primary.",
-    "La cuarta acción de fila se presenta en un menú navegable por teclado.",
-    "Las acciones peligrosas incluyen etiqueta explícita y confirmación cuando corresponda."
+    "El catálogo estándar presenta Ver, Editar y Más acciones como tres controles físicos; el menú es navegable por teclado.",
+    "Una cuarta acción física solo existe con evidencia contextual declarada.",
+    "Las acciones peligrosas incluyen etiqueta explícita, isMenuOnly y confirmación cuando corresponda."
   ],
   "evidence": [
     "docs/POLITICA_COLOR_ACCIONES.md",

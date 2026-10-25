@@ -95,6 +95,24 @@ export interface AccionesCrud {
   readonly eliminar?: boolean;
 }
 
+/**
+ * Justificación auditable para una tercera acción directa de catálogo.
+ *
+ * El estándar físico conserva Ver, Editar y Más acciones. Una acción
+ * contextual solo puede ocupar un tercer botón directo cuando el consumidor
+ * declara por qué es frecuente y cuál es la evidencia que sostiene esa
+ * excepción. Atomic solo valida la declaración y la semántica visual; no
+ * infiere permisos, contratos ni frecuencia real.
+ */
+export interface AccionDirectaContextualCatalogo {
+  /** Id de una acción ya declarada por fila. */
+  readonly idAccion: string;
+  /** Razón concreta por la que la acción debe permanecer a la vista. */
+  readonly justificacion: string;
+  /** Evidencia verificable de uso frecuente o necesidad operacional. */
+  readonly evidencia: string;
+}
+
 /** Acciones por defecto que el chasis utiliza si no se sobreescriben. */
 export const ACCIONES_CRUD_DEFECTO: Readonly<Required<AccionesCrud>> = {
   ver: true,

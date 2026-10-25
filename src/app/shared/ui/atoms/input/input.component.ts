@@ -130,19 +130,48 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   protected handleInput(event: Event): void {
+    this.propagarValorNativo(event);
+  }
+
+  /**
+   * Algunos navegadores restauran o completan valores nativos sin emitir
+   * `input`. El evento `change` constituye la segunda frontera canónica para
+   * que el ControlValueAccessor no discrepe del valor visible.
+   */
+  protected handleChange(event: Event): void {
+    this.propagarValorNativo(event);
+  }
+
+  protected handleFocus(event: Event): void {
+    this.reconciliarValorRestaurado(event);
+    this.enfocado.set(true);
+  }
+
+  protected handleBlur(event: Event): void {
+    this.reconciliarValorRestaurado(event);
+    this.enfocado.set(false);
+    this.onTouched();
+  }
+
+  private propagarValorNativo(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
+    if (value === this.value()) return;
     this.value.set(value);
     this.onChange(value);
     this.valueChange.emit(value);
   }
 
-  protected handleFocus(): void {
-    this.enfocado.set(true);
-  }
-
-  protected handleBlur(): void {
-    this.enfocado.set(false);
-    this.onTouched();
+  /**
+   * Un DOM restaurado puede mostrar un valor no vacío antes de que Angular
+   * reciba un evento. Un valor nativo vacío no puede borrar el modelo durante
+   * foco o blur; un valor restaurado no vacío y distinto se propaga.
+   */
+  private reconciliarValorRestaurado(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    if (value.length === 0 || value === this.value()) return;
+    this.value.set(value);
+    this.onChange(value);
+    this.valueChange.emit(value);
   }
 
   protected toggleReveal(): void {

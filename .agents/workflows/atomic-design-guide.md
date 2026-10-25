@@ -5,8 +5,8 @@ author: "Ing. Havel CONTRERAS TAPAHUASCO"
 document_type: "guía técnica"
 status: "vigente"
 date: "2026-08-20"
-last_updated: "2026-09-29"
-version: "6.0.0-borrador.2"
+last_updated: "2026-10-22"
+version: "6.0.0-borrador.3"
 owner: "COTAHA"
 ---
 
@@ -271,10 +271,14 @@ Si un proceso queda huérfano, se identifica por PID y directorio de trabajo. No
 se utiliza una orden global contra todos los procesos Node. No se eliminan locks
 ni dependencias para forzar una compilación.
 
-## Lecciones de catálogos — ATOMIC-20260929-004
+## Lecciones de catálogos — ATOMIC-20260929-004 y ACC-20261022-001
 
 Seguir el [contrato canónico](../../docs/CONTRATO_CATALOGOS_CRUD.md): el ADN
 resuelve icono/tono y bloqueo visual; el consumidor decide acción, permisos,
 cambios reales y resultado HTTP. No incorporar DTOs ni comparaciones de estado
-traducido a un átomo. Conservar la tercera posición, el centrado y el modal.
-La adopción local autorizada de un candidato no modifica las reglas de release.
+traducido a un átomo. La formulación histórica de «tercera posición» se conserva
+como antecedente de ATOMIC-20260929-004; ACC-20261022-001 la precisa para
+catálogos: los tres controles físicos son Ver, Editar y Más acciones. Solo una
+declaración `accionDirectaContextual` con evidencia puede promover una tercera
+directa, mientras que las destructivas se marcan `isMenuOnly`. La adopción local
+autorizada de un candidato no modifica las reglas de release.

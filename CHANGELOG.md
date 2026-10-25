@@ -2,15 +2,45 @@
 title: 'Registro de cambios de Atomic UI'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-08-23'
-last_updated: '2026-10-20'
+last_updated: '2026-10-24'
 document_type: 'changelog'
-version: '5.23.0'
+version: '5.23.2'
 status: 'vigente'
 updated: '2026-08-25'
 owner: 'COTAHA'
 ---
 
 # Registro de cambios
+
+## CLT-20261024-003 y ATOMIC-20261024-003 — reconciliación CVA en Input y manifiesto de procedencia
+
+`InputComponent` reconcilia el valor del DOM nativo en los eventos `change`,
+`focus` y `blur` cuando una restauración del navegador o autocompletado asigna
+texto sin disparar `input`, evitando emisiones duplicadas de `onChange` y
+`valueChange` cuando el valor ya coincide. Se corrige además la historia
+`Basic` de `ActionGroup` para reflejar el patrón de catálogo (ojo neutro, lápiz
+azul y baja roja con `isMenuOnly`) y se regenera
+`distribution/atomic-source-manifest.json` para habilitar el cierre de
+procedencia en consumidores. Consultar los roadmaps
+[CLT-20261024-003](../.agent/roadmaps/ROADMAP_CLT-20261024-003_sincronizacion_formulario_clientes.md)
+y
+[ATOMIC-20261024-003](../.agent/roadmaps/ROADMAP_ATOMIC-20261024-003_cierre_procedencia_acciones.md).
+
+## ACC-20261022-001 — presupuesto físico de acciones de catálogo
+
+`ActionGroup` incorpora `ActionItem.isMenuOnly` sin cambiar el significado
+genérico de `maxVisible`: las acciones forzadas al menú conservan su orden,
+compact mantiene todo dentro del menú y el clic directo consume propagación para
+no activar la fila contenedora. `PaginaCrud` adopta el estándar Ver, Editar y
+Más acciones mediante dos directas por defecto; su baja lógica se declara como
+`isMenuOnly`. La excepción `accionDirectaContextual` exige id existente,
+justificación y evidencia no vacías y rechaza Ver, Editar, acciones de menú,
+semánticas destructivas y `danger`.
+
+Se actualizan catálogo, historias, pruebas, contrato, doctrina, habilidad y
+continuidad. No cambian CSS, tokens, endpoints, permisos, dependencias ni la
+publicación. La validación y rollback se registran en el
+[roadmap ACC](../.agent/roadmaps/ROADMAP_ACC-20261022-001_estandar-acciones-catalogo.md).
 
 ## ATOMIC-20261020-002 — Select2 en capa flotante
 

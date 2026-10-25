@@ -100,6 +100,32 @@ describe('InputComponent - modos de etiqueta', () => {
       await fixture.whenStable();
       expect(estaElevada(fixture.nativeElement)).toBe(false);
     });
+
+    it('FormControl: reconcilia un valor nativo que llega sin evento input', async () => {
+      const fixture = TestBed.createComponent(AnfitrionReactivo);
+      await fixture.whenStable();
+      const control = campo(fixture.nativeElement);
+
+      control.value = 'Valor restaurado';
+      control.dispatchEvent(new Event('change'));
+      await fixture.whenStable();
+      expect(fixture.componentInstance.control.value).toBe('Valor restaurado');
+      expect(estaElevada(fixture.nativeElement)).toBe(true);
+
+      fixture.componentInstance.control.reset();
+      await fixture.whenStable();
+      control.value = 'Valor al perder foco';
+      control.dispatchEvent(new Event('blur'));
+      await fixture.whenStable();
+      expect(fixture.componentInstance.control.value).toBe('Valor al perder foco');
+
+      fixture.componentInstance.control.setValue('Valor anterior');
+      await fixture.whenStable();
+      control.value = 'Valor restaurado sobre modelo previo';
+      control.dispatchEvent(new Event('focus'));
+      await fixture.whenStable();
+      expect(fixture.componentInstance.control.value).toBe('Valor restaurado sobre modelo previo');
+    });
   });
 
   describe('variant', () => {

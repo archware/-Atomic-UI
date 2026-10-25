@@ -122,6 +122,12 @@
       "meaning": "Acciones y permisos explícitos por fila."
     },
     {
+      "name": "accionDirectaContextual",
+      "type": "AccionDirectaContextualCatalogo | null",
+      "default": null,
+      "meaning": "Excepción auditada para una tercera acción directa: exige id existente, justificación y evidencia; el chasis rechaza semánticas destructivas o isMenuOnly."
+    },
+    {
       "name": "confirmacionControlada",
       "type": "boolean",
       "meaning": "true exige resolverConfirmacion después de la respuesta; false conserva compatibilidad automática."

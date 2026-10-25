@@ -38,22 +38,22 @@ type Story = StoryObj<ActionGroupComponent>;
 
 // Acciones de ejemplo
 const basicActions: ActionItem[] = [
-    { id: 'view', icon: 'fa-solid fa-eye', label: 'Ver', variant: 'secondary' },
-    { id: 'edit', icon: 'fa-solid fa-pen', label: 'Editar', variant: 'primary' },
-    { id: 'delete', icon: 'fa-solid fa-trash', label: 'Eliminar', variant: 'danger' }
+    { id: 'view', action: 'view', icon: 'fa-solid fa-eye', label: 'Ver', variant: 'default' },
+    { id: 'edit', action: 'edit', icon: 'fa-solid fa-pen', label: 'Editar', variant: 'info' },
+    { id: 'delete', action: 'deactivate', icon: 'fa-solid fa-trash', label: 'Desactivar', variant: 'danger', isMenuOnly: true }
 ];
 
 const extendedActions: ActionItem[] = [
     { id: 'view', icon: 'fa-solid fa-eye', label: 'Ver detalles', variant: 'secondary' },
     { id: 'edit', icon: 'fa-solid fa-pen', label: 'Editar', variant: 'primary' },
-    { id: 'delete', icon: 'fa-solid fa-trash', label: 'Eliminar', variant: 'danger' },
+    { id: 'delete', action: 'deactivate', label: 'Desactivar', isMenuOnly: true },
     { id: 'duplicate', icon: 'fa-solid fa-copy', label: 'Duplicar' },
     { id: 'export', icon: 'fa-solid fa-download', label: 'Exportar' },
     { id: 'archive', icon: 'fa-solid fa-box-archive', label: 'Archivar', variant: 'warning' }
 ];
 
 /**
- * Básico: 3 acciones o menos se muestran directamente
+ * Patrón de catálogo: Ver y Editar directas; la baja lógica queda en Más.
  */
 export const Basic: Story = {
     args: {
@@ -63,7 +63,7 @@ export const Basic: Story = {
 };
 
 /**
- * Con Overflow: más de 3 acciones, las extras aparecen en menú
+ * Con overflow: maxVisible cuenta solo acciones directas; isMenuOnly siempre queda en el menú.
  */
 export const WithOverflow: Story = {
     args: {
@@ -74,7 +74,8 @@ export const WithOverflow: Story = {
 };
 
 /**
- * Frontera contractual: tres acciones visibles y la cuarta dentro del caret.
+ * El ActionGroup es genérico: tres directas y un menú son válidos cuando su consumidor
+ * documenta una acción contextual frecuente. PaginaCrud aplica esa declaración.
  */
 export const ExactlyFourActions: Story = {
     args: {

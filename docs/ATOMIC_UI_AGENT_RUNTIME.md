@@ -5,8 +5,8 @@ author: "Ing. Havel CONTRERAS TAPAHUASCO"
 document_type: "arquitectura"
 status: "vigente"
 date: "2026-08-20"
-version: "5.22.0"
-last_updated: "2026-09-29"
+version: "5.22.1"
+last_updated: "2026-10-22"
 owner: "COTAHA"
 ---
 
@@ -134,9 +134,13 @@ una extensión del sistema o una ambigüedad no resuelta por el catálogo.
 
 ## Catálogos: continuidad ATOMIC-20260929-004
 
-El [contrato canónico](CONTRATO_CATALOGOS_CRUD.md) gobierna el flujo: tres acciones
-contextuales, editor sin estado, una confirmación, Guardar válido y con cambios
-reales; preservar contexto y resultados confirmados si falla la recarga.
+El [contrato canónico](CONTRATO_CATALOGOS_CRUD.md) gobierna el flujo: Ver,
+Editar y Más acciones como presupuesto físico de catálogo, editor sin estado,
+una confirmación, Guardar válido y con cambios reales; preservar contexto y
+resultados confirmados si falla la recarga. `ActionGroup.maxVisible` continúa
+contando directas; `PaginaCrud` usa dos por defecto y solo admite una tercera
+contextual mediante `accionDirectaContextual` con justificación y evidencia. Una
+mutación destructiva no puede ocupar esa excepción.
 Aplicar también las reglas UX action-hierarchy, form-behavior y async-feedback.
 Una receta o una prueba estática no demuestra que el generador ni el consumidor
 completo cumplen: contrastar el componente conectado y validar HTTP simulado.

@@ -77,7 +77,7 @@
   <ng-template #actions let-fila>
     <app-action-group
       [actions]="getGridActions(fila)"
-      [maxVisible]="3"
+      [maxVisible]="maximoAccionesDirectas(fila)"
       (actionClick)="handleGridAction($event, fila)"
     />
   </ng-template>

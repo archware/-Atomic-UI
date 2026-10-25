@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "a6cff2c30a25a7f5066abdd693ef3666e88dacdefc632bdbf3c1c92934f2fad7",
+  "sourceTreeSha256": "2865ca7d052ee202da25d331306c56a1b52be7fcd78c516a5ba75d8f520e1b41",
   "fileCount": 326,
   "files": [
     {
@@ -270,13 +270,13 @@
     },
     {
       "path": "src/app/shared/ui/atoms/input/input.component.html",
-      "bytes": 2444,
-      "sha256": "5fcd0adbd495a973c56ceb1f2335a4e43ff28ca91eb46a776f5c429432dde16f"
+      "bytes": 2494,
+      "sha256": "d49e48532f7641b41353660357b178c5462637f7c78e076283b3a030af499f5d"
     },
     {
       "path": "src/app/shared/ui/atoms/input/input.component.ts",
-      "bytes": 5474,
-      "sha256": "34a21eaf9b1cf81be7827a2c62044a9b6935f9efb7ac69882bafc591d0755236"
+      "bytes": 6551,
+      "sha256": "2c46de289d378674a6b03b1ab00db33ae70e03381e687e6b4c5d653367460472"
     },
     {
       "path": "src/app/shared/ui/atoms/language-switcher/language-switcher.component.css",
@@ -665,8 +665,8 @@
     },
     {
       "path": "src/app/shared/ui/molecules/action-group/action-group.component.ts",
-      "bytes": 15508,
-      "sha256": "5cf3745ca1222eaca257b6f8485f849cf47c6a2c56c8a2bd3be5f2096ab64a7d"
+      "bytes": 16181,
+      "sha256": "b6686b7098fbd866ee824a93798b9bee502d53040d5e68f73537de5b7a556d47"
     },
     {
       "path": "src/app/shared/ui/molecules/action-menu/action-menu.component.css",
@@ -1505,8 +1505,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/modelos-crud.ts",
-      "bytes": 5974,
-      "sha256": "f8048d8a29615e08df2fa6bd9306def8f7db093eddd9acf221a277855843b304"
+      "bytes": 6759,
+      "sha256": "f914174ad58d5ce5a23537a015317dfdc64bc585b111a726964bac50f1c8bd07"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-ajustes/pagina-ajustes.component.css",
@@ -1540,8 +1540,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.html",
-      "bytes": 6126,
-      "sha256": "daab6461b9b2fff8bac0a2b0f2fa17dbdf59255b032c544af0a2bdeac94958bd"
+      "bytes": 6153,
+      "sha256": "0c4e6c9b0ef95f7d5b49978b92882712d6323b971add620c08e5654fd10b63c6"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.scss",
@@ -1550,8 +1550,8 @@
     },
     {
       "path": "src/app/shared/ui/templates/pagina-crud/pagina-crud.ts",
-      "bytes": 18420,
-      "sha256": "46090c44f834f826b76df2aa9a220ea81bfc08857305622cf7a5ada1c1e68f4d"
+      "bytes": 22691,
+      "sha256": "587bb7ffb49c0a8fcf05b07e1fad19fe89fb7015faaba3df00283d9201da04f7"
     },
     {
       "path": "src/app/shared/ui/templates/pagina-dashboard/pagina-dashboard.html",

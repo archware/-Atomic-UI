@@ -2,11 +2,11 @@
 title: "Contrato visual de catálogos CRUD y promoción compatible"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-09-28"
-last_updated: "2026-09-30"
+last_updated: "2026-10-22"
 document_type: "contrato visual"
 status: "vigente"
-version: "1.5.0"
-change_id: "ATOMIC-20260930-008"
+version: "1.6.0"
+change_id: "ACC-20261022-001"
 ---
 
 # Catálogos CRUD: preservar antes de sustituir
@@ -56,10 +56,10 @@ longitudes de negocio ni contexto de inquilino. Una prueba de componentes o
 procedencia no valida la seguridad de su servidor. No copiar toda una fachada
 ni regenerar archivos existentes para uniformar apariencia.
 
-Las reglas siguientes ya existían: tres acciones, detalle semántico y
-preservación del diseño. La adopción exige comprobarlas en la ruta conectada,
-no solo reconocerlas en la documentación. La lista es un control de revisión,
-no una guarda nueva del generador.
+Las reglas siguientes conservan detalle semántico y preservación del diseño. La
+adopción exige comprobarlas en la ruta conectada, no solo reconocerlas en la
+documentación. La lista es un control de revisión, no una guarda nueva del
+generador.
 
 ### Referencia visual que se conserva
 
@@ -69,11 +69,36 @@ Regla estricta: Está prohibido inyectar colores en duro (Hex/RGB/nombres). Todo
 | Región | Contrato |
 | --- | --- |
 | Columna de estado | Etiquetas centradas junto con su encabezado por omisión. Una alineación explícita prevalece. En tarjetas móviles se centra el valor en su espacio, no la etiqueta de la celda. |
-| Acciones de fila | Grupo compacto de iconos con nombre accesible; sin botones elevados ni saltos de línea que inflen la fila. Acciones de grilla: La base son 3 botones visibles, pero se autoriza a los desarrolladores a añadir un 4to o 5to botón contextual si el requerimiento lo exige. Las acciones destructivas (Desactivar) DEBEN ir siempre en el menú desplegable (isMenuOnly: true). |
+| Acciones de fila | Grupo compacto de iconos con nombre accesible; sin botones elevados ni saltos de línea que inflen la fila. El estándar físico es Ver, Editar y Más acciones: dos directas y el disparador del menú. `maxVisible` cuenta solo directas. Una cuarta acción física exige una excepción contextual válida y documentada. Las destructivas usan `isMenuOnly: true`. |
 | Consulta | Ojo neutro contrastado en el perfil de catálogo; se distingue de Activar verde (revisión aprobada ATOMIC-20260929-005). |
 | Edición | Lápiz azul según el perfil de catálogo. |
 | Baja | Papelera roja `fa-trash`; confirmación con botón `danger`. No confundir baja lógica con eliminación física. |
-| Activación | En catálogos con baja lógica ocupa la misma tercera posición que Desactivar: `activate`, círculo con marca verde (`fa-circle-check`). |
+| Activación | `activate`, círculo con marca verde (`fa-circle-check`), se conserva en Más acciones junto con Desactivar; la confirmación y el contrato pertenecen al consumidor. |
+
+### Presupuesto de acciones y excepción contextual (ACC-20261022-001)
+
+`PaginaCrud` resuelve el estándar con dos acciones directas, `Ver` y `Editar`,
+y deja las demás en el menú. Por tanto, el disparador Más completa el tercer
+control físico sin obligar a que la columna crezca ni a reducir objetivos
+táctiles. `ActionGroup` sigue siendo genérico: su `maxVisible` limita solo las
+acciones directas y `isMenuOnly` siempre prevalece.
+
+Una tercera acción directa del catálogo solo es admisible si el consumidor
+declara `accionDirectaContextual` con `idAccion`, `justificacion` y `evidencia`
+no vacíos, y el id coincide con una acción de esa fila. No son elegibles Ver,
+Editar, una acción ya marcada `isMenuOnly`, Activar/Desactivar (incluidos sus
+identificadores operativos), Eliminar/Revertir, las semánticas `delete`,
+`deactivate`, `reverse`, el tono `danger` ni un identificador que contradiga la
+semántica Ver/Editar. Cuando además existen acciones de
+menú, esta promoción genera un cuarto control físico. La declaración acredita
+la necesidad de presentación, no el permiso, contrato HTTP, frecuencia real ni
+autorización de negocio.
+
+**Antecedente conservado — ATOMIC-20260929-004.** La formulación histórica de
+«tres acciones contextuales» y la tercera posición de Activar/Desactivar sirvió
+para retirar botones elevados y estados duplicados. ACC-20261022-001 la precisa:
+en el catálogo, el tercer control físico es el menú y las mutaciones de estado
+no se promocionan por defecto.
 
 ### Ventanas y superposiciones
 
@@ -109,8 +134,8 @@ contenido, no a un segundo diseño ni a una variante nueva de modal.
 - Consultar: SummaryList con layout detail, dl/dt/dd, sin input, select,
   textarea, toggle, asteriscos de obligatoriedad ni acción Guardar.
 - Crear/editar: formulario tipado con sus validaciones y controles Atomic.
-- Activar/desactivar: confirmación independiente desde la tercera acción
-  de la grilla; no se incorpora a la consulta ni al guardado.
+- Activar/desactivar: confirmación independiente desde Más acciones; no se
+  incorpora a la consulta ni al guardado.
 
 Conservar cabecera centrada, cierre colgante, espaciado, temas y pie neutro.
 Usar el contrato instalado: si la copia compatible no expone el input detalle
@@ -125,12 +150,14 @@ form.disable(): bloquear temporalmente la edición durante un envío es legítim
 La regla readonly-detail-content es de revisión, no una guarda del generador;
 cada consumidor acredita sus pruebas y su inventario de pendientes.
 
-El consumidor declara por fila Ver, Editar, una acción de estado y opcionalmente botones contextuales adicionales. Para
+El consumidor declara por fila Ver, Editar y las acciones adicionales. Para
 activos usa `deactivate` y etiqueta Desactivar; para inactivos `activate` y
-etiqueta Activar. Atomic resuelve icono y tono mediante el perfil `catalog`;
-no lee propiedades de dominio, decide permisos ni ejecuta HTTP. El icono
-describe la próxima operación, no el estado actual. Cambia solo después de una
-respuesta confirmada por el servidor.
+etiqueta Activar. Ambas operaciones de estado llevan `isMenuOnly: true`, salvo
+que una variante futura, explícitamente aprobada, cambie la regla canónica.
+Atomic resuelve icono y tono mediante el perfil `catalog`; no lee propiedades de
+dominio, decide permisos ni ejecuta HTTP. El icono describe la próxima
+operación, no el estado actual. Cambia solo después de una respuesta confirmada
+por el servidor.
 
 El flujo es grilla → una confirmación → resultado en grilla. No se abre el
 editor ni se deja otro Guardar pendiente después del cambio de estado. Retirar
@@ -176,8 +203,10 @@ y llaman `resolverConfirmacion(exito)` después de la respuesta. La modalidad
 histórica automática se conserva para no romper consumidores y no acredita
 el ciclo asíncrono nuevo. `accionesPorFila` y `alAccionFila` permiten declarar
 la activación sin inferir el estado del registro; `abrirConfirmacion` recibe
-contenido y acción explícitos. El input `detalle` usa SummaryList en modo
-`detail`; la proyección histórica con null es compatibilidad, no patrón nuevo.
+contenido y acción explícitos. `accionDirectaContextual` controla únicamente la
+excepción de presentación y no habilita una operación. El input `detalle` usa
+SummaryList en modo `detail`; la proyección histórica con null es compatibilidad,
+no patrón nuevo.
 
 - Pruebas del componente, de integración de slots y de estados asíncronos.
 - Catálogo/API, estilos externos, tokens, lint y builds aplicables.
