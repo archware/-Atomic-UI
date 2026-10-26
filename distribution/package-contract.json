@@ -30,7 +30,7 @@
       },
       {
         "path": "src/styles/themes",
-        "extensions": [".css"],
+        "extensions": [".css", ".woff2"],
         "excludeSuffixes": []
       },
       {

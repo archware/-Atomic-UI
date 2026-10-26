@@ -14,19 +14,23 @@ owner: 'COTAHA'
 
 ## ATOMIC-20261026-003 — tipografía local canónica Quicksand y Open Sans
 
-Se empaquetan localmente en `src/styles/themes/fonts/` los archivos `.woff2` de
+Se empaquetan localmente en `src/styles/themes/fonts/` los 12 archivos `.woff2` de
 `Open Sans` (`400`, `500`, `600`, `700` en subconjuntos `latin` y `latin-ext`) y
 `Quicksand` (`400`, `500`, `600`, `700` en subconjunto completo), registrados
-mediante `@font-face` (`font-display: swap`) en `src/styles/themes/_fonts.css` e
-importados desde `src/styles/themes/index.css`. Se definen los tokens primitivos
-`--font-family-base`, `--font-family-heading` y `--font-family-mono` en
-`_tokens-primitives.css`, se corrige `--table-font-family: var(--font-family-base)`
-en `_tokens-components.css` y se asigna `--font-family-heading` a encabezados
-(`h1`–`h6`), `.text-h1`–`.text-h4`, `.page-header__title`, títulos de diálogos
-CRUD, `.modal-title`, `.form-dialog__title` y métricas de `kpi-card`. Se
-actualizan `tools/copy-lib-tokens.cjs`, `scripts/check-typography-scale.mjs` y
-el puente Dart (`scripts/emit-dart-tokens.mjs` y `dart/atomic_tokens`), y se
-sincronizan temas y procedencia con `ventas-cxc` y `pdf-tool`. Consultar el
+mediante `@font-face` (`font-display: swap`) en `src/styles/themes/_fonts.css`,
+importados desde `src/styles/themes/index.css` e inventariados en
+`distribution/package-contract.json` y `distribution/atomic-source-manifest.json`.
+Se definen los tokens primitivos `--font-family-base`, `--font-family-heading` y
+`--font-family-mono` en `_tokens-primitives.css`, se corrige
+`--table-font-family: var(--font-family-base)` en `_tokens-components.css` y se
+asigna `--font-family-heading` a encabezados (`h1`–`h6`), `.text-h1`–`.text-h4`,
+`.page-header__title`, títulos de diálogos CRUD, `.modal-title`, `.popup-title`,
+`.form-dialog__title` y métricas de `kpi-card`, además de `--font-family-base` en
+`version.component.css`. Se actualizan `tools/copy-lib-tokens.cjs`,
+`scripts/check-typography-scale.mjs`, la prueba negativa
+`tools/test-typography-scale-gate.mjs` y el puente Dart (`scripts/emit-dart-tokens.mjs`
+y `dart/atomic_tokens`), y se sincronizan temas y procedencia con `ventas-cxc` y
+`pdf-tool`. Consultar el
 [roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261026-001_tipografia_local_quicksand_open_sans.md).
 
 ## ATOMIC-20261026-002 — corrección editorial de prosa histórica

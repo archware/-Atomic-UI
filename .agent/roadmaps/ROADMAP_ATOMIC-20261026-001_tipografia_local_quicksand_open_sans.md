@@ -40,10 +40,10 @@ Adoptar en `-Atomic-UI` una combinación tipográfica 100 % local y sin dependen
   - Definición de `--font-family-base`, `--font-family-heading` y `--font-family-mono` en `src/styles/themes/_tokens-primitives.css`.
   - Enlace de `--heading-font-family: var(--font-family-heading)` y `--table-font-family: var(--font-family-base)` en `src/styles/themes/_tokens-components.css`.
   - Aplicación global en `src/styles/themes/index.css` (`html, body`, `h1`–`h6`, `code, pre, kbd, samp` y `button, input, optgroup, select, textarea`).
-  - Aplicación de `var(--font-family-heading)` en `text.component.css`, `page-header.scss`, `pagina-crud.scss`, `pagina-crud-accordion.scss`, `modal.component.css`, `form-dialog.scss` y `kpi-card.component.css`, y de `var(--font-family-base)` en `version.component.css`.
+  - Aplicación de `var(--font-family-heading)` en `text.component.css`, `page-header.scss`, `pagina-crud.scss`, `pagina-crud-accordion.scss`, `modal.component.css`, `modal-container.component.css`, `popup-container.component.css`, `form-dialog.scss` y `kpi-card.component.css`, y de `var(--font-family-base)` en `version.component.css`.
 - [x] **T3 — Herramientas de gobernanza, distribución y puente Dart:**
-  - Actualización de `scripts/check-typography-scale.mjs` para excluir `_fonts.css` y bloques `@font-face` del conteo de pesos escritos a mano.
-  - Actualización de `tools/copy-lib-tokens.cjs` para copiar `src/styles/themes/fonts/*.woff2` hacia `dist/atomic-ui/tokens/fonts/`.
+  - Actualización de `scripts/check-typography-scale.mjs` para excluir `_fonts.css`, comentarios de bloque CSS y bloques `@font-face` del conteo de pesos escritos a mano, junto con la prueba negativa `tools/test-typography-scale-gate.mjs`.
+  - Inclusión de `.woff2` en `sourceInventory.roots` de `distribution/package-contract.json` y validación en `tools/copy-lib-tokens.cjs` de que `_fonts.css` y todas sus fuentes `.woff2` referenciadas se copien a `dist/atomic-ui/tokens/fonts/`.
   - Actualización de `scripts/emit-dart-tokens.mjs` para enlazar `fontFamily: AtomicFamilias.fontFamilyHeading` en `displayLarge`, `displayMedium`, `headlineMedium`, `titleLarge` y `titleMedium` de `TextTheme` y regeneración de `dart/atomic_tokens`.
 - [x] **T4 — Manifiesto, documentación y sincronización con consumidores:**
   - Regeneración de `distribution/atomic-source-manifest.json`, ejecución de `npm run lib:build`, `npx ng build` y las 19 compuertas de `npm run governance:check`.
@@ -51,4 +51,4 @@ Adoptar en `-Atomic-UI` una combinación tipográfica 100 % local y sin dependen
 
 ## Reversión (Rollback)
 
-Restaurar los archivos de tema (`src/styles/themes/`), componentes tocados, scripts (`scripts/check-typography-scale.mjs`, `scripts/emit-dart-tokens.mjs`, `tools/copy-lib-tokens.cjs`, `tools/create-project.js`), `dart/atomic_tokens/` y `distribution/atomic-source-manifest.json` al commit previo, y ejecutar `node scripts/reconcile-provenance.cjs` en los consumidores.
+Restaurar los archivos de tema (`src/styles/themes/`), componentes tocados, scripts (`scripts/check-typography-scale.mjs`, `scripts/emit-dart-tokens.mjs`, `tools/copy-lib-tokens.cjs`, `tools/create-project.js`, `tools/test-typography-scale-gate.mjs`), `distribution/package-contract.json`, `dart/atomic_tokens/` y `distribution/atomic-source-manifest.json` al commit previo, y ejecutar `node scripts/reconcile-provenance.cjs` en los consumidores.

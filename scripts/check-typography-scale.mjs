@@ -39,6 +39,7 @@ const MAXIMO_PESOS_A_MANO = 0;
 
 const EXTENSIONES = new Set(['.css', '.scss', '.ts', '.html']);
 const PESO_A_MANO = /font-weight\s*:\s*(\d{3})\b/g;
+const COMENTARIO_BLOQUE = /\/\*[\s\S]*?\*\//gu;
 const BLOQUE_FONT_FACE = /@font-face\s*\{[^}]*\}/giu;
 const ESCALA = new Map([
   ['400', '--font-weight-body'],
@@ -77,7 +78,10 @@ export function auditarPesos(origenRuta, raizRelativa = origenRuta) {
       continue;
     }
     const contenidoOriginal = readFileSync(ruta, 'utf8');
-    const contenido = contenidoOriginal.replace(BLOQUE_FONT_FACE, (bloque) =>
+    const sinComentarios = contenidoOriginal.replace(COMENTARIO_BLOQUE, (comentario) =>
+      comentario.replace(/[^\r\n]/gu, ' '),
+    );
+    const contenido = sinComentarios.replace(BLOQUE_FONT_FACE, (bloque) =>
       bloque.replace(/[^\r\n]/gu, ' '),
     );
     for (const coincidencia of contenido.matchAll(PESO_A_MANO)) {

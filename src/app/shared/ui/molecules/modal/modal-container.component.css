@@ -67,6 +67,7 @@
 
 .modal-title {
   margin: 0;
+  font-family: var(--font-family-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-weight-emphasis);
   color: var(--text-color);

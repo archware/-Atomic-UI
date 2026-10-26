@@ -52,9 +52,23 @@ if (fs.existsSync(sourceFontsDir)) {
   }
 }
 
-if (!copied.includes('tokens.css') || !copied.includes('index.css')) {
-  fail('la copia no incluyó tokens.css e index.css.');
+if (!copied.includes('tokens.css') || !copied.includes('index.css') || !copied.includes('_fonts.css')) {
+  fail('la copia no incluyó tokens.css, index.css y _fonts.css.');
 }
+
+const fontsCss = fs.readFileSync(path.join(targetDir, '_fonts.css'), 'utf8');
+const referencedFonts = [...fontsCss.matchAll(/url\(['"]?\.\/fonts\/([^'")]+)['"]?\)/gu)].map(
+  (match) => match[1],
+);
+if (referencedFonts.length === 0) {
+  fail('_fonts.css no declara referencias relativas a ./fonts/*.woff2.');
+}
+for (const fontFile of referencedFonts) {
+  if (!fs.existsSync(path.join(targetFontsDir, fontFile))) {
+    fail(`falta la fuente referenciada dist/atomic-ui/tokens/fonts/${fontFile}.`);
+  }
+}
+
 console.log(
   `Tokens copiados a dist/atomic-ui/tokens: ${copied.length} archivos CSS (${copied.sort().join(', ')}) y ${copiedFonts.length} fuentes woff2.`,
 );
