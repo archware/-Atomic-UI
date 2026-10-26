@@ -524,6 +524,11 @@ canónica se conserva en la sección [Propietarios canónicos de desplazamiento]
 
   /* BORDES */
   --border-color: #e5e7eb;
+
+  /* TIPOGRAFÍA LOCAL (Open Sans + Quicksand vía src/styles/themes/_fonts.css) */
+  --font-family-base: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-family-heading: 'Quicksand', 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
 }
 ```
 

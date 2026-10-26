@@ -4,15 +4,46 @@ author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
 document_type: "registro técnico"
 status: "en revisión"
-last_updated: "2026-10-24"
-version: "1.4.5"
-last_change_id: "CLT-20261024-003"
+last_updated: "2026-10-26"
+version: "1.4.6"
+last_change_id: "ATOMIC-20261026-003"
 owners:
   - "COTAHA"
 ---
 
 # Lecciones aprendidas de Atomic UI
 
+## ATOMIC-20261026-003 — fuentes locales en el tema portable y guarda de pesos en `@font-face`
+
+- **Evidencia:** las aplicaciones consumidoras cargaban `@fontsource/open-sans` por separado en `src/styles.css` mientras que `_tokens-components.css` apuntaba `--table-font-family` a un token inexistente (`--font-sans, 'Inter', sans-serif`) y no existía una familia dedicada para títulos (`Quicksand`). Además, registrar `@font-face` con `font-weight: 400|500|600|700` dentro de `src/styles/themes/` activaba el detector de pesos escritos a mano si no se distinguía una declaración `@font-face` de una regla de estilo de componente.
+- **Decisión:** alojar los binarios `.woff2` en `src/styles/themes/fonts/` y declararlos en `src/styles/themes/_fonts.css` importado por `src/styles/themes/index.css`, de modo que cualquier consumidor o empaquetado de `dist/atomic-ui/tokens` reciba la tipografía completa sin depender de CDN ni de importaciones sueltas en `src/styles.css`.
+- **Prevención:** excluir `_fonts.css` y filtrar bloques `@font-face` en `scripts/check-typography-scale.mjs`, copiar `fonts/*.woff2` en `tools/copy-lib-tokens.cjs` y propagar `AtomicFamilias.fontFamilyHeading` a los estilos de encabezado del puente Dart (`scripts/emit-dart-tokens.mjs`).
+
+## ATOMIC-20261026-002 — prosa acentuada y contratos ASCII
+
+- **Evidencia:** el baseline contiene 150 hallazgos de tilde y 151 palabras;
+  dos apariciones de un adverbio en una misma línea se agrupan en un hallazgo.
+- **Corrección:** cada palabra se clasifica por su contexto antes de acentuar
+  la prosa, incluidas dos citas explicativas. Los contratos y literales de
+  código mantienen sus bytes originales.
+- **Prevención:** los encabezados corregidos conservan sus anclas públicas.
+  Dos encabezados repetidos mantienen el nivel mediante HTML documental para
+  evitar que cambie la numeración de las 43 anclas Markdown posteriores.
+- **Límite:** la unidad es editorial; las 70 pruebas de accesibilidad y sus
+  resultados históricos permanecen como evidencia del corte anterior.
+
+## ATOMIC-20261026-001 — presencia del nodo y compilación de pruebas
+
+- **Evidencia:** seis comparaciones entre atributos DOM y un identificador
+  opcional impedían compilar cuatro especificaciones. El baseline aislado
+  confirmó TS2345 y el ensayo final pasó 70/70 casos en seis suites.
+- **Corrección:** se exige presencia y se estrecha el nodo antes de leer `id`.
+  Convertir dos ausencias a `null` habría permitido acreditar un DOM inexistente.
+- **Reutilización:** se emplean dependencias completas ya instaladas y un
+  lockfile idéntico, sin modificar el enlace compartido ni instalar paquetes.
+- **Límite:** HEAD más cuatro pruebas no certifica otros cambios concurrentes.
+  El silencio de un proceso tampoco demuestra un bucle: los originales de
+  gobernanza anteriores terminaron con fallo posterior de inventario.
 ## CLT-20261024-003 — reconciliación de valores DOM sin evento input en ControlValueAccessor
 
 - **Evidencia:** la restauración automática del navegador o el autocompletado podían poblar el `<input>` nativo sin emitir el evento `input`, dejando el `FormControl` reactivo vacío o desactualizado al evaluar `puedeGuardar()` en el consumidor.
@@ -867,45 +898,49 @@ Queda estrictamente prohibido usar `(click)` sobre elementos custom de la librer
 
 ## [2026-07-19] - Tokens de Color Obligatorios en Modales y Overlays Custom
 
-**Contexto:** En la aplicacion base_python_angular (Acopiador), los modales de alerta y confirmacion construidos con `app-card variant="elevated"` + `slot="image"` tenian colores hexadecimales fijos en el header (`#1e293b`, `#f8fafc`, `#334155`). En modo oscuro el texto parecia correcto (porque los colores fijos simulaban el dark mode), pero en modo claro el fondo quedaba negro y el texto blanco, siendo completamente ilegible.
+**Contexto:** En la aplicación base_python_angular (Acopiador), los modales de alerta y confirmacion construidos con `app-card variant="elevated"` + `slot="image"` tenian colores hexadecimales fijos en el header (`#1e293b`, `#f8fafc`, `#334155`). En modo oscuro el texto parecia correcto (porque los colores fijos simulaban el dark mode), pero en modo claro el fondo quedaba negro y el texto blanco, siendo completamente ilegible.
 
-**La leccion:** Los consumidores de Atomic UI (Wails, Tauri, Python/WebView) NO deben usar colores hexadecimales fijos en ningun elemento que forme parte de un modal, overlay o dialogo. El sistema de tokens de Atomic garantiza la paridad automatica entre Light Mode y Dark Mode. Al forzar un color fijo, se rompe esa garantia y el componente queda "atado" a un solo tema.
+**La leccion:** Los consumidores de Atomic UI (Wails, Tauri, Python/WebView) NO deben usar colores hexadecimales fijos en ningún elemento que forme parte de un modal, overlay o dialogo. El sistema de tokens de Atomic garantiza la paridad automatica entre Light Mode y Dark Mode. Al forzar un color fijo, se rompe esa garantía y el componente queda "atado" a un solo tema.
 
 **Regla de tokens para modales:**
 - Header/cabecera del modal: `background: var(--surface-section)` + `border-bottom: 1px solid var(--border-color)`
 - Titulo del modal: `color: var(--text-color)`
 - Texto del cuerpo: `color: var(--text-color)` explicito (NO usar `text-secondary` ni `text-muted` en modales; esas clases aplican opacidad reducida que resulta ilegible sobre fondos de superficie)
-- Iconos de estado: `color: var(--danger-color)`, `var(--warning-color)`, `var(--success-color)` segun el tipo de alerta
+- Iconos de estado: `color: var(--danger-color)`, `var(--warning-color)`, `var(--success-color)` según el tipo de alerta
 - Separadores: `border-color: var(--border-color)`
 
-**Regla de propagacion:** Cualquier modal o elemento HTML flotante (overlay, drawer, tooltip, popover) en cualquier consumidor del ecosistema (Wails, Tauri, Python/WebView) debe heredar exclusivamente tokens semanticos de Atomic UI. Esta regla aplica antes de cualquier decision de layout o color.
+**Regla de propagacion:** Cualquier modal o elemento HTML flotante (overlay, drawer, tooltip, popover) en cualquier consumidor del ecosistema (Wails, Tauri, Python/WebView) debe heredar exclusivamente tokens semanticos de Atomic UI. Esta regla aplica antes de cualquier decisión de layout o color.
 
 ---
 
 ## [2026-07-16] - Datos demo de graficos y contratos productivos
 **Contexto:** Atomic UI contiene showcase, stories y blueprints que necesitan datos de demostracion para exponer el comportamiento de `app-chart`, dashboards y paginas analiticas. Esos datos pueden confundirse con mocks operativos cuando se propagan componentes hacia Wails, Tauri o Python.
-**La leccion:** Los datos de showcase, stories y blueprints son demostrativos y no constituyen contrato de negocio. Toda aplicacion productiva debe enlazar sus graficos a contratos backend, SP o vistas versionadas. Cuando un consumidor no tenga datos reales, debe renderizar estado vacio o contrato vacio, no valores inventados.
+**La leccion:** Los datos de showcase, stories y blueprints son demostrativos y no constituyen contrato de negocio. Toda aplicación productiva debe enlazar sus graficos a contratos backend, SP o vistas versionadas. Cuando un consumidor no tenga datos reales, debe renderizar estado vacio o contrato vacio, no valores inventados.
 **Regla de propagacion:** Los ejemplos de graficos en Atomic UI deben estar rotulados como demo y consumir tokens `--chart-color-*`, `--chart-grid-color`, superficie y tooltip. Al copiar componentes a Wails, Tauri o Python, se propaga el componente y los tokens, pero no los arreglos demo de datos.
 
 ---
 
 ## [2026-07-16] - Reserva inferior en tablas con scroll sincronizado
-**Contexto:** La grilla nominal del indicador 11 combinaba `ScrollOverlayComponent`, cuerpo de tabla scrolleable (`tbody[data-so-vertical]`), columnas sincronizadas con grid y barra horizontal superpuesta. En ese escenario, la ultima fila quedaba visualmente demasiado cerca de la barra horizontal y el texto secundario de `Estado TA` podia percibirse incompleto.
+**Contexto:** La grilla nominal del indicador 11 combinaba `ScrollOverlayComponent`, cuerpo de tabla scrolleable (`tbody[data-so-vertical]`), columnas sincronizadas con grid y barra horizontal superpuesta. En ese escenario, la última fila quedaba visualmente demasiado cerca de la barra horizontal y el texto secundario de `Estado TA` podia percibirse incompleto.
 **La leccion:** En tablas sincronizadas por grid, no se debe depender de `tbody::after` para crear aire al final del scroll. El `tbody` actua como scroller real y debe recibir `padding-bottom` y `scroll-padding-bottom` condicionados por `so-has-overflow-x`. La reserva debe ser mayor que el grosor visual de la barra; por ello `--so-scroll-end-space` usa `calc(var(--so-track-size) + var(--space-8))`.
 **Regla de propagacion:** Cualquier ajuste de `ScrollOverlayComponent`, `TableComponent`, `table-tokens.css` o `responsive-table.css` debe aplicarse primero en Atomic UI y luego copiarse a Wails, Tauri y Python. Los consumidores no deben resolver este problema con estilos locales porque se generaria drift visual entre aplicaciones.
-**Regla visual:** Las celdas cuyo unico contenido es `app-chip` pueden centrarse verticalmente mediante `display: flex; align-items: center;`. Las celdas compuestas, como `Estado TA`, deben conservar flujo vertical para mostrar el chip y el detalle secundario sin comprimir el texto.
+**Regla visual:** Las celdas cuyo único contenido es `app-chip` pueden centrarse verticalmente mediante `display: flex; align-items: center;`. Las celdas compuestas, como `Estado TA`, deben conservar flujo vertical para mostrar el chip y el detalle secundario sin comprimir el texto.
 
 ---
 
-## [2026-07-01] - Auditoria de Ecosistema: Drift, Dependencias y Seguridad
+<a id="2026-07-01---auditoria-de-ecosistema-drift-dependencias-y-seguridad"></a>
+
+## [2026-07-01] - Auditoría de Ecosistema: Drift, Dependencias y Seguridad
 
 ### 1. El Drift Silencioso en Ecosistemas Multi-Repo
-**Contexto**: La auditoria SHA-256 de todos los archivos `shared/ui` revelo que 10 archivos tenian drift y 5 estaban completamente ausentes en Tauri y Wails. En ningun momento hubo errores visibles — el drift se acumula silenciosamente.
-**La Leccion**: Los fixes aplicados en un consumidor (Wails, Tauri) deben retroalimentarse SIEMPRE a Atomic-UI (Fuente de la Verdad) antes de propagarse. El flujo correcto es: *Arreglar en Atomic-UI → Propagar a consumidores*. Nunca al reves. Validar con SHA-256 periodicamente es la unica forma de detectar drift oculto.
+**Contexto**: La auditoría SHA-256 de todos los archivos `shared/ui` revelo que 10 archivos tenian drift y 5 estaban completamente ausentes en Tauri y Wails. En ningún momento hubo errores visibles — el drift se acumula silenciosamente.
+**La Leccion**: Los fixes aplicados en un consumidor (Wails, Tauri) deben retroalimentarse SIEMPRE a Atomic-UI (Fuente de la Verdad) antes de propagarse. El flujo correcto es: *Arreglar en Atomic-UI → Propagar a consumidores*. Nunca al reves. Validar con SHA-256 periodicamente es la única forma de detectar drift oculto.
 
-### 2. Las Dependencias de package.json tambien son parte de la Fuente de la Verdad
+<a id="2-las-dependencias-de-packagejson-tambien-son-parte-de-la-fuente-de-la-verdad"></a>
+
+### 2. Las Dependencias de package.json también son parte de la Fuente de la Verdad
 **Contexto**: `chartjs-plugin-datalabels` estaba en `package.json` de Tauri y Wails pero faltaba completamente en Atomic-UI, causando errores TS2307 unicamente en la fuente. Los errores eran invisibles en los consumidores porque tenian el paquete.
-**La Leccion**: Atomic-UI debe tener instaladas TODAS las dependencias que sus componentes consumen, aunque los consumidores tambien las tengan. El `package.json` de Atomic-UI es tambien la Fuente de la Verdad de dependencias. El script de propagacion deberia incluir una verificacion de paquetes cruzada.
+**La Leccion**: Atomic-UI debe tener instaladas TODAS las dependencias que sus componentes consumen, aunque los consumidores también las tengan. El `package.json` de Atomic-UI es también la Fuente de la Verdad de dependencias. El script de propagacion deberia incluir una verificación de paquetes cruzada.
 
 ### 3. API Breaking Change en ngx-translate v18 (TranslateModule eliminado)
 **Contexto**: Wails tenia `@ngx-translate/core@^18.0.0` mientras Atomic-UI y Tauri usaban `^17.0.0`. Los componentes propagados que usaban `TranslateModule` fallaban con `TS2724` en Wails porque v18 elimino esa exportacion.
@@ -913,7 +948,7 @@ Queda estrictamente prohibido usar `(click)` sobre elementos custom de la librer
 
 ### 4. Scripts de Desarrollo con Credenciales Hardcodeadas (OWASP A07)
 **Contexto**: Se encontraron credenciales SQL Server privilegiadas en texto plano dentro de scripts auxiliares del workspace. Los valores fueron redactados y deben tratarse como comprometidos; la documentación no conserva contraseñas, cuentas ni direcciones internas.
-**La Leccion**: Los scripts de utilidad de desarrollo deben seguir el mismo patron de seguridad que el codigo de produccion. El patron correcto para scripts locales es: centralizar en `config.js` o usar el keyring del sistema (`go-keyring`), gitignorear el archivo de credenciales, y proveer un `config.example.js` como plantilla. Ningun password debe existir en texto plano en el repositorio.
+**La Leccion**: Los scripts de utilidad de desarrollo deben seguir el mismo patron de seguridad que el código de produccion. El patron correcto para scripts locales es: centralizar en `config.js` o usar el keyring del sistema (`go-keyring`), gitignorear el archivo de credenciales, y proveer un `config.example.js` como plantilla. Ningún password debe existir en texto plano en el repositorio.
 
 ---
 

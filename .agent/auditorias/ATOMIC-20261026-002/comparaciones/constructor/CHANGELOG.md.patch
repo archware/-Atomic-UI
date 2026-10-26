@@ -1,0 +1,343 @@
+--- CHANGELOG.md
++++ CHANGELOG.md
+@@ -13,0 +14,11 @@
++
++## ATOMIC-20261026-002 — corrección editorial de prosa histórica
++
++Se corrigen los 150 hallazgos de tilde del baseline documental de este registro
++y de las lecciones aprendidas, correspondientes a 151 palabras de prosa.
++La línea con dos adverbios repetidos constituye un único hallazgo de la guarda.
++Se conservan los bloques y spans de código, los identificadores ASCII, las
++rutas, las cifras históricas y las anclas previas de los encabezados afectados.
++La clasificación y el alcance de la validación se registran en el
++[roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md).
++La versión del paquete y los resultados históricos de pruebas se conservan.
+@@ -201,2 +212,2 @@
+-Correccion sobre `feat(tabs)` del mismo dia, detectada en revision adversarial
+-antes de publicar. La primera version mapeaba los cuatro cursores a la vez y no
++Corrección sobre `feat(tabs)` del mismo día, detectada en revisión adversarial
++antes de publicar. La primera versión mapeaba los cuatro cursores a la vez y no
+@@ -211 +222 @@
+-  `event.key` vale igual con modificadores, asi que entraban por el mismo
++  `event.key` vale igual con modificadores, así que entraban por el mismo
+@@ -216,4 +227,4 @@
+-par de flechas segun ella; con cualquier modificador activo el manejador sale
+-sin tocar el evento. Se anade tambien la entrada `ariaLabel`: el nombre
+-accesible del tablist estaba fijado a "Tabs" en ingles y ninguna aplicacion
+-podia traducirlo. Ambas entradas tienen valor por defecto, de modo que ningun
++par de flechas según ella; con cualquier modificador activo el manejador sale
++sin tocar el evento. Se anade también la entrada `ariaLabel`: el nombre
++accesible del tablist estaba fijado a "Tabs" en ingles y ninguna aplicación
++podia traducirlo. Ambas entradas tienen valor por defecto, de modo que ningún
+@@ -226 +237 @@
+-`click`. Quien navegaba con teclado alcanzaba la pestana activa y ahi se
++`click`. Quien navegaba con teclado alcanzaba la pestana activa y ahí se
+@@ -233 +244 @@
+-- `Home` y `End` saltan a la primera y a la ultima pestana.
++- `Home` y `End` saltan a la primera y a la última pestana.
+@@ -241,2 +252,2 @@
+-el desplazamiento horizontal automatico solo actua cuando el gesto viene del
+-raton. Ningun consumidor necesita adaptarse.
++el desplazamiento horizontal automático solo actua cuando el gesto viene del
++raton. Ningún consumidor necesita adaptarse.
+@@ -281 +292 @@
+-  regresion alli era invisible. Con el incorporado, la compuerta sigue en verde.
++  regresion allí era invisible. Con el incorporado, la compuerta sigue en verde.
+@@ -292 +303 @@
+-  correccion a la fuente canonica. Corregirlo en el generador crearia en el
++  corrección a la fuente canonica. Corregirlo en el generador crearia en el
+@@ -301 +312 @@
+-`MediaQuery.textScalerOf` sobre `fontSize`, y aplicarlo tambien en el emisor
++`MediaQuery.textScalerOf` sobre `fontSize`, y aplicarlo también en el emisor
+@@ -306 +317 @@
+-corte se resuelven con el tamano de la ventana y jamas con `textScaler`.
++corte se resuelven con el tamaño de la ventana y jamas con `textScaler`.
+@@ -416 +427 @@
+-  icono en toda la aplicacion —medido: de 19 botones de alta, uno solo lo
++  icono en toda la aplicación —medido: de 19 botones de alta, uno solo lo
+@@ -423 +434 @@
+-- **Capitulo 15 de la doctrina: «Se pliega lo que compite, no lo unico que hay».**
++- **Capitulo 15 de la doctrina: «Se pliega lo que compite, no lo único que hay».**
+@@ -426 +437 @@
+-  sola, no. Plegar lo unico que hay esconde tras un clic la razon por la que
++  sola, no. Plegar lo único que hay esconde tras un clic la razón por la que
+@@ -429 +440 @@
+-  Sale de una decision real: seis pantallas de catalogo medidas, dos con varias
++  Sale de una decisión real: seis pantallas de catalogo medidas, dos con varias
+@@ -432,4 +443,4 @@
+-  lo unico que muestran.
+-
+-  El capitulo recoge tambien el mismo presupuesto en horizontal: las acciones de
+-  una fila comparten ancho con las columnas, asi que van como iconos con nombre
++  lo único que muestran.
++
++  El capitulo recoge también el mismo presupuesto en horizontal: las acciones de
++  una fila comparten ancho con las columnas, así que van como iconos con nombre
+@@ -452 +463 @@
+-  los margenes contiguos se colapsan, asi que la separacion total no crece.
++  los margenes contiguos se colapsan, así que la separacion total no crece.
+@@ -459 +470 @@
+-  no es un trinquete: es una prohibicion, y cualquier peso escrito a mano falla el
++  no es un trinquete: es una prohibición, y cualquier peso escrito a mano falla el
+@@ -472 +483 @@
+-  La correccion queda escrita dentro del capitulo 13, no borrada: la doctrina se
++  La corrección queda escrita dentro del capitulo 13, no borrada: la doctrina se
+@@ -475 +486 @@
+-  Con las caras reales delante, la migracion de los 48 tampoco cambia lo que se
++  Con las caras reales delante, la migración de los 48 tampoco cambia lo que se
+@@ -486 +497 @@
+-  y `-title`, asi que el dibujo no cambia ni un pixel. Los 48 que quedan —500, 650,
++  y `-title`, así que el dibujo no cambia ni un pixel. Los 48 que quedan —500, 650,
+@@ -495 +506 @@
+-  `min-width: 769px` y `max-width: 768px` en el mismo fichero, asi que a 768,5px
++  `min-width: 769px` y `max-width: 768px` en el mismo fichero, así que a 768,5px
+@@ -497,2 +508,2 @@
+-  Los dos cortes comparten ahora frontera en `48rem`: solapan en un unico ancho,
+-  donde gana la ultima regla, en vez de dejar un hueco.
++  Los dos cortes comparten ahora frontera en `48rem`: solapan en un único ancho,
++  donde gana la última regla, en vez de dejar un hueco.
+@@ -504 +515 @@
+-  segun lo que de verdad pedian: `action-group` y `stepper` querian el objetivo
++  según lo que de verdad pedian: `action-group` y `stepper` querian el objetivo
+@@ -523 +534 @@
+-  mismo dia que se enuncio.
++  mismo día que se enuncio.
+@@ -527 +538 @@
+-  —`headingLevel`, 3 por omision— porque solo alli se sabe que hay por encima.
++  —`headingLevel`, 3 por omision— porque solo allí se sabe que hay por encima.
+@@ -541,2 +552,2 @@
+-  es `'Open Sans', system-ui, …` pero no hay ningun `@font-face`, no se sirve
+-  ningun fichero de fuente y la CSP del consumidor dice `font-src 'self'`, asi que
++  es `'Open Sans', system-ui, …` pero no hay ningún `@font-face`, no se sirve
++  ningún fichero de fuente y la CSP del consumidor dice `font-src 'self'`, así que
+@@ -546 +557 @@
+-  Ademas: `login` y `change-password` empiezan en `<h2>` y **no tienen `<h1>`**,
++  Además: `login` y `change-password` empiezan en `<h2>` y **no tienen `<h1>`**,
+@@ -567,2 +578,2 @@
+-  cambiar 500 por 600 engorda el trazo y 900 por 700 lo adelgaza, asi que la
+-  migracion va componente a componente. El trinquete solo impide que la deuda
++  cambiar 500 por 600 engorda el trazo y 900 por 700 lo adelgaza, así que la
++  migración va componente a componente. El trinquete solo impide que la deuda
+@@ -576 +587 @@
+-  seccion «lo que esta doctrina no cubre» anunciaba tres desde la auditoria
++  seccion «lo que esta doctrina no cubre» anunciaba tres desde la auditoría
+@@ -578 +589 @@
+-  escribieron midiendo el codigo, no proponiendo criterios.
++  escribieron midiendo el código, no proponiendo criterios.
+@@ -583,2 +594,2 @@
+-  llego ahi —«44px, tamaños de componente»—: no es un espacio, es el objetivo
+-  tactil minimo de WCAG 2.5.5, una medida de otra cosa metida en la escala de
++  llego ahí —«44px, tamaños de componente»—: no es un espacio, es el objetivo
++  tactil mínimo de WCAG 2.5.5, una medida de otra cosa metida en la escala de
+@@ -590 +601 @@
+-  que son el mismo ancho solo si nadie tocó el tamaño de letra. Hay ademas un
++  que son el mismo ancho solo si nadie tocó el tamaño de letra. Hay además un
+@@ -597 +608 @@
+-  confirma, con el motivo si habra que explicarlo meses despues. Medido en un
++  confirma, con el motivo si habra que explicarlo meses después. Medido en un
+@@ -609 +620 @@
+-  con el clic de la persona. A partir de ahi lo que se ve deja de ser lo que se
++  con el clic de la persona. A partir de ahí lo que se ve deja de ser lo que se
+@@ -623,2 +634,2 @@
+-  cuando el numero CAMBIA, asi que teclear una segunda cantidad por encima del
+-  maximo dejaba el campo enseñando lo tecleado mientras el modelo contaba otra
++  cuando el número CAMBIA, así que teclear una segunda cantidad por encima del
++  máximo dejaba el campo enseñando lo tecleado mientras el modelo contaba otra
+@@ -626 +637 @@
+-  Ademas, en un `type=number` el texto invalido (`1o0`) llega como cadena vacia
++  Además, en un `type=number` el texto invalido (`1o0`) llega como cadena vacia
+@@ -633 +644 @@
+-  lleva cuarenta dialogos al dia ya no lo lee—, se añade `tone: 'danger'` para lo
++  lleva cuarenta dialogos al día ya no lo lee—, se añade `tone: 'danger'` para lo
+@@ -646 +657 @@
+-  conserva su relleno horizontal y su ancho minimo, asi que desborda y pisa lo
++  conserva su relleno horizontal y su ancho mínimo, así que desborda y pisa lo
+@@ -649 +660 @@
+-  —sus estilos no alcanzan al interior del componente—, tiene que vivir aqui.
++  —sus estilos no alcanzan al interior del componente—, tiene que vivir aquí.
+@@ -659,2 +670,2 @@
+-  paginador se pintaban FUERA de toda comprobacion de estado, asi que escribian
+-  «Mostrando 0 - 0 de 0 registro(s)» encima del indicador de carga y tambien
++  paginador se pintaban FUERA de toda comprobación de estado, así que escribian
++  «Mostrando 0 - 0 de 0 registro(s)» encima del indicador de carga y también
+@@ -686 +697 @@
+-  documento. Con tres paginas eso pasa SIEMPRE al llegar a la ultima. Ahora el
++  documento. Con tres paginas eso pasa SIEMPRE al llegar a la última. Ahora el
+@@ -692 +703 @@
+-  justo al pulsarlo, y `disabled` ademas lo saca del arbol de accesibilidad, con
++  justo al pulsarlo, y `disabled` además lo saca del árbol de accesibilidad, con
+@@ -714 +725 @@
+-  La transparencia atenua texto Y fondo contra la pagina, asi que anula el
++  La transparencia atenua texto Y fondo contra la pagina, así que anula el
+@@ -725,2 +736,2 @@
+-  tokens; se le anadieron las alertas tras un fallo y aun asi todo lo anterior
+-  paso en verde, porque ningun par de los enumerados los cubria. Ahora recorre
++  tokens; se le anadieron las alertas tras un fallo y aun así todo lo anterior
++  paso en verde, porque ningún par de los enumerados los cubria. Ahora recorre
+@@ -729 +740 @@
+-  deshabilitado. Encuentra tambien lo que nadie ha escrito todavia.
++  deshabilitado. Encuentra también lo que nadie ha escrito todavia.
+@@ -747 +758 @@
+-  era **invisible** para ellas, asi que ni siquiera el foco delataba donde
++  era **invisible** para ellas, así que ni siquiera el foco delataba donde
+@@ -752 +763 @@
+-  despues de que la persona ya intento enviar; si no se anuncia, quien usa lector
++  después de que la persona ya intento enviar; si no se anuncia, quien usa lector
+@@ -755 +766 @@
+-  El mensaje usa el token de TEXTO del tono y no se atenua con `opacity`, segun
++  El mensaje usa el token de TEXTO del tono y no se atenua con `opacity`, según
+@@ -758,4 +769,4 @@
+-  Detectado en `prestamo_front_atomic`, donde una correccion de documento de
+-  identidad se rechazaba en silencio. Corregido aqui primero.
+-
+-### Verificacion
++  Detectado en `prestamo_front_atomic`, donde una corrección de documento de
++  identidad se rechazaba en silencio. Corregido aquí primero.
++
++<h3 id="verificacion">Verificación</h3>
+@@ -772,2 +783,2 @@
+-  dia llamaba a `preventDefault`; en las de mes y ano lo cerraba sin cancelar,
+-  de modo que el mismo componente se comportaba distinto segun donde estuvieras.
++  día llamaba a `preventDefault`; en las de mes y ano lo cerraba sin cancelar,
++  de modo que el mismo componente se comportaba distinto según donde estuvieras.
+@@ -776 +787 @@
+-  una pulsacion de Escape no cancelada se trata como peticion de cierre, asi que
++  una pulsacion de Escape no cancelada se trata como petición de cierre, así que
+@@ -781 +792 @@
+-  Detectado en `prestamo_front_atomic` y corregido primero aqui, como manda la
++  Detectado en `prestamo_front_atomic` y corregido primero aquí, como manda la
+@@ -789 +800 @@
+-  contra su codigo; solo entraron las que ese front ya cumple EN PARTE.
++  contra su código; solo entraron las que ese front ya cumple EN PARTE.
+@@ -792,3 +803,3 @@
+-  ningun script producia.
+-
+-### Verificacion
++  ningún script producia.
++
++<h3 id="verificacion-1">Verificación</h3>
+@@ -1046 +1057 @@
+-  un lector de pantalla sin poder anunciar filas ni celdas. Se midio el arbol de
++  un lector de pantalla sin poder anunciar filas ni celdas. Se midio el árbol de
+@@ -1118,2 +1129,2 @@
+-  unico modo de callarlo era renombrar el import: un rodeo que ensucia el
+-  codigo para contentar a una expresion regular. La comprobacion deja de
++  único modo de callarlo era renombrar el import: un rodeo que ensucia el
++  código para contentar a una expresion regular. La comprobación deja de
+@@ -1122 +1133 @@
+-  desaparece la unica familia de falsos positivos que tenia.
++  desaparece la única familia de falsos positivos que tenia.
+@@ -1138 +1149 @@
+-  Lo destapo migrar el consumidor a la politica 1.2.2, que prohibe primitivas
++  Lo destapo migrar el consumidor a la política 1.2.2, que prohibe primitivas
+@@ -1160,3 +1171,3 @@
+-  tener desactualizada precisamente porque no rompe nada: ningun compilador lo
+-  lee, lo leen las herramientas y quien pide un componente sin abrir su codigo.
+-  En su primera ejecucion encontro deriva real: `data-table.pagination`,
++  tener desactualizada precisamente porque no rompe nada: ningún compilador lo
++  lee, lo leen las herramientas y quien pide un componente sin abrir su código.
++  En su primera ejecución encontro deriva real: `data-table.pagination`,
+@@ -1181 +1192 @@
+-el arbol de accesibilidad. La decision no se apoya en un defecto demostrado sino
++el árbol de accesibilidad. La decisión no se apoya en un defecto demostrado sino
+@@ -1189,7 +1200,7 @@
+-**Numero nuevo a proposito.** Durante agosto dos historias paralelas de este
+-repositorio publicaron un 5.4.0 y un 5.5.0 con el mismo numero y contenido
+-distinto, de modo que «la version 5.5.0» dejo de identificar nada. No se
+-reutiliza ningun 5.5.x: 5.6.0 es el primer numero que vuelve a designar un solo
+-arbol. `main` es el tronco unico desde aqui.
+-
+-Esta version RESCATA sobre `main` el trabajo que se habia quedado en la rama
++**Número nuevo a proposito.** Durante agosto dos historias paralelas de este
++repositorio publicaron un 5.4.0 y un 5.5.0 con el mismo número y contenido
++distinto, de modo que «la versión 5.5.0» dejo de identificar nada. No se
++reutiliza ningún 5.5.x: 5.6.0 es el primer número que vuelve a designar un solo
++árbol. `main` es el tronco único desde aquí.
++
++Esta versión RESCATA sobre `main` el trabajo que se habia quedado en la rama
+@@ -1209 +1220 @@
+-  **El generador de UI y el catalogo tambien se actualizan**: `generate-ui`
++  **El generador de UI y el catalogo también se actualizan**: `generate-ui`
+@@ -1231 +1242 @@
+-  Ademas once controles dividian su contraste con `opacity` DESPUES de
++  Además once controles dividian su contraste con `opacity` DESPUÉS de
+@@ -1237 +1248 @@
+-  existen en ningun tema, en cuatro paginas del escaparate.
++  existen en ningún tema, en cuatro paginas del escaparate.
+@@ -1239 +1250 @@
+-  se ponia el mensaje de error y se salia sin tocar `files`, asi que el
++  se ponia el mensaje de error y se salia sin tocar `files`, así que el
+@@ -1247 +1258 @@
+-- **El gate dejaba de ver los comentarios de linea** y denunciaba como «color
++- **El gate dejaba de ver los comentarios de línea** y denunciaba como «color
+@@ -1254 +1265 @@
+-  `thead tr`, `tbody tr` y `tbody` **sin restituir ningun rol**, de modo que un
++  `thead tr`, `tbody tr` y `tbody` **sin restituir ningún rol**, de modo que un
+@@ -1256,2 +1267,2 @@
+-  y no se parchea aqui: un `role="table"` suelto, con los hijos ya sin rol,
+-  produce un arbol de accesibilidad invalido. Requiere decidirse entero y
++  y no se parchea aquí: un `role="table"` suelto, con los hijos ya sin rol,
++  produce un árbol de accesibilidad invalido. Requiere decidirse entero y
+@@ -1662,2 +1673,2 @@
+-La linea `5.4.0-beta.1` (2026-08-05) se consolida como `5.4.0` estable: los
+-cambios no eran experimentales y esta version es el ADN oficial de los
++La línea `5.4.0-beta.1` (2026-08-05) se consolida como `5.4.0` estable: los
++cambios no eran experimentales y esta versión es el ADN oficial de los
+@@ -1673 +1684 @@
+-- `tools/check-invalid-css-values.js` detecta ahora tambien el patron `-var(` (antes solo `NNvar(`), cerrando el hueco que dejo pasar la familia anterior.
++- `tools/check-invalid-css-values.js` detecta ahora también el patron `-var(` (antes solo `NNvar(`), cerrando el hueco que dejo pasar la familia anterior.
+@@ -1677 +1688 @@
+-- **Politica Atomic-first 1.1.0:** el gate de consumidores (`governance/consumer/check-atomic-provenance.mjs`) escanea ahora tambien los archivos `.ts` de las raices de features — primitivas visuales nativas en plantillas embebidas, `style=` inline en el marcado, colores fijos y negaciones invalidas de tokens (`*.spec.ts` exentos). Los consumidores deben copiar el gate actualizado y declarar `policyVersion: "1.1.0"`.
++- **Política Atomic-first 1.1.0:** el gate de consumidores (`governance/consumer/check-atomic-provenance.mjs`) escanea ahora también los archivos `.ts` de las raices de features — primitivas visuales nativas en plantillas embebidas, `style=` inline en el marcado, colores fijos y negaciones invalidas de tokens (`*.spec.ts` exentos). Los consumidores deben copiar el gate actualizado y declarar `policyVersion: "1.1.0"`.
+@@ -2456 +2467 @@
+-- **Tokens de color obligatorios en overlays y modales custom:** Al construir un dialog/modal personalizado sobre `app-card variant="elevated"` con un `slot="image"` como cabecera, queda prohibido usar colores hexadecimales fijos (e.g. `#1e293b`, `#f8fafc`). Toda cabecera de modal debe consumir `background: var(--surface-section)` y `color: var(--text-color)` para respetar el Dark/Light Mode automatico del ecosistema. Los iconos de estado deben usar `color: var(--danger-color)`, `var(--warning-color)` etc., nunca hexadecimales sueltos.
++- **Tokens de color obligatorios en overlays y modales custom:** Al construir un dialog/modal personalizado sobre `app-card variant="elevated"` con un `slot="image"` como cabecera, queda prohibido usar colores hexadecimales fijos (e.g. `#1e293b`, `#f8fafc`). Toda cabecera de modal debe consumir `background: var(--surface-section)` y `color: var(--text-color)` para respetar el Dark/Light Mode automático del ecosistema. Los iconos de estado deben usar `color: var(--danger-color)`, `var(--warning-color)` etc., nunca hexadecimales sueltos.
+@@ -2478 +2489 @@
+-- **Cierre inferior de tablas con scroll sincronizado**: `ScrollOverlayComponent` amplia `--so-scroll-end-space` a `calc(var(--so-track-size) + var(--space-8))` para que la ultima fila quede visible por encima de la barra horizontal cuando existe scroll vertical y horizontal simultaneo.
++- **Cierre inferior de tablas con scroll sincronizado**: `ScrollOverlayComponent` amplia `--so-scroll-end-space` a `calc(var(--so-track-size) + var(--space-8))` para que la última fila quede visible por encima de la barra horizontal cuando existe scroll vertical y horizontal simultaneo.
+@@ -2480 +2491 @@
+-- **Centrado vertical de celdas compactas**: `TableComponent` centra verticalmente las celdas cuyo unico contenido es `app-chip`, sin alterar celdas compuestas como `Estado TA` con detalle secundario.
++- **Centrado vertical de celdas compactas**: `TableComponent` centra verticalmente las celdas cuyo único contenido es `app-chip`, sin alterar celdas compuestas como `Estado TA` con detalle secundario.
+@@ -2504 +2515 @@
+-- **Altura padre controlada para filas de grafico**: Se agrego `chart-grid-compact` con filas de 430 px para evitar crecimiento excesivo en pantalla completa. `chart-panel` baja su alto minimo a 240 px para trabajar dentro de la altura fija del padre sin recortar controles.
++- **Altura padre controlada para filas de grafico**: Se agrego `chart-grid-compact` con filas de 430 px para evitar crecimiento excesivo en pantalla completa. `chart-panel` baja su alto mínimo a 240 px para trabajar dentro de la altura fija del padre sin recortar controles.
+@@ -2512 +2523 @@
+-- **Altura simetrica de paneles de grafico**: `chart-panel` reduce su alto minimo a 320 px para evitar espacios vacios excesivos en tarjetas de graficos. Se agrega `chart-panel--center` para centrar verticalmente graficos compactos como tortas/donas.
++- **Altura simetrica de paneles de grafico**: `chart-panel` reduce su alto mínimo a 320 px para evitar espacios vacios excesivos en tarjetas de graficos. Se agrega `chart-panel--center` para centrar verticalmente graficos compactos como tortas/donas.
+@@ -2520 +2531 @@
+-- **Panel uniforme para graficos**: Se agrego la utilidad `chart-panel` para que los contenedores de graficos mantengan un alto minimo estable, llenen el alto disponible de tarjetas estiradas en grid y deleguen el redimensionamiento final al componente `app-chart`.
++- **Panel uniforme para graficos**: Se agrego la utilidad `chart-panel` para que los contenedores de graficos mantengan un alto mínimo estable, llenen el alto disponible de tarjetas estiradas en grid y deleguen el redimensionamiento final al componente `app-chart`.
+@@ -2545 +2556 @@
+-- **Limpieza de utilidad de alto minimo**: Se retiro `min-h-380` porque ya no se requiere para el grafico mensual y podia inducir crecimiento vertical no deseado.
++- **Limpieza de utilidad de alto mínimo**: Se retiro `min-h-380` porque ya no se requiere para el grafico mensual y podia inducir crecimiento vertical no deseado.
+@@ -2553 +2564 @@
+-- **Grafico reactivo de alto completo**: Se ajusto `app-chart` para que el host y el contenedor interno puedan ocupar el 100% del alto disponible cuando el consumidor declara `height="100%"`. Esta correccion permite que los graficos embebidos en tarjetas altas no queden limitados por el valor por defecto de 300 px.
++- **Grafico reactivo de alto completo**: Se ajusto `app-chart` para que el host y el contenedor interno puedan ocupar el 100% del alto disponible cuando el consumidor declara `height="100%"`. Esta corrección permite que los graficos embebidos en tarjetas altas no queden limitados por el valor por defecto de 300 px.
+@@ -2573 +2584,3 @@
+-### Auditoria Profunda del Ecosistema — Sincronizacion Total y Limpieza
++<a id="auditoria-profunda-del-ecosistema--sincronizacion-total-y-limpieza"></a>
++
++### Auditoría Profunda del Ecosistema — Sincronizacion Total y Limpieza
+@@ -2577,3 +2590,3 @@
+-- **114/114 archivos `shared/ui` sincronizados**: Auditoria SHA-256 completa detecto 10 archivos con drift y 5 MISSING en Tauri y Wails. Todos corregidos. El ecosistema queda en estado 100% sincronizado.
+-- **WebView2 canvas fix retroalimentado**: La correccion `ctx.save()`/`ctx.restore()` incondicional para todos los tipos de chart (documentada en v4.9.0 y en `ECOSYSTEM_WORKFLOW.md`) existia unicamente en Wails. Se retroalimento a Atomic-UI (Fuente de la Verdad) y se propago a Tauri.
+-- **`propagate-tokens.ps1` extendido**: El script solo propagaba `_tokens-components.css` (1 de 7 archivos). Ahora cubre los 7 archivos CSS del directorio `src/styles/themes/` con verificacion SHA-256 individual por archivo.
++- **114/114 archivos `shared/ui` sincronizados**: Auditoría SHA-256 completa detecto 10 archivos con drift y 5 MISSING en Tauri y Wails. Todos corregidos. El ecosistema queda en estado 100% sincronizado.
++- **WebView2 canvas fix retroalimentado**: La corrección `ctx.save()`/`ctx.restore()` incondicional para todos los tipos de chart (documentada en v4.9.0 y en `ECOSYSTEM_WORKFLOW.md`) existia unicamente en Wails. Se retroalimento a Atomic-UI (Fuente de la Verdad) y se propago a Tauri.
++- **`propagate-tokens.ps1` extendido**: El script solo propagaba `_tokens-components.css` (1 de 7 archivos). Ahora cubre los 7 archivos CSS del directorio `src/styles/themes/` con verificación SHA-256 individual por archivo.
+@@ -2881 +2894 @@
+-- Nuevos molecules: `Alert`, `AvatarGroup`, `Combobox`, `TagInput`, `Timeline`, `Popup` story/documentacion reforzada.
++- Nuevos molecules: `Alert`, `AvatarGroup`, `Combobox`, `TagInput`, `Timeline`, `Popup` story/documentación reforzada.
+@@ -2890 +2903 @@
+-- Workflow de validacion de build/lint/test en `.github/workflows/ci.yml`.
++- Workflow de validación de build/lint/test en `.github/workflows/ci.yml`.
+@@ -2899,2 +2912,2 @@
+-- `README.md` y `src/stories/Configure.mdx` actualizados con inventario real y version 4.0.0.
+-- `package.json` actualizado a version `4.0.0`.
++- `README.md` y `src/stories/Configure.mdx` actualizados con inventario real y versión 4.0.0.
++- `package.json` actualizado a versión `4.0.0`.
+@@ -2913,2 +2926,2 @@
+-- La ejecucion local de `npm` no esta disponible en este entorno de agente.
+-- La validacion tecnica completa queda automatizada en GitHub Actions mediante `ci.yml`.
++- La ejecución local de `npm` no esta disponible en este entorno de agente.
++- La validación tecnica completa queda automatizada en GitHub Actions mediante `ci.yml`.

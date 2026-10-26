@@ -183,9 +183,13 @@ describe('SelectComponent - modos de etiqueta', () => {
 
       const etiqueta = etiquetaFlotante(raiz);
       const mensaje = raiz.querySelector('.form-error');
+      expect(mensaje).not.toBeNull();
+      if (mensaje === null) {
+        throw new Error('Se esperaba el mensaje de error');
+      }
       expect(etiqueta?.parentElement?.classList.contains('fl-control')).toBe(true);
       expect(mensaje?.closest('.fl-control')).toBeNull();
-      expect(nativo(raiz).getAttribute('aria-describedby')).toBe(mensaje?.id);
+      expect(nativo(raiz).getAttribute('aria-describedby')).toBe(mensaje.id);
       expect(nativo(raiz).getAttribute('aria-invalid')).toBe('true');
       expect(etiqueta?.classList.contains('fl-label--error')).toBe(true);
     });

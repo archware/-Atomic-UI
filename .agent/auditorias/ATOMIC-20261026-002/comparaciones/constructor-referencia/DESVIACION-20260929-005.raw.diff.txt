@@ -1,0 +1,28 @@
+warning: in the working copy of 'C:\Users\cotaha\source\repos\-Atomic-UI\.agents\desviaciones\DESVIACION-20260929-005.md', LF will be replaced by CRLF the next time Git touches it
+diff --git "a/C:\\Users\\cotaha\\AppData\\Local\\Temp\\codex-atomic-20261026-002\\antes\\.agents\\desviaciones\\DESVIACION-20260929-005.md" "b/C:\\Users\\cotaha\\source\\repos\\-Atomic-UI\\.agents\\desviaciones\\DESVIACION-20260929-005.md"
+index 7ff40d5..0fb979e 100644
+--- "a/C:\\Users\\cotaha\\AppData\\Local\\Temp\\codex-atomic-20261026-002\\antes\\.agents\\desviaciones\\DESVIACION-20260929-005.md"
++++ "b/C:\\Users\\cotaha\\source\\repos\\-Atomic-UI\\.agents\\desviaciones\\DESVIACION-20260929-005.md"
+@@ -8 +8 @@ severidad: media
+-apartado_roto: "§3.1"
++apartado_roto: "por-clasificar"
+@@ -99,0 +100,19 @@ renderiza Alert tras entrar en viewport.
++
++## Precisión de referencia — 2026-10-26
++
++La unidad `ATOMIC-20261026-002` precisa la atribución documental. El literal
++original `apartado_roto: "§3.1"` se conserva aquí como antecedente: no
++identificaba el documento dueño de la regla. La referencia material vigente
++corresponde a la [Doctrina maestra unificada](C:/Users/cotaha/source/repos/.agent/doctrinas/DOCTRINA_MAESTRA_UNIFICADA.md),
++versión 2.5.0, §3.1, «Promoción visual no destructiva (Atomic-first)».
++
++`verificar-desviaciones.ps1` interpreta `apartado_roto` contra la doctrina de
++Orquestación. La atribución operativa en ese inventario queda
++`por-clasificar`: no se ha acreditado un apartado material equivalente de
++Orquestación para el hecho visual registrado. Esta clasificación pendiente
++afecta únicamente a esa atribución; la fuente material indicada es la
++maestra §3.1.
++
++La precisión conserva el hecho, la fecha y el estado `abierta` del registro.
++No acredita una corrección visual, una reproducción actual del hallazgo ni
++una validación de demos, paquetes o publicación de Atomic.

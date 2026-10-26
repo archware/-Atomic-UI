@@ -40,9 +40,22 @@ for (const entry of fs.readdirSync(sourceDir, { withFileTypes: true })) {
   copied.push(entry.name);
 }
 
+const sourceFontsDir = path.join(sourceDir, 'fonts');
+const targetFontsDir = path.join(targetDir, 'fonts');
+const copiedFonts = [];
+if (fs.existsSync(sourceFontsDir)) {
+  fs.mkdirSync(targetFontsDir, { recursive: true });
+  for (const entry of fs.readdirSync(sourceFontsDir, { withFileTypes: true })) {
+    if (!entry.isFile() || !entry.name.endsWith('.woff2')) continue;
+    fs.copyFileSync(path.join(sourceFontsDir, entry.name), path.join(targetFontsDir, entry.name));
+    copiedFonts.push(entry.name);
+  }
+}
+
 if (!copied.includes('tokens.css') || !copied.includes('index.css')) {
   fail('la copia no incluyó tokens.css e index.css.');
 }
 console.log(
-  `Tokens copiados a dist/atomic-ui/tokens: ${copied.length} archivos (${copied.sort().join(', ')}).`,
+  `Tokens copiados a dist/atomic-ui/tokens: ${copied.length} archivos CSS (${copied.sort().join(', ')}) y ${copiedFonts.length} fuentes woff2.`,
 );
+

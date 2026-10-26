@@ -1,0 +1,18 @@
+[
+  {
+    "ruta": "CHANGELOG.md",
+    "sha256_antes": "6B94F63506A063C2BB08BA9FCE020602D9F7034B147AB399F9450E8DBA9C85B4",
+    "sha256_despues": "7ED91E444611D3412BE335D4D79F38A2CA58A07C9DC7AF9D1C1063D15960E492",
+    "bytes_antes": 173281,
+    "bytes_despues": 174231,
+    "utf8_sin_bom_lf": true
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "sha256_antes": "D6D917C8F8F98559390D1C1C33ABB09AE40BADAE2843F00BADB0C0915EEAA676",
+    "sha256_despues": "C77FCFE897D33B1B7DFEAA1C2902CBC67176E7D1C6CC7F4DFA972B7DE10F803D",
+    "bytes_antes": 88148,
+    "bytes_despues": 89133,
+    "utf8_sin_bom_lf": true
+  }
+]

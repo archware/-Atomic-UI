@@ -1,0 +1,1199 @@
+[
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 201,
+    "antes": "Correccion",
+    "despues": "Corrección",
+    "posicion": 1,
+    "contexto": "Correccion sobre `feat(tabs)` del mismo dia, detectada en revision adversar",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 201,
+    "antes": "dia",
+    "despues": "día",
+    "posicion": 41,
+    "contexto": "Corrección sobre `feat(tabs)` del mismo dia, detectada en revision adversarial",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 201,
+    "antes": "revision",
+    "despues": "revisión",
+    "posicion": 59,
+    "contexto": "Corrección sobre `feat(tabs)` del mismo día, detectada en revision adversarial",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 202,
+    "antes": "version",
+    "despues": "versión",
+    "posicion": 31,
+    "contexto": "antes de publicar. La primera version mapeaba los cuatro cursores a la vez y no",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 211,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 45,
+    "contexto": "`event.key` vale igual con modificadores, asi que entraban por el mismo",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 216,
+    "antes": "segun",
+    "despues": "según",
+    "posicion": 16,
+    "contexto": "par de flechas segun ella; con cualquier modificador activo el manejador sale",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 217,
+    "antes": "tambien",
+    "despues": "también",
+    "posicion": 31,
+    "contexto": "sin tocar el evento. Se anade tambien la entrada `ariaLabel`: el nombre",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 218,
+    "antes": "aplicacion",
+    "despues": "aplicación",
+    "posicion": 66,
+    "contexto": "accesible del tablist estaba fijado a \"Tabs\" en ingles y ninguna aplicacion",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 219,
+    "antes": "ningun",
+    "despues": "ningún",
+    "posicion": 72,
+    "contexto": "traducirlo. Ambas entradas tienen valor por defecto, de modo que ningun",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 226,
+    "antes": "ahi",
+    "despues": "ahí",
+    "posicion": 67,
+    "contexto": "click`. Quien navegaba con teclado alcanzaba la pestana activa y ahi se",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 233,
+    "antes": "ultima",
+    "despues": "última",
+    "posicion": 45,
+    "contexto": "- `Home` y `End` saltan a la primera y a la ultima pestana.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 241,
+    "antes": "automatico",
+    "despues": "automático",
+    "posicion": 30,
+    "contexto": "el desplazamiento horizontal automatico solo actua cuando el gesto viene del",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 242,
+    "antes": "Ningun",
+    "despues": "Ningún",
+    "posicion": 8,
+    "contexto": "raton. Ningun consumidor necesita adaptarse.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 281,
+    "antes": "alli",
+    "despues": "allí",
+    "posicion": 13,
+    "contexto": "regresion alli era invisible. Con el incorporado, la compuerta sigue en verde.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 292,
+    "antes": "correccion",
+    "despues": "corrección",
+    "posicion": 3,
+    "contexto": "correccion a la fuente canonica. Corregirlo en el generador crearia en el",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 301,
+    "antes": "tambien",
+    "despues": "también",
+    "posicion": 57,
+    "contexto": "`MediaQuery.textScalerOf` sobre `fontSize`, y aplicarlo tambien en el emisor",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 306,
+    "antes": "tamano",
+    "despues": "tamaño",
+    "posicion": 27,
+    "contexto": "corte se resuelven con el tamano de la ventana y jamas con `textScaler`.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 416,
+    "antes": "aplicacion",
+    "despues": "aplicación",
+    "posicion": 20,
+    "contexto": "icono en toda la aplicacion —medido: de 19 botones de alta, uno solo lo",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 423,
+    "antes": "unico",
+    "despues": "único",
+    "posicion": 66,
+    "contexto": "- **Capitulo 15 de la doctrina: «Se pliega lo que compite, no lo unico que hay».**",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 426,
+    "antes": "unico",
+    "despues": "único",
+    "posicion": 23,
+    "contexto": "sola, no. Plegar lo unico que hay esconde tras un clic la razon por la que",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 426,
+    "antes": "razon",
+    "despues": "razón",
+    "posicion": 61,
+    "contexto": "sola, no. Plegar lo único que hay esconde tras un clic la razon por la que",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 429,
+    "antes": "decision",
+    "despues": "decisión",
+    "posicion": 15,
+    "contexto": "Sale de una decision real: seis pantallas de catalogo medidas, dos con varias",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 432,
+    "antes": "unico",
+    "despues": "único",
+    "posicion": 6,
+    "contexto": "lo unico que muestran.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 434,
+    "antes": "tambien",
+    "despues": "también",
+    "posicion": 22,
+    "contexto": "El capitulo recoge tambien el mismo presupuesto en horizontal: las acciones de",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 435,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 46,
+    "contexto": "una fila comparten ancho con las columnas, asi que van como iconos con nombre",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 452,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 39,
+    "contexto": "los margenes contiguos se colapsan, asi que la separacion total no crece.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 459,
+    "antes": "prohibicion",
+    "despues": "prohibición",
+    "posicion": 30,
+    "contexto": "no es un trinquete: es una prohibicion, y cualquier peso escrito a mano falla el",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 472,
+    "antes": "correccion",
+    "despues": "corrección",
+    "posicion": 6,
+    "contexto": "La correccion queda escrita dentro del capitulo 13, no borrada: la doctrina se",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 475,
+    "antes": "migracion",
+    "despues": "migración",
+    "posicion": 36,
+    "contexto": "Con las caras reales delante, la migracion de los 48 tampoco cambia lo que se",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 486,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 15,
+    "contexto": "y `-title`, asi que el dibujo no cambia ni un pixel. Los 48 que quedan —500, 650",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 495,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 64,
+    "contexto": "`min-width: 769px` y `max-width: 768px` en el mismo fichero, asi que a 768,5px",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 497,
+    "antes": "unico",
+    "despues": "único",
+    "posicion": 69,
+    "contexto": "os dos cortes comparten ahora frontera en `48rem`: solapan en un unico ancho,",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 498,
+    "antes": "ultima",
+    "despues": "última",
+    "posicion": 17,
+    "contexto": "donde gana la ultima regla, en vez de dejar un hueco.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 504,
+    "antes": "segun",
+    "despues": "según",
+    "posicion": 3,
+    "contexto": "segun lo que de verdad pedian: `action-group` y `stepper` querian el o",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 523,
+    "antes": "dia",
+    "despues": "día",
+    "posicion": 9,
+    "contexto": "mismo dia que se enuncio.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 527,
+    "antes": "alli",
+    "despues": "allí",
+    "posicion": 47,
+    "contexto": "—`headingLevel`, 3 por omision— porque solo alli se sabe que hay por encima.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 541,
+    "antes": "ningun",
+    "despues": "ningún",
+    "posicion": 46,
+    "contexto": "es `'Open Sans', system-ui, …` pero no hay ningun `@font-face`, no se sirve",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 542,
+    "antes": "ningun",
+    "despues": "ningún",
+    "posicion": 3,
+    "contexto": "ningun fichero de fuente y la CSP del consumidor dice `font-src 'self'`",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 542,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 76,
+    "contexto": "ichero de fuente y la CSP del consumidor dice `font-src 'self'`, asi que",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 546,
+    "antes": "Ademas",
+    "despues": "Además",
+    "posicion": 3,
+    "contexto": "Ademas: `login` y `change-password` empiezan en `<h2>` y **no tienen `<",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 567,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 67,
+    "contexto": "cambiar 500 por 600 engorda el trazo y 900 por 700 lo adelgaza, asi que la",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 568,
+    "antes": "migracion",
+    "despues": "migración",
+    "posicion": 3,
+    "contexto": "migracion va componente a componente. El trinquete solo impide que la deud",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 576,
+    "antes": "auditoria",
+    "despues": "auditoría",
+    "posicion": 67,
+    "contexto": "seccion «lo que esta doctrina no cubre» anunciaba tres desde la auditoria",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 578,
+    "antes": "codigo",
+    "despues": "código",
+    "posicion": 27,
+    "contexto": "escribieron midiendo el codigo, no proponiendo criterios.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 583,
+    "antes": "ahi",
+    "despues": "ahí",
+    "posicion": 9,
+    "contexto": "llego ahi —«44px, tamaños de componente»—: no es un espacio, es el objetiv",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 584,
+    "antes": "minimo",
+    "despues": "mínimo",
+    "posicion": 10,
+    "contexto": "tactil minimo de WCAG 2.5.5, una medida de otra cosa metida en la escala de",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 590,
+    "antes": "ademas",
+    "despues": "además",
+    "posicion": 69,
+    "contexto": "ue son el mismo ancho solo si nadie tocó el tamaño de letra. Hay ademas un",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 597,
+    "antes": "despues",
+    "despues": "después",
+    "posicion": 57,
+    "contexto": "confirma, con el motivo si habra que explicarlo meses despues. Medido en un",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 609,
+    "antes": "ahi",
+    "despues": "ahí",
+    "posicion": 42,
+    "contexto": "con el clic de la persona. A partir de ahi lo que se ve deja de ser lo que se",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 623,
+    "antes": "numero",
+    "despues": "número",
+    "posicion": 13,
+    "contexto": "cuando el numero CAMBIA, asi que teclear una segunda cantidad por encima del",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 623,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 28,
+    "contexto": "cuando el número CAMBIA, asi que teclear una segunda cantidad por encima del",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 624,
+    "antes": "maximo",
+    "despues": "máximo",
+    "posicion": 3,
+    "contexto": "maximo dejaba el campo enseñando lo tecleado mientras el modelo contaba",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 626,
+    "antes": "Ademas",
+    "despues": "Además",
+    "posicion": 3,
+    "contexto": "Ademas, en un `type=number` el texto invalido (`1o0`) llega como cadena",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 633,
+    "antes": "dia",
+    "despues": "día",
+    "posicion": 30,
+    "contexto": "lleva cuarenta dialogos al dia ya no lo lee—, se añade `tone: 'danger'` para lo",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 646,
+    "antes": "minimo",
+    "despues": "mínimo",
+    "posicion": 45,
+    "contexto": "conserva su relleno horizontal y su ancho minimo, asi que desborda y pisa lo",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 646,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 53,
+    "contexto": "conserva su relleno horizontal y su ancho mínimo, asi que desborda y pisa lo",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 649,
+    "antes": "aqui",
+    "despues": "aquí",
+    "posicion": 73,
+    "contexto": "estilos no alcanzan al interior del componente—, tiene que vivir aqui.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 659,
+    "antes": "comprobacion",
+    "despues": "comprobación",
+    "posicion": 39,
+    "contexto": "paginador se pintaban FUERA de toda comprobacion de estado, asi que escribian",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 659,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 63,
+    "contexto": "paginador se pintaban FUERA de toda comprobación de estado, asi que escribian",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 660,
+    "antes": "tambien",
+    "despues": "también",
+    "posicion": 70,
+    "contexto": "ostrando 0 - 0 de 0 registro(s)» encima del indicador de carga y tambien",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 686,
+    "antes": "ultima",
+    "despues": "última",
+    "posicion": 63,
+    "contexto": "documento. Con tres paginas eso pasa SIEMPRE al llegar a la ultima. Ahora el",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 692,
+    "antes": "ademas",
+    "despues": "además",
+    "posicion": 35,
+    "contexto": "justo al pulsarlo, y `disabled` ademas lo saca del arbol de accesibilidad, con",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 692,
+    "antes": "arbol",
+    "despues": "árbol",
+    "posicion": 54,
+    "contexto": "justo al pulsarlo, y `disabled` además lo saca del arbol de accesibilidad, con",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 714,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 59,
+    "contexto": "La transparencia atenua texto Y fondo contra la pagina, asi que anula el",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 725,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 59,
+    "contexto": "tokens; se le anadieron las alertas tras un fallo y aun asi todo lo anterior",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 726,
+    "antes": "ningun",
+    "despues": "ningún",
+    "posicion": 25,
+    "contexto": "paso en verde, porque ningun par de los enumerados los cubria. Ahora recorre",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 729,
+    "antes": "tambien",
+    "despues": "también",
+    "posicion": 28,
+    "contexto": "deshabilitado. Encuentra tambien lo que nadie ha escrito todavia.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 747,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 33,
+    "contexto": "era **invisible** para ellas, asi que ni siquiera el foco delataba donde",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 752,
+    "antes": "despues",
+    "despues": "después",
+    "posicion": 3,
+    "contexto": "despues de que la persona ya intento enviar; si no se anuncia, quien usa",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 755,
+    "antes": "segun",
+    "despues": "según",
+    "posicion": 75,
+    "contexto": "aje usa el token de TEXTO del tono y no se atenua con `opacity`, segun",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 758,
+    "antes": "correccion",
+    "despues": "corrección",
+    "posicion": 51,
+    "contexto": "Detectado en `prestamo_front_atomic`, donde una correccion de documento de",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 759,
+    "antes": "aqui",
+    "despues": "aquí",
+    "posicion": 49,
+    "contexto": "identidad se rechazaba en silencio. Corregido aqui primero.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 761,
+    "antes": "Verificacion",
+    "despues": "Verificación",
+    "posicion": 5,
+    "contexto": "### Verificacion",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 772,
+    "antes": "dia",
+    "despues": "día",
+    "posicion": 3,
+    "contexto": "dia llamaba a `preventDefault`; en las de mes y ano lo cerraba sin c",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 773,
+    "antes": "segun",
+    "despues": "según",
+    "posicion": 58,
+    "contexto": "de modo que el mismo componente se comportaba distinto segun donde estuvieras.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 776,
+    "antes": "peticion",
+    "despues": "petición",
+    "posicion": 54,
+    "contexto": "una pulsacion de Escape no cancelada se trata como peticion de cierre, asi que",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 776,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 74,
+    "contexto": "lsacion de Escape no cancelada se trata como petición de cierre, asi que",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 781,
+    "antes": "aqui",
+    "despues": "aquí",
+    "posicion": 60,
+    "contexto": "Detectado en `prestamo_front_atomic` y corregido primero aqui, como manda la",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 789,
+    "antes": "codigo",
+    "despues": "código",
+    "posicion": 13,
+    "contexto": "contra su codigo; solo entraron las que ese front ya cumple EN PARTE.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 792,
+    "antes": "ningun",
+    "despues": "ningún",
+    "posicion": 3,
+    "contexto": "ningun script producia.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 794,
+    "antes": "Verificacion",
+    "despues": "Verificación",
+    "posicion": 5,
+    "contexto": "### Verificacion",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1046,
+    "antes": "arbol",
+    "despues": "árbol",
+    "posicion": 73,
+    "contexto": "ctor de pantalla sin poder anunciar filas ni celdas. Se midio el arbol de",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1118,
+    "antes": "unico",
+    "despues": "único",
+    "posicion": 3,
+    "contexto": "unico modo de callarlo era renombrar el import: un rodeo que ensucia e",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1119,
+    "antes": "codigo",
+    "despues": "código",
+    "posicion": 3,
+    "contexto": "codigo para contentar a una expresion regular. La comprobacion deja de",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1119,
+    "antes": "comprobacion",
+    "despues": "comprobación",
+    "posicion": 53,
+    "contexto": "código para contentar a una expresion regular. La comprobacion deja de",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1122,
+    "antes": "unica",
+    "despues": "única",
+    "posicion": 17,
+    "contexto": "desaparece la unica familia de falsos positivos que tenia.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1138,
+    "antes": "politica",
+    "despues": "política",
+    "posicion": 40,
+    "contexto": "Lo destapo migrar el consumidor a la politica 1.2.2, que prohibe primitivas",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1160,
+    "antes": "ningun",
+    "despues": "ningún",
+    "posicion": 59,
+    "contexto": "tener desactualizada precisamente porque no rompe nada: ningun compilador lo",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1161,
+    "antes": "codigo",
+    "despues": "código",
+    "posicion": 73,
+    "contexto": "lo leen las herramientas y quien pide un componente sin abrir su codigo.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1162,
+    "antes": "ejecucion",
+    "despues": "ejecución",
+    "posicion": 17,
+    "contexto": "En su primera ejecucion encontro deriva real: `data-table.pagination`,",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1181,
+    "antes": "arbol",
+    "despues": "árbol",
+    "posicion": 4,
+    "contexto": "el arbol de accesibilidad. La decision no se apoya en un defecto demostra",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1181,
+    "antes": "decision",
+    "despues": "decisión",
+    "posicion": 31,
+    "contexto": "el árbol de accesibilidad. La decision no se apoya en un defecto demostrado sino",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1189,
+    "antes": "Numero",
+    "despues": "Número",
+    "posicion": 3,
+    "contexto": "**Numero nuevo a proposito.** Durante agosto dos historias paralelas de e",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1190,
+    "antes": "numero",
+    "despues": "número",
+    "posicion": 57,
+    "contexto": "repositorio publicaron un 5.4.0 y un 5.5.0 con el mismo numero y contenido",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1191,
+    "antes": "version",
+    "despues": "versión",
+    "posicion": 27,
+    "contexto": "distinto, de modo que «la version 5.5.0» dejo de identificar nada. No se",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1192,
+    "antes": "ningun",
+    "despues": "ningún",
+    "posicion": 11,
+    "contexto": "reutiliza ningun 5.5.x: 5.6.0 es el primer numero que vuelve a designar un solo",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1192,
+    "antes": "numero",
+    "despues": "número",
+    "posicion": 44,
+    "contexto": "reutiliza ningún 5.5.x: 5.6.0 es el primer numero que vuelve a designar un solo",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1193,
+    "antes": "arbol",
+    "despues": "árbol",
+    "posicion": 1,
+    "contexto": "arbol. `main` es el tronco unico desde aqui.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1193,
+    "antes": "unico",
+    "despues": "único",
+    "posicion": 28,
+    "contexto": "árbol. `main` es el tronco unico desde aqui.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1193,
+    "antes": "aqui",
+    "despues": "aquí",
+    "posicion": 40,
+    "contexto": "árbol. `main` es el tronco único desde aqui.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1195,
+    "antes": "version",
+    "despues": "versión",
+    "posicion": 6,
+    "contexto": "Esta version RESCATA sobre `main` el trabajo que se habia quedado en la rama",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1209,
+    "antes": "tambien",
+    "despues": "también",
+    "posicion": 38,
+    "contexto": "**El generador de UI y el catalogo tambien se actualizan**: `generate-ui`",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1231,
+    "antes": "Ademas",
+    "despues": "Además",
+    "posicion": 3,
+    "contexto": "Ademas once controles dividian su contraste con `opacity` DESPUES de",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1231,
+    "antes": "DESPUES",
+    "despues": "DESPUÉS",
+    "posicion": 61,
+    "contexto": "Además once controles dividian su contraste con `opacity` DESPUES de",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1237,
+    "antes": "ningun",
+    "despues": "ningún",
+    "posicion": 14,
+    "contexto": "existen en ningun tema, en cuatro paginas del escaparate.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1239,
+    "antes": "asi",
+    "despues": "así",
+    "posicion": 62,
+    "contexto": "se ponia el mensaje de error y se salia sin tocar `files`, asi que el",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1247,
+    "antes": "linea",
+    "despues": "línea",
+    "posicion": 46,
+    "contexto": "- **El gate dejaba de ver los comentarios de linea** y denunciaba como «color",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1254,
+    "antes": "ningun",
+    "despues": "ningún",
+    "posicion": 52,
+    "contexto": "`thead tr`, `tbody tr` y `tbody` **sin restituir ningun rol**, de modo que un",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1256,
+    "antes": "aqui",
+    "despues": "aquí",
+    "posicion": 19,
+    "contexto": "y no se parchea aqui: un `role=\"table\"` suelto, con los hijos ya sin rol,",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1257,
+    "antes": "arbol",
+    "despues": "árbol",
+    "posicion": 14,
+    "contexto": "produce un arbol de accesibilidad invalido. Requiere decidirse entero y",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1662,
+    "antes": "linea",
+    "despues": "línea",
+    "posicion": 4,
+    "contexto": "La linea `5.4.0-beta.1` (2026-08-05) se consolida como `5.4.0` estable: l",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1663,
+    "antes": "version",
+    "despues": "versión",
+    "posicion": 39,
+    "contexto": "cambios no eran experimentales y esta version es el ADN oficial de los",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1673,
+    "antes": "tambien",
+    "despues": "también",
+    "posicion": 53,
+    "contexto": "- `tools/check-invalid-css-values.js` detecta ahora tambien el patron `-var(` (antes solo `NNvar(`), cerrando el hueco que d",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1677,
+    "antes": "Politica",
+    "despues": "Política",
+    "posicion": 5,
+    "contexto": "- **Politica Atomic-first 1.1.0:** el gate de consumidores (`governance/consu",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1677,
+    "antes": "tambien",
+    "despues": "también",
+    "posicion": 126,
+    "contexto": "`governance/consumer/check-atomic-provenance.mjs`) escanea ahora tambien los archivos `.ts` de las raices de features — primitivas visual",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2456,
+    "antes": "automatico",
+    "despues": "automático",
+    "posicion": 396,
+    "contexto": ")` y `color: var(--text-color)` para respetar el Dark/Light Mode automatico del ecosistema. Los iconos de estado deben usar `color: var(--da",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2478,
+    "antes": "ultima",
+    "despues": "última",
+    "posicion": 174,
+    "contexto": "ace` a `calc(var(--so-track-size) + var(--space-8))` para que la ultima fila quede visible por encima de la barra horizontal cuando exis",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2480,
+    "antes": "unico",
+    "despues": "único",
+    "posicion": 100,
+    "contexto": "mpactas**: `TableComponent` centra verticalmente las celdas cuyo unico contenido es `app-chip`, sin alterar celdas compuestas como `Est",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2504,
+    "antes": "minimo",
+    "despues": "mínimo",
+    "posicion": 187,
+    "contexto": "miento excesivo en pantalla completa. `chart-panel` baja su alto minimo a 240 px para trabajar dentro de la altura fija del padre sin re",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2512,
+    "antes": "minimo",
+    "despues": "mínimo",
+    "posicion": 76,
+    "contexto": "simetrica de paneles de grafico**: `chart-panel` reduce su alto minimo a 320 px para evitar espacios vacios excesivos en tarjetas de gr",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2520,
+    "antes": "minimo",
+    "despues": "mínimo",
+    "posicion": 129,
+    "contexto": "t-panel` para que los contenedores de graficos mantengan un alto minimo estable, llenen el alto disponible de tarjetas estiradas en grid",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2545,
+    "antes": "minimo",
+    "despues": "mínimo",
+    "posicion": 34,
+    "contexto": "- **Limpieza de utilidad de alto minimo**: Se retiro `min-h-380` porque ya no se requiere para el grafic",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2553,
+    "antes": "correccion",
+    "despues": "corrección",
+    "posicion": 198,
+    "contexto": "to disponible cuando el consumidor declara `height=\"100%\"`. Esta correccion permite que los graficos embebidos en tarjetas altas no queden l",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2573,
+    "antes": "Auditoria",
+    "despues": "Auditoría",
+    "posicion": 5,
+    "contexto": "### Auditoria Profunda del Ecosistema — Sincronizacion Total y Limpieza",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2577,
+    "antes": "Auditoria",
+    "despues": "Auditoría",
+    "posicion": 51,
+    "contexto": "- **114/114 archivos `shared/ui` sincronizados**: Auditoria SHA-256 completa detecto 10 archivos con drift y 5 MISSING en Ta",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2578,
+    "antes": "correccion",
+    "despues": "corrección",
+    "posicion": 47,
+    "contexto": "- **WebView2 canvas fix retroalimentado**: La correccion `ctx.save()`/`ctx.restore()` incondicional para todos los tipos",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2579,
+    "antes": "verificacion",
+    "despues": "verificación",
+    "posicion": 181,
+    "contexto": "cubre los 7 archivos CSS del directorio `src/styles/themes/` con verificacion SHA-256 individual por archivo.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2881,
+    "antes": "documentacion",
+    "despues": "documentación",
+    "posicion": 95,
+    "contexto": "`AvatarGroup`, `Combobox`, `TagInput`, `Timeline`, `Popup` story/documentacion reforzada.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2890,
+    "antes": "validacion",
+    "despues": "validación",
+    "posicion": 15,
+    "contexto": "- Workflow de validacion de build/lint/test en `.github/workflows/ci.yml`.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2899,
+    "antes": "version",
+    "despues": "versión",
+    "posicion": 80,
+    "contexto": "y `src/stories/Configure.mdx` actualizados con inventario real y version 4.0.0.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2900,
+    "antes": "version",
+    "despues": "versión",
+    "posicion": 32,
+    "contexto": "- `package.json` actualizado a version `4.0.0`.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2913,
+    "antes": "ejecucion",
+    "despues": "ejecución",
+    "posicion": 6,
+    "contexto": "- La ejecucion local de `npm` no esta disponible en este entorno de agente.",
+    "codigo": false
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2914,
+    "antes": "validacion",
+    "despues": "validación",
+    "posicion": 6,
+    "contexto": "- La validacion tecnica completa queda automatizada en GitHub Actions mediante `",
+    "codigo": false
+  }
+]

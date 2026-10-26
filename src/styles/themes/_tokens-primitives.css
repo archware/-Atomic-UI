@@ -40,9 +40,11 @@
    --ios-blue-dark: #0A84FF;
 
    /* ─────────────────────────────────────────────────────────────────────────
-     TIPOGRAFÍA
+     TIPOGRAFÍA (Carga 100 % local vía _fonts.css)
      ───────────────────────────────────────────────────────────────────────── */
-   --font-family-base: 'Open Sans', system-ui, -apple-system, sans-serif;
+   --font-family-base: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+   --font-family-heading: 'Quicksand', 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+   --font-family-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
 
 
    /* ─────────────────────────────────────────────────────────────────────────
@@ -210,17 +212,16 @@
       para quien dependa del valor anterior. */
 
    /* ─────────────────────────────────────────────────────────────────────────
-     ESCALA DE PESO TIPOGRAFICO
+     ESCALA DE PESO TIPOGRÁFICO
 
-     Cuatro pasos, y son los que la familia sabe dibujar. `'Open Sans'` no se
-     carga nunca —no hay @font-face, no se sirve ningun fichero y la CSP del
-     consumidor dice font-src 'self'—, asi que manda `system-ui`: en Windows,
-     Segoe UI, con caras reales en 400 (segoeui), 600 (seguisb), 700 (segoeuib) y
-     900 (seguibl). Comprobado en C:\Windows\Fonts.
+     Cuatro pasos gobernados sobre las familias locales cargadas en `_fonts.css`
+     (`'Open Sans'` para cuerpo/controles y `'Quicksand'` para encabezados/títulos,
+     servidas desde `./fonts/*.woff2` bajo `font-src 'self'`, con respaldo en
+     `system-ui` / `Segoe UI`).
 
-     Lo que NO tiene cara propia es 500, 650 y 750: el navegador los resuelve a
-     su vecino sin decirlo. Por eso la escala tiene cuatro pasos y no seis.
-     Capitulo 13.
+     La escala de uso en componentes mantiene cuatro pasos semánticos (400, 600,
+     700 y 800) para evitar pesos intermedios arbitrarios en hojas de estilo.
+     Capítulo 13.
      ───────────────────────────────────────────────────────────────────────── */
    --font-weight-body: 400;
    /* Texto corrido. */

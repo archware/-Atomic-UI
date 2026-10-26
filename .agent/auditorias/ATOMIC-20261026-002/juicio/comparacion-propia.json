@@ -1,0 +1,167 @@
+{
+  "asignacion": "ATOMIC-20261026-002",
+  "metodo": "Comparación independiente con copias previas, posiciones de la salida original, preservación por ordinal y parsing estático de IDs HTML.",
+  "hallazgos": 150,
+  "archivos": {
+    "CHANGELOG.md": {
+      "sha256_antes": "6b94f63506a063c2bb08ba9fce020602d9f7034b147ab399f9450e8dba9c85b4",
+      "sha256_despues": "7ed91e444611d3412be335d4d79f38a2ca58a07c9dc7af9d1c1063d15960e492",
+      "hallazgos": 133,
+      "ocurrencias_prosa": 133,
+      "ocurrencias_contractuales": 0,
+      "historia_igual_con_correcciones_autorizadas": true,
+      "encabezados_corregidos": [
+        {
+          "linea_original": 761,
+          "id_anterior": "verificacion",
+          "encabezado_original": "### Verificacion",
+          "marcado_nuevo": "<h3 id=\"verificacion\">Verificación</h3>"
+        },
+        {
+          "linea_original": 794,
+          "id_anterior": "verificacion-1",
+          "encabezado_original": "### Verificacion",
+          "marcado_nuevo": "<h3 id=\"verificacion-1\">Verificación</h3>"
+        },
+        {
+          "linea_original": 2573,
+          "id_anterior": "auditoria-profunda-del-ecosistema--sincronizacion-total-y-limpieza",
+          "encabezado_original": "### Auditoria Profunda del Ecosistema — Sincronizacion Total y Limpieza",
+          "marcado_nuevo": "<a id=\"auditoria-profunda-del-ecosistema--sincronizacion-total-y-limpieza\"></a>\n\n### Auditoría Profunda del Ecosistema — Sincronizacion Total y Limpieza"
+        }
+      ],
+      "encabezados_no_afectados": 355,
+      "anclas_Unicode_verificacion_conservadas": 43,
+      "ids_html": [
+        {
+          "etiqueta": "h3",
+          "id": "verificacion",
+          "linea": 772
+        },
+        {
+          "etiqueta": "h3",
+          "id": "verificacion-1",
+          "linea": 805
+        },
+        {
+          "etiqueta": "a",
+          "id": "auditoria-profunda-del-ecosistema--sincronizacion-total-y-limpieza",
+          "linea": 2584
+        }
+      ],
+      "ids_sin_colisiones": true,
+      "bloques_codigo": 0,
+      "spans_codigo": 1666,
+      "bloques_identicos_por_ordinal": true,
+      "spans_identicos_por_ordinal": true,
+      "fechas_identicas_por_ordinal": true,
+      "semver_identicas_por_ordinal": true,
+      "destinos_enlaces_identicos_por_ordinal": true,
+      "claves_frontmatter_identicas": true,
+      "utf8_sin_bom": true,
+      "retornos_carro": 0,
+      "lf": 2932
+    },
+    "LESSONS_LEARNED.md": {
+      "sha256_antes": "d6d917c8f8f98559390d1c1c33abb09ae40badae2843f00badb0c0915eeaa676",
+      "sha256_despues": "c77fcfe897d33b1b7dfeaa1c2902cbc67176e7d1c6cc7f4dfa972b7de10f803d",
+      "hallazgos": 17,
+      "ocurrencias_prosa": 18,
+      "ocurrencias_contractuales": 0,
+      "historia_igual_con_correcciones_autorizadas": true,
+      "encabezados_corregidos": [
+        {
+          "linea_original": 912,
+          "id_anterior": "2026-07-01---auditoria-de-ecosistema-drift-dependencias-y-seguridad",
+          "encabezado_original": "## [2026-07-01] - Auditoria de Ecosistema: Drift, Dependencias y Seguridad",
+          "marcado_nuevo": "<a id=\"2026-07-01---auditoria-de-ecosistema-drift-dependencias-y-seguridad\"></a>\n\n## [2026-07-01] - Auditoría de Ecosistema: Drift, Dependencias y Seguridad"
+        },
+        {
+          "linea_original": 918,
+          "id_anterior": "2-las-dependencias-de-packagejson-tambien-son-parte-de-la-fuente-de-la-verdad",
+          "encabezado_original": "### 2. Las Dependencias de package.json tambien son parte de la Fuente de la Verdad",
+          "marcado_nuevo": "<a id=\"2-las-dependencias-de-packagejson-tambien-son-parte-de-la-fuente-de-la-verdad\"></a>\n\n### 2. Las Dependencias de package.json también son parte de la Fuente de la Verdad"
+        }
+      ],
+      "encabezados_no_afectados": 85,
+      "anclas_Unicode_verificacion_conservadas": 0,
+      "ids_html": [
+        {
+          "etiqueta": "a",
+          "id": "2026-07-01---auditoria-de-ecosistema-drift-dependencias-y-seguridad",
+          "linea": 925
+        },
+        {
+          "etiqueta": "a",
+          "id": "2-las-dependencias-de-packagejson-tambien-son-parte-de-la-fuente-de-la-verdad",
+          "linea": 933
+        }
+      ],
+      "ids_sin_colisiones": true,
+      "bloques_codigo": 4,
+      "spans_codigo": 657,
+      "bloques_identicos_por_ordinal": true,
+      "spans_identicos_por_ordinal": true,
+      "fechas_identicas_por_ordinal": true,
+      "semver_identicas_por_ordinal": true,
+      "destinos_enlaces_identicos_por_ordinal": true,
+      "claves_frontmatter_identicas": true,
+      "utf8_sin_bom": true,
+      "retornos_carro": 0,
+      "lf": 1060
+    },
+    ".agents/desviaciones/DESVIACION-20260929-005.md": {
+      "sha256_antes": "d3d45402db2e1d8d66a2058838c11ad63e18cacca2df7626be7ff96eeedad0e5",
+      "sha256_despues": "4e4423abacaee518c731e9f364b556d483a485f1110b41b48b505354859c12bd",
+      "historia_integra_salvo_campo_autorizado_y_CRLF": true,
+      "campo_antes": "apartado_roto: \"§3.1\"",
+      "campo_despues": "apartado_roto: \"por-clasificar\"",
+      "bloques_codigo_anteriores_identicos": 0,
+      "spans_codigo_anteriores_identicos": 0,
+      "referencia_material_verificada": "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md",
+      "version_material": "2.5.0",
+      "apartado_material": "3.1",
+      "metadatos_adicionales": false,
+      "utf8_sin_bom": true,
+      "retornos_carro_antes": 99,
+      "retornos_carro_despues": 0,
+      "lf_despues": 118
+    },
+    ".agents/desviaciones/DESVIACION-20261024-011.md": {
+      "sha256_antes": "923389f68658d898beb805702f63be8b3b9e5e1801d22a8883c98a820b065a61",
+      "sha256_despues": "5ce3ce13688099f988b29cc1f2b32302beabfe0722adcecf1ed5ce4d1a84409d",
+      "historia_integra_salvo_campo_autorizado_y_CRLF": true,
+      "campo_antes": "estado: abierta",
+      "campo_despues": "estado: corregida",
+      "bloques_codigo_anteriores_identicos": 2,
+      "spans_codigo_anteriores_identicos": 5,
+      "referencia_material_verificada": "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md",
+      "version_material": "2.5.0",
+      "apartado_material": "3.1",
+      "metadatos_adicionales": false,
+      "utf8_sin_bom": true,
+      "retornos_carro_antes": 0,
+      "retornos_carro_despues": 0,
+      "lf_despues": 74
+    }
+  },
+  "diff_check": {
+    "codigo": 0,
+    "stdout": "",
+    "stderr": "warning: in the working copy of '.agents/desviaciones/DESVIACION-20260929-005.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of '.agents/desviaciones/DESVIACION-20261024-011.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'CHANGELOG.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'LESSONS_LEARNED.md', LF will be replaced by CRLF the next time Git touches it\n"
+  },
+  "ocurrencias_prosa": 151,
+  "contratos_modificados": 0,
+  "doble_ocurrencia": [
+    {
+      "ruta": "LESSONS_LEARNED.md",
+      "linea": 920,
+      "columna": 126
+    },
+    {
+      "ruta": "LESSONS_LEARNED.md",
+      "linea": 920,
+      "columna": 180
+    }
+  ]
+}

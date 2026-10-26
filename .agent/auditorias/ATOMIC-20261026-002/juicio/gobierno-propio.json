@@ -1,0 +1,15 @@
+{
+  "continuidad_ventana": 3,
+  "corte_ACC_copiado_integro": true,
+  "cuerpo_previo_continuidad_preservado": true,
+  "bitacora_previa_preservada": true,
+  "destinos_locales": 63,
+  "destinos_ausentes": [],
+  "sha256": {
+    "docs/CONTINUIDAD_AGENTES.md": "d2d98f31a63476b19c48ef45995fefb2e27b2fbf60b1d1540b05701dab18813e",
+    "docs/BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md": "b3bbfe923369a2b6614abfd302bf601ffa9efbfcd8607f4dee806b02b7d13a32",
+    ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md": "56fdcd14bd9a376197fff6ddd6530345b0ab04efe126ec2c65a292b4440ffaf4",
+    ".agents/desviaciones/DESVIACION-ATOMIC-20261026-002-001.md": "5fccc78a335f9e9a70b2631595b8439c966506d743d933c6e24008f956f382e1",
+    ".agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md": "de9d2b846031b45db1f6343258b805f8d6062f22f089dd5ce1ae7518c7a84158"
+  }
+}

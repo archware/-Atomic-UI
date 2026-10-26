@@ -14,16 +14,10 @@
    3. ¡Listo! Todo se actualiza automáticamente
    ============================================================================= */
 
-/* Fonts (Local - @fontsource) */
-@import "@fontsource/open-sans/400.css";
-@import "@fontsource/open-sans/500.css";
-@import "@fontsource/open-sans/600.css";
-@import "@fontsource/open-sans/700.css";
-
 /* Iconografia (Local - FontAwesome) */
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
-/* Sistema de temas y tokens */
+/* Sistema de temas y tokens (incluye tipografía local Open Sans + Quicksand vía _fonts.css) */
 @import './styles/themes/index.css';
 
 /* Tokens de Tabla (CR?TICO para estilos de cabecera y hover) */

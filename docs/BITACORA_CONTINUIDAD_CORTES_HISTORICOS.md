@@ -2,11 +2,11 @@
 title: "Bitácora histórica de cortes de continuidad de Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-10-25"
-last_updated: "2026-10-25"
+last_updated: "2026-10-26"
 document_type: "bitácora histórica de continuidad"
 status: "vigente"
-version: "1.0.0"
-change_id: "DOC-20261025-001"
+version: "1.0.3"
+change_id: "ATOMIC-20261026-003"
 canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
@@ -14,6 +14,25 @@ document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDA
 # Bitácora histórica de cortes de continuidad de Atomic UI
 
 Este archivo conserva los cortes históricos archivados desde [`CONTINUIDAD_AGENTES.md`](./CONTINUIDAD_AGENTES.md) conforme a la ventana deslizante de `DOC-20261025-001`. Solo debe consultarse bajo demanda cuando se investigue un corte anterior.
+
+## Corte archivado por ATOMIC-20261026-003
+
+### 3. Unidades CLT-20261024-003 y ATOMIC-20261024-003 — reconciliación CVA en Input y procedencia de acciones
+
+`InputComponent` reconcilia valores nativos en `change`, `focus` y `blur` cuando el DOM cambia sin disparar `input`, manteniendo la paridad exacta con la copia gobernada de `ventas-cxc`. Asimismo, se consolida la historia `Basic` de `ActionGroup`, se actualiza `distribution/atomic-source-manifest.json` en el commit local autorizado `3e76966493d4b59273655b7df18c1084fa044b9b` y se acredita `node scripts/check-atomic-provenance.mjs` en `ventas-cxc` con 0 violaciones (`política 1.2.3, 95 componentes y 5 servicios con procedencia`). Véanse los roadmaps [CLT-20261024-003](../../.agent/roadmaps/ROADMAP_CLT-20261024-003_sincronizacion_formulario_clientes.md) y [ATOMIC-20261024-003](../../.agent/roadmaps/ROADMAP_ATOMIC-20261024-003_cierre_procedencia_acciones.md).
+
+## Corte archivado por ATOMIC-20261026-002
+
+### 3. Unidad ACC-20261022-001 — estándar de acciones de catálogo
+
+La fuente incorpora `ActionItem.isMenuOnly` y conserva `ActionGroup.maxVisible` como límite genérico de acciones directas. `PaginaCrud` aplica la regla física del catálogo: Ver, Editar y Más acciones. La papelera de baja y el cambio de estado quedan en el menú; una tercera directa contextual solo se acepta con `accionDirectaContextual`, id existente, justificación y evidencia no vacías, y nunca para semánticas destructivas. Evidencia, validación y rollback en el [roadmap ACC](../../.agent/roadmaps/ROADMAP_ACC-20261022-001_estandar-acciones-catalogo.md).
+
+
+## Corte archivado por ATOMIC-20261026-001
+
+### 3. Unidad Select2 ATOMIC-20261020-002
+
+La corrección de `Select2` se limita a su capa flotante, pruebas y catálogo. No se deben modificar los contenedores de formularios para compensar el recorte ni sincronizar masivamente el ADN del consumidor. El estado comprobado, límites del ensayo y rollback viven en el [roadmap de Select2](../.agent/roadmaps/ROADMAP_ATOMIC-20261020-002_select2_capa_flotante.md).
 
 ## Corte previo ATOMIC-20261020-001
 

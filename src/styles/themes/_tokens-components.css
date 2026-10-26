@@ -76,7 +76,8 @@
    --table-color-primary:     var(--primary-color);
 
    /* --- Tipografía --- */
-   --table-font-family:        var(--font-sans, 'Inter', sans-serif);
+   --heading-font-family:      var(--font-family-heading);
+   --table-font-family:        var(--font-family-base);
    --table-font-size:          0.875rem;
    --table-font-size-header:   0.75rem;
    --table-font-weight-header: 600;

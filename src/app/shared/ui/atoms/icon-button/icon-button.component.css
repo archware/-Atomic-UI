@@ -50,6 +50,7 @@
 }
 
 .icon-btn--close:focus-visible,
+.icon-btn--close-ghost:focus-visible,
 .icon-btn--close-soft:focus-visible,
 .icon-btn--hanging-close:focus-visible {
   outline: 2px solid var(--danger-color);
@@ -174,6 +175,36 @@
   border-color: var(--danger-color-dark);
   transform: scale(0.9);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Close-ghost variant - neutro en reposo; en hover solo colorea la X en rojo sin pintar fondo ni borde */
+.icon-btn--close-ghost {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-color-secondary);
+  border-radius: var(--radius-full, 50%);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none;
+}
+
+.icon-btn--close-ghost:hover:not(:disabled) {
+  background: transparent;
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--danger-color-text);
+  transform: scale(1.1);
+  box-shadow: none;
+  filter: none;
+}
+
+.icon-btn--close-ghost:active:not(:disabled) {
+  background: transparent;
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--danger-color-dark);
+  transform: scale(0.92);
+  box-shadow: none;
+  filter: none;
 }
 
 /* Close-soft variant - círculo suave peligro en reposo y sólido en hover */

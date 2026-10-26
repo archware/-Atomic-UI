@@ -208,9 +208,13 @@ describe('InputComponent - modos de etiqueta', () => {
 
       const etiqueta = etiquetaFlotante(raiz);
       const mensaje = raiz.querySelector('.form-error');
+      expect(mensaje).not.toBeNull();
+      if (mensaje === null) {
+        throw new Error('Se esperaba el mensaje de error');
+      }
       expect(etiqueta?.parentElement?.classList.contains('fl-control')).toBe(true);
       expect(mensaje?.closest('.fl-control')).toBeNull();
-      expect(campo(raiz).getAttribute('aria-describedby')).toBe(mensaje?.id);
+      expect(campo(raiz).getAttribute('aria-describedby')).toBe(mensaje.id);
       expect(campo(raiz).getAttribute('aria-invalid')).toBe('true');
       expect(etiqueta?.classList.contains('fl-label--error')).toBe(true);
     });
@@ -221,10 +225,14 @@ describe('InputComponent - modos de etiqueta', () => {
       await fixture.whenStable();
       const raiz: HTMLElement = fixture.nativeElement;
       const ayuda = raiz.querySelector('.field__message');
+      expect(ayuda).not.toBeNull();
+      if (ayuda === null) {
+        throw new Error('Se esperaba el mensaje de ayuda');
+      }
 
       expect(ayuda?.textContent?.trim()).toBe('Como figura en su DNI');
       expect(ayuda?.closest('.fl-control')).toBeNull();
-      expect(campo(raiz).getAttribute('aria-describedby')).toBe(ayuda?.id);
+      expect(campo(raiz).getAttribute('aria-describedby')).toBe(ayuda.id);
     });
   });
 

@@ -13,7 +13,7 @@
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-family: var(--font-family-base) !important;
   font-size: 0.75rem !important;
   line-height: 1 !important;
   color: var(--text-color-secondary) !important;

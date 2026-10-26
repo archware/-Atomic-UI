@@ -1,0 +1,27 @@
+{
+  "fuente_previa": "C:\\Users\\cotaha\\source\\repos\\.agent\\auditorias\\DOC-20261026-001\\atomic-pruebas\\veredicto.json",
+  "cuatro_specs_identicas": 4,
+  "ejecuciones_nuevas": 0,
+  "detalle": [
+    {
+      "ruta": "src/app/shared/ui/atoms/input/input.component.spec.ts",
+      "sha256": "ceb4a0563f9c502b4aa079fcdb7abe1ff7ae47e2ca089fd382ed0127a6d2c57a",
+      "identica": true
+    },
+    {
+      "ruta": "src/app/shared/ui/atoms/select/select-variant.spec.ts",
+      "sha256": "21e813acc1752c273556acfa475164f92c3bd93933aadf761110a20f7efd4f69",
+      "identica": true
+    },
+    {
+      "ruta": "src/app/shared/ui/atoms/textarea/textarea.component.spec.ts",
+      "sha256": "910f7048ac898ae92467972c7bacd15a43b1d8404aeb252406d33804317adc3f",
+      "identica": true
+    },
+    {
+      "ruta": "src/app/shared/ui/molecules/dropdown/dropdown-variant.spec.ts",
+      "sha256": "b62af65f88d895cc73b82bb013b325bdbee37641e4c25ca63348b38e2b207f42",
+      "identica": true
+    }
+  ]
+}

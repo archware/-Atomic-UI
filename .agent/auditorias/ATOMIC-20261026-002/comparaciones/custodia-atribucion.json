@@ -1,0 +1,46 @@
+{
+  "captura_previa": "2026-10-26T13:29:00.6773572-05:00",
+  "captura_final": "2026-10-26T13:54:14.663061-05:00",
+  "repositorios_antes": 38,
+  "repositorios_despues": 38,
+  "sondeo_comparado_codigo": 1,
+  "eventos": 124,
+  "por_repositorio": [
+    {
+      "repositorio": "-Atomic-UI",
+      "eventos": 47,
+      "atribucion": "Unidad documental; confinamiento0 contra captura previa"
+    },
+    {
+      "repositorio": ".",
+      "eventos": 16,
+      "atribucion": "Solo indice documental pertenece a la unidad; restantes eventos externos preservados"
+    },
+    {
+      "repositorio": "analisis-prestamo",
+      "eventos": 5,
+      "atribucion": "Actividad externa al reparto; sin escritura de esta unidad"
+    },
+    {
+      "repositorio": "cxc-ventas-back",
+      "eventos": 25,
+      "atribucion": "Actividad externa al reparto; sin escritura de esta unidad"
+    },
+    {
+      "repositorio": "prestamo_front_atomic",
+      "eventos": 23,
+      "atribucion": "Actividad externa al reparto; sin escritura de esta unidad"
+    },
+    {
+      "repositorio": "prestamos_back",
+      "eventos": 8,
+      "atribucion": "Actividad externa al reparto; sin escritura de esta unidad"
+    }
+  ],
+  "mutaciones_rama_head_remotos_refs": [],
+  "confinamiento_codigo": 0,
+  "externas_en_atomic": 0,
+  "aviso_stash": 1,
+  "modo": "sucio_esperado",
+  "regla": "ORQ6.3 y6.4; artefactos propios de cierre se archivan tras la captura, dentro del reparto. No se persigue actividad ajena."
+}

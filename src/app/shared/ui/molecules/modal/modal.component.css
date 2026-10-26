@@ -8,7 +8,6 @@
     justify-content: center;
     z-index: 1000;
     animation: fadeIn 150ms ease;
-    overflow-y: auto;
     padding: var(--space-6) var(--space-4);
   }
 
@@ -81,6 +80,7 @@
 }
 
 .modal-title {
+  font-family: var(--font-family-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-weight-emphasis);
   color: var(--text-color);
@@ -112,9 +112,13 @@ app-icon-button.modal-close {
   }
 }
 
+.modal-body-scroll {
+  flex: 1;
+  min-height: 0;
+}
+
 .modal-body {
   padding: var(--space-4) var(--space-5);
-  overflow-y: auto;
 }
 
 .modal-footer {

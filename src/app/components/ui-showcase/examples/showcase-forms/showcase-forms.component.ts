@@ -6,7 +6,7 @@ import { InputComponent } from '../../../../shared/ui/atoms/input/input.componen
 import { SelectComponent } from '../../../../shared/ui/atoms/select/select.component';
 import { TextareaComponent } from '../../../../shared/ui/atoms/textarea/textarea.component';
 import { NumberInputComponent } from '../../../../shared/ui/atoms/number-input/number-input.component';
-import { FileInputComponent } from '../../../../shared/ui/atoms/file-input/file-input.component';
+import { FileInputComponent, FileInputFile } from '../../../../shared/ui/atoms/file-input/file-input.component';
 import { Select2Component, Select2Option } from '../../../../shared/ui/molecules/select2/select2.component';
 import { ComboboxComponent } from '../../../../shared/ui/molecules/combobox/combobox.component';
 import { TagInputComponent } from '../../../../shared/ui/molecules/tag-input/tag-input.component';
@@ -120,12 +120,15 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
           accept=".pdf,application/pdf"
           [multiple]="true"
           [maxSizeMB]="25"
+          [maxListHeight]="180"
           [showHeader]="true"
           headerTitle="Documentos cargados"
           [allowClearAll]="true"
           clearAllLabel="Limpiar lista"
           itemActionIcon="fa-solid fa-wand-magic-sparkles"
           itemActionLabel="Extraer páginas"
+          [(ngModel)]="dropzoneDemoFiles"
+          [ngModelOptions]="{standalone: true}"
         />
       </div>
     </section>
@@ -518,6 +521,15 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
   `]
 })
 export class ShowcaseFormsComponent {
+  dropzoneDemoFiles: FileInputFile[] = [
+    { name: 'expediente_clinico_2026.pdf', size: 1468006, type: 'application/pdf', file: new File([], 'expediente_clinico_2026.pdf', { type: 'application/pdf' }) },
+    { name: 'consentimiento_informado.pdf', size: 430080, type: 'application/pdf', file: new File([], 'consentimiento_informado.pdf', { type: 'application/pdf' }) },
+    { name: 'epicrisis_hospitalaria.pdf', size: 911360, type: 'application/pdf', file: new File([], 'epicrisis_hospitalaria.pdf', { type: 'application/pdf' }) },
+    { name: 'orden_quirurgica_firmada.pdf', size: 655360, type: 'application/pdf', file: new File([], 'orden_quirurgica_firmada.pdf', { type: 'application/pdf' }) },
+    { name: 'informe_radiologico_torax.pdf', size: 2097152, type: 'application/pdf', file: new File([], 'informe_radiologico_torax.pdf', { type: 'application/pdf' }) },
+    { name: 'alta_medica_resumen.pdf', size: 327680, type: 'application/pdf', file: new File([], 'alta_medica_resumen.pdf', { type: 'application/pdf' }) },
+  ];
+
   // Input values
   floatingInputValue = '';
   underlineInputValue = '';

@@ -1,0 +1,1361 @@
+[
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 201,
+    "antes": "Correccion",
+    "despues": "Corrección",
+    "columna": 1,
+    "contexto_original": "Correccion sobre `feat(tabs)` del mismo dia, detectada en revision adversarial",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 201,
+    "antes": "dia",
+    "despues": "día",
+    "columna": 41,
+    "contexto_original": "Correccion sobre `feat(tabs)` del mismo dia, detectada en revision adversarial",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 201,
+    "antes": "revision",
+    "despues": "revisión",
+    "columna": 59,
+    "contexto_original": "Correccion sobre `feat(tabs)` del mismo dia, detectada en revision adversarial",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 202,
+    "antes": "version",
+    "despues": "versión",
+    "columna": 31,
+    "contexto_original": "antes de publicar. La primera version mapeaba los cuatro cursores a la vez y no",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 211,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 45,
+    "contexto_original": "  `event.key` vale igual con modificadores, asi que entraban por el mismo",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 216,
+    "antes": "segun",
+    "despues": "según",
+    "columna": 16,
+    "contexto_original": "par de flechas segun ella; con cualquier modificador activo el manejador sale",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 217,
+    "antes": "tambien",
+    "despues": "también",
+    "columna": 31,
+    "contexto_original": "sin tocar el evento. Se anade tambien la entrada `ariaLabel`: el nombre",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 218,
+    "antes": "aplicacion",
+    "despues": "aplicación",
+    "columna": 66,
+    "contexto_original": "accesible del tablist estaba fijado a \"Tabs\" en ingles y ninguna aplicacion",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 219,
+    "antes": "ningun",
+    "despues": "ningún",
+    "columna": 72,
+    "contexto_original": "podia traducirlo. Ambas entradas tienen valor por defecto, de modo que ningun",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 226,
+    "antes": "ahi",
+    "despues": "ahí",
+    "columna": 67,
+    "contexto_original": "`click`. Quien navegaba con teclado alcanzaba la pestana activa y ahi se",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 233,
+    "antes": "ultima",
+    "despues": "última",
+    "columna": 45,
+    "contexto_original": "- `Home` y `End` saltan a la primera y a la ultima pestana.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 241,
+    "antes": "automatico",
+    "despues": "automático",
+    "columna": 30,
+    "contexto_original": "el desplazamiento horizontal automatico solo actua cuando el gesto viene del",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 242,
+    "antes": "Ningun",
+    "despues": "Ningún",
+    "columna": 8,
+    "contexto_original": "raton. Ningun consumidor necesita adaptarse.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 281,
+    "antes": "alli",
+    "despues": "allí",
+    "columna": 13,
+    "contexto_original": "  regresion alli era invisible. Con el incorporado, la compuerta sigue en verde.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 292,
+    "antes": "correccion",
+    "despues": "corrección",
+    "columna": 3,
+    "contexto_original": "  correccion a la fuente canonica. Corregirlo en el generador crearia en el",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 301,
+    "antes": "tambien",
+    "despues": "también",
+    "columna": 57,
+    "contexto_original": "`MediaQuery.textScalerOf` sobre `fontSize`, y aplicarlo tambien en el emisor",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 306,
+    "antes": "tamano",
+    "despues": "tamaño",
+    "columna": 27,
+    "contexto_original": "corte se resuelven con el tamano de la ventana y jamas con `textScaler`.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 416,
+    "antes": "aplicacion",
+    "despues": "aplicación",
+    "columna": 20,
+    "contexto_original": "  icono en toda la aplicacion —medido: de 19 botones de alta, uno solo lo",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 423,
+    "antes": "unico",
+    "despues": "único",
+    "columna": 66,
+    "contexto_original": "- **Capitulo 15 de la doctrina: «Se pliega lo que compite, no lo unico que hay».**",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 426,
+    "antes": "unico",
+    "despues": "único",
+    "columna": 23,
+    "contexto_original": "  sola, no. Plegar lo unico que hay esconde tras un clic la razon por la que",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 426,
+    "antes": "razon",
+    "despues": "razón",
+    "columna": 61,
+    "contexto_original": "  sola, no. Plegar lo unico que hay esconde tras un clic la razon por la que",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 429,
+    "antes": "decision",
+    "despues": "decisión",
+    "columna": 15,
+    "contexto_original": "  Sale de una decision real: seis pantallas de catalogo medidas, dos con varias",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 432,
+    "antes": "unico",
+    "despues": "único",
+    "columna": 6,
+    "contexto_original": "  lo unico que muestran.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 434,
+    "antes": "tambien",
+    "despues": "también",
+    "columna": 22,
+    "contexto_original": "  El capitulo recoge tambien el mismo presupuesto en horizontal: las acciones de",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 435,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 46,
+    "contexto_original": "  una fila comparten ancho con las columnas, asi que van como iconos con nombre",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 452,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 39,
+    "contexto_original": "  los margenes contiguos se colapsan, asi que la separacion total no crece.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 459,
+    "antes": "prohibicion",
+    "despues": "prohibición",
+    "columna": 30,
+    "contexto_original": "  no es un trinquete: es una prohibicion, y cualquier peso escrito a mano falla el",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 472,
+    "antes": "correccion",
+    "despues": "corrección",
+    "columna": 6,
+    "contexto_original": "  La correccion queda escrita dentro del capitulo 13, no borrada: la doctrina se",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 475,
+    "antes": "migracion",
+    "despues": "migración",
+    "columna": 36,
+    "contexto_original": "  Con las caras reales delante, la migracion de los 48 tampoco cambia lo que se",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 486,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 15,
+    "contexto_original": "  y `-title`, asi que el dibujo no cambia ni un pixel. Los 48 que quedan —500, 650,",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 495,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 64,
+    "contexto_original": "  `min-width: 769px` y `max-width: 768px` en el mismo fichero, asi que a 768,5px",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 497,
+    "antes": "unico",
+    "despues": "único",
+    "columna": 69,
+    "contexto_original": "  Los dos cortes comparten ahora frontera en `48rem`: solapan en un unico ancho,",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 498,
+    "antes": "ultima",
+    "despues": "última",
+    "columna": 17,
+    "contexto_original": "  donde gana la ultima regla, en vez de dejar un hueco.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 504,
+    "antes": "segun",
+    "despues": "según",
+    "columna": 3,
+    "contexto_original": "  segun lo que de verdad pedian: `action-group` y `stepper` querian el objetivo",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 523,
+    "antes": "dia",
+    "despues": "día",
+    "columna": 9,
+    "contexto_original": "  mismo dia que se enuncio.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 527,
+    "antes": "alli",
+    "despues": "allí",
+    "columna": 47,
+    "contexto_original": "  —`headingLevel`, 3 por omision— porque solo alli se sabe que hay por encima.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 541,
+    "antes": "ningun",
+    "despues": "ningún",
+    "columna": 46,
+    "contexto_original": "  es `'Open Sans', system-ui, …` pero no hay ningun `@font-face`, no se sirve",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 542,
+    "antes": "ningun",
+    "despues": "ningún",
+    "columna": 3,
+    "contexto_original": "  ningun fichero de fuente y la CSP del consumidor dice `font-src 'self'`, asi que",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 542,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 76,
+    "contexto_original": "  ningun fichero de fuente y la CSP del consumidor dice `font-src 'self'`, asi que",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 546,
+    "antes": "Ademas",
+    "despues": "Además",
+    "columna": 3,
+    "contexto_original": "  Ademas: `login` y `change-password` empiezan en `<h2>` y **no tienen `<h1>`**,",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 567,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 67,
+    "contexto_original": "  cambiar 500 por 600 engorda el trazo y 900 por 700 lo adelgaza, asi que la",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 568,
+    "antes": "migracion",
+    "despues": "migración",
+    "columna": 3,
+    "contexto_original": "  migracion va componente a componente. El trinquete solo impide que la deuda",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 576,
+    "antes": "auditoria",
+    "despues": "auditoría",
+    "columna": 67,
+    "contexto_original": "  seccion «lo que esta doctrina no cubre» anunciaba tres desde la auditoria",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 578,
+    "antes": "codigo",
+    "despues": "código",
+    "columna": 27,
+    "contexto_original": "  escribieron midiendo el codigo, no proponiendo criterios.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 583,
+    "antes": "ahi",
+    "despues": "ahí",
+    "columna": 9,
+    "contexto_original": "  llego ahi —«44px, tamaños de componente»—: no es un espacio, es el objetivo",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 584,
+    "antes": "minimo",
+    "despues": "mínimo",
+    "columna": 10,
+    "contexto_original": "  tactil minimo de WCAG 2.5.5, una medida de otra cosa metida en la escala de",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 590,
+    "antes": "ademas",
+    "despues": "además",
+    "columna": 69,
+    "contexto_original": "  que son el mismo ancho solo si nadie tocó el tamaño de letra. Hay ademas un",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 597,
+    "antes": "despues",
+    "despues": "después",
+    "columna": 57,
+    "contexto_original": "  confirma, con el motivo si habra que explicarlo meses despues. Medido en un",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 609,
+    "antes": "ahi",
+    "despues": "ahí",
+    "columna": 42,
+    "contexto_original": "  con el clic de la persona. A partir de ahi lo que se ve deja de ser lo que se",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 623,
+    "antes": "numero",
+    "despues": "número",
+    "columna": 13,
+    "contexto_original": "  cuando el numero CAMBIA, asi que teclear una segunda cantidad por encima del",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 623,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 28,
+    "contexto_original": "  cuando el numero CAMBIA, asi que teclear una segunda cantidad por encima del",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 624,
+    "antes": "maximo",
+    "despues": "máximo",
+    "columna": 3,
+    "contexto_original": "  maximo dejaba el campo enseñando lo tecleado mientras el modelo contaba otra",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 626,
+    "antes": "Ademas",
+    "despues": "Además",
+    "columna": 3,
+    "contexto_original": "  Ademas, en un `type=number` el texto invalido (`1o0`) llega como cadena vacia",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 633,
+    "antes": "dia",
+    "despues": "día",
+    "columna": 30,
+    "contexto_original": "  lleva cuarenta dialogos al dia ya no lo lee—, se añade `tone: 'danger'` para lo",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 646,
+    "antes": "minimo",
+    "despues": "mínimo",
+    "columna": 45,
+    "contexto_original": "  conserva su relleno horizontal y su ancho minimo, asi que desborda y pisa lo",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 646,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 53,
+    "contexto_original": "  conserva su relleno horizontal y su ancho minimo, asi que desborda y pisa lo",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 649,
+    "antes": "aqui",
+    "despues": "aquí",
+    "columna": 73,
+    "contexto_original": "  —sus estilos no alcanzan al interior del componente—, tiene que vivir aqui.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 659,
+    "antes": "comprobacion",
+    "despues": "comprobación",
+    "columna": 39,
+    "contexto_original": "  paginador se pintaban FUERA de toda comprobacion de estado, asi que escribian",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 659,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 63,
+    "contexto_original": "  paginador se pintaban FUERA de toda comprobacion de estado, asi que escribian",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 660,
+    "antes": "tambien",
+    "despues": "también",
+    "columna": 70,
+    "contexto_original": "  «Mostrando 0 - 0 de 0 registro(s)» encima del indicador de carga y tambien",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 686,
+    "antes": "ultima",
+    "despues": "última",
+    "columna": 63,
+    "contexto_original": "  documento. Con tres paginas eso pasa SIEMPRE al llegar a la ultima. Ahora el",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 692,
+    "antes": "ademas",
+    "despues": "además",
+    "columna": 35,
+    "contexto_original": "  justo al pulsarlo, y `disabled` ademas lo saca del arbol de accesibilidad, con",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 692,
+    "antes": "arbol",
+    "despues": "árbol",
+    "columna": 54,
+    "contexto_original": "  justo al pulsarlo, y `disabled` ademas lo saca del arbol de accesibilidad, con",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 714,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 59,
+    "contexto_original": "  La transparencia atenua texto Y fondo contra la pagina, asi que anula el",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 725,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 59,
+    "contexto_original": "  tokens; se le anadieron las alertas tras un fallo y aun asi todo lo anterior",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 726,
+    "antes": "ningun",
+    "despues": "ningún",
+    "columna": 25,
+    "contexto_original": "  paso en verde, porque ningun par de los enumerados los cubria. Ahora recorre",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 729,
+    "antes": "tambien",
+    "despues": "también",
+    "columna": 28,
+    "contexto_original": "  deshabilitado. Encuentra tambien lo que nadie ha escrito todavia.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 747,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 33,
+    "contexto_original": "  era **invisible** para ellas, asi que ni siquiera el foco delataba donde",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 752,
+    "antes": "despues",
+    "despues": "después",
+    "columna": 3,
+    "contexto_original": "  despues de que la persona ya intento enviar; si no se anuncia, quien usa lector",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 755,
+    "antes": "segun",
+    "despues": "según",
+    "columna": 75,
+    "contexto_original": "  El mensaje usa el token de TEXTO del tono y no se atenua con `opacity`, segun",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 758,
+    "antes": "correccion",
+    "despues": "corrección",
+    "columna": 51,
+    "contexto_original": "  Detectado en `prestamo_front_atomic`, donde una correccion de documento de",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 759,
+    "antes": "aqui",
+    "despues": "aquí",
+    "columna": 49,
+    "contexto_original": "  identidad se rechazaba en silencio. Corregido aqui primero.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 761,
+    "antes": "Verificacion",
+    "despues": "Verificación",
+    "columna": 5,
+    "contexto_original": "### Verificacion",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 772,
+    "antes": "dia",
+    "despues": "día",
+    "columna": 3,
+    "contexto_original": "  dia llamaba a `preventDefault`; en las de mes y ano lo cerraba sin cancelar,",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 773,
+    "antes": "segun",
+    "despues": "según",
+    "columna": 58,
+    "contexto_original": "  de modo que el mismo componente se comportaba distinto segun donde estuvieras.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 776,
+    "antes": "peticion",
+    "despues": "petición",
+    "columna": 54,
+    "contexto_original": "  una pulsacion de Escape no cancelada se trata como peticion de cierre, asi que",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 776,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 74,
+    "contexto_original": "  una pulsacion de Escape no cancelada se trata como peticion de cierre, asi que",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 781,
+    "antes": "aqui",
+    "despues": "aquí",
+    "columna": 60,
+    "contexto_original": "  Detectado en `prestamo_front_atomic` y corregido primero aqui, como manda la",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 789,
+    "antes": "codigo",
+    "despues": "código",
+    "columna": 13,
+    "contexto_original": "  contra su codigo; solo entraron las que ese front ya cumple EN PARTE.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 792,
+    "antes": "ningun",
+    "despues": "ningún",
+    "columna": 3,
+    "contexto_original": "  ningun script producia.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 794,
+    "antes": "Verificacion",
+    "despues": "Verificación",
+    "columna": 5,
+    "contexto_original": "### Verificacion",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1046,
+    "antes": "arbol",
+    "despues": "árbol",
+    "columna": 73,
+    "contexto_original": "  un lector de pantalla sin poder anunciar filas ni celdas. Se midio el arbol de",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1118,
+    "antes": "unico",
+    "despues": "único",
+    "columna": 3,
+    "contexto_original": "  unico modo de callarlo era renombrar el import: un rodeo que ensucia el",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1119,
+    "antes": "codigo",
+    "despues": "código",
+    "columna": 3,
+    "contexto_original": "  codigo para contentar a una expresion regular. La comprobacion deja de",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1119,
+    "antes": "comprobacion",
+    "despues": "comprobación",
+    "columna": 53,
+    "contexto_original": "  codigo para contentar a una expresion regular. La comprobacion deja de",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1122,
+    "antes": "unica",
+    "despues": "única",
+    "columna": 17,
+    "contexto_original": "  desaparece la unica familia de falsos positivos que tenia.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1138,
+    "antes": "politica",
+    "despues": "política",
+    "columna": 40,
+    "contexto_original": "  Lo destapo migrar el consumidor a la politica 1.2.2, que prohibe primitivas",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1160,
+    "antes": "ningun",
+    "despues": "ningún",
+    "columna": 59,
+    "contexto_original": "  tener desactualizada precisamente porque no rompe nada: ningun compilador lo",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1161,
+    "antes": "codigo",
+    "despues": "código",
+    "columna": 73,
+    "contexto_original": "  lee, lo leen las herramientas y quien pide un componente sin abrir su codigo.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1162,
+    "antes": "ejecucion",
+    "despues": "ejecución",
+    "columna": 17,
+    "contexto_original": "  En su primera ejecucion encontro deriva real: `data-table.pagination`,",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1181,
+    "antes": "arbol",
+    "despues": "árbol",
+    "columna": 4,
+    "contexto_original": "el arbol de accesibilidad. La decision no se apoya en un defecto demostrado sino",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1181,
+    "antes": "decision",
+    "despues": "decisión",
+    "columna": 31,
+    "contexto_original": "el arbol de accesibilidad. La decision no se apoya en un defecto demostrado sino",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1189,
+    "antes": "Numero",
+    "despues": "Número",
+    "columna": 3,
+    "contexto_original": "**Numero nuevo a proposito.** Durante agosto dos historias paralelas de este",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1190,
+    "antes": "numero",
+    "despues": "número",
+    "columna": 57,
+    "contexto_original": "repositorio publicaron un 5.4.0 y un 5.5.0 con el mismo numero y contenido",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1191,
+    "antes": "version",
+    "despues": "versión",
+    "columna": 27,
+    "contexto_original": "distinto, de modo que «la version 5.5.0» dejo de identificar nada. No se",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1192,
+    "antes": "ningun",
+    "despues": "ningún",
+    "columna": 11,
+    "contexto_original": "reutiliza ningun 5.5.x: 5.6.0 es el primer numero que vuelve a designar un solo",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1192,
+    "antes": "numero",
+    "despues": "número",
+    "columna": 44,
+    "contexto_original": "reutiliza ningun 5.5.x: 5.6.0 es el primer numero que vuelve a designar un solo",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1193,
+    "antes": "arbol",
+    "despues": "árbol",
+    "columna": 1,
+    "contexto_original": "arbol. `main` es el tronco unico desde aqui.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1193,
+    "antes": "unico",
+    "despues": "único",
+    "columna": 28,
+    "contexto_original": "arbol. `main` es el tronco unico desde aqui.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1193,
+    "antes": "aqui",
+    "despues": "aquí",
+    "columna": 40,
+    "contexto_original": "arbol. `main` es el tronco unico desde aqui.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1195,
+    "antes": "version",
+    "despues": "versión",
+    "columna": 6,
+    "contexto_original": "Esta version RESCATA sobre `main` el trabajo que se habia quedado en la rama",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1209,
+    "antes": "tambien",
+    "despues": "también",
+    "columna": 38,
+    "contexto_original": "  **El generador de UI y el catalogo tambien se actualizan**: `generate-ui`",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1231,
+    "antes": "Ademas",
+    "despues": "Además",
+    "columna": 3,
+    "contexto_original": "  Ademas once controles dividian su contraste con `opacity` DESPUES de",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1231,
+    "antes": "DESPUES",
+    "despues": "DESPUÉS",
+    "columna": 61,
+    "contexto_original": "  Ademas once controles dividian su contraste con `opacity` DESPUES de",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1237,
+    "antes": "ningun",
+    "despues": "ningún",
+    "columna": 14,
+    "contexto_original": "  existen en ningun tema, en cuatro paginas del escaparate.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1239,
+    "antes": "asi",
+    "despues": "así",
+    "columna": 62,
+    "contexto_original": "  se ponia el mensaje de error y se salia sin tocar `files`, asi que el",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1247,
+    "antes": "linea",
+    "despues": "línea",
+    "columna": 46,
+    "contexto_original": "- **El gate dejaba de ver los comentarios de linea** y denunciaba como «color",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1254,
+    "antes": "ningun",
+    "despues": "ningún",
+    "columna": 52,
+    "contexto_original": "  `thead tr`, `tbody tr` y `tbody` **sin restituir ningun rol**, de modo que un",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1256,
+    "antes": "aqui",
+    "despues": "aquí",
+    "columna": 19,
+    "contexto_original": "  y no se parchea aqui: un `role=\"table\"` suelto, con los hijos ya sin rol,",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1257,
+    "antes": "arbol",
+    "despues": "árbol",
+    "columna": 14,
+    "contexto_original": "  produce un arbol de accesibilidad invalido. Requiere decidirse entero y",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1662,
+    "antes": "linea",
+    "despues": "línea",
+    "columna": 4,
+    "contexto_original": "La linea `5.4.0-beta.1` (2026-08-05) se consolida como `5.4.0` estable: los",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1663,
+    "antes": "version",
+    "despues": "versión",
+    "columna": 39,
+    "contexto_original": "cambios no eran experimentales y esta version es el ADN oficial de los",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1673,
+    "antes": "tambien",
+    "despues": "también",
+    "columna": 53,
+    "contexto_original": "- `tools/check-invalid-css-values.js` detecta ahora tambien el patron `-var(` (antes solo `NNvar(`), cerrando el hueco que dejo pasar la familia anterior.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1677,
+    "antes": "Politica",
+    "despues": "Política",
+    "columna": 5,
+    "contexto_original": "- **Politica Atomic-first 1.1.0:** el gate de consumidores (`governance/consumer/check-atomic-provenance.mjs`) escanea ahora tambien los archivos `.ts` de las raices de features — primitivas visuales nativas en plantillas embebidas, `style=` inline en el marcado, colores fijos y negaciones invalidas de tokens (`*.spec.ts` exentos). Los consumidores deben copiar el gate actualizado y declarar `policyVersion: \"1.1.0\"`.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 1677,
+    "antes": "tambien",
+    "despues": "también",
+    "columna": 126,
+    "contexto_original": "- **Politica Atomic-first 1.1.0:** el gate de consumidores (`governance/consumer/check-atomic-provenance.mjs`) escanea ahora tambien los archivos `.ts` de las raices de features — primitivas visuales nativas en plantillas embebidas, `style=` inline en el marcado, colores fijos y negaciones invalidas de tokens (`*.spec.ts` exentos). Los consumidores deben copiar el gate actualizado y declarar `policyVersion: \"1.1.0\"`.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2456,
+    "antes": "automatico",
+    "despues": "automático",
+    "columna": 396,
+    "contexto_original": "- **Tokens de color obligatorios en overlays y modales custom:** Al construir un dialog/modal personalizado sobre `app-card variant=\"elevated\"` con un `slot=\"image\"` como cabecera, queda prohibido usar colores hexadecimales fijos (e.g. `#1e293b`, `#f8fafc`). Toda cabecera de modal debe consumir `background: var(--surface-section)` y `color: var(--text-color)` para respetar el Dark/Light Mode automatico del ecosistema. Los iconos de estado deben usar `color: var(--danger-color)`, `var(--warning-color)` etc., nunca hexadecimales sueltos.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2478,
+    "antes": "ultima",
+    "despues": "última",
+    "columna": 174,
+    "contexto_original": "- **Cierre inferior de tablas con scroll sincronizado**: `ScrollOverlayComponent` amplia `--so-scroll-end-space` a `calc(var(--so-track-size) + var(--space-8))` para que la ultima fila quede visible por encima de la barra horizontal cuando existe scroll vertical y horizontal simultaneo.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2480,
+    "antes": "unico",
+    "despues": "único",
+    "columna": 100,
+    "contexto_original": "- **Centrado vertical de celdas compactas**: `TableComponent` centra verticalmente las celdas cuyo unico contenido es `app-chip`, sin alterar celdas compuestas como `Estado TA` con detalle secundario.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2504,
+    "antes": "minimo",
+    "despues": "mínimo",
+    "columna": 187,
+    "contexto_original": "- **Altura padre controlada para filas de grafico**: Se agrego `chart-grid-compact` con filas de 430 px para evitar crecimiento excesivo en pantalla completa. `chart-panel` baja su alto minimo a 240 px para trabajar dentro de la altura fija del padre sin recortar controles.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2512,
+    "antes": "minimo",
+    "despues": "mínimo",
+    "columna": 76,
+    "contexto_original": "- **Altura simetrica de paneles de grafico**: `chart-panel` reduce su alto minimo a 320 px para evitar espacios vacios excesivos en tarjetas de graficos. Se agrega `chart-panel--center` para centrar verticalmente graficos compactos como tortas/donas.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2520,
+    "antes": "minimo",
+    "despues": "mínimo",
+    "columna": 129,
+    "contexto_original": "- **Panel uniforme para graficos**: Se agrego la utilidad `chart-panel` para que los contenedores de graficos mantengan un alto minimo estable, llenen el alto disponible de tarjetas estiradas en grid y deleguen el redimensionamiento final al componente `app-chart`.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2545,
+    "antes": "minimo",
+    "despues": "mínimo",
+    "columna": 34,
+    "contexto_original": "- **Limpieza de utilidad de alto minimo**: Se retiro `min-h-380` porque ya no se requiere para el grafico mensual y podia inducir crecimiento vertical no deseado.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2553,
+    "antes": "correccion",
+    "despues": "corrección",
+    "columna": 198,
+    "contexto_original": "- **Grafico reactivo de alto completo**: Se ajusto `app-chart` para que el host y el contenedor interno puedan ocupar el 100% del alto disponible cuando el consumidor declara `height=\"100%\"`. Esta correccion permite que los graficos embebidos en tarjetas altas no queden limitados por el valor por defecto de 300 px.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2573,
+    "antes": "Auditoria",
+    "despues": "Auditoría",
+    "columna": 5,
+    "contexto_original": "### Auditoria Profunda del Ecosistema — Sincronizacion Total y Limpieza",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2577,
+    "antes": "Auditoria",
+    "despues": "Auditoría",
+    "columna": 51,
+    "contexto_original": "- **114/114 archivos `shared/ui` sincronizados**: Auditoria SHA-256 completa detecto 10 archivos con drift y 5 MISSING en Tauri y Wails. Todos corregidos. El ecosistema queda en estado 100% sincronizado.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2578,
+    "antes": "correccion",
+    "despues": "corrección",
+    "columna": 47,
+    "contexto_original": "- **WebView2 canvas fix retroalimentado**: La correccion `ctx.save()`/`ctx.restore()` incondicional para todos los tipos de chart (documentada en v4.9.0 y en `ECOSYSTEM_WORKFLOW.md`) existia unicamente en Wails. Se retroalimento a Atomic-UI (Fuente de la Verdad) y se propago a Tauri.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2579,
+    "antes": "verificacion",
+    "despues": "verificación",
+    "columna": 181,
+    "contexto_original": "- **`propagate-tokens.ps1` extendido**: El script solo propagaba `_tokens-components.css` (1 de 7 archivos). Ahora cubre los 7 archivos CSS del directorio `src/styles/themes/` con verificacion SHA-256 individual por archivo.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2881,
+    "antes": "documentacion",
+    "despues": "documentación",
+    "columna": 95,
+    "contexto_original": "- Nuevos molecules: `Alert`, `AvatarGroup`, `Combobox`, `TagInput`, `Timeline`, `Popup` story/documentacion reforzada.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2890,
+    "antes": "validacion",
+    "despues": "validación",
+    "columna": 15,
+    "contexto_original": "- Workflow de validacion de build/lint/test en `.github/workflows/ci.yml`.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2899,
+    "antes": "version",
+    "despues": "versión",
+    "columna": 80,
+    "contexto_original": "- `README.md` y `src/stories/Configure.mdx` actualizados con inventario real y version 4.0.0.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2900,
+    "antes": "version",
+    "despues": "versión",
+    "columna": 32,
+    "contexto_original": "- `package.json` actualizado a version `4.0.0`.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2913,
+    "antes": "ejecucion",
+    "despues": "ejecución",
+    "columna": 6,
+    "contexto_original": "- La ejecucion local de `npm` no esta disponible en este entorno de agente.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "CHANGELOG.md",
+    "linea": 2914,
+    "antes": "validacion",
+    "despues": "validación",
+    "columna": 6,
+    "contexto_original": "- La validacion tecnica completa queda automatizada en GitHub Actions mediante `ci.yml`.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 882,
+    "antes": "aplicacion",
+    "despues": "aplicación",
+    "columna": 21,
+    "contexto_original": "**Contexto:** En la aplicacion base_python_angular (Acopiador), los modales de alerta y confirmacion construidos con `app-card variant=\"elevated\"` + `slot=\"image\"` tenian colores hexadecimales fijos en el header (`#1e293b`, `#f8fafc`, `#334155`). En modo oscuro el texto parecia correcto (porque los colores fijos simulaban el dark mode), pero en modo claro el fondo quedaba negro y el texto blanco, siendo completamente ilegible.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 884,
+    "antes": "ningun",
+    "despues": "ningún",
+    "columna": 123,
+    "contexto_original": "**La leccion:** Los consumidores de Atomic UI (Wails, Tauri, Python/WebView) NO deben usar colores hexadecimales fijos en ningun elemento que forme parte de un modal, overlay o dialogo. El sistema de tokens de Atomic garantiza la paridad automatica entre Light Mode y Dark Mode. Al forzar un color fijo, se rompe esa garantia y el componente queda \"atado\" a un solo tema.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 884,
+    "antes": "garantia",
+    "despues": "garantía",
+    "columna": 318,
+    "contexto_original": "**La leccion:** Los consumidores de Atomic UI (Wails, Tauri, Python/WebView) NO deben usar colores hexadecimales fijos en ningun elemento que forme parte de un modal, overlay o dialogo. El sistema de tokens de Atomic garantiza la paridad automatica entre Light Mode y Dark Mode. Al forzar un color fijo, se rompe esa garantia y el componente queda \"atado\" a un solo tema.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 890,
+    "antes": "segun",
+    "despues": "según",
+    "columna": 98,
+    "contexto_original": "- Iconos de estado: `color: var(--danger-color)`, `var(--warning-color)`, `var(--success-color)` segun el tipo de alerta",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 893,
+    "antes": "decision",
+    "despues": "decisión",
+    "columna": 271,
+    "contexto_original": "**Regla de propagacion:** Cualquier modal o elemento HTML flotante (overlay, drawer, tooltip, popover) en cualquier consumidor del ecosistema (Wails, Tauri, Python/WebView) debe heredar exclusivamente tokens semanticos de Atomic UI. Esta regla aplica antes de cualquier decision de layout o color.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 899,
+    "antes": "aplicacion",
+    "despues": "aplicación",
+    "columna": 122,
+    "contexto_original": "**La leccion:** Los datos de showcase, stories y blueprints son demostrativos y no constituyen contrato de negocio. Toda aplicacion productiva debe enlazar sus graficos a contratos backend, SP o vistas versionadas. Cuando un consumidor no tenga datos reales, debe renderizar estado vacio o contrato vacio, no valores inventados.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 905,
+    "antes": "ultima",
+    "despues": "última",
+    "columna": 228,
+    "contexto_original": "**Contexto:** La grilla nominal del indicador 11 combinaba `ScrollOverlayComponent`, cuerpo de tabla scrolleable (`tbody[data-so-vertical]`), columnas sincronizadas con grid y barra horizontal superpuesta. En ese escenario, la ultima fila quedaba visualmente demasiado cerca de la barra horizontal y el texto secundario de `Estado TA` podia percibirse incompleto.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 908,
+    "antes": "unico",
+    "despues": "único",
+    "columna": 35,
+    "contexto_original": "**Regla visual:** Las celdas cuyo unico contenido es `app-chip` pueden centrarse verticalmente mediante `display: flex; align-items: center;`. Las celdas compuestas, como `Estado TA`, deben conservar flujo vertical para mostrar el chip y el detalle secundario sin comprimir el texto.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 912,
+    "antes": "Auditoria",
+    "despues": "Auditoría",
+    "columna": 19,
+    "contexto_original": "## [2026-07-01] - Auditoria de Ecosistema: Drift, Dependencias y Seguridad",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 915,
+    "antes": "auditoria",
+    "despues": "auditoría",
+    "columna": 18,
+    "contexto_original": "**Contexto**: La auditoria SHA-256 de todos los archivos `shared/ui` revelo que 10 archivos tenian drift y 5 estaban completamente ausentes en Tauri y Wails. En ningun momento hubo errores visibles — el drift se acumula silenciosamente.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 915,
+    "antes": "ningun",
+    "despues": "ningún",
+    "columna": 162,
+    "contexto_original": "**Contexto**: La auditoria SHA-256 de todos los archivos `shared/ui` revelo que 10 archivos tenian drift y 5 estaban completamente ausentes en Tauri y Wails. En ningun momento hubo errores visibles — el drift se acumula silenciosamente.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 916,
+    "antes": "unica",
+    "despues": "única",
+    "columna": 285,
+    "contexto_original": "**La Leccion**: Los fixes aplicados en un consumidor (Wails, Tauri) deben retroalimentarse SIEMPRE a Atomic-UI (Fuente de la Verdad) antes de propagarse. El flujo correcto es: *Arreglar en Atomic-UI → Propagar a consumidores*. Nunca al reves. Validar con SHA-256 periodicamente es la unica forma de detectar drift oculto.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 918,
+    "antes": "tambien",
+    "despues": "también",
+    "columna": 41,
+    "contexto_original": "### 2. Las Dependencias de package.json tambien son parte de la Fuente de la Verdad",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 920,
+    "antes": "tambien",
+    "despues": "también",
+    "columna": 126,
+    "contexto_original": "**La Leccion**: Atomic-UI debe tener instaladas TODAS las dependencias que sus componentes consumen, aunque los consumidores tambien las tengan. El `package.json` de Atomic-UI es tambien la Fuente de la Verdad de dependencias. El script de propagacion deberia incluir una verificacion de paquetes cruzada.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 920,
+    "antes": "tambien",
+    "despues": "también",
+    "columna": 180,
+    "contexto_original": "**La Leccion**: Atomic-UI debe tener instaladas TODAS las dependencias que sus componentes consumen, aunque los consumidores tambien las tengan. El `package.json` de Atomic-UI es tambien la Fuente de la Verdad de dependencias. El script de propagacion deberia incluir una verificacion de paquetes cruzada.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 920,
+    "antes": "verificacion",
+    "despues": "verificación",
+    "columna": 273,
+    "contexto_original": "**La Leccion**: Atomic-UI debe tener instaladas TODAS las dependencias que sus componentes consumen, aunque los consumidores tambien las tengan. El `package.json` de Atomic-UI es tambien la Fuente de la Verdad de dependencias. El script de propagacion deberia incluir una verificacion de paquetes cruzada.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 928,
+    "antes": "codigo",
+    "despues": "código",
+    "columna": 104,
+    "contexto_original": "**La Leccion**: Los scripts de utilidad de desarrollo deben seguir el mismo patron de seguridad que el codigo de produccion. El patron correcto para scripts locales es: centralizar en `config.js` o usar el keyring del sistema (`go-keyring`), gitignorear el archivo de credenciales, y proveer un `config.example.js` como plantilla. Ningun password debe existir en texto plano en el repositorio.",
+    "clase": "prosa"
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 928,
+    "antes": "Ningun",
+    "despues": "Ningún",
+    "columna": 332,
+    "contexto_original": "**La Leccion**: Los scripts de utilidad de desarrollo deben seguir el mismo patron de seguridad que el codigo de produccion. El patron correcto para scripts locales es: centralizar en `config.js` o usar el keyring del sistema (`go-keyring`), gitignorear el archivo de credenciales, y proveer un `config.example.js` como plantilla. Ningun password debe existir en texto plano en el repositorio.",
+    "clase": "prosa"
+  }
+]

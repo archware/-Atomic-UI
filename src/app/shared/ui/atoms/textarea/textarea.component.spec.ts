@@ -217,12 +217,16 @@ describe('TextareaComponent - modos de etiqueta', () => {
 
       const etiqueta = etiquetaFlotante(raiz);
       const mensaje = raiz.querySelector('.form-error');
+      expect(mensaje).not.toBeNull();
+      if (mensaje === null) {
+        throw new Error('Se esperaba el mensaje de error');
+      }
       expect(etiqueta).not.toBeNull();
       expect(mensaje?.textContent?.trim()).toBe('Campo obligatorio');
       // Centrado correcto: `top` se mide contra `.fl-control`, que NO contiene el mensaje.
       expect(etiqueta?.parentElement?.classList.contains('fl-control')).toBe(true);
       expect(mensaje?.closest('.fl-control')).toBeNull();
-      expect(area(raiz).getAttribute('aria-describedby')).toBe(mensaje?.id);
+      expect(area(raiz).getAttribute('aria-describedby')).toBe(mensaje.id);
       expect(area(raiz).getAttribute('aria-invalid')).toBe('true');
       expect(etiqueta?.classList.contains('fl-label--error')).toBe(true);
     });
@@ -235,10 +239,14 @@ describe('TextareaComponent - modos de etiqueta', () => {
       await fixture.whenStable();
       const raiz: HTMLElement = fixture.nativeElement;
       const ayuda = raiz.querySelector('.textarea-message');
+      expect(ayuda).not.toBeNull();
+      if (ayuda === null) {
+        throw new Error('Se esperaba el mensaje de ayuda');
+      }
 
       expect(ayuda?.textContent?.trim()).toBe('Maximo 200 caracteres');
       expect(ayuda?.closest('.fl-control')).toBeNull();
-      expect(area(raiz).getAttribute('aria-describedby')).toBe(ayuda?.id);
+      expect(area(raiz).getAttribute('aria-describedby')).toBe(ayuda.id);
     });
 
     it('asocia la etiqueta con el textarea mediante for/id', async () => {

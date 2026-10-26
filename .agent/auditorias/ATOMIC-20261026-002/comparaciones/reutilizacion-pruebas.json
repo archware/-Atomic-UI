@@ -1,0 +1,31 @@
+{
+  "ejecuciones_nuevas": 0,
+  "especificaciones": [
+    {
+      "ruta": "src/app/shared/ui/atoms/input/input.component.spec.ts",
+      "previa": "CEB4A0563F9C502B4AA079FCDB7ABE1FF7AE47E2CA089FD382ED0127A6D2C57A",
+      "actual": "CEB4A0563F9C502B4AA079FCDB7ABE1FF7AE47E2CA089FD382ED0127A6D2C57A",
+      "coincide": true
+    },
+    {
+      "ruta": "src/app/shared/ui/atoms/select/select-variant.spec.ts",
+      "previa": "21E813ACC1752C273556ACFA475164F92C3BD93933AADF761110A20F7EFD4F69",
+      "actual": "21E813ACC1752C273556ACFA475164F92C3BD93933AADF761110A20F7EFD4F69",
+      "coincide": true
+    },
+    {
+      "ruta": "src/app/shared/ui/atoms/textarea/textarea.component.spec.ts",
+      "previa": "910F7048AC898AE92467972C7BACD15A43B1D8404AEB252406D33804317ADC3F",
+      "actual": "910F7048AC898AE92467972C7BACD15A43B1D8404AEB252406D33804317ADC3F",
+      "coincide": true
+    },
+    {
+      "ruta": "src/app/shared/ui/molecules/dropdown/dropdown-variant.spec.ts",
+      "previa": "B62AF65F88D895CC73B82BB013B325BDBEE37641E4C25CA63348B38E2B207F42",
+      "actual": "B62AF65F88D895CC73B82BB013B325BDBEE37641E4C25CA63348B38E2B207F42",
+      "coincide": true
+    }
+  ],
+  "identidad": true,
+  "veredicto_previo_sha256": "489B19768F3A9E054C0279D1EC834FC464B3E388B06622A2C76EC8B2D163990C"
+}

@@ -1,0 +1,174 @@
+
+=== verificar-colision: 3 frente(s), 9 ruta(s) declarada(s), 98 tocado(s), 52 preexistente(s) por captura, 0 externa(s) — C:\Users\cotaha\source\repos\-Atomic-UI
+  Reparto disjunto y nadie se salió del suyo.
+  Avisos: 1 (no rompen)
+    - 1 entrada(s) en stash: cambios escondidos que esta compuerta no compara contra el reparto
+
+  Declaradas por frente:
+    prosa: CHANGELOG.md, LESSONS_LEARNED.md
+    referencia: .agents/desviaciones/DESVIACION-20260929-005.md, .agents/desviaciones/DESVIACION-20261024-011.md
+    gobierno: .agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md, .agent/auditorias/ATOMIC-20261026-002, docs/CONTINUIDAD_AGENTES.md, docs/BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md, .agents/desviaciones/DESVIACION-ATOMIC-20261026-002-001.md
+  Tocados según git:
+    .agents/desviaciones/DESVIACION-20260929-005.md  [modificado]
+    .agents/desviaciones/DESVIACION-20261024-011.md  [modificado]
+    AGENTS.md  [modificado]
+    CHANGELOG.md  [modificado]
+    LESSONS_LEARNED.md  [modificado]
+    catalog/components/file-input.json  [modificado]
+    catalog/components/scroll-overlay.json  [modificado]
+    catalog/components/topbar.json  [modificado]
+    distribution/atomic-source-manifest.json  [modificado]
+    docs/BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md  [modificado]
+    docs/CONTINUIDAD_AGENTES.md  [modificado]
+    governance/consumer/AGENTS.template.md  [modificado]
+    src/app/components/ui-showcase/examples/showcase-actions/showcase-actions.component.ts  [modificado]
+    src/app/components/ui-showcase/examples/showcase-forms/showcase-forms.component.ts  [modificado]
+    src/app/components/ui-showcase/examples/showcase-structure/showcase-structure.component.ts  [modificado]
+    src/app/pages/showcase/showcase-page.component.html  [modificado]
+    src/app/pages/showcase/showcase-page.component.ts  [modificado]
+    src/app/shared/ui/atoms/file-input/file-input.component.css  [modificado]
+    src/app/shared/ui/atoms/file-input/file-input.component.html  [modificado]
+    src/app/shared/ui/atoms/file-input/file-input.component.ts  [modificado]
+    src/app/shared/ui/atoms/icon-button/icon-button.component.css  [modificado]
+    src/app/shared/ui/atoms/icon-button/icon-button.component.html  [modificado]
+    src/app/shared/ui/atoms/icon-button/icon-button.component.spec.ts  [modificado]
+    src/app/shared/ui/atoms/icon-button/icon-button.component.ts  [modificado]
+    src/app/shared/ui/atoms/input/input.component.spec.ts  [modificado]
+    src/app/shared/ui/atoms/select/select-variant.spec.ts  [modificado]
+    src/app/shared/ui/atoms/textarea/textarea.component.spec.ts  [modificado]
+    src/app/shared/ui/index.ts  [modificado]
+    src/app/shared/ui/molecules/dropdown/dropdown-variant.spec.ts  [modificado]
+    src/app/shared/ui/molecules/modal/modal-container.component.css  [modificado]
+    src/app/shared/ui/molecules/modal/modal-container.component.ts  [modificado]
+    src/app/shared/ui/molecules/modal/modal.component.css  [modificado]
+    src/app/shared/ui/molecules/modal/modal.component.ts  [modificado]
+    src/app/shared/ui/molecules/popup/popup-container.component.css  [modificado]
+    src/app/shared/ui/molecules/popup/popup-container.component.ts  [modificado]
+    src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css  [modificado]
+    src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.spec.ts  [modificado]
+    src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts  [modificado]
+    src/app/shared/ui/organisms/topbar/topbar.component.css  [modificado]
+    src/app/shared/ui/organisms/topbar/topbar.component.html  [modificado]
+    src/app/shared/ui/organisms/topbar/topbar.component.spec.ts  [modificado]
+    src/app/shared/ui/organisms/topbar/topbar.component.ts  [modificado]
+    src/app/shared/ui/templates/auth-layout/auth-layout.component.css  [modificado]
+    src/app/shared/ui/templates/auth-layout/auth-layout.component.html  [modificado]
+    src/blueprints/dialogs-page/dialogs-page.component.css  [modificado]
+    src/blueprints/dialogs-page/dialogs-page.component.html  [modificado]
+    src/blueprints/dialogs-page/dialogs-page.component.ts  [modificado]
+    src/blueprints/error-pages/error-pages.component.ts  [modificado]
+    src/blueprints/settings-page/settings-page.component.ts  [modificado]
+    src/stories/ui-icon-button.stories.ts  [modificado]
+    src/stories/ui-scroll-overlay.stories.ts  [modificado]
+    src/styles/themes/_utilities.css  [modificado]
+    tools/check-atomic-blueprints.js  [modificado]
+    tools/create-project.js  [modificado]
+    tools/test-atomic-blueprints.js  [modificado]
+    .agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/comparaciones/anclas.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/comparaciones/atribucion-referencia.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/comparaciones/continuidad-preservacion.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/comparaciones/contratos-hashes.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/comparaciones/enlaces-afectados.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/comparaciones/manifiesto.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/comparaciones/matriz-150.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/comparaciones/reutilizacion-pruebas.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/juicio/comparacion-propia.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/juicio/gobierno-propio.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/juicio/matriz-propia-151.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/juicio/reutilizacion-propia.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/juicio/veredicto.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/codificacion-antes.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/codificacion-antes.log  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/codificacion-despues.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/codificacion-despues.log  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/codificacion-gobierno.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/codificacion-gobierno.log  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/colision-antes.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/colision-antes.log  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/desviaciones-despues.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/desviaciones-despues.log  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/desviaciones-final.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/desviaciones-final.log  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/diff-continuidad-corregida.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/huellas-antes.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/indice-generar-permitido.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/indice-generar-permitido.log  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/indice-generar.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/indice-generar.log  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/indice-verificar.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/indice-verificar.log  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/lanzado.txt  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/reparto.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/sondeo-antes.json  [sin rastrear]
+    .agent/auditorias/ATOMIC-20261026-002/originales/sondeo-antes.log  [sin rastrear]
+    .agent/roadmaps/ROADMAP_ATOMIC-20261026-001_desbloqueo_pruebas.md  [sin rastrear]
+    .agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md  [sin rastrear]
+    .agents/desviaciones/DESVIACION-ATOMIC-20261026-001-001.md  [sin rastrear]
+    .agents/desviaciones/DESVIACION-ATOMIC-20261026-002-001.md  [sin rastrear]
+    catalog/components/icon-button.json  [sin rastrear]
+  Preexistentes (mismo hash que la captura, no cuentan):
+    AGENTS.md
+    catalog/components/file-input.json
+    catalog/components/scroll-overlay.json
+    catalog/components/topbar.json
+    distribution/atomic-source-manifest.json
+    governance/consumer/AGENTS.template.md
+    src/app/components/ui-showcase/examples/showcase-actions/showcase-actions.component.ts
+    src/app/components/ui-showcase/examples/showcase-forms/showcase-forms.component.ts
+    src/app/components/ui-showcase/examples/showcase-structure/showcase-structure.component.ts
+    src/app/pages/showcase/showcase-page.component.html
+    src/app/pages/showcase/showcase-page.component.ts
+    src/app/shared/ui/atoms/file-input/file-input.component.css
+    src/app/shared/ui/atoms/file-input/file-input.component.html
+    src/app/shared/ui/atoms/file-input/file-input.component.ts
+    src/app/shared/ui/atoms/icon-button/icon-button.component.css
+    src/app/shared/ui/atoms/icon-button/icon-button.component.html
+    src/app/shared/ui/atoms/icon-button/icon-button.component.spec.ts
+    src/app/shared/ui/atoms/icon-button/icon-button.component.ts
+    src/app/shared/ui/atoms/input/input.component.spec.ts
+    src/app/shared/ui/atoms/select/select-variant.spec.ts
+    src/app/shared/ui/atoms/textarea/textarea.component.spec.ts
+    src/app/shared/ui/index.ts
+    src/app/shared/ui/molecules/dropdown/dropdown-variant.spec.ts
+    src/app/shared/ui/molecules/modal/modal-container.component.css
+    src/app/shared/ui/molecules/modal/modal-container.component.ts
+    src/app/shared/ui/molecules/modal/modal.component.css
+    src/app/shared/ui/molecules/modal/modal.component.ts
+    src/app/shared/ui/molecules/popup/popup-container.component.css
+    src/app/shared/ui/molecules/popup/popup-container.component.ts
+    src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css
+    src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.spec.ts
+    src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts
+    src/app/shared/ui/organisms/topbar/topbar.component.css
+    src/app/shared/ui/organisms/topbar/topbar.component.html
+    src/app/shared/ui/organisms/topbar/topbar.component.spec.ts
+    src/app/shared/ui/organisms/topbar/topbar.component.ts
+    src/app/shared/ui/templates/auth-layout/auth-layout.component.css
+    src/app/shared/ui/templates/auth-layout/auth-layout.component.html
+    src/blueprints/dialogs-page/dialogs-page.component.css
+    src/blueprints/dialogs-page/dialogs-page.component.html
+    src/blueprints/dialogs-page/dialogs-page.component.ts
+    src/blueprints/error-pages/error-pages.component.ts
+    src/blueprints/settings-page/settings-page.component.ts
+    src/stories/ui-icon-button.stories.ts
+    src/stories/ui-scroll-overlay.stories.ts
+    src/styles/themes/_utilities.css
+    tools/check-atomic-blueprints.js
+    tools/create-project.js
+    tools/test-atomic-blueprints.js
+    .agent/roadmaps/ROADMAP_ATOMIC-20261026-001_desbloqueo_pruebas.md
+    .agents/desviaciones/DESVIACION-ATOMIC-20261026-001-001.md
+    catalog/components/icon-button.json
+
+=== Lo que esta compuerta NO cubre
+  - NO sabe QUIÉN tocó cada fichero: dice que hubo colisión, no de qué frente fue. Para eso hace falta el registro por frente del flujo.
+  - Lo de FUERA del repositorio no cuenta (§6.1): lo declarado absoluto y externo se ignora y un agente que escriba fuera donde no debe no se detecta aquí.
+  - Lo ignorado por .gitignore, .git/info/exclude o core.excludesFile no existe para git ni para esta compuerta: un .env o un bin/ tocado fuera del reparto no se ve.
+  - Un repositorio anidado sin registrar aparece como un solo directorio; lo que se edite dentro de él o de un submódulo no se enumera fichero a fichero.
+  - Stash, assume-unchanged, skip-worktree y submódulos con ignore=dirty esconden cambios: se AVISA de que existen, no se comparan contra el reparto.
+  - El trabajo ya confirmado no está en el árbol sucio: esta compuerta ve el árbol, no el historial.
+  - Sin captura previa (-CapturaPrevia) todo lo sucio anterior al reparto se acusa como colisión: es lo único seguro; §6 manda atribuirlo antes de lanzar.
+  - Sin HEAD (repositorio recién nacido) se lee `git status`, que no normaliza el fin de línea: ahí un fichero con solo CRLF cambiado sí cuenta como tocado.
+  - Rutas con salto de línea o tabulador en el nombre no se leen bien de la salida de git.
+  - NO comprueba que el reparto sea BUENO, solo que sea disjunto: dos frentes sin solape pueden seguir dependiendo uno del otro.

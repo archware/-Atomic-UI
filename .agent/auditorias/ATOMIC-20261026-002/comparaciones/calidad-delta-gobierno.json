@@ -1,0 +1,32 @@
+{
+  "codigo": 0,
+  "archivos": [
+    {
+      "ruta": "docs/CONTINUIDAD_AGENTES.md",
+      "utf8_valido": true,
+      "bom": false,
+      "cr": false,
+      "espacios_finales": 0,
+      "linea_vacia_final": false,
+      "sha256": "11966ED08C975C452921EDABD594D06CB61119A5960CE1D5BF6B41FA3D1CD679"
+    },
+    {
+      "ruta": ".agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md",
+      "utf8_valido": true,
+      "bom": false,
+      "cr": false,
+      "espacios_finales": 0,
+      "linea_vacia_final": false,
+      "sha256": "87C4A52E70B036A3956F507766ACE739FEAD7A2AE5789E407C491DAB77D3F4E0"
+    },
+    {
+      "ruta": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "utf8_valido": true,
+      "bom": false,
+      "cr": false,
+      "espacios_finales": 0,
+      "linea_vacia_final": false,
+      "sha256": "4ACC6F01341C8623BE939488E4F96022293122D1073425E31F61BC3950EABF3B"
+    }
+  ]
+}

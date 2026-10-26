@@ -1,0 +1,5 @@
+{
+  "codigo": 0,
+  "comando": "git diff --check -- docs/CONTINUIDAD_AGENTES.md",
+  "correccion": "Retirar una línea vacía final propia; no altera el corte archivado."
+}

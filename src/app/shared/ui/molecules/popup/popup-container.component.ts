@@ -15,11 +15,12 @@ import { PopupService, PopupItem } from '../../services/popup.service';
  */
 import { ButtonComponent } from '../../atoms/button/button.component';
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
+import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-overlay.component';
 
 @Component({
   selector: 'app-popup-container',
   standalone: true,
-  imports: [ButtonComponent, IconButtonComponent],
+  imports: [ButtonComponent, IconButtonComponent, ScrollOverlayComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @for (popup of popupService.popups(); track popup.id) {
@@ -55,14 +56,20 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
           </div>
 
           <!-- Body -->
-          <div class="popup-body">
-            @if (popup.message) {
-              <p class="popup-message">{{ popup.message }}</p>
-            }
-            @if (popup.htmlContent) {
-              <div [innerHTML]="popup.htmlContent"></div>
-            }
-          </div>
+          <app-scroll-overlay
+            class="so-block popup-body-scroll"
+            [skipTableDetection]="true"
+            [disableHorizontal]="true"
+          >
+            <div class="popup-body">
+              @if (popup.message) {
+                <p class="popup-message">{{ popup.message }}</p>
+              }
+              @if (popup.htmlContent) {
+                <div [innerHTML]="popup.htmlContent"></div>
+              }
+            </div>
+          </app-scroll-overlay>
 
           <!-- Footer -->
           @if (popup.buttons && popup.buttons.length > 0) {

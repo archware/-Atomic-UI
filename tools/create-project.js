@@ -236,10 +236,6 @@ Examples:
   const stylesPath = path.join(projectPath, 'src', 'styles.css');
   const stylesContent = `/* Atomic UI - Global Styles */
 @import './styles/themes/index.css';
-@import "@fontsource/open-sans/400.css";
-@import "@fontsource/open-sans/500.css";
-@import "@fontsource/open-sans/600.css";
-@import "@fontsource/open-sans/700.css";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
 /* Reset */
@@ -385,6 +381,8 @@ export const appConfig: ApplicationConfig = {
      1. Describe the UI in a ui-requirement v1 JSON document
      2. From Atomic, preview it with generate:ui -- --spec <file> --output ${projectPath} --dry-run
      3. Generate only after reviewing the plan; then wire real backend contracts
+     4. Compose every view exclusively with @shared/ui components and wrap all scrollable regions in <app-scroll-overlay class="so-block"> (never use native HTML controls or overflow: auto/scroll)
+     5. Verify before delivery with: npm run check:atomic
   `);
 }
 

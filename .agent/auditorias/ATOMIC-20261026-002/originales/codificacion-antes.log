@@ -1,0 +1,181 @@
+
+=== Codificación y ortografía (§10): 2 fichero(s) en 2 ruta(s)
+
+=== Resultado
+  Fallos: 150   Avisos: 0
+  [SIN TILDE] 150
+    CHANGELOG.md:201  'Correccion' debe escribirse 'Corrección'.
+    CHANGELOG.md:201  'dia' debe escribirse 'día'.
+    CHANGELOG.md:201  'revision' debe escribirse 'revisión'.
+    CHANGELOG.md:202  'version' debe escribirse 'versión'.
+    CHANGELOG.md:211  'asi' debe escribirse 'así'.
+    CHANGELOG.md:216  'segun' debe escribirse 'según'.
+    CHANGELOG.md:217  'tambien' debe escribirse 'también'.
+    CHANGELOG.md:218  'aplicacion' debe escribirse 'aplicación'.
+    CHANGELOG.md:219  'ningun' debe escribirse 'ningún'.
+    CHANGELOG.md:226  'ahi' debe escribirse 'ahí'.
+    CHANGELOG.md:233  'ultima' debe escribirse 'última'.
+    CHANGELOG.md:241  'automatico' debe escribirse 'automático'.
+    CHANGELOG.md:242  'Ningun' debe escribirse 'Ningún'.
+    CHANGELOG.md:281  'alli' debe escribirse 'allí'.
+    CHANGELOG.md:292  'correccion' debe escribirse 'corrección'.
+    CHANGELOG.md:301  'tambien' debe escribirse 'también'.
+    CHANGELOG.md:306  'tamano' debe escribirse 'tamaño'.
+    CHANGELOG.md:416  'aplicacion' debe escribirse 'aplicación'.
+    CHANGELOG.md:423  'unico' debe escribirse 'único'.
+    CHANGELOG.md:426  'unico' debe escribirse 'único'.
+    CHANGELOG.md:426  'razon' debe escribirse 'razón'.
+    CHANGELOG.md:429  'decision' debe escribirse 'decisión'.
+    CHANGELOG.md:432  'unico' debe escribirse 'único'.
+    CHANGELOG.md:434  'tambien' debe escribirse 'también'.
+    CHANGELOG.md:435  'asi' debe escribirse 'así'.
+    CHANGELOG.md:452  'asi' debe escribirse 'así'.
+    CHANGELOG.md:459  'prohibicion' debe escribirse 'prohibición'.
+    CHANGELOG.md:472  'correccion' debe escribirse 'corrección'.
+    CHANGELOG.md:475  'migracion' debe escribirse 'migración'.
+    CHANGELOG.md:486  'asi' debe escribirse 'así'.
+    CHANGELOG.md:495  'asi' debe escribirse 'así'.
+    CHANGELOG.md:497  'unico' debe escribirse 'único'.
+    CHANGELOG.md:498  'ultima' debe escribirse 'última'.
+    CHANGELOG.md:504  'segun' debe escribirse 'según'.
+    CHANGELOG.md:523  'dia' debe escribirse 'día'.
+    CHANGELOG.md:527  'alli' debe escribirse 'allí'.
+    CHANGELOG.md:541  'ningun' debe escribirse 'ningún'.
+    CHANGELOG.md:542  'ningun' debe escribirse 'ningún'.
+    CHANGELOG.md:542  'asi' debe escribirse 'así'.
+    CHANGELOG.md:546  'Ademas' debe escribirse 'Además'.
+    CHANGELOG.md:567  'asi' debe escribirse 'así'.
+    CHANGELOG.md:568  'migracion' debe escribirse 'migración'.
+    CHANGELOG.md:576  'auditoria' debe escribirse 'auditoría'.
+    CHANGELOG.md:578  'codigo' debe escribirse 'código'.
+    CHANGELOG.md:583  'ahi' debe escribirse 'ahí'.
+    CHANGELOG.md:584  'minimo' debe escribirse 'mínimo'.
+    CHANGELOG.md:590  'ademas' debe escribirse 'además'.
+    CHANGELOG.md:597  'despues' debe escribirse 'después'.
+    CHANGELOG.md:609  'ahi' debe escribirse 'ahí'.
+    CHANGELOG.md:623  'numero' debe escribirse 'número'.
+    CHANGELOG.md:623  'asi' debe escribirse 'así'.
+    CHANGELOG.md:624  'maximo' debe escribirse 'máximo'.
+    CHANGELOG.md:626  'Ademas' debe escribirse 'Además'.
+    CHANGELOG.md:633  'dia' debe escribirse 'día'.
+    CHANGELOG.md:646  'minimo' debe escribirse 'mínimo'.
+    CHANGELOG.md:646  'asi' debe escribirse 'así'.
+    CHANGELOG.md:649  'aqui' debe escribirse 'aquí'.
+    CHANGELOG.md:659  'comprobacion' debe escribirse 'comprobación'.
+    CHANGELOG.md:659  'asi' debe escribirse 'así'.
+    CHANGELOG.md:660  'tambien' debe escribirse 'también'.
+    CHANGELOG.md:686  'ultima' debe escribirse 'última'.
+    CHANGELOG.md:692  'ademas' debe escribirse 'además'.
+    CHANGELOG.md:692  'arbol' debe escribirse 'árbol'.
+    CHANGELOG.md:714  'asi' debe escribirse 'así'.
+    CHANGELOG.md:725  'asi' debe escribirse 'así'.
+    CHANGELOG.md:726  'ningun' debe escribirse 'ningún'.
+    CHANGELOG.md:729  'tambien' debe escribirse 'también'.
+    CHANGELOG.md:747  'asi' debe escribirse 'así'.
+    CHANGELOG.md:752  'despues' debe escribirse 'después'.
+    CHANGELOG.md:755  'segun' debe escribirse 'según'.
+    CHANGELOG.md:758  'correccion' debe escribirse 'corrección'.
+    CHANGELOG.md:759  'aqui' debe escribirse 'aquí'.
+    CHANGELOG.md:761  'Verificacion' debe escribirse 'Verificación'.
+    CHANGELOG.md:772  'dia' debe escribirse 'día'.
+    CHANGELOG.md:773  'segun' debe escribirse 'según'.
+    CHANGELOG.md:776  'peticion' debe escribirse 'petición'.
+    CHANGELOG.md:776  'asi' debe escribirse 'así'.
+    CHANGELOG.md:781  'aqui' debe escribirse 'aquí'.
+    CHANGELOG.md:789  'codigo' debe escribirse 'código'.
+    CHANGELOG.md:792  'ningun' debe escribirse 'ningún'.
+    CHANGELOG.md:794  'Verificacion' debe escribirse 'Verificación'.
+    CHANGELOG.md:1046  'arbol' debe escribirse 'árbol'.
+    CHANGELOG.md:1118  'unico' debe escribirse 'único'.
+    CHANGELOG.md:1119  'codigo' debe escribirse 'código'.
+    CHANGELOG.md:1119  'comprobacion' debe escribirse 'comprobación'.
+    CHANGELOG.md:1122  'unica' debe escribirse 'única'.
+    CHANGELOG.md:1138  'politica' debe escribirse 'política'.
+    CHANGELOG.md:1160  'ningun' debe escribirse 'ningún'.
+    CHANGELOG.md:1161  'codigo' debe escribirse 'código'.
+    CHANGELOG.md:1162  'ejecucion' debe escribirse 'ejecución'.
+    CHANGELOG.md:1181  'arbol' debe escribirse 'árbol'.
+    CHANGELOG.md:1181  'decision' debe escribirse 'decisión'.
+    CHANGELOG.md:1189  'Numero' debe escribirse 'Número'.
+    CHANGELOG.md:1190  'numero' debe escribirse 'número'.
+    CHANGELOG.md:1191  'version' debe escribirse 'versión'.
+    CHANGELOG.md:1192  'ningun' debe escribirse 'ningún'.
+    CHANGELOG.md:1192  'numero' debe escribirse 'número'.
+    CHANGELOG.md:1193  'arbol' debe escribirse 'árbol'.
+    CHANGELOG.md:1193  'unico' debe escribirse 'único'.
+    CHANGELOG.md:1193  'aqui' debe escribirse 'aquí'.
+    CHANGELOG.md:1195  'version' debe escribirse 'versión'.
+    CHANGELOG.md:1209  'tambien' debe escribirse 'también'.
+    CHANGELOG.md:1231  'Ademas' debe escribirse 'Además'.
+    CHANGELOG.md:1231  'DESPUES' debe escribirse 'DESPUÉS'.
+    CHANGELOG.md:1237  'ningun' debe escribirse 'ningún'.
+    CHANGELOG.md:1239  'asi' debe escribirse 'así'.
+    CHANGELOG.md:1247  'linea' debe escribirse 'línea'.
+    CHANGELOG.md:1254  'ningun' debe escribirse 'ningún'.
+    CHANGELOG.md:1256  'aqui' debe escribirse 'aquí'.
+    CHANGELOG.md:1257  'arbol' debe escribirse 'árbol'.
+    CHANGELOG.md:1662  'linea' debe escribirse 'línea'.
+    CHANGELOG.md:1663  'version' debe escribirse 'versión'.
+    CHANGELOG.md:1673  'tambien' debe escribirse 'también'.
+    CHANGELOG.md:1677  'Politica' debe escribirse 'Política'.
+    CHANGELOG.md:1677  'tambien' debe escribirse 'también'.
+    CHANGELOG.md:2456  'automatico' debe escribirse 'automático'.
+    CHANGELOG.md:2478  'ultima' debe escribirse 'última'.
+    CHANGELOG.md:2480  'unico' debe escribirse 'único'.
+    CHANGELOG.md:2504  'minimo' debe escribirse 'mínimo'.
+    CHANGELOG.md:2512  'minimo' debe escribirse 'mínimo'.
+    CHANGELOG.md:2520  'minimo' debe escribirse 'mínimo'.
+    CHANGELOG.md:2545  'minimo' debe escribirse 'mínimo'.
+    CHANGELOG.md:2553  'correccion' debe escribirse 'corrección'.
+    CHANGELOG.md:2573  'Auditoria' debe escribirse 'Auditoría'.
+    CHANGELOG.md:2577  'Auditoria' debe escribirse 'Auditoría'.
+    CHANGELOG.md:2578  'correccion' debe escribirse 'corrección'.
+    CHANGELOG.md:2579  'verificacion' debe escribirse 'verificación'.
+    CHANGELOG.md:2881  'documentacion' debe escribirse 'documentación'.
+    CHANGELOG.md:2890  'validacion' debe escribirse 'validación'.
+    CHANGELOG.md:2899  'version' debe escribirse 'versión'.
+    CHANGELOG.md:2900  'version' debe escribirse 'versión'.
+    CHANGELOG.md:2913  'ejecucion' debe escribirse 'ejecución'.
+    CHANGELOG.md:2914  'validacion' debe escribirse 'validación'.
+    LESSONS_LEARNED.md:882  'aplicacion' debe escribirse 'aplicación'.
+    LESSONS_LEARNED.md:884  'ningun' debe escribirse 'ningún'.
+    LESSONS_LEARNED.md:884  'garantia' debe escribirse 'garantía'.
+    LESSONS_LEARNED.md:890  'segun' debe escribirse 'según'.
+    LESSONS_LEARNED.md:893  'decision' debe escribirse 'decisión'.
+    LESSONS_LEARNED.md:899  'aplicacion' debe escribirse 'aplicación'.
+    LESSONS_LEARNED.md:905  'ultima' debe escribirse 'última'.
+    LESSONS_LEARNED.md:908  'unico' debe escribirse 'único'.
+    LESSONS_LEARNED.md:912  'Auditoria' debe escribirse 'Auditoría'.
+    LESSONS_LEARNED.md:915  'auditoria' debe escribirse 'auditoría'.
+    LESSONS_LEARNED.md:915  'ningun' debe escribirse 'ningún'.
+    LESSONS_LEARNED.md:916  'unica' debe escribirse 'única'.
+    LESSONS_LEARNED.md:918  'tambien' debe escribirse 'también'.
+    LESSONS_LEARNED.md:920  'tambien' debe escribirse 'también'.
+    LESSONS_LEARNED.md:920  'verificacion' debe escribirse 'verificación'.
+    LESSONS_LEARNED.md:928  'codigo' debe escribirse 'código'.
+    LESSONS_LEARNED.md:928  'Ningun' debe escribirse 'Ningún'.
+
+=== Lo que esta compuerta NO cubre
+  - Ortografía general: solo detecta las palabras de su lista, no revisa el texto. Las ambiguas (mas/más, esta/está, publico/público) quedan fuera a propósito.
+  - En código y datos no distingue prosa de identificador: la falta de tilde ahí es AVISO y no fallo, y los avisos no cambian el código de salida ni tienen línea base. Cerrar los que quedan pide una línea base congelada, como la de coherencia; esta compuerta no la tiene.
+  - Las sustracciones de contrato en código (variables, identificadores con dos puntos, rutas absolutas, clave al inicio de línea o tras un marcador de comentario, acceso a miembro, clave asignada con signo igual, listas de nombres de propiedad, nombres tras Sort-Object y -NotePropertyName, literal entrecomillado sin espacios, literales de una o dos palabras en listas/required/enum) tapan: un mensaje real de una sola palabra entre comillas, una frase que escriba «palabra = valor» o «palabra: valor», y la prosa pegada a un punto sin espacio.
+  - Un identificador desnudo usado como argumento o como índice en código (una clave dentro de corchetes, el argumento de una llamada) no se puede distinguir de una palabra y sigue sonando como aviso.
+  - Los ficheros de datos DE COMPUERTA (EXENCIONES_*, RUTAS_ESPERADAS_*, COHERENCIA_BASE, HOOK_EXCLUIDAS, ALCANCE, MANIFIESTO-*) quedan EXENTOS de la regla de tildes por completo, no solo en sus claves: la prosa de sus comentarios de cabecera puede ir sin acentos y nadie lo dice. Es el precio de no contradecir el contrato ASCII que declara comun.ps1. El guion que ESCRIBE esas cabeceras sí queda expuesto, así que la misma frase suena en el generador y calla en el generado.
+  - Comentarios y cadenas de código NO se descuentan: son prosa (§10.2). Lo único que se descuenta dentro de un comentario es lo citado entre acentos graves emparejados; fuera de un comentario, en código, el acento grave es sintaxis y no se descuenta nada.
+  - En un documento, un identificador escrito en la prosa sin acentos graves (una clave de configuración, una ruta) suena como FALLO si contiene una palabra de la lista: §10.3 pide citarlo entre acentos graves. Solo para tildes se descuentan destinos ASCII imprimibles de enlaces e imágenes Markdown completos en una línea, simples o angulares, con paréntesis equilibrados y escapes de puntuación; las referencias empiezan con 0–3 espacios y terminan tras destino/título. Se conservan etiquetas, texto alternativo, identificadores, títulos, delimitadores y prosa. Quedan fuera enlaces de varias líneas, autolinks, destinos desnudos, CommonMark completo y resolución o existencia de destinos. La sintaxis incompleta y los destinos no ASCII no reciben descuento; el punto ciego previo de citas entre graves se conserva.
+  - PUNTO CIEGO PRESCRITO: en un DOCUMENTO, lo citado entre acentos graves emparejados no se mira para NADA -- ni tildes, ni mojibake, ni U+FFFD, ni controles, ni invisibles. Lo manda §10.3 (líneas 424-427): los ejemplos de texto dañado se citan así y el verificador descuenta lo que haya dentro. El precio es real: una ruta, una clave o un valor de verdad rotos, citados entre acentos graves, pasan sin verse; hoy el corpus tiene nueve citas de esa forma (la propia doctrina, tres desviaciones y el registro consolidado) y todas son legítimas. Con un número impar de acentos graves en la línea no se descuenta nada.
+  - En CÓDIGO no hay descuento de acentos graves salvo dentro de un comentario, y ahí solo para la regla de tildes: el mojibake dentro de una cita de un bloque de ayuda sigue siendo fallo.
+  - Cercas: solo las de tres acentos graves. Ni las de virgulilla, ni las de cuatro acentos graves, ni los bloques sangrados con cuatro espacios. Si el documento menciona una cerca en mitad de una frase se usa un respaldo local anclado a principio de línea, porque Quitar-Cercas empareja sobre el texto entero y se tragaría la prosa intermedia.
+  - Frontmatter YAML: solo si el fichero empieza por tres guiones Y el bloque se cierra (Leer-Frontmatter). Dentro, un valor de una sola palabra se trata como identificador; con espacios, como prosa.
+  - Tabulador inicial seguido de letra es fallo en todas las clases: un lenguaje con sangría por tabulador (Go, Makefile) saldría acusado; no pases esos árboles con -Rutas.
+  - NBSP (U+00A0) dentro de una palabra no se detecta: es legítimo en tipografía.
+  - Mojibake: las secuencias de $COMUN_MOJIBAKE más el complemento local (A con circunflejo seguida de sección, ordinal, punto medio o espacio duro; y la clase abierta de la a con circunflejo seguida de euro o de comilla baja). Un signo degradado por otra vía no se ve.
+  - La pista de NO UTF-8 (cp1252, UTF-16, binario) es una heurística por bytes, no una decodificación.
+  - Los ficheros sin extensión se abren como texto: un binario sin extensión saldrá como NO UTF-8.
+  - No revisa artefactos generados (Es-Artefacto-Generado), directorios de terceros ($COMUN_IGNORAR_REVISION) ni binarios por extensión ($COMUN_BINARIO). Solo las extensiones de documento, código y datos de comun.ps1.
+  - Fin de línea: CRLF y retorno de carro suelto son FALLO (§10.1). Los separadores U+2028 y U+2029 se acusan como invisibles, no como fin de línea: no parten la línea y los números siguen contando por las tres convenciones normales.
+  - El fin de línea se mide sobre lo que git tiene GUARDADO (ls-files --eol): un fichero rastreado con LF en el índice y CRLF en el árbol por core.autocrlf NO es fallo, porque el repositorio cumple. Un fichero SIN RASTREAR se mide por el árbol, que es lo único que hay.
+  - Del módulo común NO se llaman, con motivo: Es-Historico (la codificación no prescribe: un documento histórico mal codificado se lee igual de mal que uno vigente, así que un CHANGELOG no queda exento), Es-Marcador (aquí no se juzgan valores de credencial, solo texto), Quitar-ComentariosHtml (un comentario HTML sigue siendo texto que alguien edita, y su mojibake sigue siendo mojibake), Normalizar-Apartado y Padre-De-Apartado (esta compuerta no atribuye apartados).
+  - Quitar-Comentarios se llama solo para separar el comentario del código y aplicar ahí el descuento de citas; el comentario NO se descarta.
+  - El AGENTS.md de la raíz del ecosistema no entra por defecto: se pasa con -Rutas.
+  - Repositorios: solo si una ruta es raíz de repositorios se aplica ALCANCE.txt; sobre un repositorio pasado directamente no hay estado y todo rompe.

@@ -1,0 +1,26 @@
+[
+  {
+    "ruta": ".agents/desviaciones/DESVIACION-20260929-005.md",
+    "sha256_antes": "D3D45402DB2E1D8D66A2058838C11AD63E18CACCA2DF7626BE7FF96EEEDAD0E5",
+    "sha256_despues": "4E4423ABACAEE518C731E9F364B556D483A485F1110B41B48B505354859C12BD",
+    "utf8": true,
+    "bom": false,
+    "lf": true,
+    "texto_historico_preservado": true,
+    "normalizacion_crlf_a_lf": true,
+    "diff": "DESVIACION-20260929-005.diff.txt",
+    "diff_codigo": 1
+  },
+  {
+    "ruta": ".agents/desviaciones/DESVIACION-20261024-011.md",
+    "sha256_antes": "923389F68658D898BEB805702F63BE8B3B9E5E1801D22A8883C98A820B065A61",
+    "sha256_despues": "5CE3CE13688099F988B29CC1F2B32302BEABFE0722ADCECF1ED5CE4D1A84409D",
+    "utf8": true,
+    "bom": false,
+    "lf": true,
+    "texto_historico_preservado": true,
+    "normalizacion_crlf_a_lf": false,
+    "diff": "DESVIACION-20261024-011.diff.txt",
+    "diff_codigo": 1
+  }
+]

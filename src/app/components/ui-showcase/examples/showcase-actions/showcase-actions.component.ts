@@ -93,12 +93,13 @@ import { PopupService } from '../../../../shared/ui/services/popup.service';
       </div>
 
       <div style="margin-top: 1rem;">
-        <app-text variant="caption" color="muted">Componente IconButton (default, ghost, avatar, close, close-soft, tamaños y animaciones):</app-text>
+        <app-text variant="caption" color="muted">Componente IconButton (default, ghost, avatar, close, close-ghost, close-soft, tamaños y animaciones):</app-text>
         <div class="button-grid" style="margin-top: 0.5rem;">
           <app-icon-button variant="default" icon="fa-solid fa-gear" tooltip="Default" ariaLabel="Configuración" />
           <app-icon-button variant="ghost" icon="fa-solid fa-magnifying-glass-plus" tooltip="Ghost" ariaLabel="Inspeccionar" />
           <app-icon-button variant="avatar" icon="fa-solid fa-user" tooltip="Avatar" ariaLabel="Perfil" />
           <app-icon-button variant="close" tooltip="Close neutro" ariaLabel="Cerrar neutro" />
+          <app-icon-button variant="close-ghost" tooltip="Close sin fondo (solo X roja)" ariaLabel="Cerrar solo X roja" />
           <app-icon-button variant="close-soft" size="sm" tooltip="Close-soft (sm)" ariaLabel="Quitar compacto" />
           <app-icon-button variant="close-soft" size="md" tooltip="Close-soft (md)" ariaLabel="Quitar elemento" />
           <app-icon-button variant="close-soft" size="lg" tooltip="Close-soft (lg)" ariaLabel="Quitar grande" />

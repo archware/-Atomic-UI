@@ -1,0 +1,140 @@
+=== Sondeo: raíz C:\Users\cotaha\source\repos
+    antes: 38 repositorio(s), 2026-10-26T13:29:00.6773572-05:00 | después: 38 repositorio(s), 2026-10-26T13:54:14.6630610-05:00 (C:\Users\cotaha\AppData\Local\Temp\codex-atomic-20261026-002/sondeo-final.json)
+  124 diferencia(s) en 6 repositorio(s) que el encargo tiene que justificar; 0 aviso(s):
+    . [raiz]: sin confirmar: recuento 168 -> 180
+    . [raiz]: sin confirmar: '.agent/INDICE_DOCUMENTAL.md' cambió de contenido o de estado
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/features/ventas/ventas.facade.ts' cambió de contenido o de estado
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/features/ventas/ventas.pagina.html' cambió de contenido o de estado
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/core/api/fn/ventas/api-v-2-ventas-id-delete.ts' es NUEVO
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/core/api/functions.ts' es NUEVO
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/features/cobranza/cobranza.facade.spec.ts' es NUEVO
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/features/cobranza/cobranza.facade.ts' es NUEVO
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/features/cobranza/cobranza.pagina.html' es NUEVO
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/features/cobranza/cobranza.pagina.ts' es NUEVO
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/features/cobranza/components/registro-devolucion/registro-devolucion.component.html' es NUEVO
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/features/cobranza/components/registro-devolucion/registro-devolucion.component.ts' es NUEVO
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/features/ventas/ventas.pagina.ts' es NUEVO
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/features/ventas/ventas-contexto.spec.ts' es NUEVO
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/features/vouchers/vouchers.facade.spec.ts' es NUEVO
+    . [raiz]: sin confirmar: 'ventas-cxc/src/app/features/vouchers/vouchers.facade.ts' es NUEVO
+    analisis-prestamo [activo]: sin confirmar: 'deploy/docker-demo/scripts/Promote-Images.ps1' cambió de contenido o de estado
+    analisis-prestamo [activo]: sin confirmar: 'deploy/docker-demo/scripts/tests/Test-PromocionMigraciones.Synthetic.ps1' cambió de contenido o de estado
+    analisis-prestamo [activo]: sin confirmar: 'deploy/lanzamiento/configuracion-ensayo.template.json' cambió de contenido o de estado
+    analisis-prestamo [activo]: sin confirmar: 'deploy/lanzamiento/Instalar-PrestamosAislado.ps1' cambió de contenido o de estado
+    analisis-prestamo [activo]: sin confirmar: 'deploy/lanzamiento/tests/Test-InstalacionAislada.Synthetic.ps1' cambió de contenido o de estado
+    -Atomic-UI [congelado]: sin confirmar: recuento 56 -> 98
+    -Atomic-UI [congelado]: sin confirmar: 'CHANGELOG.md' cambió de contenido o de estado
+    -Atomic-UI [congelado]: sin confirmar: 'docs/BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md' cambió de contenido o de estado
+    -Atomic-UI [congelado]: sin confirmar: 'docs/CONTINUIDAD_AGENTES.md' cambió de contenido o de estado
+    -Atomic-UI [congelado]: sin confirmar: 'LESSONS_LEARNED.md' cambió de contenido o de estado
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/comparaciones/anclas.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/comparaciones/atribucion-referencia.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/comparaciones/continuidad-preservacion.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/comparaciones/contratos-hashes.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/comparaciones/enlaces-afectados.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/comparaciones/manifiesto.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/comparaciones/matriz-150.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/comparaciones/reutilizacion-pruebas.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/juicio/comparacion-propia.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/juicio/gobierno-propio.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/juicio/matriz-propia-151.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/juicio/reutilizacion-propia.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/juicio/veredicto.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/codificacion-antes.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/codificacion-antes.log' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/codificacion-despues.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/codificacion-despues.log' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/codificacion-gobierno.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/codificacion-gobierno.log' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/colision-antes.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/colision-antes.log' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/desviaciones-despues.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/desviaciones-despues.log' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/desviaciones-final.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/desviaciones-final.log' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/diff-continuidad-corregida.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/huellas-antes.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/indice-generar.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/indice-generar.log' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/indice-generar-permitido.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/indice-generar-permitido.log' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/indice-verificar.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/indice-verificar.log' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/lanzado.txt' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/reparto.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/sondeo-antes.json' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/auditorias/ATOMIC-20261026-002/originales/sondeo-antes.log' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agents/desviaciones/DESVIACION-20260929-005.md' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agents/desviaciones/DESVIACION-20261024-011.md' es NUEVO
+    -Atomic-UI [congelado]: sin confirmar: '.agents/desviaciones/DESVIACION-ATOMIC-20261026-002-001.md' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: recuento 89 -> 112
+    cxc-ventas-back [activo]: sin confirmar: 'tests/W_CuentasCobrar.Tests/Ventas/PagosVentaContratoTests.cs' cambió de contenido o de estado
+    cxc-ventas-back [activo]: sin confirmar: '.agent/auditorias/REC-20261026-016/Capturar-CatalogoDocker.ps1' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: '.agent/auditorias/REC-20261026-016/contrato-rec016.schema.json' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: '.agent/auditorias/REC-20261026-016/RESULTADO_REC016.md' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: '.agent/auditorias/REC-20261026-016/Validar-Rec016.ps1' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: '.agent/roadmaps/ORDEN_REC-20261026-016_transporte_docker.md' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: '.agent/roadmaps/ROADMAP_REC-20261026-016_transporte_docker.md' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: '.agents/desviaciones/DESVIACION-20261026-039.md' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'Application/GlobalUsings.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'Application/UseCases/Cajas/Commands/CambiarEstadoCaja/CambiarEstadoCajaCommand.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'Application/UseCases/Cajas/Commands/CambiarEstadoCaja/CambiarEstadoCajaHandler.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'Application/UseCases/CategoriasMediosPago/Commands/ActualizarCategoriaMedioPago/ActualizarCategoriaMedioPagoHandler.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'Application/UseCases/Roles/Queries/ListarRoles/ListarRolesConsulta.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'Application/UseCases/Roles/Queries/ListarRoles/ListarRolesHandler.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'Application/UseCases/Ventas/Commands/ActualizarVenta/ActualizarVentaHandler.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'Application/UseCases/Ventas/Commands/ActualizarVenta/ActualizarVentaVM.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'Application/UseCases/Vouchers/Queries/ListarVouchers/ListarVouchersConsulta.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'Application/UseCases/Vouchers/Queries/ListarVouchers/ListarVouchersHandler.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'Application/UseCases/Vouchers/Queries/VoucherResumenDTO.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'Domain/Entities/Ventas/Venta.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'W_CuentasCobrar/Controllers/Catalogos/CajasController.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'W_CuentasCobrar/Controllers/Ventas/VentasController.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'W_CuentasCobrar/Controllers/Vouchers/VouchersController.cs' es NUEVO
+    cxc-ventas-back [activo]: sin confirmar: 'W_CuentasCobrar/GlobalUsings.cs' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: recuento 33 -> 51
+    prestamo_front_atomic [activo]: sin confirmar: 'docs/atomic-provenance.json' cambió de contenido o de estado
+    prestamo_front_atomic [activo]: sin confirmar: 'package.json' cambió de contenido o de estado
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/features/config/company/company-page.html' cambió de contenido o de estado
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/features/config/company/company-page.scss' cambió de contenido o de estado
+    prestamo_front_atomic [activo]: sin confirmar: 'docs/ADN_ATOMIC_CONTRASTE.md' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'scripts/check-atomic-rules.mjs' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'scripts/check-atomic-rules.test.mjs' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/features/config/company/company-page.ts' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/features/dashboard/dashboard.html' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/features/dashboard/dashboard.scss' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/features/dashboard/dashboard.ts' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/features/finance/collector-portfolios/collector-portfolios-page.html' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/features/finance/collector-portfolios/collector-portfolios-page.scss' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/features/finance/collector-portfolios/collector-portfolios-page.ts' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/layout/app-shell/app-shell.scss' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/ui/atoms/progress/progress.component.css' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/ui/atoms/progress/progress.component.ts' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/ui/directives/variables-css.directive.spec.ts' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/ui/directives/variables-css.directive.ts' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/ui/organisms/scroll-overlay/scroll-overlay.component.css' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/ui/organisms/scroll-overlay/scroll-overlay.component.html' es NUEVO
+    prestamo_front_atomic [activo]: sin confirmar: 'src/app/ui/organisms/scroll-overlay/scroll-overlay.component.ts' es NUEVO
+    prestamos_back [activo]: sin confirmar: 'HRA.Infrastructure/Persintence/Services/AccountMovementWriter.cs' cambió de contenido o de estado
+    prestamos_back [activo]: sin confirmar: 'scripts/deployment/ContratoMigraciones.psm1' cambió de contenido o de estado
+    prestamos_back [activo]: sin confirmar: 'scripts/deployment/tests/Test-CandidatoActual.Synthetic.ps1' cambió de contenido o de estado
+    prestamos_back [activo]: sin confirmar: 'scripts/deployment/tests/Test-ContratoMigraciones.Synthetic.ps1' cambió de contenido o de estado
+    prestamos_back [activo]: sin confirmar: 'tests/HRA.Infrastructure.IntegrationTests/Persistence/Services/AccountMovementWriterDatabaseTests.cs' cambió de contenido o de estado
+    prestamos_back [activo]: sin confirmar: 'tests/HRA.Infrastructure.IntegrationTests/Persistence/Services/ExternalPaymentWriterDatabaseTests.cs' cambió de contenido o de estado
+    prestamos_back [activo]: sin confirmar: 'tests/HRA.Infrastructure.IntegrationTests/Persistence/Services/InstallmentPaymentWriterDatabaseTests.cs' cambió de contenido o de estado
+    prestamos_back [activo]: sin confirmar: 'tools/W_Prestamos_Administracion/Infrastructure/ContextoProvisionInicial.cs' cambió de contenido o de estado
+
+=== Lo que esta compuerta NO cubre
+  - NO dice si la diferencia es LEGÍTIMA: un commit del encargo mueve el HEAD igual que uno ajeno. Justificarla o registrarla como desviación es de quien la hizo.
+  - Solo mira la raíz y su primer nivel: un repositorio anidado más abajo no se sondea.
+  - Las URL se guardan enmascaradas: un cambio SOLO en la credencial de un remoto no se detecta. Es el precio de no escribirla.
+  - Enmascarar no cubre una credencial en sintaxis scp-like (usuario:clave@host:ruta) ni una URL que no parsea y no lleva ://.
+  - No captura el upstream de las ramas (branch.*.remote), los hooks de .git/hooks, la configuración de git ni los stash.
+  - No compara el contenido de los ficheros rastreados y limpios: para eso está la compuerta de colisión. De los sucios compara el hash, no el diff.
+  - No sondea contenedores, bases ni volúmenes: un agente puede dejar el árbol idéntico y el entorno roto.
+  - El ALCANCE no excluye nada aquí: lo archivado, excluido e instantánea SÍ se sondea, porque la compuerta vigila que nada desaparezca; sus diferencias rompen igual que las de un activo.
+  - Invocada con `powershell -Command "& ..."` sin `; exit $LASTEXITCODE`, el 2 de arnés roto llega al llamador como 1. Con -File llega como 2.
+  - -Capturar sobrescribe una captura existente: lo avisa, no lo impide.
+  - Sondeados pese a estar fuera del ALCANCE (9): .camas-api-limpio, hra-database-contracts, hra-desktop-contracts, hra-platform-orchestrator, hra_dashboard_resultados, HRA_Streaming_Nexus, PREST-20260726-084-release-source, PREST-20260726-085-release-source, SGP_BE

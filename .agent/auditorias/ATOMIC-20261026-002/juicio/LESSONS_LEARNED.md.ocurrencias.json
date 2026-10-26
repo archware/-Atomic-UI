@@ -1,0 +1,164 @@
+[
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 882,
+    "antes": "aplicacion",
+    "despues": "aplicación",
+    "posicion": 21,
+    "contexto": "**Contexto:** En la aplicacion base_python_angular (Acopiador), los modales de alerta y confirm",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 884,
+    "antes": "ningun",
+    "despues": "ningún",
+    "posicion": 123,
+    "contexto": "ri, Python/WebView) NO deben usar colores hexadecimales fijos en ningun elemento que forme parte de un modal, overlay o dialogo. El sist",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 884,
+    "antes": "garantia",
+    "despues": "garantía",
+    "posicion": 318,
+    "contexto": "re Light Mode y Dark Mode. Al forzar un color fijo, se rompe esa garantia y el componente queda \"atado\" a un solo tema.",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 890,
+    "antes": "segun",
+    "despues": "según",
+    "posicion": 98,
+    "contexto": "--danger-color)`, `var(--warning-color)`, `var(--success-color)` segun el tipo de alerta",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 893,
+    "antes": "decision",
+    "despues": "decisión",
+    "posicion": 271,
+    "contexto": "ns semanticos de Atomic UI. Esta regla aplica antes de cualquier decision de layout o color.",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 899,
+    "antes": "aplicacion",
+    "despues": "aplicación",
+    "posicion": 122,
+    "contexto": "nts son demostrativos y no constituyen contrato de negocio. Toda aplicacion productiva debe enlazar sus graficos a contratos backend, SP o v",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 905,
+    "antes": "ultima",
+    "despues": "última",
+    "posicion": 228,
+    "contexto": "as con grid y barra horizontal superpuesta. En ese escenario, la ultima fila quedaba visualmente demasiado cerca de la barra horizontal",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 908,
+    "antes": "unico",
+    "despues": "único",
+    "posicion": 35,
+    "contexto": "**Regla visual:** Las celdas cuyo unico contenido es `app-chip` pueden centrarse verticalmente mediante",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 912,
+    "antes": "Auditoria",
+    "despues": "Auditoría",
+    "posicion": 19,
+    "contexto": "## [2026-07-01] - Auditoria de Ecosistema: Drift, Dependencias y Seguridad",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 915,
+    "antes": "auditoria",
+    "despues": "auditoría",
+    "posicion": 18,
+    "contexto": "**Contexto**: La auditoria SHA-256 de todos los archivos `shared/ui` revelo que 10 archivos",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 915,
+    "antes": "ningun",
+    "despues": "ningún",
+    "posicion": 162,
+    "contexto": "an drift y 5 estaban completamente ausentes en Tauri y Wails. En ningun momento hubo errores visibles — el drift se acumula silenciosame",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 916,
+    "antes": "unica",
+    "despues": "única",
+    "posicion": 285,
+    "contexto": "dores*. Nunca al reves. Validar con SHA-256 periodicamente es la unica forma de detectar drift oculto.",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 918,
+    "antes": "tambien",
+    "despues": "también",
+    "posicion": 41,
+    "contexto": "### 2. Las Dependencias de package.json tambien son parte de la Fuente de la Verdad",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 920,
+    "antes": "tambien",
+    "despues": "también",
+    "posicion": 126,
+    "contexto": "pendencias que sus componentes consumen, aunque los consumidores tambien las tengan. El `package.json` de Atomic-UI es tambien la Fuente",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 920,
+    "antes": "tambien",
+    "despues": "también",
+    "posicion": 180,
+    "contexto": "nsumidores tambien las tengan. El `package.json` de Atomic-UI es tambien la Fuente de la Verdad de dependencias. El script de propagacion",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 920,
+    "antes": "verificacion",
+    "despues": "verificación",
+    "posicion": 273,
+    "contexto": "ad de dependencias. El script de propagacion deberia incluir una verificacion de paquetes cruzada.",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 928,
+    "antes": "codigo",
+    "despues": "código",
+    "posicion": 104,
+    "contexto": "d de desarrollo deben seguir el mismo patron de seguridad que el codigo de produccion. El patron correcto para scripts locales es: centr",
+    "codigo": false
+  },
+  {
+    "ruta": "LESSONS_LEARNED.md",
+    "linea": 928,
+    "antes": "Ningun",
+    "despues": "Ningún",
+    "posicion": 332,
+    "contexto": "e credenciales, y proveer un `config.example.js` como plantilla. Ningun password debe existir en texto plano en el repositorio.",
+    "codigo": false
+  }
+]

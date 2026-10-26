@@ -1,0 +1,6 @@
+{
+  "codigo": 2,
+  "comando": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n& 'C:/Users/cotaha/source/repos/.agents/scripts/generar-indice-documental.ps1'\nexit $LASTEXITCODE",
+  "sha256_antes": "97CE5CB76FF1E358E99B51EB0EE27DA8D09501BF408B6D8582C4964BC365C299",
+  "sha256_despues": "97CE5CB76FF1E358E99B51EB0EE27DA8D09501BF408B6D8582C4964BC365C299"
+}

@@ -1,0 +1,4 @@
+{
+  "codigo": 1,
+  "comando": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n& 'C:/Users/cotaha/source/repos/.agents/scripts/verificar-codificacion.ps1' -Rutas @('C:/Users/cotaha/source/repos/-Atomic-UI/CHANGELOG.md','C:/Users/cotaha/source/repos/-Atomic-UI/LESSONS_LEARNED.md','C:/Users/cotaha/source/repos/-Atomic-UI/.agents/desviaciones/DESVIACION-20260929-005.md','C:/Users/cotaha/source/repos/-Atomic-UI/.agents/desviaciones/DESVIACION-20261024-011.md') -Detalle\nexit $LASTEXITCODE"
+}

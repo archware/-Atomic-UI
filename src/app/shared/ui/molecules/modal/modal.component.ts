@@ -40,11 +40,12 @@ const MODAL_ERROR_SELECTORS = [
 ] as const;
 
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
+import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-overlay.component';
 
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [IconButtonComponent],
+  imports: [IconButtonComponent, ScrollOverlayComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="modal-overlay"
@@ -78,9 +79,15 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
         </div>
 
         <!-- Body -->
-        <div class="modal-body">
-          <ng-content></ng-content>
-        </div>
+        <app-scroll-overlay
+          class="so-block modal-body-scroll"
+          [skipTableDetection]="true"
+          [disableHorizontal]="true"
+        >
+          <div class="modal-body">
+            <ng-content></ng-content>
+          </div>
+        </app-scroll-overlay>
 
         <!-- Footer -->
         @if (hasFooter()) {

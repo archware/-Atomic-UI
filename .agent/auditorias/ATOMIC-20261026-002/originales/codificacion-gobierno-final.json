@@ -1,0 +1,4 @@
+{
+  "codigo": 0,
+  "comando": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n& 'C:/Users/cotaha/source/repos/.agents/scripts/verificar-codificacion.ps1' -Rutas @('C:/Users/cotaha/source/repos/-Atomic-UI/docs/CONTINUIDAD_AGENTES.md','C:/Users/cotaha/source/repos/-Atomic-UI/.agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md','C:/Users/cotaha/source/repos/-Atomic-UI/.agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md') -Detalle\nexit $LASTEXITCODE"
+}

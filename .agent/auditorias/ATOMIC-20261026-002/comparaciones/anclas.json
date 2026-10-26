@@ -1,0 +1,5429 @@
+{
+  "mapas": [
+    {
+      "ruta": "CHANGELOG.md",
+      "antes": [
+        {
+          "linea": 13,
+          "id": "registro-de-cambios",
+          "nivel": 1,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 15,
+          "id": "atomic-20261026-001--desbloqueo-de-pruebas-de-accesibilidad",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 30,
+          "id": "clt-20261024-003-y-atomic-20261024-003--reconciliación-cva-en-input-y-manifiesto-de-procedencia",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 44,
+          "id": "acc-20261022-001--presupuesto-físico-de-acciones-de-catálogo",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 60,
+          "id": "atomic-20261020-002--select2-en-capa-flotante",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 70,
+          "id": "atomic-20261020-001--variante-dropzone-en-fileinputcomponent-y-homologación-de-required-en-controles-compuestos",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 74,
+          "id": "atomic-20261019-002--select2-con-etiqueta-superior-alineada-peso-700-y-marcador-de-obligatorio",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 78,
+          "id": "atomic-20261019-001--modos-de-etiqueta-unificados-superior-y-flotante-en-formularios",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 82,
+          "id": "doc-20261018-002--referencias-vigentes-de-gobierno",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 88,
+          "id": "atomic-20261001-002--calendario-y-selector-en-formularios",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 98,
+          "id": "atomic-20261001-001--presentación-de-transacciones-candidata",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 108,
+          "id": "atomic-20260930-008--experiencia-común-integración-comprobada",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 118,
+          "id": "atomic-20260930-007--detalle-uniforme-de-catálogos",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 126,
+          "id": "atomic-20260930-006--guardado-local-autorizado",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 136,
+          "id": "atomic-20260929-005--alertas-y-acciones-distinguibles",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 150,
+          "id": "atomic-20260929-004--lecciones-de-catálogos-y-bloqueo-explícito",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 160,
+          "id": "atomic-20260929-003--acción-contextual-y-guardado-habilitado-candidato",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 171,
+          "id": "atomic-20260929-002--centrado-de-etiquetas-candidato-sin-propagar",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 182,
+          "id": "atomic-20260928-001--candidato-de-preservación-visual-sin-publicar",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 199,
+          "id": "fixtabs-las-flechas-siguen-la-orientacion-y-respetan-los-modificadores",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 222,
+          "id": "feattabs-navegacion-wai-aria-completa-por-teclado",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 251,
+          "id": "f3-atomic-adr-20260825-y-f3-dart-bridge-20260825-el-adn-cruza-a-flutter",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 255,
+          "id": "objetivo-tactil-elevado-a-48px-f3-atomic-adr-20260825",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 271,
+          "id": "puente-de-tokens-hacia-dart-f3-dart-bridge-20260825",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 298,
+          "id": "tratamiento-del-escalado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 313,
+          "id": "sin-publicar",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 315,
+          "id": "cambiado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 329,
+          "id": "añadido",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 336,
+          "id": "corregido",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 355,
+          "id": "documentación",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 382,
+          "id": "5220---2026-08-20",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 384,
+          "id": "corregido-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 392,
+          "id": "distribución",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 401,
+          "id": "5210---2026-08-18",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 403,
+          "id": "corregido-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 412,
+          "id": "anadido",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 419,
+          "id": "5200---2026-08-18",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 421,
+          "id": "anadido-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 439,
+          "id": "5190---2026-08-18",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 441,
+          "id": "corregido-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 454,
+          "id": "5180---2026-08-17",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 456,
+          "id": "cambiado-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 464,
+          "id": "corregido-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 480,
+          "id": "5170---2026-08-17",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 482,
+          "id": "cambiado-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 509,
+          "id": "5160---2026-08-17",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 511,
+          "id": "corregido-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 529,
+          "id": "5150---2026-08-17",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 531,
+          "id": "anadido-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 571,
+          "id": "5140---2026-08-17",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 573,
+          "id": "anadido-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 601,
+          "id": "5130---2026-08-16",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 603,
+          "id": "cambiado-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 640,
+          "id": "5120---2026-08-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 642,
+          "id": "anadido-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 654,
+          "id": "5110---2026-08-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 656,
+          "id": "corregido-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 666,
+          "id": "5100---2026-08-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 668,
+          "id": "corregido-7",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 689,
+          "id": "cambiado-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 701,
+          "id": "590---2026-08-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 703,
+          "id": "corregido-8",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 721,
+          "id": "anadido-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 731,
+          "id": "notas",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 737,
+          "id": "584---2026-08-14",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 739,
+          "id": "anadido-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 761,
+          "id": "verificacion",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 767,
+          "id": "583---2026-08-14",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 769,
+          "id": "corregido-9",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 784,
+          "id": "anadido-7",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 794,
+          "id": "verificacion-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 800,
+          "id": "582---2026-08-14",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 802,
+          "id": "añadido-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 813,
+          "id": "accesibilidad",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 821,
+          "id": "documentación-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 827,
+          "id": "verificación",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 841,
+          "id": "identificador-de-cambio",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 845,
+          "id": "581---2026-08-14",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 847,
+          "id": "añadido-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 860,
+          "id": "documentación-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 865,
+          "id": "verificación-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 878,
+          "id": "identificador-de-cambio-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 882,
+          "id": "580---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 894,
+          "id": "corregido-10",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 948,
+          "id": "añadido-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 967,
+          "id": "verificación-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 976,
+          "id": "575---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 982,
+          "id": "corregido-11",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1030,
+          "id": "verificación-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1040,
+          "id": "574---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1042,
+          "id": "retirado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1059,
+          "id": "573---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1065,
+          "id": "corregido-12",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1088,
+          "id": "verificación-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1112,
+          "id": "572---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1114,
+          "id": "corregido-13",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1124,
+          "id": "571---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1126,
+          "id": "agregado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1147,
+          "id": "570---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1152,
+          "id": "agregado-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1175,
+          "id": "nota-sobre-los-roles-de-tabla",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1187,
+          "id": "560---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1199,
+          "id": "cambios-que-rompen",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1215,
+          "id": "agregado-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1225,
+          "id": "corregido-14",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1251,
+          "id": "conocido-y-sin-resolver",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1259,
+          "id": "558---2026-08-12",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1261,
+          "id": "corregido-15",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1288,
+          "id": "verificación-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1301,
+          "id": "557---2026-08-11",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1303,
+          "id": "añadido-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1317,
+          "id": "corregido-16",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1334,
+          "id": "verificación-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1347,
+          "id": "556---2026-08-10",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1349,
+          "id": "corregido-17",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1362,
+          "id": "verificación-7",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1376,
+          "id": "555---2026-08-10",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1378,
+          "id": "añadido-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1404,
+          "id": "seguridad",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1421,
+          "id": "verificación-8",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1425,
+          "id": "554---2026-08-10",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1427,
+          "id": "mejorado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1443,
+          "id": "verificación-9",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1462,
+          "id": "553---2026-08-10",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1464,
+          "id": "mejorado-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1484,
+          "id": "verificación-10",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1500,
+          "id": "552---2026-08-10",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1502,
+          "id": "mejorado-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1528,
+          "id": "verificación-11",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1542,
+          "id": "551---2026-08-10",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1544,
+          "id": "seguridad-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1557,
+          "id": "corregido-18",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1569,
+          "id": "procedencia-y-verificación",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1578,
+          "id": "gobernanza-121---2026-08-07",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1583,
+          "id": "agregado-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1604,
+          "id": "gobernanza-120---2026-08-06",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1611,
+          "id": "agregado-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1633,
+          "id": "550---2026-08-06",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1635,
+          "id": "agregado-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1641,
+          "id": "cambiado-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1646,
+          "id": "542---2026-08-06",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1648,
+          "id": "arreglado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1653,
+          "id": "541---2026-08-06",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1655,
+          "id": "arreglado-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1660,
+          "id": "540---2026-08-06",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1666,
+          "id": "agregado-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1670,
+          "id": "arreglado-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1675,
+          "id": "gobernanza",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1679,
+          "id": "530---2026-08-03",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1681,
+          "id": "integrado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1693,
+          "id": "estado-de-verificación",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1709,
+          "id": "521---2026-08-02",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1711,
+          "id": "mejorado-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1723,
+          "id": "corregido-19",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1746,
+          "id": "verificación-12",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1755,
+          "id": "520---2026-08-02",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1757,
+          "id": "añadido-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1771,
+          "id": "mejorado-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1786,
+          "id": "verificación-13",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1791,
+          "id": "5142---2026-08-01",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1793,
+          "id": "corregido-20",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1800,
+          "id": "verificación-14",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1805,
+          "id": "5141---2026-08-01",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1807,
+          "id": "mejorado-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1813,
+          "id": "verificación-15",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1818,
+          "id": "5140---2026-08-01",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1820,
+          "id": "mejorado-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1830,
+          "id": "corregido-21",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1841,
+          "id": "gobierno",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1847,
+          "id": "verificación-16",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1858,
+          "id": "5139---2026-07-31",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1860,
+          "id": "mejorado-7",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1870,
+          "id": "corregido-22",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1877,
+          "id": "verificación-17",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1884,
+          "id": "prest-20260731-168",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1891,
+          "id": "registros-prest-anteriores-a-la-versión-5138",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1911,
+          "id": "5138---2026-07-31-actualizada-el-2026-08-03",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1913,
+          "id": "añadido-7",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1934,
+          "id": "gobierno-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1949,
+          "id": "corregido-23",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1965,
+          "id": "verificación-18",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1975,
+          "id": "mejorado-8",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1982,
+          "id": "verificación-de-la-revisión-original",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1987,
+          "id": "5137---2026-07-29",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1989,
+          "id": "mejorado-9",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1995,
+          "id": "verificación-19",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2000,
+          "id": "5136---2026-07-29",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2002,
+          "id": "corregido-24",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2009,
+          "id": "verificación-20",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2017,
+          "id": "5135---2026-07-29",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2019,
+          "id": "corregido-25",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2025,
+          "id": "añadido-8",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2032,
+          "id": "verificación-21",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2040,
+          "id": "5134---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2042,
+          "id": "corregido-26",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2052,
+          "id": "verificación-22",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2059,
+          "id": "5133---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2061,
+          "id": "corregido-27",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2068,
+          "id": "verificación-23",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2075,
+          "id": "5132---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2077,
+          "id": "corregido-28",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2084,
+          "id": "verificación-24",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2089,
+          "id": "5131---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2091,
+          "id": "corregido-29",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2098,
+          "id": "verificación-25",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2103,
+          "id": "5130---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2105,
+          "id": "corregido-30",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2111,
+          "id": "verificación-26",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2115,
+          "id": "5129---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2117,
+          "id": "corregido-31",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2124,
+          "id": "verificación-27",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2131,
+          "id": "5128---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2133,
+          "id": "cambiado-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2144,
+          "id": "verificación-28",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2150,
+          "id": "5127---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2152,
+          "id": "añadido-9",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2161,
+          "id": "verificación-29",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2167,
+          "id": "5126---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2169,
+          "id": "corregido-32",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2176,
+          "id": "verificación-30",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2182,
+          "id": "5125---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2184,
+          "id": "corregido-33",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2191,
+          "id": "verificación-31",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2197,
+          "id": "5124---2026-07-27",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2199,
+          "id": "cambiado-7",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2206,
+          "id": "verificación-32",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2212,
+          "id": "5123---2026-07-27",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2214,
+          "id": "cambiado-8",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2222,
+          "id": "verificación-33",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2229,
+          "id": "5122---2026-07-25",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2231,
+          "id": "añadido-10",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2240,
+          "id": "verificación-34",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2247,
+          "id": "5121---2026-07-25",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2249,
+          "id": "añadido-11",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2256,
+          "id": "verificación-35",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2262,
+          "id": "5120---2026-07-25",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2264,
+          "id": "corregido-34",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2275,
+          "id": "verificación-36",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2283,
+          "id": "5119---2026-07-25",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2285,
+          "id": "añadido-12",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2305,
+          "id": "compatibilidad",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2310,
+          "id": "verificación-37",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2315,
+          "id": "5118---2026-07-24",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2317,
+          "id": "corregido-35",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2326,
+          "id": "verificación-38",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2331,
+          "id": "5117---2026-07-22",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2333,
+          "id": "gobierno-obligatorio",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2344,
+          "id": "verificación-39",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2350,
+          "id": "5116---2026-07-22",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2352,
+          "id": "añadido-13",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2359,
+          "id": "corregido-36",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2367,
+          "id": "verificación-40",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2372,
+          "id": "5115---2026-07-22",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2374,
+          "id": "añadido-14",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2385,
+          "id": "regla-de-propagación",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2391,
+          "id": "5114---2026-07-21",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2393,
+          "id": "añadido-15",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2398,
+          "id": "corregido-37",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2405,
+          "id": "5113---2026-07-20",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2407,
+          "id": "añadido-16",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2413,
+          "id": "corregido-38",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2423,
+          "id": "verificación-41",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2431,
+          "id": "5112---2026-07-20",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2433,
+          "id": "añadido-17",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2439,
+          "id": "corregido-39",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2446,
+          "id": "verificación-42",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2452,
+          "id": "5111---2026-07-19",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2454,
+          "id": "corregido-40",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2459,
+          "id": "directriz",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2465,
+          "id": "5110---2026-07-16",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2467,
+          "id": "corregido-41",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2474,
+          "id": "519---2026-07-16",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2476,
+          "id": "corregido-42",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2485,
+          "id": "v134---2026-07-16",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2487,
+          "id": "documentación-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2492,
+          "id": "518---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2494,
+          "id": "corregido-43",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2500,
+          "id": "517---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2502,
+          "id": "corregido-44",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2508,
+          "id": "516---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2510,
+          "id": "corregido-45",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2516,
+          "id": "515---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2518,
+          "id": "aniadido",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2524,
+          "id": "514---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2526,
+          "id": "corregido-46",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2532,
+          "id": "513---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2534,
+          "id": "aniadido-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2540,
+          "id": "512---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2542,
+          "id": "corregido-47",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2549,
+          "id": "511---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2551,
+          "id": "corregido-48",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2558,
+          "id": "510---2026-07-02",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2560,
+          "id": "uniformizacion-ui-y-chart-reactivo-a-temas",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2562,
+          "id": "fixed",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2571,
+          "id": "500---2026-07-01",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2573,
+          "id": "auditoria-profunda-del-ecosistema--sincronizacion-total-y-limpieza",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2575,
+          "id": "fixed-ecosistema--critico",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2583,
+          "id": "added",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2588,
+          "id": "changed",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2595,
+          "id": "490---2026-07-01",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2597,
+          "id": "auditoría-profunda-de-tokens--fix-crítico-de-tabla-y-chart--guía-de-migración",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2599,
+          "id": "fixed-tokens--crítico",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2605,
+          "id": "added-developer-experience",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2611,
+          "id": "changed-1",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2617,
+          "id": "480---2026-06-26",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2619,
+          "id": "refactorización-de-tablas-hover-effects-y-contrastes-en-modo-oscuro",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2621,
+          "id": "fixed-frontend---ui-core",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2627,
+          "id": "added-frontend---wails--tauri-datagrids",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2633,
+          "id": "470---2026-06-23",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2635,
+          "id": "dropdown-click-propagation-isolation",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2637,
+          "id": "fixed-frontend---select2component",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2642,
+          "id": "460---2026-06-23",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2644,
+          "id": "select2component-y-db-first-robustness",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2646,
+          "id": "fixed-frontend---wails--tauri",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2651,
+          "id": "fixed-backend---tauri",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2659,
+          "id": "450---2026-06-19",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2661,
+          "id": "refactorización-del-indicador-11-y-db-first",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2663,
+          "id": "fixed-base-de-datos--arquitectura",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2669,
+          "id": "added-frontend---wails--tauri",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2676,
+          "id": "440---2026-06-08",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2678,
+          "id": "refactorización-de-tablas-scrolling-avanzado-y-pulido-visual-ui",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2680,
+          "id": "added-1",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2686,
+          "id": "fixed-visual--arquitectura",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2691,
+          "id": "fixed-visual--css",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2701,
+          "id": "430---2026-05-29",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2703,
+          "id": "auditoría-de-consistencia--correcciones-visuales-routing-y-tokens",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2705,
+          "id": "added-2",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2710,
+          "id": "fixed--visual--ui",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2716,
+          "id": "fixed--temas-oscuros-elevación--sombras",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2723,
+          "id": "auditoría-técnica--inconsistencias-identificadas-pendientes-de-fase-10",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2727,
+          "id": "-críticos--routing-completamente-inoperativo",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2735,
+          "id": "-altos--css--tokens",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2743,
+          "id": "-medios--calidad-de-código",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2753,
+          "id": "-bajos--valores-hardcoded-en-tokens",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2763,
+          "id": "lecciones-aprendidas",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2765,
+          "id": "arquitectura-angular",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2773,
+          "id": "css--design-tokens",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2785,
+          "id": "420---2026-05-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2787,
+          "id": "blueprint-responsive-audit--revisión-profunda-11-de-todos-los-blueprints",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2789,
+          "id": "fixed--crítico",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2794,
+          "id": "fixed--alto-impacto-blueprints",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2802,
+          "id": "fixed--impacto-medio-blueprints",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2811,
+          "id": "410---2026-05-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2813,
+          "id": "responsive--accessibility--auditoría-completa-de-46-componentes",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2815,
+          "id": "fixed--críticos",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2820,
+          "id": "fixed--alto-impacto",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2827,
+          "id": "fixed--impacto-medio",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2838,
+          "id": "added--sistema-global",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2843,
+          "id": "fixed--stories-storybook-sesión-anterior",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2850,
+          "id": "lecciones-aprendidas-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2852,
+          "id": "css",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2866,
+          "id": "storybook",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2871,
+          "id": "angular",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2878,
+          "id": "added-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2892,
+          "id": "changed-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2903,
+          "id": "fixed-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2911,
+          "id": "notes",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2916,
+          "id": "fixed-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        }
+      ],
+      "despues": [
+        {
+          "linea": 13,
+          "id": "registro-de-cambios",
+          "nivel": 1,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 15,
+          "id": "atomic-20261026-002--corrección-editorial-de-prosa-histórica",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 26,
+          "id": "atomic-20261026-001--desbloqueo-de-pruebas-de-accesibilidad",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 41,
+          "id": "clt-20261024-003-y-atomic-20261024-003--reconciliación-cva-en-input-y-manifiesto-de-procedencia",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 55,
+          "id": "acc-20261022-001--presupuesto-físico-de-acciones-de-catálogo",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 71,
+          "id": "atomic-20261020-002--select2-en-capa-flotante",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 81,
+          "id": "atomic-20261020-001--variante-dropzone-en-fileinputcomponent-y-homologación-de-required-en-controles-compuestos",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 85,
+          "id": "atomic-20261019-002--select2-con-etiqueta-superior-alineada-peso-700-y-marcador-de-obligatorio",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 89,
+          "id": "atomic-20261019-001--modos-de-etiqueta-unificados-superior-y-flotante-en-formularios",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 93,
+          "id": "doc-20261018-002--referencias-vigentes-de-gobierno",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 99,
+          "id": "atomic-20261001-002--calendario-y-selector-en-formularios",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 109,
+          "id": "atomic-20261001-001--presentación-de-transacciones-candidata",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 119,
+          "id": "atomic-20260930-008--experiencia-común-integración-comprobada",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 129,
+          "id": "atomic-20260930-007--detalle-uniforme-de-catálogos",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 137,
+          "id": "atomic-20260930-006--guardado-local-autorizado",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 147,
+          "id": "atomic-20260929-005--alertas-y-acciones-distinguibles",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 161,
+          "id": "atomic-20260929-004--lecciones-de-catálogos-y-bloqueo-explícito",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 171,
+          "id": "atomic-20260929-003--acción-contextual-y-guardado-habilitado-candidato",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 182,
+          "id": "atomic-20260929-002--centrado-de-etiquetas-candidato-sin-propagar",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 193,
+          "id": "atomic-20260928-001--candidato-de-preservación-visual-sin-publicar",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 210,
+          "id": "fixtabs-las-flechas-siguen-la-orientacion-y-respetan-los-modificadores",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 233,
+          "id": "feattabs-navegacion-wai-aria-completa-por-teclado",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 262,
+          "id": "f3-atomic-adr-20260825-y-f3-dart-bridge-20260825-el-adn-cruza-a-flutter",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 266,
+          "id": "objetivo-tactil-elevado-a-48px-f3-atomic-adr-20260825",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 282,
+          "id": "puente-de-tokens-hacia-dart-f3-dart-bridge-20260825",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 309,
+          "id": "tratamiento-del-escalado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 324,
+          "id": "sin-publicar",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 326,
+          "id": "cambiado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 340,
+          "id": "añadido",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 347,
+          "id": "corregido",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 366,
+          "id": "documentación",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 393,
+          "id": "5220---2026-08-20",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 395,
+          "id": "corregido-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 403,
+          "id": "distribución",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 412,
+          "id": "5210---2026-08-18",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 414,
+          "id": "corregido-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 423,
+          "id": "anadido",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 430,
+          "id": "5200---2026-08-18",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 432,
+          "id": "anadido-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 450,
+          "id": "5190---2026-08-18",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 452,
+          "id": "corregido-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 465,
+          "id": "5180---2026-08-17",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 467,
+          "id": "cambiado-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 475,
+          "id": "corregido-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 491,
+          "id": "5170---2026-08-17",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 493,
+          "id": "cambiado-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 520,
+          "id": "5160---2026-08-17",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 522,
+          "id": "corregido-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 540,
+          "id": "5150---2026-08-17",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 542,
+          "id": "anadido-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 582,
+          "id": "5140---2026-08-17",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 584,
+          "id": "anadido-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 612,
+          "id": "5130---2026-08-16",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 614,
+          "id": "cambiado-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 651,
+          "id": "5120---2026-08-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 653,
+          "id": "anadido-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 665,
+          "id": "5110---2026-08-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 667,
+          "id": "corregido-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 677,
+          "id": "5100---2026-08-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 679,
+          "id": "corregido-7",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 700,
+          "id": "cambiado-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 712,
+          "id": "590---2026-08-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 714,
+          "id": "corregido-8",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 732,
+          "id": "anadido-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 742,
+          "id": "notas",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 748,
+          "id": "584---2026-08-14",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 750,
+          "id": "anadido-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 772,
+          "id": "verificacion",
+          "nivel": 3,
+          "tipo": "html"
+        },
+        {
+          "linea": 778,
+          "id": "583---2026-08-14",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 780,
+          "id": "corregido-9",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 795,
+          "id": "anadido-7",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 805,
+          "id": "verificacion-1",
+          "nivel": 3,
+          "tipo": "html"
+        },
+        {
+          "linea": 811,
+          "id": "582---2026-08-14",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 813,
+          "id": "añadido-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 824,
+          "id": "accesibilidad",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 832,
+          "id": "documentación-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 838,
+          "id": "verificación",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 852,
+          "id": "identificador-de-cambio",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 856,
+          "id": "581---2026-08-14",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 858,
+          "id": "añadido-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 871,
+          "id": "documentación-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 876,
+          "id": "verificación-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 889,
+          "id": "identificador-de-cambio-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 893,
+          "id": "580---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 905,
+          "id": "corregido-10",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 959,
+          "id": "añadido-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 978,
+          "id": "verificación-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 987,
+          "id": "575---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 993,
+          "id": "corregido-11",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1041,
+          "id": "verificación-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1051,
+          "id": "574---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1053,
+          "id": "retirado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1070,
+          "id": "573---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1076,
+          "id": "corregido-12",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1099,
+          "id": "verificación-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1123,
+          "id": "572---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1125,
+          "id": "corregido-13",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1135,
+          "id": "571---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1137,
+          "id": "agregado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1158,
+          "id": "570---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1163,
+          "id": "agregado-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1186,
+          "id": "nota-sobre-los-roles-de-tabla",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1198,
+          "id": "560---2026-08-13",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1210,
+          "id": "cambios-que-rompen",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1226,
+          "id": "agregado-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1236,
+          "id": "corregido-14",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1262,
+          "id": "conocido-y-sin-resolver",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1270,
+          "id": "558---2026-08-12",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1272,
+          "id": "corregido-15",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1299,
+          "id": "verificación-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1312,
+          "id": "557---2026-08-11",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1314,
+          "id": "añadido-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1328,
+          "id": "corregido-16",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1345,
+          "id": "verificación-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1358,
+          "id": "556---2026-08-10",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1360,
+          "id": "corregido-17",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1373,
+          "id": "verificación-7",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1387,
+          "id": "555---2026-08-10",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1389,
+          "id": "añadido-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1415,
+          "id": "seguridad",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1432,
+          "id": "verificación-8",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1436,
+          "id": "554---2026-08-10",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1438,
+          "id": "mejorado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1454,
+          "id": "verificación-9",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1473,
+          "id": "553---2026-08-10",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1475,
+          "id": "mejorado-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1495,
+          "id": "verificación-10",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1511,
+          "id": "552---2026-08-10",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1513,
+          "id": "mejorado-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1539,
+          "id": "verificación-11",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1553,
+          "id": "551---2026-08-10",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1555,
+          "id": "seguridad-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1568,
+          "id": "corregido-18",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1580,
+          "id": "procedencia-y-verificación",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1589,
+          "id": "gobernanza-121---2026-08-07",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1594,
+          "id": "agregado-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1615,
+          "id": "gobernanza-120---2026-08-06",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1622,
+          "id": "agregado-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1644,
+          "id": "550---2026-08-06",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1646,
+          "id": "agregado-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1652,
+          "id": "cambiado-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1657,
+          "id": "542---2026-08-06",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1659,
+          "id": "arreglado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1664,
+          "id": "541---2026-08-06",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1666,
+          "id": "arreglado-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1671,
+          "id": "540---2026-08-06",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1677,
+          "id": "agregado-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1681,
+          "id": "arreglado-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1686,
+          "id": "gobernanza",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1690,
+          "id": "530---2026-08-03",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1692,
+          "id": "integrado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1704,
+          "id": "estado-de-verificación",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1720,
+          "id": "521---2026-08-02",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1722,
+          "id": "mejorado-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1734,
+          "id": "corregido-19",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1757,
+          "id": "verificación-12",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1766,
+          "id": "520---2026-08-02",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1768,
+          "id": "añadido-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1782,
+          "id": "mejorado-4",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1797,
+          "id": "verificación-13",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1802,
+          "id": "5142---2026-08-01",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1804,
+          "id": "corregido-20",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1811,
+          "id": "verificación-14",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1816,
+          "id": "5141---2026-08-01",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1818,
+          "id": "mejorado-5",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1824,
+          "id": "verificación-15",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1829,
+          "id": "5140---2026-08-01",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1831,
+          "id": "mejorado-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1841,
+          "id": "corregido-21",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1852,
+          "id": "gobierno",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1858,
+          "id": "verificación-16",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1869,
+          "id": "5139---2026-07-31",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1871,
+          "id": "mejorado-7",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1881,
+          "id": "corregido-22",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1888,
+          "id": "verificación-17",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1895,
+          "id": "prest-20260731-168",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1902,
+          "id": "registros-prest-anteriores-a-la-versión-5138",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1922,
+          "id": "5138---2026-07-31-actualizada-el-2026-08-03",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1924,
+          "id": "añadido-7",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1945,
+          "id": "gobierno-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1960,
+          "id": "corregido-23",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1976,
+          "id": "verificación-18",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1986,
+          "id": "mejorado-8",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1993,
+          "id": "verificación-de-la-revisión-original",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1998,
+          "id": "5137---2026-07-29",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2000,
+          "id": "mejorado-9",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2006,
+          "id": "verificación-19",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2011,
+          "id": "5136---2026-07-29",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2013,
+          "id": "corregido-24",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2020,
+          "id": "verificación-20",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2028,
+          "id": "5135---2026-07-29",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2030,
+          "id": "corregido-25",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2036,
+          "id": "añadido-8",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2043,
+          "id": "verificación-21",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2051,
+          "id": "5134---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2053,
+          "id": "corregido-26",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2063,
+          "id": "verificación-22",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2070,
+          "id": "5133---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2072,
+          "id": "corregido-27",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2079,
+          "id": "verificación-23",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2086,
+          "id": "5132---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2088,
+          "id": "corregido-28",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2095,
+          "id": "verificación-24",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2100,
+          "id": "5131---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2102,
+          "id": "corregido-29",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2109,
+          "id": "verificación-25",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2114,
+          "id": "5130---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2116,
+          "id": "corregido-30",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2122,
+          "id": "verificación-26",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2126,
+          "id": "5129---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2128,
+          "id": "corregido-31",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2135,
+          "id": "verificación-27",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2142,
+          "id": "5128---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2144,
+          "id": "cambiado-6",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2155,
+          "id": "verificación-28",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2161,
+          "id": "5127---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2163,
+          "id": "añadido-9",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2172,
+          "id": "verificación-29",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2178,
+          "id": "5126---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2180,
+          "id": "corregido-32",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2187,
+          "id": "verificación-30",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2193,
+          "id": "5125---2026-07-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2195,
+          "id": "corregido-33",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2202,
+          "id": "verificación-31",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2208,
+          "id": "5124---2026-07-27",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2210,
+          "id": "cambiado-7",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2217,
+          "id": "verificación-32",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2223,
+          "id": "5123---2026-07-27",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2225,
+          "id": "cambiado-8",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2233,
+          "id": "verificación-33",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2240,
+          "id": "5122---2026-07-25",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2242,
+          "id": "añadido-10",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2251,
+          "id": "verificación-34",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2258,
+          "id": "5121---2026-07-25",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2260,
+          "id": "añadido-11",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2267,
+          "id": "verificación-35",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2273,
+          "id": "5120---2026-07-25",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2275,
+          "id": "corregido-34",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2286,
+          "id": "verificación-36",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2294,
+          "id": "5119---2026-07-25",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2296,
+          "id": "añadido-12",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2316,
+          "id": "compatibilidad",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2321,
+          "id": "verificación-37",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2326,
+          "id": "5118---2026-07-24",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2328,
+          "id": "corregido-35",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2337,
+          "id": "verificación-38",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2342,
+          "id": "5117---2026-07-22",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2344,
+          "id": "gobierno-obligatorio",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2355,
+          "id": "verificación-39",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2361,
+          "id": "5116---2026-07-22",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2363,
+          "id": "añadido-13",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2370,
+          "id": "corregido-36",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2378,
+          "id": "verificación-40",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2383,
+          "id": "5115---2026-07-22",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2385,
+          "id": "añadido-14",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2396,
+          "id": "regla-de-propagación",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2402,
+          "id": "5114---2026-07-21",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2404,
+          "id": "añadido-15",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2409,
+          "id": "corregido-37",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2416,
+          "id": "5113---2026-07-20",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2418,
+          "id": "añadido-16",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2424,
+          "id": "corregido-38",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2434,
+          "id": "verificación-41",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2442,
+          "id": "5112---2026-07-20",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2444,
+          "id": "añadido-17",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2450,
+          "id": "corregido-39",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2457,
+          "id": "verificación-42",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2463,
+          "id": "5111---2026-07-19",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2465,
+          "id": "corregido-40",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2470,
+          "id": "directriz",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2476,
+          "id": "5110---2026-07-16",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2478,
+          "id": "corregido-41",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2485,
+          "id": "519---2026-07-16",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2487,
+          "id": "corregido-42",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2496,
+          "id": "v134---2026-07-16",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2498,
+          "id": "documentación-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2503,
+          "id": "518---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2505,
+          "id": "corregido-43",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2511,
+          "id": "517---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2513,
+          "id": "corregido-44",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2519,
+          "id": "516---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2521,
+          "id": "corregido-45",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2527,
+          "id": "515---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2529,
+          "id": "aniadido",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2535,
+          "id": "514---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2537,
+          "id": "corregido-46",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2543,
+          "id": "513---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2545,
+          "id": "aniadido-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2551,
+          "id": "512---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2553,
+          "id": "corregido-47",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2560,
+          "id": "511---2026-07-15",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2562,
+          "id": "corregido-48",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2569,
+          "id": "510---2026-07-02",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2571,
+          "id": "uniformizacion-ui-y-chart-reactivo-a-temas",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2573,
+          "id": "fixed",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2582,
+          "id": "500---2026-07-01",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2584,
+          "id": "auditoria-profunda-del-ecosistema--sincronizacion-total-y-limpieza",
+          "nivel": null,
+          "tipo": "html"
+        },
+        {
+          "linea": 2586,
+          "id": "auditoría-profunda-del-ecosistema--sincronizacion-total-y-limpieza",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2588,
+          "id": "fixed-ecosistema--critico",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2596,
+          "id": "added",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2601,
+          "id": "changed",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2608,
+          "id": "490---2026-07-01",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2610,
+          "id": "auditoría-profunda-de-tokens--fix-crítico-de-tabla-y-chart--guía-de-migración",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2612,
+          "id": "fixed-tokens--crítico",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2618,
+          "id": "added-developer-experience",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2624,
+          "id": "changed-1",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2630,
+          "id": "480---2026-06-26",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2632,
+          "id": "refactorización-de-tablas-hover-effects-y-contrastes-en-modo-oscuro",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2634,
+          "id": "fixed-frontend---ui-core",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2640,
+          "id": "added-frontend---wails--tauri-datagrids",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2646,
+          "id": "470---2026-06-23",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2648,
+          "id": "dropdown-click-propagation-isolation",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2650,
+          "id": "fixed-frontend---select2component",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2655,
+          "id": "460---2026-06-23",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2657,
+          "id": "select2component-y-db-first-robustness",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2659,
+          "id": "fixed-frontend---wails--tauri",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2664,
+          "id": "fixed-backend---tauri",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2672,
+          "id": "450---2026-06-19",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2674,
+          "id": "refactorización-del-indicador-11-y-db-first",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2676,
+          "id": "fixed-base-de-datos--arquitectura",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2682,
+          "id": "added-frontend---wails--tauri",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2689,
+          "id": "440---2026-06-08",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2691,
+          "id": "refactorización-de-tablas-scrolling-avanzado-y-pulido-visual-ui",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2693,
+          "id": "added-1",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2699,
+          "id": "fixed-visual--arquitectura",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2704,
+          "id": "fixed-visual--css",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2714,
+          "id": "430---2026-05-29",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2716,
+          "id": "auditoría-de-consistencia--correcciones-visuales-routing-y-tokens",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2718,
+          "id": "added-2",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2723,
+          "id": "fixed--visual--ui",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2729,
+          "id": "fixed--temas-oscuros-elevación--sombras",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2736,
+          "id": "auditoría-técnica--inconsistencias-identificadas-pendientes-de-fase-10",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2740,
+          "id": "-críticos--routing-completamente-inoperativo",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2748,
+          "id": "-altos--css--tokens",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2756,
+          "id": "-medios--calidad-de-código",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2766,
+          "id": "-bajos--valores-hardcoded-en-tokens",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2776,
+          "id": "lecciones-aprendidas",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2778,
+          "id": "arquitectura-angular",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2786,
+          "id": "css--design-tokens",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2798,
+          "id": "420---2026-05-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2800,
+          "id": "blueprint-responsive-audit--revisión-profunda-11-de-todos-los-blueprints",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2802,
+          "id": "fixed--crítico",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2807,
+          "id": "fixed--alto-impacto-blueprints",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2815,
+          "id": "fixed--impacto-medio-blueprints",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2824,
+          "id": "410---2026-05-28",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2826,
+          "id": "responsive--accessibility--auditoría-completa-de-46-componentes",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2828,
+          "id": "fixed--críticos",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2833,
+          "id": "fixed--alto-impacto",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2840,
+          "id": "fixed--impacto-medio",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2851,
+          "id": "added--sistema-global",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2856,
+          "id": "fixed--stories-storybook-sesión-anterior",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2863,
+          "id": "lecciones-aprendidas-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2865,
+          "id": "css",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2879,
+          "id": "storybook",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2884,
+          "id": "angular",
+          "nivel": 4,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2891,
+          "id": "added-3",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2905,
+          "id": "changed-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2916,
+          "id": "fixed-1",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2924,
+          "id": "notes",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 2929,
+          "id": "fixed-2",
+          "nivel": 3,
+          "tipo": "markdown"
+        }
+      ],
+      "ids_previos_preservados": true,
+      "sin_colisiones": true
+    },
+    {
+      "ruta": "LESSONS_LEARNED.md",
+      "antes": [
+        {
+          "linea": 14,
+          "id": "lecciones-aprendidas-de-atomic-ui",
+          "nivel": 1,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 16,
+          "id": "atomic-20261026-001--presencia-del-nodo-y-compilación-de-pruebas",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 28,
+          "id": "clt-20261024-003--reconciliación-de-valores-dom-sin-evento-input-en-controlvalueaccessor",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 34,
+          "id": "acc-20261022-001--tres-controles-físicos-no-equivalen-a-tres-mutaciones-directas",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 52,
+          "id": "atomic-20261020-002--el-apilamiento-no-elimina-el-recorte",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 89,
+          "id": "atomic-20261020-001--rescate-upstream-first-de-dropzone-y-cierre-de-paridad-required-en-controles-con-etiqueta",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 95,
+          "id": "atomic-20261019-002--paridad-tipográfica-de-etiqueta-superior-y-campo-obligatorio-en-select2",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 101,
+          "id": "atomic-20261019-001--modos-de-etiqueta-reactividad-cva-y-geometría-de-etiqueta-flotante",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 107,
+          "id": "doc-20261018-002--la-referencia-de-doctrina-también-requiere-procedencia",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 116,
+          "id": "atomic-20261001-002--controles-compuestos-dentro-de-un-formulario",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 128,
+          "id": "atomic-20261001-001--promoción-visual-e-integración-separadas",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 144,
+          "id": "atomic-20260930-008--el-patrón-no-certifica-su-conexión",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 158,
+          "id": "atomic-20260930-007--separar-contenido-y-chasis-de-consulta",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 166,
+          "id": "atomic-20260929-005--la-muestra-debe-usar-el-componente",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 183,
+          "id": "atomic-20260929-004--adopción-parcial-comprobable",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 195,
+          "id": "atomic-20260929-003--una-intención-por-flujo",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 209,
+          "id": "atomic-20260929-002--alineación-semántica-y-geometría-comprobada",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 223,
+          "id": "atomic-20260928-001--conservar-el-diseño-al-centralizarlo",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 240,
+          "id": "índice-superior-de-aprendizajes",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 261,
+          "id": "2026-08-25---cambiar-un-token-obliga-a-regenerar-el-manifiesto-de-procedencia",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 294,
+          "id": "2026-08-23---la-separación-de-estilos-requiere-semántica-angular-y-un-canal-dinámico-limitado",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 319,
+          "id": "2026-08-23---un-estado-deshabilitado-debe-dominar-la-cascada-y-la-acción-nativa",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 341,
+          "id": "2026-08-23---la-regeneración-debe-ser-monótona-para-los-metadatos-del-consumidor",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 357,
+          "id": "2026-08-23---la-versión-local-no-define-por-sí-sola-una-fuente-reproducible",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 375,
+          "id": "2026-08-21---la-documentación-se-organiza-por-autoridad-y-audiencia",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 389,
+          "id": "2026-08-21---una-procedencia-antigua-es-un-bloqueo-de-migración-no-una-huella-pendiente",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 407,
+          "id": "2026-08-20---un-ejemplo-de-presentación-no-puede-convertirse-en-contrato-de-dominio",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 425,
+          "id": "2026-08-13---display-grid-no-retira-la-semántica-de-tabla-y-lo-medimos-tarde",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 453,
+          "id": "lo-que-hay-que-llevarse-de-aquí",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 469,
+          "id": "cómo-repetirlo",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 494,
+          "id": "2026-08-07---stacking-contexts-y-container-queries-en-tarjetas",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 500,
+          "id": "2026-08-05---estandarización-de-separación-vertical-en-formularios-modales",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 508,
+          "id": "2026-08-02---una-colección-visual-no-basta-variantes-y-ux-deben-ser-ejecutables",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 529,
+          "id": "2026-07-22---anclaje-del-pie-de-página-en-el-shell-de-la-aplicación-y-desacoplamiento-de-pipes-de-traducción",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 556,
+          "id": "2026-07-23---prohibición-de-bypass-atomic-ui-scrollbars-de-so-en-tema-oscuro-y-grillas-rígidas",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 571,
+          "id": "2026-07-22---la-fuente-visual-se-corrige-antes-que-el-consumidor",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 587,
+          "id": "2026-07-21---auditoría-agresiva-adn-cabecera-th-100-opaca-con-tinte-azul-elevación-shadow-sm-en-botones-y-estilo-forzado-en-paginación",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 604,
+          "id": "2026-07-21---auditoría-adn-de-estados-de-entrada-borde-morado-en-hover-hover-y-borde-azul-en-enfoqueescritura-focus",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 618,
+          "id": "2026-07-21---sombra-de-elevación-reposo-shadow-sm-en-todos-los-inputs-resaltado-en-paginación-y-cabecera-azul-adaptativa-con-color-mix",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 632,
+          "id": "2026-07-21---propagación-global-del-estado-hover-hover-y-glow-en-todos-los-inputs-y-selects",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 651,
+          "id": "2026-07-21---fondo-oscuro-integrado-var--surface-section-con-texto-azul-var--info-color-text-y-línea-de-acento-azul-var--info-color",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 662,
+          "id": "2026-07-21---fondo-de-cabecera-integrado-var--surface-section-restablecimiento-de-combos-de-búsqueda-a-220px-y-ultra-recorte-de-paginación-325rem",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 676,
+          "id": "2026-07-21---cabecera-thead-de-alto-contraste-en-modo-oscuro-1e293b-con-texto-blanco-f8fafc-y-reducción-del-45-en-combos-120px",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 688,
+          "id": "2026-07-21---cabecera-azul-semántica-reactiva-a-temas-var--info-color--restauración-del-ícono-svg-de-flecha-en-paginación-y-reducción-del-30-en-combos-154px",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 702,
+          "id": "2026-07-21---cabecera-azul-distintiva-ebf5ff--1e40af-y-reducción-al-50-del-combo-de-paginación-385rem",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 714,
+          "id": "2026-07-21---combo-de-paginación-compacto-máx-3-cifras--525rem-y-fondo-de-cabecera-con-color-secundario-de-marca",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 726,
+          "id": "2026-07-21---requisito-obligatorio-filltrue-en-scrolloverlay-tamaño-estándar-de-220px-para-combos-y-color-distintivo-en-thead",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 740,
+          "id": "2026-07-21---estandarización-de-ancho-de-combos-185px-unificación-de-tabla-y-color-distintivo-de-cabecera-thead",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 754,
+          "id": "2026-07-21---separación-de-thead-envoltura-de-tbody-con-scroll-auto-ocultable-distinción-de-cabecera-y-variación-de-botones",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 770,
+          "id": "2026-07-21---auditoría-profunda-habilitación-de-scroll-vertical-verticaltrue-preservación-de-flechas-svg-background-color-y-espaciado-holgado-en-filas",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 786,
+          "id": "2026-07-21---contraste-en-modo-oscuro-hover-de-filas-margen-respirable-36px-y-flechas-svg-de-combos",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 797,
+          "id": "2026-07-21---supresión-de-contenedores-dobles-single-card-boxing-y-estilos-de-combos-atómicos",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 808,
+          "id": "2026-07-21---contenedores-de-tabla-con-altura-fija-e-integridad-de-thead",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 821,
+          "id": "2026-07-21---anclaje-del-viewport-y-bloqueo-de-scroll-nivel-navegador",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 831,
+          "id": "2026-07-21---transformación-automática-de-estados-a-statusbadge",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 839,
+          "id": "2026-07-20---fugas-de-click-en-componentes-encapsulados-app-button",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 854,
+          "id": "2026-07-20---el-componente-visual-no-debe-reinterpretar-importes-ni-tendencias",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 866,
+          "id": "2026-07-20---propagación-visual-sólo-después-de-validar-la-fuente",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 880,
+          "id": "2026-07-19---tokens-de-color-obligatorios-en-modales-y-overlays-custom",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 897,
+          "id": "2026-07-16---datos-demo-de-graficos-y-contratos-productivos",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 904,
+          "id": "2026-07-16---reserva-inferior-en-tablas-con-scroll-sincronizado",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 912,
+          "id": "2026-07-01---auditoria-de-ecosistema-drift-dependencias-y-seguridad",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 914,
+          "id": "1-el-drift-silencioso-en-ecosistemas-multi-repo",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 918,
+          "id": "2-las-dependencias-de-packagejson-tambien-son-parte-de-la-fuente-de-la-verdad",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 922,
+          "id": "3-api-breaking-change-en-ngx-translate-v18-translatemodule-eliminado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 926,
+          "id": "4-scripts-de-desarrollo-con-credenciales-hardcodeadas-owasp-a07",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 932,
+          "id": "2026-06-26---iluminación-de-fondos-sin-pérdida-de-saturación-hover",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 934,
+          "id": "1-highlight-ui-vs-background-colors",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 938,
+          "id": "2026-06-23---aislamiento-de-propagación-de-eventos-en-dropdowns-y-rust-tiberius-panics",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 940,
+          "id": "1-el-falso-refresco-en-selects-sobre-wails-webview2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 945,
+          "id": "2-crasheos-silenciosos-en-rust-y-activación-de-mock-data",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 949,
+          "id": "3-excepción-tls-en-bases-de-datos-legacy",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 955,
+          "id": "2026-06-19---paginación-scrollbars-nativos-vs-custom-y-sticky-headers",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 957,
+          "id": "1-paginación-y-comportamiento-del-remanente-falso-bug",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 962,
+          "id": "2-el-desafío-de-los-sticky-headers-en-tablas-con-css-grid",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 967,
+          "id": "3-solapamiento-overlap-de-custom-scrollbars-sobre-componentes-sticky",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 974,
+          "id": "2026-07-06---uso-correcto-de-variantes-de-tarjeta-y-alineación-atomic-ui",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 978,
+          "id": "2026-07-08-desarrollo-independiente-y-sintaxis-nativa-arquitectura-desacoplada",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 983,
+          "id": "desbordamiento-silencioso-en-grillas-flexbox",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 988,
+          "id": "una-corrección-automática-de-auditoría-puede-degradar-el-framework",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 994,
+          "id": "un-aviso-transitivo-puede-cerrarse-sin-cambiar-la-línea-angular",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1006,
+          "id": "una-suite-histórica-roja-debe-reportarse-por-separado",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1018,
+          "id": "modales-personalizados-y-modo-oscuro",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1023,
+          "id": "resolucin-de-la-grilla-responsiva-acciones",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1028,
+          "id": "2026-09-25---paginación-selects-css-flex-grow-y-color-de-marca",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1034,
+          "id": "2026-09-25---arquitectura-y-topología-de-proxy",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1040,
+          "id": "2026-09-25---autenticación-y-credenciales-backend-legacy-referencia",
+          "nivel": 2,
+          "tipo": "markdown"
+        }
+      ],
+      "despues": [
+        {
+          "linea": 14,
+          "id": "lecciones-aprendidas-de-atomic-ui",
+          "nivel": 1,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 16,
+          "id": "atomic-20261026-002--prosa-acentuada-y-contratos-ascii",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 29,
+          "id": "atomic-20261026-001--presencia-del-nodo-y-compilación-de-pruebas",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 41,
+          "id": "clt-20261024-003--reconciliación-de-valores-dom-sin-evento-input-en-controlvalueaccessor",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 47,
+          "id": "acc-20261022-001--tres-controles-físicos-no-equivalen-a-tres-mutaciones-directas",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 65,
+          "id": "atomic-20261020-002--el-apilamiento-no-elimina-el-recorte",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 102,
+          "id": "atomic-20261020-001--rescate-upstream-first-de-dropzone-y-cierre-de-paridad-required-en-controles-con-etiqueta",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 108,
+          "id": "atomic-20261019-002--paridad-tipográfica-de-etiqueta-superior-y-campo-obligatorio-en-select2",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 114,
+          "id": "atomic-20261019-001--modos-de-etiqueta-reactividad-cva-y-geometría-de-etiqueta-flotante",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 120,
+          "id": "doc-20261018-002--la-referencia-de-doctrina-también-requiere-procedencia",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 129,
+          "id": "atomic-20261001-002--controles-compuestos-dentro-de-un-formulario",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 141,
+          "id": "atomic-20261001-001--promoción-visual-e-integración-separadas",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 157,
+          "id": "atomic-20260930-008--el-patrón-no-certifica-su-conexión",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 171,
+          "id": "atomic-20260930-007--separar-contenido-y-chasis-de-consulta",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 179,
+          "id": "atomic-20260929-005--la-muestra-debe-usar-el-componente",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 196,
+          "id": "atomic-20260929-004--adopción-parcial-comprobable",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 208,
+          "id": "atomic-20260929-003--una-intención-por-flujo",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 222,
+          "id": "atomic-20260929-002--alineación-semántica-y-geometría-comprobada",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 236,
+          "id": "atomic-20260928-001--conservar-el-diseño-al-centralizarlo",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 253,
+          "id": "índice-superior-de-aprendizajes",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 274,
+          "id": "2026-08-25---cambiar-un-token-obliga-a-regenerar-el-manifiesto-de-procedencia",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 307,
+          "id": "2026-08-23---la-separación-de-estilos-requiere-semántica-angular-y-un-canal-dinámico-limitado",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 332,
+          "id": "2026-08-23---un-estado-deshabilitado-debe-dominar-la-cascada-y-la-acción-nativa",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 354,
+          "id": "2026-08-23---la-regeneración-debe-ser-monótona-para-los-metadatos-del-consumidor",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 370,
+          "id": "2026-08-23---la-versión-local-no-define-por-sí-sola-una-fuente-reproducible",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 388,
+          "id": "2026-08-21---la-documentación-se-organiza-por-autoridad-y-audiencia",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 402,
+          "id": "2026-08-21---una-procedencia-antigua-es-un-bloqueo-de-migración-no-una-huella-pendiente",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 420,
+          "id": "2026-08-20---un-ejemplo-de-presentación-no-puede-convertirse-en-contrato-de-dominio",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 438,
+          "id": "2026-08-13---display-grid-no-retira-la-semántica-de-tabla-y-lo-medimos-tarde",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 466,
+          "id": "lo-que-hay-que-llevarse-de-aquí",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 482,
+          "id": "cómo-repetirlo",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 507,
+          "id": "2026-08-07---stacking-contexts-y-container-queries-en-tarjetas",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 513,
+          "id": "2026-08-05---estandarización-de-separación-vertical-en-formularios-modales",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 521,
+          "id": "2026-08-02---una-colección-visual-no-basta-variantes-y-ux-deben-ser-ejecutables",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 542,
+          "id": "2026-07-22---anclaje-del-pie-de-página-en-el-shell-de-la-aplicación-y-desacoplamiento-de-pipes-de-traducción",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 569,
+          "id": "2026-07-23---prohibición-de-bypass-atomic-ui-scrollbars-de-so-en-tema-oscuro-y-grillas-rígidas",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 584,
+          "id": "2026-07-22---la-fuente-visual-se-corrige-antes-que-el-consumidor",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 600,
+          "id": "2026-07-21---auditoría-agresiva-adn-cabecera-th-100-opaca-con-tinte-azul-elevación-shadow-sm-en-botones-y-estilo-forzado-en-paginación",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 617,
+          "id": "2026-07-21---auditoría-adn-de-estados-de-entrada-borde-morado-en-hover-hover-y-borde-azul-en-enfoqueescritura-focus",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 631,
+          "id": "2026-07-21---sombra-de-elevación-reposo-shadow-sm-en-todos-los-inputs-resaltado-en-paginación-y-cabecera-azul-adaptativa-con-color-mix",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 645,
+          "id": "2026-07-21---propagación-global-del-estado-hover-hover-y-glow-en-todos-los-inputs-y-selects",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 664,
+          "id": "2026-07-21---fondo-oscuro-integrado-var--surface-section-con-texto-azul-var--info-color-text-y-línea-de-acento-azul-var--info-color",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 675,
+          "id": "2026-07-21---fondo-de-cabecera-integrado-var--surface-section-restablecimiento-de-combos-de-búsqueda-a-220px-y-ultra-recorte-de-paginación-325rem",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 689,
+          "id": "2026-07-21---cabecera-thead-de-alto-contraste-en-modo-oscuro-1e293b-con-texto-blanco-f8fafc-y-reducción-del-45-en-combos-120px",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 701,
+          "id": "2026-07-21---cabecera-azul-semántica-reactiva-a-temas-var--info-color--restauración-del-ícono-svg-de-flecha-en-paginación-y-reducción-del-30-en-combos-154px",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 715,
+          "id": "2026-07-21---cabecera-azul-distintiva-ebf5ff--1e40af-y-reducción-al-50-del-combo-de-paginación-385rem",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 727,
+          "id": "2026-07-21---combo-de-paginación-compacto-máx-3-cifras--525rem-y-fondo-de-cabecera-con-color-secundario-de-marca",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 739,
+          "id": "2026-07-21---requisito-obligatorio-filltrue-en-scrolloverlay-tamaño-estándar-de-220px-para-combos-y-color-distintivo-en-thead",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 753,
+          "id": "2026-07-21---estandarización-de-ancho-de-combos-185px-unificación-de-tabla-y-color-distintivo-de-cabecera-thead",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 767,
+          "id": "2026-07-21---separación-de-thead-envoltura-de-tbody-con-scroll-auto-ocultable-distinción-de-cabecera-y-variación-de-botones",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 783,
+          "id": "2026-07-21---auditoría-profunda-habilitación-de-scroll-vertical-verticaltrue-preservación-de-flechas-svg-background-color-y-espaciado-holgado-en-filas",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 799,
+          "id": "2026-07-21---contraste-en-modo-oscuro-hover-de-filas-margen-respirable-36px-y-flechas-svg-de-combos",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 810,
+          "id": "2026-07-21---supresión-de-contenedores-dobles-single-card-boxing-y-estilos-de-combos-atómicos",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 821,
+          "id": "2026-07-21---contenedores-de-tabla-con-altura-fija-e-integridad-de-thead",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 834,
+          "id": "2026-07-21---anclaje-del-viewport-y-bloqueo-de-scroll-nivel-navegador",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 844,
+          "id": "2026-07-21---transformación-automática-de-estados-a-statusbadge",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 852,
+          "id": "2026-07-20---fugas-de-click-en-componentes-encapsulados-app-button",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 867,
+          "id": "2026-07-20---el-componente-visual-no-debe-reinterpretar-importes-ni-tendencias",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 879,
+          "id": "2026-07-20---propagación-visual-sólo-después-de-validar-la-fuente",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 893,
+          "id": "2026-07-19---tokens-de-color-obligatorios-en-modales-y-overlays-custom",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 910,
+          "id": "2026-07-16---datos-demo-de-graficos-y-contratos-productivos",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 917,
+          "id": "2026-07-16---reserva-inferior-en-tablas-con-scroll-sincronizado",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 925,
+          "id": "2026-07-01---auditoria-de-ecosistema-drift-dependencias-y-seguridad",
+          "nivel": null,
+          "tipo": "html"
+        },
+        {
+          "linea": 927,
+          "id": "2026-07-01---auditoría-de-ecosistema-drift-dependencias-y-seguridad",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 929,
+          "id": "1-el-drift-silencioso-en-ecosistemas-multi-repo",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 933,
+          "id": "2-las-dependencias-de-packagejson-tambien-son-parte-de-la-fuente-de-la-verdad",
+          "nivel": null,
+          "tipo": "html"
+        },
+        {
+          "linea": 935,
+          "id": "2-las-dependencias-de-packagejson-también-son-parte-de-la-fuente-de-la-verdad",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 939,
+          "id": "3-api-breaking-change-en-ngx-translate-v18-translatemodule-eliminado",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 943,
+          "id": "4-scripts-de-desarrollo-con-credenciales-hardcodeadas-owasp-a07",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 949,
+          "id": "2026-06-26---iluminación-de-fondos-sin-pérdida-de-saturación-hover",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 951,
+          "id": "1-highlight-ui-vs-background-colors",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 955,
+          "id": "2026-06-23---aislamiento-de-propagación-de-eventos-en-dropdowns-y-rust-tiberius-panics",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 957,
+          "id": "1-el-falso-refresco-en-selects-sobre-wails-webview2",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 962,
+          "id": "2-crasheos-silenciosos-en-rust-y-activación-de-mock-data",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 966,
+          "id": "3-excepción-tls-en-bases-de-datos-legacy",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 972,
+          "id": "2026-06-19---paginación-scrollbars-nativos-vs-custom-y-sticky-headers",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 974,
+          "id": "1-paginación-y-comportamiento-del-remanente-falso-bug",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 979,
+          "id": "2-el-desafío-de-los-sticky-headers-en-tablas-con-css-grid",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 984,
+          "id": "3-solapamiento-overlap-de-custom-scrollbars-sobre-componentes-sticky",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 991,
+          "id": "2026-07-06---uso-correcto-de-variantes-de-tarjeta-y-alineación-atomic-ui",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 995,
+          "id": "2026-07-08-desarrollo-independiente-y-sintaxis-nativa-arquitectura-desacoplada",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1000,
+          "id": "desbordamiento-silencioso-en-grillas-flexbox",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1005,
+          "id": "una-corrección-automática-de-auditoría-puede-degradar-el-framework",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1011,
+          "id": "un-aviso-transitivo-puede-cerrarse-sin-cambiar-la-línea-angular",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1023,
+          "id": "una-suite-histórica-roja-debe-reportarse-por-separado",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1035,
+          "id": "modales-personalizados-y-modo-oscuro",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1040,
+          "id": "resolucin-de-la-grilla-responsiva-acciones",
+          "nivel": 3,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1045,
+          "id": "2026-09-25---paginación-selects-css-flex-grow-y-color-de-marca",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1051,
+          "id": "2026-09-25---arquitectura-y-topología-de-proxy",
+          "nivel": 2,
+          "tipo": "markdown"
+        },
+        {
+          "linea": 1057,
+          "id": "2026-09-25---autenticación-y-credenciales-backend-legacy-referencia",
+          "nivel": 2,
+          "tipo": "markdown"
+        }
+      ],
+      "ids_previos_preservados": true,
+      "sin_colisiones": true
+    }
+  ],
+  "aliases": [
+    {
+      "ruta": "CHANGELOG.md",
+      "linea_antes": 761,
+      "id_anterior": "verificacion",
+      "representacion": "h3_html",
+      "motivo": "Conserva el nivel y evita desplazar los 43 encabezados Markdown acentuados posteriores."
+    },
+    {
+      "ruta": "CHANGELOG.md",
+      "linea_antes": 794,
+      "id_anterior": "verificacion-1",
+      "representacion": "h3_html",
+      "motivo": "Conserva el nivel y evita desplazar los 43 encabezados Markdown acentuados posteriores."
+    },
+    {
+      "ruta": "CHANGELOG.md",
+      "linea_antes": 2573,
+      "id_anterior": "auditoria-profunda-del-ecosistema--sincronizacion-total-y-limpieza",
+      "representacion": "alias_ascii",
+      "motivo": "Conserva el destino previo del encabezado corregido."
+    },
+    {
+      "ruta": "LESSONS_LEARNED.md",
+      "linea_antes": 912,
+      "id_anterior": "2026-07-01---auditoria-de-ecosistema-drift-dependencias-y-seguridad",
+      "representacion": "alias_ascii",
+      "motivo": "Conserva el destino previo del encabezado corregido."
+    },
+    {
+      "ruta": "LESSONS_LEARNED.md",
+      "linea_antes": 918,
+      "id_anterior": "2-las-dependencias-de-packagejson-tambien-son-parte-de-la-fuente-de-la-verdad",
+      "representacion": "alias_ascii",
+      "motivo": "Conserva el destino previo del encabezado corregido."
+    }
+  ]
+}

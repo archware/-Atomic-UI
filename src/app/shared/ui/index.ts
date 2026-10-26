@@ -280,7 +280,7 @@ export { TabsComponent, TabComponent } from './organisms/tabs/tabs.component';
 
 export { ThemeSwitcherComponent } from './organisms/theme-switcher/theme-switcher.component';
 
-export { TopbarComponent } from './organisms/topbar/topbar.component';
+export { TopbarComponent, type TopbarNotification } from './organisms/topbar/topbar.component';
 
 export { NavBarComponent } from './organisms/navbar/navbar.component';
 export type { NavBarItem, NavBarBrand } from './organisms/navbar/navbar.component';

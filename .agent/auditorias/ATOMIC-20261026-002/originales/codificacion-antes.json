@@ -1,0 +1,4 @@
+{
+  "comando": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n& 'C:/Users/cotaha/source/repos/.agents/scripts/verificar-codificacion.ps1' -Rutas @('C:/Users/cotaha/source/repos/-Atomic-UI/CHANGELOG.md','C:/Users/cotaha/source/repos/-Atomic-UI/LESSONS_LEARNED.md') -Detalle\nexit $LASTEXITCODE",
+  "codigo": 1
+}

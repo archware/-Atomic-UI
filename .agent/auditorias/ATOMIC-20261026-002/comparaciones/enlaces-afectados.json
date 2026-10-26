@@ -1,0 +1,106 @@
+{
+  "enlaces_nuevos": [
+    {
+      "archivo": "docs/CONTINUIDAD_AGENTES.md",
+      "destino": "../.agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "existe": true
+    },
+    {
+      "archivo": "docs/BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md",
+      "destino": "../../.agent/roadmaps/ROADMAP_ACC-20261022-001_estandar-acciones-catalogo.md",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md",
+      "destino": "../auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "../../roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "comparaciones/",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "C:/Users/cotaha/source/repos/.agent/doctrinas/DOCTRINA_MAESTRA_UNIFICADA.md",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "../../../.agents/desviaciones/DESVIACION-20260929-005.md",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "../../../.agents/desviaciones/DESVIACION-20261024-011.md",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "originales/codificacion-antes.log",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "originales/codificacion-antes.json",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "originales/codificacion-despues.log",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "originales/codificacion-despues.json",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "originales/desviaciones-despues.log",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "originales/desviaciones-despues.json",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "originales/desviaciones-final.log",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "originales/desviaciones-final.json",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "../../../.agents/desviaciones/DESVIACION-ATOMIC-20261026-002-001.md",
+      "existe": true
+    },
+    {
+      "archivo": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "destino": "C:/Users/cotaha/source/repos/.agent/auditorias/DOC-20261026-001/atomic-pruebas/veredicto.json",
+      "existe": true
+    },
+    {
+      "archivo": ".agents/desviaciones/DESVIACION-20260929-005.md",
+      "destino": "C:/Users/cotaha/source/repos/.agent/doctrinas/DOCTRINA_MAESTRA_UNIFICADA.md",
+      "existe": true
+    },
+    {
+      "archivo": ".agents/desviaciones/DESVIACION-20261024-011.md",
+      "destino": "C:/Users/cotaha/source/repos/.agent/doctrinas/DOCTRINA_MAESTRA_UNIFICADA.md",
+      "existe": true
+    }
+  ],
+  "fallos": 0,
+  "criterio": "Solo destinos nuevos respecto de las copias de apertura; no certifica contenido del destino ni enlaces previos."
+}

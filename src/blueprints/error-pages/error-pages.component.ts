@@ -140,6 +140,7 @@ const ERROR_DEFAULTS: Record<ErrorCode, Omit<ErrorPageConfig, 'primaryAction' | 
 
       </div>
     </div>
+    </app-scroll-overlay>
   `,
   styles: [`
     .error-page {

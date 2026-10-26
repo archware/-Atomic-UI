@@ -1,0 +1,1953 @@
+[
+  {
+    "id": 1,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 201,
+    "columnas_antes": [
+      1
+    ],
+    "ocurrencias": 1,
+    "original": "Correccion",
+    "reemplazo": "Corrección",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 2,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 201,
+    "columnas_antes": [
+      41
+    ],
+    "ocurrencias": 1,
+    "original": "dia",
+    "reemplazo": "día",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 3,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 201,
+    "columnas_antes": [
+      59
+    ],
+    "ocurrencias": 1,
+    "original": "revision",
+    "reemplazo": "revisión",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 4,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 202,
+    "columnas_antes": [
+      31
+    ],
+    "ocurrencias": 1,
+    "original": "version",
+    "reemplazo": "versión",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 5,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 211,
+    "columnas_antes": [
+      45
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 6,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 216,
+    "columnas_antes": [
+      16
+    ],
+    "ocurrencias": 1,
+    "original": "segun",
+    "reemplazo": "según",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 7,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 217,
+    "columnas_antes": [
+      31
+    ],
+    "ocurrencias": 1,
+    "original": "tambien",
+    "reemplazo": "también",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 8,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 218,
+    "columnas_antes": [
+      66
+    ],
+    "ocurrencias": 1,
+    "original": "aplicacion",
+    "reemplazo": "aplicación",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 9,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 219,
+    "columnas_antes": [
+      72
+    ],
+    "ocurrencias": 1,
+    "original": "ningun",
+    "reemplazo": "ningún",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 10,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 226,
+    "columnas_antes": [
+      67
+    ],
+    "ocurrencias": 1,
+    "original": "ahi",
+    "reemplazo": "ahí",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 11,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 233,
+    "columnas_antes": [
+      45
+    ],
+    "ocurrencias": 1,
+    "original": "ultima",
+    "reemplazo": "última",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 12,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 241,
+    "columnas_antes": [
+      30
+    ],
+    "ocurrencias": 1,
+    "original": "automatico",
+    "reemplazo": "automático",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 13,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 242,
+    "columnas_antes": [
+      8
+    ],
+    "ocurrencias": 1,
+    "original": "Ningun",
+    "reemplazo": "Ningún",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 14,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 281,
+    "columnas_antes": [
+      13
+    ],
+    "ocurrencias": 1,
+    "original": "alli",
+    "reemplazo": "allí",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 15,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 292,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "correccion",
+    "reemplazo": "corrección",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 16,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 301,
+    "columnas_antes": [
+      57
+    ],
+    "ocurrencias": 1,
+    "original": "tambien",
+    "reemplazo": "también",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 17,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 306,
+    "columnas_antes": [
+      27
+    ],
+    "ocurrencias": 1,
+    "original": "tamano",
+    "reemplazo": "tamaño",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 18,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 416,
+    "columnas_antes": [
+      20
+    ],
+    "ocurrencias": 1,
+    "original": "aplicacion",
+    "reemplazo": "aplicación",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 19,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 423,
+    "columnas_antes": [
+      66
+    ],
+    "ocurrencias": 1,
+    "original": "unico",
+    "reemplazo": "único",
+    "tipo": "prosa",
+    "racional": "Prosa entre comillas angulares; se corrige solo el acento autorizado, conservando comillas, puntuacion y cifras."
+  },
+  {
+    "id": 20,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 426,
+    "columnas_antes": [
+      23
+    ],
+    "ocurrencias": 1,
+    "original": "unico",
+    "reemplazo": "único",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 21,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 426,
+    "columnas_antes": [
+      61
+    ],
+    "ocurrencias": 1,
+    "original": "razon",
+    "reemplazo": "razón",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 22,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 429,
+    "columnas_antes": [
+      15
+    ],
+    "ocurrencias": 1,
+    "original": "decision",
+    "reemplazo": "decisión",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 23,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 432,
+    "columnas_antes": [
+      6
+    ],
+    "ocurrencias": 1,
+    "original": "unico",
+    "reemplazo": "único",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 24,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 434,
+    "columnas_antes": [
+      22
+    ],
+    "ocurrencias": 1,
+    "original": "tambien",
+    "reemplazo": "también",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 25,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 435,
+    "columnas_antes": [
+      46
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 26,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 452,
+    "columnas_antes": [
+      39
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 27,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 459,
+    "columnas_antes": [
+      30
+    ],
+    "ocurrencias": 1,
+    "original": "prohibicion",
+    "reemplazo": "prohibición",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 28,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 472,
+    "columnas_antes": [
+      6
+    ],
+    "ocurrencias": 1,
+    "original": "correccion",
+    "reemplazo": "corrección",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 29,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 475,
+    "columnas_antes": [
+      36
+    ],
+    "ocurrencias": 1,
+    "original": "migracion",
+    "reemplazo": "migración",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 30,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 486,
+    "columnas_antes": [
+      15
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 31,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 495,
+    "columnas_antes": [
+      64
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 32,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 497,
+    "columnas_antes": [
+      69
+    ],
+    "ocurrencias": 1,
+    "original": "unico",
+    "reemplazo": "único",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 33,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 498,
+    "columnas_antes": [
+      17
+    ],
+    "ocurrencias": 1,
+    "original": "ultima",
+    "reemplazo": "última",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 34,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 504,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "segun",
+    "reemplazo": "según",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 35,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 523,
+    "columnas_antes": [
+      9
+    ],
+    "ocurrencias": 1,
+    "original": "dia",
+    "reemplazo": "día",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 36,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 527,
+    "columnas_antes": [
+      47
+    ],
+    "ocurrencias": 1,
+    "original": "alli",
+    "reemplazo": "allí",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 37,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 541,
+    "columnas_antes": [
+      46
+    ],
+    "ocurrencias": 1,
+    "original": "ningun",
+    "reemplazo": "ningún",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 38,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 542,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "ningun",
+    "reemplazo": "ningún",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 39,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 542,
+    "columnas_antes": [
+      76
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 40,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 546,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "Ademas",
+    "reemplazo": "Además",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 41,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 567,
+    "columnas_antes": [
+      67
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 42,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 568,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "migracion",
+    "reemplazo": "migración",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 43,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 576,
+    "columnas_antes": [
+      67
+    ],
+    "ocurrencias": 1,
+    "original": "auditoria",
+    "reemplazo": "auditoría",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 44,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 578,
+    "columnas_antes": [
+      27
+    ],
+    "ocurrencias": 1,
+    "original": "codigo",
+    "reemplazo": "código",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 45,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 583,
+    "columnas_antes": [
+      9
+    ],
+    "ocurrencias": 1,
+    "original": "ahi",
+    "reemplazo": "ahí",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 46,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 584,
+    "columnas_antes": [
+      10
+    ],
+    "ocurrencias": 1,
+    "original": "minimo",
+    "reemplazo": "mínimo",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 47,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 590,
+    "columnas_antes": [
+      69
+    ],
+    "ocurrencias": 1,
+    "original": "ademas",
+    "reemplazo": "además",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 48,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 597,
+    "columnas_antes": [
+      57
+    ],
+    "ocurrencias": 1,
+    "original": "despues",
+    "reemplazo": "después",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 49,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 609,
+    "columnas_antes": [
+      42
+    ],
+    "ocurrencias": 1,
+    "original": "ahi",
+    "reemplazo": "ahí",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 50,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 623,
+    "columnas_antes": [
+      13
+    ],
+    "ocurrencias": 1,
+    "original": "numero",
+    "reemplazo": "número",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 51,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 623,
+    "columnas_antes": [
+      28
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 52,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 624,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "maximo",
+    "reemplazo": "máximo",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 53,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 626,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "Ademas",
+    "reemplazo": "Además",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 54,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 633,
+    "columnas_antes": [
+      30
+    ],
+    "ocurrencias": 1,
+    "original": "dia",
+    "reemplazo": "día",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 55,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 646,
+    "columnas_antes": [
+      45
+    ],
+    "ocurrencias": 1,
+    "original": "minimo",
+    "reemplazo": "mínimo",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 56,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 646,
+    "columnas_antes": [
+      53
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 57,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 649,
+    "columnas_antes": [
+      73
+    ],
+    "ocurrencias": 1,
+    "original": "aqui",
+    "reemplazo": "aquí",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 58,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 659,
+    "columnas_antes": [
+      39
+    ],
+    "ocurrencias": 1,
+    "original": "comprobacion",
+    "reemplazo": "comprobación",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 59,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 659,
+    "columnas_antes": [
+      63
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 60,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 660,
+    "columnas_antes": [
+      70
+    ],
+    "ocurrencias": 1,
+    "original": "tambien",
+    "reemplazo": "también",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 61,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 686,
+    "columnas_antes": [
+      63
+    ],
+    "ocurrencias": 1,
+    "original": "ultima",
+    "reemplazo": "última",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 62,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 692,
+    "columnas_antes": [
+      35
+    ],
+    "ocurrencias": 1,
+    "original": "ademas",
+    "reemplazo": "además",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 63,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 692,
+    "columnas_antes": [
+      54
+    ],
+    "ocurrencias": 1,
+    "original": "arbol",
+    "reemplazo": "árbol",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 64,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 714,
+    "columnas_antes": [
+      59
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 65,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 725,
+    "columnas_antes": [
+      59
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 66,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 726,
+    "columnas_antes": [
+      25
+    ],
+    "ocurrencias": 1,
+    "original": "ningun",
+    "reemplazo": "ningún",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 67,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 729,
+    "columnas_antes": [
+      28
+    ],
+    "ocurrencias": 1,
+    "original": "tambien",
+    "reemplazo": "también",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 68,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 747,
+    "columnas_antes": [
+      33
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 69,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 752,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "despues",
+    "reemplazo": "después",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 70,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 755,
+    "columnas_antes": [
+      75
+    ],
+    "ocurrencias": 1,
+    "original": "segun",
+    "reemplazo": "según",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 71,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 758,
+    "columnas_antes": [
+      51
+    ],
+    "ocurrencias": 1,
+    "original": "correccion",
+    "reemplazo": "corrección",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 72,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 759,
+    "columnas_antes": [
+      49
+    ],
+    "ocurrencias": 1,
+    "original": "aqui",
+    "reemplazo": "aquí",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 73,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 761,
+    "columnas_antes": [
+      5
+    ],
+    "ocurrencias": 1,
+    "original": "Verificacion",
+    "reemplazo": "Verificación",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 74,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 772,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "dia",
+    "reemplazo": "día",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 75,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 773,
+    "columnas_antes": [
+      58
+    ],
+    "ocurrencias": 1,
+    "original": "segun",
+    "reemplazo": "según",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 76,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 776,
+    "columnas_antes": [
+      54
+    ],
+    "ocurrencias": 1,
+    "original": "peticion",
+    "reemplazo": "petición",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 77,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 776,
+    "columnas_antes": [
+      74
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 78,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 781,
+    "columnas_antes": [
+      60
+    ],
+    "ocurrencias": 1,
+    "original": "aqui",
+    "reemplazo": "aquí",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 79,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 789,
+    "columnas_antes": [
+      13
+    ],
+    "ocurrencias": 1,
+    "original": "codigo",
+    "reemplazo": "código",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 80,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 792,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "ningun",
+    "reemplazo": "ningún",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 81,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 794,
+    "columnas_antes": [
+      5
+    ],
+    "ocurrencias": 1,
+    "original": "Verificacion",
+    "reemplazo": "Verificación",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 82,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1046,
+    "columnas_antes": [
+      73
+    ],
+    "ocurrencias": 1,
+    "original": "arbol",
+    "reemplazo": "árbol",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 83,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1118,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "unico",
+    "reemplazo": "único",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 84,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1119,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "codigo",
+    "reemplazo": "código",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 85,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1119,
+    "columnas_antes": [
+      53
+    ],
+    "ocurrencias": 1,
+    "original": "comprobacion",
+    "reemplazo": "comprobación",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 86,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1122,
+    "columnas_antes": [
+      17
+    ],
+    "ocurrencias": 1,
+    "original": "unica",
+    "reemplazo": "única",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 87,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1138,
+    "columnas_antes": [
+      40
+    ],
+    "ocurrencias": 1,
+    "original": "politica",
+    "reemplazo": "política",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 88,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1160,
+    "columnas_antes": [
+      59
+    ],
+    "ocurrencias": 1,
+    "original": "ningun",
+    "reemplazo": "ningún",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 89,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1161,
+    "columnas_antes": [
+      73
+    ],
+    "ocurrencias": 1,
+    "original": "codigo",
+    "reemplazo": "código",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 90,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1162,
+    "columnas_antes": [
+      17
+    ],
+    "ocurrencias": 1,
+    "original": "ejecucion",
+    "reemplazo": "ejecución",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 91,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1181,
+    "columnas_antes": [
+      4
+    ],
+    "ocurrencias": 1,
+    "original": "arbol",
+    "reemplazo": "árbol",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 92,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1181,
+    "columnas_antes": [
+      31
+    ],
+    "ocurrencias": 1,
+    "original": "decision",
+    "reemplazo": "decisión",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 93,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1189,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "Numero",
+    "reemplazo": "Número",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 94,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1190,
+    "columnas_antes": [
+      57
+    ],
+    "ocurrencias": 1,
+    "original": "numero",
+    "reemplazo": "número",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 95,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1191,
+    "columnas_antes": [
+      27
+    ],
+    "ocurrencias": 1,
+    "original": "version",
+    "reemplazo": "versión",
+    "tipo": "prosa",
+    "racional": "Prosa entre comillas angulares; se corrige solo el acento autorizado, conservando comillas, puntuacion y cifras."
+  },
+  {
+    "id": 96,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1192,
+    "columnas_antes": [
+      11
+    ],
+    "ocurrencias": 1,
+    "original": "ningun",
+    "reemplazo": "ningún",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 97,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1192,
+    "columnas_antes": [
+      44
+    ],
+    "ocurrencias": 1,
+    "original": "numero",
+    "reemplazo": "número",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 98,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1193,
+    "columnas_antes": [
+      1
+    ],
+    "ocurrencias": 1,
+    "original": "arbol",
+    "reemplazo": "árbol",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 99,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1193,
+    "columnas_antes": [
+      28
+    ],
+    "ocurrencias": 1,
+    "original": "unico",
+    "reemplazo": "único",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 100,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1193,
+    "columnas_antes": [
+      40
+    ],
+    "ocurrencias": 1,
+    "original": "aqui",
+    "reemplazo": "aquí",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 101,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1195,
+    "columnas_antes": [
+      6
+    ],
+    "ocurrencias": 1,
+    "original": "version",
+    "reemplazo": "versión",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 102,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1209,
+    "columnas_antes": [
+      38
+    ],
+    "ocurrencias": 1,
+    "original": "tambien",
+    "reemplazo": "también",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 103,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1231,
+    "columnas_antes": [
+      3
+    ],
+    "ocurrencias": 1,
+    "original": "Ademas",
+    "reemplazo": "Además",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 104,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1231,
+    "columnas_antes": [
+      61
+    ],
+    "ocurrencias": 1,
+    "original": "DESPUES",
+    "reemplazo": "DESPUÉS",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 105,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1237,
+    "columnas_antes": [
+      14
+    ],
+    "ocurrencias": 1,
+    "original": "ningun",
+    "reemplazo": "ningún",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 106,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1239,
+    "columnas_antes": [
+      62
+    ],
+    "ocurrencias": 1,
+    "original": "asi",
+    "reemplazo": "así",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 107,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1247,
+    "columnas_antes": [
+      46
+    ],
+    "ocurrencias": 1,
+    "original": "linea",
+    "reemplazo": "línea",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 108,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1254,
+    "columnas_antes": [
+      52
+    ],
+    "ocurrencias": 1,
+    "original": "ningun",
+    "reemplazo": "ningún",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 109,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1256,
+    "columnas_antes": [
+      19
+    ],
+    "ocurrencias": 1,
+    "original": "aqui",
+    "reemplazo": "aquí",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 110,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1257,
+    "columnas_antes": [
+      14
+    ],
+    "ocurrencias": 1,
+    "original": "arbol",
+    "reemplazo": "árbol",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 111,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1662,
+    "columnas_antes": [
+      4
+    ],
+    "ocurrencias": 1,
+    "original": "linea",
+    "reemplazo": "línea",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 112,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1663,
+    "columnas_antes": [
+      39
+    ],
+    "ocurrencias": 1,
+    "original": "version",
+    "reemplazo": "versión",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 113,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1673,
+    "columnas_antes": [
+      53
+    ],
+    "ocurrencias": 1,
+    "original": "tambien",
+    "reemplazo": "también",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 114,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1677,
+    "columnas_antes": [
+      5
+    ],
+    "ocurrencias": 1,
+    "original": "Politica",
+    "reemplazo": "Política",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 115,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 1677,
+    "columnas_antes": [
+      126
+    ],
+    "ocurrencias": 1,
+    "original": "tambien",
+    "reemplazo": "también",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 116,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2456,
+    "columnas_antes": [
+      396
+    ],
+    "ocurrencias": 1,
+    "original": "automatico",
+    "reemplazo": "automático",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 117,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2478,
+    "columnas_antes": [
+      174
+    ],
+    "ocurrencias": 1,
+    "original": "ultima",
+    "reemplazo": "última",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 118,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2480,
+    "columnas_antes": [
+      100
+    ],
+    "ocurrencias": 1,
+    "original": "unico",
+    "reemplazo": "único",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 119,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2504,
+    "columnas_antes": [
+      187
+    ],
+    "ocurrencias": 1,
+    "original": "minimo",
+    "reemplazo": "mínimo",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 120,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2512,
+    "columnas_antes": [
+      76
+    ],
+    "ocurrencias": 1,
+    "original": "minimo",
+    "reemplazo": "mínimo",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 121,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2520,
+    "columnas_antes": [
+      129
+    ],
+    "ocurrencias": 1,
+    "original": "minimo",
+    "reemplazo": "mínimo",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 122,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2545,
+    "columnas_antes": [
+      34
+    ],
+    "ocurrencias": 1,
+    "original": "minimo",
+    "reemplazo": "mínimo",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 123,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2553,
+    "columnas_antes": [
+      198
+    ],
+    "ocurrencias": 1,
+    "original": "correccion",
+    "reemplazo": "corrección",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 124,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2573,
+    "columnas_antes": [
+      5
+    ],
+    "ocurrencias": 1,
+    "original": "Auditoria",
+    "reemplazo": "Auditoría",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 125,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2577,
+    "columnas_antes": [
+      51
+    ],
+    "ocurrencias": 1,
+    "original": "Auditoria",
+    "reemplazo": "Auditoría",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 126,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2578,
+    "columnas_antes": [
+      47
+    ],
+    "ocurrencias": 1,
+    "original": "correccion",
+    "reemplazo": "corrección",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 127,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2579,
+    "columnas_antes": [
+      181
+    ],
+    "ocurrencias": 1,
+    "original": "verificacion",
+    "reemplazo": "verificación",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 128,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2881,
+    "columnas_antes": [
+      95
+    ],
+    "ocurrencias": 1,
+    "original": "documentacion",
+    "reemplazo": "documentación",
+    "tipo": "prosa",
+    "racional": "Descriptor story/documentacion en prosa; no es ruta, fichero ni identificador contractual."
+  },
+  {
+    "id": 129,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2890,
+    "columnas_antes": [
+      15
+    ],
+    "ocurrencias": 1,
+    "original": "validacion",
+    "reemplazo": "validación",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 130,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2899,
+    "columnas_antes": [
+      80
+    ],
+    "ocurrencias": 1,
+    "original": "version",
+    "reemplazo": "versión",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 131,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2900,
+    "columnas_antes": [
+      32
+    ],
+    "ocurrencias": 1,
+    "original": "version",
+    "reemplazo": "versión",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 132,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2913,
+    "columnas_antes": [
+      6
+    ],
+    "ocurrencias": 1,
+    "original": "ejecucion",
+    "reemplazo": "ejecución",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 133,
+    "ruta": "CHANGELOG.md",
+    "linea_antes": 2914,
+    "columnas_antes": [
+      6
+    ],
+    "ocurrencias": 1,
+    "original": "validacion",
+    "reemplazo": "validación",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 134,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 882,
+    "columnas_antes": [
+      21
+    ],
+    "ocurrencias": 1,
+    "original": "aplicacion",
+    "reemplazo": "aplicación",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 135,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 884,
+    "columnas_antes": [
+      123
+    ],
+    "ocurrencias": 1,
+    "original": "ningun",
+    "reemplazo": "ningún",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 136,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 884,
+    "columnas_antes": [
+      318
+    ],
+    "ocurrencias": 1,
+    "original": "garantia",
+    "reemplazo": "garantía",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 137,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 890,
+    "columnas_antes": [
+      98
+    ],
+    "ocurrencias": 1,
+    "original": "segun",
+    "reemplazo": "según",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 138,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 893,
+    "columnas_antes": [
+      271
+    ],
+    "ocurrencias": 1,
+    "original": "decision",
+    "reemplazo": "decisión",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 139,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 899,
+    "columnas_antes": [
+      122
+    ],
+    "ocurrencias": 1,
+    "original": "aplicacion",
+    "reemplazo": "aplicación",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 140,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 905,
+    "columnas_antes": [
+      228
+    ],
+    "ocurrencias": 1,
+    "original": "ultima",
+    "reemplazo": "última",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 141,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 908,
+    "columnas_antes": [
+      35
+    ],
+    "ocurrencias": 1,
+    "original": "unico",
+    "reemplazo": "único",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 142,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 912,
+    "columnas_antes": [
+      19
+    ],
+    "ocurrencias": 1,
+    "original": "Auditoria",
+    "reemplazo": "Auditoría",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 143,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 915,
+    "columnas_antes": [
+      18
+    ],
+    "ocurrencias": 1,
+    "original": "auditoria",
+    "reemplazo": "auditoría",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 144,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 915,
+    "columnas_antes": [
+      162
+    ],
+    "ocurrencias": 1,
+    "original": "ningun",
+    "reemplazo": "ningún",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 145,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 916,
+    "columnas_antes": [
+      285
+    ],
+    "ocurrencias": 1,
+    "original": "unica",
+    "reemplazo": "única",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 146,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 918,
+    "columnas_antes": [
+      41
+    ],
+    "ocurrencias": 1,
+    "original": "tambien",
+    "reemplazo": "también",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 147,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 920,
+    "columnas_antes": [
+      126,
+      180
+    ],
+    "ocurrencias": 2,
+    "original": "tambien",
+    "reemplazo": "también",
+    "tipo": "prosa",
+    "racional": "Dos adverbios de prosa en la misma linea; la guarda agrupa ambas ocurrencias en un unico hallazgo."
+  },
+  {
+    "id": 148,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 920,
+    "columnas_antes": [
+      273
+    ],
+    "ocurrencias": 1,
+    "original": "verificacion",
+    "reemplazo": "verificación",
+    "tipo": "prosa",
+    "racional": "Dos adverbios de prosa en la misma linea; la guarda agrupa ambas ocurrencias en un unico hallazgo."
+  },
+  {
+    "id": 149,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 928,
+    "columnas_antes": [
+      104
+    ],
+    "ocurrencias": 1,
+    "original": "codigo",
+    "reemplazo": "código",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  },
+  {
+    "id": 150,
+    "ruta": "LESSONS_LEARNED.md",
+    "linea_antes": 928,
+    "columnas_antes": [
+      332
+    ],
+    "ocurrencias": 1,
+    "original": "Ningun",
+    "reemplazo": "Ningún",
+    "tipo": "prosa",
+    "racional": "Palabra de prosa explicativa; no constituye identificador, clave, ruta, enum ni literal de codigo."
+  }
+]

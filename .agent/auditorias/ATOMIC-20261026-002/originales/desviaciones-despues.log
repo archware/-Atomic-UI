@@ -1,0 +1,28 @@
+
+=== 11 desviación(es) y 0 registro(s) consolidado(s) en C:/Users/cotaha/source/repos/-Atomic-UI/.agents/desviaciones; 55 apartado(s) citable(s) en la doctrina
+
+  Todas las desviaciones declaran, en su frontmatter, un apartado que existe.
+
+  Reparto por apartado (los consolidados no entran):
+    §17.0.3                    3
+    §3                         2
+    §11                        1
+    §13                        1
+    §17                        1
+    §6                         1
+    §8                         1
+    por-clasificar             1
+
+=== Lo que esta compuerta NO cubre
+  - NO comprueba que la atribución sea CORRECTA: una desviación puede citar un apartado que existe y no ser el que de verdad rompió; eso solo lo ve quien lea el hecho.
+  - Cuenta FRECUENCIA, no daño: el reparto ordena el trabajo, no lo decide.
+  - «por-clasificar» pasa a propósito (declarar la duda es honesto); solo deja aviso si la desviación ya está cerrada.
+  - No comprueba que la desviación esté bien escrita ni que sus secciones de corrección sirvan de algo. Solo la atribución.
+  - Los registros consolidados DESVIACIONES_* se validan como UN fichero y no entran en el reparto; sus D-xx internos no se atribuyen uno a uno (tienen fichero propio).
+  - Solo lee ficheros .md: 0 fichero(s) con otra extensión no se abren.
+  - Por defecto solo mira Repos2/.agents/desviaciones; el §11 sitúa cada desviación en el repositorio afectado (camas-nfc-back y camas-nfc-web tienen las suyas) y esas solo se miran pasando -Ruta.
+  - Los apartados citables se leen de los encabezados numerados fuera de cercas ```; una cerca ~~~ o un bloque sangrado no se quitan.
+  - Los subapartados (§6.1, §10.2.1) se aceptan y cuentan por su valor exacto, sin plegar al padre; verificar-vigencia.ps1 lee el mismo campo con su propia gramática y hoy no dibuja fila para subapartados: un fichero puede contar aquí y no aparecer en el cuadro del §15.2.
+  - No coteja la prosa del §15.2 (qué apartados tienen cero violaciones) con el reparto que calcula; si discrepan, es §9 y nadie lo ve.
+  - La plantilla obligatoria del §11 de la doctrina no incluye apartado_roto; esta compuerta exige un campo que la plantilla no muestra.
+  - Un § en Latin-1 o mojibake se acepta con aviso: que el fichero esté bien codificado lo comprueba verificar-codificacion.ps1, no esta compuerta.

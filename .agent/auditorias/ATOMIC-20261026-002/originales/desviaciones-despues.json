@@ -1,0 +1,4 @@
+{
+  "codigo": 0,
+  "comando": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n& 'C:/Users/cotaha/source/repos/.agents/scripts/verificar-desviaciones.ps1' -Ruta 'C:/Users/cotaha/source/repos/-Atomic-UI/.agents/desviaciones' -Doctrina 'C:/Users/cotaha/source/repos/.agent/doctrinas/DOCTRINA_ORQUESTACION_AGENTES.md' -Detalle\nexit $LASTEXITCODE"
+}

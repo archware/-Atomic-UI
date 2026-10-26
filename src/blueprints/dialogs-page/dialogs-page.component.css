@@ -240,7 +240,8 @@
   font-family: var(--font-mono, monospace);
   font-size: var(--text-xs);
   color: var(--text-color-secondary);
-  overflow-x: auto;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .principles-grid {
@@ -324,9 +325,16 @@
 
 .file-row-inline-controls {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: var(--space-2);
-  min-width: 15rem;
+  flex: 0 1 50%;
+  max-width: 15rem;
+}
+
+.file-row-inline-controls > app-floating-input.pdf-demo-page-input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 9.5rem;
 }
 
 .hanging-inline-demo {
@@ -348,6 +356,18 @@
   justify-content: space-between;
   gap: var(--space-2);
   flex-wrap: wrap;
+}
+
+.pdf-demo-scroll {
+  display: block;
+  width: 100%;
+}
+
+.pdf-demo-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-right: var(--space-2);
 }
 
 

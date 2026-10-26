@@ -29,26 +29,38 @@ describe('IconButtonComponent', () => {
   it('tiene animación "none" por defecto y aplica clase .icon-anim-none', () => {
     expect(component.animation()).toBe('none');
     const button = fixture.nativeElement.querySelector('button');
-    expect(button.classList.contains('icon-anim-none')).toBeTrue();
-    expect(button.classList.contains('icon-anim-rotate')).toBeFalse();
+    expect(button.classList.contains('icon-anim-none')).toBe(true);
+    expect(button.classList.contains('icon-anim-rotate')).toBe(false);
   });
 
   it('aplica clase .icon-anim-rotate y .icon-anim-grow solo cuando se solicitan explícitamente', () => {
     setInput('animation', 'rotate');
     const button = fixture.nativeElement.querySelector('button');
-    expect(button.classList.contains('icon-anim-rotate')).toBeTrue();
-    expect(button.classList.contains('icon-anim-none')).toBeFalse();
+    expect(button.classList.contains('icon-anim-rotate')).toBe(true);
+    expect(button.classList.contains('icon-anim-none')).toBe(false);
 
     setInput('animation', 'grow');
-    expect(button.classList.contains('icon-anim-grow')).toBeTrue();
-    expect(button.classList.contains('icon-anim-rotate')).toBeFalse();
+    expect(button.classList.contains('icon-anim-grow')).toBe(true);
+    expect(button.classList.contains('icon-anim-rotate')).toBe(false);
   });
 
   it('la variante "close" incluye el aspa estándar con clase .close.blades.heavy', () => {
     setInput('variant', 'close');
 
     const button = fixture.nativeElement.querySelector('button');
-    expect(button.classList.contains('icon-btn--close')).toBeTrue();
+    expect(button.classList.contains('icon-btn--close')).toBe(true);
+
+    const closeSpan = button.querySelector('span.close.blades.heavy');
+    expect(closeSpan).not.toBeNull();
+  });
+
+  it('la variante "close-ghost" aplica .icon-btn--close-ghost e incluye el aspa estándar .close.blades.heavy', () => {
+    setInput('variant', 'close-ghost');
+
+    const button = fixture.nativeElement.querySelector('button');
+    expect(button.classList.contains('icon-btn--close-ghost')).toBe(true);
+    expect(button.getAttribute('aria-label')).toBe('Cerrar');
+    expect(button.getAttribute('title')).toBe('Cerrar');
 
     const closeSpan = button.querySelector('span.close.blades.heavy');
     expect(closeSpan).not.toBeNull();
@@ -58,7 +70,7 @@ describe('IconButtonComponent', () => {
     setInput('variant', 'close-soft');
 
     const button = fixture.nativeElement.querySelector('button');
-    expect(button.classList.contains('icon-btn--close-soft')).toBeTrue();
+    expect(button.classList.contains('icon-btn--close-soft')).toBe(true);
     expect(button.getAttribute('aria-label')).toBe('Cerrar');
     expect(button.getAttribute('title')).toBe('Cerrar');
 
@@ -70,8 +82,8 @@ describe('IconButtonComponent', () => {
     setInput('variant', 'hanging-close');
 
     const button = fixture.nativeElement.querySelector('button');
-    expect(button.classList.contains('icon-btn--hanging-close')).toBeTrue();
-    expect(fixture.nativeElement.classList.contains('is-hanging-close')).toBeTrue();
+    expect(button.classList.contains('icon-btn--hanging-close')).toBe(true);
+    expect(fixture.nativeElement.classList.contains('is-hanging-close')).toBe(true);
 
     const closeSpan = button.querySelector('span.close.blades.heavy');
     expect(closeSpan).not.toBeNull();
@@ -86,7 +98,7 @@ describe('IconButtonComponent', () => {
     const button = fixture.nativeElement.querySelector('button');
     button.click();
 
-    expect(emitido).toBeTrue();
+    expect(emitido).toBe(true);
   });
 
   it('no emite el evento clicked cuando está deshabilitado', () => {
@@ -99,7 +111,7 @@ describe('IconButtonComponent', () => {
     const button = fixture.nativeElement.querySelector('button');
     button.click();
 
-    expect(emitido).toBeFalse();
+    expect(emitido).toBe(false);
   });
 
   it('muestra el badge cuando el conteo es mayor a cero', () => {
@@ -131,10 +143,10 @@ describe('IconButtonComponent', () => {
   it('aplica clases de tamaño "sm" y "lg" según el input size', () => {
     setInput('size', 'sm');
     const button = fixture.nativeElement.querySelector('button');
-    expect(button.classList.contains('icon-btn--sm')).toBeTrue();
+    expect(button.classList.contains('icon-btn--sm')).toBe(true);
 
     setInput('size', 'lg');
-    expect(button.classList.contains('icon-btn--lg')).toBeTrue();
+    expect(button.classList.contains('icon-btn--lg')).toBe(true);
   });
 
   it('normaliza clases Font Awesome shorthand para renderizar correctamente', () => {

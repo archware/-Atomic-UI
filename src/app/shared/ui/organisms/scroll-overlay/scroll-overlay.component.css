@@ -10,19 +10,19 @@
      arrastre- son los mismos que habia. */
   --so-thumb-color-start: var(
     --so-custom-thumb-start,
-    color-mix(in srgb, var(--text-color) 30%, transparent)
+    color-mix(in srgb, var(--text-color) 35%, transparent)
   );
   --so-thumb-color-end: var(
     --so-custom-thumb-end,
-    color-mix(in srgb, var(--text-color) 30%, transparent)
+    color-mix(in srgb, var(--text-color) 35%, transparent)
   );
   --so-thumb-color-hover: var(
     --so-custom-thumb-hover,
-    color-mix(in srgb, var(--text-color) 45%, transparent)
+    color-mix(in srgb, var(--text-color) 52%, transparent)
   );
   --so-thumb-color-active: var(
     --so-custom-thumb-active,
-    color-mix(in srgb, var(--text-color) 60%, transparent)
+    color-mix(in srgb, var(--text-color) 68%, transparent)
   );
   --so-track-size: 7px;
   --so-thumb-blur: var(--space-1);
@@ -51,6 +51,23 @@
 .so-root.so-block {
   display: block;
   height: 100%; /* Enable scroll by giving explicit height */
+}
+
+.so-root.so-block:not([data-so-table]) {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.so-root.so-block:not([data-so-table]) > .so-scroll-area {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: inherit;
+}
+
+.so-root.so-block[data-so-max-height]:not([data-so-table]) {
+  height: auto;
+  max-height: var(--so-max-height, 100%);
 }
 
 .so-scroll-area {
@@ -150,23 +167,19 @@
   display: none;
 }
 
-.so-root.so-scrolling > .so-scrollbar,
-.so-root:hover > .so-scrollbar {
-  opacity: 1;
-}
-
-.so-root.so-scrolling > .so-scrollbar,
-.so-root:hover > .so-scrollbar,
-.so-scrollbar:focus-within {
-  pointer-events: auto;
-}
-
 .so-root.so-has-overflow-y > .so-scrollbar-y {
   display: block;
 }
 
 .so-root.so-has-overflow-x > .so-scrollbar-x {
   display: block;
+}
+
+.so-root.so-scrolling > .so-scrollbar,
+.so-root:hover > .so-scrollbar,
+.so-root > .so-scrollbar:focus-within {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .so-root.so-has-overflow-x::after {
@@ -249,17 +262,18 @@
   transform: translateX(0);
 }
 
-.so-root[data-so-max-height] [data-so-vertical] {
+.so-root[data-so-max-height][data-so-table] [data-so-vertical],
+.so-root[data-so-max-height][data-so-table]:not([data-so-sync-columns]) > .so-scroll-area {
   max-height: var(--so-max-height, 100%);
   height: var(--so-body-height, auto);
   min-height: var(--so-body-height, auto);
 }
 
 .so-root[data-so-max-height]:not([data-so-table]) > .so-scroll-area,
-.so-root[data-so-max-height][data-so-table]:not([data-so-sync-columns]) > .so-scroll-area {
+.so-root[data-so-max-height]:not([data-so-table]) > .so-scroll-area > [data-so-vertical] {
   max-height: var(--so-max-height, 100%);
-  height: var(--so-body-height, auto);
-  min-height: var(--so-body-height, auto);
+  height: auto;
+  min-height: 0;
 }
 
 .so-root.so-no-vertical > .so-scrollbar-y,

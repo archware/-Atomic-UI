@@ -98,11 +98,26 @@ class AtomicTema {
       materialTapTargetSize: MaterialTapTargetSize.padded,
       visualDensity: VisualDensity.standard,
       textTheme: const TextTheme(
-        displayLarge: TextStyle(fontSize: AtomicTipografia.text4xl),
-        displayMedium: TextStyle(fontSize: AtomicTipografia.text3xl),
-        headlineMedium: TextStyle(fontSize: AtomicTipografia.text2xl),
-        titleLarge: TextStyle(fontSize: AtomicTipografia.textXl),
-        titleMedium: TextStyle(fontSize: AtomicTipografia.textLg),
+        displayLarge: TextStyle(
+          fontFamily: AtomicFamilias.fontFamilyHeading,
+          fontSize: AtomicTipografia.text4xl,
+        ),
+        displayMedium: TextStyle(
+          fontFamily: AtomicFamilias.fontFamilyHeading,
+          fontSize: AtomicTipografia.text3xl,
+        ),
+        headlineMedium: TextStyle(
+          fontFamily: AtomicFamilias.fontFamilyHeading,
+          fontSize: AtomicTipografia.text2xl,
+        ),
+        titleLarge: TextStyle(
+          fontFamily: AtomicFamilias.fontFamilyHeading,
+          fontSize: AtomicTipografia.textXl,
+        ),
+        titleMedium: TextStyle(
+          fontFamily: AtomicFamilias.fontFamilyHeading,
+          fontSize: AtomicTipografia.textLg,
+        ),
         bodyLarge: TextStyle(fontSize: AtomicTipografia.textMd),
         bodyMedium: TextStyle(fontSize: AtomicTipografia.textSm),
         labelSmall: TextStyle(fontSize: AtomicTipografia.textXs),

@@ -2,7 +2,7 @@
 title: 'Registro de cambios de Atomic UI'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-08-23'
-last_updated: '2026-10-24'
+last_updated: '2026-10-26'
 document_type: 'changelog'
 version: '5.23.2'
 status: 'vigente'
@@ -12,6 +12,49 @@ owner: 'COTAHA'
 
 # Registro de cambios
 
+## ATOMIC-20261026-003 — tipografía local canónica Quicksand y Open Sans
+
+Se empaquetan localmente en `src/styles/themes/fonts/` los archivos `.woff2` de
+`Open Sans` (`400`, `500`, `600`, `700` en subconjuntos `latin` y `latin-ext`) y
+`Quicksand` (`400`, `500`, `600`, `700` en subconjunto completo), registrados
+mediante `@font-face` (`font-display: swap`) en `src/styles/themes/_fonts.css` e
+importados desde `src/styles/themes/index.css`. Se definen los tokens primitivos
+`--font-family-base`, `--font-family-heading` y `--font-family-mono` en
+`_tokens-primitives.css`, se corrige `--table-font-family: var(--font-family-base)`
+en `_tokens-components.css` y se asigna `--font-family-heading` a encabezados
+(`h1`–`h6`), `.text-h1`–`.text-h4`, `.page-header__title`, títulos de diálogos
+CRUD, `.modal-title`, `.form-dialog__title` y métricas de `kpi-card`. Se
+actualizan `tools/copy-lib-tokens.cjs`, `scripts/check-typography-scale.mjs` y
+el puente Dart (`scripts/emit-dart-tokens.mjs` y `dart/atomic_tokens`), y se
+sincronizan temas y procedencia con `ventas-cxc` y `pdf-tool`. Consultar el
+[roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261026-001_tipografia_local_quicksand_open_sans.md).
+
+## ATOMIC-20261026-002 — corrección editorial de prosa histórica
+
+Se corrigen los 150 hallazgos de tilde del baseline documental de este registro
+y de las lecciones aprendidas, correspondientes a 151 palabras de prosa.
+La línea con dos adverbios repetidos constituye un único hallazgo de la guarda.
+Se conservan los bloques y spans de código, los identificadores ASCII, las
+rutas, las cifras históricas y las anclas previas de los encabezados afectados.
+La clasificación y el alcance de la validación se registran en el
+[roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md).
+La versión del paquete y los resultados históricos de pruebas se conservan.
+
+## ATOMIC-20261026-001 — desbloqueo de pruebas de accesibilidad
+
+Se corrigen seis expectativas TypeScript en cuatro especificaciones de Input,
+Select, Textarea y Dropdown, exigiendo que el nodo exista antes de comparar
+su identificador de accesibilidad. No se admiten nodos ausentes como éxito.
+La copia aislada del HEAD `dd93734a3eea40b87d46b4990976231fe2d6ca19` más esas
+cuatro pruebas pasa 70/70 casos de seis suites: las cuatro afectadas y
+ActionGroup/PaginaCrud. Los otros 802 archivos conservan los bytes de la copia inicial; su cotejo con blobs Git normaliza CRLF.
+Se conservan el primer fallo de permiso, el baseline recuperado con seis
+TS2345 y la salida final 0. No se repiten pruebas de consumidores.
+
+La revisión independiente y custodia se registran en el
+[roadmap propio](.agent/roadmaps/ROADMAP_ATOMIC-20261026-001_desbloqueo_pruebas.md).
+El ensayo no acredita el árbol compartido móvil, gobernanza global, paquete,
+manifiestos o propagación. No se cambian componentes, contratos o dependencias.
 ## CLT-20261024-003 y ATOMIC-20261024-003 — reconciliación CVA en Input y manifiesto de procedencia
 
 `InputComponent` reconcilia el valor del DOM nativo en los eventos `change`,
@@ -183,8 +226,8 @@ bloqueando el traslado gobernado a Ventas. Sin cambio de versión ni publicació
 
 ## fix(tabs): las flechas siguen la orientacion y respetan los modificadores
 
-Correccion sobre `feat(tabs)` del mismo dia, detectada en revision adversarial
-antes de publicar. La primera version mapeaba los cuatro cursores a la vez y no
+Corrección sobre `feat(tabs)` del mismo día, detectada en revisión adversarial
+antes de publicar. La primera versión mapeaba los cuatro cursores a la vez y no
 miraba los modificadores, con dos consecuencias medidas en navegador:
 
 - `ArrowUp` y `ArrowDown` cancelaban el desplazamiento vertical de la pagina.
@@ -193,29 +236,29 @@ miraba los modificadores, con dos consecuencias medidas en navegador:
   `aria-orientation="vertical"`. Un usuario de teclado perdia el scroll mientras
   el foco estuviera en la cabecera, y encima cambiaba de pestana.
 - `Alt+Flecha`, `Ctrl+Home`, `Ctrl+End` y `Shift+Flecha` quedaban secuestrados:
-  `event.key` vale igual con modificadores, asi que entraban por el mismo
+  `event.key` vale igual con modificadores, así que entraban por el mismo
   `switch` y llegaban a `preventDefault()`, anulando la navegacion de historial
   y el salto al inicio o al final del documento.
 
 El contenedor pasa a declarar su orientacion con `aria-orientation` y elige el
-par de flechas segun ella; con cualquier modificador activo el manejador sale
-sin tocar el evento. Se anade tambien la entrada `ariaLabel`: el nombre
-accesible del tablist estaba fijado a "Tabs" en ingles y ninguna aplicacion
-podia traducirlo. Ambas entradas tienen valor por defecto, de modo que ningun
+par de flechas según ella; con cualquier modificador activo el manejador sale
+sin tocar el evento. Se anade también la entrada `ariaLabel`: el nombre
+accesible del tablist estaba fijado a "Tabs" en ingles y ninguna aplicación
+podia traducirlo. Ambas entradas tienen valor por defecto, de modo que ningún
 consumidor necesita adaptarse.
 
 ## feat(tabs): navegacion WAI-ARIA completa por teclado
 
 El organismo `tabs` publicaba un `tablist` con el contrato ARIA correcto —roles,
 `aria-selected`, `aria-controls` y roving `tabindex`— pero solo respondia a
-`click`. Quien navegaba con teclado alcanzaba la pestana activa y ahi se
+`click`. Quien navegaba con teclado alcanzaba la pestana activa y ahí se
 quedaba: las flechas no movian nada, porque las pestanas inactivas llevan
 `tabindex="-1"` y el patron APG delega el recorrido en el contenedor.
 
 Se incorpora ese recorrido en la fuente, no en un consumidor:
 
 - `ArrowRight` y `ArrowDown` avanzan; `ArrowLeft` y `ArrowUp` retroceden.
-- `Home` y `End` saltan a la primera y a la ultima pestana.
+- `Home` y `End` saltan a la primera y a la última pestana.
 - Las pestanas deshabilitadas se omiten y el recorrido es circular.
 - La activacion es automatica, como recomienda el APG cuando el panel se
   muestra sin coste: seleccionar y mostrar ocurren en el mismo gesto.
@@ -223,8 +266,8 @@ Se incorpora ese recorrido en la fuente, no en un consumidor:
   sigue viva. Sin ese traslado el recorrido se corta tras el primer salto.
 
 `selectTab` no cambia su firma: el argumento del evento sigue siendo opcional y
-el desplazamiento horizontal automatico solo actua cuando el gesto viene del
-raton. Ningun consumidor necesita adaptarse.
+el desplazamiento horizontal automático solo actua cuando el gesto viene del
+raton. Ningún consumidor necesita adaptarse.
 
 El cambio nace de `ATOMIC-SYNC-CXC-20260825`, donde el consumidor de cuentas por
 cobrar sustituyo tres `button` nativos por este organismo y habria perdido la
@@ -263,7 +306,7 @@ descartadas y consecuencias en
 - **`_tokens-brand.css` entra en la lista de ficheros de tema.** Faltaba. La
   compuerta de contraste declaraba verificados «3 temas alcanzables» sin haber
   leido nunca el fichero que define la paleta de marca, de modo que cualquier
-  regresion alli era invisible. Con el incorporado, la compuerta sigue en verde.
+  regresion allí era invisible. Con el incorporado, la compuerta sigue en verde.
 - **`scripts/emit-dart-tokens.mjs`**: emite `dart/atomic_tokens` desde los
   ficheros de tema, con 419 colores por tema, la escala de espaciado, radios,
   bordes, tipografia y el objetivo tactil. Acompana `PROCEDENCIA.json` con la
@@ -274,7 +317,7 @@ descartadas y consecuencias en
   divergentes.
 - **El emisor no corrige un token fuera de norma: falla.** Si
   `--touch-target-min` bajara del piso de 48, se niega a emitir y remite la
-  correccion a la fuente canonica. Corregirlo en el generador crearia en el
+  corrección a la fuente canonica. Corregirlo en el generador crearia en el
   consumidor un valor distinto del que declara el ADN, que es la bifurcacion que
   el apartado 6.1 prohibe.
 
@@ -283,12 +326,12 @@ Ambas compuertas se demostraron rompiendolas antes de darlas por instaladas.
 ### Tratamiento del escalado
 
 La tipografia se emite **sin escalar**: `Text` y `RichText` aplican por si solos
-`MediaQuery.textScalerOf` sobre `fontSize`, y aplicarlo tambien en el emisor
+`MediaQuery.textScalerOf` sobre `fontSize`, y aplicarlo también en el emisor
 produciria un doble escalado —con escala 2.0, texto a 4x—. Los espaciados que
 acompanan al texto se escalan con la formula proporcional documentada por
 Flutter, expuesta en `AtomicEscala.espacio`. El objetivo tactil no se escala con
 el texto: es un piso fisico que puede crecer pero nunca encoger. Los puntos de
-corte se resuelven con el tamano de la ventana y jamas con `textScaler`.
+corte se resuelven con el tamaño de la ventana y jamas con `textScaler`.
 
 
 Todas las modificaciones importantes de este proyecto se documentan en este
@@ -398,26 +441,26 @@ archivo. El formato se basa en
 
 - **Dos reglas mas en el capitulo 15.** Que un contenedor de disposicion decide
   donde van las cosas y no de que color son; y que el mismo acto lleva el mismo
-  icono en toda la aplicacion —medido: de 19 botones de alta, uno solo lo
+  icono en toda la aplicación —medido: de 19 botones de alta, uno solo lo
   llevaba—.
 
 ## 5.20.0 - 2026-08-18
 
 ### Anadido
 
-- **Capitulo 15 de la doctrina: «Se pliega lo que compite, no lo unico que hay».**
+- **Capitulo 15 de la doctrina: «Se pliega lo que compite, no lo único que hay».**
   Un contenedor tiene un presupuesto —el alto de la pantalla, el ancho de una
   fila— y cuando VARIAS cosas compiten por ese sitio se pliegan; cuando hay una
-  sola, no. Plegar lo unico que hay esconde tras un clic la razon por la que
+  sola, no. Plegar lo único que hay esconde tras un clic la razón por la que
   alguien entro.
 
-  Sale de una decision real: seis pantallas de catalogo medidas, dos con varias
+  Sale de una decisión real: seis pantallas de catalogo medidas, dos con varias
   secciones —una con seis catalogos, otra con tres— que si piden acordeon, y
   cuatro con una sola tabla, a las que darselo «por uniformidad» habria escondido
-  lo unico que muestran.
+  lo único que muestran.
 
-  El capitulo recoge tambien el mismo presupuesto en horizontal: las acciones de
-  una fila comparten ancho con las columnas, asi que van como iconos con nombre
+  El capitulo recoge también el mismo presupuesto en horizontal: las acciones de
+  una fila comparten ancho con las columnas, así que van como iconos con nombre
   accesible. Medido: tres botones etiquetados ocupaban mas que las seis columnas
   de datos juntas, se solapaban y tapaban la columna de estado.
 
@@ -434,14 +477,14 @@ archivo. El formato se basa en
 
   Lo que se lee como descuido es esa asimetria. El margen se reparte ahora a los
   dos lados: en rejilla el aviso queda centrado en su hueco, y en flujo de bloque
-  los margenes contiguos se colapsan, asi que la separacion total no crece.
+  los margenes contiguos se colapsan, así que la separacion total no crece.
 
 ## 5.18.0 - 2026-08-17
 
 ### Cambiado
 
 - **Los 48 pesos que quedaban a mano, migrados. El trinquete llega a cero.** Ya
-  no es un trinquete: es una prohibicion, y cualquier peso escrito a mano falla el
+  no es un trinquete: es una prohibición, y cualquier peso escrito a mano falla el
   gate.
 
 - **La escala pasa a cuatro pasos: se añade `--font-weight-display` (800).**
@@ -454,10 +497,10 @@ archivo. El formato se basa en
   con Windows)**. Lo que no tiene cara es 500, 650 y 750, que el navegador
   resuelve a su vecino sin decirlo.
 
-  La correccion queda escrita dentro del capitulo 13, no borrada: la doctrina se
+  La corrección queda escrita dentro del capitulo 13, no borrada: la doctrina se
   sostiene sobre mediciones, y una medicion mal hecha se corrige donde se hizo.
 
-  Con las caras reales delante, la migracion de los 48 tampoco cambia lo que se
+  Con las caras reales delante, la migración de los 48 tampoco cambia lo que se
   ve: 500 va a `body` porque ya se dibujaba como 400; 650 va a `title` porque ya
   se dibujaba como 700; y 750, 800 y 900 van a `display` porque los tres aterrizan
   en la misma cara Black.
@@ -468,7 +511,7 @@ archivo. El formato se basa en
 
 - **99 pesos tipograficos migrados a la escala, y el trinquete baja de 147 a 48.**
   Solo los EXACTOS: 400, 600 y 700 coinciden con `--font-weight-body`, `-emphasis`
-  y `-title`, asi que el dibujo no cambia ni un pixel. Los 48 que quedan —500, 650,
+  y `-title`, así que el dibujo no cambia ni un pixel. Los 48 que quedan —500, 650,
   800 y 900— si alteran el trazo y van componente a componente, mirando el
   resultado.
 
@@ -477,16 +520,16 @@ archivo. El formato se basa en
   ANTES, no en el mismo ancho fisico.
 
   De paso se cierra la franja que la doctrina describia: `layout-shell` tenia
-  `min-width: 769px` y `max-width: 768px` en el mismo fichero, asi que a 768,5px
+  `min-width: 769px` y `max-width: 768px` en el mismo fichero, así que a 768,5px
   —que ocurre con zoom o escalado fraccionario— no se aplicaba ninguna de las dos.
-  Los dos cortes comparten ahora frontera en `48rem`: solapan en un unico ancho,
-  donde gana la ultima regla, en vez de dejar un hueco.
+  Los dos cortes comparten ahora frontera en `48rem`: solapan en un único ancho,
+  donde gana la última regla, en vez de dejar un hueco.
 
   Una prueba de `table` afirmaba el corte en `768px`; describia el defecto y se
   reescribio.
 
 - **`--space-11` deja de usarse.** Los cuatro sitios que lo consumian se reparten
-  segun lo que de verdad pedian: `action-group` y `stepper` querian el objetivo
+  según lo que de verdad pedian: `action-group` y `stepper` querian el objetivo
   tactil y pasan a `--touch-target-min`; el relleno de `select2`, que si era un
   espacio, pasa a `--space-7`, un paso real de la escala. El token se conserva
   publicado por compatibilidad, con su aviso al lado.
@@ -505,11 +548,11 @@ archivo. El formato se basa en
   Salio midiendo el capitulo 13 recien escrito: una pantalla parecia saltar de
   `<h1>` a `<h3>`, y el `<h2>` que faltaba era precisamente el nombre de cada
   panel, que no se anunciaba como titulo de nada. La regla encontro el defecto el
-  mismo dia que se enuncio.
+  mismo día que se enuncio.
 
   El boton va ahora envuelto en `role="heading"` con `aria-level`, como piden las
   practicas de ARIA para acordeon. El nivel lo decide quien monta la pantalla
-  —`headingLevel`, 3 por omision— porque solo alli se sabe que hay por encima.
+  —`headingLevel`, 3 por omision— porque solo allí se sabe que hay por encima.
 
 ## 5.15.0 - 2026-08-17
 
@@ -523,12 +566,12 @@ archivo. El formato se basa en
   frente a 8 valores sueltos) y el **peso no tenia escala ninguna**: seis valores
   compitiendo en el consumidor —400, 600, 650, 700, 750, 800— y ocho en el ADN,
   hasta 900. La mitad de esas distinciones **no se dibujan**: la familia declarada
-  es `'Open Sans', system-ui, …` pero no hay ningun `@font-face`, no se sirve
-  ningun fichero de fuente y la CSP del consumidor dice `font-src 'self'`, asi que
+  es `'Open Sans', system-ui, …` pero no hay ningún `@font-face`, no se sirve
+  ningún fichero de fuente y la CSP del consumidor dice `font-src 'self'`, así que
   Open Sans no se carga nunca y se cae a `system-ui` —Segoe UI en Windows,
   estatica—, donde 650 y 700 son el mismo trazo.
 
-  Ademas: `login` y `change-password` empiezan en `<h2>` y **no tienen `<h1>`**,
+  Además: `login` y `change-password` empiezan en `<h2>` y **no tienen `<h1>`**,
   de modo que su indice de encabezados arranca sin titulo de pagina; el catalogo
   de clientes salta de `<h1>` a `<h3>`. Las pantallas que si cumplen son las que
   usan `page-header`, que emite el `<h1>` por su cuenta.
@@ -549,8 +592,8 @@ archivo. El formato se basa en
 
 - **`npm run check:typography`**, trinquete de la escala: cuenta los pesos
   escritos a mano —hoy 147— y falla si suben. No se barren de golpe a proposito;
-  cambiar 500 por 600 engorda el trazo y 900 por 700 lo adelgaza, asi que la
-  migracion va componente a componente. El trinquete solo impide que la deuda
+  cambiar 500 por 600 engorda el trazo y 900 por 700 lo adelgaza, así que la
+  migración va componente a componente. El trinquete solo impide que la deuda
   crezca mientras se paga.
 
 ## 5.14.0 - 2026-08-17
@@ -558,28 +601,28 @@ archivo. El formato se basa en
 ### Anadido
 
 - **La doctrina cierra sus tres huecos declarados: capitulos 10, 11 y 12.** La
-  seccion «lo que esta doctrina no cubre» anunciaba tres desde la auditoria
+  seccion «lo que esta doctrina no cubre» anunciaba tres desde la auditoría
   —espaciado, tabla-a-tarjetas en movil y cuando hace falta confirmar—; se
-  escribieron midiendo el codigo, no proponiendo criterios.
+  escribieron midiendo el código, no proponiendo criterios.
 
   El 10 encontro un defecto en el propio ADN: `--space-11: 2.75rem` esta al final
   de una escala ascendente y es **mas pequeño que el 8, el 9 y el 10**. Quien pide
   el 11 esperando «mas que el 10» recibe menos que el 8. Su comentario delata como
-  llego ahi —«44px, tamaños de componente»—: no es un espacio, es el objetivo
-  tactil minimo de WCAG 2.5.5, una medida de otra cosa metida en la escala de
+  llego ahí —«44px, tamaños de componente»—: no es un espacio, es el objetivo
+  tactil mínimo de WCAG 2.5.5, una medida de otra cosa metida en la escala de
   espaciado porque no habia donde ponerla.
 
   El 11 fija el corte en `rem` y no en `px`, porque `rem` sigue el tamaño de letra
   del navegador: quien lo aumenta necesita las tarjetas ANTES, no en el mismo
   ancho fisico. Medido: quince cortes en `768px` conviven con cuatro en `48rem`,
-  que son el mismo ancho solo si nadie tocó el tamaño de letra. Hay ademas un
+  que son el mismo ancho solo si nadie tocó el tamaño de letra. Hay además un
   `769px` y un `639px`, que es como aparece una franja de un pixel sin ninguna
   regla aplicada.
 
   El 12 separa tres clases donde antes se decia «confirma lo destructivo»: lo que
   se deshace desde la pantalla no se confirma; lo que se juega en una cifra no se
   confirma, se REVISA con las cifras delante; y lo que no se puede deshacer se
-  confirma, con el motivo si habra que explicarlo meses despues. Medido en un
+  confirma, con el motivo si habra que explicarlo meses después. Medido en un
   consumidor: las dieciocho llamadas a `dialogs.confirm` estan en catalogos y
   bajas, y ninguna en caja.
 
@@ -591,7 +634,7 @@ archivo. El formato se basa en
   cambie.** Cuando el padre rechaza lo elegido y repone lo que ya tenia, llega un
   `writeValue` con un valor identico al anterior: el binding `[value]` compara,
   ve que no cambio y no toca el DOM, mientras el navegador ya movio el `<select>`
-  con el clic de la persona. A partir de ahi lo que se ve deja de ser lo que se
+  con el clic de la persona. A partir de ahí lo que se ve deja de ser lo que se
   envia, y el consumidor no tiene forma de arreglarlo desde fuera. Ahora el
   atomo reconcilia el elemento nativo en cada `writeValue`. Es la mitad olvidada
   del capitulo 4: rechazar una entrada incluye retirarla de la pantalla.
@@ -605,17 +648,17 @@ archivo. El formato se basa en
   `handleChange` escribe `formValue` en cada interaccion.
 
 - **`app-number-input` deja de recortar en silencio.** `[value]` solo reescribe
-  cuando el numero CAMBIA, asi que teclear una segunda cantidad por encima del
-  maximo dejaba el campo enseñando lo tecleado mientras el modelo contaba otra
+  cuando el número CAMBIA, así que teclear una segunda cantidad por encima del
+  máximo dejaba el campo enseñando lo tecleado mientras el modelo contaba otra
   cosa —en el contador de billetes, una fila que suma distinto de lo que muestra.
-  Ademas, en un `type=number` el texto invalido (`1o0`) llega como cadena vacia
+  Además, en un `type=number` el texto invalido (`1o0`) llega como cadena vacia
   mientras el campo lo sigue enseñando: se detecta con `validity.badInput`, se
   limpia y se repone la cantidad contada. Todo ajuste se anuncia en un
   `role="status"`; antes el recorte era mudo.
 
 - **`PopupService.confirm` se alinea con el capitulo 7.** `confirmLabel` pasa a
   ser obligatorio —un boton que dice «Confirmar» obliga a leer el titulo, y quien
-  lleva cuarenta dialogos al dia ya no lo lee—, se añade `tone: 'danger'` para lo
+  lleva cuarenta dialogos al día ya no lo lee—, se añade `tone: 'danger'` para lo
   que no se puede deshacer e `initialFocus`, que por defecto pone el foco en la
   salida segura. El contenedor mueve el foco al abrir y **se retira `onEnter`**:
   ejecutaba el boton primario desde el fondo del dialogo, de modo que un Intro
@@ -628,10 +671,10 @@ archivo. El formato se basa en
 
 - **`icon-only`: un boton de solo icono que no se sale de su propio borde.** El
   consumidor puede darle al host un tamaño cuadrado, pero el control de dentro
-  conserva su relleno horizontal y su ancho minimo, asi que desborda y pisa lo
+  conserva su relleno horizontal y su ancho mínimo, así que desborda y pisa lo
   que tenga al lado. Ocurrio literalmente: el boton de tema de la barra superior
   se solapaba con el menu de usuario. No se puede arreglar desde el consumidor
-  —sus estilos no alcanzan al interior del componente—, tiene que vivir aqui.
+  —sus estilos no alcanzan al interior del componente—, tiene que vivir aquí.
 
   El atributo `dialog-close` ya resolvia exactamente esto para el aspa de cerrar.
   En vez de añadir un segundo caso especial se generalizo.
@@ -641,8 +684,8 @@ archivo. El formato se basa en
 ### Corregido
 
 - **La tabla afirmaba «0 registro(s)» sin haber preguntado.** El resumen y el
-  paginador se pintaban FUERA de toda comprobacion de estado, asi que escribian
-  «Mostrando 0 - 0 de 0 registro(s)» encima del indicador de carga y tambien
+  paginador se pintaban FUERA de toda comprobación de estado, así que escribian
+  «Mostrando 0 - 0 de 0 registro(s)» encima del indicador de carga y también
   junto al panel de error. Ese cero es exactamente lo que alguien lee para
   decidir si su busqueda dio resultado: decia que no hay nada cuando lo que
   pasaba es que no se pudo preguntar. Con un resultado confirmado se dice la
@@ -668,13 +711,13 @@ archivo. El formato se basa en
 - **El paginador de `data-table` dejaba el foco en el `<body>`.** Los dos botones
   se deshabilitan al llegar al extremo y durante cada carga; con el foco encima,
   el navegador lo descarta y el siguiente Tab empieza desde el principio del
-  documento. Con tres paginas eso pasa SIEMPRE al llegar a la ultima. Ahora el
+  documento. Con tres paginas eso pasa SIEMPRE al llegar a la última. Ahora el
   foco se traslada al resumen antes de emitir el cambio.
 
 ### Cambiado
 
 - **Un boton en carga ya no se pone `disabled`.** Se quitaba el foco a si mismo
-  justo al pulsarlo, y `disabled` ademas lo saca del arbol de accesibilidad, con
+  justo al pulsarlo, y `disabled` además lo saca del árbol de accesibilidad, con
   lo que el `aria-busy` que anuncia el progreso no le llegaba a nadie. Ahora la
   carga se comunica con `aria-disabled` y `aria-busy`, y la segunda activacion
   la sigue bloqueando la guarda de `onButtonClick`. El `disabled` real se
@@ -696,7 +739,7 @@ archivo. El formato se basa en
   accion de tabla —que son solo icono, con liston de 3:1— y al menu de usuario.
 
 - **Un estado deshabilitado ya no se comunica con `opacity`. 28 reglas.**
-  La transparencia atenua texto Y fondo contra la pagina, asi que anula el
+  La transparencia atenua texto Y fondo contra la pagina, así que anula el
   contraste que el token traia calculado —medido: 4,09:1 con ella, 6,99:1 sin
   ella— y el icono que acompana al control la recibe por partida doble. Ahora lo
   dicen `--input-disabled-text`, `--input-disabled-bg` y el cursor. Alcanza a
@@ -707,11 +750,11 @@ archivo. El formato se basa en
 
 - **La compuerta de contraste busca PATRONES, no una lista.** Es el cambio que
   de verdad importa. `scripts/check-theme-contrast.mjs` enumeraba pares de
-  tokens; se le anadieron las alertas tras un fallo y aun asi todo lo anterior
-  paso en verde, porque ningun par de los enumerados los cubria. Ahora recorre
+  tokens; se le anadieron las alertas tras un fallo y aun así todo lo anterior
+  paso en verde, porque ningún par de los enumerados los cubria. Ahora recorre
   todos los ficheros de estilo buscando dos formas concretas: texto pintado con
   `--TONO-color`, y `opacity` dentro de una regla cuyo selector habla de
-  deshabilitado. Encuentra tambien lo que nadie ha escrito todavia.
+  deshabilitado. Encuentra también lo que nadie ha escrito todavia.
 
 ### Notas
 
@@ -729,21 +772,21 @@ efecto secundario.
 
   Peor todavia: las rutinas que llevan el foco al primer campo invalido buscan
   `input.ng-invalid` o `[aria-invalid="true"]`. Sin ese atributo, este control
-  era **invisible** para ellas, asi que ni siquiera el foco delataba donde
+  era **invisible** para ellas, así que ni siquiera el foco delataba donde
   estaba el problema.
 
   Al declarar `error`, el control queda `aria-invalid`, se asocia al mensaje con
   `aria-describedby`, y el aviso se anuncia con `role="alert"` —porque aparece
-  despues de que la persona ya intento enviar; si no se anuncia, quien usa lector
+  después de que la persona ya intento enviar; si no se anuncia, quien usa lector
   de pantalla se queda con un boton que no responde—.
 
-  El mensaje usa el token de TEXTO del tono y no se atenua con `opacity`, segun
+  El mensaje usa el token de TEXTO del tono y no se atenua con `opacity`, según
   el capitulo 8 de `DOCTRINA_DE_INTERFAZ.md`.
 
-  Detectado en `prestamo_front_atomic`, donde una correccion de documento de
-  identidad se rechazaba en silencio. Corregido aqui primero.
+  Detectado en `prestamo_front_atomic`, donde una corrección de documento de
+  identidad se rechazaba en silencio. Corregido aquí primero.
 
-### Verificacion
+<h3 id="verificacion">Verificación</h3>
 
 - Dos pruebas: que el error se anuncia y queda alcanzable por las rutinas de
   foco, y que sin error no se ensucia el marcado. Catalogo actualizado.
@@ -754,16 +797,16 @@ efecto secundario.
 ### Corregido
 
 - **`datepicker` cancelaba Escape solo en una de sus tres vistas.** En vista de
-  dia llamaba a `preventDefault`; en las de mes y ano lo cerraba sin cancelar,
-  de modo que el mismo componente se comportaba distinto segun donde estuvieras.
+  día llamaba a `preventDefault`; en las de mes y ano lo cerraba sin cancelar,
+  de modo que el mismo componente se comportaba distinto según donde estuvieras.
 
   La consecuencia no se queda dentro del calendario: dentro de un `<dialog>`,
-  una pulsacion de Escape no cancelada se trata como peticion de cierre, asi que
+  una pulsacion de Escape no cancelada se trata como petición de cierre, así que
   cerrar el selector de mes **se llevaba por delante el formulario entero** con
   todo lo escrito. Con teclado o lector de pantalla, Escape es LA forma de
   descartar un desplegable: se perdia el trabajo por hacer lo correcto.
 
-  Detectado en `prestamo_front_atomic` y corregido primero aqui, como manda la
+  Detectado en `prestamo_front_atomic` y corregido primero aquí, como manda la
   ley Atomic-first.
 
 ### Anadido
@@ -771,12 +814,12 @@ efecto secundario.
 - **`DOCTRINA_DE_INTERFAZ.md`**: ocho reglas sobre como se hace una pantalla que
   no miente sobre su estado, no pierde el trabajo de nadie y se puede usar sin
   raton. Salen de auditar un producto en produccion y de contrastar cada regla
-  contra su codigo; solo entraron las que ese front ya cumple EN PARTE.
+  contra su código; solo entraron las que ese front ya cumple EN PARTE.
   Enganchado desde `AGENTS.md` y desde la skill `atomic-ui-builder`.
 - `npm run docs:json` regenera `documentation.json`, que Storybook consume y que
-  ningun script producia.
+  ningún script producia.
 
-### Verificacion
+<h3 id="verificacion-1">Verificación</h3>
 
 - Prueba nueva que recorre las TRES vistas y exige el evento cancelado en todas.
   Validada por mutacion: retirando el `preventDefault`, se pone roja.
@@ -1028,7 +1071,7 @@ afirmaciones falsas y desbloquea una compuerta que no podía ejecutarse.
 
 - **Los roles de tabla declarados bajo la rejilla, que 5.7.0 anadio.** La
   creencia era que `display: grid` en las filas retira su rol implicito y deja a
-  un lector de pantalla sin poder anunciar filas ni celdas. Se midio el arbol de
+  un lector de pantalla sin poder anunciar filas ni celdas. Se midio el árbol de
   accesibilidad REAL de los dos motores —CDP en Chromium,
   `page.accessibility.snapshot()` en WebKit, con una tabla de doce filas— y es
   falso: los tres casos (nativa, con rejilla, con roles) son identicos.
@@ -1100,11 +1143,11 @@ linajes.
 
 - **El gate confundia un generico de TypeScript con una etiqueta HTML.**
   `viewChild<Button>('x')` se denunciaba como primitiva visual nativa, y el
-  unico modo de callarlo era renombrar el import: un rodeo que ensucia el
-  codigo para contentar a una expresion regular. La comprobacion deja de
+  único modo de callarlo era renombrar el import: un rodeo que ensucia el
+  código para contentar a una expresion regular. La comprobación deja de
   ignorar mayusculas —las etiquetas HTML se escriben en minuscula, los tipos de
   TypeScript en mayuscula inicial—, con lo que `<button` sigue detectandose y
-  desaparece la unica familia de falsos positivos que tenia.
+  desaparece la única familia de falsos positivos que tenia.
 
 ## [5.7.1] - 2026-08-13
 
@@ -1120,7 +1163,7 @@ linajes.
   que no despliega nada NO debe declarar el atributo, porque
   `aria-expanded="false"` sobre algo que no se abre es una promesa falsa.
 
-  Lo destapo migrar el consumidor a la politica 1.2.2, que prohibe primitivas
+  Lo destapo migrar el consumidor a la política 1.2.2, que prohibe primitivas
   visuales nativas en la superficie gobernada: al convertir el boton de menu de
   su shell en `app-button`, su `aria-expanded` se quedaba sin sitio donde vivir.
 - **`app-button.focus()`**, la otra mitad del mismo patron. Al pulsar Escape hay
@@ -1142,9 +1185,9 @@ conocido y sin resolver.
   Nace de que la ruptura de `alert` en 5.6.0 dejo atras el catalogo, el
   generador y su test, y `governance:check` los encontro DE UNO EN UNO porque la
   cadena se detiene en el primer paso rojo. El catalogo es la peor superficie de
-  tener desactualizada precisamente porque no rompe nada: ningun compilador lo
-  lee, lo leen las herramientas y quien pide un componente sin abrir su codigo.
-  En su primera ejecucion encontro deriva real: `data-table.pagination`,
+  tener desactualizada precisamente porque no rompe nada: ningún compilador lo
+  lee, lo leen las herramientas y quien pide un componente sin abrir su código.
+  En su primera ejecución encontro deriva real: `data-table.pagination`,
   `file-input.maxPreviewSizeMB` y `file-input.maxPreviewFiles`, ya documentadas.
 - **Roles de tabla declarados bajo la rejilla de columnas.** Con
   `syncTableColumns` —activo por omision en cuanto hay `<thead>`— las filas
@@ -1163,7 +1206,7 @@ Cambiar el `display` de los elementos de tabla ha retirado historicamente su rol
 implicito; Chrome y Firefox lo corrigieron y Safari con VoiceOver ha sido el
 rezagado. **No se ha medido en este repositorio**: la suite corre en Chrome
 Headless, `Element.computedRole` no esta disponible y no se logro instrumentar
-el arbol de accesibilidad. La decision no se apoya en un defecto demostrado sino
+el árbol de accesibilidad. La decisión no se apoya en un defecto demostrado sino
 en una asimetria: declarar el rol cuesta unas pocas escrituras condicionales, es
 inocuo donde el navegador ya lo conserva, y es la diferencia entre una tabla
 navegable y una lista de textos donde no. **Queda pendiente validarlo con NVDA o
@@ -1171,13 +1214,13 @@ VoiceOver.**
 
 ## [5.6.0] - 2026-08-13
 
-**Numero nuevo a proposito.** Durante agosto dos historias paralelas de este
-repositorio publicaron un 5.4.0 y un 5.5.0 con el mismo numero y contenido
-distinto, de modo que «la version 5.5.0» dejo de identificar nada. No se
-reutiliza ningun 5.5.x: 5.6.0 es el primer numero que vuelve a designar un solo
-arbol. `main` es el tronco unico desde aqui.
+**Número nuevo a proposito.** Durante agosto dos historias paralelas de este
+repositorio publicaron un 5.4.0 y un 5.5.0 con el mismo número y contenido
+distinto, de modo que «la versión 5.5.0» dejo de identificar nada. No se
+reutiliza ningún 5.5.x: 5.6.0 es el primer número que vuelve a designar un solo
+árbol. `main` es el tronco único desde aquí.
 
-Esta version RESCATA sobre `main` el trabajo que se habia quedado en la rama
+Esta versión RESCATA sobre `main` el trabajo que se habia quedado en la rama
 `PREST-20260805-194-contraste-y-531`, rehaciendolo en vez de fusionarlo: la
 fusion producia 13 conflictos y ninguna de las dos resoluciones compilaba.
 
@@ -1191,7 +1234,7 @@ fusion producia 13 conflictos y ninguna de las dos resoluciones compilaba.
   Los tipos `AlertVariant`, `AlertSize` y `AlertFlowSpacing` desaparecen; los
   sustituyen `AlertKind` y `AlertSpacing`. El barrel conserva el alias
   `AlertComponent` junto al nombre nuevo `Alert`.
-  **El generador de UI y el catalogo tambien se actualizan**: `generate-ui`
+  **El generador de UI y el catalogo también se actualizan**: `generate-ui`
   emitia plantillas con la API vieja, de modo que los proyectos generados no
   compilaban, y `catalog/components/alert.json` declaraba entradas que ya no
   existen. Quien genere un proyecto nuevo desde 5.6.0 obtiene `kind` y cuerpo
@@ -1213,15 +1256,15 @@ fusion producia 13 conflictos y ninguna de las dos resoluciones compilaba.
   `--input-disabled-bg` ni `--input-disabled-text` y heredaba los del bloque
   claro, anclado a `:root`: un campo casi blanco sobre pagina oscura con el
   texto a 2.05:1. brand-dark estaba en 1.68:1 y el propio tema claro en 2.31:1.
-  Ademas once controles dividian su contraste con `opacity` DESPUES de
+  Además once controles dividian su contraste con `opacity` DESPUÉS de
   resolverlo por token, lo que dejaba el resultado en 4.09:1 aun con los tokens
   corregidos; en `form-select` la flecha se atenuaba dos veces.
 - **Contraste del texto de las alertas oscuras**, que apuntaba al color base del
   tono en vez de a su variante clara: 3.74:1 y 4.06:1, ahora 7.57:1 y 7.29:1.
 - **Siete referencias a `--surface-card` y `--surface-input`**, tokens que no
-  existen en ningun tema, en cuatro paginas del escaparate.
+  existen en ningún tema, en cuatro paginas del escaparate.
 - **`file-input`: un archivo rechazado descarta la seleccion anterior.** Antes
-  se ponia el mensaje de error y se salia sin tocar `files`, asi que el
+  se ponia el mensaje de error y se salia sin tocar `files`, así que el
   componente seguia mostrando el fichero viejo y el formulario no recibia
   cambio alguno: lo que se enviaba no era lo que la pantalla senalaba con el
   error.
@@ -1229,17 +1272,17 @@ fusion producia 13 conflictos y ninguna de las dos resoluciones compilaba.
   Unida con comas y entregada a un `querySelector` singular devolvia orden de
   DOM, de modo que el marcador explicito `[data-modal-error]` perdia frente a
   cualquier `[role="alert"]` que apareciera antes en el marcado.
-- **El gate dejaba de ver los comentarios de linea** y denunciaba como «color
+- **El gate dejaba de ver los comentarios de línea** y denunciaba como «color
   fijo» un color que estaba dentro de un `//`, tipicamente el que justifica el
   valor de un token.
 
 ### Conocido y sin resolver
 
 - Con la rejilla de columnas activa, `scroll-overlay` cambia el `display` de
-  `thead tr`, `tbody tr` y `tbody` **sin restituir ningun rol**, de modo que un
+  `thead tr`, `tbody tr` y `tbody` **sin restituir ningún rol**, de modo que un
   lector de pantalla deja de anunciar filas y celdas. Afecta a los dos linajes
-  y no se parchea aqui: un `role="table"` suelto, con los hijos ya sin rol,
-  produce un arbol de accesibilidad invalido. Requiere decidirse entero y
+  y no se parchea aquí: un `role="table"` suelto, con los hijos ya sin rol,
+  produce un árbol de accesibilidad invalido. Requiere decidirse entero y
   validarse con un lector de pantalla.
 ## [5.5.8] - 2026-08-12
 
@@ -1644,8 +1687,8 @@ consumidores sube de `1.1.0` a `1.2.0`.
 
 ## [5.4.0] - 2026-08-06
 
-La linea `5.4.0-beta.1` (2026-08-05) se consolida como `5.4.0` estable: los
-cambios no eran experimentales y esta version es el ADN oficial de los
+La línea `5.4.0-beta.1` (2026-08-05) se consolida como `5.4.0` estable: los
+cambios no eran experimentales y esta versión es el ADN oficial de los
 consumidores Python, Wails, Tauri y el tablero de resultados.
 
 ### Agregado
@@ -1655,11 +1698,11 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 ### Arreglado
 
 - **Erradicacion de la familia `-var(...)`:** corregidas 20 declaraciones CSS invalidas (el parser descartaba la declaracion completa) en `badge` (posicionamiento de las 4 esquinas), `floating-input` (label flotante), `avatar-group` (solapamiento de avatares), `table`/`table-tokens` (hover-lift de filas), `card`, `panel`, `stepper`, `user-menu` y los keyframes de `select2`, `dropdown` y `language-switcher`. La forma canonica de negar un token es `calc(-1 * var(--token))`.
-- `tools/check-invalid-css-values.js` detecta ahora tambien el patron `-var(` (antes solo `NNvar(`), cerrando el hueco que dejo pasar la familia anterior.
+- `tools/check-invalid-css-values.js` detecta ahora también el patron `-var(` (antes solo `NNvar(`), cerrando el hueco que dejo pasar la familia anterior.
 
 ### Gobernanza
 
-- **Politica Atomic-first 1.1.0:** el gate de consumidores (`governance/consumer/check-atomic-provenance.mjs`) escanea ahora tambien los archivos `.ts` de las raices de features — primitivas visuales nativas en plantillas embebidas, `style=` inline en el marcado, colores fijos y negaciones invalidas de tokens (`*.spec.ts` exentos). Los consumidores deben copiar el gate actualizado y declarar `policyVersion: "1.1.0"`.
+- **Política Atomic-first 1.1.0:** el gate de consumidores (`governance/consumer/check-atomic-provenance.mjs`) escanea ahora también los archivos `.ts` de las raices de features — primitivas visuales nativas en plantillas embebidas, `style=` inline en el marcado, colores fijos y negaciones invalidas de tokens (`*.spec.ts` exentos). Los consumidores deben copiar el gate actualizado y declarar `policyVersion: "1.1.0"`.
 
 ## [5.3.0] - 2026-08-03
 
@@ -2438,7 +2481,7 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 
 ### Corregido
 
-- **Tokens de color obligatorios en overlays y modales custom:** Al construir un dialog/modal personalizado sobre `app-card variant="elevated"` con un `slot="image"` como cabecera, queda prohibido usar colores hexadecimales fijos (e.g. `#1e293b`, `#f8fafc`). Toda cabecera de modal debe consumir `background: var(--surface-section)` y `color: var(--text-color)` para respetar el Dark/Light Mode automatico del ecosistema. Los iconos de estado deben usar `color: var(--danger-color)`, `var(--warning-color)` etc., nunca hexadecimales sueltos.
+- **Tokens de color obligatorios en overlays y modales custom:** Al construir un dialog/modal personalizado sobre `app-card variant="elevated"` con un `slot="image"` como cabecera, queda prohibido usar colores hexadecimales fijos (e.g. `#1e293b`, `#f8fafc`). Toda cabecera de modal debe consumir `background: var(--surface-section)` y `color: var(--text-color)` para respetar el Dark/Light Mode automático del ecosistema. Los iconos de estado deben usar `color: var(--danger-color)`, `var(--warning-color)` etc., nunca hexadecimales sueltos.
 - **Texto de cuerpo en modales:** El parrafo de contenido de un modal custom debe llevar `color: var(--text-color)` explicito en lugar de clases de utilidad como `text-secondary` o `text-muted`, ya que estas clases aplican opacidad reducida y en fondos oscuros resultan ilegibles.
 
 ### Directriz
@@ -2460,9 +2503,9 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 
 ### Corregido
 
-- **Cierre inferior de tablas con scroll sincronizado**: `ScrollOverlayComponent` amplia `--so-scroll-end-space` a `calc(var(--so-track-size) + var(--space-8))` para que la ultima fila quede visible por encima de la barra horizontal cuando existe scroll vertical y horizontal simultaneo.
+- **Cierre inferior de tablas con scroll sincronizado**: `ScrollOverlayComponent` amplia `--so-scroll-end-space` a `calc(var(--so-track-size) + var(--space-8))` para que la última fila quede visible por encima de la barra horizontal cuando existe scroll vertical y horizontal simultaneo.
 - **Chips de metodo mas sobrios**: `chip-primary` mezcla el color primario con `surface-elevated`, reduce la saturacion visual en tema oscuro y mantiene coherencia con los chips semanticos.
-- **Centrado vertical de celdas compactas**: `TableComponent` centra verticalmente las celdas cuyo unico contenido es `app-chip`, sin alterar celdas compuestas como `Estado TA` con detalle secundario.
+- **Centrado vertical de celdas compactas**: `TableComponent` centra verticalmente las celdas cuyo único contenido es `app-chip`, sin alterar celdas compuestas como `Estado TA` con detalle secundario.
 - **Saneamiento CSS en tablas**: Se corrigieron expresiones invalidas como `76var(...)` y `1var(...)` en tokens y responsive table para evitar reglas descartadas por el navegador.
 
 ---
@@ -2486,7 +2529,7 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 
 ### Corregido
 
-- **Altura padre controlada para filas de grafico**: Se agrego `chart-grid-compact` con filas de 430 px para evitar crecimiento excesivo en pantalla completa. `chart-panel` baja su alto minimo a 240 px para trabajar dentro de la altura fija del padre sin recortar controles.
+- **Altura padre controlada para filas de grafico**: Se agrego `chart-grid-compact` con filas de 430 px para evitar crecimiento excesivo en pantalla completa. `chart-panel` baja su alto mínimo a 240 px para trabajar dentro de la altura fija del padre sin recortar controles.
 
 ---
 
@@ -2494,7 +2537,7 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 
 ### Corregido
 
-- **Altura simetrica de paneles de grafico**: `chart-panel` reduce su alto minimo a 320 px para evitar espacios vacios excesivos en tarjetas de graficos. Se agrega `chart-panel--center` para centrar verticalmente graficos compactos como tortas/donas.
+- **Altura simetrica de paneles de grafico**: `chart-panel` reduce su alto mínimo a 320 px para evitar espacios vacios excesivos en tarjetas de graficos. Se agrega `chart-panel--center` para centrar verticalmente graficos compactos como tortas/donas.
 
 ---
 
@@ -2502,7 +2545,7 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 
 ### Aniadido
 
-- **Panel uniforme para graficos**: Se agrego la utilidad `chart-panel` para que los contenedores de graficos mantengan un alto minimo estable, llenen el alto disponible de tarjetas estiradas en grid y deleguen el redimensionamiento final al componente `app-chart`.
+- **Panel uniforme para graficos**: Se agrego la utilidad `chart-panel` para que los contenedores de graficos mantengan un alto mínimo estable, llenen el alto disponible de tarjetas estiradas en grid y deleguen el redimensionamiento final al componente `app-chart`.
 
 ---
 
@@ -2527,7 +2570,7 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 ### Corregido
 
 - **Alto natural de tarjetas con graficos**: Se retiro el alto flexible global de `app-card` porque hacia crecer las tarjetas hermanas dentro de grillas, especialmente la tarjeta del grafico de torta. El control de alto queda localizado en el consumidor mediante `h-380` y `height="100%"`.
-- **Limpieza de utilidad de alto minimo**: Se retiro `min-h-380` porque ya no se requiere para el grafico mensual y podia inducir crecimiento vertical no deseado.
+- **Limpieza de utilidad de alto mínimo**: Se retiro `min-h-380` porque ya no se requiere para el grafico mensual y podia inducir crecimiento vertical no deseado.
 
 ---
 
@@ -2535,7 +2578,7 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 
 ### Corregido
 
-- **Grafico reactivo de alto completo**: Se ajusto `app-chart` para que el host y el contenedor interno puedan ocupar el 100% del alto disponible cuando el consumidor declara `height="100%"`. Esta correccion permite que los graficos embebidos en tarjetas altas no queden limitados por el valor por defecto de 300 px.
+- **Grafico reactivo de alto completo**: Se ajusto `app-chart` para que el host y el contenedor interno puedan ocupar el 100% del alto disponible cuando el consumidor declara `height="100%"`. Esta corrección permite que los graficos embebidos en tarjetas altas no queden limitados por el valor por defecto de 300 px.
 - **Contraste de grilla en tema claro**: Se convirtio `chart-tokens.css` a tokens dependientes de tema. El modo claro usa una grilla con mayor contraste y los temas oscuros conservan una grilla visible sin saturar el panel.
 
 ---
@@ -2555,13 +2598,15 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 
 ## [5.0.0] - 2026-07-01
 
-### Auditoria Profunda del Ecosistema — Sincronizacion Total y Limpieza
+<a id="auditoria-profunda-del-ecosistema--sincronizacion-total-y-limpieza"></a>
+
+### Auditoría Profunda del Ecosistema — Sincronizacion Total y Limpieza
 
 #### Fixed (Ecosistema — CRITICO)
 
-- **114/114 archivos `shared/ui` sincronizados**: Auditoria SHA-256 completa detecto 10 archivos con drift y 5 MISSING en Tauri y Wails. Todos corregidos. El ecosistema queda en estado 100% sincronizado.
-- **WebView2 canvas fix retroalimentado**: La correccion `ctx.save()`/`ctx.restore()` incondicional para todos los tipos de chart (documentada en v4.9.0 y en `ECOSYSTEM_WORKFLOW.md`) existia unicamente en Wails. Se retroalimento a Atomic-UI (Fuente de la Verdad) y se propago a Tauri.
-- **`propagate-tokens.ps1` extendido**: El script solo propagaba `_tokens-components.css` (1 de 7 archivos). Ahora cubre los 7 archivos CSS del directorio `src/styles/themes/` con verificacion SHA-256 individual por archivo.
+- **114/114 archivos `shared/ui` sincronizados**: Auditoría SHA-256 completa detecto 10 archivos con drift y 5 MISSING en Tauri y Wails. Todos corregidos. El ecosistema queda en estado 100% sincronizado.
+- **WebView2 canvas fix retroalimentado**: La corrección `ctx.save()`/`ctx.restore()` incondicional para todos los tipos de chart (documentada en v4.9.0 y en `ECOSYSTEM_WORKFLOW.md`) existia unicamente en Wails. Se retroalimento a Atomic-UI (Fuente de la Verdad) y se propago a Tauri.
+- **`propagate-tokens.ps1` extendido**: El script solo propagaba `_tokens-components.css` (1 de 7 archivos). Ahora cubre los 7 archivos CSS del directorio `src/styles/themes/` con verificación SHA-256 individual por archivo.
 - **Selector `table-cell` extendido**: `selector: '[app-table-cell]'` ampliado a `td[app-table-cell], th[app-table-header-cell]` para soportar uso en `<th>`. Mejora llevada desde Tauri/Wails a Atomic-UI.
 - **`z-index: 10` en `table-head`**: Propiedad que existia en consumidores retroalimentada a Atomic-UI.
 
@@ -2863,7 +2908,7 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 ### Added
 
 - Nuevos atoms: `Badge`, `Breadcrumb`, `FileInput`, `NumberInput`, `Progress`, `Spinner`, `TooltipDirective`.
-- Nuevos molecules: `Alert`, `AvatarGroup`, `Combobox`, `TagInput`, `Timeline`, `Popup` story/documentacion reforzada.
+- Nuevos molecules: `Alert`, `AvatarGroup`, `Combobox`, `TagInput`, `Timeline`, `Popup` story/documentación reforzada.
 - Nuevo organism: `NavBar`.
 - Nuevos blueprints: `register-page`, `forgot-password-page`, `profile-page`, `settings-page`, `error-pages`.
 - Blueprint `auth-guards` completado con archivos concretos de referencia/reexport.
@@ -2872,7 +2917,7 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 - `GlobalErrorHandlerService` para captura global de errores.
 - `FormBuilderHelper` para validaciones y helpers reutilizables en formularios reactivos.
 - Workflow CI/CD de Storybook en `.github/workflows/storybook.yml`.
-- Workflow de validacion de build/lint/test en `.github/workflows/ci.yml`.
+- Workflow de validación de build/lint/test en `.github/workflows/ci.yml`.
 
 ### Changed
 
@@ -2881,8 +2926,8 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
   - `authInterceptor` y `cacheInterceptor` en `provideHttpClient`.
   - `GlobalErrorHandlerService` como `ErrorHandler` global.
 - `app.routes.ts` migrado a lazy loading sobre blueprints reales del repositorio.
-- `README.md` y `src/stories/Configure.mdx` actualizados con inventario real y version 4.0.0.
-- `package.json` actualizado a version `4.0.0`.
+- `README.md` y `src/stories/Configure.mdx` actualizados con inventario real y versión 4.0.0.
+- `package.json` actualizado a versión `4.0.0`.
 - `ROADMAP.md` actualizado con estado de fases 3, 4 y 5 como completadas.
 
 ### Fixed
@@ -2895,8 +2940,8 @@ consumidores Python, Wails, Tauri y el tablero de resultados.
 
 ### Notes
 
-- La ejecucion local de `npm` no esta disponible en este entorno de agente.
-- La validacion tecnica completa queda automatizada en GitHub Actions mediante `ci.yml`.
+- La ejecución local de `npm` no esta disponible en este entorno de agente.
+- La validación tecnica completa queda automatizada en GitHub Actions mediante `ci.yml`.
 
 ### Fixed
 

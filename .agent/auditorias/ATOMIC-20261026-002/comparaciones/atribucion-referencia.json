@@ -1,0 +1,115 @@
+{
+  "asignacion": "ATOMIC-20261026-002",
+  "fecha": "2026-10-26",
+  "tipo": "consulta_documental_solo_lectura",
+  "alcance": "Atribución de DESVIACION-20260929-005 y separación del defecto documental registrado en DESVIACION-20261024-011.",
+  "resultado": "Se recomienda reparar la cita material mediante referencia calificada a la maestra vigente, declarar por-clasificar la atribución formal que el verificador resuelve contra Orquestación y conservar abierta la desviación visual.",
+  "decision_normativa_nueva_requerida": false,
+  "limite_decision": "Esta recomendación utiliza el valor especial ya admitido y añade una nota documental; no cambia controles ni su semántica. Una atribución formal definitiva a varias doctrinas exigiría otra unidad autorizada si requiere modificar el contrato o el verificador. Este informe no autoriza ni realiza escrituras en repositorios.",
+  "comprobaciones": {
+    "pruebas_ejecutadas": false,
+    "construcciones_ejecutadas": false,
+    "compuertas_ejecutadas": false,
+    "producto_inspeccionado": false,
+    "repositorios_modificados": false,
+    "escritura_unica": "C:/Users/cotaha/AppData/Local/Temp/codex-atomic-20261026-002/atribucion-referencia.json",
+    "lecturas": [
+      "AGENTS.md raíz suministrado en el encargo; AGENTS.md local leído del árbol.",
+      "Guía rápida, bloque superior de continuidad y primeras 80 líneas de CHANGELOG y LESSONS_LEARNED locales.",
+      "Orquestación v1.7.0: apartados 1, 9, 11 y 17.0; búsqueda dirigida de Atomic/visual/canónico/demos.",
+      "Maestra v2.5.0: apartado 3.1 y contexto inmediato del apartado 3.",
+      "Ambas desviaciones y las secciones pertinentes del verificador, sin ejecutarlo."
+    ],
+    "roadmap": "La búsqueda limitada del ID ATOMIC-20261026-002 en las dos carpetas locales de roadmaps no devolvió un archivo al momento de la consulta."
+  },
+  "evidencia": [
+    {
+      "archivo": "C:/Users/cotaha/source/repos/.agent/doctrinas/DOCTRINA_MAESTRA_UNIFICADA.md",
+      "version": "2.5.0",
+      "lineas": "153-179",
+      "apartado": "3.1",
+      "cita": "Las features conectan datos, formularios tipados y slots públicos; no recrean cabeceras, tablas, acciones de fila, pies de modal o detalles con HTML/CSS visual propio.",
+      "razon": "La fuente material vigente regula la promoción al ADN canónico y prohíbe el diseño paralelo del consumidor. Es congruente con el hecho histórico descrito y con una demo que debe consumir el Alert canónico; no acredita por sí sola el estado actual del producto."
+    },
+    {
+      "archivo": "C:/Users/cotaha/source/repos/.agent/doctrinas/DOCTRINA_MAESTRA_UNIFICADA.md",
+      "version": "2.5.0",
+      "lineas": "175-179",
+      "apartado": "3.1",
+      "cita": "El contrato visual detallado vive en Atomic, no en copias divergentes por producto.",
+      "razon": "La afirmación de fuente visual única tiene respaldo material específico; no es necesario inventar un incumplimiento de rastro o veracidad documental."
+    },
+    {
+      "archivo": "C:/Users/cotaha/source/repos/.agent/doctrinas/DOCTRINA_ORQUESTACION_AGENTES.md",
+      "version": "1.7.0",
+      "lineas": "311-324",
+      "apartado": "9",
+      "cita": "Antes de cerrar una asignación, el agente comprueba que las afirmaciones verificables de `AGENTS.md`, `README.md`, `CHANGELOG.md`, `docs/CONTINUIDAD_AGENTES.md` y el roadmap vigente siguen siendo ciertas en el árbol que deja.",
+      "razon": "Regula afirmaciones documentales verificables. La divergencia entre Alert y showcase no demuestra por sí sola que uno de esos documentos formule una afirmación falsa. Reatribuir el hecho visual a este apartado inventaría otro hecho."
+    },
+    {
+      "archivo": "C:/Users/cotaha/source/repos/.agent/doctrinas/DOCTRINA_ORQUESTACION_AGENTES.md",
+      "version": "1.7.0",
+      "lineas": "457-506",
+      "apartado": "11",
+      "cita": "Cuando algo sale mal, el agente no improvisa una solución ni abandona: deja una desviación.",
+      "razon": "Regula el rastro y los campos de la desviación. No establece el contrato visual. Puede fundamentar el defecto del registro de 2026-10-24, pero no sustituye la atribución del hecho visual de 2026-09-29."
+    },
+    {
+      "archivo": "C:/Users/cotaha/source/repos/.agent/doctrinas/DOCTRINA_ORQUESTACION_AGENTES.md",
+      "version": "1.7.0",
+      "lineas": "1042-1043",
+      "apartado": "17.0.1",
+      "cita": "Atomic-first, compatibilidad, seguridad por operación, pruebas negativas del §7 y controles obligatorios del producto permanecen sin excepciones.",
+      "razon": "Es la remisión pertinente encontrada en Orquestación: conserva Atomic-first, pero no define la regla de fuente visual única. No conviene sustituir la fuente material por este control general de orquestación para obtener un número aceptado, ni atribuir retrospectivamente una regla de octubre al hecho de septiembre sin evidencia adicional."
+    },
+    {
+      "archivo": "C:/Users/cotaha/source/repos/.agents/scripts/verificar-desviaciones.ps1",
+      "lineas": "95, 238-239, 262-272, 462-466",
+      "hecho": "La fuente por defecto es DOCTRINA_ORQUESTACION_AGENTES.md. El análisis usa apartado_roto y estado; una nota o campo que califique la doctrina no cambia la resolución del apartado.",
+      "cita": "NO comprueba que la atribución sea CORRECTA: una desviación puede citar un apartado que existe y no ser el que de verdad rompió; eso solo lo ve quien lea el hecho."
+    },
+    {
+      "archivo": "C:/Users/cotaha/source/repos/.agents/scripts/verificar-desviaciones.ps1",
+      "lineas": "38-43, 100, 270-272",
+      "hecho": "por-clasificar es un valor especial existente, destinado a declarar la duda sin contaminar el recuento. Con estado abierta no produce el aviso de cierre sin clasificar.",
+      "cita": "por-clasificar no está claro cuál. Declarar la duda es honesto; elegir a suerte contamina el recuento."
+    }
+  ],
+  "reparacion_minima_propuesta": {
+    "archivo": "C:/Users/cotaha/source/repos/-Atomic-UI/.agents/desviaciones/DESVIACION-20260929-005.md",
+    "cambio_frontmatter": {
+      "campo": "apartado_roto",
+      "valor_propuesto": "por-clasificar"
+    },
+    "conservar": [
+      "id, asignacion, repositorio, fecha, severidad y estado: abierta",
+      "Hecho, evidencia, corrección visual, escalado y observaciones históricos",
+      "Contratos ASCII y todo cambio preexistente"
+    ],
+    "campos_adicionales_necesarios": false,
+    "nota_propuesta": "Precisión de referencia (ATOMIC-20261026-002, 2026-10-26): el hecho visual descrito se contrasta con la [Doctrina maestra unificada](../../../.agent/doctrinas/DOCTRINA_MAESTRA_UNIFICADA.md), versión vigente 2.5.0, apartado 3.1, «Promoción visual no destructiva (Atomic-first)». El valor histórico `§3.1` no identificaba el documento dueño. `verificar-desviaciones.ps1` interpreta `apartado_roto` contra la doctrina de Orquestación, donde ese apartado no existe. La clasificación formal en ese inventario queda `por-clasificar`: no se ha demostrado un apartado material equivalente de Orquestación. Esta precisión conserva el hecho y el estado abierto del registro; no acredita una corrección visual, reproducción actual ni publicación.",
+    "ubicacion_nota": "Después de Qué se esperaba o como adenda fechada; el texto histórico no se reescribe como si hubiese existido esta precisión en septiembre.",
+    "aclaracion_enlace": "El enlace relativo propuesto se resuelve desde -Atomic-UI/.agents/desviaciones/ hasta repos/.agent/doctrinas/."
+  },
+  "tratamiento_registro_meta": {
+    "archivo": "C:/Users/cotaha/source/repos/-Atomic-UI/.agents/desviaciones/DESVIACION-20261024-011.md",
+    "ahora": "No se modifica durante esta consulta.",
+    "tras_reparacion_y_comprobacion": "Puede añadirse una adenda fechada que diga que el rechazo por el §3.1 no calificado se resolvió mediante referencia material explícita y clasificación formal pendiente. Solo si la ejecución del verificador sobre el directorio original completo confirma el resultado, puede marcarse corregida la desviación del rechazo documental.",
+    "limites": [
+      "El cierre del registro meta no cierra DESVIACION-20260929-005.",
+      "El resultado verde acreditaría la gramática y existencia de las atribuciones admitidas, no corrección visual ni clasificación material completa.",
+      "Se conserva la evidencia de 2026-10-24 como histórica; no se presenta su salida antigua como validación nueva.",
+      "Si el criterio de cierre se interpreta como clasificación formal definitiva, ese criterio sigue pendiente: la reparación propuesta elimina la cita ambigua sin fingir una equivalencia."
+    ]
+  },
+  "exclusiones": [
+    "No elegir §9, §11 o §17.0.1 por el mero hecho de existir.",
+    "No usar ninguno - regla ausente: la regla material sí existe en la maestra.",
+    "No mantener §3.1 y suponer que un campo adicional modifica el parser.",
+    "No cambiar el verificador, doctrina, controles, scripts, argumentos por defecto ni exclusiones.",
+    "No ejecutar una validación individual con otra doctrina y presentarla como acreditación del directorio.",
+    "No cambiar producto, pruebas, dependencias, publicación ni otros repositorios.",
+    "No anunciar que la deuda visual sigue reproduciéndose hoy: la consulta solo leyó el registro histórico."
+  ]
+}

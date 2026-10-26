@@ -26,6 +26,7 @@
    ============================================================================= */
 
 /* === IMPORTACIONES EN ORDEN === */
+@import './_fonts.css';
 @import './_tokens-primitives.css';
 @import './_tokens-brand.css';
 @import './_tokens-semantic.css';
@@ -48,8 +49,35 @@ html,
 body {
   margin: 0;
   padding: 0;
+  font-family: var(--font-family-base);
   background-color: var(--surface-ground);
   color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-heading);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-family-mono);
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
 }
 
 /* =============================================================================

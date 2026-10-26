@@ -9,12 +9,13 @@ El tamaño de letra ya vive en tokens y nadie lo discute. El PESO no tenia escal
 ninguna, y por ese hueco se colaron seis valores compitiendo: 400, 500, 600, 650,
 700, 800 y hasta 900.
 
-La mitad de esas distinciones no se ven. La familia declarada es
-`'Open Sans', system-ui, …`, pero no hay ningun `@font-face`, no se sirve ningun
-fichero de fuente, y la CSP del consumidor dice `font-src 'self'`: Open Sans no
-se carga nunca. Se cae a `system-ui` —Segoe UI en Windows, una familia
-ESTATICA—, asi que 650 y 700 aterrizan en el mismo trazo, y 750 y 800 en otro.
-Alguien afino un contraste que el navegador colapsa sin decirlo.
+Las familias canonicas (`'Open Sans'` para cuerpo y controles, y `'Quicksand'`
+para encabezados y titulos) se cargan localmente mediante `@font-face` en
+`src/styles/themes/_fonts.css` desde `./fonts/*.woff2` bajo `font-src 'self'`.
+En las hojas de estilo de componentes y vistas, la escala de peso se gobierna
+con cuatro tokens semanticos (`--font-weight-body`, `--font-weight-emphasis`,
+`--font-weight-title` y `--font-weight-display`) para impedir que cada selector
+invente pesos intermedios a mano.
 
 POR QUE UN TRINQUETE Y NO UNA PROHIBICION. Barrer los 147 usos de golpe cambia el
 dibujo de la interfaz entera sin que nadie lo mire; 500 -> 600 engorda y 900 ->
@@ -38,6 +39,7 @@ const MAXIMO_PESOS_A_MANO = 0;
 
 const EXTENSIONES = new Set(['.css', '.scss', '.ts', '.html']);
 const PESO_A_MANO = /font-weight\s*:\s*(\d{3})\b/g;
+const BLOQUE_FONT_FACE = /@font-face\s*\{[^}]*\}/giu;
 const ESCALA = new Map([
   ['400', '--font-weight-body'],
   ['600', '--font-weight-emphasis'],
@@ -69,11 +71,15 @@ mano es deuda, y cual ni siquiera tiene destino en la escala- es la misma.
 export function auditarPesos(origenRuta, raizRelativa = origenRuta) {
   const encontrados = [];
   for (const ruta of recolectar(origenRuta)) {
-    // El fichero que PUBLICA la escala es el unico que puede escribir los numeros.
-    if (ruta.endsWith('_tokens-primitives.css')) {
+    // El fichero que PUBLICA la escala y el que registra @font-face locales son
+    // los unicos que declaran los pesos numericos de las caras tipograficas.
+    if (ruta.endsWith('_tokens-primitives.css') || ruta.endsWith('_fonts.css')) {
       continue;
     }
-    const contenido = readFileSync(ruta, 'utf8');
+    const contenidoOriginal = readFileSync(ruta, 'utf8');
+    const contenido = contenidoOriginal.replace(BLOQUE_FONT_FACE, (bloque) =>
+      bloque.replace(/[^\r\n]/gu, ' '),
+    );
     for (const coincidencia of contenido.matchAll(PESO_A_MANO)) {
       const peso = coincidencia[1];
       encontrados.push({

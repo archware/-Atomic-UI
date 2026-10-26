@@ -9,7 +9,8 @@
   "relatedSources": [
     "src/app/shared/ui/atoms/icon-button/icon-button.component.ts",
     "src/app/shared/ui/atoms/language-switcher/language-switcher.component.ts",
-    "src/app/shared/ui/molecules/user-menu/user-menu.component.ts"
+    "src/app/shared/ui/molecules/user-menu/user-menu.component.ts",
+    "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts"
   ],
   "purpose": "Cabecera de aplicación que coordina navegación lateral, título, idioma, tema, notificaciones y sesión.",
   "variants": [],
@@ -28,6 +29,7 @@
     { "name": "userRole", "type": "string", "default": "", "meaning": "Rol visible de la sesión." },
     { "name": "avatarColor", "type": "string", "default": "", "meaning": "Color de fondo opcional para el avatar de usuario." },
     { "name": "notificationCount", "type": "number", "default": 0, "meaning": "Cantidad de notificaciones sin leer." },
+    { "name": "notifications", "type": "TopbarNotification[]", "default": "[]", "meaning": "Lista opcional de notificaciones mostradas en el desplegable gobernado por app-scroll-overlay." },
     { "name": "showLanguageSwitcher", "type": "boolean", "default": true, "meaning": "Controla la presencia del selector de idioma." },
     { "name": "showNotifications", "type": "boolean", "default": true, "meaning": "Controla la presencia de notificaciones." }
   ],

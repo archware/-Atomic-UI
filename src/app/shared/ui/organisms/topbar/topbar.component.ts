@@ -1,14 +1,30 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 import { UserMenuComponent, UserMenuAction } from '../../molecules/user-menu/user-menu.component';
 import { LanguageSwitcherComponent } from '../../atoms/language-switcher/language-switcher.component';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
+import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
+
+export interface TopbarNotification {
+  id: string;
+  title: string;
+  message?: string;
+  time: string;
+  isRead?: boolean;
+  icon?: string;
+}
 
 @Component({
   selector: 'app-topbar',
   standalone: true,
-  imports: [IconButtonComponent, UserMenuComponent, LanguageSwitcherComponent, VariablesCssDirective],
+  imports: [
+    IconButtonComponent,
+    UserMenuComponent,
+    LanguageSwitcherComponent,
+    VariablesCssDirective,
+    ScrollOverlayComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.css',
@@ -45,6 +61,9 @@ export class TopbarComponent {
   /** Number of unread notifications */
   readonly notificationCount = input(0);
 
+  /** Optional list of notifications rendered inside the dropdown */
+  readonly notifications = input<TopbarNotification[]>([]);
+
   /** Whether the language control is rendered */
   readonly showLanguageSwitcher = input(true);
 
@@ -63,6 +82,15 @@ export class TopbarComponent {
   /** Event emitted when any user menu action is clicked */
   readonly userAction = output<UserMenuAction>();
   readonly homeClick = output<void>();
+
+  readonly isNotificationsOpen = signal(false);
+
+  onNotificationsTrigger(): void {
+    this.notificationClick.emit();
+    if (this.notifications().length > 0) {
+      this.isNotificationsOpen.update((open) => !open);
+    }
+  }
 
   onUserAction(action: UserMenuAction): void {
     this.userAction.emit(action);

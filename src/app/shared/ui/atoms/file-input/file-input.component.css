@@ -275,10 +275,16 @@
   color: var(--text-color-on-primary);
 }
 
+.file-list-scroll {
+  display: block;
+  width: 100%;
+  margin-top: var(--space-3);
+}
+
 .file-list {
   list-style: none;
-  margin: var(--space-3) 0 0;
-  padding: 0;
+  margin: 0;
+  padding: 0 var(--space-2) 0 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);

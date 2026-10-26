@@ -1,0 +1,104 @@
+{
+  "asignacion": "ATOMIC-20261026-002",
+  "fecha": "2026-10-26T18:52:53.800580+00:00",
+  "ruta": "estandar",
+  "dictamen": "aprobado_en_alcance_con_limitacion_documentada",
+  "modelo_juez": "gpt-6-astra",
+  "esfuerzo_juez": "max",
+  "modelo_constructor": "gpt-6.1-sol",
+  "esfuerzo_constructor": "high",
+  "alcance": "Las cuatro fuentes editoriales del reparto. Se añade revisión estática de continuidad, archivo histórico y textos de gobierno; la custodia, índice y metadatos finales corresponden al responsable.",
+  "criterios": [
+    {
+      "id": "C1",
+      "resultado": "cumple",
+      "criterio": "Corrección exacta de las 150 entradas del baseline",
+      "evidencia": "La salida original y las copias previas contienen 151 ocurrencias: 133 de CHANGELOG y 18 de LESSONS. Las dos apariciones de tambien en la fila original 920 explican el desfase. Se revisaron los contextos: 151 son prosa y cero son contratos. La comparación mecánica propia coincide exactamente tras las sustituciones y adiciones autorizadas; se conservan ambas citas explicativas y la versión 5.5.0."
+    },
+    {
+      "id": "C2",
+      "resultado": "cumple",
+      "criterio": "Preservación de código, contratos e historia",
+      "evidencia": "Los dos registros conservan por ordinal 2323 spans y 4 bloques de código, claves, destinos de enlaces, fechas y versiones semánticas. No se convirtió prosa en código. En las desviaciones se preserva el cuerpo anterior: solo cambian los campos autorizados y se añaden adendas. La 005 normaliza sus 99 CRLF a LF."
+    },
+    {
+      "id": "C3",
+      "resultado": "cumple",
+      "criterio": "Anclas históricas",
+      "evidencia": "Comprobación estática propia de los h3 con IDs verificacion y verificacion-1, y de tres aliases ASCII. Los 43 encabezados Markdown posteriores conservan la misma secuencia de IDs; se preservan nivel, orden y texto de los demás encabezados no afectados. No se detectan colisiones. Se analizó el HTML con HTMLParser, sin navegador."
+    },
+    {
+      "id": "C4",
+      "resultado": "cumple",
+      "criterio": "Atribución material y desviación visual",
+      "evidencia": "La maestra actual contiene versión 2.5.0 y apartado 3.1 con el título citado. La 005 conserva estado abierta, fecha, hechos, riesgos y resultados históricos. por-clasificar declara el límite operativo en Orquestación, sin inventar equivalencia con 9 u 11 ni resolver el hallazgo visual."
+    },
+    {
+      "id": "C5",
+      "resultado": "cumple",
+      "criterio": "Resolución documental de la 011",
+      "evidencia": "Se conserva la salida histórica y el estado corregida se limita a la atribución. La adenda no inventa una nueva ejecución ni un código 0. Se leyeron los recibos originales del responsable: primera revisión 0 sobre 11 documentos y final 0 sobre 12 tras la desviación focal. Se compararon los ocho archivos originales de esos recibos y ortografía con sus copias de evidencia, idénticos."
+    },
+    {
+      "id": "C6",
+      "resultado": "cumple_con_limitacion_documentada",
+      "criterio": "Codificación y diff de las cuatro fuentes",
+      "evidencia": "UTF-8 estricto sin BOM y LF en las cuatro fuentes; diff --check focal 0. La guarda original devuelve 1 por el atributo id=\"verificacion\" de CHANGELOG:772, mientras el título visible Verificación está acentuado. Se comprobó que el verificador no descuenta atributos HTML en Markdown y agrupa una misma palabra por fila. El literal es un contrato ASCII que conserva el enlace; no debe acentuarse ni ocultarse. La salida 1 queda explícita en roadmap, cierre y desviación focal."
+    },
+    {
+      "id": "C7",
+      "resultado": "cumple_en_revision_estatica_con_observacion_menor",
+      "criterio": "Continuidad y reutilización",
+      "evidencia": "Se comprobó por igualdad que ACC se archivó íntegro y los cuerpos previos de continuidad y bitácora permanecen; ventana de tres cortes y 63 destinos locales existentes. Las cuatro especificaciones actuales coinciden en SHA-256 con el dictamen independiente de ATOMIC-20261026-001. No se repitieron las 70 pruebas. El sondeo inicial contiene 38 repositorios; la captura previa, 57 rutas sucias. Rama main y OID dd93734a3eea40b87d46b4990976231fe2d6ca19 siguen iguales. Al ampliar diff --check a gobierno se observó la línea vacía nueva al EOF de CONTINUIDAD_AGENTES:126, que el responsable debe retirar."
+    }
+  ],
+  "hallazgos_bloqueantes_en_las_cuatro_fuentes": [],
+  "limitaciones": [
+    {
+      "id": "L1",
+      "clasificacion": "falso_positivo_contractual",
+      "codigo_guarda": 1,
+      "ruta": "CHANGELOG.md:772",
+      "desviacion": ".agents/desviaciones/DESVIACION-ATOMIC-20261026-002-001.md",
+      "texto": "No se acredita el verde automático de la guarda ortográfica. El falso positivo documentado no bloquea las correcciones de prosa solicitadas ni autoriza cambiar la guarda compartida."
+    }
+  ],
+  "observaciones_gobierno": [
+    {
+      "id": "G1",
+      "prioridad": "menor",
+      "ruta": "docs/CONTINUIDAD_AGENTES.md:126",
+      "detalle": "git diff --check ampliado devuelve 1 por new blank line at EOF. Se solicitó retirar únicamente esa línea vacía propia y comprobar de nuevo el documento; las cuatro fuentes por separado devuelven 0."
+    }
+  ],
+  "pendientes_responsable": [
+    "Retirar la línea vacía final propia de continuidad y comprobar el diff focal.",
+    "Incorporar juicio y evidencias, completar metadatos finales y sus controles focales.",
+    "Completar y acreditar sondeo/custodia finales e índice después de las últimas escrituras; no forman parte de esta aprobación de fuentes."
+  ],
+  "huellas_fuentes": {
+    "CHANGELOG.md": "7ed91e444611d3412be335d4d79f38a2ca58a07c9dc7af9d1c1063d15960e492",
+    "LESSONS_LEARNED.md": "c77fcfe897d33b1b7dfeaa1c2902cbc67176e7d1c6cc7f4dfa972b7de10f803d",
+    ".agents/desviaciones/DESVIACION-20260929-005.md": "4e4423abacaee518c731e9f364b556d483a485f1110b41b48b505354859c12bd",
+    ".agents/desviaciones/DESVIACION-20261024-011.md": "5ce3ce13688099f988b29cc1f2b32302beabfe0722adcecf1ed5ce4d1a84409d"
+  },
+  "huellas_gobierno_revisado": {
+    "docs/CONTINUIDAD_AGENTES.md": "d2d98f31a63476b19c48ef45995fefb2e27b2fbf60b1d1540b05701dab18813e",
+    "docs/BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md": "b3bbfe923369a2b6614abfd302bf601ffa9efbfcd8607f4dee806b02b7d13a32",
+    ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md": "56fdcd14bd9a376197fff6ddd6530345b0ab04efe126ec2c65a292b4440ffaf4",
+    ".agents/desviaciones/DESVIACION-ATOMIC-20261026-002-001.md": "5fccc78a335f9e9a70b2631595b8439c966506d743d933c6e24008f956f382e1",
+    ".agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md": "de9d2b846031b45db1f6343258b805f8d6062f22f089dd5ce1ae7518c7a84158"
+  },
+  "evidencia_propia": [
+    "verificar.py",
+    "comparacion-propia.json",
+    "matriz-propia-151.json",
+    "CHANGELOG.md.contratos-propios.json",
+    "LESSONS_LEARNED.md.contratos-propios.json",
+    "gobierno-propio.json",
+    "reutilizacion-propia.json"
+  ],
+  "sin_escrituras_en_repositorios": true,
+  "sin_pruebas_producto_nuevas": true,
+  "fuentes_liberadas": true
+}

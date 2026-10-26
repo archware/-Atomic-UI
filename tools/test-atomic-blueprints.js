@@ -67,7 +67,7 @@ try {
     '@Component({',
     "  selector: 'atomic-invalid',",
     '  template: `<button style="color: #fff">Demo</button>`,',
-    '  styles: [`input { width: 12px; color: rgb(1, 2, 3); }`],',
+    '  styles: [`input { width: 12px; color: rgb(1, 2, 3); overflow-y: auto; }`],',
     '})',
     'export class InvalidComponent {',
     '  value: any;',
@@ -87,6 +87,7 @@ try {
     'primitiva visual nativa',
     'estilo inline',
     'selector visual nativo',
+    'scroll nativo fuera de app-scroll-overlay',
     'px hardcodeado',
     'color fijo',
   ]) {
@@ -104,7 +105,7 @@ try {
   assert.equal(main(['--atomic-root', tempRoot, '--json'], captured.io), 1);
   const json = JSON.parse(captured.errors[0]);
   assert.equal(json.valid, false);
-  assert.ok(json.failures.length >= 9);
+  assert.ok(json.failures.length >= 10);
 
   write(
     path.join(tempRoot, 'src/blueprints/blueprints.manifest.json'),

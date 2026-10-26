@@ -1,0 +1,13 @@
+{
+  "enlaces_nuevos_del_cierre": [
+    {
+      "destino": "juicio/veredicto.json",
+      "existe": true
+    },
+    {
+      "destino": "recibo-final.json",
+      "existe": true
+    }
+  ],
+  "fallos": 0
+}

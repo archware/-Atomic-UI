@@ -1,0 +1,131 @@
+{
+  "asignacion": "ATOMIC-20261026-002",
+  "fecha": "2026-10-26T13:57:31.0942079-05:00",
+  "estado": "completado_en_alcance_con_limitacion_documentada",
+  "repositorio": "C:/Users/cotaha/source/repos/-Atomic-UI",
+  "rama": "main",
+  "head": "dd93734a3eea40b87d46b4990976231fe2d6ca19",
+  "raiz_head": "46b9a9d7f4cb4f75f98aa6049465720dd1d3c5f3",
+  "hallazgos_originales": 150,
+  "ocurrencias_prosa_corregidas": 151,
+  "ocurrencias_changelog": 133,
+  "ocurrencias_lessons": 18,
+  "contratos_modificados": 0,
+  "fuentes_juzgadas": [
+    {
+      "ruta": "CHANGELOG.md",
+      "sha256_juzgado": "7ed91e444611d3412be335d4d79f38a2ca58a07c9dc7af9d1c1063d15960e492",
+      "sha256_actual": "7ED91E444611D3412BE335D4D79F38A2CA58A07C9DC7AF9D1C1063D15960E492",
+      "coincide": true
+    },
+    {
+      "ruta": "LESSONS_LEARNED.md",
+      "sha256_juzgado": "c77fcfe897d33b1b7dfeaa1c2902cbc67176e7d1c6cc7f4dfa972b7de10f803d",
+      "sha256_actual": "C77FCFE897D33B1B7DFEAA1C2902CBC67176E7D1C6CC7F4DFA972B7DE10F803D",
+      "coincide": true
+    },
+    {
+      "ruta": ".agents/desviaciones/DESVIACION-20260929-005.md",
+      "sha256_juzgado": "4e4423abacaee518c731e9f364b556d483a485f1110b41b48b505354859c12bd",
+      "sha256_actual": "4E4423ABACAEE518C731E9F364B556D483A485F1110B41B48B505354859C12BD",
+      "coincide": true
+    },
+    {
+      "ruta": ".agents/desviaciones/DESVIACION-20261024-011.md",
+      "sha256_juzgado": "5ce3ce13688099f988b29cc1f2b32302beabfe0722adcecf1ed5ce4d1a84409d",
+      "sha256_actual": "5CE3CE13688099F988B29CC1F2B32302BEABFE0722ADCECF1ED5CE4D1A84409D",
+      "coincide": true
+    }
+  ],
+  "gobierno_final": [
+    {
+      "ruta": "docs/CONTINUIDAD_AGENTES.md",
+      "sha256": "11966ED08C975C452921EDABD594D06CB61119A5960CE1D5BF6B41FA3D1CD679"
+    },
+    {
+      "ruta": "docs/BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md",
+      "sha256": "B3BBFE923369A2B6614ABFD302BF601FFA9EFBFCD8607F4DEE806B02B7D13A32"
+    },
+    {
+      "ruta": ".agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md",
+      "sha256": "87C4A52E70B036A3956F507766ACE739FEAD7A2AE5789E407C491DAB77D3F4E0"
+    },
+    {
+      "ruta": ".agents/desviaciones/DESVIACION-ATOMIC-20261026-002-001.md",
+      "sha256": "5FCCC78A335F9E9A70B2631595B8439C966506D743D933C6E24008F956F382E1"
+    },
+    {
+      "ruta": ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md",
+      "sha256": "4ACC6F01341C8623BE939488E4F96022293122D1073425E31F61BC3950EABF3B"
+    }
+  ],
+  "referencia_material": "DOCTRINA_MAESTRA_UNIFICADA.md 2.5.0 apartado3.1",
+  "referencia_operativa": "por-clasificar",
+  "desviacion_visual_original": "abierta",
+  "incidencia_referencia": "corregida_documentalmente",
+  "codigos": {
+    "ortografia_previa": 1,
+    "ortografia_cuatro_fuentes": 1,
+    "referencias_11": 0,
+    "referencias_finales_12": 0,
+    "ortografia_gobierno_inicial": 1,
+    "ortografia_gobierno_delta_final": 0,
+    "indice_inicial_sandbox": 2,
+    "indice_generado_permitido": 0,
+    "indice_verificado": 0,
+    "sondeo_antes": 0,
+    "sondeo_final": 0,
+    "sondeo_comparado": 1,
+    "confinamiento": 0,
+    "diff_fuentes_juez": 0,
+    "diff_continuidad_corregida": 0,
+    "calidad_delta_gobierno": 0
+  },
+  "limitacion_ortografia": {
+    "ruta": "CHANGELOG.md:772",
+    "literal": "id=\"verificacion\"",
+    "tipo": "falso_positivo_contractual",
+    "desviacion": "DESVIACION-ATOMIC-20261026-002-001",
+    "estado": "abierta",
+    "severidad": "media"
+  },
+  "pruebas": {
+    "reutilizadas": 70,
+    "ejecuciones_nuevas": 0,
+    "especificaciones_identicas": 4,
+    "recibo": "comparaciones/reutilizacion-pruebas.json",
+    "limite": "Resultado anterior en HEAD aislado más4pruebas, sin ampliar a árbol móvil actual"
+  },
+  "juicio": {
+    "dictamen": "aprobado_en_alcance_con_limitacion_documentada",
+    "modelo": "gpt-6-astra",
+    "archivo": "juicio/veredicto.json",
+    "sha256": "D09FEDE0406FB4B409388AC94E86EE32456FC116FC6142E2FE8F1D0E23E34A1E",
+    "devolucion_continuidad": "resuelta_con_diff_codigo0"
+  },
+  "custodia": {
+    "repositorios": 38,
+    "eventos_comparados": 124,
+    "mutaciones_git_estructurales": 0,
+    "externas_atomic": 0,
+    "aviso_stash": 1,
+    "atribucion": "comparaciones/custodia-atribucion.json",
+    "modo": "sucio_esperado_ORQ6.3_y6.4",
+    "artefactos_despues_captura": "Solo originales, comparaciones, juicio, recibo y manifiesto propios dentro del reparto"
+  },
+  "indice": {
+    "documentos": 2271,
+    "ambitos": 44,
+    "sha256": "22CB07DC6B83BE59D367DCA4C91988DCDBF6179B44FB4A83C3CF36CF567DF05B"
+  },
+  "alcance_excluido": [
+    "codigo_producto",
+    "pruebas_producto",
+    "dependencias",
+    "manifiestos_distribucion",
+    "trabajo_ajeno",
+    "commit",
+    "publicacion"
+  ],
+  "rollback": "Aplicar solo diff propio contra copias y huellas iniciales; nunca restaurar archivos completos sobre trabajo concurrente"
+}

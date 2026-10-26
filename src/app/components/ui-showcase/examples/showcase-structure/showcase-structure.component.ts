@@ -4,6 +4,8 @@ import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.compo
 import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
 import { DividerComponent } from '../../../../shared/ui/atoms/divider/divider.component';
 import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
+import { ScrollOverlayComponent } from '../../../../shared/ui/organisms/scroll-overlay/scroll-overlay.component';
+import { IconButtonComponent } from '../../../../shared/ui/atoms/icon-button/icon-button.component';
 
 @Component({
   selector: 'app-showcase-structure',
@@ -12,9 +14,44 @@ import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
     PanelComponent,
     TextComponent,
     DividerComponent,
-    RowComponent
+    RowComponent,
+    ScrollOverlayComponent,
+    IconButtonComponent
 ],
   template: `
+    <!-- SCROLL OVERLAY DEMO -->
+    <app-panel title="Scroll Overlay (Desplazamiento Canónico R10)" variant="flat" padding="md" class="showcase-section">
+      <app-text variant="caption" color="muted">
+        Contenedor con altura máxima acotada (<code>[maxBodyHeight]="'14rem'"</code>) y barra de desplazamiento superpuesta de Atomic UI.
+      </app-text>
+      <div style="margin-top: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--surface-background);">
+        <app-scroll-overlay
+          class="so-block"
+          [maxBodyHeight]="'14rem'"
+          [skipTableDetection]="true"
+          [disableHorizontal]="true"
+          scrollAreaAriaLabel="Demostración de Scroll Overlay en Showcase"
+        >
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; padding: 0.75rem;">
+            @for (item of scrollDemoItems; track item.id) {
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.625rem 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--surface-elevated);">
+                <div>
+                  <app-text variant="body" weight="semibold">{{ item.title }}</app-text>
+                  <app-text variant="caption" color="muted">{{ item.subtitle }}</app-text>
+                </div>
+                <app-icon-button
+                  [variant]="item.closeVariant"
+                  size="sm"
+                  animation="none"
+                  [ariaLabel]="'Quitar ' + item.title"
+                ></app-icon-button>
+              </div>
+            }
+          </div>
+        </app-scroll-overlay>
+      </div>
+    </app-panel>
+
     <!-- DIVIDERS -->
     <app-panel title="Dividers" variant="flat" padding="md" class="showcase-section">
       <app-text variant="body">Párrafo superior</app-text>
@@ -183,4 +220,15 @@ import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
     .btn-sm { padding: 0.25rem 0.75rem; font-size: 0.875rem; }
   `]
 })
-export class ShowcaseStructureComponent { }
+export class ShowcaseStructureComponent {
+  readonly scrollDemoItems = [
+    { id: 1, title: 'Expediente Clínico #1041 — Emergencia', subtitle: 'Variante close-ghost (solo X roja en hover)', closeVariant: 'close-ghost' as const },
+    { id: 2, title: 'Expediente Clínico #1042 — Hospitalización', subtitle: 'Variante close-ghost (solo X roja en hover)', closeVariant: 'close-ghost' as const },
+    { id: 3, title: 'Expediente Clínico #1043 — Consulta Externa', subtitle: 'Variante close-soft (círculo suave danger)', closeVariant: 'close-soft' as const },
+    { id: 4, title: 'Expediente Clínico #1044 — Laboratorio', subtitle: 'Variante close-ghost (solo X roja en hover)', closeVariant: 'close-ghost' as const },
+    { id: 5, title: 'Expediente Clínico #1045 — Farmacia Central', subtitle: 'Variante close-soft (círculo suave danger)', closeVariant: 'close-soft' as const },
+    { id: 6, title: 'Expediente Clínico #1046 — Diagnóstico por Imágenes', subtitle: 'Variante close-ghost (solo X roja en hover)', closeVariant: 'close-ghost' as const },
+    { id: 7, title: 'Expediente Clínico #1047 — Unidad de Cuidados Intensivos', subtitle: 'Variante close-soft (círculo suave danger)', closeVariant: 'close-soft' as const },
+    { id: 8, title: 'Expediente Clínico #1048 — Centro Quirúrgico', subtitle: 'Variante close-ghost (solo X roja en hover)', closeVariant: 'close-ghost' as const },
+  ];
+}

@@ -394,15 +394,20 @@ y por el hueco se colaron seis valores compitiendo: 800 (43 veces), 700 (41), 60
 800, 400, **650**, **900**, y un `font-weight:600` sin espacio que ninguna
 búsqueda por el patrón normal encuentra.
 
-**Y tres de esos valores no se ven.** La familia declarada es
-`'Open Sans', system-ui, …`, pero **no hay ningún `@font-face`, ningún fichero de
-fuente en el proyecto, y la CSP dice `font-src 'self'`**: Open Sans no se carga
-nunca, ni podría cargarse de fuera. Manda `system-ui`, que en Windows es Segoe UI.
+**Carga local y escala de cuatro pasos.** Las familias canónicas (`'Open Sans'`
+para cuerpo, tablas y controles mediante `--font-family-base`, y `'Quicksand'`
+para encabezados, títulos y métricas destacadas mediante `--font-family-heading`)
+se sirven localmente desde `src/styles/themes/_fonts.css` (`./fonts/*.woff2`) bajo
+`font-src 'self'`, sin llamadas a CDN externos y con respaldo en `system-ui` (en
+Windows, Segoe UI).
 
-Contado en `C:\Windows\Fonts`, esa familia tiene cara propia en 400
-(`segoeui`), 600 (`seguisb`), 700 (`segoeuib`) y 900 (`seguibl`) — **cuatro
-grados reales**. Lo que no tiene cara es 500, 650 y 750: el navegador los resuelve
-a su vecino sin decirlo. Alguien afinó un contraste que no se dibuja.
+Históricamente, antes de empaquetar las caras `.woff2` en el tema portable,
+`system-ui` en Windows (`C:\Windows\Fonts`) solo ofrecía cuatro grados reales:
+400 (`segoeui`), 600 (`seguisb`), 700 (`segoeuib`) y 900 (`seguibl`), mientras
+que 500, 650 y 750 se colapsaban al vecino sin aviso. Aunque `_fonts.css`
+registra hoy las caras locales 400, 500, 600 y 700 de ambas familias, las hojas
+de estilo de componentes y vistas mantienen la escala semántica de cuatro pasos
+para impedir que cada selector invente pesos intermedios a mano.
 
 > **Corrección.** La primera versión de este capítulo afirmaba que «800 y 900 no
 > aportan trazo». Era falso: Segoe UI Black existe y se instala con Windows. Lo

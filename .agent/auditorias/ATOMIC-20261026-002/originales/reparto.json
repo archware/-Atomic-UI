@@ -1,0 +1,29 @@
+{
+  "frentes": [
+    {
+      "ficheros": [
+        "CHANGELOG.md",
+        "LESSONS_LEARNED.md"
+      ],
+      "nombre": "prosa"
+    },
+    {
+      "ficheros": [
+        ".agents/desviaciones/DESVIACION-20260929-005.md",
+        ".agents/desviaciones/DESVIACION-20261024-011.md"
+      ],
+      "nombre": "referencia"
+    },
+    {
+      "ficheros": [
+        ".agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md",
+        ".agent/auditorias/ATOMIC-20261026-002",
+        "docs/CONTINUIDAD_AGENTES.md",
+        "docs/BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md",
+        ".agents/desviaciones/DESVIACION-ATOMIC-20261026-002-001.md"
+      ],
+      "nombre": "gobierno"
+    }
+  ],
+  "repositorio": "C:/Users/cotaha/source/repos/-Atomic-UI"
+}

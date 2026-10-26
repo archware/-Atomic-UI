@@ -1,0 +1,4 @@
+{
+  "codigo": 0,
+  "comando": "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n& 'C:/Users/cotaha/source/repos/.agents/scripts/verificar-sondeo.ps1' -Capturar 'C:\\Users\\cotaha\\AppData\\Local\\Temp\\codex-atomic-20261026-002/sondeo-final.json'\nexit $LASTEXITCODE"
+}

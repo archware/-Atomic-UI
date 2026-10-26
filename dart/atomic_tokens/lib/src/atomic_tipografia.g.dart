@@ -57,5 +57,7 @@ class AtomicPesos {
 class AtomicFamilias {
   const AtomicFamilias._();
 
-  static const String fontFamilyBase = '\'Open Sans\', system-ui, -apple-system, sans-serif';
+  static const String fontFamilyBase = '\'Open Sans\', system-ui, -apple-system, \'Segoe UI\', Roboto, sans-serif';
+  static const String fontFamilyHeading = '\'Quicksand\', \'Open Sans\', system-ui, -apple-system, \'Segoe UI\', sans-serif';
+  static const String fontFamilyMono = '\'JetBrains Mono\', \'Fira Code\', Consolas, monospace';
 }

@@ -118,46 +118,54 @@
             }
           </div>
         }
-        <ul class="file-list" aria-label="Archivos seleccionados">
-          @for (f of files(); track f.file) {
-            <li class="file-item">
-              @if (f.preview) {
-                <img class="file-preview" [src]="f.preview" alt="" />
-              } @else if (variant() === 'dropzone') {
-                <span class="file-icon-box" aria-hidden="true">
-                  <i class="fa-solid fa-file-lines file-icon"></i>
-                </span>
-              } @else {
-                <i class="fa-solid fa-file file-icon" aria-hidden="true"></i>
-              }
-              <div class="file-details">
-                <span class="file-name" [title]="f.name">{{ f.name }}</span>
-                <span class="file-size">{{ formatSize(f.size) }}</span>
-              </div>
-              @if (!isDisabled()) {
-                <div class="file-actions">
-                  @if (itemActionIcon()) {
+        <app-scroll-overlay
+          class="so-block file-list-scroll"
+          [maxBodyHeight]="maxListHeight()"
+          [skipTableDetection]="true"
+          [disableHorizontal]="true"
+          [resetKey]="files().length === 0"
+        >
+          <ul class="file-list" aria-label="Archivos seleccionados">
+            @for (f of files(); track f.file) {
+              <li class="file-item">
+                @if (f.preview) {
+                  <img class="file-preview" [src]="f.preview" alt="" />
+                } @else if (variant() === 'dropzone') {
+                  <span class="file-icon-box" aria-hidden="true">
+                    <i class="fa-solid fa-file-lines file-icon"></i>
+                  </span>
+                } @else {
+                  <i class="fa-solid fa-file file-icon" aria-hidden="true"></i>
+                }
+                <div class="file-details">
+                  <span class="file-name" [title]="f.name">{{ f.name }}</span>
+                  <span class="file-size">{{ formatSize(f.size) }}</span>
+                </div>
+                @if (!isDisabled()) {
+                  <div class="file-actions">
+                    @if (itemActionIcon()) {
+                      <button
+                        type="button"
+                        class="file-action"
+                        (click)="onFileAction(f)"
+                        [attr.aria-label]="itemActionLabel() + ' ' + f.name"
+                      >
+                        <i [class]="itemActionIcon()" aria-hidden="true"></i>
+                      </button>
+                    }
                     <button
                       type="button"
-                      class="file-action"
-                      (click)="onFileAction(f)"
-                      [attr.aria-label]="itemActionLabel() + ' ' + f.name"
+                      class="file-remove"
+                      (click)="removeFile(f)"
+                      [attr.aria-label]="'Eliminar ' + f.name"
                     >
-                      <i [class]="itemActionIcon()" aria-hidden="true"></i>
+                      <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                     </button>
-                  }
-                  <button
-                    type="button"
-                    class="file-remove"
-                    (click)="removeFile(f)"
-                    [attr.aria-label]="'Eliminar ' + f.name"
-                  >
-                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-                  </button>
-                </div>
-              }
-            </li>
-          }
-        </ul>
+                  </div>
+                }
+              </li>
+            }
+          </ul>
+        </app-scroll-overlay>
       }
     </div>

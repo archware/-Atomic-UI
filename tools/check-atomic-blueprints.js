@@ -5,9 +5,11 @@ const path = require('node:path');
 
 const DEFAULT_ATOMIC_ROOT = path.resolve(__dirname, '..');
 const SOURCE_EXTENSIONS = new Set(['.html', '.css', '.scss', '.ts']);
-const NATIVE_TAGS = /<(?:button|dialog|input|select|table|textarea)\b/i;
+const NATIVE_TAGS = /<(?:button|dialog|input|meter|progress|select|table|textarea)\b/i;
 const NATIVE_SELECTORS =
-  /(?<![-\w])(?:button|dialog|input|select|table|textarea)(?=\s*(?:\[|:|\.|#|\{|,|>|\+|~))/im;
+  /(?<![-\w])(?:button|dialog|input|meter|progress|select|table|textarea)(?=\s*(?:\[|:|\.|#|\{|,|>|\+|~))/im;
+const NATIVE_SCROLL_CSS =
+  /(?:overflow(?:-[xy])?\s*:\s*(?:auto|scroll)\b|::-webkit-scrollbar\b)/i;
 const INLINE_STYLE = /\sstyle\s*=/i;
 const PIXEL_VALUE = /(?:^|[^\w.-])-?(?:\d+\.?\d*|\.\d+)px\b/i;
 const FUNCTION_COLOR = /\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\s*\(/i;
@@ -253,6 +255,9 @@ function inspectVisualFragment(fragment, type, local, failures, label = '') {
   }
   if (type === 'style' && NATIVE_SELECTORS.test(source)) {
     addFailure(failures, `Blueprint con selector visual nativo${suffix}: ${local}`);
+  }
+  if (type === 'style' && NATIVE_SCROLL_CSS.test(source)) {
+    addFailure(failures, `Blueprint con scroll nativo fuera de app-scroll-overlay${suffix}: ${local}`);
   }
   if (PIXEL_VALUE.test(source)) addFailure(failures, `Blueprint con px hardcodeado${suffix}: ${local}`);
   if (hasFixedColor(source)) addFailure(failures, `Blueprint con color fijo${suffix}: ${local}`);

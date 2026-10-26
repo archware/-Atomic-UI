@@ -1,0 +1,292 @@
+{
+    "repositorio":  "C:\\Users\\cotaha\\source\\repos\\-Atomic-UI",
+    "marca":  "2026-10-26T18:32:32.5700078Z",
+    "head":  "dd93734a3eea40b87d46b4990976231fe2d6ca19",
+    "sucios":  [
+                   {
+                       "ruta":  "AGENTS.md",
+                       "hash":  "4e2ba196bb12b9527dc3ea266c901659fe824abc",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "CHANGELOG.md",
+                       "hash":  "b77b1dcec88bcaf0eb882582b540d2ec0812a08f",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "LESSONS_LEARNED.md",
+                       "hash":  "a9c0a93cc01df3f39dc73166ae7145b3f6e7bf49",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "catalog/components/file-input.json",
+                       "hash":  "d0be6fd2d270c283991446228672f2114307e008",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "catalog/components/scroll-overlay.json",
+                       "hash":  "9ff1f2954e45f35eae846a34122a8fb9939e6843",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "catalog/components/topbar.json",
+                       "hash":  "9c65834914238bb81fd202e976efbdd78ee9dd79",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "distribution/atomic-source-manifest.json",
+                       "hash":  "21b3b74e5410f83c43ecd19726016304beca7b59",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "docs/BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md",
+                       "hash":  "390d16f40363970e27735b41888831d825a0e61e",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "docs/CONTINUIDAD_AGENTES.md",
+                       "hash":  "66e96e9c60fa8e8e811de71ee97a1e0e9686c576",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "governance/consumer/AGENTS.template.md",
+                       "hash":  "5fdfdec485538a94d89a4a17cd41927f527b19df",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/components/ui-showcase/examples/showcase-actions/showcase-actions.component.ts",
+                       "hash":  "e4da5cc91742476ce1960af8edea226457e64109",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/components/ui-showcase/examples/showcase-forms/showcase-forms.component.ts",
+                       "hash":  "8916b6c04e37e10d067cc0e66fa2b274d95ea144",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/components/ui-showcase/examples/showcase-structure/showcase-structure.component.ts",
+                       "hash":  "216ebdda00319fcabcc9801975e244be8fe9769f",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/pages/showcase/showcase-page.component.html",
+                       "hash":  "c74915cd868aee9064bc53d95f3d8692a7bcf6dc",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/pages/showcase/showcase-page.component.ts",
+                       "hash":  "e54b240daa0cdf8f12fa507e32e33c640570f257",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/atoms/file-input/file-input.component.css",
+                       "hash":  "dbb22f4e9cc544f5cbf12bea79662fa2b4adaebe",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/atoms/file-input/file-input.component.html",
+                       "hash":  "a07c3855bfb710e0469450a3f00e3d03391fdfc6",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/atoms/file-input/file-input.component.ts",
+                       "hash":  "97bb47a6faad6730040d5eabc17ddaf833a9e743",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/atoms/icon-button/icon-button.component.css",
+                       "hash":  "2c155ca7fa2fa32dc9a2f2df0355c5cf7c2d06c5",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/atoms/icon-button/icon-button.component.html",
+                       "hash":  "21120017ec9477a0d025c12693386ae5e8471523",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/atoms/icon-button/icon-button.component.spec.ts",
+                       "hash":  "abcb9069d467b98be59e9e30538f6899c3aa7cdd",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/atoms/icon-button/icon-button.component.ts",
+                       "hash":  "44d381cd7197242d7bba98293236cacc7f0ea858",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/atoms/input/input.component.spec.ts",
+                       "hash":  "2d10d561c7599eb16cb9c0640920a3509289e863",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/atoms/select/select-variant.spec.ts",
+                       "hash":  "6610164030e04bf1fcd156e2b74219e728dc307f",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/atoms/textarea/textarea.component.spec.ts",
+                       "hash":  "f093a2661e0798e8dae84e7679bf794805ce6cac",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/index.ts",
+                       "hash":  "09b5fedbef1c2b069f735bf79baf6e7a8d8c7f40",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/molecules/dropdown/dropdown-variant.spec.ts",
+                       "hash":  "de0b017ae048ae14191d650cd68945ee46cd9adf",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/molecules/modal/modal-container.component.css",
+                       "hash":  "22d81e32dc71459113619cb47585136cd21d8dc1",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/molecules/modal/modal-container.component.ts",
+                       "hash":  "e3dab43a1d745b915eee7745a9f2fec671e365fc",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/molecules/modal/modal.component.css",
+                       "hash":  "2b274a21d84c152f55fc8febbca289930e325339",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/molecules/modal/modal.component.ts",
+                       "hash":  "7b7a3b3413ff1b85caec9fd927fbf33a1e623032",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/molecules/popup/popup-container.component.css",
+                       "hash":  "2e4bbda3da637ef8723127e3b4c6f54714a8e014",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/molecules/popup/popup-container.component.ts",
+                       "hash":  "a15308db55801369c52c2255ea032cfdb68ef4b6",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css",
+                       "hash":  "6444a5f70d2c3c9c641becbe721c876ca2ead25d",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.spec.ts",
+                       "hash":  "f5dc57de66f7b042c52723789535693f6445c0f7",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts",
+                       "hash":  "6baae121fa355ce96b721952ba63c5937bb206d4",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/organisms/topbar/topbar.component.css",
+                       "hash":  "030c37b3cc7b5b3516938698e4bab95a9ac14c91",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/organisms/topbar/topbar.component.html",
+                       "hash":  "ea65c91ed0033175806b8248f00c7fe23b946109",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/organisms/topbar/topbar.component.spec.ts",
+                       "hash":  "9484c237c7bd89005510b33733954b2b3eab3f3c",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/organisms/topbar/topbar.component.ts",
+                       "hash":  "8a78b501303afa9fde1b33c43bb68e17a46ef256",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/templates/auth-layout/auth-layout.component.css",
+                       "hash":  "529c26ecf72efcb0e94f18837a12751d30e367dc",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/app/shared/ui/templates/auth-layout/auth-layout.component.html",
+                       "hash":  "3e0c3b8d7fb11a4c144f23e1b90dc3a94a3842a6",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/blueprints/dialogs-page/dialogs-page.component.css",
+                       "hash":  "80341c3778cda13f0f81cb24bccb46c8c3584b66",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/blueprints/dialogs-page/dialogs-page.component.html",
+                       "hash":  "f5cdffd15d0f1c643a98926e31d66b13f961a1b4",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/blueprints/dialogs-page/dialogs-page.component.ts",
+                       "hash":  "2e6b2fc83200baf3d4a0887b0b34f1e1cb6b1e2e",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/blueprints/error-pages/error-pages.component.ts",
+                       "hash":  "af214819b7005113e8d68f1c063fbdbd3d7f8b39",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/blueprints/settings-page/settings-page.component.ts",
+                       "hash":  "1c89bd5849d71a576996a194368573dc71d8c51f",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/stories/ui-icon-button.stories.ts",
+                       "hash":  "587c1a3306af8e37068c61a728be5a7fd14dcce3",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/stories/ui-scroll-overlay.stories.ts",
+                       "hash":  "23dcd71f10cbb06e4a08014ad37f744eb999c0e1",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "src/styles/themes/_utilities.css",
+                       "hash":  "bbe23fca4cc966fdb2c4b7a43ac3f488dd8544e1",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "tools/check-atomic-blueprints.js",
+                       "hash":  "28ca71e0716033f0c8132fffe7545110ccf55f13",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "tools/create-project.js",
+                       "hash":  "4226a838f2d26f8fd57e92abed0aa95a7e1a3d32",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  "tools/test-atomic-blueprints.js",
+                       "hash":  "09701cf497770dc54cb980d57ee6e9950b073afe",
+                       "estado":  "modificado"
+                   },
+                   {
+                       "ruta":  ".agent/roadmaps/ROADMAP_ATOMIC-20261026-001_desbloqueo_pruebas.md",
+                       "hash":  "e8d3aae5c1f0c02001aa5b493e03f180aaca4c68",
+                       "estado":  "sin rastrear"
+                   },
+                   {
+                       "ruta":  ".agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md",
+                       "hash":  "cc5f13f9526428a6131f84cf7f0159a027111c4e",
+                       "estado":  "sin rastrear"
+                   },
+                   {
+                       "ruta":  ".agents/desviaciones/DESVIACION-ATOMIC-20261026-001-001.md",
+                       "hash":  "1b53911b1c0d360e1c1a14d5e23274522580b043",
+                       "estado":  "sin rastrear"
+                   },
+                   {
+                       "ruta":  "catalog/components/icon-button.json",
+                       "hash":  "5ff3ef4d20dc108bfed53f2f5ba96a3d708fd65f",
+                       "estado":  "sin rastrear"
+                   }
+               ]
+}

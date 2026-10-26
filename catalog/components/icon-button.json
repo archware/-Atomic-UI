@@ -1,0 +1,206 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "icon-button",
+  "layer": "atom",
+  "selector": "app-icon-button",
+  "export": "IconButtonComponent",
+  "source": "src/app/shared/ui/atoms/icon-button/icon-button.component.ts",
+  "relatedExports": ["IconButtonVariant", "IconButtonAnimation", "IconButtonSize"],
+  "purpose": "Botón de icono compacto para acciones puntuales, barras superiores, avatares y controles canónicos de cierre (close, close-ghost, close-soft y hanging-close).",
+  "variants": [
+    {
+      "name": "variant",
+      "values": [
+        {
+          "value": "default",
+          "default": true,
+          "meaning": "Botón de icono con borde sutil y sombra ligera para acciones secundarias o de cabecera."
+        },
+        {
+          "value": "ghost",
+          "meaning": "Variante sin borde ni fondo para acciones discretas sobre superficies limpias."
+        },
+        {
+          "value": "avatar",
+          "meaning": "Variante circular con gradiente primario para disparadores de perfil o cuenta."
+        },
+        {
+          "value": "close",
+          "meaning": "Aspa interna neutra en reposo que pinta círculo sólido danger en hover (uso canónico en cabeceras de Modal y Side-Panel)."
+        },
+        {
+          "value": "close-ghost",
+          "meaning": "Aspa neutra sin fondo en reposo ni en hover; al pasar el cursor solo colorea la X en rojo (--danger-color) manteniendo fondo y borde transparentes."
+        },
+        {
+          "value": "close-soft",
+          "meaning": "Círculo suave danger en reposo (--danger-color-lighter) que pasa a sólido danger en hover para retirar ítems en listas o colas."
+        },
+        {
+          "value": "hanging-close",
+          "meaning": "Botón de cierre circular flotante posicionado en la esquina superior derecha externa de Popups."
+        }
+      ]
+    },
+    {
+      "name": "size",
+      "values": [
+        { "value": "sm", "meaning": "Tamaño compacto (--control-height-sm)." },
+        { "value": "md", "default": true, "meaning": "Tamaño estándar (--control-height)." },
+        { "value": "lg", "meaning": "Tamaño amplio (--control-height-lg)." }
+      ]
+    },
+    {
+      "name": "animation",
+      "values": [
+        {
+          "value": "none",
+          "default": true,
+          "meaning": "Sin rotación ni escalado del icono en hover (valor por defecto canónico)."
+        },
+        {
+          "value": "grow",
+          "meaning": "Escalado suave del icono al pasar el cursor."
+        },
+        {
+          "value": "rotate",
+          "meaning": "Giro explícito de 180 grados reservado solo cuando se solicita expresamente."
+        },
+        {
+          "value": "custom",
+          "meaning": "Delega la transición a clases personalizadas del icono proyectado."
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "name": "variant",
+      "type": "IconButtonVariant",
+      "default": "default",
+      "meaning": "Variante visual y semántica del botón de icono."
+    },
+    {
+      "name": "size",
+      "type": "IconButtonSize",
+      "default": "md",
+      "meaning": "Escala de tamaño del botón (sm, md, lg)."
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "default": "",
+      "meaning": "Clase Font Awesome (completa o abreviada) cuando no se proyecta contenido ni se usa una variante de cierre."
+    },
+    {
+      "name": "animation",
+      "type": "IconButtonAnimation",
+      "default": "none",
+      "meaning": "Comportamiento de animación del icono al pasar el cursor."
+    },
+    {
+      "name": "tooltip",
+      "type": "string",
+      "default": "",
+      "meaning": "Texto descriptivo para el atributo nativo title y respaldo de etiqueta accesible."
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "default": "",
+      "meaning": "Alias del atributo nativo title cuando no se define tooltip."
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "default": "",
+      "meaning": "Nombre accesible explícito del botón; en variantes de cierre adopta 'Cerrar' por defecto."
+    },
+    {
+      "name": "badge",
+      "type": "number",
+      "default": 0,
+      "meaning": "Contador numérico superpuesto en la esquina superior derecha cuando es mayor que cero."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Deshabilita la interacción y bloquea la emisión de clicked."
+    }
+  ],
+  "outputs": [
+    {
+      "name": "clicked",
+      "type": "MouseEvent",
+      "meaning": "Evento emitido al pulsar el botón cuando no está deshabilitado."
+    }
+  ],
+  "slots": [
+    {
+      "name": "default",
+      "type": "ng-content",
+      "meaning": "Icono personalizado o SVG proyectado cuando no se usa el input icon ni una variante de cierre."
+    }
+  ],
+  "states": [
+    { "name": "idle", "meaning": "Estado base en reposo según la variante seleccionada." },
+    { "name": "hover", "meaning": "Realce visual al pasar el cursor según la variante (fondo sólido danger en close/close-soft/hanging-close; solo aspa roja sin fondo en close-ghost)." },
+    { "name": "active", "meaning": "Compresión ligera al presionar el botón." },
+    { "name": "focus-visible", "meaning": "Anillo de foco visible (--primary-color en variantes generales y --danger-color en variantes de cierre)." },
+    { "name": "disabled", "meaning": "Sin interacción y con cursor not-allowed." },
+    { "name": "badged", "meaning": "Muestra insignia numérica cuando badge > 0." }
+  ],
+  "a11y": [
+    "Renderiza un elemento nativo <button type=\"button\"> con soporte completo de teclado y foco.",
+    "Resuelve automáticamente aria-label=\"Cerrar\" y title=\"Cerrar\" en las variantes close, close-ghost, close-soft y hanging-close cuando no se proporciona etiqueta explícita.",
+    "Marca el icono interno y el aspa CSS (.close.blades.heavy) con aria-hidden=\"true\" para no duplicar lectura en tecnologías de asistencia."
+  ],
+  "responsive": [
+    "Mantiene dimensiones cuadradas gobernadas por --control-height-sm, --control-height y --control-height-lg.",
+    "La variante hanging-close posiciona el host de forma absoluta en la esquina superior derecha del contenedor relativo padre."
+  ],
+  "tokens": [
+    "--control-height",
+    "--control-height-sm",
+    "--control-height-lg",
+    "--border-color",
+    "--radius-sm",
+    "--radius-md",
+    "--radius-lg",
+    "--radius-full",
+    "--shadow-xs",
+    "--shadow-sm",
+    "--shadow-md",
+    "--shadow-glow-primary",
+    "--text-color",
+    "--text-color-secondary",
+    "--text-color-on-primary",
+    "--surface-background",
+    "--surface-hover",
+    "--primary-color",
+    "--primary-color-dark",
+    "--danger-color",
+    "--danger-color-dark",
+    "--danger-color-light",
+    "--danger-color-lighter",
+    "--danger-color-text",
+    "--font-weight-emphasis"
+  ],
+  "story": {
+    "path": "src/stories/ui-icon-button.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/icon-button/icon-button.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Las variantes de cierre (close, close-ghost, close-soft y hanging-close) renderizan el aspa geométrica canónica (.close.blades.heavy) sin requerir iconos externos."
+    ]
+  },
+  "canonicalFor": ["icon-action", "close-action", "dialog-close", "item-remove-action"]
+}

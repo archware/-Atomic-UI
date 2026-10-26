@@ -1164,8 +1164,15 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
     this.verticalScroller.style.setProperty('--so-body-height', value);
     this.verticalScroller.style.maxHeight = value;
-    this.verticalScroller.style.height = value;
-    this.verticalScroller.style.minHeight = value;
+    const isTableScroller =
+      this.verticalScroller.nodeName === 'TBODY' || this.hostEl.hasAttribute('data-so-table');
+    if (isTableScroller) {
+      this.verticalScroller.style.height = value;
+      this.verticalScroller.style.minHeight = value;
+    } else {
+      this.verticalScroller.style.height = 'auto';
+      this.verticalScroller.style.minHeight = '0px';
+    }
   }
 
   private updateScrollAreaOverflow(): void {

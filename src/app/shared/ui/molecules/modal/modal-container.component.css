@@ -75,9 +75,14 @@
 
 
 /* Body */
+.modal-body-scroll {
+  flex: 1;
+  min-height: 0;
+  max-height: 65vh;
+}
+
 .modal-body {
   padding: var(--space-5);
-  overflow-y: auto;
 }
 
 .modal-message {

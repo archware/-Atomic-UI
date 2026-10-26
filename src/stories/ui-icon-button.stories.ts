@@ -8,7 +8,7 @@ const meta: Meta<IconButtonComponent> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'ghost', 'avatar', 'close', 'close-soft', 'hanging-close'],
+      options: ['default', 'ghost', 'avatar', 'close', 'close-ghost', 'close-soft', 'hanging-close'],
       description: 'Visual variant of the icon button',
     },
     size: {
@@ -61,6 +61,18 @@ export const Disabled: Story = {
   }),
 };
 
+export const CloseGhost: Story = {
+  render: () => ({
+    template: `
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <app-icon-button variant="close-ghost" size="sm" tooltip="Cerrar sin fondo (sm)" ariaLabel="Cerrar sin fondo compacto" />
+        <app-icon-button variant="close-ghost" size="md" tooltip="Cerrar sin fondo (md)" ariaLabel="Cerrar sin fondo estándar" />
+        <app-icon-button variant="close-ghost" size="lg" tooltip="Cerrar sin fondo (lg)" ariaLabel="Cerrar sin fondo grande" />
+      </div>
+    `,
+  }),
+};
+
 export const CloseSoft: Story = {
   render: () => ({
     template: `
@@ -82,6 +94,7 @@ export const AllVariants: Story = {
           <app-icon-button variant="ghost" icon="fa-solid fa-magnifying-glass-plus" ariaLabel="Ghost" />
           <app-icon-button variant="avatar" icon="fa-solid fa-user" ariaLabel="Avatar" />
           <app-icon-button variant="close" ariaLabel="Close neutro" />
+          <app-icon-button variant="close-ghost" ariaLabel="Close-ghost solo X roja" />
           <app-icon-button variant="close-soft" ariaLabel="Close-soft peligro suave" />
           <div style="position: relative; display: inline-flex; padding: 0.75rem 1.25rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm);">
             <span>Popup</span>

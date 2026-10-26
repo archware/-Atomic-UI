@@ -63,7 +63,12 @@ describe('DropdownComponent - etiqueta y modos', () => {
     await fixture.whenStable();
     expect(elevada(raiz)).toBe(true);
     expect(marcador(raiz)?.textContent?.trim()).toBe('Elija una letra');
-    expect(disparador(raiz).getAttribute('aria-labelledby')).toBe(flotante(raiz)?.id);
+    const etiqueta = flotante(raiz);
+    expect(etiqueta).not.toBeNull();
+    if (etiqueta === null) {
+      throw new Error('Se esperaba la etiqueta flotante');
+    }
+    expect(disparador(raiz).getAttribute('aria-labelledby')).toBe(etiqueta.id);
   });
 
   it('floating-value: abrir vacio no sube la etiqueta; con valor si', async () => {

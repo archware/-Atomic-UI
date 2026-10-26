@@ -518,4 +518,37 @@ describe('ScrollOverlayComponent', () => {
 
     expect(getComputedStyle(innerVerticalRail).display).toBe('none');
   });
+
+  it('shows active overflow rails at resting opacity and elevates to full opacity while scrolling', async () => {
+    const fixture = TestBed.createComponent(ScrollOverlayComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const viewport = host.querySelector('.so-scroll-area') as HTMLElement;
+    const verticalRail = host.querySelector('.so-scrollbar-y') as HTMLElement;
+    setScrollMetrics(viewport, {
+      clientHeight: 180,
+      clientWidth: 320,
+      scrollHeight: 640,
+      scrollWidth: 320,
+    });
+    setRect(host, 320, 180);
+    setRect(viewport, 320, 180);
+
+    const component = fixture.componentInstance as unknown as { syncGeometry: () => void };
+    component.syncGeometry();
+    host.dispatchEvent(new MouseEvent('mouseleave'));
+
+    expect(host.classList).toContain('so-has-overflow-y');
+    expect(host.classList).not.toContain('so-scrolling');
+    const restingOpacity = getComputedStyle(verticalRail)
+      .opacity.trim()
+      .replace(/^var\(\s*--so-resting-opacity\s*,\s*([^)]+)\)$/, '$1');
+    expect(parseFloat(restingOpacity)).toBeCloseTo(0.68, 2);
+
+    host.dispatchEvent(new MouseEvent('mouseenter'));
+    expect(host.classList).toContain('so-scrolling');
+    expect(parseFloat(getComputedStyle(verticalRail).opacity)).toBeCloseTo(1, 2);
+  });
 });

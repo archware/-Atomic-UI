@@ -18,6 +18,7 @@ import {
   FileInputFile,
   FloatingInputComponent,
   BadgeComponent,
+  ScrollOverlayComponent,
   ModalService,
   PopupService,
   ToastService,
@@ -42,6 +43,7 @@ import {
     FileInputComponent,
     FloatingInputComponent,
     BadgeComponent,
+    ScrollOverlayComponent,
   ],
   templateUrl: './dialogs-page.component.html',
   styleUrl: './dialogs-page.component.css',
@@ -85,6 +87,30 @@ export class DialogsPageComponent {
       type: 'application/pdf',
       file: new File([], 'documento_autorizacion.pdf', { type: 'application/pdf' }),
     },
+    {
+      name: 'resolucion_directoral_084.pdf',
+      size: 512000,
+      type: 'application/pdf',
+      file: new File([], 'resolucion_directoral_084.pdf', { type: 'application/pdf' }),
+    },
+    {
+      name: 'anexo_conformidad_tecnica.pdf',
+      size: 389120,
+      type: 'application/pdf',
+      file: new File([], 'anexo_conformidad_tecnica.pdf', { type: 'application/pdf' }),
+    },
+    {
+      name: 'acta_recepcion_firmada.pdf',
+      size: 614400,
+      type: 'application/pdf',
+      file: new File([], 'acta_recepcion_firmada.pdf', { type: 'application/pdf' }),
+    },
+    {
+      name: 'constancia_verificacion.pdf',
+      size: 194560,
+      type: 'application/pdf',
+      file: new File([], 'constancia_verificacion.pdf', { type: 'application/pdf' }),
+    },
   ]);
 
   // Archivos interactivos de demostracion del patron de fila PDF (Seccion 4)
@@ -100,6 +126,30 @@ export class DialogsPageComponent {
       name: 'consentimiento_informado.pdf',
       meta: '3 paginas · 420 KB',
       pages: '1-3',
+    },
+    {
+      id: 'pdf-3',
+      name: 'epicrisis_hospitalaria.pdf',
+      meta: '6 paginas · 890 KB',
+      pages: '1-6',
+    },
+    {
+      id: 'pdf-4',
+      name: 'orden_quirurgica_firmada.pdf',
+      meta: '4 paginas · 640 KB',
+      pages: '1-4',
+    },
+    {
+      id: 'pdf-5',
+      name: 'informe_radiologico_torax.pdf',
+      meta: '8 paginas · 2.1 MB',
+      pages: '1-2, 5-8',
+    },
+    {
+      id: 'pdf-6',
+      name: 'alta_medica_resumen.pdf',
+      meta: '2 paginas · 310 KB',
+      pages: '1-2',
     },
   ]);
 
@@ -180,8 +230,32 @@ export class DialogsPageComponent {
         type: 'application/pdf',
         file: new File([], 'documento_autorizacion.pdf', { type: 'application/pdf' }),
       },
+      {
+        name: 'resolucion_directoral_084.pdf',
+        size: 512000,
+        type: 'application/pdf',
+        file: new File([], 'resolucion_directoral_084.pdf', { type: 'application/pdf' }),
+      },
+      {
+        name: 'anexo_conformidad_tecnica.pdf',
+        size: 389120,
+        type: 'application/pdf',
+        file: new File([], 'anexo_conformidad_tecnica.pdf', { type: 'application/pdf' }),
+      },
+      {
+        name: 'acta_recepcion_firmada.pdf',
+        size: 614400,
+        type: 'application/pdf',
+        file: new File([], 'acta_recepcion_firmada.pdf', { type: 'application/pdf' }),
+      },
+      {
+        name: 'constancia_verificacion.pdf',
+        size: 194560,
+        type: 'application/pdf',
+        file: new File([], 'constancia_verificacion.pdf', { type: 'application/pdf' }),
+      },
     ]);
-    this.lastInteraction.set('Archivo de muestra restaurado');
+    this.lastInteraction.set('Archivos de muestra restaurados');
   }
 
   onSecondaryCancelAction(): void {
@@ -215,6 +289,30 @@ export class DialogsPageComponent {
         name: 'consentimiento_informado.pdf',
         meta: '3 paginas · 420 KB',
         pages: '1-3',
+      },
+      {
+        id: 'pdf-3',
+        name: 'epicrisis_hospitalaria.pdf',
+        meta: '6 paginas · 890 KB',
+        pages: '1-6',
+      },
+      {
+        id: 'pdf-4',
+        name: 'orden_quirurgica_firmada.pdf',
+        meta: '4 paginas · 640 KB',
+        pages: '1-4',
+      },
+      {
+        id: 'pdf-5',
+        name: 'informe_radiologico_torax.pdf',
+        meta: '8 paginas · 2.1 MB',
+        pages: '1-2, 5-8',
+      },
+      {
+        id: 'pdf-6',
+        name: 'alta_medica_resumen.pdf',
+        meta: '2 paginas · 310 KB',
+        pages: '1-2',
       },
     ]);
     this.lastInteraction.set('Catalogo de acciones: Documentos de demostracion restaurados');

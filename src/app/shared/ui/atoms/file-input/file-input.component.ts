@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-overlay.component';
 
 let fileInputSequence = 0;
 
@@ -43,7 +44,7 @@ export type FileInputVariant = 'standard' | 'dropzone';
 @Component({
   selector: 'app-file-input',
   standalone: true,
-  imports: [],
+  imports: [ScrollOverlayComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: FileInputComponent, multi: true }],
   templateUrl: './file-input.component.html',
@@ -78,6 +79,7 @@ export class FileInputComponent implements ControlValueAccessor {
   readonly clearAllLabel = input('Limpiar lista');
   readonly itemActionIcon = input('');
   readonly itemActionLabel = input('Acción sobre archivo');
+  readonly maxListHeight = input<number | string>(210);
 
   readonly filesChange = output<FileInputFile[]>();
   readonly cleared = output<void>();

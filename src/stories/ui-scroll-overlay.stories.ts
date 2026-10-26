@@ -18,6 +18,39 @@ const meta: Meta<ScrollOverlayComponent> = {
 export default meta;
 type Story = StoryObj<ScrollOverlayComponent>;
 
+export const Default: Story = {
+  args: {
+    maxBodyHeight: 300,
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+      <app-scroll-overlay [maxBodyHeight]="maxBodyHeight">
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background: var(--surface-section);">
+              <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--primary-color);">ID</th>
+              <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--primary-color);">Nombre</th>
+              <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--primary-color);">Email</th>
+              <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--primary-color);">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
+              <tr>
+                <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">{{i}}</td>
+                <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">Usuario {{i}}</td>
+                <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">usuario{{i}}@ejemplo.com</td>
+                <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">Activo</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </app-scroll-overlay>
+    `,
+  }),
+};
+
 export const NativeViewport: Story = {
   args: {
     maxBodyHeight: 220,
@@ -55,39 +88,6 @@ export const NativeViewport: Story = {
     await expect(viewport.getAttribute('data-so-native-scrollbar')).toBe('true');
     await expect(root.classList).toContain('so-native-scrollbars');
   },
-};
-
-export const Default: Story = {
-  args: {
-    maxBodyHeight: 300,
-  },
-  render: (args) => ({
-    props: args,
-    template: `
-      <app-scroll-overlay [maxBodyHeight]="maxBodyHeight">
-        <table style="width: 100%; border-collapse: collapse;">
-          <thead>
-            <tr style="background: var(--surface-section);">
-              <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--primary-color);">ID</th>
-              <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--primary-color);">Nombre</th>
-              <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--primary-color);">Email</th>
-              <th style="padding: 0.75rem; text-align: left; border-bottom: 2px solid var(--primary-color);">Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
-              <tr>
-                <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">{{i}}</td>
-                <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">Usuario {{i}}</td>
-                <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">usuario{{i}}@ejemplo.com</td>
-                <td style="padding: 0.75rem; border-bottom: 1px solid var(--border-color);">Activo</td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </app-scroll-overlay>
-    `,
-  }),
 };
 
 export const WithColumnTemplate: Story = {

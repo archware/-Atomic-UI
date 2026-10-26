@@ -2,11 +2,11 @@
 title: "Continuidad para agentes de Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-10-25"
+last_updated: "2026-10-26"
 document_type: "manual de continuidad"
 status: "vigente"
-version: "1.5.0"
-change_id: "DOC-20261025-001"
+version: "1.5.3"
+change_id: "ATOMIC-20261026-003"
 canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
@@ -65,7 +65,7 @@ El paquete continúa en la versión `5.22.0` y la hoja [`ROADMAP_20260823_atomic
 | Runtime para agentes | [`docs/ATOMIC_UI_AGENT_RUNTIME.md`](./ATOMIC_UI_AGENT_RUNTIME.md) |
 | Catálogo y Fuente UI | [`catalog/`](../catalog/) y [`src/app/shared/ui/`](../src/app/shared/ui/) |
 | Tokens, Biblioteca y Distribución | [`src/styles/`](../src/styles/), [`projects/atomic-ui/`](../projects/atomic-ui/) y [`distribution/`](../distribution/) |
-| Roadmaps y Bitácora histórica | [`.agents/roadmaps/`](../.agents/roadmaps/) y [`BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md`](./BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md) |
+| Roadmaps y Bitácora histórica | [`.agents/roadmaps/`](../.agents/roadmaps/), [`ROADMAP_20260823_continuidad_documental_agentes.md`](../.agents/roadmaps/ROADMAP_20260823_continuidad_documental_agentes.md) (`ECO-20260823-003`) y [`BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md`](./BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md) |
 
 ## Compuertas, protocolo de cambio, definición de terminado y rollback
 
@@ -93,14 +93,34 @@ git status --short --branch
 
 > Los cortes históricos anteriores a esta ventana se conservan íntegros en [`BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md`](./BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md).
 
-### 1. Unidades CLT-20261024-003 y ATOMIC-20261024-003 — reconciliación CVA en Input y procedencia de acciones
+### 1. Unidad ATOMIC-20261026-003 — tipografía local canónica Quicksand y Open Sans
 
-`InputComponent` reconcilia valores nativos en `change`, `focus` y `blur` cuando el DOM cambia sin disparar `input`, manteniendo la paridad exacta con la copia gobernada de `ventas-cxc`. Asimismo, se consolida la historia `Basic` de `ActionGroup`, se actualiza `distribution/atomic-source-manifest.json` en el commit local autorizado `3e76966493d4b59273655b7df18c1084fa044b9b` y se acredita `node scripts/check-atomic-provenance.mjs` en `ventas-cxc` con 0 violaciones (`política 1.2.3, 95 componentes y 5 servicios con procedencia`). Véanse los roadmaps [CLT-20261024-003](../../.agent/roadmaps/ROADMAP_CLT-20261024-003_sincronizacion_formulario_clientes.md) y [ATOMIC-20261024-003](../../.agent/roadmaps/ROADMAP_ATOMIC-20261024-003_cierre_procedencia_acciones.md).
+Se empaquetan en `src/styles/themes/fonts/` los archivos `.woff2` locales de `Open Sans` (`400`, `500`, `600`, `700` en `latin` y `latin-ext`) y `Quicksand` (`400`, `500`, `600`, `700` completo), declarados en `src/styles/themes/_fonts.css` e importados al inicio de `src/styles/themes/index.css`. Se definen `--font-family-base`, `--font-family-heading` y `--font-family-mono` en `_tokens-primitives.css`, se corrige `--table-font-family: var(--font-family-base)` en `_tokens-components.css` y se enlaza `--font-family-heading` en encabezados globales (`h1`–`h6`), `text.component.css`, `page-header.scss`, `pagina-crud.scss`, `pagina-crud-accordion.scss`, `modal.component.css`, `form-dialog.scss` y `kpi-card.component.css`, así como en el puente Dart (`scripts/emit-dart-tokens.mjs`). Consultar el [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261026-001_tipografia_local_quicksand_open_sans.md).
 
-### 2. Unidad ACC-20261022-001 — estándar de acciones de catálogo
+### 2. Unidad ATOMIC-20261026-002 — corrección editorial y referencia material
 
-La fuente incorpora `ActionItem.isMenuOnly` y conserva `ActionGroup.maxVisible` como límite genérico de acciones directas. `PaginaCrud` aplica la regla física del catálogo: Ver, Editar y Más acciones. La papelera de baja y el cambio de estado quedan en el menú; una tercera directa contextual solo se acepta con `accionDirectaContextual`, id existente, justificación y evidencia no vacías, y nunca para semánticas destructivas. Evidencia, validación y rollback en el [roadmap ACC](../../.agent/roadmaps/ROADMAP_ACC-20261022-001_estandar-acciones-catalogo.md).
+Se corrigen las 151 ocurrencias de prosa que producen los 150 hallazgos
+ortográficos de los dos registros. Los identificadores ASCII, bloques de
+código, versiones y anclas históricas se conservan. La referencia visual se
+califica como maestra §3.1; la desviación original sigue abierta y declara
+`por-clasificar` para su atribución operativa a Orquestación. El control de
+referencias del directorio pasa; el control ortográfico conserva código 1
+por un falso positivo en el identificador HTML ASCII de la primera ancla.
+La [evidencia y checklist](../.agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md)
+conservan las salidas originales, el juicio independiente y la limitación.
+No se repiten las 70 pruebas válidas del corte anterior ni se modifica
+producto, dependencias, manifiestos o trabajo de otras sesiones.
 
-### 3. Unidad Select2 ATOMIC-20261020-002
+### 3. Unidad ATOMIC-20261026-001 — pruebas de accesibilidad
 
-La corrección de `Select2` se limita a su capa flotante, pruebas y catálogo. No se deben modificar los contenedores de formularios para compensar el recorte ni sincronizar masivamente el ADN del consumidor. El estado comprobado, límites del ensayo y rollback viven en el [roadmap de Select2](../.agent/roadmaps/ROADMAP_ATOMIC-20261020-002_select2_capa_flotante.md).
+Se corrigen seis expectativas en cuatro especificaciones mediante presencia
+obligatoria y estrechamiento del nodo, conservando los casos existentes. La
+copia aislada del HEAD `dd93734a3eea40b87d46b4990976231fe2d6ca19` más las cuatro
+pruebas propias pasa 70/70 casos de Input, Select, Textarea, Dropdown,
+ActionGroup y PaginaCrud. Los otros 802 archivos conservan los bytes de la copia inicial; el cotejo con
+blobs Git normaliza CRLF. Se conserva el
+lockfile de las dependencias completas existentes. No se cambian componentes,
+configuración ni dependencias. El [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261026-001_desbloqueo_pruebas.md)
+registra revisión independiente, custodia y límites del corte; no acredita el
+árbol móvil, paquete, gobernanza o procedencia actuales. El corte Select2 se
+conserva íntegro en la [bitácora histórica](BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md).

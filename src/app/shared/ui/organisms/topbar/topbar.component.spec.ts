@@ -72,4 +72,27 @@ describe('TopbarComponent', () => {
 
     expect(notificationClick).toHaveBeenCalledTimes(1);
   });
+
+  it('wraps the notification list inside app-scroll-overlay with maxBodyHeight 360', () => {
+    fixture.componentRef.setInput('showLanguageSwitcher', false);
+    fixture.componentRef.setInput('showNotifications', true);
+    fixture.componentRef.setInput('showHomeButton', false);
+    fixture.componentRef.setInput('showSidebarToggle', true);
+    fixture.componentRef.setInput('notifications', [
+      { id: 'n1', title: 'Alerta 1', message: 'Detalle', time: 'Hace 5m', isRead: false },
+    ]);
+    fixture.detectChanges();
+
+    const buttons = fixture.nativeElement.querySelectorAll('app-icon-button button');
+    (buttons[1] as HTMLButtonElement).click();
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+    const overlay = element.querySelector('.notification-dropdown app-scroll-overlay.so-block') as HTMLElement | null;
+    const list = overlay?.querySelector('.notification-list') as HTMLElement | null;
+
+    expect(overlay).not.toBeNull();
+    expect(overlay?.style.getPropertyValue('--so-max-height')).toBe('360px');
+    expect(list).not.toBeNull();
+  });
 });

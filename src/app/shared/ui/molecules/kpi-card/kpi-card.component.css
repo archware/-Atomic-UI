@@ -66,6 +66,7 @@
 .kpi-card__title {
   margin: 0;
   color: var(--text-color-secondary);
+  font-family: var(--font-family-heading);
   font-size: var(--text-xs);
   font-weight: var(--font-weight-title);
   letter-spacing: 0.04em;
@@ -98,6 +99,7 @@
 .kpi-card__value {
   margin: 0;
   color: var(--text-color);
+  font-family: var(--font-family-heading);
   font-size: 1.35rem;
   font-variant-numeric: tabular-nums;
   font-weight: var(--font-weight-title);

@@ -1,0 +1,1239 @@
+{
+    "version":  2,
+    "raiz":  "C:\\Users\\cotaha\\source\\repos",
+    "fecha":  "2026-10-26T13:54:14.6630610-05:00",
+    "repos":  {
+                  ".":  {
+                            "estado":  "raiz",
+                            "rama":  "main",
+                            "head":  "46b9a9d7f4cb4f75f98aa6049465720dd1d3c5f3",
+                            "sinConfirmar":  {
+                                                 ".agent/INDICE_DOCUMENTAL.md":  " M:81fd0c7bf777fa91634659deb477b3ddb54a4f6e",
+                                                 ".agent/doctrinas/DOCTRINA_ESCRITORIO.md":  " M:b71938f85cc2982b28a2947284eba752f80d986e",
+                                                 ".agent/doctrinas/DOCTRINA_MAESTRA_UNIFICADA.md":  " M:c68f1b995999b075f52e32538d92635ed282eebe",
+                                                 ".agent/doctrinas/DOCTRINA_ORQUESTACION_AGENTES.md":  " M:ad5692eb1affe79564bd723b8272d661e278450c",
+                                                 ".agent/guias/GUIA_RAPIDA_AGENTES_BAJO_CONTEXTO.md":  " M:353fba89d4365fc9fde6ad1a703ba43f88a77644",
+                                                 ".agent/registros/CHANGELOG.md":  " M:1ab67692ad61ad548b101f739ba3b37c57f64c73",
+                                                 ".agent/registros/LESSONS_LEARNED.md":  " M:90fa51c819e85e85f73d39b58d56e36040918ef2",
+                                                 ".agent/roadmaps/ROADMAP_ATOMIC-20261024-003_cierre_procedencia_acciones.md":  " M:ddf0656bbd998ea6c56dd80670eb73f36447e4b9",
+                                                 ".agent/roadmaps/ROADMAP_CAT-20261020-002_procedencia_atomic_categorias.md":  " M:067fad74a75ecc2ccd6c5ace7bc91b2cc86c0e8e",
+                                                 ".agent/roadmaps/ROADMAP_CLT-20261024-001_remediacion_clientes_y_catalogos.md":  " M:e064adc2982aca1d99690ad46fc85ed4fab68499",
+                                                 ".agent/roadmaps/ROADMAP_ORQ-20261024-002_reparacion_compuertas_atomic.md":  " M:81df4f0bb007f6dfc44fab267bf1a813341a6973",
+                                                 ".agent/skills/Frontend_Atomic_chasis-guidelines/SKILL.md":  " M:abc2cf95d2c1d2444418fdd272bb6cca1637a789",
+                                                 ".agent/skills/Frontend_Atomic_create-crud-page/SKILL.md":  " M:4584d601a8ccf33bc3f7bbc9717c4ecf7f90af58",
+                                                 ".agent/skills/Frontend_Atomic_ui-evolution-doctrine/SKILL.md":  " M:57570aa306be9cc3e3c7e38d30ef7c7b2fc13ecf",
+                                                 ".agent/skills/Frontend_Barracuda_bootstrap-project/SKILL.md":  " M:a6c4119decaa33738d150cb714a7403faef52de6",
+                                                 ".agents/AGENTS.md":  " M:4085dd66c2c4947805e085e2fd16f9dff76f3a8e",
+                                                 ".agents/scripts/verificar-adn-frontend.ps1":  " M:bf112978dad7270a20ebf2766ef5b0b18fe21925",
+                                                 ".agents/skills/atomic-scaffolding/SKILL.md":  " M:a774cd45f4299cbf33839b10d0f13d376fb3c089",
+                                                 "AGENTS.md":  " M:898b9090ba930a42ef6e3ec620d03319a713a9ae",
+                                                 "citas-medicas-back":  " M:DIRECTORIO",
+                                                 "citas-medicas-web":  " M:DIRECTORIO",
+                                                 "demo-chasis-front":  " M:DIRECTORIO",
+                                                 "ventas-cxc/.agent/roadmaps/ROADMAP_CAT-20261020-002_procedencia_atomic_categorias.md":  " M:4ae8dbea42dddaf1b240747636e487602e0f7693",
+                                                 "ventas-cxc/docs/atomic-provenance.json":  " M:1a7a02c85ef378c25aaba485e27977d1c3c890a3",
+                                                 "ventas-cxc/src/app/core/api/functions.ts":  " M:2836b05ed6f429a336c2837f74abde7719d44040",
+                                                 "ventas-cxc/src/app/features/abonos/abonos.facade.spec.ts":  " M:c497ca0818c4e95e68efc562def47adead1f1983",
+                                                 "ventas-cxc/src/app/features/abonos/abonos.facade.ts":  " M:e1bfa6958c25b47537459b04ffc08b0d52dd335d",
+                                                 "ventas-cxc/src/app/features/clientes/clientes.facade.spec.ts":  " M:ade8e279438c13e5295d9c35db058f897276b1b2",
+                                                 "ventas-cxc/src/app/features/clientes/clientes.facade.ts":  " M:16c9667057d4380c45c09a592b25034fad7f1322",
+                                                 "ventas-cxc/src/app/features/clientes/clientes.pagina.spec.ts":  " M:614bb820631bca30fadbe39227dde74b00b1abad",
+                                                 "ventas-cxc/src/app/features/clientes/clientes.pagina.ts":  " M:8d2c8d84c45c539864de29e55c09ba706cdf38fc",
+                                                 "ventas-cxc/src/app/features/cobranza/cobranza.facade.spec.ts":  " M:f191a1abd98920ef6d7ca2f8b1504f5f0bcd8599",
+                                                 "ventas-cxc/src/app/features/cobranza/cobranza.facade.ts":  " M:57f623fbb99c288db562baefc8105386dc6f0c02",
+                                                 "ventas-cxc/src/app/features/cobranza/cobranza.pagina.html":  " M:78c401ee50ed6c5c3ab7430bee287359dac45517",
+                                                 "ventas-cxc/src/app/features/cobranza/cobranza.pagina.ts":  " M:2dea1231f81d00510f01b0eb0d8615cc2d8c83eb",
+                                                 "ventas-cxc/src/app/features/cobranza/components/registro-devolucion/registro-devolucion.component.html":  " M:20cdfb304fb31a8db9a257a44b9dbacd6c4758c7",
+                                                 "ventas-cxc/src/app/features/cobranza/components/registro-devolucion/registro-devolucion.component.ts":  " M:824b4776cf8c3a9700ba96239ff7c619abc9db12",
+                                                 "ventas-cxc/src/app/features/ventas/components/impresion-a4/impresion-a4.component.html":  " M:e75ec3f7eedb754633386545208f9ed13b4d32a9",
+                                                 "ventas-cxc/src/app/features/ventas/components/impresion-a4/impresion-a4.component.ts":  " M:f46bf25a501dc052a5b4ba1f37fb821e44767ed7",
+                                                 "ventas-cxc/src/app/features/ventas/components/impresion-ticket/impresion-ticket.component.html":  " M:460d33ebba56530c55147a013ee77ed7723c720a",
+                                                 "ventas-cxc/src/app/features/ventas/components/impresion-ticket/impresion-ticket.component.ts":  " M:8d0461f2ad08a70cfaef15a12adf48b156d8f056",
+                                                 "ventas-cxc/src/app/features/ventas/ventas-contexto.spec.ts":  " M:26375af62fbcc3ef937d5657693399043b5d6842",
+                                                 "ventas-cxc/src/app/features/ventas/ventas-detalle.spec.ts":  " M:ff6106585ab71139fb01383c6dcef91b8667b66b",
+                                                 "ventas-cxc/src/app/features/ventas/ventas-detalle.ts":  " M:7cfa73716a9073116d5738edef0eae0a0600396d",
+                                                 "ventas-cxc/src/app/features/ventas/ventas-editor-integracion.spec.ts":  " M:3adf99e6dbc4be6acff2843d4838c135aa3235bb",
+                                                 "ventas-cxc/src/app/features/ventas/ventas.facade.ts":  " M:ca46ef1fedc5e4ba434dd4bb5a5064f01e73d45b",
+                                                 "ventas-cxc/src/app/features/ventas/ventas.pagina.html":  " M:68ec3ccf43f46e7baf6458ffdeedb436ec268ae6",
+                                                 "ventas-cxc/src/app/features/ventas/ventas.pagina.ts":  " M:c573827ce66677bf2aaf9c0f8f6425e2ea282122",
+                                                 "ventas-cxc/src/app/features/vouchers/vouchers.facade.spec.ts":  " M:45f376522eb3be4ae1c3a10ad2201cecaf8bcd28",
+                                                 "ventas-cxc/src/app/features/vouchers/vouchers.facade.ts":  " M:db9233a174a742306a340092fb5b570da2138c8f",
+                                                 "ventas-cxc/src/app/shared/ui/templates/pagina-crud/pagina-crud.spec.ts":  " M:95d6e4fd856c1f055160859ae73ed25f16ac6834",
+                                                 "ventas-cxc/src/app/shared/ui/templates/pagina-crud/pagina-crud.ts":  " M:f6a051de224a8f895a4a1940267ab2ddcbfc35a3",
+                                                 ".agent/auditorias/DOC-20261026-001/CONCILIACION_PENDIENTES.md":  "??:1071f3c8dd4b63af839a61ef943b1019b9455c2b",
+                                                 ".agent/auditorias/DOC-20261026-001/MANIFIESTO-SHA256.json":  "??:93a7798fcb58739384522c9e2e8a8f7da73928e1",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/atomic/CHANGELOG.md.txt":  "??:885b4e1b1a542ae6770d5b6e6ede92c2aa5bacae",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/atomic/LESSONS_LEARNED.md.txt":  "??:89ae9a505a6d584de091138f2904b3e1065e9102",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/atomic/docs/BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md.txt":  "??:202a745d0eb7552887d0e9899cd4167c58cc0615",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/atomic/docs/CONTINUIDAD_AGENTES.md.txt":  "??:29b3dc5187e3598b3bb5d7a841810b3779de4c46",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/atomic/src/app/shared/ui/atoms/input/input.component.spec.ts.txt":  "??:27eacd31e997fc19c7e4823ab4e69dea331b8b55",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/atomic/src/app/shared/ui/atoms/select/select-variant.spec.ts.txt":  "??:993965dd2d14b9ecf1e2c185f595f549eff7302b",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/atomic/src/app/shared/ui/atoms/textarea/textarea.component.spec.ts.txt":  "??:c71b41e6a869130e261c1af2a308588c2e7f5417",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/atomic/src/app/shared/ui/molecules/dropdown/dropdown-variant.spec.ts.txt":  "??:1f0b6a610ec129648d5f00b032018bd98f8c847e",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/root/.agent/INDICE_DOCUMENTAL.md.txt":  "??:3ed0a1c27e2432918cf9b5a49a4286b6e6be383d",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/root/.agent/registros/CHANGELOG.md.txt":  "??:ea8135b439c0683c048d529e3dacdfee88ccc0f3",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/root/.agent/registros/LESSONS_LEARNED.md.txt":  "??:6c72024e3f7a3fdfd6ee69782b6f7c2d2d9cca7d",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/root/.agent/roadmaps/ROADMAP_ATOMIC-20261024-003_cierre_procedencia_acciones.md.txt":  "??:e41d811119576277213ec532025565eeb243f436",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/root/.agent/roadmaps/ROADMAP_CAT-20261020-002_procedencia_atomic_categorias.md.txt":  "??:738bc3aa00cf550d7ec419cc858b4184918c9202",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/root/.agent/roadmaps/ROADMAP_CLT-20261024-001_remediacion_clientes_y_catalogos.md.txt":  "??:147e38e13064d60f933801d79ae858e31bc5f86f",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/root/.agent/roadmaps/ROADMAP_ORQ-20261024-002_reparacion_compuertas_atomic.md.txt":  "??:81378effa75dadd568156056ded105ca56b57597",
+                                                 ".agent/auditorias/DOC-20261026-001/anteriores/root/ventas-cxc/.agent/roadmaps/ROADMAP_CAT-20261020-002_procedencia_atomic_categorias.md.txt":  "??:f04b23e2970115b944fff975df720587a709efd3",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/baseline-comando.json":  "??:96ffddda814083eb33fbdd2015729a9329ee3f5a",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/baseline-elevado-comando.json":  "??:4b45a4ea4ea1ecede1f940d77feee77824fd4a88",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/baseline-elevado-resultado.json":  "??:02a31ff3a6a28adf7cef294ec838d7c05eb1397a",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/baseline-elevado.stderr.txt":  "??:f08860de560094ccffdb234e42870fb0aed64128",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/baseline-elevado.stdout.txt":  "??:2ab1cb462ac615350574bd1dcaa67d128e4fe3d8",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/baseline-resultado.json":  "??:d4dd80e903ca70f55234e71f7d1c331f87f8ccec",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/baseline.stderr.txt":  "??:3d65aa1191d608e25d60b05a679548b1a86ee6a9",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/baseline.stdout.txt":  "??:9b3ab8375451493b113c6e08e655b15c7dff60c3",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/cambio.diff":  "??:22fd5078ceeda871f98f155cc5d97727f13ce06e",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/codificacion-focal.json":  "??:7b548fbc5c23a2f60b518277c648c3ac997305c2",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/codificacion-focal.log":  "??:243c451e8bc028104bfdac0588f5e16cb9611fef",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/codificacion-previa.json":  "??:3e97823df74aff011127ce31a559dc90d471991d",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/codificacion-previa.log":  "??:9b98742efad184ff0841cbaced11c121385a4007",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/codificacion-propia.json":  "??:c306c0fa88cf76d7021d6ac87a983e3385b777cf",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/codificacion-propia.log":  "??:6f8852cc141e156a29b5610d2e5e318318dbf817",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/colision-antes.json":  "??:4d8f78b72baaa7db9fd386d667c7916324e2c9e7",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/colision-antes.log":  "??:f73831a0f0c2d4a5b201d6a44c5a6a291883ff00",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/comparacion-aislado-head-final.json":  "??:a3ae5ffe4ad0e2ae6ffaf7dbaa1fc4c27fe1b2bc",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/diff-check-final-codigo.txt":  "??:573541ac9702dd3969c9bc859d2b91ec1f7e6e56",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/diff-check-final.stderr.txt":  "??:503b23cb17f9642dcc3785b841124beef46e9cca",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/diff-check-final.stdout.txt":  "??:e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/entorno-inicial.json":  "??:11a1b1b8a26e0dbac2f05e45ff48bd7a25dbabb2",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/final-comando.json":  "??:f8f3ed787288a3d9069933732412da310b1edc8e",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/final-resultado.json":  "??:b316d35f002f9f7d0617a634b7738bac08c1f60f",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/final.stderr.txt":  "??:e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/final.stdout.txt":  "??:49da0671e0b6244e267b8f12a48d5cf9fc28f5d6",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/fragmentos-propios.json":  "??:62735ae4d640e8c153de8641af25ebff87a67856",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/huellas-antes.json":  "??:71a0f91283efada287ceec66251746dbcf538541",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/huellas-dependencias-finales.json":  "??:dab304241b565bbd7d9455395acec9c6dc7feff1",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/huellas-herramientas-finales.json":  "??:5ab228c9a91ec6eaea4c44f1acca2e2638b6eae5",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/huellas-pausa.json":  "??:6bd6cf17a79af5518e6f191f43fed20a3f8900f3",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/huellas-pre-edicion.json":  "??:14134fde47025eb4a7c63f4cafb850075b712a5d",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/huellas-specs-entrega.json":  "??:c7e8597dc48e0fd45983c97eb59572a864efa806",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/lanzado.txt":  "??:e64bf9514ac0e1690b404ae75be261ad9ae8ac6b",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/manifiesto-head.json":  "??:18feca879d548d22bb9a6a15b82379f1c01ed6f9",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/reparto.json":  "??:0e4aca58af5f55280200fe2962d3edcdf7159827",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/sondeo-antes.json":  "??:bce76a4da67c92e1a57569eff6c00ae25016a87d",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/sondeo-antes.log":  "??:6ece580be1e1ed663ea740de32677598f6440148",
+                                                 ".agent/auditorias/DOC-20261026-001/atomic-pruebas/veredicto.json":  "??:4d86113a8bdaceba97fb48971094b32361a9ef5f",
+                                                 ".agent/auditorias/DOC-20261026-001/atribucion-cierre.json":  "??:62ccabb7abd7095dc5eaf691710555abae74bf4f",
+                                                 ".agent/auditorias/DOC-20261026-001/codificacion-roadmaps.json":  "??:fb9d6333438adf5e8fe1bfc4296aefc1b505a0e2",
+                                                 ".agent/auditorias/DOC-20261026-001/codificacion-roadmaps.log":  "??:b978a330415adcadcef5f6ec27794c3e31349d5a",
+                                                 ".agent/auditorias/DOC-20261026-001/coherencia-final.json":  "??:c374be3433ec4e8a9daf26881001a6867893beec",
+                                                 ".agent/auditorias/DOC-20261026-001/coherencia-final.log":  "??:19dc7f6b4f79826085cfdec55332b7af1b186da0",
+                                                 ".agent/auditorias/DOC-20261026-001/coherencia-ultimo.json":  "??:c374be3433ec4e8a9daf26881001a6867893beec",
+                                                 ".agent/auditorias/DOC-20261026-001/coherencia-ultimo.log":  "??:735d15afdf3745874e14e674817db9d177978148",
+                                                 ".agent/auditorias/DOC-20261026-001/colision-antes.json":  "??:a9bc325fcc2741c7fc4b07a1879c202aa5b46bdf",
+                                                 ".agent/auditorias/DOC-20261026-001/colision-antes.log":  "??:8941a8300017d4f78f15255d0306eb7f8deb3808",
+                                                 ".agent/auditorias/DOC-20261026-001/colision-atomic-final.json":  "??:97c72c8503fba34b5a5fcbfba9b385fe2c9a9d14",
+                                                 ".agent/auditorias/DOC-20261026-001/colision-atomic-final.log":  "??:c936eeaf4ca0a03b423e83188b64535e19e3e638",
+                                                 ".agent/auditorias/DOC-20261026-001/colision-incidencia-antes.json":  "??:c4c43a2b8d2199419ce4bd2c13ddf8f2e30db741",
+                                                 ".agent/auditorias/DOC-20261026-001/colision-incidencia-antes.log":  "??:5e4954efb5763e466cddbd42444d6ed434114b3f",
+                                                 ".agent/auditorias/DOC-20261026-001/colision-incidencia-final.json":  "??:af6450aaddaee80d8f502954012089fef06bf875",
+                                                 ".agent/auditorias/DOC-20261026-001/colision-incidencia-final.log":  "??:122fe46ea227dc7b1be17a7c010c27c1abc32bf4",
+                                                 ".agent/auditorias/DOC-20261026-001/colision-root-final.json":  "??:018247aa5fc576845fdb5996ebfac5ea5cb90108",
+                                                 ".agent/auditorias/DOC-20261026-001/colision-root-final.log":  "??:738889fd282647f9b5bb862a7ac5a430369e5c1e",
+                                                 ".agent/auditorias/DOC-20261026-001/comparacion-aislado-resumen.json":  "??:508bcfb8ac5e2551d6d82dc000841d7af6295b56",
+                                                 ".agent/auditorias/DOC-20261026-001/copias-previas.json":  "??:c6ecffcd17f3b0156c5fe96844390526920d23c7",
+                                                 ".agent/auditorias/DOC-20261026-001/corte-archivado.md.txt":  "??:46fac3926cbc9db856b7f94dd835d65ae5e7faba",
+                                                 ".agent/auditorias/DOC-20261026-001/desviaciones-atomic-final.json":  "??:60dcac6fe453eb4e995f207330a2cdf82fce0d95",
+                                                 ".agent/auditorias/DOC-20261026-001/desviaciones-atomic-final.log":  "??:e8e3d94a50757a103214f2968fdfec46285c9f60",
+                                                 ".agent/auditorias/DOC-20261026-001/desviaciones-root-cierre.json":  "??:f32b25b4ff984b39545092aa9eb0c26088e29082",
+                                                 ".agent/auditorias/DOC-20261026-001/desviaciones-root-cierre.log":  "??:e7a97ffdce943071c43b6a3bc511a7c00078709e",
+                                                 ".agent/auditorias/DOC-20261026-001/desviaciones-root-final.json":  "??:f32b25b4ff984b39545092aa9eb0c26088e29082",
+                                                 ".agent/auditorias/DOC-20261026-001/desviaciones-root-final.log":  "??:133633e17ca15abbd1e0121fe7c3cf1592efe8fd",
+                                                 ".agent/auditorias/DOC-20261026-001/diagnostico-atomic.json":  "??:3accabe38a96010845fa8627d8872d49718a873c",
+                                                 ".agent/auditorias/DOC-20261026-001/diferencias-custodia.json":  "??:11482477b1551503f76814bc5ce716e218fe62ca",
+                                                 ".agent/auditorias/DOC-20261026-001/documentos-finales.json":  "??:4ad22c396a21dd9d7cf8679d19c1ae5f60b25da4",
+                                                 ".agent/auditorias/DOC-20261026-001/documentos-finales.log":  "??:b532ebaed97f5138f4fdb3d4a337266291bfef56",
+                                                 ".agent/auditorias/DOC-20261026-001/fuentes-finales.json":  "??:52466bac874c6e9b146bdb582ee24de616e8b9a4",
+                                                 ".agent/auditorias/DOC-20261026-001/huellas-antes.json":  "??:52ad800814ce977e5d6522378ac7d04c0169b742",
+                                                 ".agent/auditorias/DOC-20261026-001/indice-generacion-final.json":  "??:cbb60074444d8842310b1f219483c933f4d4f409",
+                                                 ".agent/auditorias/DOC-20261026-001/indice-generacion-final.log":  "??:186c4194e1275a569d7d7a014e1c36f8b73795b8",
+                                                 ".agent/auditorias/DOC-20261026-001/indice-generacion.json":  "??:cbb60074444d8842310b1f219483c933f4d4f409",
+                                                 ".agent/auditorias/DOC-20261026-001/indice-generacion.log":  "??:0bbf1b8b14b5c50d1504b8087a09fb40a7480b96",
+                                                 ".agent/auditorias/DOC-20261026-001/indice-verificacion-final.json":  "??:2752c1604788b83ff1c7bf363bef47dc6abd4759",
+                                                 ".agent/auditorias/DOC-20261026-001/indice-verificacion-final.log":  "??:369d210c8942470c285a051bc7010ffa37faae51",
+                                                 ".agent/auditorias/DOC-20261026-001/indice-verificacion.json":  "??:2752c1604788b83ff1c7bf363bef47dc6abd4759",
+                                                 ".agent/auditorias/DOC-20261026-001/indice-verificacion.log":  "??:322ac93feb1fb521c118c4fe49b1a30609e720d7",
+                                                 ".agent/auditorias/DOC-20261026-001/juicio-doc/veredicto-adenda.json":  "??:42981de507e2e1eed7d3568e58c9d02c8bb2c9a0",
+                                                 ".agent/auditorias/DOC-20261026-001/juicio-doc/veredicto-correccion-adenda.json":  "??:249a7808741365737d1b42c222d2635157c5a9e3",
+                                                 ".agent/auditorias/DOC-20261026-001/juicio-doc/veredicto.json":  "??:a5e18c205182d881f86fabce21b8a8b0ebeb1e6a",
+                                                 ".agent/auditorias/DOC-20261026-001/lanzado-incidencia.txt":  "??:404e917c84bd82214c3822833638cd4048df7e39",
+                                                 ".agent/auditorias/DOC-20261026-001/lanzado.txt":  "??:cc5c471bbb21e6aa12ffb0db39fef90d149258c3",
+                                                 ".agent/auditorias/DOC-20261026-001/manifest-concurrente.json":  "??:15f2783cb90b26f97345af97d08271801e785885",
+                                                 ".agent/auditorias/DOC-20261026-001/originales-previos.json":  "??:e915538227f3d771c05569452504053def9ae882",
+                                                 ".agent/auditorias/DOC-20261026-001/originales/focal-action-group-pagina-crud.log":  "??:e48b66cb393926460c145d62be751079a3d9b8eb",
+                                                 ".agent/auditorias/DOC-20261026-001/originales/governance-check-al-corte.log":  "??:e35a67e0f732149d5915e35d7f229aa2830656a0",
+                                                 ".agent/auditorias/DOC-20261026-001/originales/governance-check.log":  "??:077e725af02dbe833a0afed3759e6db491dfe1dd",
+                                                 ".agent/auditorias/DOC-20261026-001/originales/resultado-governance-pendiente.json":  "??:5e7cb56634566e7fe2010360f2b7f485c3d0a835",
+                                                 ".agent/auditorias/DOC-20261026-001/originales/resultados-npm.json":  "??:2ae1f9a657761c6eed68e97392a52fe5565a5d1f",
+                                                 ".agent/auditorias/DOC-20261026-001/preservacion-registros.json":  "??:b43a04bd49a03576f027b7fe25dea90be8c5b47d",
+                                                 ".agent/auditorias/DOC-20261026-001/rapidas.json":  "??:ff5a6c8dd8843265951edb0cd46495de96916d2e",
+                                                 ".agent/auditorias/DOC-20261026-001/rapidas.log":  "??:9581154d3238d786e0a6b6cca0495fb8a18b2efb",
+                                                 ".agent/auditorias/DOC-20261026-001/recibo-final.json":  "??:3d661bd3cefe9a90b55da49d708028e4eb5f32b8",
+                                                 ".agent/auditorias/DOC-20261026-001/reparto-incidencia.json":  "??:6d04b6f4417cb5dd102c1bc2988271ba8444f998",
+                                                 ".agent/auditorias/DOC-20261026-001/reparto.json":  "??:19884b0abf7fb7ba3e9204e227e05d7e85404521",
+                                                 ".agent/auditorias/DOC-20261026-001/sondeo-antes.json":  "??:55d181ae1e988ed0c054d0efdb0645ae53115302",
+                                                 ".agent/auditorias/DOC-20261026-001/sondeo-antes.log":  "??:10166f42e26fa1f985300ad3afbc135527097ac2",
+                                                 ".agent/auditorias/DOC-20261026-001/sondeo-comparacion.json":  "??:45a5d4f0d3e3a4513525e368dbda4b0d0bdd2523",
+                                                 ".agent/auditorias/DOC-20261026-001/sondeo-comparacion.log":  "??:959d0b4d89d6f4d0a3ee82d03e96f247ae008a09",
+                                                 ".agent/auditorias/DOC-20261026-001/sondeo-despues.json":  "??:31e2af10161105583918f516228e95185956e89b",
+                                                 ".agent/auditorias/DOC-20261026-001/sondeo-final.json":  "??:2b3c7bb29e386e770e98dd3e317c9c4df02a900c",
+                                                 ".agent/auditorias/DOC-20261026-001/sondeo-final.log":  "??:eaef7fa6964855ab64bd38835511bf2ba72898e4",
+                                                 ".agent/auditorias/DOC-20261026-001/ultimo-documental.json":  "??:b0ec85351ba17395e191301098f4792802e1854f",
+                                                 ".agent/auditorias/DOC-20261026-001/ultimo-documental.log":  "??:6d21d1ce7f53fbed39bd6794af7ae52a2a976340",
+                                                 ".agent/roadmaps/ROADMAP_DOC-20261026-001_conciliacion_pendientes.md":  "??:99d69336673320287923f74257cc89a2efec3c25",
+                                                 ".agents/desviaciones/DESVIACION-DOC-20261026-001-001.md":  "??:947581e3c184fe15dd27961af262963764bcb542",
+                                                 ".agents/desviaciones/DESVIACION-DOC-20261026-001-002.md":  "??:e09a767467fde3980c2d588e500679a867a09696",
+                                                 "ventas-cxc/src/app/core/api/fn/ventas/api-v-2-ventas-id-delete.ts":  "??:6740301392598ecbc6ca9a74f5dc431d0f3347d5"
+                                             },
+                            "remotos":  {
+                                            "frontend_fixer":  {
+                                                                   "fetch":  "C:\\Users\\cotaha\\.gemini\\antigravity\\brain\\f8332099-50e6-452b-a3ca-0c08c877bbdc\\.system_generated\\worktrees\\subagent-Frontend-Fixer-self-c1350ecb",
+                                                                   "push":  "C:\\Users\\cotaha\\.gemini\\antigravity\\brain\\f8332099-50e6-452b-a3ca-0c08c877bbdc\\.system_generated\\worktrees\\subagent-Frontend-Fixer-self-c1350ecb"
+                                                               }
+                                        },
+                            "refs":  {
+                                         "refs/heads/main":  "46b9a9d7f4cb4f75f98aa6049465720dd1d3c5f3",
+                                         "refs/heads/subagent-Backend-Fixer-self-546d0aad":  "338000f8a10b002de863609add07f19b261825e1",
+                                         "refs/remotes/frontend_fixer/HEAD":  "338000f8a10b002de863609add07f19b261825e1",
+                                         "refs/remotes/frontend_fixer/main":  "338000f8a10b002de863609add07f19b261825e1",
+                                         "refs/remotes/frontend_fixer/subagent-Backend-Architect-self-96222df3":  "338000f8a10b002de863609add07f19b261825e1",
+                                         "refs/remotes/frontend_fixer/subagent-Backend-Developer-self-903c6962":  "338000f8a10b002de863609add07f19b261825e1",
+                                         "refs/remotes/frontend_fixer/subagent-Backend-Developer-self-bce5856a":  "338000f8a10b002de863609add07f19b261825e1",
+                                         "refs/remotes/frontend_fixer/subagent-Backend-Fixer-self-546d0aad":  "338000f8a10b002de863609add07f19b261825e1",
+                                         "refs/remotes/frontend_fixer/subagent-Database-Architect-self-ed347552":  "338000f8a10b002de863609add07f19b261825e1",
+                                         "refs/remotes/frontend_fixer/subagent-Database-Fixer-self-721870a5":  "338000f8a10b002de863609add07f19b261825e1",
+                                         "refs/remotes/frontend_fixer/subagent-Frontend-Architect-self-0e7d3480":  "338000f8a10b002de863609add07f19b261825e1",
+                                         "refs/remotes/frontend_fixer/subagent-Frontend-Developer-self-f1ec5d0d":  "338000f8a10b002de863609add07f19b261825e1",
+                                         "refs/remotes/frontend_fixer/subagent-Frontend-Fixer-self-c1350ecb":  "338000f8a10b002de863609add07f19b261825e1"
+                                     }
+                        },
+                  "-Atomic-UI":  {
+                                     "estado":  "congelado",
+                                     "rama":  "main",
+                                     "head":  "dd93734a3eea40b87d46b4990976231fe2d6ca19",
+                                     "sinConfirmar":  {
+                                                          ".agents/desviaciones/DESVIACION-20260929-005.md":  " M:0fb979e27ef97f8ba6176b0e45eb1776b28a926c",
+                                                          ".agents/desviaciones/DESVIACION-20261024-011.md":  " M:792eb54d6249a203cd212570594da74f495782e5",
+                                                          "AGENTS.md":  " M:4e2ba196bb12b9527dc3ea266c901659fe824abc",
+                                                          "CHANGELOG.md":  " M:7b0122bed468447be834e52bca5fdf1f5b1d4882",
+                                                          "LESSONS_LEARNED.md":  " M:e4b9a47eaf20ddee1922495bdb2b61cf033e290e",
+                                                          "catalog/components/file-input.json":  " M:d0be6fd2d270c283991446228672f2114307e008",
+                                                          "catalog/components/scroll-overlay.json":  " M:9ff1f2954e45f35eae846a34122a8fb9939e6843",
+                                                          "catalog/components/topbar.json":  " M:9c65834914238bb81fd202e976efbdd78ee9dd79",
+                                                          "distribution/atomic-source-manifest.json":  " M:21b3b74e5410f83c43ecd19726016304beca7b59",
+                                                          "docs/BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md":  " M:77fe15730b3e052c283bec9a385fa075401b50e8",
+                                                          "docs/CONTINUIDAD_AGENTES.md":  " M:5775e1e7e60a4bc767b464b511c1d7368fac5f03",
+                                                          "governance/consumer/AGENTS.template.md":  " M:5fdfdec485538a94d89a4a17cd41927f527b19df",
+                                                          "src/app/components/ui-showcase/examples/showcase-actions/showcase-actions.component.ts":  " M:e4da5cc91742476ce1960af8edea226457e64109",
+                                                          "src/app/components/ui-showcase/examples/showcase-forms/showcase-forms.component.ts":  " M:8916b6c04e37e10d067cc0e66fa2b274d95ea144",
+                                                          "src/app/components/ui-showcase/examples/showcase-structure/showcase-structure.component.ts":  " M:216ebdda00319fcabcc9801975e244be8fe9769f",
+                                                          "src/app/pages/showcase/showcase-page.component.html":  " M:c74915cd868aee9064bc53d95f3d8692a7bcf6dc",
+                                                          "src/app/pages/showcase/showcase-page.component.ts":  " M:e54b240daa0cdf8f12fa507e32e33c640570f257",
+                                                          "src/app/shared/ui/atoms/file-input/file-input.component.css":  " M:dbb22f4e9cc544f5cbf12bea79662fa2b4adaebe",
+                                                          "src/app/shared/ui/atoms/file-input/file-input.component.html":  " M:a07c3855bfb710e0469450a3f00e3d03391fdfc6",
+                                                          "src/app/shared/ui/atoms/file-input/file-input.component.ts":  " M:97bb47a6faad6730040d5eabc17ddaf833a9e743",
+                                                          "src/app/shared/ui/atoms/icon-button/icon-button.component.css":  " M:2c155ca7fa2fa32dc9a2f2df0355c5cf7c2d06c5",
+                                                          "src/app/shared/ui/atoms/icon-button/icon-button.component.html":  " M:21120017ec9477a0d025c12693386ae5e8471523",
+                                                          "src/app/shared/ui/atoms/icon-button/icon-button.component.spec.ts":  " M:abcb9069d467b98be59e9e30538f6899c3aa7cdd",
+                                                          "src/app/shared/ui/atoms/icon-button/icon-button.component.ts":  " M:44d381cd7197242d7bba98293236cacc7f0ea858",
+                                                          "src/app/shared/ui/atoms/input/input.component.spec.ts":  " M:2d10d561c7599eb16cb9c0640920a3509289e863",
+                                                          "src/app/shared/ui/atoms/select/select-variant.spec.ts":  " M:6610164030e04bf1fcd156e2b74219e728dc307f",
+                                                          "src/app/shared/ui/atoms/textarea/textarea.component.spec.ts":  " M:f093a2661e0798e8dae84e7679bf794805ce6cac",
+                                                          "src/app/shared/ui/index.ts":  " M:09b5fedbef1c2b069f735bf79baf6e7a8d8c7f40",
+                                                          "src/app/shared/ui/molecules/dropdown/dropdown-variant.spec.ts":  " M:de0b017ae048ae14191d650cd68945ee46cd9adf",
+                                                          "src/app/shared/ui/molecules/modal/modal-container.component.css":  " M:22d81e32dc71459113619cb47585136cd21d8dc1",
+                                                          "src/app/shared/ui/molecules/modal/modal-container.component.ts":  " M:e3dab43a1d745b915eee7745a9f2fec671e365fc",
+                                                          "src/app/shared/ui/molecules/modal/modal.component.css":  " M:2b274a21d84c152f55fc8febbca289930e325339",
+                                                          "src/app/shared/ui/molecules/modal/modal.component.ts":  " M:7b7a3b3413ff1b85caec9fd927fbf33a1e623032",
+                                                          "src/app/shared/ui/molecules/popup/popup-container.component.css":  " M:2e4bbda3da637ef8723127e3b4c6f54714a8e014",
+                                                          "src/app/shared/ui/molecules/popup/popup-container.component.ts":  " M:a15308db55801369c52c2255ea032cfdb68ef4b6",
+                                                          "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css":  " M:6444a5f70d2c3c9c641becbe721c876ca2ead25d",
+                                                          "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.spec.ts":  " M:f5dc57de66f7b042c52723789535693f6445c0f7",
+                                                          "src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts":  " M:6baae121fa355ce96b721952ba63c5937bb206d4",
+                                                          "src/app/shared/ui/organisms/topbar/topbar.component.css":  " M:030c37b3cc7b5b3516938698e4bab95a9ac14c91",
+                                                          "src/app/shared/ui/organisms/topbar/topbar.component.html":  " M:ea65c91ed0033175806b8248f00c7fe23b946109",
+                                                          "src/app/shared/ui/organisms/topbar/topbar.component.spec.ts":  " M:9484c237c7bd89005510b33733954b2b3eab3f3c",
+                                                          "src/app/shared/ui/organisms/topbar/topbar.component.ts":  " M:8a78b501303afa9fde1b33c43bb68e17a46ef256",
+                                                          "src/app/shared/ui/templates/auth-layout/auth-layout.component.css":  " M:529c26ecf72efcb0e94f18837a12751d30e367dc",
+                                                          "src/app/shared/ui/templates/auth-layout/auth-layout.component.html":  " M:3e0c3b8d7fb11a4c144f23e1b90dc3a94a3842a6",
+                                                          "src/blueprints/dialogs-page/dialogs-page.component.css":  " M:80341c3778cda13f0f81cb24bccb46c8c3584b66",
+                                                          "src/blueprints/dialogs-page/dialogs-page.component.html":  " M:f5cdffd15d0f1c643a98926e31d66b13f961a1b4",
+                                                          "src/blueprints/dialogs-page/dialogs-page.component.ts":  " M:2e6b2fc83200baf3d4a0887b0b34f1e1cb6b1e2e",
+                                                          "src/blueprints/error-pages/error-pages.component.ts":  " M:af214819b7005113e8d68f1c063fbdbd3d7f8b39",
+                                                          "src/blueprints/settings-page/settings-page.component.ts":  " M:1c89bd5849d71a576996a194368573dc71d8c51f",
+                                                          "src/stories/ui-icon-button.stories.ts":  " M:587c1a3306af8e37068c61a728be5a7fd14dcce3",
+                                                          "src/stories/ui-scroll-overlay.stories.ts":  " M:23dcd71f10cbb06e4a08014ad37f744eb999c0e1",
+                                                          "src/styles/themes/_utilities.css":  " M:bbe23fca4cc966fdb2c4b7a43ac3f488dd8544e1",
+                                                          "tools/check-atomic-blueprints.js":  " M:28ca71e0716033f0c8132fffe7545110ccf55f13",
+                                                          "tools/create-project.js":  " M:4226a838f2d26f8fd57e92abed0aa95a7e1a3d32",
+                                                          "tools/test-atomic-blueprints.js":  " M:09701cf497770dc54cb980d57ee6e9950b073afe",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md":  "??:47e4aec7f48faea184c3a1622b721c78734dc210",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/comparaciones/anclas.json":  "??:076ef02269320899e859177fe274317f92d3325f",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/comparaciones/atribucion-referencia.json":  "??:e6ae2672516dc2b6d187bf37ffe57de51b64fcc5",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/comparaciones/continuidad-preservacion.json":  "??:fbab2173a9bd98fd779fe9f468b16cb84add3036",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/comparaciones/contratos-hashes.json":  "??:0446bdde0b6bc4e109be3c69c42eddb4e573c1d5",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/comparaciones/enlaces-afectados.json":  "??:1d75248d18e4c8ea951009b3f2f5a52522139082",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/comparaciones/manifiesto.json":  "??:108c0ab90cb9366101d5ce1255fe01e21554b496",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/comparaciones/matriz-150.json":  "??:5069af5b96b5f008c5133b6e2aa98448c805ec2b",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/comparaciones/reutilizacion-pruebas.json":  "??:2b4c1b80c30fae6dccf89a1ee63491ec700a4d0d",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/juicio/comparacion-propia.json":  "??:cf90a212b7456065179e4e097d01c31d654b8fec",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/juicio/gobierno-propio.json":  "??:d9739ed51c2626d3647743ea123d745b7da4b598",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/juicio/matriz-propia-151.json":  "??:d2cf9da178a93502402a683f3060fdbf9a58e03e",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/juicio/reutilizacion-propia.json":  "??:251b6457c83aea694e9848132689c654578a4e4a",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/juicio/veredicto.json":  "??:b6c8ff4041c37cd17527e00c735872abb75cd680",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/codificacion-antes.json":  "??:7c3ef5a3480544ed33272c35ddee33c67beb8a52",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/codificacion-antes.log":  "??:e880db029f366d67731cf20ceaff694272b76751",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/codificacion-despues.json":  "??:e040481c54004a8051b1ce6938304e70529b92bb",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/codificacion-despues.log":  "??:12716727d09b5c1c070ee750ced0811eabdec7da",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/codificacion-gobierno.json":  "??:a481ec148696e6d7865f1712c2b3143295c27706",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/codificacion-gobierno.log":  "??:9b42a85b27d26ca3974c120296f70a6dd010069b",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/colision-antes.json":  "??:5f74f53f28c511c049d0219e28f5b3f1e71fc6f7",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/colision-antes.log":  "??:047b20dc4497c55c7712e671f9a3c62ea054cad7",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/desviaciones-despues.json":  "??:3a6967910ce63e34138285e0fb75a852c4e15a61",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/desviaciones-despues.log":  "??:2f0a7e79ab061e7015c24fc30c753782b11a8943",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/desviaciones-final.json":  "??:3a6967910ce63e34138285e0fb75a852c4e15a61",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/desviaciones-final.log":  "??:6f37892e1a53a0b9ac5c4fe84f2a3a2fefcaeb48",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/diff-continuidad-corregida.json":  "??:f01a6a82edff6844ea5b41dae119d21c7ca8f70c",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/huellas-antes.json":  "??:106874b8171f665f4359d6be2019d379f63c6035",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/indice-generar-permitido.json":  "??:2c1accaffe815bc88bc6eab52351a0e1e1bdf170",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/indice-generar-permitido.log":  "??:f715894bfcbaba75386db55f7b4ca4aa9295aa24",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/indice-generar.json":  "??:5bf84797ee59ec9fdfffb6588d81a3428ae79ef5",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/indice-generar.log":  "??:1af288b63536e6c05e731f58a2b4f8490d791a71",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/indice-verificar.json":  "??:c3ab36e1e3a9529eb55d3a78493c6b26e810bb70",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/indice-verificar.log":  "??:d4ef0af1106f9ab1b07ac23c15fc8a161f35a182",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/lanzado.txt":  "??:b3a0ac68419985b056ef99fc8b264c3a979face3",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/reparto.json":  "??:4395157f884e2e71c0ac1b58ae098cce94efb0a9",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/sondeo-antes.json":  "??:ca84a38e911e1e984578db060090e8f444134f54",
+                                                          ".agent/auditorias/ATOMIC-20261026-002/originales/sondeo-antes.log":  "??:0e8d33883c0f2cb2b5fec26ccbd168d9e1c35f61",
+                                                          ".agent/roadmaps/ROADMAP_ATOMIC-20261026-001_desbloqueo_pruebas.md":  "??:e8d3aae5c1f0c02001aa5b493e03f180aaca4c68",
+                                                          ".agent/roadmaps/ROADMAP_ATOMIC-20261026-002_tildes_y_referencia.md":  "??:149d09577b279f4a9b56dd50f79d9192145d20af",
+                                                          ".agents/desviaciones/DESVIACION-ATOMIC-20261026-001-001.md":  "??:1b53911b1c0d360e1c1a14d5e23274522580b043",
+                                                          ".agents/desviaciones/DESVIACION-ATOMIC-20261026-002-001.md":  "??:4946157a21959867c3062b3b5a0d617ad7f8af8a",
+                                                          "catalog/components/icon-button.json":  "??:5ff3ef4d20dc108bfed53f2f5ba96a3d708fd65f"
+                                                      },
+                                     "remotos":  {
+                                                     "origin":  {
+                                                                    "fetch":  "https://github.com/archware/-Atomic-UI.git",
+                                                                    "push":  "https://github.com/archware/-Atomic-UI.git"
+                                                                }
+                                                 },
+                                     "refs":  {
+                                                  "refs/heads/PREST-20260805-194-contraste-y-531":  "82bf8deb192c7d4f4a298018bc48f5affb6e8a5f",
+                                                  "refs/heads/main":  "dd93734a3eea40b87d46b4990976231fe2d6ca19",
+                                                  "refs/remotes/origin/HEAD":  "3e76966493d4b59273655b7df18c1084fa044b9b",
+                                                  "refs/remotes/origin/PREST-20260805-194-contraste-y-531":  "82bf8deb192c7d4f4a298018bc48f5affb6e8a5f",
+                                                  "refs/remotes/origin/gh-pages":  "961afa7d560ca326c2ce80346ed64d2560607ed8",
+                                                  "refs/remotes/origin/main":  "3e76966493d4b59273655b7df18c1084fa044b9b",
+                                                  "refs/tags/PREST-20260728-109":  "befdde4cccdd42160ed8feaac33dc9bffaa1ad4f",
+                                                  "refs/tags/PREST-20260728-110":  "b251b343b5a3d4c18bdc8007d275fe2f2840df3b",
+                                                  "refs/tags/PREST-20260728-111":  "1fe3f3c730f366284c215332251deeb8bd9f10c5",
+                                                  "refs/tags/PREST-20260728-112":  "b7710b585e97ce7775e8adf6b235e74c4f35ad54",
+                                                  "refs/tags/PREST-20260729-130":  "d2d69a24cb5f9609bf9a4341086ebb9f350c72b8",
+                                                  "refs/tags/PREST-20260729-131":  "b3d95cc55df958193985188e22a584aa905098da",
+                                                  "refs/tags/PREST-20260729-138":  "4403383a085fe8a4ad2054e14609e5a37b317438"
+                                              }
+                                 },
+                  ".camas-api-limpio":  {
+                                            "estado":  "instantanea",
+                                            "rama":  null,
+                                            "head":  "87724d522fbd4ae97048ec81f4ae010730bef5b4",
+                                            "sinConfirmar":  {
+
+                                                             },
+                                            "remotos":  {
+                                                            "origin":  {
+                                                                           "fetch":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/camas-nfc-back",
+                                                                           "push":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/camas-nfc-back"
+                                                                       }
+                                                        },
+                                            "refs":  {
+                                                         "refs/heads/master":  "bdccad96a3a9697382e0102444d3f7f92f0c6141",
+                                                         "refs/remotes/origin/HEAD":  "0177036ca135f2697c594d2e7c7b6aac3901b673",
+                                                         "refs/remotes/origin/master":  "0177036ca135f2697c594d2e7c7b6aac3901b673"
+                                                     }
+                                        },
+                  "10022024-BASE-WEB":  {
+                                            "estado":  "congelado",
+                                            "rama":  "main",
+                                            "head":  "b247375ed5eb809049cc542b08b83000c61b520f",
+                                            "sinConfirmar":  {
+                                                                 "azure-pipelines.yml":  " M:ab4350a0e3d59420d50576acaea2c8455eeb4577",
+                                                                 "docs/CONTINUIDAD_AGENTES.md":  " M:51641e3717c35bc07516c369d8182aa50ea610c6"
+                                                             },
+                                            "remotos":  {
+                                                            "limpio":  {
+                                                                           "fetch":  "C:/Users/cotaha/_archivo-repos/_respaldos/vf-10022024-BASE-WEB.git",
+                                                                           "push":  "C:/Users/cotaha/_archivo-repos/_respaldos/vf-10022024-BASE-WEB.git"
+                                                                       },
+                                                            "origin":  {
+                                                                           "fetch":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/10022024-BASE-WEB",
+                                                                           "push":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/10022024-BASE-WEB"
+                                                                       }
+                                                        },
+                                            "refs":  {
+                                                         "refs/heads/feature/f10-compras-inventario":  "5a5136deb33182a5581878c877f0b378a27e35d5",
+                                                         "refs/heads/feature/f4-saas-core":  "c448408fd1b24e87d7e6a0fb673b43ef90fc9225",
+                                                         "refs/heads/feature/f5-telemetria-schema-sunat":  "e69dcac761ff449af60e92d3ca88916f10812e50",
+                                                         "refs/heads/feature/f6-sunat-async-schema-perms-stack":  "125d7181d1970f9832d28ba07cbeb60ae809d5c4",
+                                                         "refs/heads/feature/f7-contabilidad":  "cab496684610b340b1f4510bce2679afd9c320ed",
+                                                         "refs/heads/feature/f8-erp-exposicion-ventas":  "78691bb98c475aaf5272333a07f388158e44d486",
+                                                         "refs/heads/feature/f9-onboarding-ventas-e2e":  "1ab557ad401e16987d7b6fcf81827ffe5c374cbf",
+                                                         "refs/heads/feature/login-multiempresa":  "c8fdeeca6d9293aa012931133e76f58916e9d00e",
+                                                         "refs/heads/feature/net10-chasis":  "86be839dc387566605aa1318071d80521071ac07",
+                                                         "refs/heads/main":  "b247375ed5eb809049cc542b08b83000c61b520f",
+                                                         "refs/remotes/limpio/HEAD":  "f02532d069f84604175343f1005ccdd8719daba7",
+                                                         "refs/remotes/limpio/feature/f10-compras-inventario":  "5a5136deb33182a5581878c877f0b378a27e35d5",
+                                                         "refs/remotes/limpio/feature/f4-saas-core":  "c448408fd1b24e87d7e6a0fb673b43ef90fc9225",
+                                                         "refs/remotes/limpio/feature/f5-telemetria-schema-sunat":  "e69dcac761ff449af60e92d3ca88916f10812e50",
+                                                         "refs/remotes/limpio/feature/f6-sunat-async-schema-perms-stack":  "125d7181d1970f9832d28ba07cbeb60ae809d5c4",
+                                                         "refs/remotes/limpio/feature/f7-contabilidad":  "cab496684610b340b1f4510bce2679afd9c320ed",
+                                                         "refs/remotes/limpio/feature/f8-erp-exposicion-ventas":  "78691bb98c475aaf5272333a07f388158e44d486",
+                                                         "refs/remotes/limpio/feature/f9-onboarding-ventas-e2e":  "1ab557ad401e16987d7b6fcf81827ffe5c374cbf",
+                                                         "refs/remotes/limpio/feature/login-multiempresa":  "c8fdeeca6d9293aa012931133e76f58916e9d00e",
+                                                         "refs/remotes/limpio/feature/net10-chasis":  "86be839dc387566605aa1318071d80521071ac07",
+                                                         "refs/remotes/limpio/main":  "f02532d069f84604175343f1005ccdd8719daba7",
+                                                         "refs/remotes/origin/HEAD":  "46a221dac30ce4eb016425a0e160b0324b3d0c19",
+                                                         "refs/remotes/origin/feature/f10-compras-inventario":  "5a5136deb33182a5581878c877f0b378a27e35d5",
+                                                         "refs/remotes/origin/feature/f4-saas-core":  "c448408fd1b24e87d7e6a0fb673b43ef90fc9225",
+                                                         "refs/remotes/origin/feature/f5-telemetria-schema-sunat":  "e69dcac761ff449af60e92d3ca88916f10812e50",
+                                                         "refs/remotes/origin/feature/f6-sunat-async-schema-perms-stack":  "125d7181d1970f9832d28ba07cbeb60ae809d5c4",
+                                                         "refs/remotes/origin/feature/f7-contabilidad":  "cab496684610b340b1f4510bce2679afd9c320ed",
+                                                         "refs/remotes/origin/feature/f8-erp-exposicion-ventas":  "78691bb98c475aaf5272333a07f388158e44d486",
+                                                         "refs/remotes/origin/feature/f9-onboarding-ventas-e2e":  "1ab557ad401e16987d7b6fcf81827ffe5c374cbf",
+                                                         "refs/remotes/origin/feature/login-multiempresa":  "c8fdeeca6d9293aa012931133e76f58916e9d00e",
+                                                         "refs/remotes/origin/feature/net10-chasis":  "86be839dc387566605aa1318071d80521071ac07",
+                                                         "refs/remotes/origin/main":  "46a221dac30ce4eb016425a0e160b0324b3d0c19",
+                                                         "refs/tags/red/antes-de-limpiar-am":  "e15a156333b7e2dac4976ef4e3e775dc769979e0"
+                                                     }
+                                        },
+                  "analisis-prestamo":  {
+                                            "estado":  "activo",
+                                            "rama":  "main",
+                                            "head":  "00a3e59b03a3fae0bcdce52c2c6a4fd0550ca460",
+                                            "sinConfirmar":  {
+                                                                 "deploy/docker-demo/scripts/Promote-Images.ps1":  " M:01622d4aecbec352c6b542b29c3a9bc27c5a39d2",
+                                                                 "deploy/lanzamiento/esquema/01-ddl.sql":  " M:c24678bc26ca3e7a3c4de80742e9eff036441d55",
+                                                                 "deploy/lanzamiento/esquema/02-dml-catalogos.sql":  " M:e193fcc635add159791180e918b1a37092998254",
+                                                                 "docs/CONTINUIDAD_AGENTES.md":  " M:7dc344a4bcbad0b545db22ae6bcf37823899f039",
+                                                                 "docs/planes/DECISION_ATOMIC_TRONCO_UNICO.md":  " M:60306f7bb24d0cbe9056c185f046d36a0efa42dd",
+                                                                 ".agent/roadmaps/ROADMAP_PREST-20261026-240_preparacion_produccion.md":  "??:a067398645f8f86324c5e58c99d7b692289153d2",
+                                                                 "deploy/docker-demo/scripts/tests/Test-PromocionMigraciones.Synthetic.ps1":  "??:9e8e9f9daad43809baf0b00bbd879f6317161283",
+                                                                 "deploy/lanzamiento/Instalar-PrestamosAislado.ps1":  "??:fb7eba4b09ea47a8035867bf5c13f48d0425efd3",
+                                                                 "deploy/lanzamiento/configuracion-ensayo.template.json":  "??:605b44cb80bb9799aff9301e4fc6d22aab072d8b",
+                                                                 "deploy/lanzamiento/esquema/Atestar-MigracionEjecutada.sql":  "??:c5ec9130242b4352bcc9e3c19e9361f823fa9337",
+                                                                 "deploy/lanzamiento/esquema/Verificar-InstalacionFinal.sql":  "??:72cd51c571fcdb2ec46a3282b4e45fa251aeb8a0",
+                                                                 "deploy/lanzamiento/tests/Test-InstalacionAislada.Synthetic.ps1":  "??:03191aeb0db9d8ca5b0a7add114d25c8c73fe93b"
+                                                             },
+                                            "remotos":  {
+                                                            "local":  {
+                                                                          "fetch":  "C:/Users/cotaha/source/git-remotes/analisis-prestamo.git",
+                                                                          "push":  "C:/Users/cotaha/source/git-remotes/analisis-prestamo.git"
+                                                                      }
+                                                        },
+                                            "refs":  {
+                                                         "refs/heads/PREST-20260811-210-allowed-hosts":  "86fb25c6f743b295f160c4378ab06260be8c30f8",
+                                                         "refs/heads/main":  "00a3e59b03a3fae0bcdce52c2c6a4fd0550ca460",
+                                                         "refs/remotes/local/HEAD":  "abe3487cf6453c58c1189d0b6c29c1bdc3358cc3",
+                                                         "refs/remotes/local/PREST-20260811-210-allowed-hosts":  "86fb25c6f743b295f160c4378ab06260be8c30f8",
+                                                         "refs/remotes/local/main":  "abe3487cf6453c58c1189d0b6c29c1bdc3358cc3",
+                                                         "refs/tags/PREST-20260728-110":  "b08c7288bff3951c40f99cef59d03da3b44d804b",
+                                                         "refs/tags/PREST-20260728-112":  "799bfe51b1653d46f28a0cce185692d8f7fe2d05",
+                                                         "refs/tags/PREST-20260729-130":  "4376ec46365f334f0d36c6d05547459d9496f069",
+                                                         "refs/tags/PREST-20260729-131":  "c5305d8300f8b5b6345e882b776687cfb023e5ba",
+                                                         "refs/tags/PREST-20260729-138":  "063f2c50d73ab1b5098f3ad47bdd2bb37b19c810"
+                                                     }
+                                        },
+                  "base-back":  {
+                                    "estado":  "activo",
+                                    "rama":  "master",
+                                    "head":  "a5b9dd2c151157956ef91dad13435bac787e51cb",
+                                    "sinConfirmar":  {
+
+                                                     },
+                                    "remotos":  {
+
+                                                },
+                                    "refs":  {
+                                                 "refs/heads/master":  "a5b9dd2c151157956ef91dad13435bac787e51cb"
+                                             }
+                                },
+                  "base_python_angular":  {
+                                              "estado":  "inactivo",
+                                              "rama":  "master",
+                                              "head":  "df81ef1efd42056bbc095db83d188a1281950215",
+                                              "sinConfirmar":  {
+                                                                   ".agents/AGENTS.md":  " M:1719052d1f6e6bbfad02ebe1e3ee8441d7d9d782",
+                                                                   "AGENTS.md":  " M:0d48b2634d58a713267e89c05d6ebc8f18ca2334",
+                                                                   "docs/CONTINUIDAD_AGENTES.md":  " M:2f1276b3d4fd9669629b088ea5d94484e40ae0f5"
+                                                               },
+                                              "remotos":  {
+
+                                                          },
+                                              "refs":  {
+                                                           "refs/heads/codex/python-admin-recovery-reproducible-160":  "aab99fbf123b26832cfd743c5e8c18147024b362",
+                                                           "refs/heads/codex/python-admin-recovery-reproducible-160-integrable":  "8a6f61f849eecf19c098dfde925e1d0801d03116",
+                                                           "refs/heads/codex/quarantine-python-pending-20260815":  "498df2a4f59a7a53ca9d5f357c14b857f91a4f50",
+                                                           "refs/heads/master":  "df81ef1efd42056bbc095db83d188a1281950215"
+                                                       }
+                                          },
+                  "base_tauri_angular":  {
+                                             "estado":  "inactivo",
+                                             "rama":  "master",
+                                             "head":  "d2899e919ea21adc1f80338dc66ebf3769838b9b",
+                                             "sinConfirmar":  {
+                                                                  ".agents/AGENTS.md":  " M:d25bc62100f81c8d10635574eefa56cd3e9f1c8e",
+                                                                  "AGENTS.md":  " M:4cfefc38f47c4d001f332d2e213008d8292f3bda",
+                                                                  "docs/CONTINUIDAD_AGENTES.md":  " M:e56e96a16d9df0909535ebece1ac62563017bfa3",
+                                                                  "src/app/dashboard/gerencial/gerencial.component.ts":  " M:3a755ea9782f2e6514d919854cc90417a225ee2a"
+                                                              },
+                                             "remotos":  {
+
+                                                         },
+                                             "refs":  {
+                                                          "refs/heads/master":  "d2899e919ea21adc1f80338dc66ebf3769838b9b"
+                                                      }
+                                         },
+                  "base_wails_angular":  {
+                                             "estado":  "inactivo",
+                                             "rama":  "master",
+                                             "head":  "87ad8262565444497cd9db4d9bea8cf64c191eb4",
+                                             "sinConfirmar":  {
+                                                                  "AGENTS.md":  " M:2c9ca45eb3a44f7cda3a4790f4582bd0f88fcb6c",
+                                                                  "docs/CONTINUIDAD_AGENTES.md":  " M:02c8d58ef68b67d8449a4d064456bb72d35cf3f6",
+                                                                  "frontend/src/app/dashboard/gerencial/gerencial.component.ts":  " M:79d3823e9a453f4c69cc3ed745388711e78fb5b5"
+                                                              },
+                                             "remotos":  {
+
+                                                         },
+                                             "refs":  {
+                                                          "refs/heads/master":  "87ad8262565444497cd9db4d9bea8cf64c191eb4"
+                                                      }
+                                         },
+                  "bcp_pdf_extractor":  {
+                                            "estado":  "inactivo",
+                                            "rama":  "main",
+                                            "head":  "6aae189f82445ff866d686416e913883b78c93d6",
+                                            "sinConfirmar":  {
+                                                                 "AGENTS.md":  " M:7d713d85a97998910527029bb9b28a9c68e055ca",
+                                                                 "docs/CONTINUIDAD_AGENTES.md":  " M:6e47a5511d84d773d60a7081aa477b07ec7d8ad4"
+                                                             },
+                                            "remotos":  {
+
+                                                        },
+                                            "refs":  {
+                                                         "refs/heads/main":  "6aae189f82445ff866d686416e913883b78c93d6"
+                                                     }
+                                        },
+                  "caja_herramientas":  {
+                                            "estado":  "inactivo",
+                                            "rama":  "main",
+                                            "head":  "09e549d6b66d10a4078f89530de93516eda673a9",
+                                            "sinConfirmar":  {
+
+                                                             },
+                                            "remotos":  {
+
+                                                        },
+                                            "refs":  {
+                                                         "refs/heads/main":  "09e549d6b66d10a4078f89530de93516eda673a9"
+                                                     }
+                                        },
+                  "camas-nfc-back":  {
+                                         "estado":  "activo",
+                                         "rama":  "master",
+                                         "head":  "bdccad96a3a9697382e0102444d3f7f92f0c6141",
+                                         "sinConfirmar":  {
+                                                              "AGENTS.md":  " M:647025b929cd49ed450f1862f06d8f2aa3956351",
+                                                              "docs/CONTINUIDAD_AGENTES.md":  " M:1d9c247e1ceb4740000fcd08b01136b7896357ee"
+                                                          },
+                                         "remotos":  {
+                                                         "origin":  {
+                                                                        "fetch":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/camas-nfc-back",
+                                                                        "push":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/camas-nfc-back"
+                                                                    }
+                                                     },
+                                         "refs":  {
+                                                      "refs/heads/master":  "bdccad96a3a9697382e0102444d3f7f92f0c6141",
+                                                      "refs/remotes/origin/HEAD":  "0177036ca135f2697c594d2e7c7b6aac3901b673",
+                                                      "refs/remotes/origin/master":  "0177036ca135f2697c594d2e7c7b6aac3901b673"
+                                                  }
+                                     },
+                  "camas-nfc-movil":  {
+                                          "estado":  "activo",
+                                          "rama":  "master",
+                                          "head":  "dca50b53b32d718dc8822cbc1350d06d667ad242",
+                                          "sinConfirmar":  {
+                                                               "AGENTS.md":  " M:de5ae51cd65098990b4e530967a0623f6464733d",
+                                                               "docs/CONTINUIDAD_AGENTES.md":  " M:b0393fd02ec306b0da775d1d37828042eff818d9"
+                                                           },
+                                          "remotos":  {
+                                                          "origin":  {
+                                                                         "fetch":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/camas-nfc-movil",
+                                                                         "push":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/camas-nfc-movil"
+                                                                     }
+                                                      },
+                                          "refs":  {
+                                                       "refs/heads/master":  "dca50b53b32d718dc8822cbc1350d06d667ad242",
+                                                       "refs/remotes/origin/HEAD":  "b6b89da07ce4be6e1bbe42a7923ed4cbc73fc346",
+                                                       "refs/remotes/origin/master":  "b6b89da07ce4be6e1bbe42a7923ed4cbc73fc346"
+                                                   }
+                                      },
+                  "camas-nfc-web":  {
+                                        "estado":  "activo",
+                                        "rama":  "master",
+                                        "head":  "b308c128194637c3284541071078f9208998af58",
+                                        "sinConfirmar":  {
+                                                             "AGENTS.md":  " M:0e1d061d7379e7f83071b6360b6ae1d55d1a50b1",
+                                                             "docs/atomic-provenance.json":  " M:5e1a5f119c9b87130730e43a73588466845a4b89",
+                                                             "src/app/features/cuartos/cuartos.component.css":  " M:76e2dd42fd2020ddd49aed44549f4c22ba536d8a",
+                                                             "src/app/features/cuartos/cuartos.component.html":  " M:782a825dcba46e3e3854eb6091286e33c9a36631",
+                                                             "src/app/features/cuartos/cuartos.component.ts":  " M:3e382071b91f9473e70d15becde1c29621b90494",
+                                                             "src/app/features/servicios/servicios.css":  " M:6b5cf9e7fc034fa86b201ce21dda61f630455f6f",
+                                                             "src/app/features/servicios/servicios.html":  " M:9ccf72cfc039af514abce4ebb16779a9afebb5f7",
+                                                             "src/app/shared/ui/index.ts":  " M:70f33c378ff8c14718aefe8d54c001fb8b5d3f8e",
+                                                             "src/styles/themes/tokens.css":  " M:9f76332c4c4896bf3ece0557417a6eb8bf16e1fa"
+                                                         },
+                                        "remotos":  {
+                                                        "frontend_fixer":  {
+                                                                               "fetch":  "C:\\Users\\cotaha\\.gemini\\antigravity\\brain\\f8332099-50e6-452b-a3ca-0c08c877bbdc\\.system_generated\\worktrees\\subagent-Frontend-Fixer-self-c1350ecb\\camas-nfc-web",
+                                                                               "push":  "C:\\Users\\cotaha\\.gemini\\antigravity\\brain\\f8332099-50e6-452b-a3ca-0c08c877bbdc\\.system_generated\\worktrees\\subagent-Frontend-Fixer-self-c1350ecb\\camas-nfc-web"
+                                                                           },
+                                                        "origin":  {
+                                                                       "fetch":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/camas-nfc-web",
+                                                                       "push":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/camas-nfc-web"
+                                                                   }
+                                                    },
+                                        "refs":  {
+                                                     "refs/heads/master":  "b308c128194637c3284541071078f9208998af58",
+                                                     "refs/remotes/origin/HEAD":  "120db10d9aff2545307ffb41536337f4776e26fb",
+                                                     "refs/remotes/origin/master":  "120db10d9aff2545307ffb41536337f4776e26fb"
+                                                 }
+                                    },
+                  "citas-medicas-back":  {
+                                             "estado":  "activo",
+                                             "rama":  "master",
+                                             "head":  "155cc52d3f55879ea3354ed14606e040c1f2c701",
+                                             "sinConfirmar":  {
+                                                                  "AGENTS.md":  " M:5ac920077a0d193ffc86949280c8ae3b71abe6f8",
+                                                                  "docs/CONTINUIDAD_AGENTES.md":  " M:2ec2bbcea013c07c691e11e89bee5009fd12f8ce"
+                                                              },
+                                             "remotos":  {
+
+                                                         },
+                                             "refs":  {
+                                                          "refs/heads/master":  "155cc52d3f55879ea3354ed14606e040c1f2c701"
+                                                      }
+                                         },
+                  "citas-medicas-web":  {
+                                            "estado":  "activo",
+                                            "rama":  "master",
+                                            "head":  "f02d32c4a447fcda1ef31e006edf4ff5bb61fbc0",
+                                            "sinConfirmar":  {
+                                                                 "docs/CONTINUIDAD_AGENTES.md":  " M:5bef8cfe955cb8453793f620e06276ef3cc7ee96"
+                                                             },
+                                            "remotos":  {
+
+                                                        },
+                                            "refs":  {
+                                                         "refs/heads/master":  "f02d32c4a447fcda1ef31e006edf4ff5bb61fbc0"
+                                                     }
+                                        },
+                  "cxc-ventas-back":  {
+                                          "estado":  "activo",
+                                          "rama":  "codex/cierre-cxc-20260930",
+                                          "head":  "c18f373234d7654cc6fd040b87eaa92429e74f7c",
+                                          "sinConfirmar":  {
+                                                               ".agents/desviaciones/DESVIACION-20261024-021.md":  " M:be23c985b0cdad7a839e2ea7e3e26382dcfff4f1",
+                                                               "Application/Common/Helpers/FiltroBusquedaCatalogo.cs":  " M:8c7b74ad3fef370843d2db4b34a6ba11b798454a",
+                                                               "Application/GlobalUsings.cs":  " M:e100368039093c822280291030df364585790b41",
+                                                               "Application/UseCases/CategoriasMediosPago/Commands/ActualizarCategoriaMedioPago/ActualizarCategoriaMedioPagoHandler.cs":  " M:fe08963fef81d189caf7ccede512c57e85f9aaf3",
+                                                               "Application/UseCases/Roles/Queries/ListarRoles/ListarRolesConsulta.cs":  " M:dbc9bf5f83e2de1481b278243a669d9e9b3b6a10",
+                                                               "Application/UseCases/Roles/Queries/ListarRoles/ListarRolesHandler.cs":  " M:026bc485db53990802a53666b1280cdd0d0d0e0a",
+                                                               "Application/UseCases/Ventas/Commands/RegistrarVenta/RegistrarVentaHandler.cs":  " M:99ba954c136a11e404471b04741b34e050752555",
+                                                               "Application/UseCases/Ventas/Queries/ListarVentas/ListarVentasHandler.cs":  " M:46f3a261f599fb471d4f693371269b2c85b10e10",
+                                                               "Application/UseCases/Ventas/Queries/ObtenerVenta/ObtenerVentaHandler.cs":  " M:d4a08ae2eed9b754d61aad60bfbdcb5e04d13b46",
+                                                               "Application/UseCases/Ventas/Queries/VentaDTO.cs":  " M:c966a6145d8a99110b447a7aa8ec38dacd38092d",
+                                                               "Application/UseCases/Ventas/Queries/VentaResumenDTO.cs":  " M:c22d19a595f34417e8126d2ed97d2b4e39befe20",
+                                                               "CHANGELOG.md":  " M:66d1d55e62ef946d4126a94e3b413aad1ee832a1",
+                                                               "Domain/Entities/Clientes/Cliente.cs":  " M:9d9fa83dfd85b71467dc94134ee7c976e191cfa6",
+                                                               "Domain/Entities/Ventas/Venta.cs":  " M:43646d80cf243cbf0c19690f174cf4d9c9fb6fa7",
+                                                               "Infrastructure/Documentos/GeneradorNotaVentaPdf.cs":  " M:9f5acb191734652678a9a40eb1f94a3def1bf385",
+                                                               "LESSONS_LEARNED.md":  " M:6af2c224261e7d98939603d41127d728cd06730b",
+                                                               "W_CuentasCobrar/Controllers/Catalogos/CajasController.cs":  " M:7252265ffd2b6ab459f45084b840be3e83e87a01",
+                                                               "W_CuentasCobrar/Controllers/Ventas/VentasController.cs":  " M:824c079b0039e94c5bfbbf9d54f47340f3d13d37",
+                                                               "W_CuentasCobrar/Controllers/Vouchers/VouchersController.cs":  " M:d80818634db10ef8e40d5801687a4cee421d5d1e",
+                                                               "W_CuentasCobrar/GlobalUsings.cs":  " M:7fead15855ed737fb404a67e68a1cdfb6cc63ba5",
+                                                               "docs/CONTINUIDAD_AGENTES.md":  " M:24c3a2fda16d6e86a803ea2f068556e74f3e1d04",
+                                                               "tests/Domain.Tests/Mvp/DominioMvpTests.cs":  " M:c8d272d723010880366b1d9f872bcaefb32b9578",
+                                                               "tests/W_CuentasCobrar.Tests/Catalogos/BusquedaCatalogosTests.cs":  " M:b1e39ca672b30d8a86834ae3f5a717b1fdb21864",
+                                                               "tests/W_CuentasCobrar.Tests/Catalogos/MigracionCodigoClientesPostgreSqlTests.cs":  " M:42221759d914a9f95fcee48550d4828fb5ee70db",
+                                                               "tests/W_CuentasCobrar.Tests/Ventas/PagosVentaContratoTests.cs":  " M:680ea2f29df618fa699afecbc216059cea4679a6",
+                                                               ".agent/auditorias/REC-20261025-005/RESULTADO_PREIMAGEN.md":  "??:ff5502291cdcac1a335065313981c4ca6e4e1c40",
+                                                               ".agent/auditorias/REC-20261025-005/preimagen-public.sql":  "??:2039110d6dd823ded18525c19fe538083ef86151",
+                                                               ".agent/auditorias/REC-20261025-006/Capturar-PreimagenPublic.ps1":  "??:10ca7666d91d82700e6b7191a890c972f5589741",
+                                                               ".agent/auditorias/REC-20261025-006/RESULTADO_PREIMAGEN.md":  "??:2697222f9426a587eb20fd915143903500bff14a",
+                                                               ".agent/auditorias/REC-20261025-006/preimagen-public.sql":  "??:d766d49b4d6e68e982e5eaa8009376e4003d784c",
+                                                               ".agent/auditorias/REC-20261025-007/RESULTADO_CAPTURA.md":  "??:41508c03f08b084730ad6e425d1594ffc28beba5",
+                                                               ".agent/auditorias/REC-20261025-008/RESULTADO_TRANSPORTE.md":  "??:94dbb5619edb419bc25bbfe34718bb029d174277",
+                                                               ".agent/auditorias/REC-20261025-009/MATRIZ_CONSUMIDORES_PUBLIC.md":  "??:748f79aacee27933f41fce4ab0c5df748de38fbb",
+                                                               ".agent/auditorias/REC-20261025-012/Capturar-RespaldoLectura.ps1":  "??:19c8f19300354197ac7abd465cf162101751ac26",
+                                                               ".agent/auditorias/REC-20261025-012/RESULTADO_REC012.md":  "??:4fc3a896a4eb65e7f5e98ab47bda7612c6c93e99",
+                                                               ".agent/auditorias/REC-20261025-012/Validar-Rec012.ps1":  "??:328908be7745213832f815e6eb6521e294acc43c",
+                                                               ".agent/auditorias/REC-20261025-012/capturar-respaldo-lectura.sql":  "??:9203608fd81c0a9514c3d69b49b935e259333476",
+                                                               ".agent/auditorias/REC-20261025-012/contrato-rec012.schema.json":  "??:65f51ed4cc1fe6691b394cbc439ac8b66d9c9c84",
+                                                               ".agent/auditorias/REC-20261025-013/Diagnosticar-Transporte.ps1":  "??:0ad3c39825dd6937cd94c0da189a00ea3b97a594",
+                                                               ".agent/auditorias/REC-20261025-013/RESULTADO_REC013.md":  "??:742ad9c16519bcdb941356c5c77e26bd2d7ce516",
+                                                               ".agent/auditorias/REC-20261025-013/Validar-Rec013.ps1":  "??:70fb3d6572ae003fd0b8831c3aadd91f65679c13",
+                                                               ".agent/auditorias/REC-20261025-013/contrato-rec013.schema.json":  "??:af0c06b4a0617b7300cd6b181219fd1b41a794c7",
+                                                               ".agent/auditorias/REC-20261025-013/diagnosticar-transporte.sql":  "??:79e8fe804eb97d79db54c9eabf0c058c0fa59d29",
+                                                               ".agent/auditorias/REC-20261025-014/Capturar-CatalogoSaneado.ps1":  "??:9122bea9c2d9c2ceb8a4ba74e450f0cf5da0d219",
+                                                               ".agent/auditorias/REC-20261025-014/RESULTADO_REC014.md":  "??:bc7569d17ae871bed4d29730bc0193dacee24b93",
+                                                               ".agent/auditorias/REC-20261025-014/Validar-Rec014.ps1":  "??:52fcc560e764d9c2d9e5cbb1917fcde5b5d1cec5",
+                                                               ".agent/auditorias/REC-20261025-014/catalogo-saneado.sql":  "??:d54a45c19ed572098ccf0552627f7c8c19de8346",
+                                                               ".agent/auditorias/REC-20261025-014/contrato-rec014.schema.json":  "??:bd381845d638330b8f0f08c096d08787985b6170",
+                                                               ".agent/auditorias/REC-20261025-015/RESULTADO_REC015.md":  "??:be5fe4ac01e5e36cac63b1406fe7b3bb5a6b808e",
+                                                               ".agent/auditorias/REC-20261026-016/Capturar-CatalogoDocker.ps1":  "??:ac3b3d74348dfc68d7639c7e162b927b6ee9c398",
+                                                               ".agent/auditorias/REC-20261026-016/RESULTADO_REC016.md":  "??:c11fefbe7d0578aad6b0381f72e51979ed8a8dda",
+                                                               ".agent/auditorias/REC-20261026-016/Validar-Rec016.ps1":  "??:55e6a6fa0f2c02b601fdab723334d570c44515fc",
+                                                               ".agent/auditorias/REC-20261026-016/contrato-rec016.schema.json":  "??:83a3864bf35cad95aaaea20175229889a57804fb",
+                                                               ".agent/roadmaps/ORDEN_REC-20261025-003_rol_respaldo_minimo.md":  "??:50c1fede53629cd3f0f0c6eb0effe85e1355be1d",
+                                                               ".agent/roadmaps/ORDEN_REC-20261025-004_privilegios_public_respaldo.md":  "??:04d6e626c5a7ed83d3c833e9b4e5c4b1ad41b055",
+                                                               ".agent/roadmaps/ORDEN_REC-20261025-005_preimagen_public_lectura.md":  "??:bb84efe37979b71ddc4832a3c3eaf49370e9618f",
+                                                               ".agent/roadmaps/ORDEN_REC-20261025-006_fuente_y_envoltorio.md":  "??:b67bab4d48fed6489142d9aca50676cc92e5893c",
+                                                               ".agent/roadmaps/ORDEN_REC-20261025-007_captura_unica_public.md":  "??:a61a20a45337c55f9d5297bcfda46e6c06bef720",
+                                                               ".agent/roadmaps/ORDEN_REC-20261025-008_transporte_preimagen_public.md":  "??:c0dd36fbfe5bb59a887711eba13cba78d8666f80",
+                                                               ".agent/roadmaps/ORDEN_REC-20261025-009_matriz_consumidores_public.md":  "??:2ae0b496f7a91c45664baac2e58f1097354e92ca",
+                                                               ".agent/roadmaps/ORDEN_REC-20261025-012_respaldo_lectura.md":  "??:612883dcef1b95f3acc1a9cf07f781e2b4a36ac8",
+                                                               ".agent/roadmaps/ORDEN_REC-20261025-013_diagnostico_transporte.md":  "??:c5342fd69a394235f8d5c135b48d938aea9fa6e3",
+                                                               ".agent/roadmaps/ORDEN_REC-20261025-014_catalogo_saneado.md":  "??:89c5562cbaadc40d2c12cbed70852c324c357f53",
+                                                               ".agent/roadmaps/ORDEN_REC-20261025-015_catalogo_operacional.md":  "??:2cd89a01fb23930d4803fe9fbce4fdc5b943ff3c",
+                                                               ".agent/roadmaps/ORDEN_REC-20261026-016_transporte_docker.md":  "??:1a882b6d65dc500f1cfdf78ecd5d129a6a60aa78",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261025-003_rol_respaldo_minimo.md":  "??:777fe43a7f19fee58d8a13c1c315da1a6fd9f6ae",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261025-004_privilegios_public_respaldo.md":  "??:73a6fdf43ff998cff9c5ac3ceb257ba19ea1ec0d",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261025-005_preservacion_public_lectura.md":  "??:5911301e64c18c57676b3ab99f85a61aafc584db",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261025-006_preimagen_public_evidencia.md":  "??:91f55f0f4dffeada661f5ac1dc82cfb59bc61717",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261025-007_captura_unica_public.md":  "??:da15fd3c624aeccc8cf64f2e02d7739e0ae0b0c1",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261025-008_transporte_preimagen_public.md":  "??:f2d366f4ccd5446ef8f9cb62116b6e72e6b66c27",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261025-009_matriz_consumidores_public.md":  "??:1e154d4496838b24b24a96fe610606b3f9aa9ac8",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261025-010_cierre_documental_rec009.md":  "??:c928b44624200e247fc385472554eaf9db87a8e7",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261025-011_cierre_arnes_rec010.md":  "??:ec1c9daa41e12fca045ef6b4f0b16aa08886435d",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261025-012_respaldo_lectura.md":  "??:27882bdde5aa63140b18205ff0e4e823f45e0b9d",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261025-013_diagnostico_transporte.md":  "??:72116ffd68f89250fa0794ad8d91147132ba4658",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261025-014_catalogo_saneado.md":  "??:345155a547699a489c9eaaabf64195baf6b90cdd",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261025-015_catalogo_operacional.md":  "??:8cbf45d982184cb4c20c52ba38642b121fc37569",
+                                                               ".agent/roadmaps/ROADMAP_REC-20261026-016_transporte_docker.md":  "??:bf5936818c36c0ac13ddbc6218bf7b0fa42c379f",
+                                                               ".agents/desviaciones/DESVIACION-20261025-022.md":  "??:2052e4e35a9f8b264eba83443b09dfe8eae62cae",
+                                                               ".agents/desviaciones/DESVIACION-20261025-023.md":  "??:40c7b0a71f0524bfe406031d5cc0fce49acf5f6f",
+                                                               ".agents/desviaciones/DESVIACION-20261025-024.md":  "??:adf5d4ef879dd3f0aebd46eea29b4610a3126bb9",
+                                                               ".agents/desviaciones/DESVIACION-20261025-025.md":  "??:866b6db8f32cadcfa8852a5e1f370607b25ff180",
+                                                               ".agents/desviaciones/DESVIACION-20261025-026.md":  "??:317fa8b0a4a5a5aa07ad19e73bb0e0b030670afe",
+                                                               ".agents/desviaciones/DESVIACION-20261025-027.md":  "??:7e1e19d9b9f29a49f7f98749ab0a5e00722e4d8c",
+                                                               ".agents/desviaciones/DESVIACION-20261025-028.md":  "??:cd1d97ebd3309c244cfed8ca49d22630798bee65",
+                                                               ".agents/desviaciones/DESVIACION-20261025-029.md":  "??:a8a77ee01808a32926c38af0ab0fb890ed454093",
+                                                               ".agents/desviaciones/DESVIACION-20261025-030.md":  "??:dc3c644bd6de98a59d14d1434734682af94cb6b0",
+                                                               ".agents/desviaciones/DESVIACION-20261025-031.md":  "??:ad11c12ddef0d11081d50d54120f7d36092d1d85",
+                                                               ".agents/desviaciones/DESVIACION-20261025-032.md":  "??:51855a196f4ec86bcf77f20debf0e785e135c73e",
+                                                               ".agents/desviaciones/DESVIACION-20261025-033.md":  "??:2be1b1b769e860525db9227fdfd7df43e73f7599",
+                                                               ".agents/desviaciones/DESVIACION-20261025-034.md":  "??:6dba4f7cf2e509cdc76425daa654f6da66736a2e",
+                                                               ".agents/desviaciones/DESVIACION-20261025-035.md":  "??:35d2be06e0c1f6403aa7d36b70d03e07d74855b6",
+                                                               ".agents/desviaciones/DESVIACION-20261025-039.md":  "??:0341058abd685ba2ca42bac4589e6e15090c673d",
+                                                               ".agents/desviaciones/DESVIACION-20261025-040.md":  "??:a5ee70b5d3b366aad09102cda3a3b5aaf038f243",
+                                                               ".agents/desviaciones/DESVIACION-20261025-041.md":  "??:b04f10b81bea30388c8739f3f291fd33359de8f2",
+                                                               ".agents/desviaciones/DESVIACION-20261025-042.md":  "??:7c5c0a022059a8e619c6441ba239487c3b623d09",
+                                                               ".agents/desviaciones/DESVIACION-20261025-043.md":  "??:7d9f83cbd99448d3ad885ad999eed86c59c2ab5a",
+                                                               ".agents/desviaciones/DESVIACION-20261025-044.md":  "??:1ba9ee26ae62f2dfbb4049d83e92b9e48df18364",
+                                                               ".agents/desviaciones/DESVIACION-20261025-045.md":  "??:c37dcc4307f69f66c56e5ca932a0fb5c4457c295",
+                                                               ".agents/desviaciones/DESVIACION-20261025-046.md":  "??:d2e5821abe8512f5625adb1cb4292ad65dd12372",
+                                                               ".agents/desviaciones/DESVIACION-20261026-036.md":  "??:ed6f5b358764a488f343ed2a2eed6bde73e02a42",
+                                                               ".agents/desviaciones/DESVIACION-20261026-037.md":  "??:71588f30f0312b540d1eba04d59d6da6867ec879",
+                                                               ".agents/desviaciones/DESVIACION-20261026-038.md":  "??:13bdca73c96dfc1e4da634f5386af788ba83b268",
+                                                               ".agents/desviaciones/DESVIACION-20261026-039.md":  "??:abd4c0381f5913c966857130488bba191c4c86d5",
+                                                               "Application/UseCases/Cajas/Commands/CambiarEstadoCaja/CambiarEstadoCajaCommand.cs":  "??:8007c976760946c06dad71ce5d68e12f11ffd35e",
+                                                               "Application/UseCases/Cajas/Commands/CambiarEstadoCaja/CambiarEstadoCajaHandler.cs":  "??:8e8bfca304d28ad36b82c51fb79d4d627f527f8a",
+                                                               "Application/UseCases/Ventas/Commands/ActualizarVenta/ActualizarVentaHandler.cs":  "??:bb3e0939c09ed96d3d2d2f8d1001beb703964250",
+                                                               "Application/UseCases/Ventas/Commands/ActualizarVenta/ActualizarVentaVM.cs":  "??:be1f975b3c4502b4c615c9ca86306bb4cb9406f5",
+                                                               "Application/UseCases/Vouchers/Queries/ListarVouchers/ListarVouchersConsulta.cs":  "??:c9481d132b126f8df11a506b6e47d973d732308e",
+                                                               "Application/UseCases/Vouchers/Queries/ListarVouchers/ListarVouchersHandler.cs":  "??:c19f2a007d36c2a306ccd3de817dd7071ca0f4fc",
+                                                               "Application/UseCases/Vouchers/Queries/VoucherResumenDTO.cs":  "??:86177009c96e417ad74685978821fd06a496127e"
+                                                           },
+                                          "remotos":  {
+                                                          "origin":  {
+                                                                         "fetch":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/cxc-ventas-back",
+                                                                         "push":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/cxc-ventas-back"
+                                                                     }
+                                                      },
+                                          "refs":  {
+                                                       "refs/heads/codex/cierre-cxc-20260930":  "c18f373234d7654cc6fd040b87eaa92429e74f7c",
+                                                       "refs/heads/main":  "32846a32caacdd92300dc81ab66bf3776592d8a5",
+                                                       "refs/remotes/origin/HEAD":  "85f3dbf814724ea25d7edee35188d4f8f43413c9",
+                                                       "refs/remotes/origin/main":  "85f3dbf814724ea25d7edee35188d4f8f43413c9"
+                                                   }
+                                      },
+                  "cxc-ventas-front":  {
+                                           "estado":  "activo",
+                                           "rama":  "main",
+                                           "head":  "a2099abf7199784d985ed08c7e834009661c8165",
+                                           "sinConfirmar":  {
+                                                                "docs/CONTINUIDAD_AGENTES.md":  " M:6952c9ce75162ba307f2e0829952c94a80065a3b",
+                                                                "docs/decisions/ADR-CXC-20260824-001-adopcion-atomic-5-22.md":  " M:f9bf309b6ae28040ddbdd7efd0ca51654b977d19",
+                                                                "src/app/shared/ui/index.ts":  " M:8823611c092aeb10bda7df50f0aba3895f7bc33f"
+                                                            },
+                                           "remotos":  {
+                                                           "origin":  {
+                                                                          "fetch":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/cxc-ventas-front",
+                                                                          "push":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/cxc-ventas-front"
+                                                                      }
+                                                       },
+                                           "refs":  {
+                                                        "refs/heads/main":  "a2099abf7199784d985ed08c7e834009661c8165",
+                                                        "refs/remotes/origin/HEAD":  "2e8cd208c6bdbcda896bbc5c5eac87b2e45fe4d7",
+                                                        "refs/remotes/origin/main":  "2e8cd208c6bdbcda896bbc5c5eac87b2e45fe4d7"
+                                                    }
+                                       },
+                  "cxc-ventas-front_old":  {
+                                               "estado":  "activo",
+                                               "rama":  "main",
+                                               "head":  "9db1267acb701d24e8ff27e69dee9a8a61729b52",
+                                               "sinConfirmar":  {
+
+                                                                },
+                                               "remotos":  {
+                                                               "origin":  {
+                                                                              "fetch":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/cxc-ventas-front",
+                                                                              "push":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/cxc-ventas-front"
+                                                                          }
+                                                           },
+                                               "refs":  {
+                                                            "refs/heads/main":  "9db1267acb701d24e8ff27e69dee9a8a61729b52",
+                                                            "refs/remotes/origin/HEAD":  "2e8cd208c6bdbcda896bbc5c5eac87b2e45fe4d7",
+                                                            "refs/remotes/origin/main":  "2e8cd208c6bdbcda896bbc5c5eac87b2e45fe4d7"
+                                                        }
+                                           },
+                  "demo-chasis-front":  {
+                                            "estado":  "activo",
+                                            "rama":  "master",
+                                            "head":  "23aac3b3e8bf948e1c812c43a0971afa979d8322",
+                                            "sinConfirmar":  {
+                                                                 "docs/CONTINUIDAD_AGENTES.md":  " M:6c003db4ed8c894dd57e0f2e875fa37540966565"
+                                                             },
+                                            "remotos":  {
+
+                                                        },
+                                            "refs":  {
+                                                         "refs/heads/master":  "23aac3b3e8bf948e1c812c43a0971afa979d8322"
+                                                     }
+                                        },
+                  "docfactory":  {
+                                     "estado":  "activo",
+                                     "rama":  "master",
+                                     "head":  "3e149d9688d939096479778f25fa05d6db5b4a01",
+                                     "sinConfirmar":  {
+                                                          "docs/CONTINUIDAD_AGENTES.md":  " M:32c14071afa5df3db8710ae7cf98ba6db328e362"
+                                                      },
+                                     "remotos":  {
+
+                                                 },
+                                     "refs":  {
+                                                  "refs/heads/master":  "3e149d9688d939096479778f25fa05d6db5b4a01"
+                                              }
+                                 },
+                  "Entregable-CitasMedicas":  {
+                                                  "estado":  "activo",
+                                                  "rama":  "main",
+                                                  "head":  "508abed39d6e314017633bf0232d573dc5b992ed",
+                                                  "sinConfirmar":  {
+
+                                                                   },
+                                                  "remotos":  {
+                                                                  "origin":  {
+                                                                                 "fetch":  "https://github.com/archware/citas-medicas.git",
+                                                                                 "push":  "https://github.com/archware/citas-medicas.git"
+                                                                             }
+                                                              },
+                                                  "refs":  {
+                                                               "refs/heads/main":  "508abed39d6e314017633bf0232d573dc5b992ed",
+                                                               "refs/remotes/origin/HEAD":  "508abed39d6e314017633bf0232d573dc5b992ed",
+                                                               "refs/remotes/origin/main":  "508abed39d6e314017633bf0232d573dc5b992ed"
+                                                           }
+                                              },
+                  "herramientas":  {
+                                       "estado":  "inactivo",
+                                       "rama":  "main",
+                                       "head":  "00068099fe85f7956bd4ee37a9662ed1e1ab6c20",
+                                       "sinConfirmar":  {
+
+                                                        },
+                                       "remotos":  {
+
+                                                   },
+                                       "refs":  {
+                                                    "refs/heads/main":  "00068099fe85f7956bd4ee37a9662ed1e1ab6c20"
+                                                }
+                                   },
+                  "hra-database-contracts":  {
+                                                 "estado":  "archivado",
+                                                 "rama":  "main",
+                                                 "head":  "fb776896b90bc6df3164edf47983543a82d5397d",
+                                                 "sinConfirmar":  {
+
+                                                                  },
+                                                 "remotos":  {
+
+                                                             },
+                                                 "refs":  {
+                                                              "refs/heads/main":  "fb776896b90bc6df3164edf47983543a82d5397d"
+                                                          }
+                                             },
+                  "hra-desktop-contracts":  {
+                                                "estado":  "archivado",
+                                                "rama":  "main",
+                                                "head":  "09ad2f4f4f3775452c703936abe2adc57aa9f12b",
+                                                "sinConfirmar":  {
+                                                                     "docs/CONTINUIDAD_AGENTES.md":  " M:edbaa3ebbd00b1ede834c692f843de90fbf2f3db"
+                                                                 },
+                                                "remotos":  {
+
+                                                            },
+                                                "refs":  {
+                                                             "refs/heads/main":  "09ad2f4f4f3775452c703936abe2adc57aa9f12b"
+                                                         }
+                                            },
+                  "hra-platform-orchestrator":  {
+                                                    "estado":  "archivado",
+                                                    "rama":  "main",
+                                                    "head":  "4ba0f3de198c85ceaa589c07ed0a6295e1bb0371",
+                                                    "sinConfirmar":  {
+
+                                                                     },
+                                                    "remotos":  {
+
+                                                                },
+                                                    "refs":  {
+                                                                 "refs/heads/main":  "4ba0f3de198c85ceaa589c07ed0a6295e1bb0371"
+                                                             }
+                                                },
+                  "hra_dashboard_resultados":  {
+                                                   "estado":  "archivado",
+                                                   "rama":  "master",
+                                                   "head":  "24b94782f285117c50bbe21961edff0332a174a0",
+                                                   "sinConfirmar":  {
+                                                                        "docs/CONTINUIDAD_AGENTES.md":  " M:aaa62e356fa2324be4238bcb7d9dc4f8cb548820"
+                                                                    },
+                                                   "remotos":  {
+
+                                                               },
+                                                   "refs":  {
+                                                                "refs/heads/master":  "24b94782f285117c50bbe21961edff0332a174a0"
+                                                            }
+                                               },
+                  "HRA_Streaming_Nexus":  {
+                                              "estado":  "archivado",
+                                              "rama":  "main",
+                                              "head":  "4d684c0c1d5dfcdf94fbb0e903d841c23ee013da",
+                                              "sinConfirmar":  {
+
+                                                               },
+                                              "remotos":  {
+
+                                                          },
+                                              "refs":  {
+                                                           "refs/heads/main":  "4d684c0c1d5dfcdf94fbb0e903d841c23ee013da"
+                                                       }
+                                          },
+                  "pdf-tool":  {
+                                   "estado":  "activo",
+                                   "rama":  "master",
+                                   "head":  "4b85bbc66d4e14637027553206da08c8bce2086d",
+                                   "sinConfirmar":  {
+                                                        "frontend/src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.css":  " M:4893dbe11c391ef43acbf14038755c9845eff8a9",
+                                                        "frontend/src/app/shared/ui/organisms/scroll-overlay/scroll-overlay.component.ts":  " M:720d172dc9ac699e88e22bb4d2e09cc08dc150ce"
+                                                    },
+                                   "remotos":  {
+
+                                               },
+                                   "refs":  {
+                                                "refs/heads/master":  "4b85bbc66d4e14637027553206da08c8bce2086d"
+                                            }
+                               },
+                  "PREST-20260726-084-release-source":  {
+                                                            "estado":  "instantanea",
+                                                            "rama":  "release/PREST-20260726-084",
+                                                            "head":  "8dac43318c96098f55acfae82bfdd29bf64c2da6",
+                                                            "sinConfirmar":  {
+
+                                                                             },
+                                                            "remotos":  {
+
+                                                                        },
+                                                            "refs":  {
+                                                                         "refs/heads/release/PREST-20260726-084":  "8dac43318c96098f55acfae82bfdd29bf64c2da6"
+                                                                     }
+                                                        },
+                  "PREST-20260726-085-release-source":  {
+                                                            "estado":  "instantanea",
+                                                            "rama":  "release/PREST-20260726-085",
+                                                            "head":  "b8b8d6eb77bc6c8498a94ba47572944e8dd91544",
+                                                            "sinConfirmar":  {
+
+                                                                             },
+                                                            "remotos":  {
+
+                                                                        },
+                                                            "refs":  {
+                                                                         "refs/heads/release/PREST-20260726-085":  "b8b8d6eb77bc6c8498a94ba47572944e8dd91544"
+                                                                     }
+                                                        },
+                  "prestamos_back":  {
+                                         "estado":  "activo",
+                                         "rama":  "PREST-20260805-194-par30",
+                                         "head":  "412052685db8a8de51ef64be4c5e7baaa1f1fbeb",
+                                         "sinConfirmar":  {
+                                                              "HRA.Application/Common/Interfaces/IExternalPaymentWriter.cs":  " M:54394110be270ac6e7fbe49855503ef2f9664798",
+                                                              "HRA.Application/Common/Interfaces/IExternalSavingsDepositWriter.cs":  " M:6e32c00ec72238188bf78e511fd0748da2c6ac58",
+                                                              "HRA.Application/UseCases/Credito_/Commands/NewCredito/NewCreditoHandler.cs":  " M:2bfd6af40c30095014cf2d1d525034e949aeb656",
+                                                              "HRA.Application/UseCases/Credito_/Queries/SimularCreditoV2/SimularCreditoV2Handler.cs":  " M:ecb3895839b74c7e96efa587c4c06ff2c7e87a95",
+                                                              "HRA.Application/UseCases/ExternalPayments/Commands/RegisterExternalPayment/RegisterExternalPaymentHandler.cs":  " M:a63ba1424579fc894dcd6d4a7ca172b21b2fd987",
+                                                              "HRA.Application/UseCases/ExternalPayments/Commands/RegisterExternalSavingsDeposit/RegisterExternalSavingsDepositCommand.cs":  " M:d1abe9428e1fb50004803e1656de2e593bffbcfa",
+                                                              "HRA.Infrastructure/Persintence/Services/AccountMovementWriter.cs":  " M:33c619a250e3e2a8060adaaa3cc2fda0e329af3f",
+                                                              "HRA.Infrastructure/Persintence/Services/CashDenominationLedger.cs":  " M:d2f45eb7c0e38192266a2903836d13757fd43da5",
+                                                              "HRA.Infrastructure/Persintence/Services/CreditApplicationStore.cs":  " M:34cebae9d73f4548ecdd6050d87110a8ae014d89",
+                                                              "HRA.Infrastructure/Persintence/Services/ExternalPaymentWriter.cs":  " M:c809c9f54554dad3a588b0656ea512ae79eb0d14",
+                                                              "HRA.Infrastructure/Persintence/Services/ExternalSavingsDepositWriter.cs":  " M:1622ed97f51a2114fd7da3626fd20da6887c8476",
+                                                              "HRA.Infrastructure/Persintence/Services/InstallmentPaymentWriter.cs":  " M:75b5531dc8d188685ce0dcb88a54967f6574929f",
+                                                              "docs/CONTINUIDAD_AGENTES.md":  " M:a01d52492cef862727839aa042dc19c786fb3b6e",
+                                                              "scripts/deployment/New-ProductionCandidate.ps1":  " M:2e133785c823f137e193e46ef521dcd981183e55",
+                                                              "scripts/deployment/Test-ProductionCandidate.ps1":  " M:99c4d6c567bd1c9b5ffff311a1836f7a44a5a1eb",
+                                                              "scripts/deployment/tests/Test-SourceBoundProductionCandidate.Synthetic.ps1":  " M:ea898ac6c322ac9515044dcf18fd7f7d68e445c6",
+                                                              "tests/HRA.Application.UnitTests/HRA.Application.UnitTests.csproj":  " M:c7c6f440385e1ada2c7f19cec1640e118fd1d0f9",
+                                                              "tests/HRA.Application.UnitTests/UseCases/Credito_/Commands/NewCredito/NewCreditoHandlerTests.cs":  " M:d16c01ed0fbbd93b9c92cab6a75cccedee877a74",
+                                                              "tests/HRA.Application.UnitTests/UseCases/Credito_/Queries/SimularCreditoV2/SimularCreditoV2HandlerTests.cs":  " M:cbb33f6da563eaf4c8e4fc5c4cc22fd0cd489726",
+                                                              "tests/HRA.Infrastructure.IntegrationTests/HRA.Infrastructure.IntegrationTests.csproj":  " M:b4ff640a7d3115dea0be934b25ead7fa8311c629",
+                                                              "tests/HRA.Infrastructure.IntegrationTests/Persistence/Services/AccountMovementWriterDatabaseTests.cs":  " M:1a4c0fd2ee87ee7f65dc0cafe652e344e4501b52",
+                                                              "tests/HRA.Infrastructure.IntegrationTests/Persistence/Services/CreditApplicationStoreDatabaseTests.cs":  " M:747a89ac4ddbdb67ba27776208876adf61dfd2be",
+                                                              "tests/HRA.Infrastructure.IntegrationTests/Persistence/Services/ExternalPaymentWriterDatabaseTests.cs":  " M:087690f2b94e4f4ed73262d21736140873dcf1ac",
+                                                              "tests/HRA.Infrastructure.IntegrationTests/Persistence/Services/ExternalSavingsDepositWriterDatabaseTests.cs":  " M:6aad73e003485a22692ce35165634235ad6387a1",
+                                                              "tests/HRA.Infrastructure.IntegrationTests/Persistence/Services/InstallmentPaymentWriterDatabaseTests.cs":  " M:35bdc874c987d2e40b2261d72b91f5a087bb6d1d",
+                                                              ".agent/roadmaps/ROADMAP_PREST-20261026-240_preparacion_produccion.md":  "??:86a99b79782d258d0e0a4f800cbf8434e0a7ac3f",
+                                                              ".agents/desviaciones/DESVIACION-PREST-20261026-240-001.md":  "??:fc1ff8a40bac5d83bb0d2b2ba09041e330233bb0",
+                                                              "HRA.Infrastructure/DB_query/migrations/077_PREST-20261026-240_provision_administrativa_inicial.rollback.sql":  "??:5ec5b87cb354f77e6c918ddf5e1e996705e87d5e",
+                                                              "HRA.Infrastructure/DB_query/migrations/077_PREST-20261026-240_provision_administrativa_inicial.up.sql":  "??:a6a06972a2ff9c8184bbeb520895b3a30e93ccb9",
+                                                              "HRA.Infrastructure/DB_query/migrations/077_PREST-20261026-240_provision_administrativa_inicial.verify.sql":  "??:b29d6264f98513e66ebfadeec0ff35513bdbb0eb",
+                                                              "scripts/deployment/ContratoMigraciones.psm1":  "??:3ddde75aa91ac78addbe75392159a03d21b0fd4a",
+                                                              "scripts/deployment/politica-migraciones.json":  "??:864a4df7d1afbcdb56d7a66aecd3452b9b4451ca",
+                                                              "scripts/deployment/tests/Test-CandidatoActual.Synthetic.ps1":  "??:9226b0650247f806bbe51f303e64221c4a7abf26",
+                                                              "scripts/deployment/tests/Test-ContratoMigraciones.Synthetic.ps1":  "??:a641e7491b25a93bd9d438de7bd19926cb124918",
+                                                              "tests/HRA.Application.UnitTests/Infrastructure/IntegridadFinancieraConsultasTests.cs":  "??:9510f87c380e347df0832dc519ec2ff457f43f4b",
+                                                              "tests/HRA.Application.UnitTests/ProvisionInicial/ProvisionInicialTests.cs":  "??:28eadbe83e10d4950fe4c40f02d14776f5207d3a",
+                                                              "tests/HRA.Application.UnitTests/UseCases/ExternalPayments/JornadaCajaExternaHandlerTests.cs":  "??:883ae98a1ba0dd3054f1ebd22229eaaa21b309ba",
+                                                              "tests/HRA.Infrastructure.IntegrationTests/Persistence/Services/ConcurrenciaCierreCajaDatabaseTests.cs":  "??:ce75dcaee38260fb7c540ecbe5f2bacb1f2b2a53",
+                                                              "tests/HRA.Infrastructure.IntegrationTests/ProvisionInicial/ProvisionInicialDatabaseTests.cs":  "??:e6e4920de16fd16c890ff1d76c4c07c72a40b14d",
+                                                              "tools/W_Prestamos_Administracion/Application/ProvisionarAdministradorInicialComando.cs":  "??:f2618e1c8bf0bc88f596e6cc34f6acbc1a005236",
+                                                              "tools/W_Prestamos_Administracion/Application/ProvisionarAdministradorInicialManejador.cs":  "??:7afd99abd3479530705b52cfac3aedd72bcff0d2",
+                                                              "tools/W_Prestamos_Administracion/Application/ResultadoProvisionInicialDto.cs":  "??:905ac1b198bfabe01556c3ad02b9da4107111d55",
+                                                              "tools/W_Prestamos_Administracion/Application/SolicitudProvisionInicialDto.cs":  "??:c3b4603e806083a20867bf6130dcaa4413ca7e76",
+                                                              "tools/W_Prestamos_Administracion/Domain/RegistroProvisionInicial.cs":  "??:ab1a7d5bd0ac082b70d752e3dbfcb168befc1eb1",
+                                                              "tools/W_Prestamos_Administracion/Infrastructure/ActorProvisionInicial.cs":  "??:b1f5edde850d206f7b2389ddbb0c17ecad39ae19",
+                                                              "tools/W_Prestamos_Administracion/Infrastructure/ContextoProvisionInicial.cs":  "??:a6c7fb35fa3f2a9c0a5041c6dff945ca3f907989",
+                                                              "tools/W_Prestamos_Administracion/Infrastructure/EntornoProvisionInicial.cs":  "??:a6883f98a68330c18fa4ef12474e4914bccaa583",
+                                                              "tools/W_Prestamos_Administracion/Infrastructure/RegistroMigracionProvision.cs":  "??:af8bd70438c44c1dbd0436b0ada3a832e21500a5",
+                                                              "tools/W_Prestamos_Administracion/Infrastructure/RegistroProvisionInicialMap.cs":  "??:8a7183e20bdb612302c451c7f0d17fc9c8d03054",
+                                                              "tools/W_Prestamos_Administracion/Infrastructure/RelojProvisionInicial.cs":  "??:6ff955bfc223f38de265f56b8d77c35692f0f026",
+                                                              "tools/W_Prestamos_Administracion/Infrastructure/RepositorioProvisionInicial.cs":  "??:a857d4f2fac8557dac77804891a99b0085fc3afe",
+                                                              "tools/W_Prestamos_Administracion/Program.cs":  "??:a6163913ba876adeb017decc7de5879acd5c2fcc",
+                                                              "tools/W_Prestamos_Administracion/ProgramaProvisionInicial.cs":  "??:4ab7bdb51ab5633e08eb86894c41e9207e48613a",
+                                                              "tools/W_Prestamos_Administracion/W_Prestamos_Administracion.csproj":  "??:67f64d32307bc30553808418c424f92cad863900"
+                                                          },
+                                         "remotos":  {
+                                                         "origin":  {
+                                                                        "fetch":  "https://CREDENCIAL-RETIRADA@dev.azure.com/business-projects/App_prestamos/_git/prestamos_back",
+                                                                        "push":  "https://CREDENCIAL-RETIRADA@dev.azure.com/business-projects/App_prestamos/_git/prestamos_back"
+                                                                    }
+                                                     },
+                                         "refs":  {
+                                                      "refs/heads/Luis_back":  "e505ca7694852bdbc78d8aaea334c1737f91ab29",
+                                                      "refs/heads/PREST-20260805-194-par30":  "412052685db8a8de51ef64be4c5e7baaa1f1fbeb",
+                                                      "refs/heads/cambio-final":  "1b8f1c4391c7f8856fbacaba2965945a96e5123c",
+                                                      "refs/heads/jhenry_back":  "924f10ddb44c83c008322900fcccb69934bd21a8",
+                                                      "refs/heads/main":  "924f10ddb44c83c008322900fcccb69934bd21a8",
+                                                      "refs/remotes/origin/HEAD":  "924f10ddb44c83c008322900fcccb69934bd21a8",
+                                                      "refs/remotes/origin/Luis_back":  "e505ca7694852bdbc78d8aaea334c1737f91ab29",
+                                                      "refs/remotes/origin/PREST-20260805-194-par30":  "e386af917364ccf72b53862f57f749d02b80ddc3",
+                                                      "refs/remotes/origin/cambio-final":  "1b8f1c4391c7f8856fbacaba2965945a96e5123c",
+                                                      "refs/remotes/origin/jhenry_back":  "924f10ddb44c83c008322900fcccb69934bd21a8",
+                                                      "refs/remotes/origin/main":  "924f10ddb44c83c008322900fcccb69934bd21a8",
+                                                      "refs/remotes/origin/victor_back":  "83fc8c70ee920b69e683cd6ce9735d200aeb6d0c",
+                                                      "refs/tags/PREST-20260728-111":  "c5ce4c16d9db22f6534a04ee3004cc2b9c2b06cc",
+                                                      "refs/tags/PREST-20260728-112":  "1ed982922aba828c0e32ee8a5035a63004119d4c",
+                                                      "refs/tags/PREST-20260729-138":  "4b26a4c8ff3c4c2d64520115fd55496ed4cb078c"
+                                                  }
+                                     },
+                  "prestamo_front_atomic":  {
+                                                "estado":  "activo",
+                                                "rama":  "main",
+                                                "head":  "500a8d689433e5a90ba4df59151c3fc92d3305e0",
+                                                "sinConfirmar":  {
+                                                                     "docs/ADN_ATOMIC_CONTRASTE.md":  " M:130efdad98220331b34114508c572eef684a2248",
+                                                                     "docs/CONTINUIDAD_AGENTES.md":  " M:785bd9833ca9d1210ee6804053591d0c6eee567b",
+                                                                     "docs/atomic-provenance.json":  " M:9d9d01e2fe628004416e76f590e274128e6e0a3e",
+                                                                     "package.json":  " M:e634f4c1f68df1980252b143491937f9fb807394",
+                                                                     "playwright.config.ts":  " M:27333df7b01b31126b8e79dc92e0a0a8c1707d24",
+                                                                     "scripts/check-atomic-rules.mjs":  " M:32d125eeeadda8ca14948bea24b5256d5b958786",
+                                                                     "src/app/core/auth/auth-facade.spec.ts":  " M:dd91e2ab13990163ade71934be0bf71cb46bfd3d",
+                                                                     "src/app/core/auth/auth-facade.ts":  " M:99ab0531c30ef00cd1376641e50262177668a2f2",
+                                                                     "src/app/core/auth/auth-store.spec.ts":  " M:6989e5121732282bf02d231128f9ab1945b31dbc",
+                                                                     "src/app/core/auth/auth-store.ts":  " M:7c0de188a8f58cfa111385c6be169fa33f7cabdc",
+                                                                     "src/app/core/auth/auth.interceptor.spec.ts":  " M:46056bb3469153062378375510d529eb0edc8056",
+                                                                     "src/app/core/auth/auth.interceptor.ts":  " M:607b8399ee3ad223126cfb1e42354439d1dcb805",
+                                                                     "src/app/features/config/company/company-page.html":  " M:3f683830d1c44c73deaa87c085cef899f8324414",
+                                                                     "src/app/features/config/company/company-page.scss":  " M:f76b7d753205e85e85b0292e54e6689a4f0935bf",
+                                                                     "src/app/features/config/company/company-page.ts":  " M:332a1c72d5870add64e32e39402c397c7b87a6d9",
+                                                                     "src/app/features/dashboard/dashboard.html":  " M:3827844c21af145f3bccffbee687bdc051dd49d1",
+                                                                     "src/app/features/dashboard/dashboard.scss":  " M:146d151b752fb59e348b1cd38f1ce76f15619c8b",
+                                                                     "src/app/features/dashboard/dashboard.ts":  " M:a87f3ada4b5c543d6114acf10f1c92cbea232f74",
+                                                                     "src/app/features/finance/collector-portfolios/collector-portfolios-page.html":  " M:370f18a0ed02d998d26b15fd9561136959fcaf2d",
+                                                                     "src/app/features/finance/collector-portfolios/collector-portfolios-page.scss":  " M:6170b42d62035fcb09921819f6d45e84f09d97d1",
+                                                                     "src/app/features/finance/collector-portfolios/collector-portfolios-page.ts":  " M:fed9bd93452b0adb2c8df1feeb1ec6496997f930",
+                                                                     "src/app/features/finance/credit-applications/credit-applications-api.ts":  " M:0332421b6681d18d341088d020e6286e6d6170d0",
+                                                                     "src/app/features/finance/credit-applications/credit-applications-facade.spec.ts":  " M:2ef509fd932d90dc6e0cee732277a5299fd091aa",
+                                                                     "src/app/features/finance/credit-applications/credit-applications-facade.ts":  " M:eed40388accc7c150cbff0a450da016db6f7f751",
+                                                                     "src/app/features/finance/credit-applications/credit-applications-page.html":  " M:f9da3f036a0aa7d59b434bee5171bdf9a777aa38",
+                                                                     "src/app/features/finance/credit-applications/credit-applications-page.scss":  " M:db8ff89cba16048ca75a6443f10e0bcd2aea8436",
+                                                                     "src/app/features/finance/credit-applications/credit-applications-page.ts":  " M:8984c84201c3f2c3c21b18500c99cdc64990cb7a",
+                                                                     "src/app/features/finance/credit/credit-application-dialog.spec.ts":  " M:af36d79bd7945a74b0bf58985ab3e95cdf5d3b65",
+                                                                     "src/app/features/finance/credit/credit-application-dialog.ts":  " M:993cefd4da084ea66c2d1c2eab6b024049e50746",
+                                                                     "src/app/features/finance/credit/credit-page.spec.ts":  " M:7eaf8f7490eff78e58d7043a927453e963ea12c7",
+                                                                     "src/app/features/finance/operations/operations-api.spec.ts":  " M:4452ece9f79e9ed0562d40e367350509f2ed9673",
+                                                                     "src/app/features/finance/operations/operations-api.ts":  " M:162743cae0b9a1261234bd60785860d88e2aa01a",
+                                                                     "src/app/features/finance/operations/operations-facade.spec.ts":  " M:73b9da62f5a72d68f8510b63b8d3cd9ddb191917",
+                                                                     "src/app/features/finance/operations/operations-facade.ts":  " M:19948f0a631cb31249705cb5d6b12829bea2f312",
+                                                                     "src/app/features/finance/operations/operations-page.html":  " M:db1853fb5b43ea9167f89a1a7a66624f0374a9fe",
+                                                                     "src/app/features/finance/operations/operations-page.spec.ts":  " M:3b7f2ec19f0dd0f3735ab15dfdda1b96abdae3c8",
+                                                                     "src/app/features/finance/operations/operations.models.ts":  " M:78c160df22db92dbc11dccca2041fb17209639fa",
+                                                                     "src/app/layout/app-shell/app-shell.scss":  " M:a92d9ec743a346701d1d38433f96625214cfcf67",
+                                                                     ".agent/roadmaps/ROADMAP_PREST-20261026-240_preparacion_produccion.md":  "??:b1fc45e028ac0b53488fa8a3b729820190c1ab2c",
+                                                                     "scripts/check-atomic-rules.test.mjs":  "??:818a5bc66a2d3965a5d4d8f665ebdb133d359f9d",
+                                                                     "scripts/preparar-playwright.mjs":  "??:04f079b9c07c48a3d3569c1c1150af37ad41b5b7",
+                                                                     "scripts/preparar-playwright.test.mjs":  "??:2712b6521d848fa0ca62903587215c58ca8dcee0",
+                                                                     "src/app/features/finance/credit-applications/credit-applications-api.spec.ts":  "??:c89ed46d8e1dafcb2bfaacb6ac3e43a2e5ba28d3",
+                                                                     "src/app/features/finance/credit-applications/credit-applications-page.spec.ts":  "??:3758719b782c407b6a0284bbf9d454c516354bb4",
+                                                                     "src/app/ui/atoms/progress/progress.component.css":  "??:7a67a9344389087b23aa17fcd0132edf8585aec2",
+                                                                     "src/app/ui/atoms/progress/progress.component.ts":  "??:df3ea2d604ceaefdfbc25936585aaee4306e68f3",
+                                                                     "src/app/ui/directives/variables-css.directive.spec.ts":  "??:fe419777ca6dfa8c731400a1f0ba2342928f01e3",
+                                                                     "src/app/ui/directives/variables-css.directive.ts":  "??:3669d89b4fc9332d8b8e086ff4c60685c7173b23",
+                                                                     "src/app/ui/organisms/scroll-overlay/scroll-overlay.component.css":  "??:430fcd4188f26caac0a3364b1579b52dbd1ca4b1",
+                                                                     "src/app/ui/organisms/scroll-overlay/scroll-overlay.component.html":  "??:ffdf6fd346b9c81467f245a29f3fac83f8efefb5",
+                                                                     "src/app/ui/organisms/scroll-overlay/scroll-overlay.component.ts":  "??:dc37f9db6a7ad12278d318240dba5dce1a7a9887"
+                                                                 },
+                                                "remotos":  {
+                                                                "origin":  {
+                                                                               "fetch":  "https://github.com/archware/prestamo_front_atomic.git",
+                                                                               "push":  "https://github.com/archware/prestamo_front_atomic.git"
+                                                                           }
+                                                            },
+                                                "refs":  {
+                                                             "refs/heads/PREST-20260805-194-contraste-y-531":  "ec840794e2dc09fc5dd30c854ca1de0bd26fb593",
+                                                             "refs/heads/main":  "500a8d689433e5a90ba4df59151c3fc92d3305e0",
+                                                             "refs/remotes/origin/HEAD":  "dddb442d2449b0551cb6e27fdd41672e537530ff",
+                                                             "refs/remotes/origin/PREST-20260805-194-contraste-y-531":  "ec840794e2dc09fc5dd30c854ca1de0bd26fb593",
+                                                             "refs/remotes/origin/main":  "dddb442d2449b0551cb6e27fdd41672e537530ff",
+                                                             "refs/tags/PREST-20260728-109":  "054be8b8fb28b69e009b5569db5739fcb5648bc1",
+                                                             "refs/tags/PREST-20260728-110":  "033f5368c0d53afc0b0d5e5a9890834146e00b39",
+                                                             "refs/tags/PREST-20260728-111":  "041de5717ded9951f68a90334541916ab62dfd48",
+                                                             "refs/tags/PREST-20260728-112":  "c99a79f8b5f56a9529361e4f1b866a2ed0f159cb",
+                                                             "refs/tags/PREST-20260729-130":  "a67098945b9ce09eeedc60937cf633ac59555d1c",
+                                                             "refs/tags/PREST-20260729-131":  "526720b4fabd5b1d2b23895f07f4a569b01b0407",
+                                                             "refs/tags/PREST-20260729-138":  "30ea39a0b6b29a85ede3726dec9b05075f4f8c3a"
+                                                         }
+                                            },
+                  "saas-admin-front":  {
+                                           "estado":  "activo",
+                                           "rama":  "master",
+                                           "head":  "5b5d08729c12e70a21f9cd6cdb2a3bcd40c6a369",
+                                           "sinConfirmar":  {
+                                                                "docs/CONTINUIDAD_AGENTES.md":  " M:ee0b316c6681610a93d3e3d24c2221491e29145c"
+                                                            },
+                                           "remotos":  {
+
+                                                       },
+                                           "refs":  {
+                                                        "refs/heads/master":  "5b5d08729c12e70a21f9cd6cdb2a3bcd40c6a369"
+                                                    }
+                                       },
+                  "saas-erp-front":  {
+                                         "estado":  "activo",
+                                         "rama":  "master",
+                                         "head":  "70d53504c1a216c965fb7f58e30d5f2af851b058",
+                                         "sinConfirmar":  {
+                                                              "docs/CONTINUIDAD_AGENTES.md":  " M:8b2785e83db74ce5f1d2787c102588d610ac4db6"
+                                                          },
+                                         "remotos":  {
+                                                         "origin":  {
+                                                                        "fetch":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/saas-erp-front",
+                                                                        "push":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/saas-erp-front"
+                                                                    }
+                                                     },
+                                         "refs":  {
+                                                      "refs/heads/master":  "70d53504c1a216c965fb7f58e30d5f2af851b058",
+                                                      "refs/remotes/origin/HEAD":  "30a0f07998876c72ef897f9ddfb14317964261b3",
+                                                      "refs/remotes/origin/master":  "30a0f07998876c72ef897f9ddfb14317964261b3"
+                                                  }
+                                     },
+                  "saas-pos-front":  {
+                                         "estado":  "activo",
+                                         "rama":  "master",
+                                         "head":  "18ae1455b1e2a582939d7b5696853c1d2a85fe56",
+                                         "sinConfirmar":  {
+                                                              "docs/CONTINUIDAD_AGENTES.md":  " M:44e4752493cec547b9e216cc9e6dc7670a8e0524"
+                                                          },
+                                         "remotos":  {
+                                                         "origin":  {
+                                                                        "fetch":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/saas-pos-front",
+                                                                        "push":  "https://CREDENCIAL-RETIRADA@dev.azure.com/arqueware/10022024-BASE-WEB/_git/saas-pos-front"
+                                                                    }
+                                                     },
+                                         "refs":  {
+                                                      "refs/heads/master":  "18ae1455b1e2a582939d7b5696853c1d2a85fe56",
+                                                      "refs/remotes/origin/HEAD":  "7113d7a3f15c475aac9cfb6b3d78f06109e77707",
+                                                      "refs/remotes/origin/main":  "7113d7a3f15c475aac9cfb6b3d78f06109e77707",
+                                                      "refs/remotes/origin/master":  "4e4ec64eee8734241a66a5556b18875fa0f60881"
+                                                  }
+                                     },
+                  "SGP_BE":  {
+                                 "estado":  "excluido",
+                                 "rama":  "sgp_cambios",
+                                 "head":  "e74930d9e171861094ac4bd8be8d5410faa1b15f",
+                                 "sinConfirmar":  {
+
+                                                  },
+                                 "remotos":  {
+                                                 "origin":  {
+                                                                "fetch":  "https://github.com/hrayacuchoDESA/SGP_BE.git",
+                                                                "push":  "https://github.com/hrayacuchoDESA/SGP_BE.git"
+                                                            }
+                                             },
+                                 "refs":  {
+                                              "refs/heads/main":  "a2f89b09d4de838707aa977ac15def5369b50746",
+                                              "refs/heads/sgp_cambios":  "e74930d9e171861094ac4bd8be8d5410faa1b15f",
+                                              "refs/tags/1.0.0":  "218525f4d93899d274336cf0765189fc73a0f6c5"
+                                          }
+                             },
+                  "test_sql":  {
+                                   "estado":  "inactivo",
+                                   "rama":  "master",
+                                   "head":  "5c0b7d02573498ebc1af1846264c69a839e4cd50",
+                                   "sinConfirmar":  {
+
+                                                    },
+                                   "remotos":  {
+
+                                               },
+                                   "refs":  {
+                                                "refs/heads/master":  "5c0b7d02573498ebc1af1846264c69a839e4cd50"
+                                            }
+                               }
+              }
+}

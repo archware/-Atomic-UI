@@ -25,6 +25,7 @@ app-query-toolbar {
 
 .pagina-crud-accordion__dialogo-titulo {
   margin: 0;
+  font-family: var(--font-family-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-weight-title);
 }
@@ -69,6 +70,7 @@ app-query-toolbar {
   padding: var(--space-4) var(--space-5);
   border-bottom: var(--border-width-thin) solid var(--border-color);
   background-color: var(--modal-header-bg, var(--surface-bg, var(--bg-primary)));
+  font-family: var(--font-family-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-weight-title);
 }

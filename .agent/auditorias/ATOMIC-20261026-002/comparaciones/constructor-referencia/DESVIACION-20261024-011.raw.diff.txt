@@ -1,0 +1,33 @@
+warning: in the working copy of 'C:\Users\cotaha\AppData\Local\Temp\codex-atomic-20261026-002\antes\.agents\desviaciones\DESVIACION-20261024-011.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'C:\Users\cotaha\source\repos\-Atomic-UI\.agents\desviaciones\DESVIACION-20261024-011.md', LF will be replaced by CRLF the next time Git touches it
+diff --git "a/C:\\Users\\cotaha\\AppData\\Local\\Temp\\codex-atomic-20261026-002\\antes\\.agents\\desviaciones\\DESVIACION-20261024-011.md" "b/C:\\Users\\cotaha\\source\\repos\\-Atomic-UI\\.agents\\desviaciones\\DESVIACION-20261024-011.md"
+index b0afe8f..792eb54 100644
+--- "a/C:\\Users\\cotaha\\AppData\\Local\\Temp\\codex-atomic-20261026-002\\antes\\.agents\\desviaciones\\DESVIACION-20261024-011.md"
++++ "b/C:\\Users\\cotaha\\source\\repos\\-Atomic-UI\\.agents\\desviaciones\\DESVIACION-20261024-011.md"
+@@ -6 +6 @@ fecha: 2026-10-24
+-estado: abierta
++estado: corregida
+@@ -51,0 +52,23 @@ esta unidad.
++
++## Resolución documental — 2026-10-26
++
++La unidad `ATOMIC-20261026-002` corrige la atribución documental que originó el
++rechazo histórico, cuyo hecho, salida inicial y fecha se conservan arriba.
++En `DESVIACION-20260929-005.md` se sustituye el literal original
++`apartado_roto: "§3.1"` por `apartado_roto: "por-clasificar"` y se añade la
++referencia material calificada a la [Doctrina maestra unificada](C:/Users/cotaha/source/repos/.agent/doctrinas/DOCTRINA_MAESTRA_UNIFICADA.md),
++versión 2.5.0, §3.1, «Promoción visual no destructiva (Atomic-first)».
++
++`por-clasificar` declara pendiente la atribución operativa a Orquestación que
++inspecciona el verificador; no afirma una equivalencia material entre sus
++apartados y la regla visual de la maestra. El estado `corregida` de este
++registro se limita a la corrección documental efectuada. El escalado anterior
++describe el bloqueo observado el 24 de octubre; la acreditación actual del
++directorio completo queda pendiente de la ejecución final del responsable,
++después de la última escritura de la unidad.
++
++El recibo de esa validación, con su código y salida originales, se incorporará
++al roadmap y a la evidencia de `ATOMIC-20261026-002`. Esta adenda no afirma una
++ejecución nueva ni un resultado 0. `DESVIACION-20260929-005.md` conserva su
++estado `abierta`: su hallazgo visual no queda resuelto por esta corrección y
++no se acredita una validación de UI, demos, paquetes o publicación de Atomic.

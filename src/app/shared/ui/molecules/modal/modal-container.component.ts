@@ -15,11 +15,12 @@ import { ModalService, ModalItem } from '../../services/modal.service';
  */
 import { ButtonComponent } from '../../atoms/button/button.component';
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
+import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-overlay.component';
 
 @Component({
   selector: 'app-modal-container',
   standalone: true,
-  imports: [ButtonComponent, IconButtonComponent],
+  imports: [ButtonComponent, IconButtonComponent, ScrollOverlayComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @for (modal of modalService.modals(); track modal.id; let first = $first) {
@@ -52,14 +53,20 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
           </div>
 
           <!-- Body -->
-          <div class="modal-body">
-            @if (modal.message) {
-              <p class="modal-message">{{ modal.message }}</p>
-            }
-            @if (modal.htmlContent) {
-              <div [innerHTML]="modal.htmlContent"></div>
-            }
-          </div>
+          <app-scroll-overlay
+            class="so-block modal-body-scroll"
+            [skipTableDetection]="true"
+            [disableHorizontal]="true"
+          >
+            <div class="modal-body">
+              @if (modal.message) {
+                <p class="modal-message">{{ modal.message }}</p>
+              }
+              @if (modal.htmlContent) {
+                <div [innerHTML]="modal.htmlContent"></div>
+              }
+            </div>
+          </app-scroll-overlay>
 
           <!-- Footer -->
           @if (modal.hasFooter && modal.buttons && modal.buttons.length > 0) {

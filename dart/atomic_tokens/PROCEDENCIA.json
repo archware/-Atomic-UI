@@ -30,7 +30,7 @@
   "fuente": [
     {
       "archivo": "src/styles/themes/_tokens-primitives.css",
-      "sha256": "e46699338f53babe45830693a6012d1e64b6e3319be02c19d38301d6c5af5e6c"
+      "sha256": "d9fb131cf22e06221a74304d7048a02079a26a0f2e85854983a9e3a5eddf8324"
     },
     {
       "archivo": "src/styles/themes/_tokens-brand.css",
@@ -42,7 +42,7 @@
     },
     {
       "archivo": "src/styles/themes/_tokens-components.css",
-      "sha256": "552f6a19016cae44ec664f62e9445839815d3d7f8777681587e6bd6e7abd0408"
+      "sha256": "2c4647f240e556ace741af172346fa8816a2ea2ef2d55e63e2e3f6c9d4792492"
     }
   ],
   "emitido": [
@@ -56,7 +56,7 @@
     },
     {
       "archivo": "lib/src/atomic_tipografia.g.dart",
-      "sha256": "51e7fc9134a8f46784a8b188974e876ac22e2202295109e98dcf7c13d7710a2d"
+      "sha256": "a6f8ec1a0ceb7e231904eb027287507e699911a91897802fcca60c8b64da0dd5"
     },
     {
       "archivo": "lib/src/atomic_escala.g.dart",
@@ -64,7 +64,7 @@
     },
     {
       "archivo": "lib/src/atomic_tema.g.dart",
-      "sha256": "04471c9c06c1b7178058bfc6fb255a1577769bd6481dd4402650555bef41b6a1"
+      "sha256": "059f4e4def1e010e8069516590e82e7bae7777a4777d62b871219787eb6f4b6a"
     },
     {
       "archivo": "lib/atomic_tokens.dart",

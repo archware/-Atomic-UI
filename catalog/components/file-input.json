@@ -175,6 +175,12 @@
       "type": "number",
       "default": 4,
       "meaning": "Cuántas vistas previas se generan como máximo, por el mismo motivo de presupuesto de memoria."
+    },
+    {
+      "name": "maxListHeight",
+      "type": "number | string",
+      "default": 210,
+      "meaning": "Altura máxima de la lista de archivos seleccionados gobernada por app-scroll-overlay."
     }
   ],
   "outputs": [

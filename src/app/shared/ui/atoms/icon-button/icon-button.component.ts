@@ -6,6 +6,7 @@ export type IconButtonVariant =
   | 'ghost'
   | 'avatar'
   | 'close'
+  | 'close-ghost'
   | 'close-soft'
   | 'hanging-close';
 export type IconButtonAnimation = 'rotate' | 'grow' | 'none' | 'custom';
@@ -37,6 +38,7 @@ export class IconButtonComponent {
     const currentVariant = this.variant();
     return (
       currentVariant === 'close' ||
+      currentVariant === 'close-ghost' ||
       currentVariant === 'close-soft' ||
       currentVariant === 'hanging-close'
     );

@@ -36,6 +36,7 @@
 
 .page-header__title {
   color: var(--text-color);
+  font-family: var(--font-family-heading);
   font-size: clamp(var(--text-2xl), 3vw, var(--text-3xl));
   line-height: 1.2;
 }

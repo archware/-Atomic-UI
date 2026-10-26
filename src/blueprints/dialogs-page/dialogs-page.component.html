@@ -203,21 +203,32 @@
             <app-text variant="h4" weight="bold">Boton Integrado Interior</app-text>
           </div>
           <app-text variant="body-sm" color="secondary">
-            Ubicado dentro del contenedor de superficie. Integra aspas de transicion fisica para modales.
+            Ubicado dentro del contenedor de superficie. Soporta cierre con circulo rojo (close) o solo aspa roja sin fondo (close-ghost).
           </app-text>
-          <div class="tile-stage">
+          <div class="tile-stage tile-stage--column">
             <div class="inside-header-demo">
-              <app-text variant="caption" weight="bold">Encabezado de Modal</app-text>
+              <app-text variant="caption" weight="bold">Close neutro (fondo rojo en hover)</app-text>
               <app-icon-button
                 variant="close"
                 animation="none"
+                tooltip="Close neutro"
                 ariaLabel="Cerrar modal interior"
                 (clicked)="onInsideCloseTrigger()"
               />
             </div>
+            <div class="inside-header-demo">
+              <app-text variant="caption" weight="bold">Close-ghost (solo X roja sin fondo)</app-text>
+              <app-icon-button
+                variant="close-ghost"
+                animation="none"
+                tooltip="Close sin fondo (solo X roja)"
+                ariaLabel="Cerrar modal solo aspa roja"
+                (clicked)="onCatalogActionTrigger('IconButton Close-Ghost')"
+              />
+            </div>
           </div>
           <div class="tile-code">
-            <code>app-icon-button variant="close" animation="none"</code>
+            <code>app-icon-button variant="close" | variant="close-ghost"</code>
           </div>
         </article>
 
@@ -327,7 +338,7 @@
             <app-text variant="h4" weight="bold">Descarte de Adjuntos y Dropzone</app-text>
           </div>
           <app-text variant="body-sm" color="secondary">
-            Zona de carga avanzada con indicador de arrastre y eliminacion individual por archivo.
+            Zona de carga avanzada con indicador de arrastre, contenedor desplazable app-scroll-overlay y eliminacion individual por archivo.
           </app-text>
           <div class="tile-stage tile-stage--column">
             <app-file-input
@@ -339,33 +350,43 @@
             />
             @if (attachedFiles().length > 0) {
               <div class="attached-files-box">
-                <app-text variant="caption" weight="bold">Item Dismiss Action:</app-text>
-                @for (item of attachedFiles(); track item.name) {
-                  <div class="attached-file-row">
-                    <i class="fa-solid fa-file-pdf attached-file-icon" aria-hidden="true"></i>
-                    <div class="attached-file-info">
-                      <app-text variant="caption" weight="bold">{{ item.name }}</app-text>
-                      <app-text variant="caption" color="secondary">{{ (item.size / 1024).toFixed(0) }} KB</app-text>
-                    </div>
-                    <app-icon-button
-                      variant="close-soft"
-                      size="sm"
-                      animation="none"
-                      ariaLabel="Eliminar archivo adjunto"
-                      tooltip="Quitar archivo"
-                      (clicked)="onRemoveAttachedFile(item.name)"
-                    />
+                <app-text variant="caption" weight="bold">Item Dismiss Action ({{ attachedFiles().length }} archivos):</app-text>
+                <app-scroll-overlay
+                  class="so-block pdf-demo-scroll"
+                  [maxBodyHeight]="160"
+                  [skipTableDetection]="true"
+                  [disableHorizontal]="true"
+                  [resetKey]="attachedFiles().length === 0"
+                >
+                  <div class="pdf-demo-list">
+                    @for (item of attachedFiles(); track item.name) {
+                      <div class="attached-file-row">
+                        <i class="fa-solid fa-file-pdf attached-file-icon" aria-hidden="true"></i>
+                        <div class="attached-file-info">
+                          <app-text variant="caption" weight="bold">{{ item.name }}</app-text>
+                          <app-text variant="caption" color="secondary">{{ (item.size / 1024).toFixed(0) }} KB</app-text>
+                        </div>
+                        <app-icon-button
+                          variant="close-soft"
+                          size="sm"
+                          animation="none"
+                          ariaLabel="Eliminar archivo adjunto"
+                          tooltip="Quitar archivo"
+                          (clicked)="onRemoveAttachedFile(item.name)"
+                        />
+                      </div>
+                    }
                   </div>
-                }
+                </app-scroll-overlay>
               </div>
             } @else {
               <app-button variant="outline" size="sm" iconClass="fa-solid fa-rotate-left" (buttonClick)="onResetAttachedFiles()">
-                Restaurar archivo de muestra
+                Restaurar archivos de muestra
               </app-button>
             }
           </div>
           <div class="tile-code">
-            <code>app-file-input [multiple]="true" + app-icon-button variant="close-soft"</code>
+            <code>app-file-input [multiple]="true" + app-scroll-overlay [maxBodyHeight]="160" + app-icon-button variant="close-soft"</code>
           </div>
         </article>
 
@@ -602,19 +623,20 @@
         <article class="variant-tile">
           <div class="tile-header">
             <app-badge variant="warning" size="sm">IconButton</app-badge>
-            <app-text variant="h4" weight="bold">Botones de Icono, Close-Soft y Patron de Fila PDF</app-text>
+            <app-text variant="h4" weight="bold">Botones de Icono, Close-Ghost, Close-Soft y Patron de Fila PDF</app-text>
           </div>
           <app-text variant="body-sm" color="secondary">
-            Comparativa entre las 6 variantes (default, ghost, avatar, close neutro, close-soft con circulo peligro suave y hanging-close), escala (sm, md, lg), animaciones (none, grow, rotate) y tarjeta interactiva de documento PDF.
+            Comparativa entre las 7 variantes (default, ghost, avatar, close neutro, close-ghost solo X roja sin fondo, close-soft con circulo peligro suave y hanging-close), escala (sm, md, lg), animaciones (none, grow, rotate) y tarjeta interactiva de documento PDF.
           </app-text>
           <div class="tile-stage tile-stage--column">
             <div class="showcase-group">
-              <app-text variant="caption" weight="bold">Variantes de app-icon-button (default, ghost, avatar, close, close-soft, hanging-close):</app-text>
+              <app-text variant="caption" weight="bold">Variantes de app-icon-button (default, ghost, avatar, close, close-ghost, close-soft, hanging-close):</app-text>
               <div class="showcase-button-row">
                 <app-icon-button variant="default" icon="fa-solid fa-gear" tooltip="Default" ariaLabel="Configuracion" (clicked)="onCatalogActionTrigger('IconButton Default')" />
                 <app-icon-button variant="ghost" icon="fa-solid fa-magnifying-glass-plus" tooltip="Ghost" ariaLabel="Inspeccionar" (clicked)="onCatalogActionTrigger('IconButton Ghost')" />
                 <app-icon-button variant="avatar" icon="fa-solid fa-user" tooltip="Avatar" ariaLabel="Perfil" (clicked)="onCatalogActionTrigger('IconButton Avatar')" />
-                <app-icon-button variant="close" tooltip="Close neutro" ariaLabel="Cerrar neutro" (clicked)="onCatalogActionTrigger('IconButton Close')" />
+                <app-icon-button variant="close" tooltip="Close neutro (fondo rojo en hover)" ariaLabel="Cerrar neutro" (clicked)="onCatalogActionTrigger('IconButton Close')" />
+                <app-icon-button variant="close-ghost" tooltip="Close-ghost (solo X roja sin fondo)" ariaLabel="Cerrar solo X roja" (clicked)="onCatalogActionTrigger('IconButton Close-Ghost')" />
                 <app-icon-button variant="close-soft" tooltip="Close-soft (reposo peligro suave)" ariaLabel="Quitar elemento" (clicked)="onCatalogActionTrigger('IconButton Close-Soft')" />
                 <div class="hanging-inline-demo">
                   <app-text variant="caption">Popup</app-text>
@@ -624,8 +646,11 @@
             </div>
 
             <div class="showcase-group">
-              <app-text variant="caption" weight="bold">Escala de tamanos (sm, md, lg) y animaciones configurables (none, grow, rotate):</app-text>
+              <app-text variant="caption" weight="bold">Escala de tamanos (sm, md, lg) en close-ghost / close-soft y animaciones configurables (none, grow, rotate):</app-text>
               <div class="showcase-button-row">
+                <app-icon-button variant="close-ghost" size="sm" tooltip="Close-ghost sm" ariaLabel="Cerrar sin fondo compacto" (clicked)="onCatalogActionTrigger('Close-Ghost SM')" />
+                <app-icon-button variant="close-ghost" size="md" tooltip="Close-ghost md" ariaLabel="Cerrar sin fondo estandar" (clicked)="onCatalogActionTrigger('Close-Ghost MD')" />
+                <app-icon-button variant="close-ghost" size="lg" tooltip="Close-ghost lg" ariaLabel="Cerrar sin fondo grande" (clicked)="onCatalogActionTrigger('Close-Ghost LG')" />
                 <app-icon-button variant="close-soft" size="sm" tooltip="Close-soft sm" ariaLabel="Cerrar compacto" (clicked)="onCatalogActionTrigger('Close-Soft SM')" />
                 <app-icon-button variant="close-soft" size="md" tooltip="Close-soft md" ariaLabel="Cerrar estandar" (clicked)="onCatalogActionTrigger('Close-Soft MD')" />
                 <app-icon-button variant="close-soft" size="lg" tooltip="Close-soft lg" ariaLabel="Cerrar grande" (clicked)="onCatalogActionTrigger('Close-Soft LG')" />
@@ -637,7 +662,7 @@
 
             <div class="showcase-group">
               <div class="pdf-card-header">
-                <app-text variant="caption" weight="bold">Patron interactivo de tarjeta de documento PDF (FloatingInput + Close-Soft + Soft Danger):</app-text>
+                <app-text variant="caption" weight="bold">Patron interactivo de tarjeta de documento PDF (FloatingInput compacto + Close-Ghost MD + Soft Danger):</app-text>
                 @if (pdfDemoFiles().length > 0) {
                   <app-button
                     variant="soft"
@@ -661,34 +686,47 @@
                 }
               </div>
 
-              @for (doc of pdfDemoFiles(); track doc.id) {
-                <div class="attached-file-row">
-                  <i class="fa-solid fa-file-pdf attached-file-icon" aria-hidden="true"></i>
-                  <div class="attached-file-info">
-                    <app-text variant="caption" weight="bold">{{ doc.name }}</app-text>
-                    <app-text variant="caption" color="secondary">{{ doc.meta }}</app-text>
+              @if (pdfDemoFiles().length > 0) {
+                <app-scroll-overlay
+                  class="so-block pdf-demo-scroll"
+                  [maxBodyHeight]="210"
+                  [skipTableDetection]="true"
+                  [disableHorizontal]="true"
+                  [resetKey]="pdfDemoFiles().length === 0"
+                >
+                  <div class="pdf-demo-list">
+                    @for (doc of pdfDemoFiles(); track doc.id) {
+                      <div class="attached-file-row">
+                        <i class="fa-solid fa-file-pdf attached-file-icon" aria-hidden="true"></i>
+                        <div class="attached-file-info">
+                          <app-text variant="caption" weight="bold">{{ doc.name }}</app-text>
+                          <app-text variant="caption" color="secondary">{{ doc.meta }}</app-text>
+                        </div>
+                        <div class="file-row-inline-controls">
+                          <app-floating-input
+                            class="pdf-demo-page-input"
+                            label="Hojas a incluir"
+                            variant="floating"
+                            [value]="doc.pages"
+                            placeholder="Ej: 1-3, 5"
+                          />
+                          <app-icon-button
+                            variant="close-ghost"
+                            size="md"
+                            tooltip="Quitar de la lista"
+                            ariaLabel="Quitar de la lista"
+                            (clicked)="onRemovePdfDemoFile(doc.id)"
+                          />
+                        </div>
+                      </div>
+                    }
                   </div>
-                  <div class="file-row-inline-controls">
-                    <app-floating-input
-                      label="Hojas a incluir"
-                      variant="floating"
-                      [value]="doc.pages"
-                      placeholder="Ej: 1-3, 5"
-                    />
-                    <app-icon-button
-                      variant="close-soft"
-                      size="sm"
-                      tooltip="Quitar de la lista"
-                      ariaLabel="Quitar de la lista"
-                      (clicked)="onRemovePdfDemoFile(doc.id)"
-                    />
-                  </div>
-                </div>
+                </app-scroll-overlay>
               }
             </div>
           </div>
           <div class="tile-code">
-            <code>app-floating-input + app-icon-button variant="close-soft" + app-button variant="soft" tone="danger" size="sm"</code>
+            <code>app-scroll-overlay [maxBodyHeight]="210" + app-floating-input + app-icon-button variant="close-ghost" size="md"</code>
           </div>
         </article>
       </div>
