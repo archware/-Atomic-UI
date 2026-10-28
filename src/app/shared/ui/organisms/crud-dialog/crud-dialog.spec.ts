@@ -116,7 +116,7 @@ describe('CrudDialog', () => {
     fixture.componentRef.setInput('labelledBy', 'editor-title');
     fixture.detectChanges();
 
-    const host = document.createElement('prest-input');
+    const host = document.createElement('app-input');
     host.classList.add('ng-invalid');
     const input = document.createElement('input');
     host.appendChild(input);

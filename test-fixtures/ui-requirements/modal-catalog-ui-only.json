@@ -6,7 +6,7 @@
   "feature": {
     "key": "relationship",
     "className": "Relationship",
-    "selector": "prest-relationship-page",
+    "selector": "app-relationship-page",
     "title": "Parentescos",
     "singular": "parentesco",
     "plural": "parentescos"

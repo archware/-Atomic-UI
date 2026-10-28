@@ -4,13 +4,47 @@ author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-08-23'
 last_updated: '2026-10-26'
 document_type: 'changelog'
-version: '5.23.2'
+version: '5.23.3'
 status: 'vigente'
 updated: '2026-08-25'
 owner: 'COTAHA'
 ---
 
 # Registro de cambios
+
+## ATOMIC-20260823-600 (corte 3) — compuertas de selectores y Tailwind, unidades relativas y tokens canónicos
+
+Se completan los bloques de saneamiento del tercer corte hacia Atomic UI
+6.0: (1) saneamiento de `ScrollOverlayComponent` (`variant: 'default' | 'brand'`,
+UTF-8 y unidades `rem`), reparación de `PaginaCrudAccordion` (`(buttonClick)` en
+Cancelar, pie en modo `ver`, tokens reales y `pagina-crud-accordion.spec.ts`),
+protección SSR de `ThemeService.getEffectiveTheme()`, retiro de rotaciones en
+hover en `ThemeSwitcherComponent`, eliminación de las hojas huérfanas
+`filters.component.css` y `chart-tokens.css` y prohibición de `CommonModule` en
+`check:control-flow` (`test:control-flow-gate`); (2) acotamiento de los 16 alias
+transitorios `prest-*` en `ALIAS_TRANSITORIOS_DEL_ADN` bajo selector primario
+`app-*` obligatorio y retiro de `prest-*` en el generador (`tools/generate-ui.js`),
+gobernado por la compuerta `check:selectors` (120 declaraciones verificadas) y su
+prueba negativa `test:selectors-gate`; (3) purga de utilidades residuales de
+Tailwind en historias, vistas de demostración y generador, gobernada por
+`check:no-tailwind` (558 archivos auditados, 0 residuos) y `test:no-tailwind-gate`;
+y (4) sustitución de las medidas rígidas `px` no pertenecientes a trazos finos de
+borde/contorno (`<= 2px`) o puntos de corte en las 35 hojas `.css`/`.scss` y 6
+archivos `.ts`/`.html` de `src/app/shared/ui/` y en
+`src/styles/themes/_utilities.css` por tokens (`--space-*`, `--text-*`,
+`--avatar-*`, `--checkbox-size`, `--checkbox-icon-size`, `--topbar-height`) o
+unidades `rem`, gobernada por la nueva compuerta `check:units`
+(`scripts/check-css-units.mjs`, 105 hojas auditadas) y su prueba negativa
+`test:units-gate` (`tools/test-css-units-gate.mjs`). Asimismo, se eliminan
+tokens fantasma, colores literales `#hex`/`rgb()`/`rgba()`, selectores
+`::ng-deep` sin ámbito `:host` en `icon-button.component.css` y
+`row.component.css`, y variables dinámicas `--floating-*-icon-cursor` en favor
+de las clases de estado `.floating-input__icon--clickable` y
+`.floating-textarea__icon--clickable`. Se regeneran el puente Dart
+(`dart/atomic_tokens`), el catálogo (`catalog/`) y el manifiesto de fuentes
+(`distribution/atomic-source-manifest.json`), y se verifican `npm run lib:build` y
+198/198 pruebas unitarias en Karma + `ChromeHeadless`. Consultar el
+[roadmap](.agents/roadmaps/ROADMAP_20260823_atomic_ui_6_0.md).
 
 ## ATOMIC-20261026-003 — tipografía local canónica Quicksand y Open Sans
 

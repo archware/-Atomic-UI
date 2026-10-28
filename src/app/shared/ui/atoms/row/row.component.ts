@@ -74,7 +74,7 @@ export class RowComponent {
    * Minimum column width for responsive mode
    * Only used when responsive=true
    */
-  readonly minColumnWidth = input('200px');
+  readonly minColumnWidth = input('12.5rem');
 
   /** 
    * Flex wrap mode (uses flexbox instead of grid)

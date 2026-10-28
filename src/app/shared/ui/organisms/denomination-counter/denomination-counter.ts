@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -48,7 +47,6 @@ export interface DenominationCounterRow extends DenominationDefinition {
     AccordionComponent,
     AccordionItemComponent,
     ButtonComponent,
-    CommonModule,
     FormsModule,
     NumberInputComponent,
   ],

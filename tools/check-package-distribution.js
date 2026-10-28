@@ -384,9 +384,10 @@ function npmPackDryRun(contract, expectedManifest, packageJson, publicExports) {
 }
 
 function main() {
-  const action = process.argv[2] || 'check';
+  const rawAction = process.argv[2] || 'check';
+  const action = rawAction === 'write' ? 'manifest' : rawAction;
   if (!['manifest', 'check', 'dry-run'].includes(action)) {
-    fail('Uso: node tools/check-package-distribution.js [manifest|check|dry-run]');
+    fail('Uso: node tools/check-package-distribution.js [manifest|write|check|dry-run]');
   }
 
   const publicExports = readConfinedJson(

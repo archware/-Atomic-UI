@@ -12,8 +12,8 @@
   --navbar-dark-surface: var(--gray-800);
   --navbar-primary-surface: var(--brand-primary-500);
   --navbar-inverse-text: var(--text-color-on-primary);
-  --navbar-inverse-hover: rgba(255, 255, 255, 0.14);
-  --navbar-inverse-active: rgba(255, 255, 255, 0.22);
+  --navbar-inverse-hover: color-mix(in srgb, var(--gray-0) 14%, transparent);
+  --navbar-inverse-active: color-mix(in srgb, var(--gray-0) 22%, transparent);
 }
 
 /* ======= NAVBAR ======= */
@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-4);
-  height: 60px;
+  height: 3.75rem;
   padding: 0 var(--space-6);
   background: var(--surface-background);
   border-bottom: 1px solid var(--border-color);
@@ -83,7 +83,7 @@
   text-decoration: none;
   flex-shrink: 0;
 }
-.navbar__logo { height: 28px; width: auto; }
+.navbar__logo { height: 1.75rem; width: auto; }
 .navbar__brand-name {
   font-size: var(--text-md);
   font-weight: var(--font-weight-emphasis);
@@ -112,10 +112,7 @@
   background: transparent;
   color: var(--text-color-secondary);
   font-size: var(--text-sm);
-  /* Era «var(--font-medium, 500)», y ni el token existia ni el 500 se dibuja:
-     la familia es estatica y lo redondea al mismo trazo que el 400. El peso de
-     cuerpo es lo que ya se estaba pintando, escrito con su nombre. */
-  font-weight: var(--font-weight-body);
+  font-weight: var(--font-weight-emphasis);
   cursor: pointer;
   white-space: nowrap;
   transition: background 150ms ease, color 150ms ease;
@@ -148,8 +145,8 @@
   display: none;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 2.25rem;
+  height: 2.25rem;
   border: none;
   border-radius: var(--radius-md);
   background: transparent;

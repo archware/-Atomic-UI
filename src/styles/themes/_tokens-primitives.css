@@ -311,6 +311,8 @@
    /* 46px - Default (actual --control-height) */
    --control-height-lg: 3.5rem;
    /* 56px - Prominent CTAs */
+   --checkbox-size: var(--space-5);
+   --checkbox-icon-size: var(--text-sm);
 
    /* ─────────────────────────────────────────────────────────────────────────
       ETIQUETA DE CAMPO (Input, Select, Select2, Textarea, Datepicker, ...)

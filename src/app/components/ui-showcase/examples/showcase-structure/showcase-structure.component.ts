@@ -22,33 +22,66 @@ import { IconButtonComponent } from '../../../../shared/ui/atoms/icon-button/ico
     <!-- SCROLL OVERLAY DEMO -->
     <app-panel title="Scroll Overlay (Desplazamiento Canónico R10)" variant="flat" padding="md" class="showcase-section">
       <app-text variant="caption" color="muted">
-        Contenedor con altura máxima acotada (<code>[maxBodyHeight]="'14rem'"</code>) y barra de desplazamiento superpuesta de Atomic UI.
+        Variantes canónicas de <code>&lt;app-scroll-overlay&gt;</code>: <code>variant="default"</code> (neutro plomo con auto-ocultamiento) y <code>variant="brand"</code> (degradado primario-secundario de marca con riel suave visible en reposo).
       </app-text>
-      <div style="margin-top: 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--surface-background);">
-        <app-scroll-overlay
-          class="so-block"
-          [maxBodyHeight]="'14rem'"
-          [skipTableDetection]="true"
-          [disableHorizontal]="true"
-          scrollAreaAriaLabel="Demostración de Scroll Overlay en Showcase"
-        >
-          <div style="display: flex; flex-direction: column; gap: 0.5rem; padding: 0.75rem;">
-            @for (item of scrollDemoItems; track item.id) {
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.625rem 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--surface-elevated);">
-                <div>
-                  <app-text variant="body" weight="semibold">{{ item.title }}</app-text>
-                  <app-text variant="caption" color="muted">{{ item.subtitle }}</app-text>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 0.75rem;">
+        <div style="border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--surface-background); padding: 0.5rem;">
+          <app-text variant="caption" weight="semibold">variant="default" (Neutro / Auto-hide)</app-text>
+          <app-scroll-overlay
+            class="so-block"
+            variant="default"
+            [maxBodyHeight]="'13rem'"
+            [skipTableDetection]="true"
+            [disableHorizontal]="true"
+            scrollAreaAriaLabel="Demostración de Scroll Overlay variante default"
+          >
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; padding: 0.5rem 0.75rem 0.5rem 0.25rem;">
+              @for (item of scrollDemoItems; track item.id) {
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.625rem 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--surface-elevated);">
+                  <div>
+                    <app-text variant="body" weight="semibold">{{ item.title }}</app-text>
+                    <app-text variant="caption" color="muted">{{ item.subtitle }}</app-text>
+                  </div>
+                  <app-icon-button
+                    [variant]="item.closeVariant"
+                    size="sm"
+                    animation="none"
+                    [ariaLabel]="'Quitar ' + item.title"
+                  ></app-icon-button>
                 </div>
-                <app-icon-button
-                  [variant]="item.closeVariant"
-                  size="sm"
-                  animation="none"
-                  [ariaLabel]="'Quitar ' + item.title"
-                ></app-icon-button>
-              </div>
-            }
-          </div>
-        </app-scroll-overlay>
+              }
+            </div>
+          </app-scroll-overlay>
+        </div>
+
+        <div style="border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--surface-background); padding: 0.5rem;">
+          <app-text variant="caption" weight="semibold">variant="brand" (Degradado de Marca)</app-text>
+          <app-scroll-overlay
+            class="so-block"
+            variant="brand"
+            [maxBodyHeight]="'13rem'"
+            [skipTableDetection]="true"
+            [disableHorizontal]="true"
+            scrollAreaAriaLabel="Demostración de Scroll Overlay variante brand"
+          >
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; padding: 0.5rem 0.75rem 0.5rem 0.25rem;">
+              @for (item of scrollDemoItems; track item.id) {
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.625rem 0.75rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--surface-elevated);">
+                  <div>
+                    <app-text variant="body" weight="semibold">{{ item.title }}</app-text>
+                    <app-text variant="caption" color="muted">{{ item.subtitle }}</app-text>
+                  </div>
+                  <app-icon-button
+                    [variant]="item.closeVariant"
+                    size="sm"
+                    animation="none"
+                    [ariaLabel]="'Quitar ' + item.title"
+                  ></app-icon-button>
+                </div>
+              }
+            </div>
+          </app-scroll-overlay>
+        </div>
       </div>
     </app-panel>
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 
 export type TextVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'body-lg' | 'body' | 'body-sm' | 'caption' | 'label';
 export type TextWeight = 'normal' | 'medium' | 'semibold' | 'bold';
@@ -10,7 +10,7 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify';
 @Component({
   selector: 'app-text',
   standalone: true,
-  imports: [CommonModule],
+  imports: [NgClass, NgTemplateOutlet],
   templateUrl: './text.component.html',
   styleUrl: './text.component.css'
 })

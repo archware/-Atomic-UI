@@ -3,8 +3,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
-import { Select } from '../app/shared/ui/atoms/form-select/select';
-import type { SelectOption } from '../app/shared/ui/atoms/form-select/select';
+import { SelectComponent } from '../app/shared/ui/atoms/select/select.component';
+import type { SelectOption } from '../app/shared/ui/atoms/select/select.component';
 
 /*
   DOS SELECTS CONVIVEN EN EL ADN Y NO SON EL MISMO.
@@ -78,7 +78,7 @@ const AGENCIAS: readonly SelectOption[] = [
 @Component({
   selector: 'app-form-select-reactivo-demo',
   standalone: true,
-  imports: [ReactiveFormsModule, Select, ButtonComponent],
+  imports: [ReactiveFormsModule, SelectComponent, ButtonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <form class="demo" [formGroup]="formulario">
@@ -178,13 +178,13 @@ class FormSelectReactivoDemo {
   }
 }
 
-const meta: Meta<Select> = {
+const meta: Meta<SelectComponent> = {
   title: '1. Atoms/Form Select',
-  component: Select,
+  component: SelectComponent,
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      imports: [Select, FormSelectReactivoDemo],
+      imports: [SelectComponent, FormSelectReactivoDemo],
     }),
   ],
   parameters: {
@@ -214,7 +214,7 @@ const meta: Meta<Select> = {
 };
 
 export default meta;
-type Story = StoryObj<Select>;
+type Story = StoryObj<SelectComponent>;
 
 /*
   El campo vacio es el estado inicial real: el placeholder ocupa el sitio de la

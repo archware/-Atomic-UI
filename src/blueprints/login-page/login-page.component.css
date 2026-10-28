@@ -63,13 +63,13 @@
 .mb-4 { margin-bottom: 1rem; }
 .mb-6 { margin-bottom: 1.5rem; }
 .mt-4 { margin-top: 1rem; }
-.mt-6 { margin-top: 1.5rem; }
+.login-card__footer-note { margin-top: 1.5rem; }
 
 .w-full { width: 100%; }
 
 .text-center { text-align: center; }
 
-.inline { display: inline-block; }
+.login-card__inline-link { display: inline-block; }
 
 .link-inline {
   color: var(--primary-color);

@@ -32,7 +32,7 @@
 .calendar-icon-btn {
   position: absolute;
   right: 1rem;
-  top: calc(var(--control-height, 48px) / 2);
+  top: calc(var(--control-height, 3rem) / 2);
   transform: translateY(-50%);
   box-sizing: border-box;
   border: none;
@@ -73,7 +73,7 @@
   */
   box-shadow: var(--shadow-lg);
   padding: var(--space-4);
-  width: 320px;
+  width: 20rem;
   box-sizing: border-box;
   animation: slideDown 0.2s ease-out;
   transform-origin: top left;
@@ -82,7 +82,7 @@
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-0.625rem);
   }
 
   to {

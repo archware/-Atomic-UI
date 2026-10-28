@@ -24,9 +24,9 @@
     --so-custom-thumb-active,
     color-mix(in srgb, var(--text-color) 68%, transparent)
   );
-  --so-track-size: 7px;
+  --so-track-size: 0.4375rem;
   --so-thumb-blur: var(--space-1);
-  --so-min-column-width: 140px;
+  --so-min-column-width: 8.75rem;
   --so-scroll-end-space: calc(var(--so-track-size) + var(--space-8));
 }
 
@@ -158,6 +158,25 @@
   display: none !important;
 }
 
+.so-root.so-variant-brand {
+  --so-thumb-color-start: var(
+    --so-custom-thumb-start,
+    rgba(var(--brand-primary-500-rgb), 0.62)
+  );
+  --so-thumb-color-end: var(
+    --so-custom-thumb-end,
+    rgba(var(--brand-secondary-500-rgb), 0.72)
+  );
+  --so-thumb-color-hover: var(--so-custom-thumb-hover, var(--primary-color));
+  --so-thumb-color-active: var(--so-custom-thumb-active, var(--primary-color-dark));
+  --so-track-bg: var(--so-custom-track-bg, rgba(var(--brand-primary-500-rgb), 0.08));
+  --so-track-bg-hover: var(
+    --so-custom-track-bg-hover,
+    rgba(var(--brand-primary-500-rgb), 0.14)
+  );
+  --so-resting-opacity: var(--so-custom-resting-opacity, 0.68);
+}
+
 .so-scrollbar {
   position: absolute;
   pointer-events: none;
@@ -167,12 +186,23 @@
   display: none;
 }
 
+.so-root.so-variant-brand > .so-scrollbar {
+  border-radius: var(--radius-full);
+  background: var(--so-track-bg);
+  opacity: var(--so-resting-opacity, 0.68);
+  transition:
+    opacity 180ms ease,
+    background-color 180ms ease;
+}
+
 .so-root.so-has-overflow-y > .so-scrollbar-y {
   display: block;
+  pointer-events: auto;
 }
 
 .so-root.so-has-overflow-x > .so-scrollbar-x {
   display: block;
+  pointer-events: auto;
 }
 
 .so-root.so-scrolling > .so-scrollbar,
@@ -180,6 +210,13 @@
 .so-root > .so-scrollbar:focus-within {
   opacity: 1;
   pointer-events: auto;
+}
+
+.so-root.so-variant-brand.so-scrolling > .so-scrollbar,
+.so-root.so-variant-brand:hover > .so-scrollbar,
+.so-root.so-variant-brand > .so-scrollbar:focus-within {
+  opacity: 1;
+  background: var(--so-track-bg-hover);
 }
 
 .so-root.so-has-overflow-x::after {
@@ -316,7 +353,7 @@
   display: grid;
   grid-template-columns: var(
     --so-column-template,
-    repeat(auto-fit, minmax(var(--so-min-column-width, 140px), max-content))
+    repeat(auto-fit, minmax(var(--so-min-column-width, 8.75rem), max-content))
   );
   width: max-content;
   min-width: 100%;
@@ -331,7 +368,7 @@
 
 .so-root[data-so-table][data-so-sync-columns] th,
 .so-root[data-so-table][data-so-sync-columns] td {
-  min-width: var(--so-min-column-width, 140px);
+  min-width: var(--so-min-column-width, 8.75rem);
   box-sizing: border-box;
   white-space: nowrap;
 }

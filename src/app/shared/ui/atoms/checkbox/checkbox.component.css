@@ -23,8 +23,8 @@
 }
 
 .checkbox-box {
-  width: var(--checkbox-size, var(--space-5));
-  height: var(--checkbox-size, var(--space-5));
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,8 +36,8 @@
 }
 
 .checkbox-check {
-  width: var(--checkbox-icon-size, 0.875rem);
-  height: var(--checkbox-icon-size, 0.875rem);
+  width: var(--checkbox-icon-size);
+  height: var(--checkbox-icon-size);
   color: var(--text-color-on-primary);
   opacity: 0;
   transform: scale(0.5);

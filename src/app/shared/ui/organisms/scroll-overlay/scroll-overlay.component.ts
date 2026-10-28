@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 
 type ListenerUnsubscriber = () => void;
+export type ScrollOverlayVariant = 'default' | 'brand';
 
 @Component({
   selector: 'app-scroll-overlay',
@@ -24,6 +25,25 @@ type ListenerUnsubscriber = () => void;
   },
 })
 export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
+  /**
+   * Visual palette variant for the overlay scrollbars.
+   * 'default' renders the neutral thumb and auto-hides at rest.
+   * 'brand' renders the primary-to-secondary brand gradient thumb with a soft tinted track visible at rest.
+   */
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  readonly entradaVariante = input<ScrollOverlayVariant>('default', { alias: 'variant' });
+
+  set variant(value: ScrollOverlayVariant) {
+    const normalized: ScrollOverlayVariant = value === 'brand' ? 'brand' : 'default';
+    this._variant = normalized;
+    if (this.hostEl) {
+      this.hostEl.classList.toggle('so-variant-brand', normalized === 'brand');
+    }
+  }
+  get variant(): ScrollOverlayVariant {
+    return this._variant;
+  }
+
   /**
    * CSS selector used to locate the element that controls the vertical scroll.
    * Defaults to content marked explicitly with `data-scroll-overlay-vertical`.
@@ -49,7 +69,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
    * Uses the browser scrollbars on the resolved owners and suppresses the decorative overlay rails.
    * The scrollbar palette is provided by the canonical theme tokens.
    */
-  // Los alias siguientes conservan la API pÃºblica y delegan en setters con efectos sobre el DOM.
+  // Los alias siguientes conservan la API pública y delegan en setters con efectos sobre el DOM.
   // eslint-disable-next-line @angular-eslint/no-input-rename
   readonly entradaBarrasNativas = input(false, { alias: 'nativeScrollbars' });
 
@@ -254,12 +274,19 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   private dragPointerIdY?: number;
   private dragPointerIdX?: number;
 
+  private _variant: ScrollOverlayVariant = 'default';
   private _maxBodyHeight: number | string | undefined;
   private _minColumnWidth = 140;
   private _disableVertical = false;
   private _disableHorizontal = false;
   private _nativeScrollbars = false;
   private _resetKey: unknown;
+  private readonly sincronizarVariante = effect(() => {
+    const valor = this.entradaVariante();
+    untracked(() => {
+      this.variant = valor;
+    });
+  });
   private readonly sincronizarBarrasNativas = effect(() => {
     const valor = this.entradaBarrasNativas();
     untracked(() => {
@@ -318,6 +345,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
 
     this.hostEl = this.elementRef.nativeElement;
     this.hostEl.style.setProperty('--so-track-size', `${this.trackSize()}px`);
+    this.variant = this.entradaVariante();
     this.hostEl.classList.toggle('so-lock-template', this._lockColumnTemplate);
     this.hostEl.classList.toggle('so-native-scrollbars', this._nativeScrollbars);
     this.applyMinColumnWidth();
@@ -679,7 +707,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
         childList: true,
         subtree: true,
         attributes: true,
-        attributeFilter: ['src', 'style', 'class', 'hidden'],
+        attributeFilter: ['src', 'style', 'class', 'hidden', 'width', 'height'],
       });
     }
   }
@@ -1050,8 +1078,8 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   private updateThumbs(): void {
-    this.updateVerticalThumb();
     this.updateHorizontalThumb();
+    this.updateVerticalThumb();
   }
 
   private syncGeometry(): void {
@@ -1076,9 +1104,10 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     this.verticalBarHeight = 0;
     this.horizontalBarWidth = 0;
 
-    // Primero detectar overflow real ANTES de ajustar posiciones
-    const hasVerticalOverflow = this.hasVerticalScrollOverflow();
+    // Primero actualizar overflow horizontal (.so-has-overflow-x controla padding-bottom) antes de medir el vertical
     const hasHorizontalOverflow = this.hasHorizontalScrollOverflow();
+    this.hostEl.classList.toggle('so-has-overflow-x', hasHorizontalOverflow);
+    const hasVerticalOverflow = this.hasVerticalScrollOverflow();
 
     let horizontalRect: DOMRect | null = null;
     let horizontalBarTop: number | null = null;
@@ -1100,7 +1129,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
       const barTop = verticalRect.top - hostRect.top + headerOffset;
       barY.style.top = `${barTop}px`;
 
-      // Ajustar altura si hay overflow horizontal para evitar colisiÃ³n
+      // Ajustar altura si hay overflow horizontal para evitar colisión
       let barHeight = verticalRect.height - headerOffset;
       if (hasHorizontalOverflow && horizontalBarTop !== null) {
         barHeight = Math.max(0, horizontalBarTop - barTop - this.verticalBarGap);
@@ -1119,7 +1148,7 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
         horizontalRect.top - hostRect.top + horizontalRect.height - this.trackSize();
       barX.style.top = `${horizontalBarVisualTop}px`;
 
-      // Calcular ancho disponible desde la posiciÃ³n left hasta el borde derecho del host
+      // Calcular ancho disponible desde la posición left hasta el borde derecho del host
       let barWidth = hostRect.width - leftPosition;
 
       if (hasVerticalOverflow && !this.disableVertical) {

@@ -54,11 +54,12 @@ app-query-toolbar {
   z-index: 1000;
   display: grid;
   place-items: center;
-  background-color: var(--color-backdrop, rgb(0 0 0 / 0.5));
+  background-color: var(--modal-overlay);
 }
 
 .pagina-crud-accordion__confirmacion {
-  background-color: var(--surface-bg, var(--bg-primary));
+  background-color: var(--modal-bg);
+  border: var(--border-width-thin) solid var(--modal-border);
   border-radius: var(--radius-lg);
   max-inline-size: 28rem;
   box-shadow: var(--shadow-lg);
@@ -68,8 +69,8 @@ app-query-toolbar {
 .pagina-crud-accordion__confirmacion-titulo {
   margin: 0;
   padding: var(--space-4) var(--space-5);
-  border-bottom: var(--border-width-thin) solid var(--border-color);
-  background-color: var(--modal-header-bg, var(--surface-bg, var(--bg-primary)));
+  border-bottom: var(--border-width-thin) solid var(--modal-border);
+  background-color: var(--modal-header-bg);
   font-family: var(--font-family-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-weight-title);
@@ -86,8 +87,8 @@ app-query-toolbar {
   justify-content: flex-end;
   gap: var(--space-3);
   padding: var(--space-4) var(--space-5);
-  border-block-start: var(--border-width-thin) solid var(--border-color);
-  background-color: var(--modal-footer-bg, var(--surface-section));
+  border-block-start: var(--border-width-thin) solid var(--modal-border);
+  background-color: var(--modal-footer-bg);
 }
 
 

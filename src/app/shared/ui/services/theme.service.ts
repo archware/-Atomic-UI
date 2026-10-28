@@ -43,7 +43,7 @@ export class ThemeService {
     });
 
     // Escuchar cambios en preferencia del SO
-    if (typeof window !== 'undefined' && window.matchMedia) {
+    if (typeof window !== 'undefined' && typeof window.matchMedia === 'function') {
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
       const handleChange = () => {
         if (this.selectedTheme() === 'system') {
@@ -126,6 +126,7 @@ export class ThemeService {
     const selected = this.selectedTheme();
 
     if (selected === 'system') {
+      if (typeof window.matchMedia !== 'function') return 'light';
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
 

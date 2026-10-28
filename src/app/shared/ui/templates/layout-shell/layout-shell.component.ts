@@ -33,7 +33,7 @@ export class LayoutShellComponent implements OnInit, OnChanges {
   readonly sidebarVisible = input(true);
 
   /** Sidebar width (default: 260px). Supports any CSS value: '260px', '25%', 'clamp(200px, 20%, 300px)' */
-  readonly sidebarWidth = input('260px');
+  readonly sidebarWidth = input('16.25rem');
 
   /** Controls the canonical footer row outside the scroll viewport. */
   readonly footerVisible = input(true);

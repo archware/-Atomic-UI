@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 7.5rem);
 }
 
 .pagina-dashboard__metricas {
@@ -13,7 +13,7 @@
 
 .pagina-dashboard__widgets {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(21.875rem, 1fr));
   gap: var(--space-6);
   align-items: start;
 }

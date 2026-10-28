@@ -118,7 +118,7 @@ function assertGeneratedQuality(fixture, output) {
       assert(source.includes('PageHeader'), `${relative} no consume PageHeader.`);
     }
     if (relative.endsWith('-page.html') && !relative.endsWith('-form-page.html')) {
-      assert(source.includes('<prest-query-toolbar'), `${relative} no consume QueryToolbar.`);
+      assert(source.includes('<app-query-toolbar'), `${relative} no consume QueryToolbar.`);
     }
     if (relative.endsWith('.spec.ts') && relative.includes('-page.spec.ts')) {
       assert(source.includes('provideZonelessChangeDetection'), `${relative} no explicita pruebas zoneless.`);
@@ -148,14 +148,14 @@ function assertGeneratedQuality(fixture, output) {
   assert(styles.includes('atomic-generated-filters'), 'No se genero layout interno para filtros proyectados.');
 
   if (fixture.name === 'route-form-integrated') {
-    assert(aggregate.includes('<prest-action-group'), 'actionDisplay=overflow no genero ActionGroup.');
+    assert(aggregate.includes('<app-action-group'), 'actionDisplay=overflow no genero ActionGroup.');
     assert(aggregate.includes('[compact]="true"'), 'El overflow no activo el modo compacto.');
     assert(aggregate.includes('invalidRouteId'), 'La ruta de edicion no distingue un id invalido.');
     assert(aggregate.includes('Number.isFinite(parsed)'), 'El id numerico no se valida sin reglas de signo inventadas.');
     assert(!aggregate.includes('parsed > 0'), 'El generador invento que todo id numerico debe ser positivo.');
     assert(aggregate.includes('fieldError('), 'El formulario no expone validacion visible.');
   } else {
-    assert(aggregate.includes('<prest-table-action'), 'actionDisplay=inline no genero TableAction.');
+    assert(aggregate.includes('<app-table-action'), 'actionDisplay=inline no genero TableAction.');
   }
 
   if (fixture.name === 'modal-catalog-ui-only') {
@@ -244,7 +244,7 @@ function main() {
     overflowRequirement.id = 'atomic.fixture.relationship.modal.delete-overflow';
     overflowRequirement.feature.key = 'relationship-overflow';
     overflowRequirement.feature.className = 'RelationshipOverflow';
-    overflowRequirement.feature.selector = 'prest-relationship-overflow-page';
+    overflowRequirement.feature.selector = 'app-relationship-overflow-page';
     overflowRequirement.variants.actionDisplay = 'overflow';
     const overflowSpec = path.join(tempRoot, 'modal-delete-overflow.json');
     fs.writeFileSync(overflowSpec, `${JSON.stringify(overflowRequirement, null, 2)}\n`, 'utf8');
@@ -258,6 +258,18 @@ function main() {
     assert(overflowAggregate.includes("actionId === 'delete'"), 'Overflow no despacha delete explicitamente.');
 
     assertAngularCompilation(tempRoot);
+
+    const legacySelectorRequirement = JSON.parse(fs.readFileSync(modalSpec, 'utf8'));
+    legacySelectorRequirement.feature.selector = 'prest-relationship-page';
+    assert.equal(validateSchema(legacySelectorRequirement), false, 'El schema acepto un selector con prefijo prest-.');
+    const legacySelectorSpec = path.join(tempRoot, 'legacy-selector.json');
+    fs.writeFileSync(legacySelectorSpec, `${JSON.stringify(legacySelectorRequirement, null, 2)}\n`, 'utf8');
+    const legacySelectorOutput = path.join(tempRoot, 'legacy-selector-output');
+    fs.mkdirSync(legacySelectorOutput, { recursive: true });
+    const rejectedLegacySelector = invoke(legacySelectorSpec, legacySelectorOutput);
+    assert.notEqual(rejectedLegacySelector.status, 0, 'El generador acepto un selector con prefijo prest-.');
+    assert.match(rejectedLegacySelector.stderr, /spec\.feature\.selector/i);
+    assert.deepEqual(relativeFiles(legacySelectorOutput), [], 'Un selector prest- rechazado no debe crear archivos.');
 
     const invalidOutput = path.join(tempRoot, 'invalid-contract');
     fs.mkdirSync(invalidOutput, { recursive: true });

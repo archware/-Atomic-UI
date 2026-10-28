@@ -4,14 +4,14 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
 import { ChoiceControl } from '../app/shared/ui/atoms/choice-control/choice-control';
-import { Input } from '../app/shared/ui/atoms/form-input/input';
+import { InputComponent } from '../app/shared/ui/atoms/input/input.component';
 import { ModalComponent } from '../app/shared/ui/molecules/modal/modal.component';
 import { PageHeader } from '../app/shared/ui/organisms/page-header/page-header';
 import { PaginationComponent } from '../app/shared/ui/molecules/pagination/pagination.component';
 import { PanelComponent } from '../app/shared/ui/surfaces/panel/panel.component';
 import { QueryToolbar } from '../app/shared/ui/organisms/query-toolbar/query-toolbar';
-import { Select } from '../app/shared/ui/atoms/form-select/select';
-import type { SelectOption } from '../app/shared/ui/atoms/form-select/select';
+import { SelectComponent } from '../app/shared/ui/atoms/select/select.component';
+import type { SelectOption } from '../app/shared/ui/atoms/select/select.component';
 import { StatusBadgeComponent } from '../app/shared/ui/atoms/status-badge/status-badge.component';
 import type { StatusBadgeStatus } from '../app/shared/ui/atoms/status-badge/status-badge.component';
 import { TableAction } from '../app/shared/ui/atoms/table-action/table-action';
@@ -99,13 +99,13 @@ const CARTERAS: readonly SelectOption[] = [
   imports: [
     ButtonComponent,
     ChoiceControl,
-    Input,
+    InputComponent,
     ModalComponent,
     PageHeader,
     PaginationComponent,
     PanelComponent,
     QueryToolbar,
-    Select,
+    SelectComponent,
     StatusBadgeComponent,
     TableAction,
     TableCellComponent,

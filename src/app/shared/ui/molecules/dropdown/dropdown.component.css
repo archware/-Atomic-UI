@@ -70,7 +70,7 @@ el menu pesaba menos que la tarjeta desde la que se abre.
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   z-index: 100;
-  max-height: 240px;
+  max-height: 15rem;
   overflow-y: auto;
   animation: dropdownFade 150ms ease;
 }

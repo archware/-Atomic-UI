@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-8);
-  min-height: 150px;
+  min-height: 9.375rem;
 }
 
 /* Loading */
@@ -26,7 +26,7 @@
   text-align: center;
   gap: var(--space-3);
   width: 100%;      /* Ocupa el ancho disponible en pantallas pequeñas */
-  max-width: 400px; /* Limita en pantallas grandes */
+  max-width: 25rem; /* Limita en pantallas grandes */
 }
 
 .error-icon {

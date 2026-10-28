@@ -22,13 +22,13 @@
 .avatar-warning { background-color: var(--avatar-background-color, var(--warning-color-lighter)); color: var(--warning-color-text); }
 .avatar-danger { background-color: var(--avatar-background-color, var(--danger-color-lighter)); color: var(--danger-color-text); }
 .avatar-info { background-color: var(--avatar-background-color, var(--info-color-lighter)); color: var(--info-color-text); }
-.avatar-user { background: var(--primary-color-gradient, linear-gradient(135deg, var(--primary-color, var(--purple-500, #8b5cf6)), var(--primary-color-dark, var(--purple-700, #6d28d9)))) !important; color: white !important; }
+.avatar-user { background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark)) !important; color: var(--text-color-on-primary) !important; }
 
-.avatar-xs { width: var(--avatar-size-xs, var(--space-5)); height: var(--avatar-size-xs, var(--space-5)); font-size: var(--text-xs); }
-.avatar-sm { width: var(--avatar-size-sm, var(--space-6)); height: var(--avatar-size-sm, var(--space-6)); font-size: var(--text-xs); }
-.avatar-md { width: var(--avatar-size-md, 2.5rem); height: var(--avatar-size-md, 2.5rem); font-size: var(--text-sm); }
-.avatar-lg { width: var(--avatar-size-lg, var(--space-8)); height: var(--avatar-size-lg, var(--space-8)); font-size: var(--text-lg); }
-.avatar-xl { width: var(--avatar-size-xl, 4rem); height: var(--avatar-size-xl, 4rem); font-size: var(--text-xl); }
+.avatar-xs { width: var(--avatar-xs); height: var(--avatar-xs); font-size: var(--text-xs); }
+.avatar-sm { width: var(--avatar-sm); height: var(--avatar-sm); font-size: var(--text-xs); }
+.avatar-md { width: var(--avatar-md); height: var(--avatar-md); font-size: var(--text-sm); }
+.avatar-lg { width: var(--avatar-lg); height: var(--avatar-lg); font-size: var(--text-lg); }
+.avatar-xl { width: var(--avatar-xl); height: var(--avatar-xl); font-size: var(--text-xl); }
 
 .avatar img {
   width: 100%;
@@ -43,7 +43,7 @@
 .avatar-initials {
   font-weight: var(--font-weight-emphasis);
   text-transform: uppercase;
-  color: white;
+  color: var(--text-color-on-primary);
 }
 
 /* Ensure initials in colored variants contrast well (usually dark on light bg or vice versa) */

@@ -259,6 +259,42 @@ describe('ThemeService', () => {
 
       expect(service.getEffectiveDarkMode()).toBe('dark');
     });
+
+    it('no lanza error y usa tema light por omision cuando window.matchMedia es undefined', () => {
+      const descriptorOriginal = Object.getOwnPropertyDescriptor(window, 'matchMedia');
+      Object.defineProperty(window, 'matchMedia', {
+        configurable: true,
+        writable: true,
+        value: undefined,
+      });
+
+      try {
+        localStorage.removeItem('app-theme');
+        TestBed.resetTestingModule();
+        TestBed.configureTestingModule({
+          providers: [
+            provideZonelessChangeDetection(),
+            ThemeService,
+            { provide: PLATFORM_ID, useValue: 'browser' },
+          ],
+        });
+
+        let nuevoServicio!: ThemeService;
+        expect(() => {
+          nuevoServicio = TestBed.inject(ThemeService);
+        }).not.toThrow();
+        expect(nuevoServicio.getEffectiveDarkMode()).toBe('light');
+
+        nuevoServicio.setDarkTheme();
+        flushThemeEffects();
+        expect(nuevoServicio.getEffectiveDarkMode()).toBe('dark');
+        expect(nuevoServicio.isDarkMode()).toBeTrue();
+      } finally {
+        if (descriptorOriginal) {
+          Object.defineProperty(window, 'matchMedia', descriptorOriginal);
+        }
+      }
+    });
   });
 
   describe('isDarkMode signal', () => {

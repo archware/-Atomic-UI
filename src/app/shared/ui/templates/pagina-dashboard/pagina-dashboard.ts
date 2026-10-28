@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { PageHeader } from '../../organisms/page-header/page-header';
 import { MetricsGridComponent, KpiMetric } from '../../organisms/metrics-grid/metrics-grid.component';
 import { DataStateComponent } from '../../molecules/data-state/data-state.component';
@@ -13,7 +12,7 @@ import { ApiError } from '../../services/api.service';
 @Component({
   selector: 'app-pagina-dashboard',
   standalone: true,
-  imports: [CommonModule, PageHeader, MetricsGridComponent, DataStateComponent],
+  imports: [PageHeader, MetricsGridComponent, DataStateComponent],
   templateUrl: './pagina-dashboard.html',
   styleUrl: './pagina-dashboard.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

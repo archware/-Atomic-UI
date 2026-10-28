@@ -2,7 +2,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { PaginaCrud } from './pagina-crud';
 import { provideTranslateService } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
-import { Input } from '../../atoms/form-input/input';
+import { InputComponent } from '../../atoms/input/input.component';
 import { DataTable } from '../../organisms/data-table/data-table';
 import { ActionGroupComponent, type ActionItem } from '../../molecules/action-group/action-group.component';
 import { ButtonComponent } from '../../atoms/button/button.component';
@@ -265,7 +265,7 @@ describe('PaginaCrud: catálogo compatible', () => {
     fixture.componentInstance.alSolicitarPagina.subscribe(pagina);
     fixture.componentRef.setInput('tamanioPagina', 25);
     fixture.detectChanges();
-    const filtro: Input = fixture.debugElement.query(By.directive(Input)).componentInstance;
+    const filtro: InputComponent = fixture.debugElement.query(By.directive(InputComponent)).componentInstance;
     filtro.valueChange.emit('Café');
     fixture.componentInstance.abrirConfirmacion(fila, confirmar);
     fixture.componentInstance.resolverConfirmacion(true);

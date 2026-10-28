@@ -58,7 +58,7 @@
 }
 
 .table-action:not(:disabled):active {
-  transform: translateY(1px);
+  transform: translateY(var(--border-width-thin));
 }
 
 .table-action:disabled {

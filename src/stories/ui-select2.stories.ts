@@ -3,7 +3,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { FormsModule } from '@angular/forms';
 import { Select2Component } from '../app/shared/ui/molecules/select2/select2.component';
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
-import { Input } from '../app/shared/ui/atoms/form-input/input';
+import { InputComponent } from '../app/shared/ui/atoms/input/input.component';
 import { FormDialog, FormDialogActions } from '../app/shared/ui/organisms/form-dialog/form-dialog';
 import { ThemeSwitcherComponent } from '../app/shared/ui/organisms/theme-switcher/theme-switcher.component';
 
@@ -13,7 +13,7 @@ const meta: Meta<Select2Component> = {
   component: Select2Component,
   decorators: [
     moduleMetadata({
-      imports: [FormsModule, ButtonComponent, Input, FormDialog, FormDialogActions, ThemeSwitcherComponent],
+      imports: [FormsModule, ButtonComponent, InputComponent, FormDialog, FormDialogActions, ThemeSwitcherComponent],
     }),
   ],
   tags: ['autodocs'],

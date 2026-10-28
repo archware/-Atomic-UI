@@ -38,9 +38,7 @@
           (keydown.space)="handleClearClick($event); $event.preventDefault()"
           tabindex="0"
           [attr.aria-label]="'Clear'"
-          [appVariablesCss]="{
-            '--floating-textarea-icon-cursor': hasValue() ? 'pointer' : 'default'
-          }"
+          [class.floating-textarea__icon--clickable]="clickableIcon()"
         >
           @if (hasValue()) {
             <i class="fa-solid fa-times" aria-hidden="true"></i>

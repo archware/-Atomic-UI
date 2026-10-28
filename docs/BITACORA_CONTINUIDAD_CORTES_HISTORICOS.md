@@ -5,8 +5,8 @@ date: "2026-10-25"
 last_updated: "2026-10-26"
 document_type: "bitácora histórica de continuidad"
 status: "vigente"
-version: "1.0.3"
-change_id: "ATOMIC-20261026-003"
+version: "1.0.4"
+change_id: "ATOMIC-20260823-600"
 canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
@@ -14,6 +14,12 @@ document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDA
 # Bitácora histórica de cortes de continuidad de Atomic UI
 
 Este archivo conserva los cortes históricos archivados desde [`CONTINUIDAD_AGENTES.md`](./CONTINUIDAD_AGENTES.md) conforme a la ventana deslizante de `DOC-20261025-001`. Solo debe consultarse bajo demanda cuando se investigue un corte anterior.
+
+## Corte archivado por ATOMIC-20260823-600 (corte 3)
+
+### 3. Unidad ATOMIC-20261026-001 — pruebas de accesibilidad
+
+Se corrigen seis expectativas en cuatro especificaciones mediante presencia obligatoria y estrechamiento del nodo, conservando los casos existentes. La copia aislada del HEAD `dd93734a3eea40b87d46b4990976231fe2d6ca19` más las cuatro pruebas propias pasa 70/70 casos de Input, Select, Textarea, Dropdown, ActionGroup y PaginaCrud. Los otros 802 archivos conservan los bytes de la copia inicial; el cotejo con blobs Git normaliza CRLF. Se conserva el lockfile de las dependencias completas existentes. No se cambian componentes, configuración ni dependencias. El [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261026-001_desbloqueo_pruebas.md) registra revisión independiente, custodia y límites del corte; no acredita el árbol móvil, paquete, gobernanza o procedencia actuales.
 
 ## Corte archivado por ATOMIC-20261026-003
 

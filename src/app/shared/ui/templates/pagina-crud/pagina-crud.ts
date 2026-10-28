@@ -19,7 +19,7 @@ import { ActionGroupComponent, type ActionItem } from '../../molecules/action-gr
 import { resolveTableActionIcon, resolveTableActionTone, type TableActionName } from '../../atoms/table-action/table-action';
 import { SummaryListComponent, type SummaryListItem } from '../../molecules/summary-list/summary-list.component';
 import { ButtonComponent } from '../../atoms/button/button.component';
-import { Input } from '../../atoms/form-input/input';
+import { InputComponent } from '../../atoms/input/input.component';
 import { Select2Component, type Select2Option } from '../../molecules/select2/select2.component';
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 import { NgTemplateOutlet } from '@angular/common';
@@ -89,7 +89,7 @@ export interface FiltroBusqueda {
     QueryToolbar,
     DataTable,
     ButtonComponent,
-    Input,
+    InputComponent,
     Select2Component,
     IconButtonComponent,
     NgTemplateOutlet,

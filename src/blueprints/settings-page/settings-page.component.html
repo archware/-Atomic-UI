@@ -23,10 +23,10 @@
   >
     <ng-template #resumen>
       @if (successMessage()) {
-        <app-alert kind="success" [closable]="true" class="mb-4 mx-6 mt-4">{{ successMessage() }}</app-alert>
+        <app-alert kind="success" [closable]="true" class="mb-4 mt-4">{{ successMessage() }}</app-alert>
       }
       @if (errorMessage()) {
-        <app-alert kind="danger" [closable]="true" class="mb-4 mx-6 mt-4">{{ errorMessage() }}</app-alert>
+        <app-alert kind="danger" [closable]="true" class="mb-4 mt-4">{{ errorMessage() }}</app-alert>
       }
     </ng-template>
 

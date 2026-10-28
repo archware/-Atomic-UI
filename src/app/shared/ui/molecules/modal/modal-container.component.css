@@ -40,20 +40,20 @@
 }
 
 @keyframes modalSlideUp {
-  from { transform: translateY(20px); opacity: 0; }
+  from { transform: translateY(1.25rem); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 
 @keyframes modalSlideDown {
   from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(1.25rem); opacity: 0; }
 }
 
 /* Sizes */
-.modal-sm { max-width: 400px; }
-.modal-md { max-width: 550px; }
-.modal-lg { max-width: 800px; }
-.modal-xl { max-width: 1000px; }
+.modal-sm { max-width: 25rem; }
+.modal-md { max-width: 34.375rem; }
+.modal-lg { max-width: 50rem; }
+.modal-xl { max-width: 62.5rem; }
 
 /* Header */
 .modal-header {

@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 export type SummaryListLayout = 'summary' | 'detail';
@@ -14,7 +13,7 @@ export interface SummaryListItem {
 @Component({
   selector: 'app-summary-list',
   standalone: true,
-  imports: [CommonModule, VariablesCssDirective],
+  imports: [VariablesCssDirective],
   template: `
     <dl class="summary-list" [class.data-list]="layout() === 'detail'" [class.summary-list--featured]="featured()" [class.summary-list--detail]="layout() === 'detail'">
       @for (item of items(); track item.label) {

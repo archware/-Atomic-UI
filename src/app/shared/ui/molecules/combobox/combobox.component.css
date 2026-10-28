@@ -57,11 +57,11 @@
 
 .combobox-dropdown {
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% + var(--space-1));
   left: 0;
   right: 0;
   z-index: 1000;
-  max-height: 240px;
+  max-height: 15rem;
   overflow-y: auto;
   background: var(--surface-background);
   border: 1px solid var(--border-color);

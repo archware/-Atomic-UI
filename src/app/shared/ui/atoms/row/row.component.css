@@ -58,12 +58,12 @@
 .row--valign-baseline { align-items: baseline; }
 
 /* === Individual Column Alignment (utility classes) === */
-::ng-deep .justify-start { justify-self: start !important; }
-::ng-deep .justify-center { justify-self: center !important; }
-::ng-deep .justify-end { justify-self: end !important; }
-::ng-deep .align-self-start { align-self: start !important; }
-::ng-deep .align-self-center { align-self: center !important; }
-::ng-deep .align-self-end { align-self: end !important; }
+:host ::ng-deep .justify-start { justify-self: start !important; }
+:host ::ng-deep .justify-center { justify-self: center !important; }
+:host ::ng-deep .justify-end { justify-self: end !important; }
+:host ::ng-deep .align-self-start { align-self: start !important; }
+:host ::ng-deep .align-self-center { align-self: center !important; }
+:host ::ng-deep .align-self-end { align-self: end !important; }
 
 /* === Responsive: Stack on mobile === */
 @media (max-width: 40rem) {

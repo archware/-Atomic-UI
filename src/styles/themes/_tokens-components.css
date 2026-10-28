@@ -32,6 +32,7 @@
    --nav-item-active-bg: var(--primary-color-lighter);
    --nav-item-active-text: var(--primary-color);
    --nav-shadow: var(--shadow-sm);
+   --topbar-height: 4rem;
    --topbar-action-icon-size: var(--icon-md);
    --topbar-title-max-inline-size: 10rem;
    --topbar-title-compact-min-inline-size: 5rem;

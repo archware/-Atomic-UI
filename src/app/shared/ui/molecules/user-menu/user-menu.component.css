@@ -32,7 +32,7 @@
   top: calc(100% + var(--space-2));
   right: 0;
   /* min() evita que el dropdown desborde el viewport en pantallas pequeñas */
-  min-width: min(220px, calc(100vw - var(--space-6)));
+  min-width: min(13.75rem, calc(100vw - var(--space-6)));
   max-width: calc(100vw - var(--space-4));
   background: var(--surface-background);
   border: 1px solid var(--border-color);
@@ -190,4 +190,4 @@
   margin-left: var(--space-1);
 }
 
-.user-menu__item:last-child { border-bottom-left-radius: calc(var(--radius-lg) - 1px); border-bottom-right-radius: calc(var(--radius-lg) - 1px); }
+.user-menu__item:last-child { border-bottom-left-radius: calc(var(--radius-lg) - var(--border-width-thin)); border-bottom-right-radius: calc(var(--radius-lg) - var(--border-width-thin)); }

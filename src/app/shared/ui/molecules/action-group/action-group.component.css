@@ -198,7 +198,7 @@ reserva a menu desplegable, popover y aviso.
 @keyframes menuFadeIn {
   from { 
     opacity: 0; 
-    transform: translateY(-4px); 
+    transform: translateY(calc(-1 * var(--space-1)));
   }
   to { 
     opacity: 1; 

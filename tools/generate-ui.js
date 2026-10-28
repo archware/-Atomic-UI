@@ -24,7 +24,7 @@ const FIELD_TYPES = new Set(['string', 'number', 'boolean']);
 const IDENTIFIER = /^[A-Za-z_$][A-Za-z0-9_$]*$/;
 const STABLE_ID = /^[a-z][a-z0-9.-]{2,100}$/;
 const KEBAB = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
-const SELECTOR = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$/;
+const SELECTOR = /^app-[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const PASCAL = /^[A-Z][A-Za-z0-9]*$/;
 
 class RequirementError extends Error {
@@ -1054,7 +1054,7 @@ ${branches}
     queueMicrotask(() => {
       const root = this.editorForm()?.nativeElement;
       root?.querySelector<HTMLElement>(
-        'prest-input.ng-invalid input, app-number-input.ng-invalid input, prest-choice-control.ng-invalid input',
+        'app-input.ng-invalid input, app-number-input.ng-invalid input, app-choice-control.ng-invalid input',
       )?.focus({ preventScroll: true });
     });
   }
@@ -1065,7 +1065,7 @@ function editorImports(spec) {
   const imports = new Set(['ButtonComponent']);
   for (const name of spec.editor.fields) {
     const field = fieldByName(spec, name);
-    if (field.type === 'string') imports.add('Input');
+    if (field.type === 'string') imports.add('InputComponent');
     if (field.type === 'number') imports.add('NumberInputComponent');
     if (field.type === 'boolean') imports.add('ChoiceControl');
   }
@@ -1090,7 +1090,7 @@ function editorTemplate(spec) {
     }
     if (field.type === 'boolean') {
       return `      <div class="atomic-generated-field">
-        <prest-choice-control
+        <app-choice-control
           label="${html(field.label)}"
           [checked]="form.controls.${name}.value"
           (changed)="form.controls.${name}.setValue($event); form.controls.${name}.markAsTouched()"
@@ -1103,7 +1103,7 @@ function editorTemplate(spec) {
     const maxLength = field.maxLength !== undefined ? ` [maxLength]="${field.maxLength}"` : '';
     const minLength = field.minLength !== undefined ? ` [minLength]="${field.minLength}"` : '';
     return `      <div class="atomic-generated-field">
-        <prest-input
+        <app-input
           label="${html(field.label)}"
           formControlName="${name}"
           [error]="fieldError('${name}')"
@@ -1122,7 +1122,7 @@ function commonListImports(spec, extras = []) {
     'ButtonComponent',
     'CardComponent',
     'DataTable',
-    'Input',
+    'InputComponent',
     'PageHeader',
     'QueryToolbar',
     rowActionComponent,
@@ -1135,14 +1135,14 @@ function rowActionTemplate(spec, action, label, handler) {
   if (spec.variants.actionDisplay === 'overflow') {
     const actionLiteral = html(tsString(action));
     const labelLiteral = html(tsString(label));
-    return `<prest-action-group
+    return `<app-action-group
           [actions]="[{ id: ${actionLiteral}, action: ${actionLiteral}, label: ${labelLiteral} }]"
           [compact]="true"
           size="${size}"
           (actionClick)="${handler}(row)"
         />`;
   }
-  return `<prest-table-action
+  return `<app-table-action
           action="${action}"
           label="${html(label)}"
           size="${size}"
@@ -1157,7 +1157,7 @@ function modalRowActionsTemplate(spec) {
   }
   const size = spec.variants.density === 'compact' ? 'sm' : 'md';
   if (spec.variants.actionDisplay === 'overflow') {
-    return `<prest-action-group
+    return `<app-action-group
           [actions]="rowActions(row)"
           [compact]="true"
           size="${size}"
@@ -1166,7 +1166,7 @@ function modalRowActionsTemplate(spec) {
   }
   return `${rowActionTemplate(spec, 'edit', `Editar ${spec.feature.singular}`, 'openEdit')}
         @if (canDelete(row)) {
-          <prest-table-action
+          <app-table-action
             action="delete"
             label="${html(deleteAction.label)}"
             tone="danger"
@@ -1258,7 +1258,6 @@ import { ${imports.join(', ')}, DataTableColumn, DataTableSortChange } from '@sh
 ${actionItemImport}import { ${featureClass}Facade } from './${spec.feature.key}.facade';
 import { ${model}, ${model}Draft, ${model}Id } from './${spec.feature.key}.models';
 ${permissionImport}
-
 @Component({
   selector: ${tsString(spec.feature.selector)},
   standalone: true,
@@ -1364,7 +1363,7 @@ function buildModalTemplate(spec, recipe) {
   const deleteDialog = deleteAction
     ? `
   @if (deleteOpen()) {
-    <prest-form-dialog
+    <app-form-dialog
       #confirmDeleteDialog
       title="${html(deleteAction.confirmation.title)}"
       description="${html(deleteAction.confirmation.message)}"
@@ -1384,23 +1383,23 @@ function buildModalTemplate(spec, recipe) {
       @if (facade.mutationError(); as message) {
         <app-alert kind="danger">{{ message }}</app-alert>
       }
-      <prest-form-dialog-actions>
+      <app-form-dialog-actions>
         <app-button type="button" variant="ghost" [disabled]="facade.isMutating()" (buttonClick)="cancelDelete()">${html(deleteAction.confirmation.cancelLabel)}</app-button>
         <app-button type="button" variant="danger" tone="danger" [disabled]="facade.isMutating()" (buttonClick)="confirmDelete()">${html(deleteAction.confirmation.confirmLabel)}</app-button>
-      </prest-form-dialog-actions>
-    </prest-form-dialog>
+      </app-form-dialog-actions>
+    </app-form-dialog>
   }
 `
     : '';
   return `${generatedHtmlHeader(spec, recipe)}<section aria-labelledby="${spec.feature.key}-title" data-ui-requirement="${html(spec.id)}">
-  <prest-page-header
+  <app-page-header
     title="${html(spec.feature.title)}"
     subtitle="Administre ${html(spec.feature.plural)} sin abandonar el listado."
     headingId="${spec.feature.key}-title"
     density="${html(spec.variants.density)}"
   >
     <app-button page-header-actions type="button" (buttonClick)="openCreate()">Nuevo</app-button>
-  </prest-page-header>
+  </app-page-header>
 
   @if (facade.error(); as message) {
     <app-alert kind="danger">{{ message }}</app-alert>
@@ -1410,18 +1409,18 @@ function buildModalTemplate(spec, recipe) {
   }
 
   <app-card class="atomic-generated-list">
-    <prest-query-toolbar
+    <app-query-toolbar
       density="${html(spec.variants.density)}"
       accessibleLabel="Buscar ${html(spec.feature.plural)}"
     >
       <form class="atomic-generated-filters" query-filters [formGroup]="filterForm" (ngSubmit)="applySearch()" novalidate>
-        <prest-input label="Buscar" type="search" formControlName="search" />
+        <app-input label="Buscar" type="search" formControlName="search" />
         <app-button type="button" variant="ghost" (buttonClick)="clearSearch()">Limpiar</app-button>
         <app-button type="submit" variant="secondary">Buscar</app-button>
       </form>
-    </prest-query-toolbar>
+    </app-query-toolbar>
 
-    <prest-data-table
+    <app-data-table
       caption="${html(spec.feature.title)}"
       density="${html(spec.variants.density)}"
       [columns]="columns"
@@ -1444,11 +1443,11 @@ function buildModalTemplate(spec, recipe) {
       <ng-template #actions let-row>
         ${modalRowActionsTemplate(spec)}
       </ng-template>
-    </prest-data-table>
+    </app-data-table>
   </app-card>
 
   @if (editorOpen()) {
-    <prest-form-dialog
+    <app-form-dialog
       #editorDialog
       [title]="editorTitle()"
       size="${html(spec.variants.editorSize)}"
@@ -1462,12 +1461,12 @@ ${editorTemplate(spec)}
         @if (facade.mutationError(); as message) {
           <app-alert kind="danger">{{ message }}</app-alert>
         }
-        <prest-form-dialog-actions>
+        <app-form-dialog-actions>
           <app-button type="button" variant="ghost" [disabled]="facade.isMutating()" (buttonClick)="closeEditor()">Cancelar</app-button>
           <app-button type="submit" [disabled]="facade.isMutating()">Guardar</app-button>
-        </prest-form-dialog-actions>
+        </app-form-dialog-actions>
       </form>
-    </prest-form-dialog>
+    </app-form-dialog>
   }
 ${deleteDialog}</section>
 `;
@@ -1546,29 +1545,29 @@ export class ${page} implements OnInit {
 
 function buildListTemplate(spec, recipe) {
   return `${generatedHtmlHeader(spec, recipe)}<section aria-labelledby="${spec.feature.key}-title" data-ui-requirement="${html(spec.id)}">
-  <prest-page-header
+  <app-page-header
     title="${html(spec.feature.title)}"
     subtitle="Consulte y administre ${html(spec.feature.plural)}."
     headingId="${spec.feature.key}-title"
     density="${html(spec.variants.density)}"
   >
     <app-button page-header-actions type="button" (buttonClick)="create()">Nuevo</app-button>
-  </prest-page-header>
+  </app-page-header>
   @if (facade.error(); as message) {
     <app-alert kind="danger">{{ message }}</app-alert>
   }
   <app-card class="atomic-generated-list">
-    <prest-query-toolbar
+    <app-query-toolbar
       density="${html(spec.variants.density)}"
       accessibleLabel="Buscar ${html(spec.feature.plural)}"
     >
       <form class="atomic-generated-filters" query-filters [formGroup]="filterForm" (ngSubmit)="applySearch()" novalidate>
-        <prest-input label="Buscar" type="search" formControlName="search" />
+        <app-input label="Buscar" type="search" formControlName="search" />
         <app-button type="button" variant="ghost" (buttonClick)="clearSearch()">Limpiar</app-button>
         <app-button type="submit" variant="secondary">Buscar</app-button>
       </form>
-    </prest-query-toolbar>
-    <prest-data-table
+    </app-query-toolbar>
+    <app-data-table
       caption="${html(spec.feature.title)}"
       density="${html(spec.variants.density)}"
       [columns]="columns"
@@ -1589,7 +1588,7 @@ function buildListTemplate(spec, recipe) {
       <ng-template #actions let-row>
         ${rowActionTemplate(spec, 'edit', `Editar ${spec.feature.singular}`, 'edit')}
       </ng-template>
-    </prest-data-table>
+    </app-data-table>
   </app-card>
 </section>
 `;
@@ -1700,14 +1699,14 @@ ${formErrorMethod(spec)}
 
 function buildRouteFormTemplate(spec, recipe) {
   return `${generatedHtmlHeader(spec, recipe)}<section aria-labelledby="${spec.feature.key}-form-title" data-ui-requirement="${html(spec.id)}">
-  <prest-page-header
+  <app-page-header
     [title]="title()"
     subtitle="Complete los datos requeridos y guarde los cambios."
     headingId="${spec.feature.key}-form-title"
     density="${html(spec.variants.density)}"
   >
     <app-button page-header-actions type="button" variant="ghost" (buttonClick)="cancel()">Volver</app-button>
-  </prest-page-header>
+  </app-page-header>
   <app-data-state
     [loading]="recordId() !== null && facade.detailStatus() === 'loading'"
     [error]="detailError()"
@@ -1850,7 +1849,7 @@ export class ${page} implements OnInit {
 
 function buildMasterTemplate(spec, recipe) {
   return `${generatedHtmlHeader(spec, recipe)}<section class="atomic-generated-master-detail" aria-labelledby="${spec.feature.key}-title" data-ui-requirement="${html(spec.id)}" data-detail-placement="${html(spec.variants.detailPlacement)}">
-  <prest-page-header
+  <app-page-header
     title="${html(spec.feature.title)}"
     subtitle="Seleccione ${html(spec.feature.singular)} para consultar su detalle."
     headingId="${spec.feature.key}-title"
@@ -1860,17 +1859,17 @@ function buildMasterTemplate(spec, recipe) {
     <app-alert kind="danger">{{ message }}</app-alert>
   }
   <app-card class="atomic-generated-list">
-    <prest-query-toolbar
+    <app-query-toolbar
       density="${html(spec.variants.density)}"
       accessibleLabel="Buscar ${html(spec.feature.plural)}"
     >
       <form class="atomic-generated-filters" query-filters [formGroup]="filterForm" (ngSubmit)="applySearch()" novalidate>
-        <prest-input label="Buscar" type="search" formControlName="search" />
+        <app-input label="Buscar" type="search" formControlName="search" />
         <app-button type="button" variant="ghost" (buttonClick)="clearSearch()">Limpiar</app-button>
         <app-button type="submit" variant="secondary">Buscar</app-button>
       </form>
-    </prest-query-toolbar>
-    <prest-data-table
+    </app-query-toolbar>
+    <app-data-table
       caption="${html(spec.feature.title)}"
       density="${html(spec.variants.density)}"
       [columns]="columns"
@@ -1891,7 +1890,7 @@ function buildMasterTemplate(spec, recipe) {
       <ng-template #actions let-row>
         ${rowActionTemplate(spec, 'view', `Ver ${spec.feature.singular}`, 'select')}
       </ng-template>
-    </prest-data-table>
+    </app-data-table>
   </app-card>
   <app-card class="atomic-generated-detail" title="Detalle">
     <app-data-state
@@ -1982,7 +1981,7 @@ section {
     align-items: start;
   }
 
-  .atomic-generated-master-detail[data-detail-placement='aside'] > prest-page-header,
+  .atomic-generated-master-detail[data-detail-placement='aside'] > app-page-header,
   .atomic-generated-master-detail[data-detail-placement='aside'] > app-alert {
     grid-column: 1 / -1;
   }

@@ -4,8 +4,8 @@ import { moduleMetadata } from '@storybook/angular';
 import { DividerComponent } from '../app/shared/ui/atoms/divider/divider.component';
 import { LoaderComponent } from '../app/shared/ui/atoms/loader/loader.component';
 import { RowComponent } from '../app/shared/ui/atoms/row/row.component';
-import { Select } from '../app/shared/ui/atoms/form-select/select';
-import type { SelectOption } from '../app/shared/ui/atoms/form-select/select';
+import { SelectComponent } from '../app/shared/ui/atoms/select/select.component';
+import type { SelectOption } from '../app/shared/ui/atoms/select/select.component';
 import { PanelComponent } from '../app/shared/ui/surfaces/panel/panel.component';
 
 /*
@@ -145,7 +145,7 @@ const meta: Meta<PanelComponent> = {
         RowComponent,
         DividerComponent,
         LoaderComponent,
-        Select,
+        SelectComponent,
         EstructuraCelda,
         EstructuraRotulo,
       ],

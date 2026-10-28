@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   contentChild,
-  contentChildren,
   input,
   output,
   signal,
@@ -23,7 +22,7 @@ import {
 } from '../../organisms/accordion/accordion.component';
 import { TableAction } from '../../atoms/table-action/table-action';
 import { ButtonComponent } from '../../atoms/button/button.component';
-import { Input } from '../../atoms/form-input/input';
+import { InputComponent } from '../../atoms/input/input.component';
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 import { NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -92,7 +91,7 @@ export interface EventoEntidadAccordion<T = unknown> {
     AccordionItemComponent,
     TableAction,
     ButtonComponent,
-    Input,
+    InputComponent,
     IconButtonComponent,
     NgTemplateOutlet,
     FormsModule,
@@ -270,9 +269,10 @@ export class PaginaCrudAccordion<T extends object = Record<string, unknown>> {
 
   cerrarDialogo(): void {
     const dialogos = this.dialogoCrud();
-    if (dialogos.length > 0) {
-      dialogos[0].close();
+    if (this.guardando() || !dialogos[0]?.open) {
+      return;
     }
+    dialogos[0].close();
     this.alCerrarDialogo.emit();
   }
 

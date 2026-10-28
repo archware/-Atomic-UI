@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Input } from '../../atoms/form-input/input';
+import { InputComponent } from '../../atoms/input/input.component';
 import { TransactionEditor } from './transaction-editor';
 @Component({
-  imports: [TransactionEditor, Input, ReactiveFormsModule],
+  imports: [TransactionEditor, InputComponent, ReactiveFormsModule],
   template: '<app-transaction-editor><div transactionLine><app-input label="Cantidad" [formControl]="cantidad" type="number" /></div></app-transaction-editor>',
 })
 class Host { readonly cantidad = new FormControl(1); }

@@ -2,8 +2,8 @@
 <div class="profile-summary">
   <div class="avatar-section">
     @if (loading()) {
-      <app-skeleton variant="circular" width="80px" height="80px"></app-skeleton>
-      <app-skeleton variant="text" width="120px"></app-skeleton>
+      <app-skeleton variant="circular" width="5rem" height="5rem"></app-skeleton>
+      <app-skeleton variant="text" width="7.5rem"></app-skeleton>
     } @else {
       <app-avatar [initials]="initials()" size="xl"></app-avatar>
       <app-text variant="h3" weight="semibold">

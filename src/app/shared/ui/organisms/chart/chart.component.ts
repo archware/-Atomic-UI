@@ -32,7 +32,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   readonly data = input.required<ChartConfiguration['data']>();
   readonly options: InputSignal<ChartConfiguration['options']> =
     input.required<ChartConfiguration['options']>();
-  readonly height = input('300px');
+  readonly height = input('18.75rem');
   @ViewChild('chartContainer') private chartContainer?: ElementRef<HTMLDivElement>;
   @ViewChild(BaseChartDirective) private chart?: BaseChartDirective;
 

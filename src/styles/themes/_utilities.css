@@ -22,9 +22,9 @@
 .text-left { text-align: left !important; }
 .text-right { text-align: right !important; }
 
-.font-bold { font-weight: bold !important; }
+.font-bold { font-weight: var(--font-weight-title) !important; }
 .font-medium { font-weight: var(--font-weight-body) !important; }
-.font-normal { font-weight: normal !important; }
+.font-normal { font-weight: var(--font-weight-body) !important; }
 
 .text-muted { color: var(--text-color-muted) !important; }
 .text-secondary { color: var(--text-color-secondary) !important; }
@@ -35,13 +35,13 @@
 .text-white { color: var(--gray-0) !important; }
 
 /* Font Sizes */
-.text-sm { font-size: 0.85rem !important; }
-.text-base { font-size: 1rem !important; }
-.text-lg { font-size: 1.125rem !important; }
+.text-sm { font-size: var(--text-sm) !important; }
+.text-base { font-size: var(--text-md) !important; }
+.text-lg { font-size: var(--text-lg) !important; }
 .text-xl { font-size: var(--text-xl) !important; }
-.text-2xl { font-size: 1.5rem !important; }
-.text-3xl { font-size: 2rem !important; }
-.text-4xl { font-size: 2.5rem !important; }
+.text-2xl { font-size: var(--text-2xl) !important; }
+.text-3xl { font-size: var(--text-3xl) !important; }
+.text-4xl { font-size: var(--text-4xl) !important; }
 
 /* Margins (Bottom mainly used) */
 .mb-0 { margin-bottom: 0 !important; }
@@ -91,19 +91,19 @@
 /* Display Block */
 .d-block { display: block !important; }
 /* Grid */
-.grid-cols-220 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important; }
-.grid-cols-180 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important; }
-.grid-cols-350 { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important; }
-.chart-grid-compact { grid-auto-rows: 430px !important; }
+.grid-cols-220 { grid-template-columns: repeat(auto-fit, minmax(13.75rem, 1fr)) !important; }
+.grid-cols-180 { grid-template-columns: repeat(auto-fit, minmax(11.25rem, 1fr)) !important; }
+.grid-cols-350 { grid-template-columns: repeat(auto-fit, minmax(21.875rem, 1fr)) !important; }
+.chart-grid-compact { grid-auto-rows: 26.875rem !important; }
 
 @media (max-width: 56.25rem) {
   .chart-grid-compact { grid-auto-rows: auto !important; }
 }
 
 /* Heights */
-.h-300 { height: 300px !important; }
-.h-380 { height: 380px !important; }
-.h-29 { height: 29px !important; }
+.h-300 { height: 18.75rem !important; }
+.h-380 { height: 23.75rem !important; }
+.h-29 { height: 1.8125rem !important; }
 
 /* Chart Layout */
 .chart-panel {
@@ -114,20 +114,20 @@
 }
 
 .chart-panel--fill {
-  height: 320px !important;
+  height: 20rem !important;
 }
 
 .chart-panel--center {
-  height: 260px !important;
+  height: 16.25rem !important;
   justify-content: center !important;
 }
 
 /* Chart Colors */
-.text-chart-1 { color: var(--chart-color-1, #ec4899) !important; }
-.text-chart-2 { color: var(--chart-color-2, #3b82f6) !important; }
-.text-chart-3 { color: var(--chart-color-3, #8b5cf6) !important; }
-.text-chart-4 { color: var(--chart-color-4, #10b981) !important; }
-.text-chart-5 { color: var(--chart-color-5, #f59e0b) !important; }
+.text-chart-1 { color: var(--chart-color-1) !important; }
+.text-chart-2 { color: var(--chart-color-2) !important; }
+.text-chart-3 { color: var(--chart-color-3) !important; }
+.text-chart-4 { color: var(--chart-color-4) !important; }
+.text-chart-5 { color: var(--chart-color-5) !important; }
 
 /* Margins */
 .m-0 { margin: 0 !important; }

@@ -1,18 +1,17 @@
 import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { PaginaCrud, FiltroBusqueda } from '../../../../shared/ui/templates/pagina-crud/pagina-crud';
 import { PaginaCrudAccordion } from '../../../../shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion';
 import { PaginaWizardComponent } from '../../../../shared/ui/templates/pagina-wizard/pagina-wizard';
 import { EntidadAccordion } from '../../../../shared/ui/templates/modelos-crud';
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { DataTableColumn } from '../../../../shared/ui/organisms/data-table/data-table';
-import { Input } from '../../../../shared/ui/atoms/form-input/input';
+import { InputComponent } from '../../../../shared/ui/atoms/input/input.component';
 import { Step } from '../../../../shared/ui/organisms/stepper/stepper.component';
 
 @Component({
   selector: 'app-showcase-templates',
   standalone: true,
-  imports: [CommonModule, PaginaCrud, PaginaCrudAccordion, PaginaWizardComponent, PanelComponent, Input],
+  imports: [PaginaCrud, PaginaCrudAccordion, PaginaWizardComponent, PanelComponent, InputComponent],
   template: `
     <app-panel title="Templates (Pagina CRUD y Variantes)" variant="flat" padding="md" class="showcase-section">
       <p style="color: var(--text-color-secondary); margin-bottom: 1rem; font-size: 0.875rem;">

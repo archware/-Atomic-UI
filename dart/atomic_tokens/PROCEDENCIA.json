@@ -30,7 +30,7 @@
   "fuente": [
     {
       "archivo": "src/styles/themes/_tokens-primitives.css",
-      "sha256": "d9fb131cf22e06221a74304d7048a02079a26a0f2e85854983a9e3a5eddf8324"
+      "sha256": "f5bfc3b9812742bfdebfc056841b438ba268ad013ed603f17e1323effada18f1"
     },
     {
       "archivo": "src/styles/themes/_tokens-brand.css",
@@ -42,7 +42,7 @@
     },
     {
       "archivo": "src/styles/themes/_tokens-components.css",
-      "sha256": "2c4647f240e556ace741af172346fa8816a2ea2ef2d55e63e2e3f6c9d4792492"
+      "sha256": "fb753801ebcca85bf51ed684aa8bafa269c330215911f8f467d6094ef3c37631"
     }
   ],
   "emitido": [

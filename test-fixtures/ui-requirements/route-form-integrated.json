@@ -6,7 +6,7 @@
   "feature": {
     "key": "role-access",
     "className": "RoleAccess",
-    "selector": "prest-role-access-page",
+    "selector": "app-role-access-page",
     "title": "Roles",
     "singular": "rol",
     "plural": "roles",

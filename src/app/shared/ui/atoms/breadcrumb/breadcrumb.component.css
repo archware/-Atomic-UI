@@ -22,7 +22,7 @@
   text-decoration: none;
   transition: color 150ms ease;
 }
-.breadcrumb-link:hover { color: var(--color-primary-hover, var(--color-primary)); text-decoration: underline; }
+.breadcrumb-link:hover { color: var(--primary-color-hover); text-decoration: underline; }
 
 .breadcrumb-text {
   color: var(--text-color-secondary);

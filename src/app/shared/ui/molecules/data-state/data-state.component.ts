@@ -1,5 +1,5 @@
 import { Component, ContentChild, TemplateRef, ChangeDetectionStrategy, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { LoaderComponent } from '../../atoms/loader/loader.component';
 import { ApiError } from '../../services/api.service';
 import { ButtonComponent } from '../../atoms/button/button.component';
@@ -30,7 +30,7 @@ import { ButtonComponent } from '../../atoms/button/button.component';
  *     <div class="custom-error">
  *       <h3>¡Ups! Algo salió mal</h3>
  *       <p>{{ error.message }}</p>
- *       <button (click)="retry()">Reintentar</button>
+ *       <button type="button" (click)="retry()">Reintentar</button>
  *     </div>
  *   </ng-template>
  *
@@ -56,7 +56,7 @@ import { ButtonComponent } from '../../atoms/button/button.component';
 @Component({
   selector: 'app-data-state',
   standalone: true,
-  imports: [CommonModule, LoaderComponent, ButtonComponent],
+  imports: [NgTemplateOutlet, LoaderComponent, ButtonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <!-- Loading State -->

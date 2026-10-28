@@ -53,6 +53,13 @@ parametro: la REGLA es comun, el inventario de excepciones no.
 resuelve las excepciones contra su propia linea base, que es un trinquete y no
 una lista escrita a mano.
 */
+const PATRON_SELECTOR_CANONICO_APP =
+  /^(?:app-[a-z0-9]+(?:-[a-z0-9]+)*|[a-z]*\[app(?:-[a-z0-9]+(?:-[a-z0-9]+)*|[A-Z][A-Za-z0-9]*)\])$/u;
+
+function esSelectorCanonicoApp(selector) {
+  return PATRON_SELECTOR_CANONICO_APP.test(selector);
+}
+
 function auditarSelectores(uiRoot, aliasTransitorios = ALIAS_TRANSITORIOS_DEL_ADN) {
   const hallazgos = [];
   let declaraciones = 0;
@@ -65,28 +72,51 @@ function auditarSelectores(uiRoot, aliasTransitorios = ALIAS_TRANSITORIOS_DEL_AD
     for (const match of content.matchAll(selectorPattern)) {
       declaraciones += 1;
       const linea = content.slice(0, match.index).split(/\r?\n/u).length;
-      const selectors = match[2].split(',').map((selector) => selector.trim());
-      const prestSelectors = selectors.filter((selector) => selector.startsWith('prest-'));
-      if (prestSelectors.length === 0) {
-        continue;
-      }
-      aliases += prestSelectors.length;
-      if (!aliasTransitorios.has(relativePath)) {
+      const selectors = match[2]
+        .split(',')
+        .map((selector) => selector.trim())
+        .filter(Boolean);
+
+      if (selectors.length === 0 || !esSelectorCanonicoApp(selectors[0])) {
         hallazgos.push({
           rutaArchivo: filePath,
           rutaRelativa: relativePath,
           linea,
-          detalle: 'el alias prest-* no está en la excepción transitoria.',
+          detalle: `el selector primario "${selectors[0] ?? ''}" debe usar el prefijo canónico app- o [app...].`,
         });
       }
-      for (const legacySelector of prestSelectors) {
-        const canonicalSelector = `app-${legacySelector.slice('prest-'.length)}`;
-        if (selectors[0] !== canonicalSelector || !selectors.includes(canonicalSelector)) {
+
+      const prestSelectors = selectors.filter((selector) => selector.startsWith('prest-'));
+      if (prestSelectors.length > 0) {
+        aliases += prestSelectors.length;
+        if (!aliasTransitorios.has(relativePath)) {
           hallazgos.push({
             rutaArchivo: filePath,
             rutaRelativa: relativePath,
             linea,
-            detalle: `${legacySelector} debe acompañar a ${canonicalSelector} y el selector app-* debe aparecer primero.`,
+            detalle: 'el alias prest-* no está en la excepción transitoria.',
+          });
+        }
+        for (const legacySelector of prestSelectors) {
+          const canonicalSelector = `app-${legacySelector.slice('prest-'.length)}`;
+          if (selectors[0] !== canonicalSelector || !selectors.includes(canonicalSelector)) {
+            hallazgos.push({
+              rutaArchivo: filePath,
+              rutaRelativa: relativePath,
+              linea,
+              detalle: `${legacySelector} debe acompañar a ${canonicalSelector} y el selector app-* debe aparecer primero.`,
+            });
+          }
+        }
+      }
+
+      for (const selector of selectors) {
+        if (!esSelectorCanonicoApp(selector) && !selector.startsWith('prest-')) {
+          hallazgos.push({
+            rutaArchivo: filePath,
+            rutaRelativa: relativePath,
+            linea,
+            detalle: `el selector "${selector}" usa un prefijo no autorizado; solo se permite app- (o [app...]) y los aliases transitorios registrados.`,
           });
         }
       }
@@ -100,10 +130,16 @@ function ejecutar() {
   const uiRoot = path.resolve(process.argv[2] || 'src/app/shared/ui');
   const { hallazgos, declaraciones, aliases } = auditarSelectores(uiRoot);
 
+  if (declaraciones === 0) {
+    console.error('- El barrido no descubrió ninguna declaración de selector: la compuerta no certifica nada.');
+    process.exitCode = 2;
+    return;
+  }
+
   if (hallazgos.length > 0) {
     console.error('El gobierno de selectores Atomic detectó incumplimientos:');
     for (const hallazgo of hallazgos) {
-      console.error(`- ${hallazgo.rutaRelativa}: ${hallazgo.detalle}`);
+      console.error(`- ${hallazgo.rutaRelativa}:${hallazgo.linea}: ${hallazgo.detalle}`);
     }
     process.exitCode = 1;
     return;
@@ -116,4 +152,9 @@ function ejecutar() {
 
 if (require.main === module) ejecutar();
 
-module.exports = { auditarSelectores, listTypeScriptFiles, ALIAS_TRANSITORIOS_DEL_ADN };
+module.exports = {
+  auditarSelectores,
+  esSelectorCanonicoApp,
+  listTypeScriptFiles,
+  ALIAS_TRANSITORIOS_DEL_ADN,
+};

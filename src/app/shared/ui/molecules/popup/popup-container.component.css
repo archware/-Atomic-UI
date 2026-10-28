@@ -41,20 +41,20 @@
 }
 
 @keyframes popupSlideUp {
-  from { transform: translateY(20px) scale(0.95); opacity: 0; }
+  from { transform: translateY(1.25rem) scale(0.95); opacity: 0; }
   to { transform: translateY(0) scale(1); opacity: 1; }
 }
 
 @keyframes popupSlideDown {
   from { transform: translateY(0) scale(1); opacity: 1; }
-  to { transform: translateY(20px) scale(0.95); opacity: 0; }
+  to { transform: translateY(1.25rem) scale(0.95); opacity: 0; }
 }
 
 /* Sizes */
-.popup-sm { max-width: 360px; }
-.popup-md { max-width: 450px; }
-.popup-lg { max-width: 600px; }
-.popup-xl { max-width: 1140px; }
+.popup-sm { max-width: 22.5rem; }
+.popup-md { max-width: 28.125rem; }
+.popup-lg { max-width: 37.5rem; }
+.popup-xl { max-width: 71.25rem; }
 
 /* Header */
 .popup-header {

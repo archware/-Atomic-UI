@@ -44,6 +44,6 @@ ya tiene declarado encima, y con ello sigue al tema sin un bloque propio.
    apuntar. Antes eran 6px a mano, un valor que no esta en ninguna escala y que
    por tanto nadie puede ajustar sin adivinar de donde salio.
 */
-:host:hover .icon-sun { transform: rotate(45deg) scale(1.15); filter: drop-shadow(0 0 var(--space-2) var(--warning-color)); }
+:host:hover .icon-sun { transform: scale(1.1); filter: drop-shadow(0 0 var(--space-2) var(--warning-color)); }
 
-:host:hover .icon-moon { transform: rotate(-15deg) scale(1.15); filter: drop-shadow(0 0 var(--space-2) var(--primary-color)); }
+:host:hover .icon-moon { transform: scale(1.1); filter: drop-shadow(0 0 var(--space-2) var(--primary-color)); }

@@ -180,7 +180,7 @@
         padding: var(--space-4);
         margin-bottom: var(--space-3);
         box-shadow: var(--rtc-shadow-card);
-        min-height: 200px;
+        min-height: 12.5rem;
     }
 
     .so-root[data-so-table][data-so-sync-columns] .rtc-row:hover,
@@ -222,7 +222,7 @@
         color: var(--table-color-primary);
         font-size: var(--text-sm);
         width: 40%;
-        max-width: 140px;
+        max-width: 8.75rem;
         text-align: left;
         padding-right: var(--space-2);
     }
@@ -246,7 +246,7 @@
         color: var(--table-color-primary);
         font-size: var(--text-sm);
         width: 40%;
-        max-width: 140px;
+        max-width: 8.75rem;
         text-align: left;
         padding-right: var(--space-2);
     }
@@ -293,6 +293,3 @@
         display: none;
     }
 }
-
-
-

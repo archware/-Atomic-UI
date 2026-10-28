@@ -1,12 +1,12 @@
 <!--
-  Chasis B Ã¢â‚¬â€ PÃƒÂ¡gina CRUD multi-entidad con acordeÃƒÂ³n.
+  Chasis B — Página CRUD multi-entidad con acordeón.
 
-  PatrÃƒÂ³n ADR-007:
-    PageHeader Ã¢â€ â€™ Accordion Ã¢â€ â€™ [AccordionItem Ãƒâ€” N entidades]
-      Ã¢â€ â€™ QueryToolbar + DataTable + CrudDialog compartido
+  Patrón ADR-007:
+    PageHeader → Accordion → [AccordionItem × N entidades]
+      → QueryToolbar + DataTable + CrudDialog compartido
 
-  Doctrina Ã‚Â§15: acordeÃƒÂ³n solo cuando hay Ã¢â€°Â¥2 secciones que compiten.
-  La entidad principal arranca abierta, las secundarias retraÃƒÂ­das.
+  Doctrina §15: acordeón solo cuando hay ≥2 secciones que compiten.
+  La entidad principal arranca abierta, las secundarias retraídas.
 -->
 
 <app-page-header
@@ -21,8 +21,8 @@
       [description]="ent.descripcion ?? ''"
       [open]="ent.abiertoInicial ?? false"
     >
-      <!-- Barra de bÃƒÂºsqueda y acciÃƒÂ³n por entidad -->
-      <app-query-toolbar [accessibleLabel]="'BÃƒÂºsqueda y acciones de ' + ent.titulo">
+      <!-- Barra de búsqueda y acción por entidad -->
+      <app-query-toolbar [accessibleLabel]="'Búsqueda y acciones de ' + ent.titulo">
         <div query-filters>
           <app-input
             type="search"
@@ -83,13 +83,12 @@
   }
 </app-accordion>
 
-<!-- DiÃƒÂ¡logo CRUD compartido -->
+<!-- Diálogo CRUD compartido -->
 <app-crud-dialog
   #dialogoCrud
   [labelledBy]="idTituloDialogo"
   [size]="(entidades().find(e => e.clave === claveEntidadActiva())?.tamanoDialogo) ?? 'md'"
   (cancelled)="cerrarDialogo()"
-  (closed)="cerrarDialogo()"
 >
   <header class="pagina-crud-accordion__dialogo-cabecera">
     <h2 [id]="idTituloDialogo" class="pagina-crud-accordion__dialogo-titulo">
@@ -114,9 +113,11 @@
     </div>
   }
 
-  @if (!esModoPrevisualizacion) {
-    <footer class="pagina-crud-accordion__dialogo-pie">
-      <app-button variant="outline" (clicked)="cerrarDialogo()">Cancelar</app-button>
+  <footer class="pagina-crud-accordion__dialogo-pie">
+    <app-button variant="outline" (buttonClick)="cerrarDialogo()">
+      {{ esModoPrevisualizacion ? 'Cerrar' : 'Cancelar' }}
+    </app-button>
+    @if (!esModoPrevisualizacion) {
       <app-button
         variant="primary"
         [loading]="guardando()"
@@ -125,11 +126,11 @@
       >
         Guardar
       </app-button>
-    </footer>
-  }
+    }
+  </footer>
 </app-crud-dialog>
 
-<!-- ConfirmaciÃƒÂ³n de baja lÃƒÂ³gica (igual que Chasis A) -->
+<!-- Confirmación de baja lógica (igual que Chasis A) -->
 @if (mostrarConfirmacion()) {
   <div class="pagina-crud-accordion__confirmacion-fondo" (click)="cancelarBaja()">
     <div

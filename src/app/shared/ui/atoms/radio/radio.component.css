@@ -49,8 +49,8 @@
 }
 
 .radio-circle {
-  width: var(--checkbox-size, var(--space-5));
-  height: var(--checkbox-size, var(--space-5));
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,8 +62,8 @@
 }
 
 .radio-dot {
-  width: calc(var(--checkbox-size, var(--space-5)) * 0.5);
-  height: calc(var(--checkbox-size, var(--space-5)) * 0.5);
+  width: calc(var(--checkbox-size) * 0.5);
+  height: calc(var(--checkbox-size) * 0.5);
   border-radius: var(--radius-full);
   background: var(--text-color-on-primary);
   opacity: 0;

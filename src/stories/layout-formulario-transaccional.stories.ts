@@ -13,13 +13,13 @@ import { FormsModule } from '@angular/forms';
 import { Alert } from '../app/shared/ui/molecules/alert/alert.component';
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
 import { ChoiceControl } from '../app/shared/ui/atoms/choice-control/choice-control';
-import { Input } from '../app/shared/ui/atoms/form-input/input';
+import { InputComponent } from '../app/shared/ui/atoms/input/input.component';
 import { PageHeader } from '../app/shared/ui/organisms/page-header/page-header';
 import { PanelComponent } from '../app/shared/ui/surfaces/panel/panel.component';
 import { RadioComponent } from '../app/shared/ui/atoms/radio/radio.component';
 import type { RadioOption } from '../app/shared/ui/atoms/radio/radio.component';
-import { Select } from '../app/shared/ui/atoms/form-select/select';
-import type { SelectOption } from '../app/shared/ui/atoms/form-select/select';
+import { SelectComponent } from '../app/shared/ui/atoms/select/select.component';
+import type { SelectOption } from '../app/shared/ui/atoms/select/select.component';
 import { TextareaComponent } from '../app/shared/ui/atoms/textarea/textarea.component';
 import { ThemeSwitcherComponent } from '../app/shared/ui/organisms/theme-switcher/theme-switcher.component';
 
@@ -81,11 +81,11 @@ const TASA_COMISION = 0.015;
     ButtonComponent,
     ChoiceControl,
     FormsModule,
-    Input,
+    InputComponent,
     PageHeader,
     PanelComponent,
     RadioComponent,
-    Select,
+    SelectComponent,
     TextareaComponent,
     ThemeSwitcherComponent,
   ],

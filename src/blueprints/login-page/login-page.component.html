@@ -73,7 +73,7 @@
 
       <app-text variant="body-sm" color="muted" align="center">
         ¿No tienes cuenta?
-        <app-button variant="link" (buttonClick)="showRegister()" class="inline">
+        <app-button variant="link" (buttonClick)="showRegister()" class="login-card__inline-link">
           Regístrate aquí
         </app-button>
       </app-text>
@@ -142,7 +142,7 @@
       <div class="mt-4 text-center">
         <app-text variant="body-sm" color="muted" align="center">
           ¿Ya tienes cuenta?
-          <app-button variant="link" (buttonClick)="showLogin()" class="inline">
+          <app-button variant="link" (buttonClick)="showLogin()" class="login-card__inline-link">
             Inicia sesión
           </app-button>
         </app-text>
@@ -196,7 +196,7 @@
       </div>
       }
 
-      <div class="mt-6 text-center">
+      <div class="login-card__footer-note text-center">
         <app-button variant="link" iconClass="fa-solid fa-arrow-left" iconPosition="left" (buttonClick)="showLogin()">
           Volver al inicio de sesión
         </app-button>

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
-import { Input } from '../app/shared/ui/atoms/form-input/input';
+import { InputComponent } from '../app/shared/ui/atoms/input/input.component';
 import { QueryToolbar } from '../app/shared/ui/organisms/query-toolbar/query-toolbar';
 
 const meta: Meta<QueryToolbar> = {
@@ -10,7 +10,7 @@ const meta: Meta<QueryToolbar> = {
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      imports: [ButtonComponent, Input, QueryToolbar],
+      imports: [ButtonComponent, InputComponent, QueryToolbar],
     }),
   ],
   argTypes: {
@@ -31,15 +31,15 @@ export const Auto: Story = {
   render: (args) => ({
     props: args,
     template: `
-      <prest-query-toolbar
+      <app-query-toolbar
         [density]="density"
         [layout]="layout"
         [accessibleLabel]="accessibleLabel"
       >
-        <prest-input query-filters label="Buscar" placeholder="Nombre o documento" />
+        <app-input query-filters label="Buscar" placeholder="Nombre o documento" />
         <app-button query-actions variant="outline">Exportar</app-button>
         <app-button query-actions>Nuevo</app-button>
-      </prest-query-toolbar>
+      </app-query-toolbar>
     `,
   }),
 };

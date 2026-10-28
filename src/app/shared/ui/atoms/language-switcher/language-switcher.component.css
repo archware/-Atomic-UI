@@ -45,7 +45,7 @@
   position: absolute;
   top: calc(100% + var(--space-2));
   right: 0;
-  min-width: 140px;
+  min-width: 8.75rem;
   background: var(--surface-overlay);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);

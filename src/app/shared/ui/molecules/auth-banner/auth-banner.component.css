@@ -4,7 +4,7 @@
   position: relative;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   overflow: hidden;
-  color: white;
+  color: var(--text-color-on-primary);
 }
 
 @media (min-width: 64rem) {
@@ -23,35 +23,35 @@
 .banner-content {
   position: relative;
   z-index: 2;
-  max-width: 600px;
+  max-width: 37.5rem;
 }
 
 .banner-shape {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
+  filter: blur(5rem);
   z-index: 1;
 }
 
 .shape-1 {
-  width: 400px;
-  height: 400px;
-  background: rgba(255, 255, 255, 0.2);
-  top: -100px;
-  left: -100px;
+  width: 25rem;
+  height: 25rem;
+  background: color-mix(in srgb, var(--gray-0) 20%, transparent);
+  top: -6.25rem;
+  left: -6.25rem;
 }
 
 .shape-2 {
-  width: 500px;
-  height: 500px;
-  background: rgba(0, 0, 0, 0.15);
-  bottom: -150px;
-  right: -100px;
+  width: 31.25rem;
+  height: 31.25rem;
+  background: color-mix(in srgb, var(--gray-1000) 15%, transparent);
+  bottom: -9.375rem;
+  right: -6.25rem;
 }
 
 .banner-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-image: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 40%);
+  background-image: radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--gray-0) 15%, transparent) 0%, transparent 40%);
   z-index: 1;
 }

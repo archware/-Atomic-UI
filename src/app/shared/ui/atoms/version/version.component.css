@@ -12,7 +12,7 @@
 .atomic-version {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 6px !important;
+  gap: 0.375rem !important;
   font-family: var(--font-family-base);
   font-size: 0.75rem !important;
   line-height: 1 !important;
@@ -29,7 +29,7 @@
 
 /* === PILL VARIANT === */
 .atomic-version--pill {
-  padding: 3px 10px !important;
+  padding: 0.1875rem 0.625rem !important;
   background: var(--surface-background) !important;
   border: var(--border-width-thin) solid var(--border-color) !important;
   border-radius: var(--radius-full) !important;
@@ -37,7 +37,7 @@
 
 /* === BADGE VARIANT === */
 .atomic-version--badge {
-  padding: 3px 8px !important;
+  padding: 0.1875rem var(--space-2) !important;
   background: var(--surface-background) !important;
   border: var(--border-width-thin) solid var(--border-color) !important;
   border-radius: var(--radius-sm) !important;
@@ -52,7 +52,7 @@
 
 /* === COMPACT VARIANT === */
 .atomic-version--compact {
-  gap: 4px !important;
+  gap: var(--space-1) !important;
   font-size: 0.7rem !important;
 }
 
@@ -64,11 +64,11 @@
    el punto ya era ambar. */
 .atomic-version__dot {
   --version-dot: var(--success-color);
-  width: 7px !important;
-  height: 7px !important;
+  width: 0.4375rem !important;
+  height: 0.4375rem !important;
   border-radius: 50% !important;
   background-color: var(--version-dot) !important;
-  box-shadow: 0 0 6px var(--version-dot) !important;
+  box-shadow: 0 0 0.375rem var(--version-dot) !important;
   display: inline-block !important;
 }
 
@@ -109,7 +109,7 @@
    tema redefine --alert-info-text a --blue-300. Elegir el token que ya esta
    medido evita repetir a mano una cuenta que alguien ya cerro. */
 .atomic-version__env {
-  padding: 2px 6px !important;
+  padding: 0.125rem 0.375rem !important;
   border-radius: var(--radius-sm) !important;
   font-size: 0.65rem !important;
   font-weight: var(--font-weight-title) !important;

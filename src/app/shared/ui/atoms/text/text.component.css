@@ -56,7 +56,7 @@ h1, h2, h3, h4, p {
 .color-success { color: var(--success-color-text); }
 .color-warning { color: var(--warning-color-text); }
 .color-danger { color: var(--danger-color-text); }
-.color-white { color: var(--white, var(--gray-0)); }
+.color-white { color: var(--text-color-inverse); }
 
 /* 
  * Dark mode se maneja automáticamente via tokens semánticos.

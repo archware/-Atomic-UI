@@ -13,6 +13,20 @@
   "purpose": "Contenedor que resuelve propietarios de desplazamiento, alinea tablas y ofrece indicadores overlay o barras nativas tokenizadas.",
   "variants": [
     {
+      "name": "variant",
+      "values": [
+        {
+          "value": "default",
+          "meaning": "Indicadores superpuestos neutros que se auto-ocultan en reposo.",
+          "default": true
+        },
+        {
+          "value": "brand",
+          "meaning": "Indicadores superpuestos con degradado primario-secundario de marca, riel tintado suave y visibilidad parcial en reposo (0.68)."
+        }
+      ]
+    },
+    {
       "name": "lock-column-template",
       "values": [
         {
@@ -83,6 +97,12 @@
     }
   ],
   "inputs": [
+    {
+      "name": "variant",
+      "type": "ScrollOverlayVariant",
+      "default": "default",
+      "meaning": "Variante cromática de los indicadores overlay ('default' neutro o 'brand' con degradado de marca y riel visible en reposo)."
+    },
     {
       "name": "verticalSelector",
       "type": "string | null",
@@ -223,6 +243,10 @@
   ],
   "tokens": [
     "--border-color",
+    "--brand-primary-500-rgb",
+    "--brand-secondary-500-rgb",
+    "--primary-color",
+    "--primary-color-dark",
     "--radius-full",
     "--scrollbar-thumb",
     "--scrollbar-thumb-hover",

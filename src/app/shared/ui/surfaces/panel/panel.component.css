@@ -142,8 +142,8 @@
   padding: var(--space-4) var(--space-5);
   border-bottom: 1px solid var(--border-color);
   background: var(--surface-section);
-  border-top-left-radius: calc(var(--radius-lg) - 1px);
-  border-top-right-radius: calc(var(--radius-lg) - 1px);
+  border-top-left-radius: calc(var(--radius-lg) - var(--border-width-thin));
+  border-top-right-radius: calc(var(--radius-lg) - var(--border-width-thin));
 }
 
 .panel__icon {
@@ -155,7 +155,7 @@
   font-size: var(--text-sm);
   font-weight: var(--font-weight-emphasis);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.03125rem;
   color: var(--text-color-secondary);
   margin: 0;
   flex: 1;

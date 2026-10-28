@@ -1,20 +1,20 @@
-﻿import { Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { authGuard, guestGuard } from '@shared/ui/guards/auth.guard';
 
 /**
- * Ejemplo de app.routes.ts con guards de autenticaciÃ³n.
+ * Ejemplo de app.routes.ts con guards de autenticación.
  *
  * @customize Copia las rutas relevantes a tu app.routes.ts real.
  */
 export const routesExample: Routes = [
-  // Rutas pÃºblicas â€” solo para usuarios NO autenticados
+  // Rutas públicas — solo para usuarios NO autenticados
   {
     path: 'login',
     loadComponent: () => import('../login-page/login-page.component').then(m => m.LoginPageComponent),
     canActivate: [guestGuard],
   },
 
-  // Rutas protegidas â€” solo para usuarios autenticados
+  // Rutas protegidas — solo para usuarios autenticados
   {
     path: 'dashboard',
     loadComponent: () => import('../dashboard-page/dashboard-page.component').then(m => m.DashboardPageComponent),

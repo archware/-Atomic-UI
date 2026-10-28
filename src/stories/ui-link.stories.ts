@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { CommonModule } from '@angular/common';
 import { LinkComponent } from '../app/shared/ui/atoms/link/link.component';
 
 const meta: Meta<LinkComponent> = {
@@ -9,7 +8,7 @@ const meta: Meta<LinkComponent> = {
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      imports: [CommonModule, LinkComponent],
+      imports: [LinkComponent],
     }),
   ],
   argTypes: {

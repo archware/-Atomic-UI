@@ -2,8 +2,10 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const ts = require('typescript');
 
 const PATRON_DIRECTIVAS_PROHIBIDAS = /\*(ngIf|ngFor|ngSwitchCase|ngSwitchDefault|ngSwitch)\b/;
+const SIMBOLOS_COMMON_PROHIBIDOS = new Set(['CommonModule']);
 
 const DIRECTORIOS_IGNORADOS = new Set([
   'node_modules',
@@ -46,6 +48,51 @@ function auditarArchivo(rutaArchivo) {
     }
   }
 
+  if (rutaArchivo.endsWith('.ts')) {
+    const fuente = ts.createSourceFile(
+      rutaArchivo,
+      contenido,
+      ts.ScriptTarget.Latest,
+      true,
+      ts.ScriptKind.TS,
+    );
+    for (const sentencia of fuente.statements) {
+      if (
+        !ts.isImportDeclaration(sentencia) ||
+        sentencia.moduleSpecifier?.text !== '@angular/common'
+      ) {
+        continue;
+      }
+      const enlaces = sentencia.importClause?.namedBindings;
+      if (!enlaces) continue;
+
+      if (ts.isNamespaceImport(enlaces)) {
+        const posicion = fuente.getLineAndCharacterOfPosition(enlaces.getStart(fuente));
+        hallazgos.push({
+          rutaArchivo,
+          linea: posicion.line + 1,
+          directiva: `* as ${enlaces.name.text}`,
+          detalle: `importacion de espacio de nombres * as ${enlaces.name.text} desde @angular/common prohibida; use importaciones puntuales y control flow nativo`,
+        });
+        continue;
+      }
+
+      if (!ts.isNamedImports(enlaces)) continue;
+
+      for (const elemento of enlaces.elements) {
+        const simboloOriginal = elemento.propertyName?.text ?? elemento.name.text;
+        if (!SIMBOLOS_COMMON_PROHIBIDOS.has(simboloOriginal)) continue;
+        const posicion = fuente.getLineAndCharacterOfPosition(elemento.getStart(fuente));
+        hallazgos.push({
+          rutaArchivo,
+          linea: posicion.line + 1,
+          directiva: simboloOriginal,
+          detalle: `importacion de ${simboloOriginal} prohibida; use control flow nativo (@if, @for, @switch) e importaciones puntuales de @angular/common`,
+        });
+      }
+    }
+  }
+
   return hallazgos;
 }
 
@@ -63,9 +110,15 @@ dos invocaciones.
 */
 function ejecutar() {
   const raiz = path.resolve(process.argv[2] || path.join(__dirname, '../src'));
-  const hallazgos = auditarArbol(raiz);
+  const archivos = listarArchivos(raiz);
+  if (archivos.length === 0) {
+    console.error('- El barrido no descubrio ningun archivo en el origen: la compuerta no certifica nada.');
+    process.exitCode = 2;
+    return;
+  }
+  const hallazgos = archivos.flatMap(auditarArchivo);
   if (hallazgos.length > 0) {
-    console.error('Se detectaron directivas estructurales legacy (*ngIf, *ngFor, *ngSwitch); use control flow nativo (@if, @for, @switch):');
+    console.error('Se detectaron directivas estructurales legacy (*ngIf, *ngFor, *ngSwitch) o importaciones de CommonModule:');
     for (const hallazgo of hallazgos) {
       console.error(
         `- ${path.relative(process.cwd(), hallazgo.rutaArchivo)}:${hallazgo.linea} (${hallazgo.directiva})`,
@@ -74,7 +127,7 @@ function ejecutar() {
     process.exitCode = 1;
     return;
   }
-  console.log('Control flow nativo verificado: no se detectaron *ngIf, *ngFor ni *ngSwitch.');
+  console.log('Control flow nativo verificado: no se detectaron *ngIf, *ngFor, *ngSwitch ni CommonModule.');
 }
 
 if (require.main === module) ejecutar();

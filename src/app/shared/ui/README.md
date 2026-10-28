@@ -725,22 +725,6 @@ Fase 5 (Semana 5): Eliminar dependencias antiguas
 
 ---
 
-## Mapeo de clases Tailwind a variables CSS
-
-| Clase Tailwind     | Variable CSS                   |
-| ------------------ | ------------------------------ |
-| `text-primary-700` | `var(--primary-color-dark)`    |
-| `bg-primary-50`    | `var(--primary-color-lighter)` |
-| `text-gray-900`    | `var(--text-color)`            |
-| `text-gray-500`    | `var(--text-color-secondary)`  |
-| `bg-white`         | `var(--surface-background)`    |
-| `bg-gray-50`       | `var(--surface-section)`       |
-| `border-gray-300`  | `var(--border-color)`          |
-| `text-red-600`     | `var(--danger-color)`          |
-| `text-green-600`   | `var(--success-color)`         |
-
----
-
 ## Creación de componentes
 
 ### Nomenclatura y ubicación
@@ -781,7 +765,6 @@ ng g c shared/ui/organisms/mi-componente --standalone
 
 ````typescript
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 /**
  * Tipos exportados para uso externo
@@ -799,7 +782,7 @@ export type MiComponenteSize = 'sm' | 'md' | 'lg';
 @Component({
   selector: 'app-mi-componente',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './mi-componente.component.html',
   styleUrl: './mi-componente.component.css',

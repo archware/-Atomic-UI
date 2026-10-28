@@ -30,7 +30,7 @@ export const Comfortable: Story = {
   render: (args) => ({
     props: args,
     template: `
-      <prest-page-header
+      <app-page-header
         [eyebrow]="eyebrow"
         [title]="title"
         [subtitle]="subtitle"
@@ -38,7 +38,7 @@ export const Comfortable: Story = {
       >
         <app-button page-header-actions variant="outline">Exportar</app-button>
         <app-button page-header-actions>Nuevo</app-button>
-      </prest-page-header>
+      </app-page-header>
     `,
   }),
 };

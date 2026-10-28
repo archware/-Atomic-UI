@@ -351,7 +351,6 @@ export const appConfig: ApplicationConfig = {
         [
           'install',
           '@angular/animations@^22.0.7',
-          '@fontsource/open-sans@^5.2.7',
           '@fortawesome/fontawesome-free@^6.4.2',
           '@ngx-translate/core@^17.0.0',
           '@ngx-translate/http-loader@^17.0.0',

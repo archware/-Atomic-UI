@@ -67,7 +67,7 @@
 /* === TEXTAREA LINE (for underline/material) === */
 .textarea-line {
   position: absolute;
-  bottom: 4px;
+  bottom: var(--space-1);
   left: 0;
   width: 100%;
   height: var(--space-1);
@@ -239,7 +239,11 @@
   width: 1.75rem;
   height: 1.75rem;
   right: var(--space-3);
-  cursor: var(--floating-textarea-icon-cursor, default);
+  cursor: default;
+}
+
+.textarea-icon-btn--static.floating-textarea__icon--clickable {
+  cursor: pointer;
 }
 
 /* === STATES === */

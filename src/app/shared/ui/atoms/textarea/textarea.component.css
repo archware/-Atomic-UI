@@ -83,7 +83,7 @@
 }
 
 .has-error .textarea-input:focus {
-  box-shadow: 0 0 0 3px var(--danger-color-light);
+  box-shadow: 0 0 0 var(--border-width-thick) var(--danger-color-light);
 }
 
 .textarea-message {

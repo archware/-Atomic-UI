@@ -10,7 +10,7 @@
   display: grid;
   height: 100vh;
   height: 100dvh;
-  --sidebar-width: 260px;
+  --sidebar-width: 16.25rem;
   grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
   grid-template-rows: auto minmax(0, 1fr) auto;
   grid-template-areas:
@@ -39,7 +39,7 @@
   padding: 0;
   display: flex;
   align-items: center;
-  height: 64px;
+  height: var(--topbar-height, 4rem);
   min-width: 0;
 }
 
@@ -64,7 +64,7 @@
 
 .content-wrapper {
   width: 100%;
-  padding: 24px 36px;
+  padding: var(--space-5) 2.25rem;
   box-sizing: border-box;
 }
 
@@ -76,7 +76,7 @@
 @media (max-width: 64rem) {
   .layout-shell {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: 64px minmax(0, 1fr) auto;
+    grid-template-rows: var(--topbar-height, 4rem) minmax(0, 1fr) auto;
     grid-template-areas:
       'header'
       'content'
@@ -84,7 +84,7 @@
   }
 
   .content-wrapper {
-    padding: 24px 36px;
+    padding: var(--space-5) 2.25rem;
   }
 
   .layout-sidebar {
@@ -148,7 +148,7 @@
   overflow: visible;
   clip-path: none;
   border-radius: var(--radius-md);
-  background-color: var(--surface-card, var(--bg-primary));
+  background-color: var(--card-bg);
   color: var(--text-color);
   box-shadow: var(--shadow-lg);
   outline: 2px solid var(--brand-primary-500);

@@ -5,8 +5,8 @@ date: "2026-08-23"
 last_updated: "2026-10-26"
 document_type: "manual de continuidad"
 status: "vigente"
-version: "1.5.3"
-change_id: "ATOMIC-20261026-003"
+version: "1.5.4"
+change_id: "ATOMIC-20260823-600"
 canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
@@ -47,13 +47,13 @@ tools/ y scripts/ -> consulta, generación, auditoría, pruebas negativas y mani
 
 ## Estado doctrinal comprobado
 
-El paquete continúa en la versión `5.22.0` y la hoja [`ROADMAP_20260823_atomic_ui_6_0.md`](../.agents/roadmaps/ROADMAP_20260823_atomic_ui_6_0.md) permanece en ejecución. Dos cortes están validados: contratos públicos mediante Signals y estilos Angular externos en el alcance mantenido. Estado de las seis familias hacia 6.0.0:
-1. **Medidas rígidas:** pendiente retirar `px` residuales en `src/app/shared/ui`.
-2. **Tailwind:** `[x]` `tailwind.config.js`, `@tailwind` y dependencias retirados en `6be5a57`; pendiente sustituir utilidades residuales en historias/demos.
-3. **Aliases:** permanecen 16 declaraciones de selector que incluyen `prest-*`.
+El paquete continúa en la versión `5.22.0` y la hoja [`ROADMAP_20260823_atomic_ui_6_0.md`](../.agents/roadmaps/ROADMAP_20260823_atomic_ui_6_0.md) mantiene tres cortes técnicos validados: contratos Signals, estilos externos y saneamiento de Tailwind, unidades relativas y tokens canónicos. Estado de las seis familias hacia 6.0.0:
+1. **Medidas rígidas:** `[x]` sustituidas por tokens o `rem` en `src/app/shared/ui/` y `src/styles/themes/_utilities.css`, gobernadas por `check:units` y `test:units-gate` (105 hojas auditadas, 0 medidas `px` rígidas prohibidas).
+2. **Tailwind:** `[x]` `tailwind.config.js`, `@tailwind`, dependencias y utilidades residuales retirados en historias, vistas y generador, gobernados por `check:no-tailwind` y `test:no-tailwind-gate` (558 archivos auditados, 0 residuos).
+3. **Aliases:** permanecen 16 alias transitorios `prest-*` acotados en `ALIAS_TRANSITORIOS_DEL_ADN` con selector primario `app-*` obligatorio (`check:selectors` y `test:selectors-gate`, 120 declaraciones verificadas) y retirados de `tools/generate-ui.js`.
 4. **Colisiones:** `[x]` resueltas en `ATOMIC-20261019-001` (`InputComponent` y `SelectComponent` como implementaciones únicas de `app-input` y `app-select`).
-5. **Generador:** debe producir exclusivamente Signals, estilos externos, tokens y selectores `app-`.
-6. **Cambio de versión:** faltan el salto a 6.0.0, política, manifiestos y propagación verificada.
+5. **Generador:** `[x]` `tools/generate-ui.js` emite exclusivamente Signals, estilos externos, clases semánticas y selectores `app-`.
+6. **Cambio de versión:** pendiente el salto administrativo a `6.0.0`, retiro final de los 16 alias transitorios, política `2.0` y propagación sincronizada con consumidores.
 
 ## Fuentes locales y rutas operativas
 
@@ -93,11 +93,15 @@ git status --short --branch
 
 > Los cortes históricos anteriores a esta ventana se conservan íntegros en [`BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md`](./BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md).
 
-### 1. Unidad ATOMIC-20261026-003 — tipografía local canónica Quicksand y Open Sans
+### 1. Unidad ATOMIC-20260823-600 (corte 3) — compuertas de selectores y Tailwind, unidades relativas y tokens canónicos
+
+Se sanea `ScrollOverlayComponent` (`variant: 'default' | 'brand'`, UTF-8, unidades `rem`), se repara `PaginaCrudAccordion` (`(buttonClick)` en Cancelar, pie en modo `ver`, tokens reales y `pagina-crud-accordion.spec.ts`), se protege `ThemeService.getEffectiveTheme()` para SSR (`typeof window.matchMedia !== 'function'`), se retiran rotaciones en hover de `ThemeSwitcherComponent`, se eliminan dos hojas CSS huérfanas (`filters.component.css`, `chart-tokens.css`) y se prohíbe `CommonModule` en `check:control-flow` (`test:control-flow-gate`). Se acotan los 16 alias transitorios `prest-*` bajo `app-*` primario obligatorio (`check:selectors` y `test:selectors-gate`, 120 declaraciones) retirándolos del generador `tools/generate-ui.js`, y se purgan las utilidades residuales de Tailwind en historias, vistas de demostración y generador (`check:no-tailwind` y `test:no-tailwind-gate`, 558 archivos). Se sustituyen las medidas rígidas `px` no pertenecientes a trazos finos (`<= 2px`) o puntos de corte en las 35 hojas `.css`/`.scss` y 6 archivos `.ts`/`.html` de `src/app/shared/ui/` y en `src/styles/themes/_utilities.css` por tokens o `rem`, gobernadas por `check:units` (`scripts/check-css-units.mjs` y `tools/test-css-units-gate.mjs`, 105 hojas auditadas). Se añaden `--checkbox-size`, `--checkbox-icon-size` y `--topbar-height`, se eliminan tokens fantasma y colores literales `#hex`/`rgb()`/`rgba()`, se acotan con `:host` las reglas `::ng-deep` en `icon-button.component.css` y `row.component.css`, se reemplazan `--floating-*-icon-cursor` por clases de estado, se regeneran `catalog/`, `dart/atomic_tokens` y `distribution/atomic-source-manifest.json`, y se validan `npm run lib:build` y 198/198 pruebas unitarias en Karma + `ChromeHeadless`. Consultar el [roadmap](../.agents/roadmaps/ROADMAP_20260823_atomic_ui_6_0.md).
+
+### 2. Unidad ATOMIC-20261026-003 — tipografía local canónica Quicksand y Open Sans
 
 Se empaquetan en `src/styles/themes/fonts/` los 12 archivos `.woff2` locales de `Open Sans` (`400`, `500`, `600`, `700` en `latin` y `latin-ext`) y `Quicksand` (`400`, `500`, `600`, `700` completo), declarados en `src/styles/themes/_fonts.css`, importados al inicio de `src/styles/themes/index.css` e inventariados en `distribution/package-contract.json` y `distribution/atomic-source-manifest.json`. Se definen `--font-family-base`, `--font-family-heading` y `--font-family-mono` en `_tokens-primitives.css`, se corrige `--table-font-family: var(--font-family-base)` en `_tokens-components.css` y se enlaza `--font-family-heading` en encabezados globales (`h1`–`h6`), `text.component.css`, `page-header.scss`, `pagina-crud.scss`, `pagina-crud-accordion.scss`, `modal.component.css`, `modal-container.component.css`, `popup-container.component.css`, `form-dialog.scss` y `kpi-card.component.css`, además de `version.component.css`, el puente Dart (`scripts/emit-dart-tokens.mjs`) y la prueba negativa `tools/test-typography-scale-gate.mjs`. Consultar el [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261026-001_tipografia_local_quicksand_open_sans.md).
 
-### 2. Unidad ATOMIC-20261026-002 — corrección editorial y referencia material
+### 3. Unidad ATOMIC-20261026-002 — corrección editorial y referencia material
 
 Se corrigen las 151 ocurrencias de prosa que producen los 150 hallazgos
 ortográficos de los dos registros. Los identificadores ASCII, bloques de
@@ -110,17 +114,3 @@ La [evidencia y checklist](../.agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITO
 conservan las salidas originales, el juicio independiente y la limitación.
 No se repiten las 70 pruebas válidas del corte anterior ni se modifica
 producto, dependencias, manifiestos o trabajo de otras sesiones.
-
-### 3. Unidad ATOMIC-20261026-001 — pruebas de accesibilidad
-
-Se corrigen seis expectativas en cuatro especificaciones mediante presencia
-obligatoria y estrechamiento del nodo, conservando los casos existentes. La
-copia aislada del HEAD `dd93734a3eea40b87d46b4990976231fe2d6ca19` más las cuatro
-pruebas propias pasa 70/70 casos de Input, Select, Textarea, Dropdown,
-ActionGroup y PaginaCrud. Los otros 802 archivos conservan los bytes de la copia inicial; el cotejo con
-blobs Git normaliza CRLF. Se conserva el
-lockfile de las dependencias completas existentes. No se cambian componentes,
-configuración ni dependencias. El [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261026-001_desbloqueo_pruebas.md)
-registra revisión independiente, custodia y límites del corte; no acredita el
-árbol móvil, paquete, gobernanza o procedencia actuales. El corte Select2 se
-conserva íntegro en la [bitácora histórica](BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md).

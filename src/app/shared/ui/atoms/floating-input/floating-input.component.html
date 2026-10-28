@@ -1,10 +1,5 @@
 @if (variant() === 'standard' && tieneEtiqueta()) {
-  <label class="fl-label floating-input-top-label" [attr.for]="inputId()">
-    {{ label() }}
-    @if (required()) {
-      <span class="field__required fl-label__required" aria-hidden="true">*</span>
-    }
-  </label>
+  <label class="fl-label floating-input-top-label" [attr.for]="inputId()">{{ label() }}@if (required()) {<span class="field__required fl-label__required" aria-hidden="true">*</span>}</label>
 }
 <div
       class="floating-input-wrapper"
@@ -35,12 +30,7 @@
         [attr.placeholder]="marcador()"
       />
       @if (flotante()) {
-        <label class="floating-label" [attr.for]="inputId()">
-          {{ label() }}
-          @if (required()) {
-            <span class="field__required fl-label__required" aria-hidden="true">*</span>
-          }
-        </label>
+        <label class="floating-label" [attr.for]="inputId()">{{ label() }}@if (required()) {<span class="field__required fl-label__required" aria-hidden="true">*</span>}</label>
       }
       <span class="input-line"></span>
 
@@ -71,9 +61,7 @@
           (keydown.space)="handleIconClick($event); $event.preventDefault()"
           tabindex="0"
           [attr.aria-label]="label() || 'Input icon action'"
-          [appVariablesCss]="{
-            '--floating-input-icon-cursor': clearable() && hasValue() ? 'pointer' : 'default'
-          }"
+          [class.floating-input__icon--clickable]="clickableIcon()"
         >
           <i [class]="getIconClass()"></i>
         </button>

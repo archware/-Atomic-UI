@@ -46,7 +46,7 @@ export class GlobalErrorHandlerService implements ErrorHandler {
     this.zone.run(() => {
       // Solo redirige si es un error crítico y estamos en el browser
       if (typeof window !== 'undefined') {
-        document.body.innerHTML = '<div style="padding:40px;background:red;color:white;position:fixed;top:0;left:0;width:100%;height:100%;z-index:999999;font-size:20px;overflow:auto;"><pre>' + err.stack + '</pre></div>';
+        document.body.innerHTML = '<div style="padding:2.5rem;background:red;color:white;position:fixed;top:0;left:0;width:100%;height:100%;z-index:999999;font-size:1.25rem;overflow:auto;"><pre>' + err.stack + '</pre></div>';
       }
     });
   }

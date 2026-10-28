@@ -229,7 +229,7 @@
     display: block;
     font-weight: var(--table-font-weight-label);
     color: var(--table-color-primary);
-    flex: 0 0 120px;
+    flex: 0 0 7.5rem;
     margin-right: var(--space-3);
   }
 

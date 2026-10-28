@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { Alert } from '../app/shared/ui/molecules/alert/alert.component';
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
 import { CrudDialog } from '../app/shared/ui/organisms/crud-dialog/crud-dialog';
-import { Input } from '../app/shared/ui/atoms/form-input/input';
+import { InputComponent } from '../app/shared/ui/atoms/input/input.component';
 
 /*
   EL CICLO CRUD ENTERO, DENTRO DE LA CARCASA QUE LO SOSTIENE.
@@ -68,7 +68,7 @@ let secuenciaDemo = 0;
 @Component({
   selector: 'app-story-crud-dialog-ficha',
   standalone: true,
-  imports: [Alert, ButtonComponent, CrudDialog, FormsModule, Input],
+  imports: [Alert, ButtonComponent, CrudDialog, FormsModule, InputComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="demo">

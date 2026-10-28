@@ -5,13 +5,19 @@ date: "2026-08-23"
 document_type: "registro técnico"
 status: "en revisión"
 last_updated: "2026-10-26"
-version: "1.4.6"
-last_change_id: "ATOMIC-20261026-003"
+version: "1.4.7"
+last_change_id: "ATOMIC-20260823-600"
 owners:
   - "COTAHA"
 ---
 
 # Lecciones aprendidas de Atomic UI
+
+## ATOMIC-20260823-600 (corte 3) — unidades relativas, nombres reales de tokens y clases de estado frente a cursores dinámicos
+
+- **Evidencia:** las hojas de `src/app/shared/ui/` y `_utilities.css` combinaban medidas rígidas `px` con tokens inexistentes (`--avatar-size-*`, `--dropdown-text`, `--header-height`, `--input-background`, `--brand-color*`, `--surface-highlight`, `--surface-card`) cuyos respaldos en duro (`#hex`, `rgba()`, `px`) ocultaban la ausencia del token en `tokens:check`. Además, `FloatingInputComponent` y `FloatingTextareaComponent` utilizaban `[appVariablesCss]` solo para alternar `cursor: pointer|default` mediante `--floating-*-icon-cursor`.
+- **Decisión:** definir los tokens faltantes reales (`--checkbox-size`, `--checkbox-icon-size` en `_tokens-primitives.css` y `--topbar-height` en `_tokens-components.css`), enlazar los nombres canónicos verificados por `audit-tokens.ps1` y `check-typography-scale.mjs` (`--font-weight-body`, `--font-weight-emphasis`, `--font-weight-title`, `--text-color-inverse`, `--primary-color-hover`, `--surface-hover`, `--card-bg`), sustituir las variables de cursor por las clases `.floating-input__icon--clickable` y `.floating-textarea__icon--clickable` y acotar con `:host` las reglas `::ng-deep` de `icon-button` y `row`.
+- **Prevención:** instalar la compuerta `scripts/check-css-units.mjs` (`npm run check:units`) y su prueba negativa `tools/test-css-units-gate.mjs` (`npm run test:units-gate`) en `tooling:test` y `governance:check`, y regenerar `dart/atomic_tokens`, `catalog/` y `distribution/atomic-source-manifest.json` tras cualquier alta de token primitivo o de componente.
 
 ## ATOMIC-20261026-003 — fuentes locales en el tema portable y guarda de pesos en `@font-face`
 

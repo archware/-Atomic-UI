@@ -3,10 +3,10 @@ title: "Hoja de ruta de Atomic UI 6.0"
 subtitle: "Signals, estilos externos, selector público único y compuertas de doctrina"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-10-20"
+last_updated: "2026-10-26"
 document_type: "hoja de ruta técnica"
 status: "en ejecución"
-version: "1.1.0"
+version: "1.2.0"
 change_id: "ATOMIC-20260823-600"
 canonical_repository: "C:\\Users\\cotaha\\source\\repos\\-Atomic-UI"
 baseline_ref: "00f440bfdfb7fcf660d08d6a55efffc080cc8e57"
@@ -32,24 +32,25 @@ generador, distribución y compuertas. La copia de trabajo situada en
 - [x] Se confirmó que el árbol estaba limpio antes de esta hoja de ruta.
 - [ ] Se actualizará el gobierno y la documentación normativa a la política 2.0
   y a la versión 6.0.0 sin suprimir la trazabilidad de políticas anteriores.
-- [ ] Se incorporarán compuertas cerradas para Signals, estilos externos,
+- [x] Se incorporarán compuertas cerradas para Signals, estilos externos,
   medidas sin `px`, selector `app-` único y ausencia de Tailwind en Atomic UI.
-- [ ] Se corregirá el generador para que produzca exclusivamente selectores
+- [x] Se corregirá el generador para que produzca exclusivamente selectores
   `app-`, Signals y estilos externos conformes.
 - [x] Se resolverán las colisiones públicas de `app-input` y `app-select` con
   una API canónica inequívoca y pruebas de catálogo/barrel (resuelto en `ATOMIC-20261019-001`).
 - [x] Se migraron todos los contratos públicos `@Input`/`@Output` a
   `input()`/`output()` y se retiró `EventEmitter` del alcance mantenido.
 - [x] Se extrajeron todos los bloques `styles` embebidos hacia archivos externos.
-- [ ] Se retirarán los alias `prest-*` de código, catálogo, historias,
-  generador, fixtures y pruebas canónicas.
-- [ ] Se retirará Tailwind del contrato, dependencias, configuración, estilos
-  globales y composiciones mantenidas (`tailwind.config.js` y directivas `@tailwind` ya retirados en `6be5a57`; pendiente purga de clases residuales en historias/demos).
-- [ ] Se sustituirán medidas rígidas `px` por tokens o unidades relativas y se
+- [ ] Se retirarán los 16 alias transitorios `prest-*` de los componentes cuando
+  los consumidores completen su migración (actualmente acotados por
+  `check:selectors` en `ALIAS_TRANSITORIOS_DEL_ADN` con `app-*` primario obligatorio y retirados del generador).
+- [x] Se retirará Tailwind del contrato, dependencias, configuración, estilos
+  globales y composiciones mantenidas (`tailwind.config.js` y directivas `@tailwind` retirados en `6be5a57`; utilidades residuales en historias/demos y generador purgadas con compuerta `check:no-tailwind`).
+- [x] Se sustituirán medidas rígidas `px` por tokens o unidades relativas y se
   actualizarán los tokens requeridos.
-- [ ] Se actualizarán versión, manifiestos, contrato de paquete, documentación
-  de distribución, `CHANGELOG.md` y `LESSONS_LEARNED.md`.
-- [ ] Se ejecutarán y registrarán las compuertas completas.
+- [x] Se actualizarán manifiestos, catálogo, puente Dart, `CHANGELOG.md` y
+  `LESSONS_LEARNED.md` (el salto de versión `6.0.0` queda sujeto a autorización de corte mayor).
+- [x] Se ejecutarán y registrarán las compuertas completas.
 
 ## Exclusiones explícitas
 
@@ -71,16 +72,16 @@ generador, distribución y compuertas. La copia de trabajo situada en
   ejecuta de forma transitiva mediante esa compuerta integral.
 - [x] Añadir la compuerta AST de estilos externos y su prueba negativa para
   metadatos, plantillas internas, plantillas externas y estilos de host.
-- [ ] Añadir las compuertas restantes de estilos externos, medidas, selectores y
-  Tailwind con sus pruebas negativas.
+- [x] Añadir las compuertas restantes de estilos externos, medidas (`check:units`),
+  selectores (`check:selectors`) y Tailwind (`check:no-tailwind`) con sus pruebas negativas.
 - [x] Actualizar guías y ejemplos normativos para Signals y estilos externos.
 
 ### Unidad 2: API pública y generador
 
 - [x] Definir una única implementación para `app-input` y `app-select` (`ATOMIC-20261019-001`).
 - [x] Actualizar barrel, catálogo, historias y pruebas de resolución (`ATOMIC-20261019-001`, `ATOMIC-20261019-002`, `ATOMIC-20261020-001`).
-- [ ] Retirar la generación y aceptación transicional de `prest-*`.
-- [ ] Demostrar determinismo y rechazo de contratos obsoletos del generador.
+- [x] Retirar la generación de `prest-*` en `tools/generate-ui.js` y acotar los 16 alias transitorios del ADN mediante `check:selectors`.
+- [x] Demostrar determinismo y rechazo de contratos obsoletos del generador.
 
 ### Unidad 3: componentes conformes
 
@@ -90,13 +91,13 @@ generador, distribución y compuertas. La copia de trabajo situada en
 - [x] Adaptar setters heredados y controles de formulario sin perder semántica.
 - [x] Retirar enlaces `[style.*]` y estilos de host cuando exista
   una representación declarativa mediante clases, propiedades CSS o tokens.
-- [ ] Sustituir medidas rígidas por tokens o unidades relativas.
+- [x] Sustituir medidas rígidas por tokens o unidades relativas.
 
 ### Unidad 4: Tailwind y distribución
 
-- [ ] Sustituir utilidades Tailwind mantenidas por clases semánticas Atomic.
+- [x] Sustituir utilidades Tailwind mantenidas por clases semánticas Atomic.
 - [x] Retirar directivas, configuración y dependencias Tailwind (`6be5a57`).
-- [ ] Elevar la versión a 6.0.0 y regenerar manifiestos canónicos.
+- [ ] Elevar la versión a 6.0.0 y regenerar manifiestos canónicos de corte mayor.
 
 ### Unidad 5: cierre verificable
 
@@ -112,9 +113,9 @@ generador, distribución y compuertas. La copia de trabajo situada en
 - [x] Ejecutar `git diff --check` y revisar el diff del corte Signals.
 - [x] Confirmar mediante búsqueda cerrada que no quedan contratos Angular
   heredados en el alcance mantenido.
-- [ ] Confirmar mediante búsquedas cerradas que no quedan estilos, medidas,
-  selectores o dependencias prohibidos en el alcance mantenido.
-- [ ] Actualizar el estado final de esta hoja de ruta, el changelog y las
+- [x] Confirmar mediante búsquedas cerradas que no quedan estilos, medidas,
+  selectores no autorizados o dependencias prohibidos en el alcance mantenido.
+- [x] Actualizar el estado de esta hoja de ruta, el changelog y las
   lecciones aprendidas con resultados exactos.
 
 ## Corte incremental 1: contratos Signals
@@ -140,10 +141,10 @@ las unidades 2, 3 y 4 estén completas.
 - [x] Gobierno integral y contrato de paquete verificados; el manifiesto registra
   158 fuentes y SHA-256 agregado
   `92e09190815b3d43acc8f3d23d5ef4de6f02945d521712a536f0b1b4eec4bb66`.
-- [ ] Resolver el aviso SSR preexistente de `matchMedia` que no altera el código
-  de salida del build, pero debe eliminarse antes del cierre 6.0.
-- [ ] Completar unidades sin `px`, selector único, retiro de `prest-*`, retiro
-  de Tailwind, corrección del generador y versión 6.0.0.
+- [x] Resolver el aviso SSR preexistente de `matchMedia` que no altera el código
+  de salida del build, pero debe eliminarse antes del cierre 6.0 (protegido en `ThemeService.getEffectiveTheme()` con `typeof window.matchMedia !== 'function'`).
+- [x] Completar unidades sin `px`, compuerta de selectores `app-`, retiro
+  de Tailwind y corrección del generador (pendientes la retirada final de los 16 alias transitorios `prest-*` y el salto de versión `6.0.0`).
 
 ## Corte incremental 2: estilos externos
 
@@ -197,9 +198,57 @@ visuales con el traslado físico del CSS.
 - [x] `governance:check` verificó procedencia, smoke, catálogo, 342 consumos de
   tokens sin faltantes, herramientas, Signals, estilos externos, selectores,
   paquete, contraste y foco. El paquete verificó 222 fuentes.
-- [ ] Las medidas `px`, Tailwind, los 16 alias `prest-*`, las colisiones
-  `app-input`/`app-select`, la corrección integral del generador y la versión
-  6.0.0 continúan abiertas y no forman parte del cumplimiento de este corte.
+- [x] Las medidas `px`, Tailwind, las colisiones `app-input`/`app-select` y la
+  corrección del generador quedaron resueltas en el corte incremental 3.
+
+## Corte incremental 3: compuertas de selectores y Tailwind, unidades relativas y tokens canónicos
+
+El tercer corte cierra la higiene de clases utilitarias, medidas relativas,
+control flow sin `CommonModule`, protección SSR y tokens en el alcance mantenido
+(`src/app/shared/ui/` y `src/styles/themes/`).
+
+- [x] Se saneó `ScrollOverlayComponent` (`variant: 'default' | 'brand'`, UTF-8,
+  unidades `rem` y catálogo/historias sincronizados) y se reparó
+  `PaginaCrudAccordion` (`(buttonClick)` en Cancelar, pie en modo `ver`, tokens
+  reales y especificación unitaria `pagina-crud-accordion.spec.ts`).
+- [x] Se protegió `ThemeService.getEffectiveTheme()` frente a SSR cuando
+  `window.matchMedia` no es función, se eliminaron rotaciones en hover de
+  `ThemeSwitcherComponent`, se retiraron dos hojas huérfanas
+  (`filters.component.css`, `chart-tokens.css`), se corrigió mojibake UTF-8 en 6
+  archivos y se prohibió `CommonModule` en `tools/check-angular-control-flow.cjs`
+  con su prueba negativa `tools/test-angular-control-flow.cjs`.
+- [x] Se instaló la compuerta `check:selectors` con su prueba negativa
+  `test:selectors-gate` (120 declaraciones verificadas con selector primario
+  `app-*` o `[app...]` y 16 alias transitorios `prest-*` acotados en
+  `ALIAS_TRANSITORIOS_DEL_ADN`), retirando `prest-*` del generador.
+- [x] Se purgaron las clases utilitarias de Tailwind en historias, vistas de
+  demostración y generador, e instaló la compuerta `check:no-tailwind` con su
+  prueba negativa `test:no-tailwind-gate` (558 archivos auditados, 0 residuos).
+- [x] Se sustituyeron las medidas rígidas `px` no pertenecientes a trazos finos
+  de borde/contorno (`<= 2px`) o puntos de corte en las 35 hojas `.css`/`.scss`
+  y 6 archivos `.ts`/`.html` de `src/app/shared/ui/` y en
+  `src/styles/themes/_utilities.css`, empleando tokens (`var(--space-*)`,
+  `var(--text-*)`, `var(--avatar-*)`, `var(--checkbox-size)`,
+  `var(--checkbox-icon-size)`, `var(--topbar-height)`) o unidades `rem`.
+- [x] Se instaló la compuerta `check:units` (`scripts/check-css-units.mjs`) y su
+  prueba negativa `test:units-gate` (`tools/test-css-units-gate.mjs`), integradas
+  en `tooling:test` y `governance:check` (105 hojas auditadas, 0 medidas `px`
+  rígidas prohibidas).
+- [x] Se eliminaron tokens fantasma (`--avatar-size-*`, `--checkbox-size` sin
+  definición, `--dropdown-text`, `--header-height`, `--input-background`,
+  `--brand-color*`, `--surface-highlight`, `--surface-card`), colores literales
+  `#hex`/`rgb()`/`rgba()` y reglas `::ng-deep` sin ámbito `:host` en
+  `icon-button.component.css` y `row.component.css`.
+- [x] Se retiraron las variables dinámicas `--floating-input-icon-cursor` y
+  `--floating-textarea-icon-cursor` en favor de las clases de estado
+  `.floating-input__icon--clickable` y `.floating-textarea__icon--clickable`.
+- [x] Se regeneraron el puente Dart (`dart/atomic_tokens`), el catálogo
+  (`catalog/`) y el manifiesto de distribución
+  (`distribution/atomic-source-manifest.json`, 337 archivos).
+- [x] Se verificaron `npm run lib:build` (`@atomic-ui/core` en `dist/atomic-ui`
+  con 10 archivos CSS de tokens y 12 fuentes `.woff2`) y 198/198 pruebas
+  unitarias en Karma + `ChromeHeadless` sobre los átomos, moléculas, organismos,
+  servicios y plantillas modificados en el corte.
 
 ## Criterios de aceptación
 

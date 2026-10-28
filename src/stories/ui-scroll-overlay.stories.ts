@@ -148,6 +148,35 @@ export const SmallHeight: Story = {
   }),
 };
 
+export const BrandVariant: Story = {
+  args: {
+    variant: 'brand',
+    maxBodyHeight: 220,
+    skipTableDetection: true,
+    disableHorizontal: true,
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+      <app-scroll-overlay
+        class="so-block"
+        [variant]="variant"
+        [maxBodyHeight]="maxBodyHeight"
+        [skipTableDetection]="skipTableDetection"
+        [disableHorizontal]="disableHorizontal"
+      >
+        <div style="padding: 1rem;">
+          @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
+            <p style="margin-bottom: 1rem;">
+              Elemento {{i}}: Barra superpuesta con degradado primario-secundario de marca y riel suave visible en reposo.
+            </p>
+          }
+        </div>
+      </app-scroll-overlay>
+    `,
+  }),
+};
+
 export const NoScroll: Story = {
   args: {
     maxBodyHeight: 500,

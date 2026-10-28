@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { PaginaDashboardComponent } from '../app/shared/ui/templates/pagina-dashboard/pagina-dashboard';
-import { CommonModule } from '@angular/common';
 
 const meta: Meta<PaginaDashboardComponent> = {
   title: 'Templates/Pagina Dashboard (Chasis D)',

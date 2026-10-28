@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, computed, signal, input } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Important for NgClass
+import { NgClass } from '@angular/common';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 /** Avatar size options */
@@ -14,7 +14,7 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [CommonModule, VariablesCssDirective],
+  imports: [NgClass, VariablesCssDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.css'

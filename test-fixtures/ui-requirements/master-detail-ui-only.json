@@ -6,7 +6,7 @@
   "feature": {
     "key": "account-summary",
     "className": "AccountSummary",
-    "selector": "prest-account-summary-page",
+    "selector": "app-account-summary-page",
     "title": "Resumen de cuentas",
     "singular": "cuenta",
     "plural": "cuentas"

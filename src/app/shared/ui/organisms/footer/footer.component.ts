@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { VersionComponent } from '../../atoms/version/version.component';
 import { LinkComponent } from '../../atoms/link/link.component';
 import { AppVersionService } from '../../services/app-version.service';
@@ -27,7 +27,7 @@ export type FooterVariant = 'simple' | 'inline' | 'columns';
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, VersionComponent, LinkComponent],
+  imports: [NgTemplateOutlet, VersionComponent, LinkComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './footer.component.css',
     templateUrl: './footer.component.html'

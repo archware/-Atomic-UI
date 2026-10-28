@@ -184,4 +184,8 @@ export class FloatingInputComponent implements ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
     this.disabledByForm.set(isDisabled);
   }
+
+  clickableIcon(): boolean {
+    return this.clearable() && this.hasValue();
+  }
 }

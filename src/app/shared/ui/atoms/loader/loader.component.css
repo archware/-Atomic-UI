@@ -20,7 +20,7 @@
 /* ========== TAMAÑOS ========== */
 .loader-sm { --loader-size: var(--space-5); --loader-thickness: var(--space-1); }
 .loader-container { --loader-size: 2.5rem; --loader-thickness: var(--space-1); }
-.loader-lg { --loader-size: 3.5rem; --loader-thickness: 4px; }
+.loader-lg { --loader-size: 3.5rem; --loader-thickness: var(--space-1); }
 
 /* ========== 1. SPINNER CON DEGRADADO ========== */
 .gradient-spinner {
@@ -190,7 +190,7 @@
   background: var(--gradient-5);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 10px var(--gradient-5);
+  box-shadow: 0 0 0.625rem var(--gradient-5);
 }
 
 /* Aqui habia un bloque de tema oscuro que redeclaraba .spinner-track con el MISMO

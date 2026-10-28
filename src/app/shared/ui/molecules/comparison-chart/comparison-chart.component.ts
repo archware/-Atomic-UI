@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 export interface ComparisonChartItem {
@@ -13,7 +12,7 @@ export interface ComparisonChartItem {
 @Component({
   selector: 'app-comparison-chart',
   standalone: true,
-  imports: [CommonModule, VariablesCssDirective],
+  imports: [VariablesCssDirective],
   template: `
     <div class="chart-legend" aria-label="Leyenda del gráfico">
       <span><i class="chart-legend__dot chart-legend__dot--a"></i>{{ labelA() }}</span>

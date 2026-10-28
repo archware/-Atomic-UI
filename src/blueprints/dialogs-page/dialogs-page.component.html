@@ -662,7 +662,7 @@
 
             <div class="showcase-group">
               <div class="pdf-card-header">
-                <app-text variant="caption" weight="bold">Patron interactivo de tarjeta de documento PDF (FloatingInput compacto + Close-Ghost MD + Soft Danger):</app-text>
+                <app-text variant="caption" weight="bold">Patron interactivo de tarjeta de documento PDF (ScrollOverlay Brand + FloatingInput compacto + Close-Ghost MD + Soft Danger):</app-text>
                 @if (pdfDemoFiles().length > 0) {
                   <app-button
                     variant="soft"
@@ -689,6 +689,7 @@
               @if (pdfDemoFiles().length > 0) {
                 <app-scroll-overlay
                   class="so-block pdf-demo-scroll"
+                  variant="brand"
                   [maxBodyHeight]="210"
                   [skipTableDetection]="true"
                   [disableHorizontal]="true"
@@ -726,7 +727,7 @@
             </div>
           </div>
           <div class="tile-code">
-            <code>app-scroll-overlay [maxBodyHeight]="210" + app-floating-input + app-icon-button variant="close-ghost" size="md"</code>
+            <code>app-scroll-overlay variant="brand" [maxBodyHeight]="210" + app-floating-input + app-icon-button variant="close-ghost" size="md"</code>
           </div>
         </article>
       </div>

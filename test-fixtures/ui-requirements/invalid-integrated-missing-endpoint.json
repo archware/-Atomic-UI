@@ -6,7 +6,7 @@
   "feature": {
     "key": "invalid-record",
     "className": "InvalidRecord",
-    "selector": "prest-invalid-record-page",
+    "selector": "app-invalid-record-page",
     "title": "Registros inválidos",
     "singular": "registro",
     "plural": "registros"

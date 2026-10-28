@@ -519,7 +519,7 @@ describe('ScrollOverlayComponent', () => {
     expect(getComputedStyle(innerVerticalRail).display).toBe('none');
   });
 
-  it('shows active overflow rails at resting opacity and elevates to full opacity while scrolling', async () => {
+  it('auto-hides active overflow rails at rest in default variant and shows brand variant rails at resting opacity (0.68)', async () => {
     const fixture = TestBed.createComponent(ScrollOverlayComponent);
     fixture.detectChanges();
     await fixture.whenStable();
@@ -527,6 +527,7 @@ describe('ScrollOverlayComponent', () => {
     const host = fixture.nativeElement as HTMLElement;
     const viewport = host.querySelector('.so-scroll-area') as HTMLElement;
     const verticalRail = host.querySelector('.so-scrollbar-y') as HTMLElement;
+    verticalRail.style.transition = 'none';
     setScrollMetrics(viewport, {
       clientHeight: 180,
       clientWidth: 320,
@@ -541,11 +542,26 @@ describe('ScrollOverlayComponent', () => {
     host.dispatchEvent(new MouseEvent('mouseleave'));
 
     expect(host.classList).toContain('so-has-overflow-y');
+    expect(host.classList).not.toContain('so-variant-brand');
     expect(host.classList).not.toContain('so-scrolling');
+    expect(parseFloat(getComputedStyle(verticalRail).opacity)).toBeCloseTo(0, 2);
+
+    fixture.componentRef.setInput('variant', 'brand');
+    fixture.detectChanges();
+    expect(host.classList).toContain('so-variant-brand');
     const restingOpacity = getComputedStyle(verticalRail)
       .opacity.trim()
       .replace(/^var\(\s*--so-resting-opacity\s*,\s*([^)]+)\)$/, '$1');
     expect(parseFloat(restingOpacity)).toBeCloseTo(0.68, 2);
+
+    fixture.componentRef.setInput('variant', 'default');
+    fixture.detectChanges();
+    expect(host.classList).not.toContain('so-variant-brand');
+    expect(parseFloat(getComputedStyle(verticalRail).opacity)).toBeCloseTo(0, 2);
+
+    fixture.componentRef.setInput('variant', 'brand');
+    fixture.detectChanges();
+    expect(host.classList).toContain('so-variant-brand');
 
     host.dispatchEvent(new MouseEvent('mouseenter'));
     expect(host.classList).toContain('so-scrolling');

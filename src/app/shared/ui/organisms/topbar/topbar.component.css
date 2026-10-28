@@ -16,7 +16,7 @@
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding: 0 36px;
+  padding: 0 2.25rem;
   gap: var(--space-4);
 }
 
@@ -51,7 +51,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  margin-top: 2px;
+  margin-top: 0.125rem;
 }
 
 .page-subtitle {
@@ -75,12 +75,12 @@
   white-space: nowrap;
 }
 
-.api-status-badge.badge-success { background-color: rgba(34, 197, 94, 0.15); color: var(--success-color, #16a34a); }
-.api-status-badge.badge-warning { background-color: rgba(245, 158, 11, 0.15); color: var(--warning-color, #d97706); }
-.api-status-badge.badge-danger { background-color: rgba(239, 68, 68, 0.15); color: var(--danger-color, #dc2626); }
+.api-status-badge.badge-success { background-color: var(--success-color-light); color: var(--success-color-text); }
+.api-status-badge.badge-warning { background-color: var(--warning-color-light); color: var(--warning-color-text); }
+.api-status-badge.badge-danger { background-color: var(--danger-color-light); color: var(--danger-color-text); }
 
 .status-dot {
-  font-size: 6px;
+  font-size: 0.375rem;
 }
 
 .topbar-right {
@@ -97,7 +97,7 @@
 
 @media (max-width: 48rem) {
   .topbar-container {
-    padding: 0 36px;
+    padding: 0 2.25rem;
     gap: var(--space-2);
   }
 
@@ -149,8 +149,8 @@
 .notification-dropdown {
   position: absolute;
   top: calc(100% + var(--space-2));
-  right: -5px;
-  width: 320px;
+  right: -0.3125rem;
+  width: 20rem;
   max-width: calc(100vw - var(--space-4));
   background: var(--surface-background);
   border: 1px solid var(--border-color);
@@ -221,7 +221,7 @@
 }
 
 .notification-item.unread {
-  background: var(--surface-highlight, rgba(124, 58, 237, 0.05));
+  background: var(--surface-hover);
 }
 
 .notification-item.unread:hover {
@@ -244,7 +244,7 @@
 .notification-content {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0.125rem;
   flex: 1;
   min-width: 0;
 }
@@ -268,14 +268,14 @@
 }
 
 .notification-item-time {
-  font-size: 11px;
+  font-size: var(--text-2xs);
   color: var(--text-color-muted);
-  margin-top: 2px;
+  margin-top: 0.125rem;
 }
 
 .notification-unread-dot {
-  width: 8px;
-  height: 8px;
+  width: var(--space-2);
+  height: var(--space-2);
   background-color: var(--primary-color);
   border-radius: 50%;
   position: absolute;

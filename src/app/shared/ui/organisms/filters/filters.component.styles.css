@@ -12,7 +12,7 @@
 
 /* Cada campo proyectado crece pero no baja de 160px */
 .filter-bar > ::ng-deep * {
-  flex: 1 1 160px;
+  flex: 1 1 10rem;
   min-width: 0;
 }
 

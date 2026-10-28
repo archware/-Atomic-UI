@@ -298,7 +298,11 @@
   width: 1.75rem;
   height: 1.75rem;
   right: var(--space-3);
-  cursor: var(--floating-input-icon-cursor, default);
+  cursor: default;
+}
+
+.input-icon-btn--static.floating-input__icon--clickable {
+  cursor: pointer;
 }
 
 .input-icon-btn i {
