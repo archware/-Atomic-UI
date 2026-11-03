@@ -2,15 +2,19 @@
 title: 'Registro de cambios de Atomic UI'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-08-23'
-last_updated: '2026-10-26'
+last_updated: '2026-11-03'
 document_type: 'changelog'
-version: '5.23.3'
+version: '5.23.4'
 status: 'vigente'
-updated: '2026-08-25'
+updated: '2026-11-03'
 owner: 'COTAHA'
 ---
 
 # Registro de cambios
+
+## ATOMIC-20261103-001 — organismo canónico `app-about-dialog` («Acerca de» y Créditos del Sistema)
+
+Se crea y cataloga en `-Atomic-UI` el organismo canónico `<app-about-dialog>` (`src/app/shared/ui/organisms/about-dialog/`) para presentar la información institucional, versión, entorno, runtime, autoría principal (`Ing. Havel CONTRERAS TAPAHUASCO` — `@archware`), transparencia de co-ingeniería con IA Agéntica (`aiDisclosure`), tabla estructurada de créditos (`AboutCreditItem[]`), insignias de stack tecnológico (`AboutTechBadge[]`), enlaces externos verificados (`AboutLinkItem[]`) y pie de derechos de autor en aplicaciones web y de escritorio (Tauri/Wails/Python). Soporta tres variantes de presentación (`modal`, `popup` y `card`), desplazamiento gobernado con `<app-scroll-overlay class="so-block">`, Signals (`input()`/`output()`), `ChangeDetectionStrategy.OnPush`, control flow nativo (`@if`, `@for`) y tokens semánticos puros. Se exporta en `src/app/shared/ui/index.ts`, se registra en `catalog/components/about-dialog.json`, se expone en Storybook (`src/stories/ui-about-dialog.stories.ts`) y en la Sección 5 del Blueprint de diálogos (`src/blueprints/dialogs-page/`), y se actualiza `distribution/atomic-source-manifest.json`.
 
 ## ATOMIC-20260823-600 (corte 3) — compuertas de selectores y Tailwind, unidades relativas y tokens canónicos
 

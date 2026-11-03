@@ -370,4 +370,18 @@
   padding-right: var(--space-2);
 }
 
+.about-blueprint-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.about-blueprint-preview {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+
 

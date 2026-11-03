@@ -732,5 +732,112 @@
         </article>
       </div>
     </section>
+
+    <!-- ============================================================
+         SECCIÓN 5: ORGANISMO CANÓNICO ACERCA DE Y CRÉDITOS (app-about-dialog)
+         ============================================================ -->
+    <section class="blueprint-block" aria-label="Organismo canónico Acerca de y Créditos">
+      <div class="block-heading">
+        <app-text variant="h3" weight="bold">
+          5. Organismo Canónico «Acerca de» y Créditos del Sistema (app-about-dialog)
+        </app-text>
+        <app-text variant="body-sm" color="secondary">
+          Presentación estandarizada de identidad del producto, versión, entorno, autoría principal, transparencia de co-ingeniería con IA Agéntica, créditos técnicos, stack tecnológico y enlaces externos en variantes modal, popup y card.
+        </app-text>
+      </div>
+
+      <div class="about-blueprint-toolbar">
+        <app-button
+          variant="primary"
+          size="sm"
+          iconClass="fa-solid fa-circle-info"
+          (buttonClick)="onOpenAboutModal()"
+        >
+          Abrir Acerca de (Variante Modal)
+        </app-button>
+
+        <app-button
+          variant="secondary"
+          size="sm"
+          iconClass="fa-solid fa-window-restore"
+          (buttonClick)="onOpenAboutPopup()"
+        >
+          Abrir Acerca de (Variante Popup)
+        </app-button>
+      </div>
+
+      <div class="about-blueprint-preview">
+        <app-about-dialog
+          variant="card"
+          size="lg"
+          dialogTitle="Acerca de Editor PDF Studio"
+          appName="Editor PDF Studio"
+          appSubtitle="Organizador, extractor y unificador visual de documentos PDF"
+          appDescription="Aplicación de escritorio de alto rendimiento para unificar, reorganizar, rotar y extraer páginas de archivos PDF con procesamiento 100% en memoria local y privacidad absoluta."
+          version="v0.5.1"
+          environment="LOCAL & SEGURO"
+          runtimeInfo="Tauri + Rust Desktop"
+          logoIcon="fa-solid fa-file-pdf"
+          authorName="Ing. Havel CONTRERAS TAPAHUASCO"
+          authorRole="Autor, Arquitecto de Software y Desarrollador Principal"
+          githubHandle="@archware"
+          githubUrl="https://github.com/archware"
+          aiDisclosure="Desarrollado en co-ingeniería con IA Agéntica bajo la doctrina de arquitectura hexagonal y el sistema de diseño Atomic UI."
+          [credits]="aboutCredits"
+          [techStack]="aboutTechStack"
+          [links]="aboutLinks"
+          copyrightText="© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware). Todos los derechos reservados."
+        />
+      </div>
+
+      <app-about-dialog
+        variant="modal"
+        size="md"
+        [open]="isAboutModalOpen()"
+        dialogTitle="Acerca de Editor PDF Studio"
+        appName="Editor PDF Studio"
+        appSubtitle="Organizador, extractor y unificador visual de documentos PDF"
+        appDescription="Aplicación de escritorio de alto rendimiento para unificar, reorganizar, rotar y extraer páginas de archivos PDF con procesamiento 100% en memoria local y privacidad absoluta."
+        version="v0.5.1"
+        environment="LOCAL & SEGURO"
+        runtimeInfo="Tauri + Rust Desktop"
+        logoIcon="fa-solid fa-file-pdf"
+        authorName="Ing. Havel CONTRERAS TAPAHUASCO"
+        authorRole="Autor, Arquitecto de Software y Desarrollador Principal"
+        githubHandle="@archware"
+        githubUrl="https://github.com/archware"
+        aiDisclosure="Desarrollado en co-ingeniería con IA Agéntica bajo la doctrina de arquitectura hexagonal y el sistema de diseño Atomic UI."
+        [credits]="aboutCredits"
+        [techStack]="aboutTechStack"
+        [links]="aboutLinks"
+        copyrightText="© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware). Todos los derechos reservados."
+        (closed)="onCloseAboutModal()"
+      />
+
+      <app-about-dialog
+        variant="popup"
+        size="md"
+        [open]="isAboutPopupOpen()"
+        dialogTitle="Acerca de Editor PDF Studio (Popup)"
+        appName="Editor PDF Studio"
+        appSubtitle="Organizador, extractor y unificador visual de documentos PDF"
+        appDescription="Aplicación de escritorio de alto rendimiento para unificar, reorganizar, rotar y extraer páginas de archivos PDF con procesamiento 100% en memoria local y privacidad absoluta."
+        version="v0.5.1"
+        environment="LOCAL & SEGURO"
+        runtimeInfo="Tauri + Rust Desktop"
+        logoIcon="fa-solid fa-file-pdf"
+        authorName="Ing. Havel CONTRERAS TAPAHUASCO"
+        authorRole="Autor, Arquitecto de Software y Desarrollador Principal"
+        githubHandle="@archware"
+        githubUrl="https://github.com/archware"
+        aiDisclosure="Desarrollado en co-ingeniería con IA Agéntica bajo la doctrina de arquitectura hexagonal y el sistema de diseño Atomic UI."
+        [credits]="aboutCredits"
+        [techStack]="aboutTechStack"
+        [links]="aboutLinks"
+        copyrightText="© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware). Todos los derechos reservados."
+        (closed)="onCloseAboutPopup()"
+      />
+    </section>
   </div>
 </app-layout-shell>
+

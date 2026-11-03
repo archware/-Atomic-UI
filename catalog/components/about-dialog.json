@@ -1,0 +1,230 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "about-dialog",
+  "layer": "organism",
+  "selector": "app-about-dialog",
+  "export": "AboutDialogComponent",
+  "source": "src/app/shared/ui/organisms/about-dialog/about-dialog.component.ts",
+  "purpose": "Organismo canónico «Acerca de» y Créditos del Sistema que presenta la identidad de la aplicación, versión, entorno, runtime, autoría principal, declaración de co-ingeniería con IA Agéntica, créditos técnicos, stack tecnológico, enlaces y derechos de autor en variantes modal, popup o card.",
+  "variants": [
+    {
+      "name": "variant",
+      "values": [
+        { "value": "modal", "meaning": "Ventana informativa del sistema con botón X interior mediante app-modal.", "default": true },
+        { "value": "popup", "meaning": "Superposición con botón de cierre exterior flotante hanging-close." },
+        { "value": "card", "meaning": "Superficie en línea para inspección en Blueprints o secciones embebidas." }
+      ]
+    },
+    {
+      "name": "size",
+      "values": [
+        { "value": "sm", "meaning": "Ancho compacto." },
+        { "value": "md", "meaning": "Ancho estándar.", "default": true },
+        { "value": "lg", "meaning": "Ancho amplio." }
+      ]
+    },
+    {
+      "name": "open",
+      "values": [
+        { "value": false, "meaning": "Diálogo cerrado en variantes modal y popup.", "default": true },
+        { "value": true, "meaning": "Diálogo visible en variantes modal y popup." }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "name": "open",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Controla la visibilidad cuando variant es modal o popup."
+    },
+    {
+      "name": "variant",
+      "type": "AboutDialogVariant",
+      "default": "modal",
+      "meaning": "Modo de presentación: modal, popup o card."
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "md",
+      "meaning": "Tamaño máximo del diálogo o tarjeta."
+    },
+    {
+      "name": "dialogTitle",
+      "type": "string",
+      "default": "Acerca de",
+      "meaning": "Título visible en el encabezado del diálogo o tarjeta."
+    },
+    {
+      "name": "appName",
+      "type": "string",
+      "default": "Aplicación Atomic",
+      "meaning": "Nombre oficial de la aplicación o producto."
+    },
+    {
+      "name": "appSubtitle",
+      "type": "string",
+      "default": "Plataforma de Escritorio y Web",
+      "meaning": "Subtítulo descriptivo corto del producto."
+    },
+    {
+      "name": "appDescription",
+      "type": "string",
+      "default": "",
+      "meaning": "Resumen funcional opcional del producto."
+    },
+    {
+      "name": "version",
+      "type": "string",
+      "default": "v1.0.0",
+      "meaning": "Versión semántica publicada del producto."
+    },
+    {
+      "name": "environment",
+      "type": "string",
+      "default": "PROD",
+      "meaning": "Etiqueta de entorno o garantía operativa."
+    },
+    {
+      "name": "runtimeInfo",
+      "type": "string",
+      "default": "",
+      "meaning": "Información opcional del motor o runtime de ejecución."
+    },
+    {
+      "name": "logoIcon",
+      "type": "string",
+      "default": "fa-solid fa-layer-group",
+      "meaning": "Clase FontAwesome para el emblema del producto cuando no se define imagen."
+    },
+    {
+      "name": "logoImageUrl",
+      "type": "string",
+      "default": "",
+      "meaning": "URL opcional del logotipo del producto."
+    },
+    {
+      "name": "authorName",
+      "type": "string",
+      "default": "Ing. Havel CONTRERAS TAPAHUASCO",
+      "meaning": "Nombre del autor o arquitecto principal del software."
+    },
+    {
+      "name": "authorRole",
+      "type": "string",
+      "default": "Arquitectura y Desarrollo Principal",
+      "meaning": "Rol o cargo del autor principal."
+    },
+    {
+      "name": "githubHandle",
+      "type": "string",
+      "default": "@archware",
+      "meaning": "Identificador de cuenta u organización en GitHub."
+    },
+    {
+      "name": "githubUrl",
+      "type": "string",
+      "default": "https://github.com/archware",
+      "meaning": "URL del perfil u organización en GitHub."
+    },
+    {
+      "name": "aiDisclosure",
+      "type": "string",
+      "default": "Desarrollado en co-ingeniería con IA Agéntica bajo arquitectura gobernada Atomic UI.",
+      "meaning": "Nota institucional de transparencia sobre co-ingeniería con IA Agéntica."
+    },
+    {
+      "name": "credits",
+      "type": "AboutCreditItem[]",
+      "default": [],
+      "meaning": "Lista estructurada de créditos, autorías y reconocimientos técnicos."
+    },
+    {
+      "name": "techStack",
+      "type": "AboutTechBadge[]",
+      "default": [],
+      "meaning": "Colección de insignias del stack tecnológico del producto."
+    },
+    {
+      "name": "links",
+      "type": "AboutLinkItem[]",
+      "default": [],
+      "meaning": "Enlaces externos o de referencia asociados al producto."
+    },
+    {
+      "name": "copyrightText",
+      "type": "string",
+      "default": "© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware). Todos los derechos reservados.",
+      "meaning": "Leyenda legal de derechos de autor al pie del componente."
+    },
+    {
+      "name": "closeButtonText",
+      "type": "string",
+      "default": "Cerrar",
+      "meaning": "Etiqueta del botón de cierre en el pie del diálogo."
+    }
+  ],
+  "outputs": [
+    {
+      "name": "closed",
+      "type": "void",
+      "meaning": "Se emite cuando la persona solicita cerrar el diálogo en variante modal o popup."
+    }
+  ],
+  "states": [
+    { "name": "closed", "meaning": "open=false en variantes modal y popup." },
+    { "name": "open", "meaning": "open=true en variantes modal y popup." },
+    { "name": "inline-card", "meaning": "variant=card renderizado de forma permanente en línea." }
+  ],
+  "a11y": [
+    "En variante modal delega rol dialog, foco inicial, trampa de foco, cierre con Escape y restauración de foco a ModalComponent.",
+    "En variante popup expone role=dialog, aria-modal=true, aria-labelledby único, foco inicial en el cierre seguro, trampa de foco (Tab/Shift+Tab), cierre con Escape y restauración de foco al disparador.",
+    "Los enlaces externos a GitHub y recursos abren con target=_blank y rel=noopener noreferrer."
+  ],
+  "responsive": [
+    "A 36rem o menos apila el bloque hero verticalmente y colapsa la grilla de créditos a una sola columna.",
+    "El cuerpo de las variantes modal y popup se desplaza exclusivamente mediante ScrollOverlayComponent."
+  ],
+  "tokens": [
+    "--surface-background",
+    "--surface-section",
+    "--surface-elevated",
+    "--border-color",
+    "--border-color-light",
+    "--primary-color",
+    "--primary-color-lighter",
+    "--primary-color-text",
+    "--secondary-color-lighter",
+    "--secondary-color-light",
+    "--secondary-color-text",
+    "--text-color",
+    "--text-color-secondary",
+    "--text-color-muted",
+    "--text-color-on-primary",
+    "--overlay-backdrop",
+    "--shadow-xs",
+    "--shadow-sm",
+    "--shadow-xl",
+    "--radius-md",
+    "--radius-lg",
+    "--radius-full"
+  ],
+  "story": { "path": "src/stories/ui-about-dialog.stories.ts", "status": "available" },
+  "test": {
+    "path": "src/app/shared/ui/organisms/about-dialog/about-dialog.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Soporta presentación en modal, popup y card reutilizando la misma plantilla semántica de créditos."
+    ]
+  },
+  "canonicalFor": [
+    "about-dialog",
+    "system-credits-dialog",
+    "app-version-and-authorship-dialog"
+  ]
+}

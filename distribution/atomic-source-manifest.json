@@ -10,8 +10,8 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "5afa68a93ec6381fe5648be9fcac6db59d66de100b864f85e2640dca02046413",
-  "fileCount": 337,
+  "sourceTreeSha256": "8e41648cdce2838cb20c9dc171d7c061ca7ee2e1284cc5a03297030fd8215276",
+  "fileCount": 340,
   "files": [
     {
       "path": "projects/atomic-ui/ng-package.json",
@@ -645,8 +645,8 @@
     },
     {
       "path": "src/app/shared/ui/index.ts",
-      "bytes": 16777,
-      "sha256": "d2e2047f1c231cdf667dbbdaa1453e823d4899c9c4be87f5456084ccf55fc2fe"
+      "bytes": 17014,
+      "sha256": "7d653328898b594abc46d945b1d173164eafc27d4e291e6dd55222be036f1518"
     },
     {
       "path": "src/app/shared/ui/interceptors/auth.interceptor.ts",
@@ -972,6 +972,21 @@
       "path": "src/app/shared/ui/molecules/user-menu/user-menu.component.ts",
       "bytes": 3217,
       "sha256": "a8286e1f110816c090506c01a9d28c614b76c8a03c686dbcd61fd42370f360b8"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/about-dialog/about-dialog.component.css",
+      "bytes": 6281,
+      "sha256": "fb31d8d4502b254bfb89b545f9ad11a5f3ddbeafb97f571eac30759324a9dcdc"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/about-dialog/about-dialog.component.html",
+      "bytes": 10296,
+      "sha256": "2d46671ac2d0ec96b6774a47d965b0986b6f5f07b45218b3d4fc46e4d99a9207"
+    },
+    {
+      "path": "src/app/shared/ui/organisms/about-dialog/about-dialog.component.ts",
+      "bytes": 9434,
+      "sha256": "11fc0dd576baf42ea87b418d23584c25ce33aa4191ae6f9b81c49d1cae8af07e"
     },
     {
       "path": "src/app/shared/ui/organisms/accordion/accordion-item-component.component.html",

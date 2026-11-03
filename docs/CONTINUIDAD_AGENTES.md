@@ -2,11 +2,11 @@
 title: "Continuidad para agentes de Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-10-26"
+last_updated: "2026-11-03"
 document_type: "manual de continuidad"
 status: "vigente"
-version: "1.5.4"
-change_id: "ATOMIC-20260823-600"
+version: "1.5.5"
+change_id: "ATOMIC-20261103-001"
 canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
@@ -93,24 +93,15 @@ git status --short --branch
 
 > Los cortes históricos anteriores a esta ventana se conservan íntegros en [`BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md`](./BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md).
 
-### 1. Unidad ATOMIC-20260823-600 (corte 3) — compuertas de selectores y Tailwind, unidades relativas y tokens canónicos
+### 1. Unidad ATOMIC-20261103-001 — organismo canónico `app-about-dialog` («Acerca de» y Créditos del Sistema)
+
+Se crea y cataloga en `-Atomic-UI` el organismo canónico `<app-about-dialog>` (`src/app/shared/ui/organisms/about-dialog/`) para presentar identidad de producto, versión, entorno, runtime, autoría principal (`Ing. Havel CONTRERAS TAPAHUASCO` — `@archware`), transparencia de co-ingeniería con IA Agéntica (`aiDisclosure`), tabla de créditos técnicos (`AboutCreditItem[]`), stack tecnológico (`AboutTechBadge[]`), enlaces externos verificados (`AboutLinkItem[]`) y derechos de autor en tres variantes (`modal`, `popup` y `card`). Se reexporta en `src/app/shared/ui/index.ts`, se registra en `catalog/components/about-dialog.json`, se expone en Storybook (`src/stories/ui-about-dialog.stories.ts`) y en la Sección 5 de `DialogsPageComponent`, y se actualiza `distribution/atomic-source-manifest.json`. Consultar el [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261103-001_about_dialog.md).
+
+### 2. Unidad ATOMIC-20260823-600 (corte 3) — compuertas de selectores y Tailwind, unidades relativas y tokens canónicos
 
 Se sanea `ScrollOverlayComponent` (`variant: 'default' | 'brand'`, UTF-8, unidades `rem`), se repara `PaginaCrudAccordion` (`(buttonClick)` en Cancelar, pie en modo `ver`, tokens reales y `pagina-crud-accordion.spec.ts`), se protege `ThemeService.getEffectiveTheme()` para SSR (`typeof window.matchMedia !== 'function'`), se retiran rotaciones en hover de `ThemeSwitcherComponent`, se eliminan dos hojas CSS huérfanas (`filters.component.css`, `chart-tokens.css`) y se prohíbe `CommonModule` en `check:control-flow` (`test:control-flow-gate`). Se acotan los 16 alias transitorios `prest-*` bajo `app-*` primario obligatorio (`check:selectors` y `test:selectors-gate`, 120 declaraciones) retirándolos del generador `tools/generate-ui.js`, y se purgan las utilidades residuales de Tailwind en historias, vistas de demostración y generador (`check:no-tailwind` y `test:no-tailwind-gate`, 558 archivos). Se sustituyen las medidas rígidas `px` no pertenecientes a trazos finos (`<= 2px`) o puntos de corte en las 35 hojas `.css`/`.scss` y 6 archivos `.ts`/`.html` de `src/app/shared/ui/` y en `src/styles/themes/_utilities.css` por tokens o `rem`, gobernadas por `check:units` (`scripts/check-css-units.mjs` y `tools/test-css-units-gate.mjs`, 105 hojas auditadas). Se añaden `--checkbox-size`, `--checkbox-icon-size` y `--topbar-height`, se eliminan tokens fantasma y colores literales `#hex`/`rgb()`/`rgba()`, se acotan con `:host` las reglas `::ng-deep` en `icon-button.component.css` y `row.component.css`, se reemplazan `--floating-*-icon-cursor` por clases de estado, se regeneran `catalog/`, `dart/atomic_tokens` y `distribution/atomic-source-manifest.json`, y se validan `npm run lib:build` y 198/198 pruebas unitarias en Karma + `ChromeHeadless`. Consultar el [roadmap](../.agents/roadmaps/ROADMAP_20260823_atomic_ui_6_0.md).
 
-### 2. Unidad ATOMIC-20261026-003 — tipografía local canónica Quicksand y Open Sans
+### 3. Unidad ATOMIC-20261026-003 — tipografía local canónica Quicksand y Open Sans
 
 Se empaquetan en `src/styles/themes/fonts/` los 12 archivos `.woff2` locales de `Open Sans` (`400`, `500`, `600`, `700` en `latin` y `latin-ext`) y `Quicksand` (`400`, `500`, `600`, `700` completo), declarados en `src/styles/themes/_fonts.css`, importados al inicio de `src/styles/themes/index.css` e inventariados en `distribution/package-contract.json` y `distribution/atomic-source-manifest.json`. Se definen `--font-family-base`, `--font-family-heading` y `--font-family-mono` en `_tokens-primitives.css`, se corrige `--table-font-family: var(--font-family-base)` en `_tokens-components.css` y se enlaza `--font-family-heading` en encabezados globales (`h1`–`h6`), `text.component.css`, `page-header.scss`, `pagina-crud.scss`, `pagina-crud-accordion.scss`, `modal.component.css`, `modal-container.component.css`, `popup-container.component.css`, `form-dialog.scss` y `kpi-card.component.css`, además de `version.component.css`, el puente Dart (`scripts/emit-dart-tokens.mjs`) y la prueba negativa `tools/test-typography-scale-gate.mjs`. Consultar el [roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261026-001_tipografia_local_quicksand_open_sans.md).
 
-### 3. Unidad ATOMIC-20261026-002 — corrección editorial y referencia material
-
-Se corrigen las 151 ocurrencias de prosa que producen los 150 hallazgos
-ortográficos de los dos registros. Los identificadores ASCII, bloques de
-código, versiones y anclas históricas se conservan. La referencia visual se
-califica como maestra §3.1; la desviación original sigue abierta y declara
-`por-clasificar` para su atribución operativa a Orquestación. El control de
-referencias del directorio pasa; el control ortográfico conserva código 1
-por un falso positivo en el identificador HTML ASCII de la primera ancla.
-La [evidencia y checklist](../.agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md)
-conservan las salidas originales, el juicio independiente y la limitación.
-No se repiten las 70 pruebas válidas del corte anterior ni se modifica
-producto, dependencias, manifiestos o trabajo de otras sesiones.

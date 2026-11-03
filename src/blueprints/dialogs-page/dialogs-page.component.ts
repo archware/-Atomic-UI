@@ -19,6 +19,10 @@ import {
   FloatingInputComponent,
   BadgeComponent,
   ScrollOverlayComponent,
+  AboutDialogComponent,
+  type AboutCreditItem,
+  type AboutTechBadge,
+  type AboutLinkItem,
   ModalService,
   PopupService,
   ToastService,
@@ -44,6 +48,7 @@ import {
     FloatingInputComponent,
     BadgeComponent,
     ScrollOverlayComponent,
+    AboutDialogComponent,
   ],
   templateUrl: './dialogs-page.component.html',
   styleUrl: './dialogs-page.component.css',
@@ -114,7 +119,7 @@ export class DialogsPageComponent {
   ]);
 
   // Archivos interactivos de demostracion del patron de fila PDF (Seccion 4)
-  readonly pdfDemoFiles = signal<Array<{ id: string; name: string; meta: string; pages: string }>>([
+  readonly pdfDemoFiles = signal<{ id: string; name: string; meta: string; pages: string }[]>([
     {
       id: 'pdf-1',
       name: 'expediente_clinico_2026.pdf',
@@ -392,4 +397,81 @@ export class DialogsPageComponent {
     });
     this.lastInteraction.set('Toast emitido con descarte automatico y contextual');
   }
+
+  // --- Seccion 5: Organismo canonico Acerca de (app-about-dialog) ---
+  readonly isAboutModalOpen = signal(false);
+  readonly isAboutPopupOpen = signal(false);
+
+  readonly aboutCredits: AboutCreditItem[] = [
+    {
+      label: 'Autoría Principal',
+      value: 'Ing. Havel CONTRERAS TAPAHUASCO (@archware)',
+      subtext: 'Arquitectura Hexagonal y Gobierno del Sistema de Diseño',
+      icon: 'fa-solid fa-user-shield',
+      badge: 'Autor',
+    },
+    {
+      label: 'Co-Ingeniería IA',
+      value: 'Asistencia de IA Agéntica & Orquestación Doctrinal',
+      subtext: 'Compuertas deterministas y verificación automatizada',
+      icon: 'fa-solid fa-wand-magic-sparkles',
+      badge: 'IA',
+    },
+    {
+      label: 'Arquitectura y Seguridad',
+      value: 'Procesamiento 100% local en memoria sin subida a servidores',
+      subtext: 'Frontera tipada y privacidad institucional',
+      icon: 'fa-solid fa-shield-halved',
+    },
+    {
+      label: 'Sistema de Diseño',
+      value: 'Atomic UI (@atomic-ui/core) — Signals & OnPush',
+      subtext: 'Tokens semánticos puros sin estilos paralelos',
+      icon: 'fa-solid fa-cubes',
+    },
+  ];
+
+  readonly aboutTechStack: AboutTechBadge[] = [
+    { label: 'Tauri 1.5 + Rust', icon: 'fa-solid fa-gears', variant: 'primary' },
+    { label: 'Angular 19 + Signals', icon: 'fa-brands fa-angular', variant: 'secondary' },
+    { label: 'Atomic UI', icon: 'fa-solid fa-layer-group', variant: 'info' },
+    { label: 'PDF.js + pdf-lib', icon: 'fa-solid fa-file-pdf', variant: 'warning' },
+    { label: '100% Local', icon: 'fa-solid fa-lock', variant: 'success' },
+  ];
+
+  readonly aboutLinks: AboutLinkItem[] = [
+    {
+      label: 'GitHub @archware',
+      url: 'https://github.com/archware',
+      icon: 'fa-brands fa-github',
+      external: true,
+    },
+    {
+      label: 'Repositorio Atomic UI',
+      url: 'https://github.com/archware/-Atomic-UI',
+      icon: 'fa-solid fa-code-branch',
+      external: true,
+    },
+  ];
+
+  onOpenAboutModal(): void {
+    this.isAboutModalOpen.set(true);
+    this.lastInteraction.set('Abierto dialogo Acerca de en variante modal');
+  }
+
+  onCloseAboutModal(): void {
+    this.isAboutModalOpen.set(false);
+    this.lastInteraction.set('Cerrado dialogo Acerca de en variante modal');
+  }
+
+  onOpenAboutPopup(): void {
+    this.isAboutPopupOpen.set(true);
+    this.lastInteraction.set('Abierto dialogo Acerca de en variante popup');
+  }
+
+  onCloseAboutPopup(): void {
+    this.isAboutPopupOpen.set(false);
+    this.lastInteraction.set('Cerrado dialogo Acerca de en variante popup');
+  }
 }
+

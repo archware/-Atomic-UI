@@ -2,11 +2,11 @@
 title: "Bitácora histórica de cortes de continuidad de Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-10-25"
-last_updated: "2026-10-26"
+last_updated: "2026-11-03"
 document_type: "bitácora histórica de continuidad"
 status: "vigente"
-version: "1.0.4"
-change_id: "ATOMIC-20260823-600"
+version: "1.0.5"
+change_id: "ATOMIC-20261103-001"
 canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
@@ -14,6 +14,12 @@ document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDA
 # Bitácora histórica de cortes de continuidad de Atomic UI
 
 Este archivo conserva los cortes históricos archivados desde [`CONTINUIDAD_AGENTES.md`](./CONTINUIDAD_AGENTES.md) conforme a la ventana deslizante de `DOC-20261025-001`. Solo debe consultarse bajo demanda cuando se investigue un corte anterior.
+
+## Corte archivado por ATOMIC-20261103-001
+
+### 3. Unidad ATOMIC-20261026-002 — corrección editorial y referencia material
+
+Se corrigen las 151 ocurrencias de prosa que producen los 150 hallazgos ortográficos de los dos registros. Los identificadores ASCII, bloques de código, versiones y anclas históricas se conservan. La referencia visual se califica como maestra §3.1; la desviación original sigue abierta y declara `por-clasificar` para su atribución operativa a Orquestación. El control de referencias del directorio pasa; el control ortográfico conserva código 1 por un falso positivo en el identificador HTML ASCII de la primera ancla. La [evidencia y checklist](../.agent/auditorias/ATOMIC-20261026-002/CIERRE_EDITORIAL.md) conservan las salidas originales, el juicio independiente y la limitación. No se repiten las 70 pruebas válidas del corte anterior ni se modifica producto, dependencias, manifiestos o trabajo de otras sesiones.
 
 ## Corte archivado por ATOMIC-20260823-600 (corte 3)
 

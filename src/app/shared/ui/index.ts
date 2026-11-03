@@ -381,3 +381,11 @@ export * from './config/chasis.config';
 export { TransactionDetail } from './organisms/transaction-detail/transaction-detail';
 export type { TransactionDetailGroup, TransactionDetailTable } from './organisms/transaction-detail/transaction-detail';
 export { TransactionEditor } from './organisms/transaction-editor/transaction-editor';
+export { AboutDialogComponent } from './organisms/about-dialog/about-dialog.component';
+export type {
+  AboutDialogVariant,
+  AboutCreditItem,
+  AboutTechBadge,
+  AboutLinkItem,
+} from './organisms/about-dialog/about-dialog.component';
+

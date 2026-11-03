@@ -4,14 +4,20 @@ author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
 document_type: "registro técnico"
 status: "en revisión"
-last_updated: "2026-10-26"
-version: "1.4.7"
-last_change_id: "ATOMIC-20260823-600"
+last_updated: "2026-11-03"
+version: "1.4.8"
+last_change_id: "ATOMIC-20261103-001"
 owners:
   - "COTAHA"
 ---
 
 # Lecciones aprendidas de Atomic UI
+
+## ATOMIC-20261103-001 — contratos de catálogo y tokens definidos en organismos multi-variante (`app-about-dialog`)
+
+- **Evidencia:** al introducir un organismo nuevo (`app-about-dialog`) que proyecta el mismo cuerpo semántico dentro de tres variantes de contenedor (`modal`, `popup` y `card`), el validador de catálogo (`tools/check-atomic-catalog.js`) exige que cada entrada de `inputs` y `outputs` en `catalog/components/about-dialog.json` declare `meaning` (y `default` tipado en inputs) bajo `layer: "organism"`, mientras que `scripts/audit-tokens.ps1` rechaza cualquier token CSS intermedio (`--space-1-5`, `--duration-fast`, `--z-modal`) que no esté declarado en `src/styles/themes/_tokens-*.css`.
+- **Decisión:** reutilizar un único `<ng-template #aboutBody>` con `<app-scroll-overlay class="so-block">` para las tres variantes (`modal`, `popup` y `card`), consumir exclusivamente los tokens primitivos y de componente definidos en `src/styles/themes/` (`--space-1` a `--space-5`, `--radius-*`, `--font-size-*`, `--font-weight-*`, `--surface-*`) y alinear `catalog/components/about-dialog.json` con `catalog/schemas/component.schema.json`.
+- **Prevención:** ejecutar siempre `npm run catalog:generate`, `scripts/audit-tokens.ps1`, `scripts/check-css-units.mjs`, `scripts/check-typography-scale.mjs` y `node tools/check-package-distribution.js manifest` antes de propagar un organismo nuevo a proyectos consumidores con pin gobernado (`check:atomic:pin`).
 
 ## ATOMIC-20260823-600 (corte 3) — unidades relativas, nombres reales de tokens y clases de estado frente a cursores dinámicos
 
