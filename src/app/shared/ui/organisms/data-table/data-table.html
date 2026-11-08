@@ -232,6 +232,6 @@
     </table>
   </app-scroll-overlay>
   @if (effectiveStatus() === 'loading' && displayedRows().length > 0) {
-    <div class="sr-only" role="status" aria-live="polite">{{ loadingMessage() }}</div>
+    <div class="visually-hidden" role="status" aria-live="polite">{{ loadingMessage() }}</div>
   }
 </div>

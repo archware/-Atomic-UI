@@ -48,7 +48,8 @@
   text-align: start;
 }
 
-.data-table__caption--hidden {
+.data-table__caption--hidden,
+.visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
