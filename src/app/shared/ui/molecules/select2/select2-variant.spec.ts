@@ -62,9 +62,12 @@ describe('Select2Component - modos de etiqueta', () => {
     await fixture.whenStable();
     expect(fixture.componentInstance.variant()).toBe('standard');
     expect(etiquetaFlotante(fixture.nativeElement)).toBeNull();
-    expect(fixture.nativeElement.querySelector('label.fl-label')?.textContent?.trim()).toBe(
-      'Region',
-    );
+    // El combobox se asocia por aria-labelledby; su etiqueta visual no requiere un label nativo.
+    const raiz: HTMLElement = fixture.nativeElement;
+    const etiqueta = raiz.querySelector('.fl-label');
+    expect(etiqueta).not.toBeNull();
+    if (!etiqueta) throw new Error('Falta la etiqueta estándar de Select2');
+    expect(etiqueta.textContent?.trim()).toBe('Region');
   });
 
   it('standard: la etiqueta superior y el marcador siempre visibles', async () => {
@@ -92,18 +95,21 @@ describe('Select2Component - modos de etiqueta', () => {
     expect(marcador(raiz)?.textContent?.trim()).toBe('Seleccione una region');
   });
 
-  it('floating: el foco del teclado en el disparador tambien sube la etiqueta', async () => {
+  it('floating: el foco del teclado en el disparador tambien sube la etiqueta y marca focused en el wrapper', async () => {
     const fixture = TestBed.createComponent(Anfitrion);
     await fixture.whenStable();
     const raiz: HTMLElement = fixture.nativeElement;
+    const wrapper = raiz.querySelector('.select2-wrapper') as HTMLElement;
 
     disparador(raiz).dispatchEvent(new Event('focus'));
     await fixture.whenStable();
     expect(estaElevada(raiz)).toBe(true);
+    expect(wrapper.classList.contains('focused')).toBe(true);
 
     disparador(raiz).dispatchEvent(new Event('blur'));
     await fixture.whenStable();
     expect(estaElevada(raiz)).toBe(false);
+    expect(wrapper.classList.contains('focused')).toBe(false);
   });
 
   it('floating-value: abrir la lista vacia NO sube la etiqueta; con valor si', async () => {
@@ -146,7 +152,7 @@ describe('Select2Component - modos de etiqueta', () => {
     expect(marcador(raiz)).toBeNull();
   });
 
-  it('seleccion multiple vacia con floating: etiqueta en reposo y sin marcador', async () => {
+  it('seleccion multiple vacia con floating: etiqueta en reposo, sin marcador y sin salto de altura al enfocar', async () => {
     const fixture = TestBed.createComponent(Anfitrion);
     fixture.componentInstance.multiple.set(true);
     await fixture.whenStable();
@@ -154,6 +160,11 @@ describe('Select2Component - modos de etiqueta', () => {
     expect(estaElevada(raiz)).toBe(false);
     expect(marcador(raiz)).toBeNull();
     expect(raiz.querySelectorAll('.select2-tag').length).toBe(0);
+
+    const altoReposo = disparador(raiz).getBoundingClientRect().height;
+    disparador(raiz).dispatchEvent(new Event('focus'));
+    await fixture.whenStable();
+    expect(disparador(raiz).getBoundingClientRect().height).toBeCloseTo(altoReposo, 0);
   });
 
   it('sin etiqueta, floating no oculta el marcador y expone aria-label', async () => {
@@ -168,16 +179,22 @@ describe('Select2Component - modos de etiqueta', () => {
     expect(disparador(raiz).getAttribute('aria-label')).toBe('Region de atencion');
   });
 
-  it('deshabilitado marca la etiqueta flotante', async () => {
+  it('deshabilitado marca la etiqueta flotante y alinea el fondo del disparador con el parche de la etiqueta elevada', async () => {
     const fixture = TestBed.createComponent(Select2Component);
     fixture.componentRef.setInput('options', OPCIONES);
     fixture.componentRef.setInput('label', 'Region');
     fixture.componentRef.setInput('variant', 'floating');
     fixture.componentRef.setInput('disabled', true);
+    fixture.componentInstance.writeValue('ARE');
     await fixture.whenStable();
-    expect(
-      fixture.nativeElement.querySelector('.fl-label--floating.fl-label--disabled'),
-    ).not.toBeNull();
+    const raiz: HTMLElement = fixture.nativeElement;
+    const etiqueta = raiz.querySelector(
+      '.fl-label--floating.fl-label--floated.fl-label--disabled',
+    ) as HTMLElement;
+    expect(etiqueta).not.toBeNull();
+    expect(getComputedStyle(etiqueta).backgroundColor).toBe(
+      getComputedStyle(disparador(raiz)).backgroundColor,
+    );
   });
 
   it('el disparador referencia la etiqueta por aria-labelledby', async () => {
@@ -196,7 +213,9 @@ describe('Select2Component - modos de etiqueta', () => {
     fixture.componentRef.setInput('required', true);
     await fixture.whenStable();
     const raiz: HTMLElement = fixture.nativeElement;
-    const etiqueta = raiz.querySelector('label.fl-label') as HTMLElement;
+    const etiqueta = raiz.querySelector('.fl-label');
+    expect(etiqueta).not.toBeNull();
+    if (!etiqueta) throw new Error('Falta la etiqueta estándar de Select2');
     const asterisco = etiqueta.querySelector('.field__required');
     expect(asterisco?.textContent).toBe('*');
     expect(asterisco?.getAttribute('aria-hidden')).toBe('true');
@@ -227,5 +246,72 @@ describe('Select2Component - modos de etiqueta', () => {
     expect(fixture.componentInstance.required()).toBe(false);
     expect(raiz.querySelector('.field__required')).toBeNull();
     expect(disparador(raiz).hasAttribute('aria-required')).toBe(false);
+  });
+
+  it('no eleva la etiqueta ni marca valor cuando existe una opción centinela vacía (value: null o "") y permite restablecer al elegirla', async () => {
+    const opcionesConCentinela = [
+      { label: 'Seleccionar...', value: null },
+      ...OPCIONES,
+    ];
+    const fixture = TestBed.createComponent(Select2Component);
+    fixture.componentRef.setInput('label', 'Estado');
+    fixture.componentRef.setInput('variant', 'floating');
+    fixture.componentRef.setInput('options', opcionesConCentinela);
+    fixture.componentInstance.writeValue(null);
+    await fixture.whenStable();
+
+    const raiz: HTMLElement = fixture.nativeElement;
+    expect(fixture.componentInstance.selectedOption()).toBeNull();
+    expect(estaElevada(raiz)).toBe(false);
+
+    fixture.componentInstance.selectOption(opcionesConCentinela[1]);
+    await fixture.whenStable();
+    expect(fixture.componentInstance.selectedOption()?.value).toBe('ARE');
+    expect(estaElevada(raiz)).toBe(true);
+
+    fixture.componentInstance.selectOption(opcionesConCentinela[0]);
+    await fixture.whenStable();
+    expect(fixture.componentInstance.selectedOption()).toBeNull();
+    expect(estaElevada(raiz)).toBe(false);
+  });
+
+  it('conserva el valor escrito cuando options y writeValue cambian en el mismo ciclo de cascada', async () => {
+    const fixture = TestBed.createComponent(Select2Component);
+    fixture.componentRef.setInput('label', 'Subfiltro');
+    fixture.componentRef.setInput('variant', 'floating');
+    fixture.componentRef.setInput('options', OPCIONES);
+    await fixture.whenStable();
+
+    const nuevasOpciones = [
+      { label: 'Activo', value: 'ACTIVO' },
+      { label: 'Inactivo', value: 'INACTIVO' },
+    ];
+    // Simula el orden de actualización en cascada donde writeValue llega antes de que corra el effect de options
+    fixture.componentInstance.writeValue('ACTIVO');
+    fixture.componentRef.setInput('options', nuevasOpciones);
+    await fixture.whenStable();
+
+    expect(fixture.componentInstance.selectedOption()?.value).toBe('ACTIVO');
+    expect(estaElevada(fixture.nativeElement)).toBe(true);
+  });
+
+  it('marca has-custom-width cuando width es fijo y lo omite cuando es porcentual o expresión con %', async () => {
+    const fixture = TestBed.createComponent(Select2Component);
+    fixture.componentRef.setInput('options', OPCIONES);
+    await fixture.whenStable();
+    const wrapper = fixture.nativeElement.querySelector('.select2-wrapper') as HTMLElement;
+    expect(wrapper.classList.contains('has-custom-width')).toBe(false);
+
+    fixture.componentRef.setInput('width', '180px');
+    await fixture.whenStable();
+    expect(wrapper.classList.contains('has-custom-width')).toBe(true);
+
+    fixture.componentRef.setInput('width', '50%');
+    await fixture.whenStable();
+    expect(wrapper.classList.contains('has-custom-width')).toBe(false);
+
+    fixture.componentRef.setInput('width', 'calc(100% - 2rem)');
+    await fixture.whenStable();
+    expect(wrapper.classList.contains('has-custom-width')).toBe(false);
   });
 });

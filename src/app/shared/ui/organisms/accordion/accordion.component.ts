@@ -4,6 +4,7 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
+  computed,
   inject,
   signal,
   effect,
@@ -11,6 +12,8 @@ import {
   input,
   output
 } from '@angular/core';
+
+export type AccordionVariant = 'default' | 'multiple' | 'single' | 'flush';
 
 @Component({
   selector: 'app-accordion',
@@ -20,15 +23,48 @@ import {
     templateUrl: './accordion.component.html'
 })
 export class AccordionComponent {
+  readonly variant = input<AccordionVariant>('default');
   readonly flush = input(false);
   readonly single = input(false);
+  /**
+   * En modo de selección única (`single` o `variant="single"`), indica si el
+   * panel activo puede cerrarse al volver a pulsarlo (`true` por omisión) o si
+   * debe permanecer siempre al menos un panel abierto (`false`).
+   */
+  readonly collapsible = input(true);
+
+  readonly esModoUnico = computed(() => this.single() || this.variant() === 'single');
+  readonly esSinMarco = computed(() => this.flush() || this.variant() === 'flush');
 
   private readonly items: AccordionItemComponent[] = [];
 
+  private readonly sincronizarModoUnico = effect(() => {
+    const modoUnico = this.esModoUnico();
+    const esColapsable = this.collapsible();
+    if (!modoUnico) {
+      return;
+    }
+    untracked(() => {
+      this.ordenarItemsPorDom();
+      const abiertos = this.items.filter((candidate) => candidate.isOpen());
+      if (abiertos.length > 1) {
+        this.closeOtherItems(abiertos[0]);
+      } else if (abiertos.length === 0 && !esColapsable) {
+        this.asegurarAlMenosUnoAbierto();
+      }
+    });
+  });
+
   register(item: AccordionItemComponent): void {
-    this.items.push(item);
-    if (this.single() && item.isOpen()) {
-      this.closeOtherItems(item);
+    if (!this.items.includes(item)) {
+      this.items.push(item);
+    }
+    this.ordenarItemsPorDom();
+    if (this.esModoUnico() && item.isOpen()) {
+      const primeroAbierto = this.items.find((candidate) => candidate.isOpen());
+      if (primeroAbierto) {
+        this.closeOtherItems(primeroAbierto, false);
+      }
     }
   }
 
@@ -37,17 +73,30 @@ export class AccordionComponent {
     if (index >= 0) {
       this.items.splice(index, 1);
     }
+    this.asegurarAlMenosUnoAbierto();
+  }
+
+  notifyItemOpened(item: AccordionItemComponent): void {
+    if (this.esModoUnico() && this.items.includes(item)) {
+      this.closeOtherItems(item);
+    }
   }
 
   requestToggle(item: AccordionItemComponent): void {
     const nextOpen = !item.isOpen();
-    if (nextOpen && this.single()) {
-      this.closeOtherItems(item);
+    if (!nextOpen && this.esModoUnico() && !this.collapsible()) {
+      const otrosAbiertos = this.items.some(
+        (candidate) => candidate !== item && candidate.isOpen(),
+      );
+      if (!otrosAbiertos) {
+        return;
+      }
     }
     item.setOpen(nextOpen, true);
   }
 
   moveFocus(item: AccordionItemComponent, key: string): boolean {
+    this.ordenarItemsPorDom();
     const enabledItems = this.items.filter((candidate) => !candidate.disabled());
     const currentIndex = enabledItems.indexOf(item);
     if (currentIndex < 0 || enabledItems.length === 0) {
@@ -76,12 +125,38 @@ export class AccordionComponent {
     return true;
   }
 
-  private closeOtherItems(openItem: AccordionItemComponent): void {
+  private closeOtherItems(openItem: AccordionItemComponent, emit = true): void {
     for (const item of this.items) {
       if (item !== openItem && item.isOpen()) {
-        item.setOpen(false, true);
+        item.setOpen(false, emit);
       }
     }
+  }
+
+  private asegurarAlMenosUnoAbierto(): void {
+    if (!this.esModoUnico() || this.collapsible()) {
+      return;
+    }
+    this.ordenarItemsPorDom();
+    const hayAbierto = this.items.some((candidate) => candidate.isOpen() && !candidate.disabled());
+    if (hayAbierto) {
+      return;
+    }
+    const primeroHabilitado = this.items.find((candidate) => !candidate.disabled());
+    primeroHabilitado?.setOpen(true, true);
+  }
+
+  private ordenarItemsPorDom(): void {
+    this.items.sort((a, b) => {
+      const pos = a.nativeElement.compareDocumentPosition(b.nativeElement);
+      if (pos & Node.DOCUMENT_POSITION_FOLLOWING) {
+        return -1;
+      }
+      if (pos & Node.DOCUMENT_POSITION_PRECEDING) {
+        return 1;
+      }
+      return 0;
+    });
   }
 }
 
@@ -107,6 +182,7 @@ export class AccordionItemComponent implements OnInit, OnDestroy {
   readonly id = input(`accordion-${++AccordionItemComponent.nextId}`);
   readonly title = input('');
   readonly description = input('');
+  readonly icon = input('');
   /** Nivel del encabezado que anuncia este panel. Ver el comentario de arriba. */
   readonly headingLevel = input(3);
   readonly disabled = input(false);
@@ -119,12 +195,21 @@ export class AccordionItemComponent implements OnInit, OnDestroy {
   readonly openChange = output<boolean>();
 
   readonly isOpen = signal(false);
+  private ultimoAbiertoEntrada: boolean | undefined = undefined;
   private readonly sincronizarAbierto = effect(() => {
     const abierto = this.entradaAbierto();
+    if (this.ultimoAbiertoEntrada === abierto) {
+      return;
+    }
+    this.ultimoAbiertoEntrada = abierto;
     untracked(() => {
       this.open = abierto;
     });
   });
+
+  get nativeElement(): HTMLElement {
+    return this.elementRef.nativeElement;
+  }
 
   get headerId(): string {
     return `${this.id()}-header`;
@@ -135,6 +220,11 @@ export class AccordionItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    const abiertoInicial = this.entradaAbierto();
+    this.ultimoAbiertoEntrada = abiertoInicial;
+    if (abiertoInicial && !this.isOpen()) {
+      this.isOpen.set(true);
+    }
     this.accordion?.register(this);
   }
 
@@ -164,6 +254,9 @@ export class AccordionItemComponent implements OnInit, OnDestroy {
       this.focusHeaderWhenContentContainsFocus();
     }
     this.isOpen.set(value);
+    if (value) {
+      this.accordion?.notifyItemOpened(this);
+    }
     if (emit) {
       this.openChange.emit(value);
     }
@@ -185,6 +278,9 @@ export class AccordionItemComponent implements OnInit, OnDestroy {
   }
 
   handleHeaderKeydown(event: KeyboardEvent): void {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+      return;
+    }
     if (this.accordion?.moveFocus(this, event.key)) {
       event.preventDefault();
     }

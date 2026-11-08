@@ -1,14 +1,21 @@
 @if (variant() === 'standard' && tieneEtiqueta()) {
-  <label class="fl-label floating-textarea-top-label" [attr.for]="textareaId()">{{ label() }}</label>
+  <label
+    class="fl-label floating-textarea-top-label"
+    [class.fl-label--error]="error()"
+    [class.fl-label--disabled]="isDisabled()"
+    [attr.for]="textareaId()"
+  >{{ label() }}</label>
 }
 <div
       class="floating-textarea-wrapper"
       [class]="'variant-' + claseVisual()"
+      [class.has-custom-width]="tieneAnchoFijo()"
       [class.label-solo-valor]="soloValor()"
       [class.focused]="isFocused()"
       [class.has-value]="hasValue()"
       [class.has-error]="error()"
       [class.disabled]="isDisabled()"
+      [class.has-icon]="clearable() && hasValue()"
       [appVariablesCss]="{ '--floating-textarea-width': width() || null }"
     >
       <textarea
@@ -29,7 +36,7 @@
       }
       <span class="textarea-line"></span>
 
-      @if (clearable()) {
+      @if (clearable() && hasValue()) {
         <button
           type="button"
           class="textarea-icon-btn textarea-icon-btn--static"
@@ -40,9 +47,7 @@
           [attr.aria-label]="'Clear'"
           [class.floating-textarea__icon--clickable]="clickableIcon()"
         >
-          @if (hasValue()) {
-            <i class="fa-solid fa-times" aria-hidden="true"></i>
-          }
+          <i class="fa-solid fa-times" aria-hidden="true"></i>
         </button>
       }
 

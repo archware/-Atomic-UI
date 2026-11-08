@@ -18,7 +18,7 @@ export const Default: Story = {
 
 export const MiddlePage: Story = {
   render: () => ({
-    template: `<app-pagination [total]="100" [pageSize]="10"></app-pagination>`,
+    template: `<app-pagination [total]="100" [pageSize]="10" [page]="5"></app-pagination>`,
   }),
 };
 

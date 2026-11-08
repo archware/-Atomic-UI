@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, computed, signal, input } from '@angular/core';
-import { NgClass } from '@angular/common';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
 /** Avatar size options */
@@ -14,7 +13,7 @@ export type AvatarVariant = 'default' | 'primary' | 'secondary' | 'success' | 'w
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [NgClass, VariablesCssDirective],
+  imports: [VariablesCssDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.css'
@@ -29,6 +28,11 @@ export class AvatarComponent {
   readonly status = input<AvatarStatus>();
   readonly icon = input<string>(); // New: Icon class support
   readonly variant = input<AvatarVariant>('default'); // New: Color variant
+  readonly avatarClasses = computed(() =>
+    ['avatar', `avatar-${this.size()}`, `avatar-${this.variant()}`, this.rounded() ? 'avatar-rounded' : '']
+      .filter(Boolean)
+      .join(' ')
+  );
   readonly colorFondo = computed(() =>
     this.color() || (!this.src() && !this.icon() && this.variant() === 'default' ? this.colorFromName() : null)
   );

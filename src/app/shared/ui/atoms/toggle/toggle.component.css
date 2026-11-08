@@ -91,6 +91,10 @@ solo servia para hacer creer que el relleno era cero.
   line-height: 1.4;
 }
 
+.toggle-wrapper.disabled .toggle-label {
+  color: var(--input-disabled-text);
+}
+
 /*
  * Dark mode se maneja automáticamente via tokens semánticos.
  * --border-color, --surface-background, --primary-color, --shadow-focus-primary

@@ -2,11 +2,18 @@ import { Component, signal } from '@angular/core';
 import { PaginaCrud, FiltroBusqueda } from '../../../../shared/ui/templates/pagina-crud/pagina-crud';
 import { PaginaCrudAccordion } from '../../../../shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion';
 import { PaginaWizardComponent } from '../../../../shared/ui/templates/pagina-wizard/pagina-wizard';
-import { EntidadAccordion } from '../../../../shared/ui/templates/modelos-crud';
+import { EntidadAccordion, SolicitudPagina } from '../../../../shared/ui/templates/modelos-crud';
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { DataTableColumn } from '../../../../shared/ui/organisms/data-table/data-table';
 import { InputComponent } from '../../../../shared/ui/atoms/input/input.component';
 import { Step } from '../../../../shared/ui/organisms/stepper/stepper.component';
+
+interface FilaProductoDemostracion {
+  id: number;
+  nombre: string;
+  categoria: string;
+  codigoCategoria: string;
+}
 
 @Component({
   selector: 'app-showcase-templates',
@@ -25,7 +32,9 @@ import { Step } from '../../../../shared/ui/organisms/stepper/stepper.component'
           [filas]="filasCrud()"
           [embedded]="true"
           [opcionesBusqueda]="opcionesBusqueda"
-          tipoBusqueda="categoria"
+          [tipoBusqueda]="tipoBusquedaActual()"
+          (alCambiarTipoBusqueda)="onCambiarTipoBusqueda($event)"
+          (alSolicitarPagina)="onSolicitarPagina($event)"
         >
           <ng-template #formularioCrud let-ctx>
             <div style="display: grid; gap: 1rem;">
@@ -39,6 +48,7 @@ import { Step } from '../../../../shared/ui/organisms/stepper/stepper.component'
       <div style="border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden;">
         <app-pagina-crud-accordion
           titulo="Variante: CRUD Accordion"
+          varianteAccordion="single"
           [entidades]="entidadesAccordion"
           [columnasPorEntidad]="columnasAccordion"
           [filasPorEntidad]="filasAccordion"
@@ -83,16 +93,40 @@ export class ShowcaseTemplatesComponent {
     { label: 'Nombre', value: 'nombre', tipo: 'texto' }
   ];
 
-  columnasCrud: DataTableColumn<any>[] = [
+  columnasCrud: DataTableColumn<FilaProductoDemostracion>[] = [
     { key: 'id', header: 'ID', width: '80px' },
     { key: 'nombre', header: 'Nombre' },
     { key: 'categoria', header: 'Categoría' }
   ];
 
-  filasCrud = signal([
-    { id: 1, nombre: 'Laptop', categoria: 'Electrónica' },
-    { id: 2, nombre: 'Camisa', categoria: 'Ropa' }
-  ]);
+  private readonly catalogoInicialCrud: FilaProductoDemostracion[] = [
+    { id: 1, nombre: 'Laptop', categoria: 'Electrónica', codigoCategoria: 'electro' },
+    { id: 2, nombre: 'Camisa', categoria: 'Ropa', codigoCategoria: 'ropa' }
+  ];
+
+  tipoBusquedaActual = signal<string | null>(null);
+  filasCrud = signal<FilaProductoDemostracion[]>(this.catalogoInicialCrud);
+
+  onCambiarTipoBusqueda(tipo: string | null): void {
+    this.tipoBusquedaActual.set(tipo);
+    this.filasCrud.set(this.catalogoInicialCrud);
+  }
+
+  onSolicitarPagina(solicitud: SolicitudPagina): void {
+    const termino = (solicitud.busqueda ?? '').trim().toLowerCase();
+    const tipo = this.tipoBusquedaActual();
+    if (!termino || !tipo) {
+      this.filasCrud.set(this.catalogoInicialCrud);
+      return;
+    }
+    this.filasCrud.set(
+      this.catalogoInicialCrud.filter(fila =>
+        tipo === 'categoria'
+          ? fila.codigoCategoria === termino
+          : fila.nombre.toLowerCase().includes(termino),
+      ),
+    );
+  }
 
   // --- Variante Accordion ---
   entidadesAccordion: EntidadAccordion[] = [
@@ -100,7 +134,7 @@ export class ShowcaseTemplatesComponent {
     { clave: 'marcas', titulo: 'Marcas', abiertoInicial: false }
   ];
 
-  columnasAccordion: Record<string, DataTableColumn<any>[]> = {
+  columnasAccordion: Record<string, DataTableColumn<Record<string, unknown>>[]> = {
     familias: [
       { key: 'id', header: 'ID', width: '80px' },
       { key: 'descripcion', header: 'Descripción Familia' }
@@ -111,7 +145,7 @@ export class ShowcaseTemplatesComponent {
     ]
   };
 
-  filasAccordion: Record<string, any[]> = {
+  filasAccordion: Record<string, Record<string, unknown>[]> = {
     familias: [
       { id: 1, descripcion: 'Línea Blanca' },
       { id: 2, descripcion: 'Audio y Video' }

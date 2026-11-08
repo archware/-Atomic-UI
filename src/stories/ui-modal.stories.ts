@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { expect, userEvent, waitFor, within } from 'storybook/test';
-import { ChangeDetectionStrategy, Component, inject, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { ModalComponent } from '../app/shared/ui/molecules/modal/modal.component';
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
 import { FloatingInputComponent } from '../app/shared/ui/atoms/floating-input/floating-input.component';
@@ -255,4 +255,34 @@ export const AsyncActionLifecycle: Story = {
       await waitFor(() => expect(error).toHaveFocus());
     });
   },
+};
+
+@Component({
+  selector: 'app-story-modal-retorno-estable',
+  imports: [ModalComponent, ButtonComponent],
+  template: `<section #destino role="region" aria-label="Destino estable de confirmacion" tabindex="-1">
+    <p>La confirmacion devuelve el foco a esta region estable.</p>
+    @if (filaVisible()) {
+      <app-button (buttonClick)="abierto.set(true)">Confirmar retiro sintetico</app-button>
+    }
+    @if (abierto()) {
+      <app-modal title="Confirmacion sintetica" size="sm" [resolverFocoRetorno]="resolver" (closed)="abierto.set(false)">
+        <p>La confirmacion retira el origen y destruye esta ventana.</p>
+        <div slot="footer">
+          <app-button variant="outline" (buttonClick)="abierto.set(false)">Cancelar</app-button>
+          <app-button (buttonClick)="filaVisible.set(false); abierto.set(false)">Confirmar retiro</app-button>
+        </div>
+      </app-modal>
+    }
+  </section>`,
+})
+class HistoriaModalRetornoEstable {
+  readonly destino = viewChild.required<ElementRef<HTMLElement>>('destino');
+  readonly filaVisible = signal(true);
+  readonly abierto = signal(false);
+  readonly resolver = () => this.destino().nativeElement;
+}
+export const RetornoTrasDestruccion: Story = {
+  decorators: [moduleMetadata({ imports: [HistoriaModalRetornoEstable] })],
+  render: () => ({ template: '<app-story-modal-retorno-estable />' }),
 };

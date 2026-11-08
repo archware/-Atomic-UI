@@ -1,5 +1,10 @@
 
-    <div class="accordion" [class.accordion-flush]="flush()">
+    <div
+      class="accordion"
+      [class.accordion-flush]="esSinMarco()"
+      [class.accordion-single]="esModoUnico()"
+      [attr.data-variant]="variant()"
+    >
       <ng-content></ng-content>
     </div>
   

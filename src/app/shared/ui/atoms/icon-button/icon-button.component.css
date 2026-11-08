@@ -31,7 +31,7 @@
   border-radius: var(--radius-lg);
 }
 
-.icon-btn:hover { background: var(--surface-hover); color: var(--primary-color); transform: translateY(-0.125rem) scale(1.05); box-shadow: var(--shadow-md); filter: brightness(1.1); }
+.icon-btn:hover:not(:disabled) { background: var(--surface-hover); color: var(--primary-color); transform: translateY(-0.125rem) scale(1.05); box-shadow: var(--shadow-md); filter: brightness(1.1); }
 
 .icon-btn:active {
   transform: scale(0.95);
@@ -63,7 +63,7 @@
   box-shadow: none;
 }
 
-.icon-btn--ghost:hover {
+.icon-btn--ghost:hover:not(:disabled) {
   background: transparent;
   color: var(--primary-color);
   box-shadow: none;
@@ -72,17 +72,34 @@
 
 /* Avatar variant - circular con gradiente */
 .icon-btn--avatar {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
+  background: linear-gradient(
+    135deg,
+    var(--button-primary-bg, var(--primary-color)),
+    var(--brand-primary-700, var(--primary-color-dark))
+  );
   border-radius: 50%;
   border: none;
   box-shadow: none;
   color: var(--text-color-on-primary);
 }
 
-.icon-btn--avatar:hover {
-  background: linear-gradient(135deg, var(--primary-color-dark), var(--primary-color));
+.icon-btn--avatar:hover:not(:disabled) {
+  background: linear-gradient(
+    135deg,
+    var(--brand-primary-700, var(--primary-color-dark)),
+    var(--button-primary-bg, var(--primary-color))
+  );
+  color: var(--text-color-on-primary);
   transform: scale(1.05);
   box-shadow: var(--shadow-glow-primary);
+  filter: none;
+}
+
+.icon-btn--avatar:not(:disabled) ::ng-deep i,
+.icon-btn--avatar:not(:disabled) ::ng-deep svg,
+.icon-btn--avatar:hover:not(:disabled) ::ng-deep i,
+.icon-btn--avatar:hover:not(:disabled) ::ng-deep svg {
+  color: var(--text-color-on-primary);
 }
 
 /* Badge */
@@ -121,34 +138,33 @@
 
 
 /* Rotate Animation (Default) */
-.icon-anim-rotate:hover ::ng-deep i.icon,
-.icon-anim-rotate:hover ::ng-deep i.configuration-icon,
-.icon-anim-rotate:hover ::ng-deep i.fa-solid,
-.icon-anim-rotate:hover ::ng-deep i.fa-regular,
-.icon-anim-rotate:hover ::ng-deep i.fa-brands {
+.icon-anim-rotate:hover:not(:disabled) ::ng-deep i.icon,
+.icon-anim-rotate:hover:not(:disabled) ::ng-deep i.configuration-icon,
+.icon-anim-rotate:hover:not(:disabled) ::ng-deep i.fa-solid,
+.icon-anim-rotate:hover:not(:disabled) ::ng-deep i.fa-regular,
+.icon-anim-rotate:hover:not(:disabled) ::ng-deep i.fa-brands {
   transform: scale(1.1) rotate(180deg);
-  color: var(--primary-color);
+  color: currentColor;
 }
 
 /* Grow Animation */
-.icon-anim-grow:hover ::ng-deep i.icon,
-.icon-anim-grow:hover ::ng-deep i.configuration-icon,
-.icon-anim-grow:hover ::ng-deep i.fa-solid,
-.icon-anim-grow:hover ::ng-deep i.fa-regular,
-.icon-anim-grow:hover ::ng-deep i.fa-brands {
+.icon-anim-grow:hover:not(:disabled) ::ng-deep i.icon,
+.icon-anim-grow:hover:not(:disabled) ::ng-deep i.configuration-icon,
+.icon-anim-grow:hover:not(:disabled) ::ng-deep i.fa-solid,
+.icon-anim-grow:hover:not(:disabled) ::ng-deep i.fa-regular,
+.icon-anim-grow:hover:not(:disabled) ::ng-deep i.fa-brands {
   transform: scale(1.15);
-  color: var(--primary-color);
+  color: currentColor;
 }
 
 /* None Animation */
-.icon-anim-none:hover ::ng-deep i.icon,
-.icon-anim-none:hover ::ng-deep i.configuration-icon,
-.icon-anim-none:hover ::ng-deep i.fa-solid,
-.icon-anim-none:hover ::ng-deep i.fa-regular,
-.icon-anim-none:hover ::ng-deep i.fa-brands {
+.icon-anim-none:hover:not(:disabled) ::ng-deep i.icon,
+.icon-anim-none:hover:not(:disabled) ::ng-deep i.configuration-icon,
+.icon-anim-none:hover:not(:disabled) ::ng-deep i.fa-solid,
+.icon-anim-none:hover:not(:disabled) ::ng-deep i.fa-regular,
+.icon-anim-none:hover:not(:disabled) ::ng-deep i.fa-brands {
   transform: none !important;
-  /* Still allow color change for interactive feedback */
-  color: var(--primary-color);
+  color: currentColor;
 }
 
 

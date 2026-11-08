@@ -2,19 +2,262 @@
 title: 'Registro de cambios de Atomic UI'
 author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 date: '2026-08-23'
-last_updated: '2026-11-03'
+last_updated: '2026-11-04'
+change_id: 'ATOMIC-20261104-001'
 document_type: 'changelog'
-version: '5.23.4'
+version: '5.23.8'
 status: 'vigente'
-updated: '2026-11-03'
+updated: '2026-11-04'
 owner: 'COTAHA'
 ---
 
 # Registro de cambios
 
+## ATOMIC-20261104-001 — algoritmo de páginas visibles, tokens de contraste y variantes en `app-pagination` y legibilidad secundaria, hover de avatar y tarjeta PDF en Cierres (`app-text`, `app-badge`, `app-icon-button`, `dialogs-page`)
+
+Se corrige la omisión de la página `1` y de la última página en `PaginationComponent.visiblePages()` cuando el rango visible alcanza los extremos con `totalPages > maxVisible`, se reemplazan el fondo plano `--primary-color-light` del contenedor y el activo oscuro apagado `--brand-primary-600` por la familia semántica `--pagination-*` auditada en los tres temas (`light`, `dark`, `brand-dark`), se dota de identidad visual diferenciada a las cuatro variantes (`standard`, `minimal`, `rounded`, `cards`), se corrigen el contraste de textos secundarios (`<app-text color="secondary">`), insignias (`<app-badge>`) y botones secundarios, la visibilidad del icono interior en `app-icon-button[variant="avatar"]` al hacer hover y el reflujo responsivo sin recorte horizontal del patrón de tarjeta de documento PDF en la vista de Cierres (`/dialogs`), y se garantiza la preservación y restauración de la posición de desplazamiento (`scroll`) al ejecutar operaciones sobre tablas/diálogos y al navegar entre rutas:
+
+- **Algoritmo de páginas visibles (`pagination.component.ts`, `ui-pagination.stories.ts`)**: se elimina la condición `if (i !== 1 && i !== total)` dentro del bucle `for (let i = start; i <= end; i++)` en `visiblePages()`, que descartaba la página `1` cuando `start === 1` y la última página `total` cuando `end === total` (provocando que en `[page]="1"` con `[total]="100"` no se renderizara el botón `.page-btn.active` de la página `1`), y se añade `[page]="5"` a la historia `MiddlePage`.
+- **Tokens cromáticos y tratamiento de variantes de paginación (`_tokens-components.css`, `pagination.component.css`, `check-theme-contrast.mjs`, `catalog/components/pagination.json`)**: se reemplaza en `.pagination-wrapper` el fondo `var(--primary-color-light)` por `var(--pagination-wrapper-bg)` (`var(--surface-section)`) con borde `var(--pagination-wrapper-border)` y sombra `var(--shadow-xs)`. Se definen en `light`, `dark` y `brand-dark` los tokens `--pagination-accent-text`, `--pagination-hover-text`, `--pagination-hover-border`, `--pagination-active-bg` (`var(--primary-color)` en claro y `var(--brand-primary-A700)` en oscuro), `--pagination-active-border`, `--pagination-active-shadow`, `--pagination-disabled-bg`, `--pagination-disabled-text`, `--pagination-badge-bg`, `--pagination-badge-border`, `--pagination-card-accent-border`, `--pagination-card-active-bg` y `--pagination-card-active-border`. Las cuatro variantes quedan diferenciadas: `standard` (botones con borde y flechas acentuadas), `minimal` (botones de acción realzados e insignia central en píldora), `rounded` (riel en píldora con botones circulares y activo con resplandor) y `cards` (tarjetas táctiles con borde inferior acentuado de `2px` y activo destacado).
+- **Legibilidad secundaria, hover de `variant="avatar"` en `app-icon-button`, patrón de tarjeta de documento PDF en Cierres, alineación a `Angular 22 + Signals` y retiro total de sintaxis heredada (`text.component.*`, `badge.component.*`, `avatar.component.*`, `data-state.component.ts`, `footer.component.html`, `file-input.component.ts`, `number-input.component.ts`, `combobox.component.ts`, `context-menu.component.ts`, `modal.component.ts`, `modal-container.component.ts`, `chart.component.ts`, `scroll-overlay.component.ts`, `tabs.component.ts`, `crud-table.component.ts`, `icon-button.component.css`, `dialogs-page.component.*`, `error-pages.component.*`, `check-angular-signals.cjs`, `check-angular-control-flow.cjs`, `_tokens-semantic.css`, `_tokens-components.css`)**: en `TextComponent` (`text.component.ts`, `text.component.html`, `text.component.css`), `.color-secondary` pasa de `var(--secondary-color)` (`#FFB800` amarillo de relleno, contraste `1.75:1` sobre blanco) a `var(--text-color-secondary)` (`7.56:1` en claro y `11.5:1` en oscuro, homologado con `.text-secondary`), eliminando el texto amarillo ilegible en los 28 párrafos descriptivos del Blueprint de Cierres (`dialogs-page.component.html`) y en `wizard-page.component.html`, y se moderniza el átomo con `ChangeDetectionStrategy.OnPush`, `renderAs` y `classes` mediante `computed()`, `[class]="classes()"` y `[ngTemplateOutlet]="content"` (retirando `OnInit`, `NgClass` y `*ngTemplateOutlet`). En `BadgeComponent` y `AvatarComponent` se retira `NgClass` en favor del enlace nativo `[class]`, y en `DataStateComponent` y `FooterComponent` se sustituyen las 14 directivas estructurales con asterisco `*ngTemplateOutlet` por `[ngTemplateOutlet]` y `[ngTemplateOutletContext]`. Asimismo, se migran la totalidad de consultas de vista y contenido con decoradores heredados (`@ViewChild`, `@ViewChildren`, `@ContentChild`, `@ContentChildren`, `QueryList`) a consultas Signal (`viewChild()`, `viewChildren()`, `contentChild()`, `contentChildren()`) en `crud-table`, `number-input`, `file-input`, `combobox`, `context-menu`, `data-state`, `modal`, `modal-container`, `chart`, `scroll-overlay` y `tabs`. En `BadgeComponent` (`badge.component.html`, `badge.component.css`) se proyecta `<ng-content></ng-content>` dentro de `.badge` cuando `count() === null && !dot() && !overlay()` (y fuera de `.badge` cuando `overlay()` es verdadero), mostrando las etiquetas de las 17 insignias de `dialogs-page.component.html`, y se actualizan `--text-color-on-secondary: var(--brand-secondary-950)` (`#422300`, contraste `8.35:1` sobre `#FFB800`), `--secondary-color-text: var(--brand-secondary-800)` (`#8a5200`, contraste `6.58:1` sobre `--secondary-color-lighter`), `--secondary-color-lighter: rgba(255, 184, 0, 0.15)` en oscuro y `.badge--secondary` / `.badge--warning` con `color: var(--text-color-on-secondary)`. En `IconButtonComponent` (`icon-button.component.css`), `.icon-btn--avatar` y `.icon-btn--avatar:hover:not(:disabled)` construyen su degradado con `var(--button-primary-bg, var(--primary-color))` y `var(--brand-primary-700, var(--primary-color-dark))` (garantizando contraste `>= 8.98:1` con `--text-color-on-primary` en `light`, `dark` y `brand-dark`), `.icon-btn--avatar:hover:not(:disabled)` declara `color: var(--text-color-on-primary)` y `filter: none`, `.icon-btn--avatar` fija `color: var(--text-color-on-primary)` sobre `::ng-deep i` y `::ng-deep svg`, y las reglas `.icon-anim-rotate:hover:not(:disabled) ::ng-deep i.*`, `.icon-anim-grow:hover:not(:disabled) ::ng-deep i.*` e `.icon-anim-none:hover:not(:disabled) ::ng-deep i.*` reemplazan `color: var(--primary-color)` por `color: currentColor`. En `dialogs-page.component.ts`, `ui-about-dialog.stories.ts`, `about-dialog.component.spec.ts` y `documentation.json`, la insignia de stack tecnológico pasa de `'Angular 19 + Signals'` a `'Angular 22 + Signals'` (y se actualizan todas las apariciones en `Configure.mdx`, `README.md` y `src/app/shared/ui/README.md` a la versión `5.22.0`, `TypeScript 6.0+` y `viewChild.required()`), mientras que en `dialogs-page.component.html` y `dialogs-page.component.css` las filas `.attached-file-row--pdf-card` igualan su fondo `var(--surface-background)` con `.floating-label`, apilan `.attached-file-main` (`min-width: 0; overflow-wrap: anywhere`) sobre `.file-row-inline-controls` (`width: 100%; align-items: flex-start`, con `app-floating-input.pdf-demo-page-input` en `flex: 1 1 0%; min-width: 0; --fi-min-width: 0;` y `app-icon-button[variant="close-ghost"]` en `flex-shrink: 0; margin-top: var(--space-3)`), añaden `min-width: 0` a `.variant-tile`, `.tile-stage`, `.showcase-group` y `.attached-files-box`, y la grilla de la Sección 4 adopta `.catalog-grid--showcase` (`minmax(min(100%, 26rem), 1fr)`). Además, en `ErrorPagesComponent` (`src/blueprints/error-pages/error-pages.component.ts`, `error-pages.component.spec.ts`) se migran los 9 `@Input()` heredados a Signals (`input()`, `computed()`) con `ChangeDetectionStrategy.OnPush`, inyección opcional de `Router`/`ActivatedRoute` y fallback ante cadenas vacías `""`, y se endurecen `tools/check-angular-signals.cjs` (raíz `../src`, prohibición de `Input`, `Output`, `EventEmitter`, `ViewChild`, `ViewChildren`, `ContentChild`, `ContentChildren`) y `tools/check-angular-control-flow.cjs` (prohibición de `*ngIf`, `*ngFor`, `*ngSwitch`, `*ngTemplateOutlet`, `CommonModule`, `NgClass`, `NgStyle`, `NgIf`, `NgFor`, `NgSwitch`, `NgSwitchCase`, `NgSwitchDefault`).
+- **Preservación de scroll en operaciones y restauración por ruta en navegación (`scroll-overlay.component.ts`, `layout-shell.component.*`, `data-table.html`, `data-table.spec.ts`, `crud-dialog.ts`, `action-group.component.ts`, `action-menu.component.ts`, `modal-container.component.ts`, `popup-container.component.ts`, `datepicker.component.ts`, `pagina-crud.ts`, `crud-table.component.ts`, `showcase-forms.component.ts`)**: se exponen `getScrollElement()`, `getScrollPosition()` y `setScrollPosition()` en `ScrollOverlayComponent` y se implementa en `LayoutShellComponent` la persistencia y restauración de scroll por ruta (`ROUTE_SCROLL_POSITIONS` + `sessionStorage` `'atomic-ui:layout-scroll:v1'` y `LayoutShellComponent.clearSavedScrollPositions()`), capturando el desplazamiento saliente en `NavigationStart` y eventos `scroll` (ignorando colapsos temporales cuando `scrollHeight <= clientHeight + 1`) y restaurándolo en `NavigationEnd` y `ngAfterViewInit` mediante `ResizeObserver` / `MutationObserver` para soportar tanto shells únicos como shells recreados por ruta y bloques `@defer` sin interferir con el scroll manual del usuario. En `DataTable` (`data-table.html`), cuando `effectiveStatus() === 'loading' && displayedRows().length > 0`, se conservan las filas `@for (row of displayedRows(); ...)` renderizadas en el `<tbody>` (anunciando `loadingMessage()` mediante `.sr-only[role="status"]`) para impedir que la altura de la tabla colapse a una fila única y reinicie el `scrollTop` a `0` al recargar tras una operación. En `CrudDialog` se capturan y restauran los desplazamientos externos (`.so-scroll-area` fuera del `<dialog>`) alrededor de `showModal()`, `close()` y `handleClosed()`, en `ActionGroupComponent`, `ActionMenuComponent`, `ModalContainerComponent`, `PopupContainerComponent` y `DatepickerComponent` se aplica `{ preventScroll: true }` a todos los `.focus({ preventScroll: true })` (cerrando el menú flotante antes de emitir `actionClick`), en `CrudTableComponent` se preservan `paginaActual`, `tamanoActual` y `busquedaActual` tras editar/eliminar sin colapsar `estadoGrilla` a `'loading'` cuando ya existen filas, y en `ShowcaseFormsComponent` se previene el envío nativo de `<form>`.
+- **Variante de selección única (`variant="single"`) y mejoras en `app-accordion` y `app-pagina-crud-accordion` (`accordion.component.*`, `accordion-item*`, `pagina-crud-accordion.*`, `modelos-crud.ts`, `catalog/components/accordion.json`, `showcase-navigation.component.ts`, `showcase-templates.component.ts`, `ui-accordion*.stories.ts`)**: se incorpora y exporta `AccordionVariant = 'default' | 'multiple' | 'single' | 'flush'` con `variant = input<AccordionVariant>('default')` y `collapsible = input(true)` en `AccordionComponent`, junto con `icon = input('')` en `AccordionItemComponent`. Se corrige la sincronización inicial de `[open]` en `AccordionItemComponent.ngOnInit()` antes de `register(this)` y se mantiene `this.items` ordenado por posición en el DOM (`compareDocumentPosition`) para conservar abierto el primer panel del DOM en modo `single` incluso con bloques condicionales `@if`/`@for`, se notifica la apertura reactiva mediante `notifyItemOpened(this)` y se garantiza con `asegurarAlMenosUnoAbierto()` que cuando `[collapsible]="false"` en modo `single` permanezca siempre al menos un panel habilitado abierto incluso si el panel activo se destruye. Se exponen `varianteAccordion`, `soloUnoAbierto` y `colapsable` en `PaginaCrudAccordion` y `icono`/`deshabilitada` en `EntidadAccordion`, se cataloga `app-accordion` en `catalog/components/accordion.json` y se actualizan el Showcase y Storybook.
+- **Verificación y propagación**: se auditan `20` pares de contraste por tema en `scripts/check-theme-contrast.mjs`, se ejecutan en `ChromeHeadless` las suites afectadas (`134/134` pruebas en `layout-shell`, `data-table`, `crud-dialog` y `action-group` y `22/22` en `accordion` y `pagina-crud-accordion` en `-Atomic-UI`, y `216/216` + `16/16` pruebas Vitest en las suites sincronizadas de `ventas-cxc`), se regeneran `documentation.json`, `dart/atomic_tokens` (`440` colores por tema) y `distribution/atomic-source-manifest.json` (`340` fuentes, SHA-256 `eefa50fad1633d65644eae4e4d502a06d1abcccb875a7594423972bccb94888c`), y se sincronizan las fuentes modificadas hacia `ventas-cxc`. Consultar el [roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261104-001_colores_variantes_paginacion.md).
+
+## ATOMIC-20261103-002 — posicionamiento y contraste de Tooltips y progresión geométrica de Loaders
+
+Se corrige el posicionamiento desplazado y el contraste ilegible de los tooltips en tema oscuro, así como la progresión de tamaños (`sm` < `md` < `lg`) y la alineación vertical uniforme de las seis variantes de `<app-loader>`:
+
+- **Tooltips (`TooltipDirective`, `tooltip.css`, `_tokens-components.css`, `check-theme-contrast.mjs`, `ShowcaseFeedbackComponent`)**: se retira la regla CSS paralela `.tooltip-trigger:hover::after` de `ShowcaseFeedbackComponent` (que combinaba `background: var(--text-color)` con `color: var(--text-color-on-primary)`, produciendo blanco sobre blanco `1.04:1` en tema oscuro y posicionando el pseudo-elemento al `50%` del ancho de la página porque `<app-button>` tenía `:host { display: block; }` a ancho completo) y se migra a la directiva canónica `[appTooltip]`. En `tooltip.css` se acota `.tooltip-host:not(.atomic-button--full-width) { width: fit-content; }` y se estiliza `.tooltip` con tokens canónicos (`--tooltip-bg`, `--tooltip-text`, `--tooltip-border`, `--tooltip-shadow`, `--space-2`, `--space-3`, `--radius-sm`, `--font-size-xs`, `--font-weight-emphasis`). En `TooltipDirective` se añade `resolveTriggerRect()` para medir el hijo interactivo real cuando el host es un elemento personalizado o `display: contents`, se evita duplicar nodos en `show()`, se soporta `focusin`/`focusout` y se ancla la medición oculta en `top: 0px; left: 0px`. En `_tokens-components.css` se definen `--tooltip-bg: var(--surface-elevated)`, `--tooltip-text` (`var(--text-color)` / `var(--gray-50)`), `--tooltip-border: var(--border-color-strong)` y `--tooltip-shadow: var(--shadow-lg)` para `dark` y `brand-dark` (y `--tooltip-border: var(--gray-800)` en `light`), auditando el par `--tooltip-text` / `--tooltip-bg` en `scripts/check-theme-contrast.mjs` (`13` pares por tema, contraste `>= 13:1` en los tres temas) y regenerando `dart/atomic_tokens`.
+- **Loaders (`LoaderComponent`, `ShowcaseStatusComponent`, `ui-loader.stories.ts`)**: en `loader.component.css`, `.loader-sm` estaba declarada antes de `.loader-container { --loader-size: 2.5rem; }` con idéntica especificidad `(0,1,0)`, por lo que `sm` era sobrescrito y renderizaba a `40px` igual que `md`. Se eleva la especificidad y el orden de cascada con `.loader-container.loader-sm` (`--space-5` / `24px`, `--border-width-medium`), `.loader-container.loader-md` (`--space-7` / `40px`, `--border-width-thick`) y `.loader-container.loader-lg` (`--space-9` / `56px`, `--space-1`), y se dota a `.loader-container`, `.dots` y `.bars` de `height: var(--loader-size)` y `min-width: var(--loader-size)` para que las seis variantes (`spinner`, `dots`, `pulse`, `bars`, `gradient`, `orbit`) reserven exactamente la misma caja vertical y alineen sus etiquetas inferiores en una misma línea base en `ShowcaseStatusComponent` y Storybook.
+- **Verificación y propagación**: se añaden pruebas en `ChromeHeadless` dentro de `tooltip.directive.spec.ts`, `loader.component.spec.ts`, `showcase-feedback.component.spec.ts` y `showcase-status.component.spec.ts` (`15/15` casos específicos), se actualizan `catalog/components/loader.json`, `catalog/components/tooltip.json`, `catalog/components/spinner.json` y `distribution/atomic-source-manifest.json` (`340` fuentes, SHA-256 `0e0d40e6bd7f9cc010c01f5c605b61935ac66cc9b9f3d969909eac71233ec1a9`) y se sincronizan las fuentes modificadas hacia `ventas-cxc`. Consultar el [roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261103-002_tooltips_y_loaders.md).
+
 ## ATOMIC-20261103-001 — organismo canónico `app-about-dialog` («Acerca de» y Créditos del Sistema)
 
 Se crea y cataloga en `-Atomic-UI` el organismo canónico `<app-about-dialog>` (`src/app/shared/ui/organisms/about-dialog/`) para presentar la información institucional, versión, entorno, runtime, autoría principal (`Ing. Havel CONTRERAS TAPAHUASCO` — `@archware`), transparencia de co-ingeniería con IA Agéntica (`aiDisclosure`), tabla estructurada de créditos (`AboutCreditItem[]`), insignias de stack tecnológico (`AboutTechBadge[]`), enlaces externos verificados (`AboutLinkItem[]`) y pie de derechos de autor en aplicaciones web y de escritorio (Tauri/Wails/Python). Soporta tres variantes de presentación (`modal`, `popup` y `card`), desplazamiento gobernado con `<app-scroll-overlay class="so-block">`, Signals (`input()`/`output()`), `ChangeDetectionStrategy.OnPush`, control flow nativo (`@if`, `@for`) y tokens semánticos puros. Se exporta en `src/app/shared/ui/index.ts`, se registra en `catalog/components/about-dialog.json`, se expone en Storybook (`src/stories/ui-about-dialog.stories.ts`) y en la Sección 5 del Blueprint de diálogos (`src/blueprints/dialogs-page/`), y se actualiza `distribution/atomic-source-manifest.json`.
+
+## ATOMIC-20261102-006 — apertura tras render y retorno estable de foco
+
+Se corrige la apertura declarativa de `FormDialog` mediante `afterRenderEffect`. La reproducción real con `ReactiveFormsModule`, `InputComponent` y foco nativo acredita el fallo anterior 0→500→0 y la conservación de 500 tras la corrección, incluyendo desenfoque, reapertura y un campo independiente 35. No se modifica el CVA.
+
+Se añade `resolverFocoRetorno` a `CrudDialog`, `FormDialog`, `ModalComponent` y `PaginaCrud`, con prioridad del destino explícito válido y fallback al origen. Se verifica el foco real, se rechazan destinos ocultos/desconectados/no enfocables y se cancelan restauraciones anteriores al reabrir o destruir. `PaginaCrud` publica un host estable como región accesible mediante `obtenerDestinoFocoRetorno()`. Se actualizan catálogo, contrato, historias y regresiones.
+
+La corrida histórica anterior pasó 800/800 casos en ChromeHeadless. Las compuertas de catálogo, API, foco y lint terminan con código cero. La evidencia original, las pruebas negativas aisladas, las construcciones y la revisión externa se registran en el [roadmap de la unidad](.agent/roadmaps/ROADMAP_ATOMIC-20261102-006_restauracion_foco.md). La fuente permanece local: no se confirma, publica ni acredita adopción de consumidores.
+
+
+Acreditación complementaria del 2026-11-03: el orquestador repitió las familias de carrera, callback y generación en `negativas-atomic-responsable`, con códigos limpio/detección/restaurado `0/1/0`. El constructor verificó los originales y la igualdad de las siete categorías —archivos, dependencias, configuración, herramientas, comando, alcance y entorno— antes y después de cada fase y entre limpio y restaurado. Esta evidencia nueva sustituye únicamente la acreditación insuficiente anterior; siete archivos con SHA no constituían siete categorías. El inventario `atomic-guardas-fuentes-responsable.json`, generado por AST desde las cuatro fuentes runtime, descubre 259 sitios, 70 relevantes y siete métodos; su contenido y las huellas de entrada fueron contrastados por el constructor.
+
+En la caracterización previa al caso final, el constructor ejecutó cuatro mutaciones adicionales, exclusivamente en TEMP y sin nuevas pruebas de producto. `validacion_crud`, `otra_ventana_crud` y `otra_ventana_modal` obtuvieron `0/1/0`. `validacion_modal` obtuvo `0/0/0`: retirar solo `[aria-disabled="true"], ` del selector de `ModalComponent.restaurarFoco` no fue detectado por las 33 pruebas existentes. La fuente temporal se restauró exactamente y sus siete categorías volvieron a coincidir con la fase limpia. En esa medición se conservó el residual de cobertura; ese resultado histórico no acreditó todas las obligaciones de las guardas ni constituyó aprobación del frente. Los originales y resultados residen en `negativas-atomic-adicionales`, `negativas-atomic-adicionales-resumen.json` y `acreditacion-constructor-evidencia-raiz.json`, bajo el temporal custodiado por el roadmap.
+
+La sesión histórica de `governance:check` identificada como `23488` no conserva proceso recuperable ni archivo de salida final; su log alcanza `governance:smoke`, pero no acredita éxito ni permite reconstruir el código de salida. El responsable ejecutó la corrida definitiva de gobierno en la sesión 60660 y recuperó su código nativo 0. Los originales se conservan en `governance-cobertura-final.stdout.txt`, `governance-cobertura-final.stderr.txt` y `governance-cobertura-final.exit.txt`. La acreditación corresponde a esa corrida. La sesión histórica 23488 y el intento interrumpido quedan como antecedentes. La revisión de codificación verifica UTF-8 estricto y preservación literal de todas las líneas previas no ASCII de las cinco rutas afectadas, con evidencia en `acreditacion-encoding007-constructor.json`; no existen snapshots de las fuentes defectuosas y la desviación 007 continúa condicionada al juicio independiente del delta completo. La corrida histórica de 800 pruebas correctas no sustituye esa comprobación de preservación.
+
+
+
+Cierre de cobertura del 2026-11-03: se añade un único caso persistente en `modal.component.spec.ts` que utiliza la API pública y el foco real. El origen permanece conectado y enfocado antes de abrir; el callback entrega otro botón visible, conectado, habilitado nativamente y con `aria-disabled="true"`. Tras destruir la fixture, retirar su DOM y vaciar la microtarea mediante el mecanismo existente, se verifica que `document.activeElement` vuelve al origen y no al candidato. No se modifican el código de producción, las historias, el catálogo ni los estilos.
+
+La corrida nueva obtiene 34/34 casos de Modal, 108/108 de los cuatro componentes y de Input, y 801/801 en la suite completa; lint, build y lib:build terminan con código cero. El resultado 800/800 y el mutante 33/33 pertenecen a la caracterización histórica anterior. Se repiten las siete familias completas —carrera, callback, generación, validación del destino en Crud y Modal, y otra ventana en Crud y Modal— sobre TEMP sincronizado con el caso final: todas obtienen `0/1/0`, con fuentes, comandos, resultados y siete categorías antes y después de cada fase, además de igualdad entre limpio y restaurado. En `validacion_modal` el fallo se atribuye al nuevo caso de `aria-disabled`, sin modificar otra cláusula ni aceptar un fallo de compilación o timeout como detección. Los originales nuevos se conservan en `negativas-atomic-cobertura-final` y `negativas-atomic-cobertura-final-resumen.json`; los anteriores no se reasignan ni sobrescriben.
+
+El manifiesto se regenera únicamente mediante `npm.cmd run package:manifest`: conserva 337 archivos y `sourceTreeSha256=386c85a20877b07389978c225d2eb3d492656d219d4481375c788007dbe9f5c6`. El inventario propagable no incluye el spec de Modal; no se interpreta esa huella como cobertura de pruebas. El build y la evidencia visual anteriores de Storybook se reutilizan tras contrastar 539 entradas de producción, historias, estilos, configuración y declaraciones de dependencias sin cambios, según `storybook-reuso-cobertura-final.json`; no existe una interfaz nueva que requiera otro escenario visual. La desviación 007 conserva su revisión independiente. La procedencia del consumidor, su `atomicRef` y la adopción siguen pendientes del Guardián y de CI.
+
+
+## ATOMIC-20261102-005 — geometría, trazo y contraste de etiquetas flotantes y consistencia de tokens en controles de formulario
+
+Se corrige el solapamiento visual entre las etiquetas flotantes (`variant="floating"` y `variant="floating-value"`) y el contenido interno o controles adjuntos, se refuerza su grosor tipográfico (`700`), tamaño elevado (`0.8125rem` / `13px`) y contraste en reposo (`--field-label-color-resting`), se unifica el color (`--field-label-color-floated`), sangría (`16px`) y posición interior (`top: var(--space-1)`) de las variantes `underline` y `material`, se suprime el doble anillo interno `:focus-visible` en `app-tag-input`, `app-number-input` y `app-datepicker`, se habilita el dimensionamiento horizontal `[width]` en barras flex y la búsqueda en cascada reactiva en `Select2Component`, `PaginaCrud` y showcases, y se homologan los tokens canónicos (`--input-*`, `--field-label-*`) conforme a `DOCTRINA_DE_INTERFAZ.md`:
+
+- **Tokens tipográficos y de contraste de etiqueta (`_tokens-primitives.css`, `_tokens-components.css`, `check-theme-contrast.mjs`)**: `--field-label-floated-font-weight` pasa de `600` (`--font-weight-emphasis`) a `700` (`--font-weight-title`) y `--field-label-floated-font-size` sube de `0.75rem` (`12px`) a `0.8125rem` (`13px`), eliminando la pérdida de grosor visual al elevarse la etiqueta. `--field-label-padding` se ajusta de `0 var(--space-2)` (`0 8px`) a `0 var(--space-1)` (`0 4px`) con `border-radius: var(--radius-sm)`, y el `max-width` base de `.fl-label--floating` y `.floating-label` se amplía a `calc(100% - var(--field-label-inset) - var(--space-1))` (`100% - 16px`), alineando el texto de la etiqueta flotante a `16px` del borde izquierdo y recuperando `16px` de ancho útil total contra el truncado prematuro. Se introduce `--field-label-color-resting: var(--text-color-secondary)` en los tres temas (`light` `7.56:1`, `dark` `11.9:1`, `brand-dark`), sustituyendo `--input-placeholder` (`2.54:1` en claro) en `.fl-label--floating` y `.floating-label`, y se registra en `scripts/check-theme-contrast.mjs` (`12` pares auditados por tema).
+- **`app-number-input` y `app-tag-input` (geometría, centrado vertical y supresión de doble borde de foco)**: en `app-number-input`, `.number-input__control` conserva `height: var(--control-height)` (`46px`) con botones internos redondeados centrados (`var(--control-height-xs)` = `24px`), dejando `2.875px` de holgura limpia bajo `.fl-label--floated` y corrigiendo el hover a `background: var(--primary-color); color: var(--text-color-on-primary)`. En `app-tag-input`, `.tag-input__field` usa `padding: var(--space-2) var(--space-4)` (`8px 16px`) y acota el relleno superior extra (`.fl-field--floating.tag-input--elevated.tag-input--has-tags .tag-input__field { padding-top: var(--space-4) }`) a cuando existen etiquetas (`tags().length > 0`), manteniendo `.tag-input__input` (`Agregar etiqueta...`) perfectamente centrado en vertical (`13px` arriba y abajo, `3.875px` bajo `.fl-label--floated`) cuando se enfoca vacío y garantizando `8.875px` de separación sobre los chips cuando está poblado. Tanto `.tag-input__input` como `.number-input__field`, `.number-input__btn:focus-visible` y `.datepicker-trigger` declaran `box-shadow: none;`, suprimiendo el segundo borde interior heredado de la regla global `:focus-visible` de `index.css`.
+- **Variantes `underline`/`material`, dimensionamiento `[width]` en contenedores flex y búsqueda en cascada (`floating-input`, `floating-textarea`, `textarea`, `select2`, `pagina-crud`, `showcase-forms`, `showcase-templates`)**: en `floating-input` y `floating-textarea`, `.variant-underline` y `.variant-material` unifican el color de `.floating-label` elevada/enfocada en `var(--field-label-color-floated)` (sustituyendo el morado `var(--primary-color)` que discrepaba de la línea azul `--info-color` y del resto de variantes), garantizan que `.disabled .floating-label` conserve `var(--input-disabled-text)` sobre `.focused`/`.has-value` en las cuatro variantes flotantes, suprimen el botón enfocable vacío cuando `clearable` no tiene valor y el `::-webkit-search-cancel-button` nativo en `type="search"`, y unifican su sangría en `left: var(--field-label-inset); padding: var(--field-label-padding)` + `padding: var(--space-5) var(--space-4)` y su posición vertical elevada en `top: var(--space-1)` (`4px` dentro de la caja en vez de `-4px` fuera). `Select2Component`, `FloatingInputComponent` y `FloatingTextareaComponent` enlazan `[class.has-custom-width]="tieneAnchoFijo()"` (`!ancho.includes('%')`) y `:host:has(> .*-wrapper.has-custom-width) { width: fit-content; max-width: 100%; }` para alinearse en una misma fila dentro de contenedores `flex-wrap: wrap` cuando reciben anchos fijos (`width="180px"`, `width="200px"`). En `Select2Component`, las opciones centinela vacías (`value: null` o `""`) restablecen `selectedOption` a `null` sin elevar la etiqueta flotante y `writeValue` conserva `pendingValue` cuando `[options]` y `[ngModel]` cambian en el mismo ciclo; en `PaginaCrud`, `ShowcaseFormsComponent` y `ShowcaseTemplatesComponent` se habilita la conmutación reactiva de búsqueda en cascada entre criterios `select` y `texto` (iniciando con un único selector `Buscar por` en valor `null` y marcador `Seleccionar...`, desplegando el segundo control únicamente tras elegir criterio e instanciando el subfiltro con `@for (...; track tipo)`).
+- **Verificación y manifiesto**: se actualizan `dart/atomic_tokens/PROCEDENCIA.json`, `catalog/components/*.json` y `distribution/atomic-source-manifest.json` (`340` archivos, SHA-256 `ac6c89c728c8d678288551c29a8532cf5f3c651e49bde5041c8d41f3bf719d00`). Pasan las 24 compuertas de `npm run governance:check` (`check:field-labels` sobre `18` hojas con `0/0` medidas a mano, `check:contrast` sobre `12` pares por tema, `check:units` sobre `106` hojas, `package:check`, `tokens:dart:check`, `check:focus`), `npm run lint`, `npx ng test --watch=false --browsers=ChromeHeadless` (`821/821` casos), `npm run build` y `npm run lib:build`. Detalles y rollback en el [roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261102-005_mejoras_etiquetas_inputs.md).
+
+## ATOMIC-20261102-004 — corrección de dependencias y validación de sus contratos
+
+La resolución de herramientas distingue `minimatch@<4`, dirigido a la fachada
+privada `@atomic-ui/compatibilidad-minimatch` en
+`tools/compatibilidad-minimatch`, de `minimatch@>=4 <11.0.1`, dirigido a
+`11.0.4`. La fachada utiliza el motor oficial mediante el alias
+`motor-minimatch` y conserva la forma de función CommonJS y los metadatos
+`set`, `globSet` y `globParts` consumidos por glob 7 y Karma. El reemplazo de
+`deepmerge` por `npm:@stackline/deepmerge@1.1.0` se acota a
+`fork-ts-checker-webpack-plugin@9.1.0`. Estas decisiones no acreditan por sí
+solas compatibilidad universal ni aprobación de la unidad.
+
+El bundle de Storybook 10.6.5 contiene una copia de minimatch que no cambia
+con los overrides externos. El backport de la corrección oficial de
+amplificación se aplica mediante `postinstall`, con versión y hashes
+reconocidos, idempotencia y fallo ante deriva. La actualización siguiente
+requiere revisar ese parche. La instalación `--omit=dev` permite la ausencia
+de Storybook; `--check` devuelve 1 si falta el bundle. No se afirma que todo
+el motor embebido sea v11 ni que desaparezcan vulnerabilidades desconocidas.
+
+Los originales de la primera candidatura conservan la eliminación observada
+de 34 alertas, auditorías completa y `--omit=dev` sin alertas e instalación
+con el npm declarado 11.12.1, `postinstall` correcto y lock intacto. También
+se conservan el corpus de 66 casos, lint sin errores ni avisos, construcciones
+de aplicación, biblioteca y Storybook con código cero, y ambas corridas de
+Karma: 764 casos correctos y un fallo de Select2 entre 765, seguidos de una
+única repetición completa de 765/765 con cobertura, sin editar fuentes ni
+atribuir una causa no demostrada al fallo. `npm ls --all` registra código 1
+por el binding opcional oxc WASI, observado igualmente en la referencia
+anterior; los listados de raíz y objetivo terminan con cero. Storybook
+conserva los avisos de tamaño de sus bundles.
+
+La segunda y última corrección de esa candidatura se rechaza: la guarda no
+detecta `make()` sobre una instancia de Minimatch devuelta por una fábrica,
+y el contraste funciona con v3 y falla con la fachada. Ese uso no se atribuye
+al Karma instalado. El criterio vuelve a arquitectura, sin una tercera
+edición bajo la orden agotada. Los cambios posteriores de ejecución,
+historias y catálogos de la unidad concurrente 006 invalidan las pasadas
+anteriores de navegador y las regresiones para acreditar el árbol posterior.
+La captura documental detecta la nueva ventana 006/005/003 y detiene la
+escritura antes de sobrescribir trabajo concurrente.
+
+La segunda candidatura agotó sus dos correcciones y quedó en TEMP. En una
+copia, retirar `@colors/colors/safe.js` impidió cargar el reporter de Karma
+mientras la guarda y su CLI devolvían cero. El archivo estaba presente en
+la instalación real. Se conservan el ensayo, la restauración y los rechazos
+de las propuestas `17/e1`, `8a/4338` y de la última corrección. La nueva
+orden mantiene la ruta completa y fija una garantía más acotada. El JSON
+de línea base pertenece a la candidatura que quedó en TEMP.
+
+La guarda adoptada limita la comprobación local a descubrir instalaciones y consumos
+de `minimatch`, `motor-minimatch` y `deepmerge`, incluidas las declaraciones
+de la raíz. Comprueba identidad, versión y resolución efectiva desde cada
+propietario, con contraste del lock y distinción de dependencias requeridas
+y omisiones opcionales. La comprobación tiene alcance de desarrollo y se
+ejecuta sin red. El helper separado verifica la versión y los hashes del
+backport de Storybook. El corpus y la carga del reporter de Karma son pruebas
+separadas. La evidencia se limita a los consumos y casos medidos.
+
+La revalidación sobre el corte 006 registra 800/800 casos, lint sin avisos y
+las construcciones de aplicación, biblioteca y Storybook con código cero.
+Una especificación posterior de Modal motiva repetir lint y Karma. Esa
+corrida registra 801/801 casos y cobertura de 78,07 % de sentencias,
+68,04 % de ramas, 76,65 % de funciones y 78,83 % de líneas. La especificación
+queda fuera de las entradas de las compilaciones y del navegador. La pasada
+de navegador del corte 006 verifica la aplicación en 4200, Storybook de
+desarrollo, el diálogo y su foco, una sola instancia de tabla en los tres
+estados del control y el preview estático, sin errores de consola.
+La comprobación ADN R1–R10 termina con código cero para los diez archivos
+fuente aplicables de su alcance.
+
+Las instalaciones aisladas con npm 11.12.1 y 11.16.0 ejecutan los scripts
+y conservan el lock `241047…`. La instalación `--omit=dev` termina con cero
+y sigue la rama de ausencia esperada de Storybook.
+
+Las auditorías del árbol vivo del 3 de noviembre registran cero alertas
+en la instalación completa y con `--omit=dev`. Los resultados de adopción,
+equivalencia de las pruebas y gobierno se identifican por corrida en el
+roadmap.
+
+La guarda acotada y su README se adoptaron con código cero y con las
+huellas esperadas. En el árbol vivo, `check:dependencias` termina con cero.
+Las instalaciones limpias con npm 11.12.1 y 11.16.0 pasan. Ambas auditorías
+del árbol vivo arrojan un total de cero y conservan iguales las siete
+huellas de entradas.
+
+Los lotes concurrentes `ui-acotada-css-final` y `ui-acotada-ultimo-corte`
+conservan sus códigos 2 del driver. El primero registró un cambio de
+`catalog/components/about-dialog.json`, ajeno a Karma y a los builds de
+aplicación y biblioteca. Las ejecuciones individuales y su alcance se
+conservan en el roadmap.
+
+El lote estable `ui-006-lote-H87f4t` pasa 807/807 pruebas de Karma y los
+tres builds con código cero y siete huellas iguales, sobre CSS
+`9078ef48…` y manifiesto `3718b8c0…`. Se conserva el lint con código cero
+del lote anterior porque las diferencias de CSS y manifiesto quedan
+fuera de sus entradas. La aplicación renderiza con la consola sin errores
+en la observación del corte estable. Las observaciones de Storybook
+estático y de desarrollo corresponden a sus cortes registrados. La
+comprobación ADN R1–R10 termina con cero en su alcance aplicable.
+
+La corrida global completa registra código 1 por índice documental y
+hallazgos de secretos fuera de Atomic UI. El índice se verifica por
+separado. En la corrida original de gobierno pasan la comprobación de
+dependencias y la del consumidor. El smoke registra código 1 por el
+arnés. El lote v3 registra código cero en el smoke y en otras 22
+obligaciones y conserva la deriva externa observada. Los códigos originales y las repeticiones se conservan.
+
+La corrida definitiva de `package:check` termina con código cero, incluido
+el driver, y conserva iguales las siete huellas. Registra 347 lecturas y
+cero fuera de las entradas previstas, valida 340 fuentes y produce un
+ensayo de empaquetado privado de cinco archivos y 78.488 bytes. Se preservan
+los dos intentos fallidos, por cambio concurrente del inventario y por la
+caché temporal del arnés, respectivamente. El roadmap conserva los códigos
+de gobierno, incluida la repetición del smoke en el corte de cierre.
+
+La versión del producto continúa en `5.22.0`, con Angular 22, Storybook
+10.6.5 y Karma 6.4.4, sin migración de sus versiones principales,
+publicación ni adopción en consumidores. La corrida completa conservada
+del ecosistema devuelve 1 por secretos ajenos (`REAL 34`, `DEBIL 10`),
+índice desactualizado y EOF del roadmap paralelo 005; esa corrida no acredita
+un verde global. La nueva candidatura, sus resultados definitivos, el juicio,
+gobierno, índice, confinamiento, sondeo, originales y rollback se identifican
+en el [roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261102-004_seguridad_dependencias.md).
+
+## ATOMIC-20261102-003 — tipado público y confirmación accesible
+
+Se corrigen los 18 avisos de tipado y los cuatro de accesibilidad sin
+supresiones ni reducción de las reglas de lint. Los chips traducen sus tonos
+al vocabulario admitido por Chip y el valor genérico predeterminado de
+`PaginaCrud` pasa de `any` a `Record<string, unknown>`, conservando
+`T extends object` y el argumento explícito de entidad. Este endurecimiento
+estático local puede exigir parametrizar referencias desnudas; no se presenta
+como equivalencia universal ni como propagación a consumidores.
+
+La confirmación de `PaginaCrudAccordion` utiliza el diálogo nativo del chasis
+con rol `alertdialog`, nombre y descripción únicos, foco inicial en Cancelar,
+Escape, cierre interno, fondo optativo y retorno al disparador. Se conserva la
+intención `{ clave, datos }`, consumida antes de emitir, y el límite de 28rem
+mediante el token del chasis; la plantilla no persiste ni anuncia éxito.
+Se ajustan los cuatro radios interiores de cabecera y pie mediante
+`calc(var(--radius-lg) - var(--border-width-thin))`.
+Se adapta el renderer Angular de Storybook 10.6.5 para los IDs con inicial
+numérica mediante una copia interna tipada del contexto de renderizado;
+se conservan los IDs públicos y los enlaces de las historias. La comprobación
+definitiva en navegador verifica el diálogo numérico, las nueve tablas de
+propiedades y un cambio de control con una sola instancia, conservando las
+cuatro URLs originales de las historias.
+Se añaden 54 regresiones Karma sobre extracción, ordenación y accesibilidad.
+El tipado estático se acredita mediante la fixture `ngc`; los tonos, mediante
+el navegador de Storybook. El lint final pasa con cero errores y cero avisos;
+la suite completa pasa 762/762
+casos después del refuerzo de emisión única. Las construcciones de aplicación,
+biblioteca y Storybook terminan con código cero. Se regenera el manifiesto de
+las 337 fuentes. El gobierno Atomic completo termina con código cero. El
+navegador definitivo acredita título y tabla visibles sin
+errores, las tres variantes de tonos en dos historias y la confirmación con
+X, Cancelar y foco. Las capturas definitivas de 375 y 1280 CSS px muestran los
+radios interiores sin puntas. Los originales, la revisión independiente y
+los límites de las compuertas del ecosistema se registran en el
+[roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261102-003_avisos_lint.md).
+Las versiones del producto y las dependencias se conservan.
+
+## ATOMIC-20261102-002 — bootstrap ESM, lint y pruebas completas
+
+Se elimina el require dinámico de `@angular/compiler` que interrumpía el
+bootstrap en el navegador y se conserva un único import ESM. Se comprueban
+contenido renderizado, consola del nuevo arranque y teclado de Select2. Se
+corrigen los 11 errores de lint con cero errores finales y 22 avisos conservados.
+Se retira código privado de refresh sin llamadas desde el flujo activo y se
+actualizan las pruebas para comprobar credenciales por cookies, origen exacto,
+exclusiones intactas y propagación de errores, manteniendo la política vigente.
+La etiqueta de Select2 usa un span asociado por `aria-labelledby`; se conservan
+IDs, clases, obligatoriedad y variantes. La suite completa pasa 708/708 casos,
+incluidos nueve casos adicionales. Se regenera el manifiesto de las 337 fuentes.
+La evidencia, revisión, límites y rollback se conservan en el
+[roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261102-002_arranque_lint_pruebas.md).
+
+## ATOMIC-20261102-001 — dependencias y arranque local
+
+Se actualizan las dependencias de Angular dentro de la línea 22.2 y las de
+Storybook dentro de la línea 10, conservando la versión `5.22.0` de Atomic UI.
+Se revisan los overrides de herramientas para evitar que una fijación antigua
+impida recibir las correcciones oficiales. La optimización de scripts se
+desactiva exclusivamente en desarrollo para permitir el prebundling de
+`ng serve`. El cambio previo del usuario en el lock se conserva. La auditoría,
+las versiones resueltas, las pruebas, los remanentes y los límites de gobierno
+se registran en el
+[roadmap](.agent/roadmaps/ROADMAP_ATOMIC-20261102-001_dependencias.md).
 
 ## ATOMIC-20260823-600 (corte 3) — compuertas de selectores y Tailwind, unidades relativas y tokens canónicos
 

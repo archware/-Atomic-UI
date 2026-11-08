@@ -1,0 +1,106 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "accordion",
+  "layer": "organism",
+  "selector": "app-accordion",
+  "export": "AccordionComponent",
+  "source": "src/app/shared/ui/organisms/accordion/accordion.component.ts",
+  "relatedExports": ["AccordionItemComponent", "AccordionVariant"],
+  "purpose": "Organismo de paneles plegables accesibles con modos de apertura múltiple o exclusiva (single), variante integrada sin marco (flush), control de plegado obligatorio (collapsible) y navegación por teclado.",
+  "variants": [
+    {
+      "name": "variant",
+      "values": [
+        { "value": "default", "meaning": "Paneles con superficie elevada y apertura independiente por defecto.", "default": true },
+        { "value": "multiple", "meaning": "Permite mantener varios paneles abiertos simultáneamente para comparar contenido." },
+        { "value": "single", "meaning": "Selección exclusiva: abrir un panel cierra automáticamente los demás." },
+        { "value": "flush", "meaning": "Sin marco lateral, radio ni sombra para integrarse dentro de tarjetas o contenedores con borde propio." }
+      ]
+    },
+    {
+      "name": "single",
+      "values": [
+        { "value": false, "meaning": "Apertura independiente según variant.", "default": true },
+        { "value": true, "meaning": "Activa el cierre automático de los demás paneles (combinable con flush)." }
+      ]
+    },
+    {
+      "name": "collapsible",
+      "appliesWhen": "variant === 'single' || single === true",
+      "values": [
+        { "value": true, "meaning": "El panel activo puede cerrarse al volver a pulsarlo.", "default": true },
+        { "value": false, "meaning": "Mantiene siempre al menos un panel habilitado abierto." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "variant", "type": "AccordionVariant", "default": "default", "meaning": "Variante estructural y de apertura del acordeón: default, multiple, single o flush." },
+    { "name": "flush", "type": "boolean", "default": false, "meaning": "Retira borde lateral, radio y sombra de los paneles cuando se anida dentro de otra superficie." },
+    { "name": "single", "type": "boolean", "default": false, "meaning": "Cuando es true, abrir un panel cierra automáticamente los demás." },
+    { "name": "collapsible", "type": "boolean", "default": true, "meaning": "En modo único (single), indica si el panel activo puede cerrarse al volver a pulsarlo." },
+    { "name": "id", "type": "string", "meaning": "Identificador base del panel (app-accordion-item) para vincular aria-controls y aria-labelledby." },
+    { "name": "title", "type": "string", "default": "", "meaning": "Título visible en el encabezado del panel (app-accordion-item)." },
+    { "name": "description", "type": "string", "default": "", "meaning": "Subtítulo o resumen contextual bajo el título del panel (app-accordion-item)." },
+    { "name": "icon", "type": "string", "default": "", "meaning": "Clase de icono opcional previa al título en el encabezado del panel (app-accordion-item)." },
+    { "name": "headingLevel", "type": "number", "default": 3, "meaning": "Nivel semántico aria-level del encabezado del panel (app-accordion-item)." },
+    { "name": "disabled", "type": "boolean", "default": false, "meaning": "Bloquea la interacción del panel y lo excluye de la navegación con flechas (app-accordion-item)." },
+    { "name": "open", "type": "boolean", "default": false, "meaning": "Estado abierto inicial o controlado reactivamente del panel (app-accordion-item)." }
+  ],
+  "outputs": [
+    { "name": "openChange", "type": "boolean", "meaning": "Emite el nuevo estado abierto o cerrado del panel cuando cambia por interacción o coordinación del acordeón." }
+  ],
+  "behavior": [
+    "En modo single (variant='single' o [single]='true'), abrir un panel por clic o por cambio reactivo de [open] cierra automáticamente los demás.",
+    "Si varios paneles declaran [open]='true' en la carga inicial o al conmutar a modo single, se conserva abierto únicamente el primero.",
+    "Cuando [collapsible]='false' en modo single, no se permite plegar el último panel abierto y, si el panel abierto se destruye o todos inician cerrados, se abre el primer panel habilitado.",
+    "Al cerrar un panel cuyo contenido tenía el foco activo, el foco se traslada previamente a su botón de encabezado antes de aplicar inert."
+  ],
+  "states": [
+    { "name": "collapsed", "meaning": "Panel cerrado con región oculta (aria-hidden=true e inert)." },
+    { "name": "expanded", "meaning": "Panel desplegado con encabezado acentuado y chevron rotado 180 grados." },
+    { "name": "disabled", "meaning": "Encabezado deshabilitado que no responde al clic ni participa en el recorrido con flechas." }
+  ],
+  "a11y": [
+    "Cada encabezado es un button nativo dentro de un contenedor con role=heading y aria-level configurable.",
+    "Vincula cada botón con su panel mediante aria-expanded, aria-controls, role=region y aria-labelledby.",
+    "Los paneles cerrados aplican aria-hidden=true e inert para impedir foco accidental en controles ocultos.",
+    "Soporta navegación por teclado entre encabezados habilitados mediante ArrowDown, ArrowUp, Home y End sin interceptar atajos con modificadores."
+  ],
+  "responsive": [
+    "Los encabezados usan min-width: 0 y ajuste fluido para títulos, iconos y descripciones sin desbordamiento horizontal.",
+    "La transición de apertura emplea grid-template-rows y respeta prefers-reduced-motion: reduce."
+  ],
+  "tokens": [
+    "--border-color",
+    "--focus-ring",
+    "--font-weight-body",
+    "--font-weight-emphasis",
+    "--hover-background",
+    "--input-disabled-text",
+    "--primary-color",
+    "--radius-md",
+    "--shadow-sm",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--surface-background",
+    "--surface-section",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-secondary",
+    "--text-md",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": { "path": "src/stories/ui-accordion.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/organisms/accordion/accordion.component.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, hojas CSS externas y tokens semánticos."
+    ]
+  },
+  "canonicalFor": ["accordion", "collapsible-panels", "exclusive-accordion", "faq-panels"]
+}

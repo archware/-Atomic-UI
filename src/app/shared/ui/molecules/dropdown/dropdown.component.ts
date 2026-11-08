@@ -1,6 +1,6 @@
 import {
   Component, signal, computed, HostListener, model,
-  ElementRef, ChangeDetectionStrategy, forwardRef, OnChanges, SimpleChanges, inject,
+  ElementRef, ChangeDetectionStrategy, forwardRef, inject,
   input
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -31,7 +31,7 @@ export interface DropdownOption {
   template: `
     <div class="dropdown fl-field" [class.fl-field--floating]="flotante()" [class.open]="isOpen()" [class.disabled]="isDisabled()">
       @if (label() && !flotante()) {
-        <span class="fl-label" [id]="labelId">{{ label() }}</span>
+        <span class="fl-label" [class.fl-label--disabled]="isDisabled()" [id]="labelId">{{ label() }}</span>
       }
       <div class="fl-control dropdown-box">
       @if (flotante()) {
@@ -101,7 +101,7 @@ export interface DropdownOption {
   `,
   styleUrls: ['./dropdown.component.css', '../../atoms/form-field/field-label.css']
 })
-export class DropdownComponent implements OnChanges, ControlValueAccessor {
+export class DropdownComponent implements ControlValueAccessor {
   readonly options = input<DropdownOption[]>([]);
   readonly label = input('');
   /** Modo de etiqueta comun: standard | floating | floating-value. */
@@ -150,10 +150,6 @@ export class DropdownComponent implements OnChanges, ControlValueAccessor {
   private onTouched: () => void = () => { /* noop */ };
 
   private readonly elementRef = inject(ElementRef);
-
-  ngOnChanges(_changes: SimpleChanges) {
-    // selectedOption es ahora computed a partir de value() y options()
-  }
 
   writeValue(value: string | number): void {
     this.value.set(value);

@@ -301,27 +301,31 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
     }
     
     if (rows && typeof rows === 'object' && !Array.isArray(rows)) {
-      const anyRows = rows as any;
-      // Extract array from known wrapper properties or fallback to the first array found
-      if (Array.isArray(anyRows.$values)) {
-        rows = anyRows.$values;
-      } else if (Array.isArray(anyRows.data)) {
-        rows = anyRows.data;
-      } else if (Array.isArray(anyRows.items)) {
-        rows = anyRows.items;
-      } else if (Array.isArray(anyRows.elementos)) {
-        rows = anyRows.elementos;
-      } else if (anyRows.value && Array.isArray(anyRows.value.elementos)) {
-        rows = anyRows.value.elementos;
-      } else if (anyRows.value && Array.isArray(anyRows.value.data)) {
-        rows = anyRows.value.data;
+      const envoltorio = rows as Record<string, unknown>;
+      const valor = envoltorio['value'];
+      const valorAnidado = valor !== null && (typeof valor === 'object' || typeof valor === 'function')
+        ? valor as Record<string, unknown>
+        : undefined;
+      // Conservar la prioridad historica de los arreglos, incluso si estan vacios.
+      if (Array.isArray(envoltorio['$values'])) {
+        rows = envoltorio['$values'];
+      } else if (Array.isArray(envoltorio['data'])) {
+        rows = envoltorio['data'];
+      } else if (Array.isArray(envoltorio['items'])) {
+        rows = envoltorio['items'];
+      } else if (Array.isArray(envoltorio['elementos'])) {
+        rows = envoltorio['elementos'];
+      } else if (valorAnidado && Array.isArray(valorAnidado['elementos'])) {
+        rows = valorAnidado['elementos'];
+      } else if (valorAnidado && Array.isArray(valorAnidado['data'])) {
+        rows = valorAnidado['data'];
       } else {
-        const arrayKey = Object.keys(anyRows).find(key => Array.isArray(anyRows[key]));
-        if (arrayKey) {
-          rows = anyRows[arrayKey];
-        } else if (anyRows.value && typeof anyRows.value === 'object') {
-          const valArrayKey = Object.keys(anyRows.value).find(key => Array.isArray(anyRows.value[key]));
-          if (valArrayKey) rows = anyRows.value[valArrayKey];
+        const claveArreglo = Object.keys(envoltorio).find(clave => Array.isArray(envoltorio[clave]));
+        if (claveArreglo) {
+          rows = envoltorio[claveArreglo];
+        } else if (valorAnidado) {
+          const claveArregloAnidado = Object.keys(valorAnidado).find(clave => Array.isArray(valorAnidado[clave]));
+          if (claveArregloAnidado) rows = valorAnidado[claveArregloAnidado];
         }
       }
     }

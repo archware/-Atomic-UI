@@ -14,7 +14,9 @@
         { "value": "spinner", "meaning": "Indicador circular.", "default": true },
         { "value": "dots", "meaning": "Secuencia de puntos." },
         { "value": "pulse", "meaning": "Pulso visual." },
-        { "value": "bars", "meaning": "Barras animadas." }
+        { "value": "bars", "meaning": "Barras animadas." },
+        { "value": "gradient", "meaning": "Anillo circular con degradado animado." },
+        { "value": "orbit", "meaning": "Órbita planetaria animada." }
       ]
     },
     {
@@ -31,7 +33,7 @@
     { "name": "error", "type": "ApiError | null", "default": null, "meaning": "Activa error cuando no hay carga." },
     { "name": "isEmpty", "type": "boolean", "default": false, "meaning": "Activa vacío cuando no hay carga ni error." },
     { "name": "loadingText", "type": "string", "default": "", "meaning": "Texto junto al loader por defecto." },
-    { "name": "loaderVariant", "type": "'spinner' | 'dots' | 'pulse' | 'bars'", "default": "spinner", "meaning": "Representación del loader." },
+    { "name": "loaderVariant", "type": "'spinner' | 'dots' | 'pulse' | 'bars' | 'gradient' | 'orbit'", "default": "spinner", "meaning": "Representación del loader." },
     { "name": "loaderSize", "type": "'sm' | 'md' | 'lg'", "default": "md", "meaning": "Escala del loader." },
     { "name": "errorTitle", "type": "string", "default": "Error al cargar", "meaning": "Título de error por defecto." },
     { "name": "emptyText", "type": "string", "default": "No hay datos disponibles", "meaning": "Texto vacío por defecto." },

@@ -15,6 +15,9 @@ import { IconButtonComponent } from '../../atoms/icon-button/icon-button.compone
 import { ModalComponent } from '../../molecules/modal/modal.component';
 import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
 
+/* orden-dom: es un CONJUNTO de tipos de control equivalentes, no una lista de
+   prioridad. Aqui se quiere el primer control del marcado del popup; la marca
+   explicita [data-about-initial-focus] se consulta aparte con prioridad. */
 const ABOUT_POPUP_FOCUSABLE_SELECTOR = [
   'button:not([disabled])',
   '[href]',

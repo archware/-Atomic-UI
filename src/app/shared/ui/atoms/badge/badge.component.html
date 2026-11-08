@@ -1,14 +1,18 @@
+@if (overlay()) {
+  <ng-content></ng-content>
+}
 @if (visible()) {
-      <span
-        class="badge"
-        [ngClass]="badgeClasses"
-        [attr.aria-label]="ariaLabel() || (count() ? count() + ' notificaciones' : null)"
-      >
-        @if (!dot()) {
-          {{ displayCount }}
-        }
-      </span>
+  <span
+    class="badge"
+    [class]="badgeClasses"
+    [attr.aria-label]="ariaLabel() || (count() ? count() + ' notificaciones' : null)"
+  >
+    @if (!dot()) {
+      @if (count() !== null) {
+        {{ displayCount }}
+      } @else if (!overlay()) {
+        <ng-content></ng-content>
+      }
     }
-    @if (!visible() && overlay()) {
-      <ng-content></ng-content>
-    }
+  </span>
+}

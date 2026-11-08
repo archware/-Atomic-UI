@@ -1,6 +1,11 @@
 <div class="fl-field" [class.fl-field--floating]="flotante()">
   @if (tieneEtiqueta() && !flotante()) {
-    <label class="fl-label" [attr.for]="textareaId()">{{ label() }}</label>
+    <label
+      class="fl-label"
+      [class.fl-label--error]="error()"
+      [class.fl-label--disabled]="isDisabled()"
+      [attr.for]="textareaId()"
+    >{{ label() }}</label>
   }
   <div
     class="fl-control textarea-control"

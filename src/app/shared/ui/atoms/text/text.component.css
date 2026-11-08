@@ -51,7 +51,7 @@ h1, h2, h3, h4, p {
 /* Colors - Tokens without fallbacks */
 .color-default { color: var(--text-color); }
 .color-primary { color: var(--primary-color); }
-.color-secondary { color: var(--secondary-color); }
+.color-secondary { color: var(--text-color-secondary); }
 .color-muted { color: var(--text-color-secondary); }
 .color-success { color: var(--success-color-text); }
 .color-warning { color: var(--warning-color-text); }

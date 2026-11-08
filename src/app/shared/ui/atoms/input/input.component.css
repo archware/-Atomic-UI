@@ -81,6 +81,7 @@
 
 .field__control--icon .fl-label--floating:not(.fl-label--floated) {
   left: calc(var(--space-7) - var(--space-2));
+  max-width: calc(100% - var(--space-7) - var(--field-label-inset));
 }
 
 .field__reveal {
@@ -102,6 +103,10 @@
 
 .field__control:has(.field__reveal) .field__input {
   padding-right: 5.25rem;
+}
+
+.field__control:has(.field__reveal) .fl-label--floating:not(.fl-label--floated) {
+  max-width: calc(100% - var(--space-10) - var(--field-label-inset));
 }
 
 .field__message {

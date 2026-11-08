@@ -48,29 +48,25 @@ app-query-toolbar {
 }
 
 /* ─── Confirmación de baja ───────────────────────────────── */
-.pagina-crud-accordion__confirmacion-fondo {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: grid;
-  place-items: center;
-  background-color: var(--modal-overlay);
+.pagina-crud-accordion__confirmacion {
+  --crud-dialog-max-width-sm: 28rem;
+  --modal-shadow: var(--shadow-lg);
 }
 
-.pagina-crud-accordion__confirmacion {
-  background-color: var(--modal-bg);
-  border: var(--border-width-thin) solid var(--modal-border);
-  border-radius: var(--radius-lg);
-  max-inline-size: 28rem;
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
+.pagina-crud-accordion__confirmacion-cabecera {
+  border-start-start-radius: calc(var(--radius-lg) - var(--border-width-thin));
+  border-start-end-radius: calc(var(--radius-lg) - var(--border-width-thin));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: var(--border-width-thin) solid var(--modal-border);
+  background-color: var(--modal-header-bg);
 }
 
 .pagina-crud-accordion__confirmacion-titulo {
   margin: 0;
-  padding: var(--space-4) var(--space-5);
-  border-bottom: var(--border-width-thin) solid var(--modal-border);
-  background-color: var(--modal-header-bg);
   font-family: var(--font-family-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-weight-title);
@@ -83,6 +79,8 @@ app-query-toolbar {
 }
 
 .pagina-crud-accordion__confirmacion-pie {
+  border-end-start-radius: calc(var(--radius-lg) - var(--border-width-thin));
+  border-end-end-radius: calc(var(--radius-lg) - var(--border-width-thin));
   display: flex;
   justify-content: flex-end;
   gap: var(--space-3);

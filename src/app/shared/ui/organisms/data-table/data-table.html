@@ -141,100 +141,97 @@
       </thead>
 
       <tbody>
-        @switch (effectiveStatus()) {
-          @case ('loading') {
-            <tr class="data-table__state-row">
-              <td [attr.colspan]="columnSpan()">
-                <div class="data-table__state" role="status" aria-live="polite">
-                  <span class="data-table__spinner" aria-hidden="true"></span>
-                  <span>{{ loadingMessage() }}</span>
+        @if (effectiveStatus() === 'loading' && displayedRows().length === 0) {
+          <tr class="data-table__state-row">
+            <td [attr.colspan]="columnSpan()">
+              <div class="data-table__state" role="status" aria-live="polite">
+                <span class="data-table__spinner" aria-hidden="true"></span>
+                <span>{{ loadingMessage() }}</span>
+              </div>
+            </td>
+          </tr>
+        } @else if (effectiveStatus() === 'error') {
+          <tr class="data-table__state-row">
+            <td [attr.colspan]="columnSpan()">
+              <app-alert kind="danger" spacing="none">
+                <div class="data-table__state data-table__state--inline">
+                  <span>{{ errorMessage() }}</span>
+                  <app-button class="data-table__retry" variant="outline" tone="neutral"
+                    size="sm" [fullWidth]="true" (buttonClick)="retry.emit()">
+                    {{ retryLabel() }}
+                  </app-button>
                 </div>
-              </td>
-            </tr>
-          }
-          @case ('error') {
-            <tr class="data-table__state-row">
-              <td [attr.colspan]="columnSpan()">
-                <app-alert kind="danger" spacing="none">
-                  <div class="data-table__state data-table__state--inline">
-                    <span>{{ errorMessage() }}</span>
-                    <app-button class="data-table__retry" variant="outline" tone="neutral"
-                      size="sm" [fullWidth]="true" (buttonClick)="retry.emit()">
-                      {{ retryLabel() }}
-                    </app-button>
-                  </div>
-                </app-alert>
-              </td>
-            </tr>
-          }
-          @case ('empty') {
-            <tr class="data-table__state-row">
-              <td [attr.colspan]="columnSpan()">
-                <div class="data-table__state" role="status">{{ emptyMessage() }}</div>
-              </td>
-            </tr>
-          }
-          @case ('idle') {
-            <tr class="data-table__state-row">
-              <td [attr.colspan]="columnSpan()">
-                <div class="data-table__state" role="status">{{ idleMessage() }}</div>
-              </td>
-            </tr>
-          }
-          @default {
-            @for (row of displayedRows(); track identifyRow($index, row); let rowIndex = $index) {
-              <tr>
-                @if (showRowNumber()) {
-                  <td
-                    data-column="rowNumber"
-                    [attr.data-label]="rowNumberHeader()"
-                    class="data-table__cell--end"
-                    [appVariablesCss]="{ '--data-table-column-width': rowNumberWidth() }"
-                  >
-                    {{ rowNumber(rowIndex) }}
-                  </td>
-                }
+              </app-alert>
+            </td>
+          </tr>
+        } @else if (effectiveStatus() === 'empty') {
+          <tr class="data-table__state-row">
+            <td [attr.colspan]="columnSpan()">
+              <div class="data-table__state" role="status">{{ emptyMessage() }}</div>
+            </td>
+          </tr>
+        } @else if (effectiveStatus() === 'idle') {
+          <tr class="data-table__state-row">
+            <td [attr.colspan]="columnSpan()">
+              <div class="data-table__state" role="status">{{ idleMessage() }}</div>
+            </td>
+          </tr>
+        } @else {
+          @for (row of displayedRows(); track identifyRow($index, row); let rowIndex = $index) {
+            <tr>
+              @if (showRowNumber()) {
+                <td
+                  data-column="rowNumber"
+                  [attr.data-label]="rowNumberHeader()"
+                  class="data-table__cell--end"
+                  [appVariablesCss]="{ '--data-table-column-width': rowNumberWidth() }"
+                >
+                  {{ rowNumber(rowIndex) }}
+                </td>
+              }
 
-                @for (column of columns(); track column.key) {
-                  <td
-                    [attr.data-column]="column.key"
-                    [attr.data-label]="column.header | translate"
-                    [appVariablesCss]="{ '--data-table-column-width': column.width ?? null }"
-                    [class.data-table__cell--start]="column.align === 'start'"
-                    [class.data-table__cell--center]="columnAlignment(column) === 'center'"
-                    [class.data-table__cell--end]="columnAlignment(column) === 'end'"
-                  >
-                    @if (isTagColumn(column)) {
-                      <app-chip
-                        [variant]="getTagVariant(column, row)"
-                      >
-                        {{ displayValue(column, row) }}
-                      </app-chip>
-                    } @else {
+              @for (column of columns(); track column.key) {
+                <td
+                  [attr.data-column]="column.key"
+                  [attr.data-label]="column.header | translate"
+                  [appVariablesCss]="{ '--data-table-column-width': column.width ?? null }"
+                  [class.data-table__cell--start]="column.align === 'start'"
+                  [class.data-table__cell--center]="columnAlignment(column) === 'center'"
+                  [class.data-table__cell--end]="columnAlignment(column) === 'end'"
+                >
+                  @if (isTagColumn(column)) {
+                    <app-chip
+                      [variant]="getTagVariant(column, row)"
+                    >
                       {{ displayValue(column, row) }}
-                    }
-                  </td>
-                }
+                    </app-chip>
+                  } @else {
+                    {{ displayValue(column, row) }}
+                  }
+                </td>
+              }
 
-                @if (actionsTemplate(); as actions) {
-                  <td
-                    class="data-table__actions"
-                    [attr.data-label]="actionsHeader()"
-                    [appVariablesCss]="{ '--data-table-actions-width': actionsWidth() }"
-                  >
-                    <div class="data-table__action-list">
-                      <ng-container
-                        [ngTemplateOutlet]="actions"
-                        [ngTemplateOutletContext]="actionContext(row, rowIndex)"
-                      ></ng-container>
-                    </div>
-                  </td>
-                }
-              </tr>
-            }
+              @if (actionsTemplate(); as actions) {
+                <td
+                  class="data-table__actions"
+                  [attr.data-label]="actionsHeader()"
+                  [appVariablesCss]="{ '--data-table-actions-width': actionsWidth() }"
+                >
+                  <div class="data-table__action-list">
+                    <ng-container
+                      [ngTemplateOutlet]="actions"
+                      [ngTemplateOutletContext]="actionContext(row, rowIndex)"
+                    ></ng-container>
+                  </div>
+                </td>
+              }
+            </tr>
           }
         }
       </tbody>
     </table>
   </app-scroll-overlay>
+  @if (effectiveStatus() === 'loading' && displayedRows().length > 0) {
+    <div class="sr-only" role="status" aria-live="polite">{{ loadingMessage() }}</div>
+  }
 </div>

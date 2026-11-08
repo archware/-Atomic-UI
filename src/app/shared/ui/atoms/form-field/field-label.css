@@ -58,11 +58,12 @@
   top: calc(var(--control-height) / 2);
   left: var(--field-label-inset);
   z-index: 1;
-  max-width: calc(100% - (2 * var(--field-label-inset)));
+  max-width: calc(100% - var(--field-label-inset) - var(--space-1));
   overflow: hidden;
   padding: var(--field-label-padding);
+  border-radius: var(--radius-sm);
   background: transparent;
-  color: var(--input-placeholder);
+  color: var(--field-label-color-resting);
   font-size: var(--field-label-font-size);
   font-weight: var(--field-label-font-weight);
   line-height: var(--field-label-line-height);
@@ -85,6 +86,7 @@
   font-weight: var(--field-label-floated-font-weight);
 }
 
+.fl-label.fl-label--disabled,
 .fl-label--floating.fl-label--disabled {
   color: var(--input-disabled-text);
 }
@@ -93,6 +95,7 @@
   background: var(--input-disabled-bg);
 }
 
+.fl-label.fl-label--error,
 .fl-label--floating.fl-label--error,
 .fl-label--floating.fl-label--floated.fl-label--error {
   color: var(--field-label-color-error);

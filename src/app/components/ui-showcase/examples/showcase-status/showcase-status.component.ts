@@ -45,15 +45,15 @@ import { SkeletonComponent } from '../../../../shared/ui/atoms/skeleton/skeleton
       <div class="loader-sizes">
         <div class="loader-size-item">
           <app-loader variant="spinner" size="sm"></app-loader>
-          <span>Small</span>
+          <span class="loader-label">Small</span>
         </div>
         <div class="loader-size-item">
           <app-loader variant="spinner" size="md"></app-loader>
-          <span>Medium</span>
+          <span class="loader-label">Medium</span>
         </div>
         <div class="loader-size-item">
           <app-loader variant="spinner" size="lg"></app-loader>
-          <span>Large</span>
+          <span class="loader-label">Large</span>
         </div>
       </div>
     </section>
@@ -91,10 +91,12 @@ import { SkeletonComponent } from '../../../../shared/ui/atoms/skeleton/skeleton
     .section-title { font-size: 1.25rem; font-weight: var(--font-weight-emphasis); margin-bottom: 1rem; color: var(--text-color); }
     .subsection-title { font-size: 1rem; font-weight: var(--font-weight-body); margin: 1rem 0 0.5rem; color: var(--text-color-secondary); }
 
-    .loader-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
-    .loader-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1rem; background: var(--surface-elevated); border-radius: 0.5rem; }
-    .loader-sizes { display: flex; gap: 2rem; align-items: flex-end; }
-    .loader-size-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+    .loader-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+    .loader-item { display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 7.5rem; gap: 0.75rem; padding: 1.25rem 1rem; background: var(--surface-elevated); border-radius: 0.5rem; }
+    .loader-sizes { display: flex; gap: 2rem; align-items: stretch; flex-wrap: wrap; }
+    .loader-size-item { display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-width: 5.5rem; min-height: 6.5rem; gap: 0.75rem; padding: 1rem; background: var(--surface-elevated); border-radius: 0.5rem; }
+    .loader-item app-loader, .loader-size-item app-loader { margin: auto 0; }
+    .loader-label { font-size: var(--text-sm); color: var(--text-color); line-height: 1.25; }
 
     .loading-container { display: flex; flex-direction: column; gap: 1rem; padding: 1rem; background: var(--surface-elevated); border-radius: 0.5rem; border: 1px solid var(--border-color); }
 

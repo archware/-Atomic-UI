@@ -49,22 +49,30 @@ export const Large: Story = {
 export const AllVariants: Story = {
   render: () => ({
     template: `
-      <div style="display: flex; gap: 2rem; align-items: center;">
-        <div style="text-align: center;">
-          <app-loader variant="spinner" size="md"></app-loader>
-          <p>Spinner</p>
+      <div style="display: flex; gap: 2rem; align-items: flex-end; flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+          <app-loader variant="spinner" size="lg"></app-loader>
+          <p style="margin: 0;">Spinner</p>
         </div>
-        <div style="text-align: center;">
-          <app-loader variant="dots" size="md"></app-loader>
-          <p>Dots</p>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+          <app-loader variant="dots" size="lg"></app-loader>
+          <p style="margin: 0;">Dots</p>
         </div>
-        <div style="text-align: center;">
-          <app-loader variant="pulse" size="md"></app-loader>
-          <p>Pulse</p>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+          <app-loader variant="pulse" size="lg"></app-loader>
+          <p style="margin: 0;">Pulse</p>
         </div>
-        <div style="text-align: center;">
-          <app-loader variant="bars" size="md"></app-loader>
-          <p>Bars</p>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+          <app-loader variant="bars" size="lg"></app-loader>
+          <p style="margin: 0;">Bars</p>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+          <app-loader variant="gradient" size="lg"></app-loader>
+          <p style="margin: 0;">Gradient</p>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+          <app-loader variant="orbit" size="lg"></app-loader>
+          <p style="margin: 0;">Orbit</p>
         </div>
       </div>
     `,
@@ -74,18 +82,18 @@ export const AllVariants: Story = {
 export const AllSizes: Story = {
   render: () => ({
     template: `
-      <div style="display: flex; gap: 2rem; align-items: center;">
-        <div style="text-align: center;">
-          <app-loader variant="spinner" size="sm"></app-loader>
-          <p>Small</p>
+      <div style="display: flex; gap: 2rem; align-items: stretch;">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 5.5rem; gap: 0.5rem;">
+          <app-loader style="margin: auto 0;" variant="spinner" size="sm"></app-loader>
+          <p style="margin: 0;">Small</p>
         </div>
-        <div style="text-align: center;">
-          <app-loader variant="spinner" size="md"></app-loader>
-          <p>Medium</p>
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 5.5rem; gap: 0.5rem;">
+          <app-loader style="margin: auto 0;" variant="spinner" size="md"></app-loader>
+          <p style="margin: 0;">Medium</p>
         </div>
-        <div style="text-align: center;">
-          <app-loader variant="spinner" size="lg"></app-loader>
-          <p>Large</p>
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 5.5rem; gap: 0.5rem;">
+          <app-loader style="margin: auto 0;" variant="spinner" size="lg"></app-loader>
+          <p style="margin: 0;">Large</p>
         </div>
       </div>
     `,

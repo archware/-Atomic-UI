@@ -170,7 +170,7 @@ describe('PaginationComponent', () => {
       expect(component.visiblePages()).toContain('...');
     });
 
-    it('should always include page 1 and last page', () => {
+    it('should always include page 1 and last page when on middle page', () => {
       fixture.componentRef.setInput('total', 100);
       fixture.componentRef.setInput('pageSize', 10);
       fixture.componentRef.setInput('maxVisible', 5);
@@ -178,8 +178,147 @@ describe('PaginationComponent', () => {
       fixture.detectChanges();
 
       const pages = component.visiblePages();
-      expect(pages[0]).toBe(1);
-      expect(pages[pages.length - 1]).toBe(10);
+      expect(pages).toEqual([1, '...', 3, 4, 5, 6, 7, '...', 10]);
+    });
+
+    it('should include page 1 as active button when on page 1 and totalPages > maxVisible', () => {
+      fixture.componentRef.setInput('total', 100);
+      fixture.componentRef.setInput('pageSize', 10);
+      fixture.componentRef.setInput('maxVisible', 5);
+      fixture.componentRef.setInput('page', 1);
+      fixture.detectChanges();
+
+      expect(component.visiblePages()).toEqual([1, 2, 3, 4, 5, '...', 10]);
+      const activeBtn = fixture.nativeElement.querySelector('.page-btn.active') as HTMLButtonElement | null;
+      expect(activeBtn).not.toBeNull();
+      expect(activeBtn?.textContent?.trim()).toBe('1');
+      expect(activeBtn?.getAttribute('aria-current')).toBe('page');
+    });
+
+    it('should include last page as active button without duplication when on last page and totalPages > maxVisible', () => {
+      fixture.componentRef.setInput('total', 100);
+      fixture.componentRef.setInput('pageSize', 10);
+      fixture.componentRef.setInput('maxVisible', 5);
+      fixture.componentRef.setInput('page', 10);
+      fixture.detectChanges();
+
+      expect(component.visiblePages()).toEqual([1, '...', 6, 7, 8, 9, 10]);
+      const activeBtn = fixture.nativeElement.querySelector('.page-btn.active') as HTMLButtonElement | null;
+      expect(activeBtn).not.toBeNull();
+      expect(activeBtn?.textContent?.trim()).toBe('10');
+      expect(activeBtn?.getAttribute('aria-current')).toBe('page');
+    });
+  });
+
+  // ── Variants & visual differentiation ─────────────────────────────────────
+  describe('variants visual treatment', () => {
+    it('renders distinct active and disabled button styles and variant treatments', () => {
+      fixture.componentRef.setInput('total', 100);
+      fixture.componentRef.setInput('pageSize', 10);
+      fixture.componentRef.setInput('page', 1);
+      fixture.componentRef.setInput('variant', 'standard');
+      fixture.detectChanges();
+
+      const hostEl = fixture.nativeElement as HTMLElement;
+      const activeBtn = hostEl.querySelector('.page-btn.active') as HTMLElement;
+      const inactiveBtn = hostEl.querySelectorAll('.page-btn.page-number')[1] as HTMLElement;
+      const disabledPrev = hostEl.querySelector('.page-prev') as HTMLElement;
+
+      expect(activeBtn.textContent?.trim()).toBe('1');
+      expect(getComputedStyle(activeBtn).backgroundColor).toBeTruthy();
+      expect(getComputedStyle(activeBtn).backgroundColor).not.toBe(
+        getComputedStyle(inactiveBtn).backgroundColor,
+      );
+      expect(getComputedStyle(disabledPrev).boxShadow).toBe('none');
+
+      fixture.componentRef.setInput('variant', 'rounded');
+      fixture.detectChanges();
+      const roundedNav = hostEl.querySelector('.pagination-rounded') as HTMLElement;
+      const roundedInactiveBtn = hostEl.querySelectorAll('.pagination-rounded .page-btn.page-number')[1] as HTMLElement;
+      roundedInactiveBtn.style.transition = 'none';
+      expect(roundedNav).not.toBeNull();
+      expect(['transparent', 'rgba(0, 0, 0, 0)']).toContain(
+        getComputedStyle(roundedInactiveBtn).backgroundColor,
+      );
+      const isJsdom = getComputedStyle(activeBtn).backgroundColor.startsWith('var(');
+      if (!isJsdom) {
+        expect(parseFloat(getComputedStyle(roundedNav).borderTopLeftRadius)).toBeGreaterThan(20);
+      }
+
+      fixture.componentRef.setInput('variant', 'cards');
+      fixture.detectChanges();
+      const cardsNav = hostEl.querySelector('.pagination-cards') as HTMLElement;
+      const cardBtn = hostEl.querySelector('.pagination-cards .page-btn.page-number:not(.active)') as HTMLElement;
+      expect(cardsNav).not.toBeNull();
+      expect(cardBtn).not.toBeNull();
+      expect(['transparent', 'rgba(0, 0, 0, 0)']).toContain(
+        getComputedStyle(cardsNav).backgroundColor,
+      );
+      if (isJsdom) {
+        expect(getComputedStyle(cardBtn).borderBottomColor).toBe(
+          'var(--pagination-card-accent-border)',
+        );
+      } else {
+        expect(parseFloat(getComputedStyle(cardBtn).borderBottomWidth)).toBeGreaterThanOrEqual(2);
+      }
+
+      fixture.componentRef.setInput('variant', 'minimal');
+      fixture.detectChanges();
+      const badgeEl = hostEl.querySelector('.pagination-minimal .page-minimal-text') as HTMLElement;
+      expect(badgeEl).not.toBeNull();
+      expect(getComputedStyle(badgeEl).backgroundColor).toBeTruthy();
+    });
+
+    it('applies high-contrast semantic tokens in light, dark, and brand-dark themes', () => {
+      const root = document.documentElement;
+      const previousTheme = root.getAttribute('data-theme');
+      try {
+        fixture.componentRef.setInput('total', 100);
+        fixture.componentRef.setInput('pageSize', 10);
+        fixture.componentRef.setInput('page', 1);
+        fixture.componentRef.setInput('variant', 'standard');
+        fixture.detectChanges();
+
+        const hostEl = fixture.nativeElement as HTMLElement;
+        const wrapper = hostEl.querySelector('.pagination-wrapper') as HTMLElement;
+        const activeBtn = hostEl.querySelector('.page-btn.active') as HTMLElement;
+        const inactiveBtn = hostEl.querySelectorAll('.page-btn.page-number')[1] as HTMLElement;
+        activeBtn.style.transition = 'none';
+        inactiveBtn.style.transition = 'none';
+
+        root.setAttribute('data-theme', 'light');
+        root.classList.remove('dark', 'theme-dark');
+        const lightWrapperBg = getComputedStyle(wrapper).backgroundColor;
+        const lightActiveBg = getComputedStyle(activeBtn).backgroundColor;
+
+        root.setAttribute('data-theme', 'dark');
+        const darkWrapperBg = getComputedStyle(wrapper).backgroundColor;
+        const darkActiveBg = getComputedStyle(activeBtn).backgroundColor;
+        const darkInactiveBg = getComputedStyle(inactiveBtn).backgroundColor;
+
+        expect(darkActiveBg).not.toBe(darkInactiveBg);
+
+        root.setAttribute('data-theme', 'brand-dark');
+        const brandDarkWrapperBg = getComputedStyle(wrapper).backgroundColor;
+        const brandDarkActiveBg = getComputedStyle(activeBtn).backgroundColor;
+        expect(brandDarkActiveBg).toBe(darkActiveBg);
+
+        if (lightWrapperBg.startsWith('var(')) {
+          expect(lightWrapperBg).toBe('var(--pagination-wrapper-bg)');
+          expect(lightActiveBg).toBe('var(--pagination-active-bg)');
+          expect(darkInactiveBg).toBe('var(--pagination-bg)');
+        } else {
+          expect(darkWrapperBg).not.toBe(lightWrapperBg);
+          expect(darkActiveBg).not.toBe(lightActiveBg);
+          expect(brandDarkWrapperBg).not.toBe(lightWrapperBg);
+        }
+      } finally {
+        if (previousTheme === null) {
+          root.removeAttribute('data-theme');
+        } else {
+          root.setAttribute('data-theme', previousTheme);
+        }
+      }
     });
   });
 

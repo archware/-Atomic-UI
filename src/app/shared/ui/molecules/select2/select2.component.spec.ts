@@ -106,6 +106,37 @@ describe('Select2Component', () => {
     ).toBe('Provincia de atención');
   });
 
+  for (const variante of ['standard', 'floating', 'floating-value'] as const) {
+    it(`asocia el nombre accesible a un nodo existente en la variante ${variante}`, () => {
+      fixture.componentRef.setInput('label', 'Provincia de atención');
+      fixture.componentRef.setInput('variant', variante);
+      fixture.componentRef.setInput('required', true);
+      fixture.detectChanges();
+
+      const raiz = fixture.nativeElement as HTMLElement;
+      const disparador = raiz.querySelector('.select2-trigger') as HTMLElement;
+      const etiquetaId = disparador.getAttribute('aria-labelledby');
+      expect(etiquetaId).toBeTruthy();
+      const etiqueta = raiz.querySelector(`[id="${etiquetaId}"]`);
+      expect(etiqueta).not.toBeNull();
+      if (!etiqueta) throw new Error('Falta el nodo del nombre accesible de Select2');
+
+      // El combobox personalizado se nombra con aria-labelledby; for no etiqueta un div.
+      expect(disparador.getAttribute('role')).toBe('combobox');
+      expect(etiqueta.tagName).toBe('SPAN');
+      expect(etiqueta.hasAttribute('for')).toBeFalse();
+      expect(etiqueta.textContent?.replace('*', '').trim()).toBe('Provincia de atención');
+      expect(etiqueta.querySelector('.fl-label__required')?.getAttribute('aria-hidden')).toBe('true');
+      expect(disparador.getAttribute('aria-required')).toBe('true');
+      expect(disparador.hasAttribute('aria-label')).toBeFalse();
+
+      fixture.componentRef.setInput('required', false);
+      fixture.detectChanges();
+      expect(disparador.hasAttribute('aria-required')).toBeFalse();
+      expect(etiqueta.querySelector('.fl-label__required')).toBeNull();
+    });
+  }
+
   async function abrir(): Promise<HTMLElement> {
     fixture.componentInstance.toggleDropdown();
     fixture.detectChanges();

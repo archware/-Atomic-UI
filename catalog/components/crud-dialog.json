@@ -25,6 +25,12 @@
   ],
   "inputs": [
     {
+      "name": "resolverFocoRetorno",
+      "type": "(() => HTMLElement | null) | null",
+      "default": null,
+      "meaning": "Resuelve al restaurar un destino conectado, visible y enfocable del mismo documento, externo al diálogo. Tiene prioridad sobre el origen; null, excepción o foco fallido conservan el origen sin modificar tabindex."
+    },
+    {
       "name": "panelClass",
       "type": "string",
       "default": "",
@@ -47,13 +53,25 @@
       "type": "string | null",
       "default": null,
       "meaning": "Id de una descripción opcional."
+    },
+    {
+      "name": "rol",
+      "type": "'dialog' | 'alertdialog'",
+      "default": "dialog",
+      "meaning": "Rol semántico del dialog nativo; alertdialog declara aria-modal true."
+    },
+    {
+      "name": "cerrarAlPulsarFondo",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Emite cancelled ante una pulsación primaria fuera de los límites del dialog abierto. El consumidor decide cerrar."
     }
   ],
   "outputs": [
     {
       "name": "cancelled",
       "type": "Event",
-      "meaning": "Intento nativo de cancelar; preventDefault ya fue aplicado y el consumidor decide cerrar."
+      "meaning": "Intento nativo de cancelar por Escape o fondo optativo; preventDefault ya fue aplicado y el consumidor decide cerrar."
     },
     { "name": "closed", "type": "void", "meaning": "Cierre efectivo del dialog." }
   ],
@@ -81,7 +99,9 @@
     "showModal guarda el elemento activo externo y closed restaura su foco si continúa conectado.",
     "El selector de foco prioriza data-dialog-initial-focus, data-control-focus y controles nativos habilitados.",
     "El dialog recorta su superficie; data-crud-dialog-scroll-surface es el único propietario vertical y ScrollOverlay oculta su scrollbar nativo.",
-    "showModal reinicia tanto el dialog como la superficie desplazable antes de enfocar."
+    "showModal reinicia tanto el dialog como la superficie desplazable antes de enfocar.",
+    "rol conserva dialog por defecto; alertdialog añade aria-modal true.",
+    "cerrarAlPulsarFondo es optativo: solo el puntero primario principal fuera del rectángulo emite cancelled, sin cierre automático."
   ],
   "states": [
     { "name": "closed", "meaning": "El dialog no está en top layer." },
@@ -116,7 +136,7 @@
     "--space-6",
     "--text-color"
   ],
-  "story": { "path": null, "status": "missing" },
+  "story": { "path": "src/stories/ui-crud-dialog.stories.ts", "status": "available" },
   "test": {
     "path": "src/app/shared/ui/organisms/crud-dialog/crud-dialog.spec.ts",
     "status": "available"

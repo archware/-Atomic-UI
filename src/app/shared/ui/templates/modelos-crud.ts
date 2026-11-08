@@ -64,8 +64,12 @@ export interface EntidadAccordion<_T extends object = Record<string, unknown>> {
   readonly titulo: string;
   /** Descripción opcional debajo del título. */
   readonly descripcion?: string;
+  /** Icono Font Awesome opcional para la cabecera del panel. */
+  readonly icono?: string;
   /** Si el item arranca abierto (solo el principal). */
   readonly abiertoInicial?: boolean;
+  /** Si el panel de la entidad está temporalmente deshabilitado. */
+  readonly deshabilitada?: boolean;
   /** Etiqueta del botón de acción principal. Por defecto 'Nuevo'. */
   readonly etiquetaNuevo?: string;
   /** Placeholder del campo de búsqueda. */

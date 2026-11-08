@@ -37,7 +37,7 @@ const creditsDemo: AboutCreditItem[] = [
 
 const techStackDemo: AboutTechBadge[] = [
   { label: 'Tauri 1.5 + Rust', icon: 'fa-solid fa-gears', variant: 'primary' },
-  { label: 'Angular 19 + Signals', icon: 'fa-brands fa-angular', variant: 'secondary' },
+  { label: 'Angular 22 + Signals', icon: 'fa-brands fa-angular', variant: 'secondary' },
   { label: 'Atomic UI', icon: 'fa-solid fa-layer-group', variant: 'info' },
   { label: 'PDF.js + pdf-lib', icon: 'fa-solid fa-file-pdf', variant: 'warning' },
   { label: '100% Local', icon: 'fa-solid fa-lock', variant: 'success' },

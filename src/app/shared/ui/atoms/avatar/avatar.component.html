@@ -1,6 +1,5 @@
 <div
-      class="avatar"
-      [ngClass]="['avatar-' + size(), 'avatar-' + variant(), rounded() ? 'avatar-rounded' : '']"
+      [class]="avatarClasses()"
       [appVariablesCss]="{ '--avatar-background-color': colorFondo() }"
     >
       @if (src() && !imageFailed()) {

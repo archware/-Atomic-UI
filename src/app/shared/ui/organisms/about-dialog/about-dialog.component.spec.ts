@@ -27,7 +27,7 @@ describe('AboutDialogComponent', () => {
 
   const sampleTechStack: AboutTechBadge[] = [
     { label: 'Tauri 1.5 + Rust', icon: 'fa-solid fa-gears', variant: 'primary' },
-    { label: 'Angular + Signals', icon: 'fa-brands fa-angular', variant: 'secondary' },
+    { label: 'Angular 22 + Signals', icon: 'fa-brands fa-angular', variant: 'secondary' },
     { label: '100% Local', icon: 'fa-solid fa-shield-halved', variant: 'success' },
   ];
 
@@ -89,6 +89,7 @@ describe('AboutDialogComponent', () => {
     expect(host.textContent).toContain('co-ingeniería con IA Agéntica');
     expect(host.textContent).toContain('Autoría Principal');
     expect(host.textContent).toContain('Tauri 1.5 + Rust');
+    expect(host.textContent).toContain('Angular 22 + Signals');
     expect(host.textContent).toContain('Repositorio Atomic UI');
 
     const githubLink = host.querySelector<HTMLAnchorElement>('a.about-github-pill');

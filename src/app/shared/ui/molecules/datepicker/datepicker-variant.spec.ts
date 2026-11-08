@@ -116,5 +116,26 @@ describe('DatepickerComponent - modos de etiqueta', () => {
       expect(raiz.querySelector('.datepicker-trigger')?.getAttribute('aria-required')).toBe('true');
     }
   });
+
+  it('suprime el anillo global en .datepicker-trigger al enfocar y propaga error y disabled a la etiqueta superior standard', async () => {
+    const fixture = TestBed.createComponent(DatepickerComponent);
+    fixture.componentRef.setInput('label', 'Nacimiento');
+    fixture.componentRef.setInput('error', 'Fecha inválida');
+    fixture.componentRef.setInput('disabled', true);
+    await fixture.whenStable();
+    const raiz: HTMLElement = fixture.nativeElement;
+    const etiquetaSuperior = raiz.querySelector('.datepicker-top-label') as HTMLElement;
+    expect(etiquetaSuperior.classList.contains('fl-label--error')).toBe(true);
+    expect(etiquetaSuperior.classList.contains('fl-label--disabled')).toBe(true);
+
+    fixture.componentRef.setInput('disabled', false);
+    await fixture.whenStable();
+    const disparador = raiz.querySelector('.datepicker-trigger') as HTMLElement;
+    disparador.focus();
+    await fixture.whenStable();
+    const estiloDisparador = getComputedStyle(disparador);
+    expect(estiloDisparador.boxShadow).toBe('none');
+    expect(estiloDisparador.outlineStyle).toBe('none');
+  });
 });
 

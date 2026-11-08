@@ -28,14 +28,15 @@ try {
   fs.writeFileSync(
     path.join(raizTemporal, 'moderno.ts'),
     `import { Component } from '@angular/core';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
-  imports: [NgClass, NgTemplateOutlet],
+  imports: [NgTemplateOutlet],
   template: \`
     @if (cargando) {
       <app-spinner />
     }
+    <ng-container [ngTemplateOutlet]="tpl"></ng-container>
   \`,
 })
 export class ModernoComponent {}
@@ -51,24 +52,25 @@ export class ModernoComponent {}
 <li *ngFor="let el of lista">{{ el }}</li>
 <span *ngSwitchCase="'A'">Opcion A</span>
 <span *ngSwitchDefault>Por defecto</span>
+<ng-container *ngTemplateOutlet="tpl"></ng-container>
 `,
   );
 
   const hallazgosHtml = auditarArbol(raizTemporal);
-  assert.equal(hallazgosHtml.length, 4);
+  assert.equal(hallazgosHtml.length, 5);
   assert.deepEqual(
     hallazgosHtml.map((h) => h.directiva).sort(),
-    ['*ngFor', '*ngIf', '*ngSwitchCase', '*ngSwitchDefault'],
+    ['*ngFor', '*ngIf', '*ngSwitchCase', '*ngSwitchDefault', '*ngTemplateOutlet'],
   );
 
-  // Caso 3: Archivo con directivas estructurales legacy en inline template TS, CommonModule y * as common
+  // Caso 3: Archivo con directivas estructurales legacy en inline template TS, CommonModule, NgClass y * as common
   fs.writeFileSync(
     path.join(raizTemporal, 'legacy.ts'),
-    `import { CommonModule } from '@angular/common';
+    `import { CommonModule, NgClass } from '@angular/common';
 import * as common from '@angular/common';
 
 @Component({
-  imports: [CommonModule, common.CommonModule],
+  imports: [CommonModule, NgClass, common.CommonModule],
   template: '<div *ngIf="activo">Hola</div>'
 })
 export class LegacyComponent {}
@@ -76,14 +78,15 @@ export class LegacyComponent {}
   );
 
   const hallazgosTotales = auditarArbol(raizTemporal);
-  assert.equal(hallazgosTotales.length, 7);
+  assert.equal(hallazgosTotales.length, 9);
   const hallazgosTs = hallazgosTotales.filter((h) => h.rutaArchivo.endsWith('legacy.ts'));
-  assert.equal(hallazgosTs.length, 3);
+  assert.equal(hallazgosTs.length, 4);
   assert.deepEqual(
     hallazgosTs.map((h) => ({ directiva: h.directiva, linea: h.linea })),
     [
       { directiva: '*ngIf', linea: 6 },
       { directiva: 'CommonModule', linea: 1 },
+      { directiva: 'NgClass', linea: 1 },
       { directiva: '* as common', linea: 2 },
     ],
   );
@@ -99,7 +102,7 @@ export class LegacyComponent {}
   );
   assert.equal(cliVacio.status, 2, 'barrido vacio debe devolver codigo 2');
 
-  console.log('Gate Control Flow probado: acepta sintaxis moderna (@if, @for, @switch, NgClass, NgTemplateOutlet) y rechaza directivas estructurales legacy (*ngIf, *ngFor, *ngSwitch), CommonModule, * as @angular/common y barrido vacio.');
+  console.log('Gate Control Flow probado: acepta sintaxis moderna (@if, @for, @switch, [ngTemplateOutlet]) y rechaza directivas estructurales legacy (*ngIf, *ngFor, *ngSwitch, *ngTemplateOutlet), CommonModule, NgClass/NgStyle, * as @angular/common y barrido vacio.');
 } finally {
   fs.rmSync(raizTemporal, { recursive: true, force: true });
 }

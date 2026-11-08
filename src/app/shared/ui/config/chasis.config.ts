@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { SidebarMenuItem, SidebarUser } from '../organisms/sidebar/sidebar.component';
+import { SidebarMenuItem } from '../organisms/sidebar/sidebar.component';
 
 export interface ChasisConfig {
   logoText: string;

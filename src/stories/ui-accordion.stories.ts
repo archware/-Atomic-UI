@@ -1,10 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AccordionComponent } from '../app/shared/ui/organisms/accordion/accordion.component';
+import { moduleMetadata } from '@storybook/angular';
+import {
+  AccordionComponent,
+  AccordionItemComponent,
+} from '../app/shared/ui/organisms/accordion/accordion.component';
 
 const meta: Meta<AccordionComponent> = {
   title: '3. Organisms/Accordion',
   component: AccordionComponent,
   tags: ['autodocs'],
+  decorators: [moduleMetadata({ imports: [AccordionComponent, AccordionItemComponent] })],
 };
 
 export default meta;
@@ -28,11 +33,43 @@ export const Default: Story = {
   }),
 };
 
+export const SingleOpen: Story = {
+  name: 'Selección única (variant="single")',
+  render: () => ({
+    template: `
+      <app-accordion variant="single">
+        <app-accordion-item
+          title="¿Qué es este sistema?"
+          description="Arquitectura y soporte de temas"
+          icon="fa-solid fa-layer-group"
+          [open]="true"
+        >
+          <p>Al abrir otra sección, esta se cierra automáticamente para mantener una sola activa.</p>
+        </app-accordion-item>
+        <app-accordion-item
+          title="¿Cómo cambio el tema?"
+          description="Conmutación entre modo claro y oscuro"
+          icon="fa-solid fa-palette"
+        >
+          <p>Usa el componente ThemeSwitcher en la esquina superior derecha para cambiar entre modos.</p>
+        </app-accordion-item>
+        <app-accordion-item
+          title="¿Puedo personalizar los colores?"
+          description="Variables semánticas y tokens de marca"
+          icon="fa-solid fa-sliders"
+        >
+          <p>Sí, todos los colores están definidos como variables CSS en el archivo tokens.css.</p>
+        </app-accordion-item>
+      </app-accordion>
+    `,
+  }),
+};
+
 export const WithOneExpanded: Story = {
   render: () => ({
     template: `
       <app-accordion>
-        <app-accordion-item title="Sección expandida" [expanded]="true">
+        <app-accordion-item title="Sección expandida" [open]="true">
           <p>Esta sección está abierta por defecto.</p>
         </app-accordion-item>
         <app-accordion-item title="Sección cerrada">
@@ -43,11 +80,27 @@ export const WithOneExpanded: Story = {
   }),
 };
 
+export const FlushSingle: Story = {
+  name: 'Sin marco con selección única (variant="flush" [single]="true")',
+  render: () => ({
+    template: `
+      <app-accordion variant="flush" [single]="true">
+        <app-accordion-item title="Condiciones del crédito" [open]="true">
+          <p>Tasa, plazo y comisiones aplicables.</p>
+        </app-accordion-item>
+        <app-accordion-item title="Requisitos documentales">
+          <p>Documentos que deben presentarse antes del desembolso.</p>
+        </app-accordion-item>
+      </app-accordion>
+    `,
+  }),
+};
+
 export const FAQ: Story = {
   render: () => ({
     template: `
-      <app-accordion>
-        <app-accordion-item title="¿Cuáles son los métodos de pago?">
+      <app-accordion [single]="true">
+        <app-accordion-item title="¿Cuáles son los métodos de pago?" [open]="true">
           <p>Aceptamos tarjetas de crédito, débito, transferencias bancarias y pagos en efectivo.</p>
         </app-accordion-item>
         <app-accordion-item title="¿Cuánto tarda el envío?">
@@ -67,14 +120,14 @@ export const FAQ: Story = {
 export const WithIcons: Story = {
   render: () => ({
     template: `
-      <app-accordion>
-        <app-accordion-item title="📦 Información del producto">
+      <app-accordion variant="single">
+        <app-accordion-item title="Información del producto" icon="fa-solid fa-box" [open]="true">
           <p>Detalles sobre el producto seleccionado.</p>
         </app-accordion-item>
-        <app-accordion-item title="🚚 Envío y entrega">
+        <app-accordion-item title="Envío y entrega" icon="fa-solid fa-truck">
           <p>Información sobre tiempos y costos de envío.</p>
         </app-accordion-item>
-        <app-accordion-item title="💳 Métodos de pago">
+        <app-accordion-item title="Métodos de pago" icon="fa-solid fa-credit-card">
           <p>Opciones de pago disponibles.</p>
         </app-accordion-item>
       </app-accordion>
@@ -86,7 +139,7 @@ export const SingleItem: Story = {
   render: () => ({
     template: `
       <app-accordion>
-        <app-accordion-item title="Ver más detalles" [expanded]="true">
+        <app-accordion-item title="Ver más detalles" [open]="true">
           <p>Este es un acordeón con un solo ítem, útil para secciones expandibles.</p>
           <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
             <li>Detalle 1</li>

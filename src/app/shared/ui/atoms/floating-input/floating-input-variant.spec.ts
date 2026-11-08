@@ -115,4 +115,84 @@ describe('FloatingInputComponent - modos de etiqueta', () => {
     expect(raiz.querySelector('.input-error')?.textContent?.trim()).toBe('Requerido');
     expect(caja(raiz).classList.contains('has-error')).toBe(true);
   });
+
+  it('deshabilitado con valor: la etiqueta elevada usa el mismo color de texto inactivo que la caja en floating, outline, underline y material', async () => {
+    for (const variante of ['floating', 'outline', 'underline', 'material'] as const) {
+      const fixture = TestBed.createComponent(Anfitrion);
+      fixture.componentInstance.variante.set(variante);
+      fixture.componentInstance.control.setValue('Valor inactivo');
+      fixture.componentInstance.control.disable();
+      await fixture.whenStable();
+      const raiz: HTMLElement = fixture.nativeElement;
+      const etiqueta = etiquetaInterna(raiz) as HTMLElement;
+      const inputEl = campo(raiz);
+      if (variante === 'floating' || variante === 'outline') {
+        expect(getComputedStyle(etiqueta).backgroundColor).toBe(
+          getComputedStyle(inputEl).backgroundColor,
+        );
+      }
+      expect(getComputedStyle(etiqueta).color).toBe(getComputedStyle(inputEl).color);
+    }
+  });
+
+  it('unifica color y sangría horizontal de la etiqueta elevada en floating, outline, underline y material y mantiene top interno en underline/material', async () => {
+    const fixtureBase = TestBed.createComponent(Anfitrion);
+    fixtureBase.componentInstance.variante.set('floating');
+    fixtureBase.componentInstance.control.setValue('Referencia');
+    await fixtureBase.whenStable();
+    const etiquetaBase = etiquetaInterna(fixtureBase.nativeElement) as HTMLElement;
+    const computadoBase = getComputedStyle(etiquetaBase);
+    const colorBase = computadoBase.color;
+    const leftBase = computadoBase.left;
+    const topBase = computadoBase.top;
+    expect(colorBase).toBeTruthy();
+
+    for (const variante of ['outline', 'underline', 'material'] as const) {
+      const fixture = TestBed.createComponent(Anfitrion);
+      fixture.componentInstance.variante.set(variante);
+      fixture.componentInstance.control.setValue('Referencia');
+      await fixture.whenStable();
+      const etiqueta = etiquetaInterna(fixture.nativeElement) as HTMLElement;
+      const estilo = getComputedStyle(etiqueta);
+      expect(estilo.color).toBe(colorBase);
+      expect(estilo.left).toBe(leftBase);
+      if (variante === 'outline') {
+        expect(estilo.top).toBe(topBase);
+      } else {
+        expect(parseFloat(estilo.top)).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('marca has-custom-width solo cuando width es fijo y no porcentual ni expresión con %', async () => {
+    const fixture = TestBed.createComponent(FloatingInputComponent);
+    await fixture.whenStable();
+    expect(caja(fixture.nativeElement).classList.contains('has-custom-width')).toBe(false);
+
+    fixture.componentRef.setInput('width', '180px');
+    await fixture.whenStable();
+    expect(caja(fixture.nativeElement).classList.contains('has-custom-width')).toBe(true);
+
+    fixture.componentRef.setInput('width', '25%');
+    await fixture.whenStable();
+    expect(caja(fixture.nativeElement).classList.contains('has-custom-width')).toBe(false);
+
+    fixture.componentRef.setInput('width', 'calc(100% - 2rem)');
+    await fixture.whenStable();
+    expect(caja(fixture.nativeElement).classList.contains('has-custom-width')).toBe(false);
+  });
+
+  it('clearable sin iconClass no renderiza un botón enfocable vacío cuando no hay valor', async () => {
+    const fixture = TestBed.createComponent(FloatingInputComponent);
+    fixture.componentRef.setInput('clearable', true);
+    await fixture.whenStable();
+    const raiz: HTMLElement = fixture.nativeElement;
+    expect(raiz.querySelector('.input-icon-btn')).toBeNull();
+    expect(caja(raiz).classList.contains('has-icon')).toBe(false);
+
+    fixture.componentInstance.writeValue('Texto');
+    await fixture.whenStable();
+    expect(raiz.querySelector('.input-icon-btn')).not.toBeNull();
+    expect(caja(raiz).classList.contains('has-icon')).toBe(true);
+  });
 });

@@ -27,7 +27,12 @@
         (keydown)="handleHeaderKeydown($event)"
       >
         <span class="accordion-heading">
-          <span class="accordion-title">{{ title() }}</span>
+          <span class="accordion-title-row">
+            @if (icon()) {
+              <i class="accordion-leading-icon" [class]="icon()" aria-hidden="true"></i>
+            }
+            <span class="accordion-title">{{ title() }}</span>
+          </span>
           @if (description()) {
             <span class="accordion-description">{{ description() }}</span>
           }

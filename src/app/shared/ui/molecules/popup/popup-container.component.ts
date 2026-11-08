@@ -125,7 +125,7 @@ export class PopupContainerComponent {
         overlay?.querySelector<HTMLElement>('.popup-btn');
       if (objetivo) {
         const nativeFocusable = objetivo.matches('button, input, [tabindex]') ? objetivo : objetivo.querySelector<HTMLElement>('button, input, [tabindex]');
-        (nativeFocusable || objetivo).focus();
+        (nativeFocusable || objetivo).focus({ preventScroll: true });
         this.focused.add(ultimo.id);
       }
     });

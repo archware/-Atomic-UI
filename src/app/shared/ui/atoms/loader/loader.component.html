@@ -1,4 +1,4 @@
-<div class="loader-container" [class]="'loader-' + variant()" [class.loader-sm]="size() === 'sm'" [class.loader-lg]="size() === 'lg'">
+<div class="loader-container" [class]="'loader-' + variant()" [class.loader-sm]="size() === 'sm'" [class.loader-md]="size() === 'md'" [class.loader-lg]="size() === 'lg'">
 
       <!-- Spinner con degradado -->
       @if (variant() === 'spinner') {
@@ -15,10 +15,10 @@
             </defs>
             <circle class="spinner-track" cx="25" cy="25" r="20" />
             <circle 
+              class="spinner-arc"
               cx="25" cy="25" r="20" 
               fill="none" 
               [attr.stroke]="'url(#' + spinnerId + ')'" 
-              stroke-width="4"
               stroke-linecap="round"
               stroke-dasharray="75 50"
             />
@@ -72,10 +72,10 @@
               </linearGradient>
             </defs>
             <circle 
+              class="gradient-arc"
               cx="25" cy="25" r="20" 
               fill="none" 
               [attr.stroke]="'url(#' + ringId + ')'" 
-              stroke-width="5"
               stroke-linecap="round"
               stroke-dasharray="62.83 62.83"
             />

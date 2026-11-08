@@ -156,6 +156,7 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
           variant="material" 
           label="Contraseña" 
           type="password"
+          autocomplete="new-password"
           [(ngModel)]="materialInputValue"
           [ngModelOptions]="{standalone: true}"
         ></app-floating-input>
@@ -198,6 +199,7 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
           variant="floating" 
           label="Contraseña (con toggle)" 
           type="password"
+          autocomplete="new-password"
           [(ngModel)]="passwordInputValue"
           [ngModelOptions]="{standalone: true}"
         ></app-floating-input>
@@ -375,12 +377,16 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
       <div style="background: var(--surface-elevated); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-bottom: 1.5rem;">
         <h4 class="subsection-title" style="margin-top: 0;">1. Buscador Simple</h4>
         <app-query-toolbar accessibleLabel="Búsqueda simple">
-          <div query-filters style="display: flex; gap: 0.5rem; width: 100%;">
+          <div query-filters style="display: flex; gap: 0.75rem; width: 100%; align-items: flex-end;">
             <app-floating-input 
               variant="outline" 
               label="Buscar..." 
+              placeholder="Filtrar por nombre o categoría..."
               type="search"
+              [clearable]="true"
               width="300px"
+              [(ngModel)]="simpleSearchQuery"
+              [ngModelOptions]="{standalone: true}"
             ></app-floating-input>
           </div>
           <div query-actions>
@@ -389,26 +395,60 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
             </app-button>
           </div>
         </app-query-toolbar>
+        <p style="margin: 0.75rem 0 0; font-size: 0.8125rem; color: var(--text-color-secondary);">
+          Coincidencias ({{ filteredSimpleItems.length }}):
+          <strong>{{ filteredSimpleSummary }}</strong>
+        </p>
       </div>
 
       <div style="background: var(--surface-elevated); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
         <h4 class="subsection-title" style="margin-top: 0;">2. Búsqueda en Cascada</h4>
         <app-query-toolbar accessibleLabel="Búsqueda en cascada">
-          <div query-filters style="display: flex; gap: 0.5rem; width: 100%; align-items: center; flex-wrap: wrap;">
-            <app-select2 
+          <div query-filters style="display: flex; gap: 0.75rem; width: 100%; align-items: flex-end; flex-wrap: wrap;">
+            <app-select2
               label="Buscar por"
               variant="floating"
-              [options]="[{value: 'name', label: 'Nombre'}, {value: 'status', label: 'Estado'}]" 
-              placeholder="Buscar por..."
-              width="180px"
-            ></app-select2>
-            <app-select2 
-              label="Estado"
-              variant="floating"
-              [options]="[{value: 'active', label: 'Activo'}, {value: 'inactive', label: 'Inactivo'}]" 
-              placeholder="Valor"
+              [searchable]="false"
+              [options]="cascadeFilterOptions"
+              [ngModel]="cascadeFilterType"
+              (ngModelChange)="onCascadeFilterTypeChange($event)"
+              [ngModelOptions]="{standalone: true}"
               width="200px"
             ></app-select2>
+            @if (cascadeFilterType === 'status') {
+              <app-select2
+                label="Estado"
+                variant="floating"
+                [searchable]="false"
+                [options]="cascadeStatusOptions"
+                [(ngModel)]="cascadeSearchValue"
+                [ngModelOptions]="{standalone: true}"
+                placeholder="Seleccione estado"
+                width="220px"
+              ></app-select2>
+            } @else if (cascadeFilterType === 'category') {
+              <app-select2
+                label="Categoría"
+                variant="floating"
+                [searchable]="false"
+                [options]="cascadeCategoryOptions"
+                [(ngModel)]="cascadeSearchValue"
+                [ngModelOptions]="{standalone: true}"
+                placeholder="Seleccione categoría"
+                width="220px"
+              ></app-select2>
+            } @else if (cascadeFilterType === 'name') {
+              <app-floating-input
+                variant="outline"
+                label="Nombre"
+                placeholder="Buscar por nombre..."
+                type="search"
+                [clearable]="true"
+                width="240px"
+                [(ngModel)]="cascadeSearchText"
+                [ngModelOptions]="{standalone: true}"
+              ></app-floating-input>
+            }
           </div>
           <div query-actions>
             <app-button variant="primary" iconClass="fa-solid fa-plus">
@@ -416,13 +456,17 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
             </app-button>
           </div>
         </app-query-toolbar>
+        <p style="margin: 0.75rem 0 0; font-size: 0.8125rem; color: var(--text-color-secondary);">
+          Coincidencias ({{ filteredCascadeItems.length }}):
+          <strong>{{ filteredCascadeSummary }}</strong>
+        </p>
       </div>
     </section>
 
     <!-- FORMULARIO -->
     <section class="showcase-section">
       <h3 class="section-title">Formulario con Componentes Atomic</h3>
-      <form class="showcase-form">
+      <form class="showcase-form" (ngSubmit)="onSubmit()" (submit)="$event.preventDefault()">
         <!-- Fila 1: Nombre y Email -->
         <app-row variant="form">
           <app-floating-input 
@@ -501,7 +545,7 @@ import { QueryToolbar } from '../../../../shared/ui/organisms/query-toolbar/quer
     .showcase-section { margin-bottom: 2rem; display: block; }
     .section-title { font-size: 1.25rem; font-weight: var(--font-weight-emphasis); margin-bottom: 1rem; color: var(--text-color); }
     .subsection-title { font-size: 1rem; font-weight: var(--font-weight-body); margin: 1rem 0 0.5rem; color: var(--text-color-secondary); }
-    .input-variants-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .input-variants-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 1rem; }
 
     /* Form Styles */
     .showcase-form { background: var(--surface-elevated); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); }
@@ -577,6 +621,82 @@ export class ShowcaseFormsComponent {
     { value: 'ar', label: 'Argentina', icon: '🇦🇷' },
     { value: 'cl', label: 'Chile', icon: '🇨🇱' }
   ];
+
+  // Variante de Búsqueda (Simple vs Cascada)
+  simpleSearchQuery = '';
+  cascadeFilterType: string | null = null;
+  cascadeSearchValue: string | number | null = null;
+  cascadeSearchText = '';
+
+  readonly cascadeFilterOptions: Select2Option[] = [
+    { value: null, label: 'Seleccionar...' },
+    { value: 'status', label: 'Estado' },
+    { value: 'category', label: 'Categoría' },
+    { value: 'name', label: 'Nombre' },
+  ];
+
+  readonly cascadeStatusOptions: Select2Option[] = [
+    { value: null, label: 'Seleccionar...' },
+    { value: 'active', label: 'Activo' },
+    { value: 'inactive', label: 'Inactivo' },
+  ];
+
+  readonly cascadeCategoryOptions: Select2Option[] = [
+    { value: null, label: 'Seleccionar...' },
+    { value: 'electro', label: 'Electrónica' },
+    { value: 'ropa', label: 'Ropa' },
+  ];
+
+  readonly searchDemoItems = [
+    { name: 'Laptop Pro 15', category: 'electro', categoryLabel: 'Electrónica', status: 'active', statusLabel: 'Activo' },
+    { name: 'Monitor Clínico 4K', category: 'electro', categoryLabel: 'Electrónica', status: 'inactive', statusLabel: 'Inactivo' },
+    { name: 'Guardapolvo Quirúrgico', category: 'ropa', categoryLabel: 'Ropa', status: 'active', statusLabel: 'Activo' },
+  ];
+
+  get filteredSimpleItems() {
+    const query = this.simpleSearchQuery.trim().toLowerCase();
+    if (!query) return this.searchDemoItems;
+    return this.searchDemoItems.filter(
+      item =>
+        item.name.toLowerCase().includes(query) ||
+        item.categoryLabel.toLowerCase().includes(query) ||
+        item.statusLabel.toLowerCase().includes(query),
+    );
+  }
+
+  get filteredSimpleSummary(): string {
+    const items = this.filteredSimpleItems;
+    return items.length > 0 ? items.map(i => `${i.name} (${i.statusLabel})`).join(' · ') : 'Sin resultados';
+  }
+
+  get filteredCascadeItems() {
+    if (!this.cascadeFilterType) return this.searchDemoItems;
+    if (this.cascadeFilterType === 'status') {
+      if (!this.cascadeSearchValue) return this.searchDemoItems;
+      return this.searchDemoItems.filter(item => item.status === this.cascadeSearchValue);
+    }
+    if (this.cascadeFilterType === 'category') {
+      if (!this.cascadeSearchValue) return this.searchDemoItems;
+      return this.searchDemoItems.filter(item => item.category === this.cascadeSearchValue);
+    }
+    if (this.cascadeFilterType === 'name') {
+      const query = this.cascadeSearchText.trim().toLowerCase();
+      if (!query) return this.searchDemoItems;
+      return this.searchDemoItems.filter(item => item.name.toLowerCase().includes(query));
+    }
+    return this.searchDemoItems;
+  }
+
+  get filteredCascadeSummary(): string {
+    const items = this.filteredCascadeItems;
+    return items.length > 0 ? items.map(i => `${i.name} (${i.categoryLabel}, ${i.statusLabel})`).join(' · ') : 'Sin resultados';
+  }
+
+  onCascadeFilterTypeChange(type: string | number | null | (string | number | null)[]): void {
+    this.cascadeFilterType = typeof type === 'string' ? type : null;
+    this.cascadeSearchValue = null;
+    this.cascadeSearchText = '';
+  }
 
   // Radio options
   preferenceOptions: RadioOption[] = [

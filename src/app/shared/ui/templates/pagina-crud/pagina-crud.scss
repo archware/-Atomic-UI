@@ -67,11 +67,13 @@ app-query-toolbar {
 
 .pagina-crud__filtros-cascada {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-3);
   align-items: flex-end;
 }
 
 .pagina-crud__filtro-control {
+  width: 15rem;
   min-width: 15rem;
   max-width: 20rem;
 }

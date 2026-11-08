@@ -1,3 +1,5 @@
+import { Component, ElementRef, signal, viewChild } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { ButtonComponent } from '../app/shared/ui/atoms/button/button.component';
@@ -61,4 +63,39 @@ export const Declarative: Story = {
       </app-form-dialog>
     `,
   }),
+};
+
+@Component({
+  selector: 'app-story-form-render-retorno',
+  imports: [FormDialog, FormDialogActions, InputComponent, ButtonComponent, ReactiveFormsModule],
+  template: `<section #destino role="region" aria-label="Destino estable del formulario" tabindex="-1">
+    <p>Modelo: {{ limite.value }}; campo independiente: {{ plazo.value }}</p>
+    @if (origenVisible()) {
+      <app-button (buttonClick)="abrir()">Abrir 0 a 500</app-button>
+    }
+    <app-button variant="outline" (buttonClick)="abierto.set(true)">Reabrir</app-button>
+    <app-form-dialog title="Valores tras render" [(opened)]="abierto"
+      [resolverFocoRetorno]="resolver" (cancelled)="abierto.set(false)">
+      <app-input label="Limite" type="number" [formControl]="limite" />
+      <app-input label="Plazo" type="number" [formControl]="plazo" />
+      <app-form-dialog-actions>
+        <app-button variant="outline" (buttonClick)="abierto.set(false)">Cancelar</app-button>
+        <app-button (buttonClick)="origenVisible.set(false); abierto.set(false)">Retirar origen y cerrar</app-button>
+      </app-form-dialog-actions>
+    </app-form-dialog>
+  </section>`,
+})
+class HistoriaFormularioRenderRetorno {
+  readonly destino = viewChild.required<ElementRef<HTMLElement>>('destino');
+  readonly limite = new FormControl(0, { nonNullable: true });
+  readonly plazo = new FormControl(35, { nonNullable: true });
+  readonly abierto = signal(false);
+  readonly origenVisible = signal(true);
+  readonly resolver = () => this.destino().nativeElement;
+  abrir(): void { this.limite.setValue(500); this.abierto.set(true); }
+}
+
+export const AperturaTrasRenderYRetorno: Story = {
+  decorators: [moduleMetadata({ imports: [HistoriaFormularioRenderRetorno] })],
+  render: () => ({ template: '<app-story-form-render-retorno />' }),
 };

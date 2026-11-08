@@ -11,18 +11,18 @@ const raizTemporal = fs.mkdtempSync(path.join(os.tmpdir(), 'atomic-signals-'));
 try {
   fs.writeFileSync(
     path.join(raizTemporal, 'moderno.ts'),
-    "import { input, output } from '@angular/core';\nexport const valor = input(0);\n",
+    "import { input, output, viewChild, viewChildren, contentChild, contentChildren } from '@angular/core';\nexport const valor = input(0);\n",
   );
   assert.deepEqual(auditarArbol(raizTemporal), []);
 
   fs.writeFileSync(
     path.join(raizTemporal, 'heredado.ts'),
-    "import { Input as Entrada, Output, EventEmitter } from '@angular/core';\n",
+    "import { Input as Entrada, Output, EventEmitter, ViewChild, ViewChildren, ContentChild, ContentChildren } from '@angular/core';\n",
   );
   const hallazgos = auditarArbol(raizTemporal);
   assert.deepEqual(
     hallazgos.map((hallazgo) => hallazgo.simbolo).sort(),
-    ['EventEmitter', 'Input', 'Output'],
+    ['ContentChild', 'ContentChildren', 'EventEmitter', 'Input', 'Output', 'ViewChild', 'ViewChildren'],
   );
   assert.ok(hallazgos.every((hallazgo) => hallazgo.linea === 1));
   console.log('Gate Signals probado: acepta APIs modernas y rechaza decoradores heredados con alias.');

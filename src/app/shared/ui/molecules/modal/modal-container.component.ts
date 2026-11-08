@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, ViewChildren, QueryList, ElementRef, effect } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, ElementRef, effect, viewChildren } from '@angular/core';
 
 import { ModalService, ModalItem } from '../../services/modal.service';
 
@@ -91,7 +91,7 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
 export class ModalContainerComponent {
   protected readonly modalService = inject(ModalService);
 
-  @ViewChildren('modalElement') modalElements!: QueryList<ElementRef<HTMLElement>>;
+  readonly modalElements = viewChildren<ElementRef<HTMLElement>>('modalElement');
 
   constructor() {
     // Effect to focus the newest modal when the list changes
@@ -100,7 +100,8 @@ export class ModalContainerComponent {
       if (modalList.length > 0) {
         // Wait for next tick to ensure DOM is updated
         setTimeout(() => {
-          const newestModal = this.modalElements.last;
+          const elements = this.modalElements();
+          const newestModal = elements[elements.length - 1];
           if (newestModal) {
             // Find first focusable element (close button or first action button)
             const focusable = newestModal.nativeElement.querySelector(
@@ -108,9 +109,9 @@ export class ModalContainerComponent {
             ) as HTMLElement;
 
             if (focusable) {
-              focusable.focus();
+              focusable.focus({ preventScroll: true });
             } else {
-              newestModal.nativeElement.focus();
+              newestModal.nativeElement.focus({ preventScroll: true });
             }
           }
         }, 0);

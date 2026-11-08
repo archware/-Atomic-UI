@@ -9,6 +9,12 @@
   "purpose": "Plantilla canónica de catálogo que preserva acciones compactas, filtros y ventanas.",
   "inputs": [
     {
+      "name": "resolverFocoRetorno",
+      "type": "(() => HTMLElement | null) | null",
+      "default": null,
+      "meaning": "Resuelve al restaurar un destino conectado, visible y enfocable del mismo documento, externo al diálogo. Tiene prioridad sobre el origen; null, excepción o foco fallido conservan el origen sin modificar tabindex."
+    },
+    {
       "name": "titulo",
       "type": "string",
       "meaning": "Título del catálogo.",
@@ -214,7 +220,7 @@
   "outputs": [
     {
       "name": "alCambiarTipoBusqueda",
-      "type": "string",
+      "type": "string | null",
       "meaning": "Intención de presentación; el consumidor coordina el resultado."
     },
     {
@@ -309,6 +315,7 @@
     "catalog-detail"
   ],
   "methods": [
+    { "name": "obtenerDestinoFocoRetorno", "type": "() => HTMLElement", "meaning": "Devuelve el host estable region, nombrado por titulo y con tabindex=-1, incluso durante la recarga de filas. Su uso como destino lo decide el consumidor." },
     {
       "name": "abrirDialogo",
       "type": "void",

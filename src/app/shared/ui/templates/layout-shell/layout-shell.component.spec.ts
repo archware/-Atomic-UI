@@ -1,6 +1,19 @@
-import { provideZonelessChangeDetection } from '@angular/core';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { LayoutShellComponent } from './layout-shell.component';
+
+@Component({
+  standalone: true,
+  imports: [LayoutShellComponent],
+  template: `
+    <app-layout-shell>
+      <div style="height: 2400px; width: 100%;">Contenido extenso desplazable</div>
+    </app-layout-shell>
+  `,
+})
+class ScrollableShellHost {}
 
 describe('LayoutShellComponent', () => {
   it('reserva el scroll principal al overlay y evita un segundo dueño en el sidebar', async () => {
@@ -152,5 +165,63 @@ describe('LayoutShellComponent', () => {
     const raiz = fixture.nativeElement as HTMLElement;
     expect((raiz.querySelector('main') as HTMLElement).hasAttribute('inert')).toBe(false);
     expect((raiz.querySelector('.layout-sidebar') as HTMLElement).hasAttribute('inert')).toBe(false);
+  });
+
+  it('persiste y restaura la posición de scroll al cambiar de ruta y volver (shell persistente y recreado)', async () => {
+    LayoutShellComponent.clearSavedScrollPositions();
+    const routerEvents$ = new Subject<unknown>();
+    const fakeRouter = {
+      url: '/showcase',
+      events: routerEvents$.asObservable(),
+    };
+
+    await TestBed.configureTestingModule({
+      imports: [ScrollableShellHost],
+      providers: [
+        provideZonelessChangeDetection(),
+        { provide: Router, useValue: fakeRouter },
+      ],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(ScrollableShellHost);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const scrollArea = fixture.nativeElement.querySelector(
+      '.layout-content .so-scroll-area',
+    ) as HTMLElement;
+    expect(scrollArea).not.toBeNull();
+
+    scrollArea.scrollTop = 420;
+    scrollArea.dispatchEvent(new Event('scroll'));
+
+    // Navegar a otra ruta (/dialogs)
+    routerEvents$.next(new NavigationStart(1, '/dialogs'));
+    fakeRouter.url = '/dialogs';
+    routerEvents$.next(new NavigationEnd(1, '/dialogs', '/dialogs'));
+    await fixture.whenStable();
+
+    expect(scrollArea.scrollTop).toBe(0);
+
+    // Volver a la ruta original (/showcase) en shell persistente
+    routerEvents$.next(new NavigationStart(2, '/showcase'));
+    fakeRouter.url = '/showcase';
+    routerEvents$.next(new NavigationEnd(2, '/showcase', '/showcase'));
+    await fixture.whenStable();
+
+    expect(scrollArea.scrollTop).toBe(420);
+
+    // También debe restaurar cuando el componente LayoutShell se destruye y recrea en la ruta
+    fixture.destroy();
+    const recreatedFixture = TestBed.createComponent(ScrollableShellHost);
+    recreatedFixture.detectChanges();
+    await recreatedFixture.whenStable();
+
+    const recreatedScrollArea = recreatedFixture.nativeElement.querySelector(
+      '.layout-content .so-scroll-area',
+    ) as HTMLElement;
+    expect(recreatedScrollArea.scrollTop).toBe(420);
+    recreatedFixture.destroy();
+    LayoutShellComponent.clearSavedScrollPositions();
   });
 });

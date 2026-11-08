@@ -6,18 +6,11 @@ import {
     HttpEvent,
     HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
-import { catchError, filter, take, switchMap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-import { TokenService } from '../services/token.service';
 import { AuthService } from '../services/auth.service';
 import { ApiService } from '../services/api.service';
-
-/**
- * Default app ID for token retrieval
- * @customize Set your application ID
- */
-const DEFAULT_APP_ID = '2';
 
 /**
  * URLs that should skip authentication
@@ -29,25 +22,13 @@ const PUBLIC_URLS = [
 ];
 
 /**
- * Flag to prevent multiple refresh requests
- */
-let isRefreshing = false;
-
-/**
- * Subject to queue requests while refreshing
- */
-const refreshTokenSubject = new BehaviorSubject<string | null>(null);
-
-/**
- * Authentication Interceptor
- * 
- * Automatically adds Bearer token to requests and handles token refresh.
- * 
- * Features:
- * - Adds Authorization header to authenticated requests
- * - Automatic token refresh on 401 errors
- * - Request queuing during refresh
- * - Skip public endpoints
+ * Interceptor de autenticación mediante cookies.
+ *
+ * Habilita withCredentials en rutas relativas y solicitudes al origen de la API,
+ * salvo los endpoints públicos. HttpOnly se configura en el servidor; este
+ * interceptor no añade Authorization ni renueva tokens. Ante un 401 de una
+ * solicitud incluida cierra la sesión y propaga el mismo error.
+ * Las solicitudes excluidas conservan los atributos definidos por el llamador.
  * 
  * @usage
  * ```typescript
@@ -66,7 +47,6 @@ export const authInterceptor: HttpInterceptorFn = (
     req: HttpRequest<unknown>,
     next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
-    const tokenService = inject(TokenService);
     const authService = inject(AuthService);
     const apiService = inject(ApiService);
 
@@ -76,27 +56,20 @@ export const authInterceptor: HttpInterceptorFn = (
     }
 
     /*
-      LA CREDENCIAL SOLO VIAJA AL ORIGEN PROPIO DE LA API.
+      withCredentials SOLO SE AÑADE PARA EL ORIGEN PROPIO DE LA API.
 
-      Antes, la decision de a quien mandar el token era una lista NEGRA de tres
-      rutas publicas: todo lo demas se firmaba, incluidas las URL absolutas a
-      terceros. Cualquier peticion a un servicio externo —un mapa, un tipo de
-      cambio, un PDF alojado fuera, una pasarela, un CDN— se llevaba el JWT del
-      usuario a un host que no es el nuestro, donde queda en sus registros.
-
-      La postura correcta es la contraria: lista BLANCA por origen. Se firma lo
-      que va a la base declarada de la API y nada mas.
-
-      Con `baseUrl` sin configurar se conserva el comportamiento de siempre para
-      las rutas RELATIVAS —que van al propio origen del documento y por tanto
-      son seguras— y se deja de firmar cualquier URL absoluta, que es
-      exactamente la fuga que esto viene a cerrar.
+      La comparación por origen evita habilitar cookies en solicitudes a
+      terceros o a dominios que solo comparten un prefijo con la API.
+      Sin baseUrl configurada se conserva la inclusión de rutas relativas,
+      que se resuelven contra el origen del documento, y se excluyen las URL
+      absolutas. Esta selección no elimina headers ni atributos de credenciales
+      que el llamador haya establecido previamente.
     */
     if (!belongsToApi(req.url, apiService.getBaseUrl())) {
         return next(req);
     }
 
-    // Add credentials for HttpOnly cookies
+    // Habilita cookies; su atributo HttpOnly corresponde al servidor.
     req = req.clone({
         withCredentials: true
     });
@@ -114,18 +87,6 @@ export const authInterceptor: HttpInterceptorFn = (
 };
 
 /**
- * Add Authorization header to request
- */
-function addTokenHeader(
-    request: HttpRequest<unknown>,
-    token: string
-): HttpRequest<unknown> {
-    return request.clone({
-        withCredentials: true
-    });
-}
-
-/**
  * Check if URL is public (no auth required)
  */
 function isPublicUrl(url: string): boolean {
@@ -133,11 +94,10 @@ function isPublicUrl(url: string): boolean {
 }
 
 /**
- * Decide si una peticion va al origen propio de la API y por tanto puede
- * llevar la credencial.
+ * Decide si el interceptor habilita cookies para una petición.
  *
- * Una ruta RELATIVA siempre va al origen del documento, asi que es segura por
- * construccion. Una ABSOLUTA solo se firma si comparte origen con la base
+ * Una ruta RELATIVA se resuelve contra el origen del documento.
+ * Una ABSOLUTA solo se incluye si comparte origen con la base
  * declarada; comparar por origen y no por prefijo de cadena evita que
  * `https://api.ejemplo.com.atacante.net` pase por ser `https://api.ejemplo.com`.
  */
@@ -154,53 +114,7 @@ function belongsToApi(url: string, baseUrl: string): boolean {
         const base = new URL(baseUrl, globalThis.location?.href);
         return destino.origin === base.origin;
     } catch {
-        // Una URL que no se puede analizar no se firma: ante la duda, no se
-        // entrega la credencial.
+        // Una URL que no se puede analizar no recibe withCredentials del interceptor.
         return false;
     }
-}
-
-/**
- * Handle 401 error with token refresh
- */
-function handle401Error(
-    request: HttpRequest<unknown>,
-    next: HttpHandlerFn,
-    tokenService: TokenService,
-    authService: AuthService
-): Observable<HttpEvent<unknown>> {
-    if (!isRefreshing) {
-        isRefreshing = true;
-        refreshTokenSubject.next(null);
-
-        const refreshToken = tokenService.getRefreshToken(DEFAULT_APP_ID);
-
-        if (refreshToken) {
-            return authService.refreshToken().pipe(
-                switchMap((response) => {
-                    isRefreshing = false;
-                    refreshTokenSubject.next(response.access_Token);
-
-                    return next(addTokenHeader(request, response.access_Token));
-                }),
-                catchError((err) => {
-                    isRefreshing = false;
-                    authService.logout();
-                    return throwError(() => err);
-                })
-            );
-        } else {
-            // No refresh token, force logout
-            isRefreshing = false;
-            authService.logout();
-            return throwError(() => new Error('Session expired'));
-        }
-    }
-
-    // Wait for refresh to complete, then retry request
-    return refreshTokenSubject.pipe(
-        filter(token => token !== null),
-        take(1),
-        switchMap(token => next(addTokenHeader(request, token!)))
-    );
 }

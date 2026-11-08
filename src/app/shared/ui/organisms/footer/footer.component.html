@@ -5,8 +5,8 @@
       [attr.aria-label]="accessibleLabel()">
       @if (variant() === 'simple') {
         <div class="atomic-footer__container atomic-footer__container--bottom">
-          <ng-container *ngTemplateOutlet="copyrightTemplate"></ng-container>
-          <ng-container *ngTemplateOutlet="versionTemplate"></ng-container>
+          <ng-container [ngTemplateOutlet]="copyrightTemplate"></ng-container>
+          <ng-container [ngTemplateOutlet]="versionTemplate"></ng-container>
         </div>
       }
 
@@ -14,13 +14,13 @@
         <div class="atomic-footer__container atomic-footer__container--stacked">
           @if (socialLinks().length > 0 || legalLinks().length > 0) {
             <div class="atomic-footer__inline-top">
-              <ng-container *ngTemplateOutlet="social"></ng-container>
-              <ng-container *ngTemplateOutlet="legal"></ng-container>
+              <ng-container [ngTemplateOutlet]="social"></ng-container>
+              <ng-container [ngTemplateOutlet]="legal"></ng-container>
             </div>
           }
           <div class="atomic-footer__bottom-row">
-            <ng-container *ngTemplateOutlet="copyrightTemplate"></ng-container>
-            <ng-container *ngTemplateOutlet="versionTemplate"></ng-container>
+            <ng-container [ngTemplateOutlet]="copyrightTemplate"></ng-container>
+            <ng-container [ngTemplateOutlet]="versionTemplate"></ng-container>
           </div>
         </div>
       }
@@ -38,21 +38,21 @@
             @if (legalLinks().length > 0) {
               <div class="atomic-footer__column">
                 <h4 class="atomic-footer__column-title">{{ legalTitle() }}</h4>
-                <ng-container *ngTemplateOutlet="legal"></ng-container>
+                <ng-container [ngTemplateOutlet]="legal"></ng-container>
               </div>
             }
 
             @if (socialLinks().length > 0) {
               <div class="atomic-footer__column">
                 <h4 class="atomic-footer__column-title">{{ socialTitle() }}</h4>
-                <ng-container *ngTemplateOutlet="social; context: { vertical: true }"></ng-container>
+                <ng-container [ngTemplateOutlet]="social" [ngTemplateOutletContext]="{ vertical: true }"></ng-container>
               </div>
             }
           </div>
 
           <div class="atomic-footer__bottom-row">
-            <ng-container *ngTemplateOutlet="copyrightTemplate"></ng-container>
-            <ng-container *ngTemplateOutlet="versionTemplate"></ng-container>
+            <ng-container [ngTemplateOutlet]="copyrightTemplate"></ng-container>
+            <ng-container [ngTemplateOutlet]="versionTemplate"></ng-container>
           </div>
         </div>
       }

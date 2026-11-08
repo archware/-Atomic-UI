@@ -1,5 +1,6 @@
 import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import type { UserMenuAction } from '@shared/ui/molecules/user-menu/user-menu.component';
 import {
   LayoutShellComponent, TopbarComponent, SidebarComponent, SidebarMenuItem, SidebarUser,
   PanelComponent, RowComponent,
@@ -62,7 +63,7 @@ export class DashboardPageComponent implements OnInit {
   closeSidebar() { this.sidebarVisible.set(false); }
   toggleSidebar() { this.sidebarVisible.update(v => !v); }
   onMenuItemClick(item: SidebarMenuItem): void { if (item.route) this.router.navigate([item.route]); }
-  onUserAction(action: any): void {
+  onUserAction(action: UserMenuAction): void {
     if (action.id === 'settings') this.router.navigate(['/settings']);
   }
   onLogout() {}

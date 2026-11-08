@@ -6,6 +6,7 @@ import {
   ElementRef,
   inject,
   Injector,
+  OnDestroy,
   input,
   output,
   viewChild,
@@ -49,11 +50,14 @@ const ERROR_FOCUS_SELECTORS = [
   templateUrl: './crud-dialog.html',
   styleUrl: './crud-dialog.scss',
 })
-export class CrudDialog {
+export class CrudDialog implements OnDestroy {
+  readonly resolverFocoRetorno = input<(() => HTMLElement | null) | null>(null);
   readonly panelClass = input('');
   readonly size = input<'sm' | 'md' | 'lg' | 'xl'>('md');
   readonly labelledBy = input.required<string>();
   readonly describedBy = input<string | null>(null);
+  readonly rol = input<'dialog' | 'alertdialog'>('dialog');
+  readonly cerrarAlPulsarFondo = input(false);
   readonly cancelled = output<Event>();
   readonly closed = output<void>();
 
@@ -62,6 +66,11 @@ export class CrudDialog {
   private readonly injector = inject(Injector);
   private returnFocusTarget: HTMLElement | null = null;
   private pendingErrorFocus?: AfterRenderRef;
+  private restauracionPendiente?: AfterRenderRef;
+  private generacionApertura = 0;
+  private destruido = false;
+  private cierreNotificado = false;
+  private desplazamientosAlCerrar: { elemento: HTMLElement; top: number; left: number }[] = [];
 
   get nativeElement(): HTMLDialogElement {
     return this.dialog().nativeElement;
@@ -73,7 +82,13 @@ export class CrudDialog {
 
   showModal(focusSelectors: string | readonly string[] = DEFAULT_FOCUS_SELECTORS): void {
     const element = this.nativeElement;
+    const desplazamientosPrevios = this.capturarDesplazamientosExternos(element);
     if (!element.open) {
+      this.generacionApertura++;
+      this.cierreNotificado = false;
+      this.desplazamientosAlCerrar = [];
+      this.restauracionPendiente?.destroy();
+      this.restauracionPendiente = undefined;
       const activeElement = element.ownerDocument.activeElement;
       this.returnFocusTarget =
         activeElement instanceof HTMLElement &&
@@ -90,6 +105,7 @@ export class CrudDialog {
     element.scrollTop = 0;
     this.scrollSurface().nativeElement.scrollTop = 0;
     this.focusFirst(element, focusSelectors);
+    this.restaurarDesplazamientosExternos(desplazamientosPrevios);
   }
 
   close(returnValue?: string): void {
@@ -97,8 +113,10 @@ export class CrudDialog {
     if (!element.open) {
       return;
     }
+    this.desplazamientosAlCerrar = this.capturarDesplazamientosExternos(element);
     if (typeof element.close === 'function') {
       element.close(returnValue);
+      this.restaurarDesplazamientosExternos(this.desplazamientosAlCerrar);
     } else {
       element.removeAttribute('open');
       this.handleClosed();
@@ -173,17 +191,97 @@ export class CrudDialog {
     return target.ownerDocument.activeElement === target;
   }
 
+  protected alPulsarFondo(evento: PointerEvent): void {
+    const dialogo = this.nativeElement;
+    if (!this.cerrarAlPulsarFondo() || !dialogo.open || evento.target !== dialogo ||
+        !evento.isPrimary || evento.button !== 0) {
+      return;
+    }
+    const limites = dialogo.getBoundingClientRect();
+    if (evento.clientX >= limites.left && evento.clientX <= limites.right &&
+        evento.clientY >= limites.top && evento.clientY <= limites.bottom) {
+      return;
+    }
+    this.handleCancel(evento);
+  }
+
   protected handleCancel(event: Event): void {
     event.preventDefault();
     this.cancelled.emit(event);
   }
 
+  ngOnDestroy(): void {
+    this.destruido = true;
+    this.generacionApertura++;
+    this.restauracionPendiente?.destroy();
+    this.pendingErrorFocus?.destroy();
+  }
+
+  private restaurarFoco(destino: HTMLElement | null, dialogo: HTMLDialogElement): boolean {
+    if (!destino || !destino.isConnected || destino.ownerDocument !== dialogo.ownerDocument ||
+        destino === dialogo.ownerDocument.body || dialogo.contains(destino) ||
+        destino.closest('[hidden], [inert], [aria-hidden="true"], [aria-disabled="true"], [disabled]') ||
+        destino.getClientRects().length === 0 || getComputedStyle(destino).visibility !== 'visible') return false;
+    try {
+      destino.focus({ preventScroll: true });
+      return destino.isConnected && destino.ownerDocument.activeElement === destino;
+    } catch { return false; }
+  }
+
   protected handleClosed(): void {
-    this.closed.emit();
-    const target = this.returnFocusTarget;
+    if (this.destruido || this.open || this.cierreNotificado) return;
+    this.cierreNotificado = true;
+    this.pendingErrorFocus?.destroy();
+    this.pendingErrorFocus = undefined;
+    const desplazamientos =
+      this.desplazamientosAlCerrar.length > 0
+        ? this.desplazamientosAlCerrar
+        : this.capturarDesplazamientosExternos(this.nativeElement);
+    this.desplazamientosAlCerrar = [];
+    this.restaurarDesplazamientosExternos(desplazamientos);
+    const origen = this.returnFocusTarget;
     this.returnFocusTarget = null;
-    if (target?.isConnected) {
-      queueMicrotask(() => target.focus({ preventScroll: true }));
+    const generacion = this.generacionApertura;
+    this.restauracionPendiente = afterNextRender({ write: () => {
+      this.restauracionPendiente = undefined;
+      if (this.destruido || this.open || generacion !== this.generacionApertura) return;
+      const dialogo = this.nativeElement;
+      const otraVentanaAbierta = Array.from(dialogo.ownerDocument.querySelectorAll<HTMLElement>(
+        'dialog[open], [aria-modal="true"]:not(dialog)',
+      )).some(ventana => ventana.getClientRects().length > 0 &&
+        getComputedStyle(ventana).visibility === 'visible' &&
+        !ventana.closest('[hidden], [inert], [aria-hidden="true"]'));
+      if (otraVentanaAbierta) return;
+      let destino: HTMLElement | null = null;
+      try { destino = this.resolverFocoRetorno()?.() ?? null; } catch { /* El cierre prevalece. */ }
+      if (!this.restaurarFoco(destino, dialogo)) this.restaurarFoco(origen, dialogo);
+      this.restaurarDesplazamientosExternos(desplazamientos);
+    } }, { injector: this.injector });
+    this.closed.emit();
+  }
+
+  private capturarDesplazamientosExternos(
+    dialogo: HTMLDialogElement,
+  ): { elemento: HTMLElement; top: number; left: number }[] {
+    const doc = dialogo.ownerDocument;
+    if (!doc) return [];
+    return Array.from(doc.querySelectorAll<HTMLElement>('.so-scroll-area'))
+      .filter((el) => !dialogo.contains(el))
+      .map((elemento) => ({
+        elemento,
+        top: elemento.scrollTop,
+        left: elemento.scrollLeft,
+      }));
+  }
+
+  private restaurarDesplazamientosExternos(
+    instantaneas: readonly { elemento: HTMLElement; top: number; left: number }[],
+  ): void {
+    for (const { elemento, top, left } of instantaneas) {
+      if (elemento.isConnected) {
+        if (elemento.scrollTop !== top) elemento.scrollTop = top;
+        if (elemento.scrollLeft !== left) elemento.scrollLeft = left;
+      }
     }
   }
 }

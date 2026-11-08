@@ -50,6 +50,10 @@ const CONTRAST_PAIRS = [
   },
   { what: 'texto principal sobre el fondo de pagina', fg: '--text-color', bg: '--surface-background' },
   { what: 'texto principal sobre una seccion', fg: '--text-color', bg: '--surface-section' },
+  { what: 'texto secundario sobre el fondo de pagina', fg: '--text-color-secondary', bg: '--surface-background' },
+  { what: 'texto secundario sobre una seccion', fg: '--text-color-secondary', bg: '--surface-section' },
+  { what: 'texto tonal secundario sobre fondo tonal', fg: '--secondary-color-text', bg: '--secondary-color-lighter' },
+  { what: 'texto de boton secundario', fg: '--button-secondary-text', bg: '--button-secondary-bg' },
   { what: 'texto de un campo activo', fg: '--input-text', bg: '--input-bg' },
   {
     what: 'texto de un boton deshabilitado',
@@ -70,6 +74,12 @@ const CONTRAST_PAIRS = [
   { what: 'texto de una alerta de exito', fg: '--alert-success-text', bg: '--success-color-lighter' },
   { what: 'texto de una alerta de aviso', fg: '--alert-warning-text', bg: '--warning-color-lighter' },
   { what: 'texto de una alerta de peligro', fg: '--alert-danger-text', bg: '--danger-color-lighter' },
+  { what: 'etiqueta flotante en reposo', fg: '--field-label-color-resting', bg: '--input-bg' },
+  { what: 'etiqueta flotante elevada', fg: '--field-label-color-floated', bg: '--input-bg' },
+  { what: 'texto de un tooltip', fg: '--tooltip-text', bg: '--tooltip-bg' },
+  { what: 'texto de boton de paginacion en reposo', fg: '--pagination-text', bg: '--pagination-bg' },
+  { what: 'texto de boton de paginacion activo', fg: '--pagination-active-text', bg: '--pagination-active-bg' },
+  { what: 'texto de boton de paginacion deshabilitado', fg: '--pagination-disabled-text', bg: '--pagination-disabled-bg' },
 ];
 
 const failures = [];
@@ -200,7 +210,7 @@ for (const theme of REACHABLE_THEMES) {
 // --- Referencias colgantes ------------------------------------------------
 // Solo familias gobernadas por los ficheros de tema: fuera de ellas hay tokens
 // legitimos definidos en el propio componente o inyectados por [style].
-const GOVERNED = /^--(?:text-(?:2xs|xs|sm|md|lg|xl|2xl|3xl|4xl)|input-|surface-|gray-|letter-spacing-|border-width-)/;
+const GOVERNED = /^--(?:text-(?:2xs|xs|sm|md|lg|xl|2xl|3xl|4xl)|input-|surface-|gray-|letter-spacing-|border-width-|tooltip-|pagination-)/;
 
 const defined = new Set();
 for (const theme of [...REACHABLE_THEMES, 'brand-dark', 'brand-light']) {

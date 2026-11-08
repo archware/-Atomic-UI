@@ -42,8 +42,17 @@
     <section class="showcase-section">
       <h3 class="section-title">Tooltips</h3>
       <div class="tooltip-container">
-        <app-button variant="outline" class="tooltip-trigger" data-tooltip="Este es un tooltip de ayuda">
+        <app-button variant="outline" appTooltip="Este es un tooltip de ayuda" tooltipPosition="top">
           Hover para tooltip
+        </app-button>
+        <app-button variant="outline" appTooltip="Tooltip en la parte inferior" tooltipPosition="bottom">
+          Tooltip abajo
+        </app-button>
+        <app-button variant="outline" appTooltip="Tooltip a la izquierda" tooltipPosition="left">
+          Tooltip izquierda
+        </app-button>
+        <app-button variant="outline" appTooltip="Tooltip a la derecha" tooltipPosition="right">
+          Tooltip derecha
         </app-button>
       </div>
     </section>

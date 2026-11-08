@@ -4,8 +4,17 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
 
-const PATRON_DIRECTIVAS_PROHIBIDAS = /\*(ngIf|ngFor|ngSwitchCase|ngSwitchDefault|ngSwitch)\b/;
-const SIMBOLOS_COMMON_PROHIBIDOS = new Set(['CommonModule']);
+const PATRON_DIRECTIVAS_PROHIBIDAS = /\*(ngIf|ngFor|ngSwitchCase|ngSwitchDefault|ngSwitch|ngTemplateOutlet)\b/;
+const SIMBOLOS_COMMON_PROHIBIDOS = new Set([
+  'CommonModule',
+  'NgClass',
+  'NgStyle',
+  'NgIf',
+  'NgFor',
+  'NgSwitch',
+  'NgSwitchCase',
+  'NgSwitchDefault',
+]);
 
 const DIRECTORIOS_IGNORADOS = new Set([
   'node_modules',

@@ -31,8 +31,8 @@
     verdad y no solo desplace la página.
   -->
   <main #mainContent id="layout-main-content" class="layout-content" tabindex="-1" [attr.inert]="contentInert">
-    <app-scroll-overlay class="so-block h-full w-full" [skipTableDetection]="true">
-      <div class="content-wrapper">
+    <app-scroll-overlay #mainScrollOverlay class="so-block h-full w-full" [skipTableDetection]="true">
+      <div #contentWrapper class="content-wrapper">
         <ng-content></ng-content>
       </div>
     </app-scroll-overlay>

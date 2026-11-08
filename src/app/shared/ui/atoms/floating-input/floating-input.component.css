@@ -3,10 +3,15 @@
   width: 100%;
 }
 
+:host:has(> .floating-input-wrapper.has-custom-width) {
+  width: fit-content;
+  max-width: 100%;
+}
+
 .floating-input-wrapper {
   position: relative;
   width: var(--floating-input-width, 100%);
-  min-width: var(--fi-min-width, 8rem); /* Controlable desde el contenedor padre. */
+  min-width: var(--fi-min-width, var(--floating-input-width, 8rem)); /* Controlable desde el contenedor padre. */
   margin-top: var(--space-3);
 }
 
@@ -14,15 +19,21 @@
 .floating-input {
   width: 100%;
   height: var(--control-height);
-  padding: 0 0.875rem;
+  padding: 0 var(--space-4);
   line-height: calc(var(--control-height) - var(--space-1)); /* Robust vertical centering */
   font-size: 0.875rem;
   color: var(--input-text);
   background: transparent;
   border: none;
   outline: none;
-  transition: all 200ms ease;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
   box-sizing: border-box; /* Ensure padding doesn't affect height */
+}
+
+.floating-input:focus,
+.floating-input:focus-visible {
+  outline: none;
+  box-shadow: none;
 }
 
 /* Standardize date and number inputs */
@@ -59,18 +70,39 @@
   display: none;
 }
 
+.floating-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
 /* === FLOATING LABEL === */
 .floating-label {
   position: absolute;
   left: var(--field-label-inset);
   top: calc(var(--control-height) / 2);
   transform: translateY(-50%);
+  max-width: calc(100% - var(--field-label-inset) - var(--space-1));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: var(--field-label-font-size);
-  color: var(--input-placeholder);
+  font-weight: var(--field-label-font-weight);
+  line-height: var(--field-label-line-height);
+  color: var(--field-label-color-resting);
   pointer-events: none;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    top 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    font-size 200ms cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: left center;
   z-index: 10; /* Ensure label sits above borders/content */
+}
+
+.has-icon:not(.focused):not(.has-value) .floating-label,
+.has-icon.label-solo-valor:not(.has-value) .floating-label {
+  max-width: calc(100% - var(--space-7) - var(--field-label-inset));
 }
 
 /* Label goes up when focused or has value */
@@ -79,8 +111,8 @@
   top: var(--space-1);
   transform: translateY(0);
   font-size: var(--field-label-floated-font-size);
-  font-weight: var(--font-weight-body);
-  color: var(--info-color-text);
+  font-weight: var(--field-label-floated-font-weight);
+  color: var(--field-label-color-floated);
 }
 
 /* === INPUT LINE (for underline/material) === */
@@ -123,7 +155,8 @@
 .variant-floating .floating-label {
   left: var(--field-label-inset);
   background: var(--input-bg);
-  padding: 0 var(--space-2);
+  padding: var(--field-label-padding);
+  border-radius: var(--radius-sm);
   white-space: nowrap;
 }
 
@@ -145,22 +178,24 @@
 /* === VARIANT: UNDERLINE === */
 .variant-underline .floating-input {
   height: var(--control-height);
-  padding: 0;
-  padding-top: var(--space-5); /* Increased for 4var(--space-2) height */
+  padding: var(--space-5) var(--space-4) 0;
   line-height: 1.5; /* Reset line-height for underline */
   font-size: 0.875rem;
   border-bottom: 1px solid var(--input-border);
 }
 
+.variant-underline.has-icon .floating-input {
+  padding-right: var(--space-8);
+}
+
 .variant-underline .floating-label {
-  left: 0;
-  /* font-size hereda de .floating-label base (1.0625rem) */
+  left: var(--field-label-inset);
+  padding: var(--field-label-padding);
 }
 
 .variant-underline.focused .floating-label,
 .variant-underline.has-value .floating-label {
-  top: calc(-1 * var(--space-1));
-  font-size: var(--space-3);
+  top: var(--space-1);
 }
 
 .variant-underline.focused .floating-input,
@@ -175,8 +210,7 @@
 /* === VARIANT: MATERIAL === */
 .variant-material .floating-input {
   height: var(--control-height);
-  padding: 0;
-  padding-top: var(--space-5);
+  padding: var(--space-5) var(--space-4) 0;
   line-height: 1.5;
   font-size: 0.875rem;
 }
@@ -186,16 +220,14 @@
 }
 
 .variant-material .floating-label {
-  left: 0;
+  left: var(--field-label-inset);
+  padding: var(--field-label-padding);
   font-size: var(--field-label-font-size);
 }
 
 .variant-material.focused .floating-label,
 .variant-material.has-value .floating-label {
-  top: calc(-1 * var(--space-1));
-  font-size: var(--space-3);
-  color: var(--primary-color);
-  font-weight: var(--font-weight-emphasis);
+  top: var(--space-1);
 }
 
 /* === VARIANT: OUTLINE === */
@@ -212,7 +244,8 @@
 .variant-outline .floating-label {
   top: calc(var(--control-height) / 2);
   background: var(--input-bg);
-  padding: 0 var(--space-2);
+  padding: var(--field-label-padding);
+  border-radius: var(--radius-sm);
   font-size: var(--field-label-font-size);
   white-space: nowrap;
 }
@@ -316,6 +349,17 @@
   color: var(--input-disabled-text);
 }
 
+.disabled .floating-label,
+.disabled.focused .floating-label,
+.disabled.has-value .floating-label {
+  color: var(--input-disabled-text);
+}
+
+.disabled.variant-floating .floating-label,
+.disabled.variant-outline .floating-label {
+  background: var(--input-disabled-bg);
+}
+
 .has-error .floating-input {
   border-color: var(--danger-color) !important;
 }
@@ -375,5 +419,6 @@
   top: calc(var(--control-height) / 2);
   transform: translateY(-50%);
   font-size: var(--field-label-font-size);
-  color: var(--input-placeholder);
+  font-weight: var(--field-label-font-weight);
+  color: var(--field-label-color-resting);
 }

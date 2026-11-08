@@ -122,7 +122,7 @@ export class ActionMenuComponent implements OnInit, OnDestroy {
     this.isOpen.set(false);
     this.destroyMenu();
     if (restoreFocus) {
-      (this.elementRef.nativeElement.querySelector('.action-menu-trigger') as HTMLElement | null)?.focus();
+      (this.elementRef.nativeElement.querySelector('.action-menu-trigger') as HTMLElement | null)?.focus({ preventScroll: true });
     }
   }
 
@@ -166,8 +166,8 @@ export class ActionMenuComponent implements OnInit, OnDestroy {
         e.stopPropagation();
         e.preventDefault();
         if (!action.disabled) {
-          this.actionClick.emit(action.id);
           this.closeMenu(true);
+          this.actionClick.emit(action.id);
         }
       });
       this.menuListenerCleanups.push(cleanup);
@@ -183,7 +183,7 @@ export class ActionMenuComponent implements OnInit, OnDestroy {
 
     requestAnimationFrame(() => {
       this.updatePosition();
-      this.enabledMenuItems()[0]?.focus();
+      this.enabledMenuItems()[0]?.focus({ preventScroll: true });
     });
   }
 
@@ -229,7 +229,7 @@ export class ActionMenuComponent implements OnInit, OnDestroy {
 
     if (nextIndex !== null) {
       event.preventDefault();
-      items[nextIndex]?.focus();
+      items[nextIndex]?.focus({ preventScroll: true });
     }
   }
 

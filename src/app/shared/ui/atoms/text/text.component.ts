@@ -1,5 +1,5 @@
-import { Component, OnInit, input } from '@angular/core';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 
 export type TextVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'body-lg' | 'body' | 'body-sm' | 'caption' | 'label';
 export type TextWeight = 'normal' | 'medium' | 'semibold' | 'bold';
@@ -10,34 +10,29 @@ export type TextAlign = 'left' | 'center' | 'right' | 'justify';
 @Component({
   selector: 'app-text',
   standalone: true,
-  imports: [NgClass, NgTemplateOutlet],
+  imports: [NgTemplateOutlet],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './text.component.html',
   styleUrl: './text.component.css'
 })
-export class TextComponent implements OnInit {
+export class TextComponent {
   readonly variant = input<TextVariant>('body');
   readonly weight = input<TextWeight>('normal');
   readonly color = input<TextColor>('default');
   readonly align = input<TextAlign>('left');
 
-  renderAs = 'p';
-
-  ngOnInit() {
-    // Map variant to semantic HTML tag
+  readonly renderAs = computed<'h1' | 'h2' | 'h3' | 'h4' | 'p'>(() => {
     const variant = this.variant();
-    if (['h1', 'h2', 'h3', 'h4'].includes(variant)) {
-      this.renderAs = variant;
-    } else {
-      this.renderAs = 'p';
+    if (variant === 'h1' || variant === 'h2' || variant === 'h3' || variant === 'h4') {
+      return variant;
     }
-  }
+    return 'p';
+  });
 
-  get classes() {
-    return {
-      [`text-${this.variant()}`]: true,
-      [`weight-${this.weight()}`]: true,
-      [`color-${this.color()}`]: true,
-      [`align-${this.align()}`]: true
-    };
-  }
+  readonly classes = computed<Record<string, boolean>>(() => ({
+    [`text-${this.variant()}`]: true,
+    [`weight-${this.weight()}`]: true,
+    [`color-${this.color()}`]: true,
+    [`align-${this.align()}`]: true
+  }));
 }

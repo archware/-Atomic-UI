@@ -1,0 +1,71 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "loader",
+  "layer": "atom",
+  "selector": "app-loader",
+  "export": "LoaderComponent",
+  "source": "src/app/shared/ui/atoms/loader/loader.component.ts",
+  "purpose": "Indicador visual de carga animado con seis variantes geométricas y progresión de tamaño y trazo gobernada por tokens.",
+  "variants": [
+    {
+      "name": "variant",
+      "values": [
+        { "value": "spinner", "meaning": "Arco circular con pista y degradado animado.", "default": true },
+        { "value": "dots", "meaning": "Secuencia horizontal de cinco puntos pulsantes con caja vertical uniforme." },
+        { "value": "pulse", "meaning": "Anillos concéntricos expansivos con núcleo central." },
+        { "value": "bars", "meaning": "Cinco barras verticales con rebote escalonado." },
+        { "value": "gradient", "meaning": "Anillo circular con degradado continuo." },
+        { "value": "orbit", "meaning": "Anillo orbital con satélite en rotación contenida." }
+      ]
+    },
+    {
+      "name": "size",
+      "values": [
+        { "value": "sm", "meaning": "Escala compacta de 1.5rem (24px) y trazo fino." },
+        { "value": "md", "meaning": "Escala estándar de 2.5rem (40px) y trazo medio.", "default": true },
+        { "value": "lg", "meaning": "Escala prominente de 3.5rem (56px) y trazo reforzado." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "variant", "type": "'spinner' | 'dots' | 'pulse' | 'bars' | 'gradient' | 'orbit'", "default": "spinner", "meaning": "Variante visual animada del indicador de carga." },
+    { "name": "size", "type": "'sm' | 'md' | 'lg'", "default": "md", "meaning": "Tamaño del contenedor y escala de trazo del indicador." }
+  ],
+  "outputs": [],
+  "states": [
+    { "name": "loading", "meaning": "Animación activa continua mientras se resuelve una operación asíncrona." }
+  ],
+  "a11y": [
+    "Genera identificadores SVG únicos por instancia para evitar colisiones de linearGradient en el DOM.",
+    "Cuando se integra en contenedores de estado como app-data-state, la región anuncia el estado de carga."
+  ],
+  "responsive": [
+    "Todas las variantes reservan una caja cuadrada mínima (--loader-size) para mantener alineadas las etiquetas inferiores en grillas y filas flexibles."
+  ],
+  "tokens": [
+    "--border-color",
+    "--border-width-medium",
+    "--border-width-thick",
+    "--loader-border",
+    "--loader-gradient-1",
+    "--loader-gradient-2",
+    "--loader-gradient-3",
+    "--loader-gradient-4",
+    "--loader-gradient-5",
+    "--radius-sm",
+    "--space-1",
+    "--space-5",
+    "--space-7",
+    "--space-9"
+  ],
+  "story": { "path": "src/stories/ui-loader.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/atoms/loader/loader.component.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Los selectores .loader-container.loader-sm, .loader-md y .loader-lg garantizan progresión estricta de dimensiones (24px < 40px < 56px) y grosor de trazo."
+    ]
+  },
+  "canonicalFor": ["loader", "loading-indicator", "activity-indicator"]
+}

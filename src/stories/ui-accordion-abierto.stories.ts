@@ -42,9 +42,11 @@ comportamiento interesante está repartido:
 |---|---|---|
 | \`open\` | panel | Abre el panel de entrada. **No es \`expanded\`.** |
 | \`disabled\` | panel | Bloquea el encabezado y lo saca de la travesía con flechas. |
-| \`title\`, \`description\` | panel | Encabezado en dos líneas. |
+| \`title\`, \`description\`, \`icon\` | panel | Encabezado en dos líneas con icono opcional. |
 | \`headingLevel\` | panel | Nivel del \`role="heading"\`; por omisión 3. |
-| \`single\` | organismo | Al abrir uno, cierra los demás. |
+| \`variant\` | organismo | Variante estructural y de apertura (\`'default' \\| 'multiple' \\| 'single' \\| 'flush'\`). |
+| \`single\` | organismo | Al abrir uno, cierra los demás (equivalente a \`variant="single"\` y combinable con \`flush\`). |
+| \`collapsible\` | organismo | En modo único (\`single\`), define si el panel activo puede cerrarse (\`true\` por omisión). |
 | \`flush\` | organismo | Quita el marco y deja los paneles a ras del contenedor. |
 
 Dos detalles de accesibilidad que ya vienen resueltos y conviene no deshacer: el
@@ -111,9 +113,9 @@ export const SoloUnPanelALaVez: Story = {
       <div style="display:flex; flex-direction:column; gap:var(--space-8); max-width:44rem; padding:var(--space-4);">
         <section>
           <h3 style="margin:0 0 var(--space-3); font-size:var(--text-md); color:var(--text-color);">
-            Con [single]="true"
+            Con variant="single" (o [single]="true")
           </h3>
-          <app-accordion [single]="true">
+          <app-accordion variant="single">
             <app-accordion-item title="Datos del titular" [open]="true">
               Nombre, documento y estado civil.
             </app-accordion-item>

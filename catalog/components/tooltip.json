@@ -1,0 +1,60 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "tooltip",
+  "layer": "atom",
+  "selector": "[appTooltip]",
+  "export": "TooltipDirective",
+  "source": "src/app/shared/ui/atoms/tooltip/tooltip.directive.ts",
+  "purpose": "Directiva atómica para mostrar globos de ayuda contextuales accesibles y de alto contraste en hover y foco de teclado.",
+  "variants": [
+    {
+      "name": "tooltip-position",
+      "values": [
+        { "value": "top", "meaning": "Centrado sobre el elemento disparador.", "default": true },
+        { "value": "bottom", "meaning": "Centrado debajo del elemento disparador." },
+        { "value": "left", "meaning": "Centrado a la izquierda del elemento disparador." },
+        { "value": "right", "meaning": "Centrado a la derecha del elemento disparador." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "appTooltip", "type": "string", "required": true, "meaning": "Texto descriptivo a mostrar dentro del globo; si es cadena vacía no se despliega." },
+    { "name": "tooltipPosition", "type": "'top' | 'bottom' | 'left' | 'right'", "default": "top", "meaning": "Posición relativa del globo respecto al elemento disparador." }
+  ],
+  "outputs": [],
+  "states": [
+    { "name": "hidden", "meaning": "Sin nodo en el DOM cuando el disparador no tiene hover ni foco." },
+    { "name": "visible", "meaning": "Globo renderizado en document.body con position: fixed y role=tooltip." }
+  ],
+  "a11y": [
+    "Publica role=tooltip y responde tanto a puntero (mouseenter/mouseleave) como a teclado (focusin/focusout/blur).",
+    "Permite descartar el globo activo pulsando Escape conforme a WCAG 1.4.13.",
+    "Garantiza contraste >= 14:1 entre --tooltip-text y --tooltip-bg en los temas light, dark y brand-dark."
+  ],
+  "responsive": [
+    "Calcula coordenadas mediante el control interactivo real cuando el host es un elemento personalizado y acota el eje transversal dentro de los márgenes del viewport.",
+    "Actualiza su posición dinámicamente ante eventos de scroll o resize."
+  ],
+  "tokens": [
+    "--border-width-thin",
+    "--font-weight-emphasis",
+    "--radius-md",
+    "--space-2",
+    "--space-3",
+    "--text-sm",
+    "--tooltip-bg",
+    "--tooltip-border",
+    "--tooltip-shadow",
+    "--tooltip-text"
+  ],
+  "story": { "path": "src/stories/ui-tooltip.stories.ts", "status": "available" },
+  "test": { "path": "src/app/shared/ui/atoms/tooltip/tooltip.directive.spec.ts", "status": "available" },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Ajusta automáticamente el ancho de hosts personalizados (app-button, app-icon-button) a fit-content salvo fullWidth sin alterar el ancho de elementos nativos."
+    ]
+  },
+  "canonicalFor": ["tooltip", "contextual-help-bubble"]
+}

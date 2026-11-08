@@ -1,10 +1,6 @@
 :host { display: block; width: 100%; }
 
 /* La tipografia de la etiqueta (superior y flotante) vive en ../../atoms/form-field/field-label.css */
-.tag-input__label {
-  margin-bottom: var(--field-label-gap);
-}
-
 .tag-input__field {
   display: flex;
   flex-wrap: wrap;
@@ -12,12 +8,23 @@
   gap: var(--space-1);
   box-sizing: border-box;
   min-height: var(--control-height);
-  padding: var(--space-2) var(--space-3);
-  border: var(--border-width-thin) solid var(--border-color);
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-width-thin) solid var(--input-border);
   border-radius: var(--radius-md);
   background: var(--input-bg);
+  box-shadow: var(--input-shadow);
   cursor: text;
   transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.fl-field--floating.tag-input--elevated.tag-input--has-tags .tag-input__field {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-2);
+}
+
+.tag-input-wrapper:not(.tag-input--disabled):not(.tag-input--focused) .tag-input__field:hover {
+  border-color: var(--input-border-hover);
+  box-shadow: var(--input-shadow-hover);
 }
 
 .tag-input--focused .tag-input__field {
@@ -25,10 +32,15 @@
   box-shadow: var(--input-shadow-focus);
 }
 
+.tag-input--error .tag-input__field {
+  border-color: var(--danger-color);
+}
+
 .tag-input--disabled .tag-input__field {
   cursor: not-allowed;
-  background: var(--surface-section);
+  background: var(--input-disabled-bg);
   color: var(--input-disabled-text);
+  box-shadow: none;
 }
 
 .tag-input__input {
@@ -36,22 +48,40 @@
   min-width: 5rem;
   border: none;
   outline: none;
+  box-shadow: none;
   background: transparent;
-  font-size: var(--text-sm);
+  font-family: inherit;
+  font-size: var(--text-md);
+  font-weight: var(--font-weight-body);
+  line-height: var(--field-label-line-height);
   color: var(--text-color);
-  padding: var(--space-1) 0;
+  padding: 0;
+}
+
+.tag-input__input:focus,
+.tag-input__input:focus-visible {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.tag-input__input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.tag-input--disabled .tag-input__input {
+  cursor: not-allowed;
+  color: var(--input-disabled-text);
 }
 
 .tag-input__hint {
   display: block;
-  margin-top: var(--space-1);
   font-size: var(--text-xs);
   color: var(--text-color-muted);
 }
 
 .tag-input__error {
   display: block;
-  margin-top: var(--space-1);
   font-size: var(--text-xs);
   color: var(--danger-color-text);
 }

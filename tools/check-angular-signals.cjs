@@ -4,7 +4,15 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
 
-const SIMBOLOS_PROHIBIDOS = new Set(['Input', 'Output', 'EventEmitter']);
+const SIMBOLOS_PROHIBIDOS = new Set([
+  'Input',
+  'Output',
+  'EventEmitter',
+  'ViewChild',
+  'ViewChildren',
+  'ContentChild',
+  'ContentChildren',
+]);
 
 function listarArchivosTypeScript(raiz) {
   if (!fs.existsSync(raiz)) return [];
@@ -64,10 +72,12 @@ El bloque CLI de abajo solo corre cuando se ejecuta el archivo directamente, de
 modo que importarlo no dispara `process.exitCode`.
 */
 function ejecutar() {
-  const raiz = path.resolve(process.argv[2] || path.join(__dirname, '../src/app/shared/ui'));
+  const raiz = path.resolve(process.argv[2] || path.join(__dirname, '../src'));
   const hallazgos = auditarArbol(raiz);
   if (hallazgos.length > 0) {
-    console.error('Se detectaron contratos Angular heredados; deben utilizarse input() y output():');
+    console.error(
+      'Se detectaron contratos Angular heredados; deben utilizarse input(), output(), viewChild(), viewChildren(), contentChild() y contentChildren():',
+    );
     for (const hallazgo of hallazgos) {
       console.error(
         `- ${path.relative(process.cwd(), hallazgo.rutaArchivo)}:${hallazgo.linea} (${hallazgo.simbolo})`,
@@ -76,7 +86,9 @@ function ejecutar() {
     process.exitCode = 1;
     return;
   }
-  console.log('Contrato Signals verificado: no se importan Input, Output ni EventEmitter.');
+  console.log(
+    'Contrato Signals verificado: no se importan Input, Output, EventEmitter, ViewChild, ViewChildren, ContentChild ni ContentChildren.',
+  );
 }
 
 if (require.main === module) ejecutar();

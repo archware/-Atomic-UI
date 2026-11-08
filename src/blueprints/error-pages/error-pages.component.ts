@@ -1,4 +1,10 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+} from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -78,12 +84,13 @@ const ERROR_DEFAULTS: Record<ErrorCode, Omit<ErrorPageConfig, 'primaryAction' | 
 @Component({
   selector: 'app-error-pages',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ButtonComponent,
     TextComponent,
-  ScrollOverlayComponent,
-    RowComponent
-],
+    ScrollOverlayComponent,
+    RowComponent,
+  ],
   template: `
     <app-scroll-overlay class="so-block h-screen w-full" [skipTableDetection]="true">
     <div class="error-page">
@@ -114,10 +121,10 @@ const ERROR_DEFAULTS: Record<ErrorCode, Omit<ErrorPageConfig, 'primaryAction' | 
             (click)="onPrimaryAction()"
           >
             <i class="fa-solid fa-house" icon-left></i>
-            {{ primaryActionLabel }}
+            {{ primaryActionLabel() }}
           </app-button>
 
-          @if (showSecondaryAction) {
+          @if (showSecondaryAction()) {
             <app-button variant="ghost" (click)="onSecondaryAction()">
               <i class="fa-solid fa-arrow-rotate-right" icon-left></i>
               Reintentar
@@ -131,10 +138,10 @@ const ERROR_DEFAULTS: Record<ErrorCode, Omit<ErrorPageConfig, 'primaryAction' | 
         </app-row>
 
         <!-- Info técnica (solo en development) -->
-        @if (showTechnicalInfo && technicalMessage) {
+        @if (showTechnicalInfo() && technicalMessage()) {
           <details class="error-technical">
             <summary>Información técnica</summary>
-            <code>{{ technicalMessage }}</code>
+            <code>{{ technicalMessage() }}</code>
           </details>
         }
 
@@ -153,7 +160,7 @@ const ERROR_DEFAULTS: Record<ErrorCode, Omit<ErrorPageConfig, 'primaryAction' | 
     }
 
     .error-container {
-      max-width: 520px;
+      max-width: 32.5rem;
       width: 100%;
       text-align: center;
       display: flex;
@@ -174,7 +181,7 @@ const ERROR_DEFAULTS: Record<ErrorCode, Omit<ErrorPageConfig, 'primaryAction' | 
       line-height: 1;
       color: var(--primary-color);
       opacity: 0.15;
-      letter-spacing: -4px;
+      letter-spacing: -0.25rem;
       user-select: none;
     }
 
@@ -183,7 +190,7 @@ const ERROR_DEFAULTS: Record<ErrorCode, Omit<ErrorPageConfig, 'primaryAction' | 
     }
 
     .error-description {
-      max-width: 400px;
+      max-width: 25rem;
     }
 
     .error-actions {
@@ -196,7 +203,7 @@ const ERROR_DEFAULTS: Record<ErrorCode, Omit<ErrorPageConfig, 'primaryAction' | 
       margin-top: var(--space-6);
       text-align: left;
       background: var(--surface-section);
-      border: 1px solid var(--border-color);
+      border: var(--border-width-sm, 0.0625rem) solid var(--border-color);
       border-radius: var(--radius-md);
       padding: var(--space-3) var(--space-4);
       width: 100%;
@@ -226,62 +233,59 @@ const ERROR_DEFAULTS: Record<ErrorCode, Omit<ErrorPageConfig, 'primaryAction' | 
     }
   `],
 })
-export class ErrorPagesComponent implements OnInit {
+export class ErrorPagesComponent {
   /** HTTP error code to display */
-  @Input() code: ErrorCode = 404;
+  readonly code = input<ErrorCode>(404);
 
   /** Override default title */
-  @Input() title?: string;
+  readonly title = input<string | undefined>(undefined);
 
   /** Override default description */
-  @Input() description?: string;
+  readonly description = input<string | undefined>(undefined);
 
   /** Override default icon */
-  @Input() icon?: string;
+  readonly icon = input<string | undefined>(undefined);
 
   /** Label for primary action button */
-  @Input() primaryActionLabel = 'Ir al inicio';
+  readonly primaryActionLabel = input('Ir al inicio');
 
   /** Route for primary action */
-  @Input() primaryActionRoute = '/';
+  readonly primaryActionRoute = input('/');
 
   /** Show retry button (useful for 500, 503) */
-  @Input() showSecondaryAction = false;
+  readonly showSecondaryAction = input(false);
 
   /** Show technical details section */
-  @Input() showTechnicalInfo = false;
+  readonly showTechnicalInfo = input(false);
 
   /** Technical error message for developers */
-  @Input() technicalMessage?: string;
+  readonly technicalMessage = input<string | undefined>(undefined);
 
-  private readonly router = inject(Router);
-  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router, { optional: true });
+  private readonly route = inject(ActivatedRoute, { optional: true });
 
-  ngOnInit(): void {
-    const routeCode = this.route.snapshot.data['code'];
-    if (typeof routeCode === 'number') {
-      this.code = routeCode as ErrorCode;
-    }
-  }
+  protected readonly resolvedCode = computed<ErrorCode>(() => {
+    const routeCode = this.route?.snapshot?.data?.['code'];
+    return typeof routeCode === 'number' ? (routeCode as ErrorCode) : this.code();
+  });
 
-  protected resolvedCode(): ErrorCode {
-    return this.code;
-  }
+  protected readonly resolvedTitle = computed<string>(() => {
+    const code = this.resolvedCode();
+    return this.title()?.trim() || ERROR_DEFAULTS[code]?.title || 'Error';
+  });
 
-  protected resolvedTitle(): string {
-    return this.title ?? ERROR_DEFAULTS[this.code]?.title ?? 'Error';
-  }
+  protected readonly resolvedDescription = computed<string>(() => {
+    const code = this.resolvedCode();
+    return this.description()?.trim() || ERROR_DEFAULTS[code]?.description || '';
+  });
 
-  protected resolvedDescription(): string {
-    return this.description ?? ERROR_DEFAULTS[this.code]?.description ?? '';
-  }
-
-  protected resolvedIcon(): string {
-    return this.icon ?? ERROR_DEFAULTS[this.code]?.icon ?? '❌';
-  }
+  protected readonly resolvedIcon = computed<string>(() => {
+    const code = this.resolvedCode();
+    return this.icon()?.trim() || ERROR_DEFAULTS[code]?.icon || '❌';
+  });
 
   onPrimaryAction(): void {
-    this.router.navigate([this.primaryActionRoute]);
+    this.router?.navigate([this.primaryActionRoute()]);
   }
 
   onSecondaryAction(): void {

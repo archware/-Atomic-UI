@@ -163,9 +163,7 @@ export class WizardPageComponent {
     { value: 'whatsapp', label: 'WhatsApp' },
   ];
 
-  get nextEnabled(): boolean {
-    return true;
-  }
+  readonly nextEnabled = true;
 
   onStepChange(stepIndex: number) {
     this.currentStep.set(stepIndex);

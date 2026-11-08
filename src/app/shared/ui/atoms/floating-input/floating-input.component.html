@@ -1,15 +1,21 @@
 @if (variant() === 'standard' && tieneEtiqueta()) {
-  <label class="fl-label floating-input-top-label" [attr.for]="inputId()">{{ label() }}@if (required()) {<span class="field__required fl-label__required" aria-hidden="true">*</span>}</label>
+  <label
+    class="fl-label floating-input-top-label"
+    [class.fl-label--error]="error()"
+    [class.fl-label--disabled]="isDisabled()"
+    [attr.for]="inputId()"
+  >{{ label() }}@if (required()) {<span class="field__required fl-label__required" aria-hidden="true">*</span>}</label>
 }
 <div
       class="floating-input-wrapper"
       [class]="'variant-' + claseVisual()"
+      [class.has-custom-width]="tieneAnchoFijo()"
       [class.label-solo-valor]="soloValor()"
       [class.focused]="isFocused()"
       [class.has-value]="hasValue()"
       [class.has-error]="error()"
       [class.disabled]="isDisabled()"
-      [class.has-icon]="icon() || type() === 'password'"
+      [class.has-icon]="icon() || iconClass() || (clearable() && hasValue()) || type() === 'password'"
       [appVariablesCss]="{ '--floating-input-width': width() || null }"
     >
       <input
@@ -52,7 +58,7 @@
             aria-hidden="true"
           ></i>
         </button>
-      } @else if (iconClass() || clearable()) {
+      } @else if (iconClass() || (clearable() && hasValue())) {
         <button
           type="button"
           class="input-icon-btn input-icon-btn--static"

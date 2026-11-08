@@ -1,9 +1,25 @@
 
-    <app-accordion [single]="true">
-      <app-accordion-item title="Cliente" description="Cliente seleccionado" [open]="true">
-        <button type="button">Acción cliente</button>
-      </app-accordion-item>
-      <app-accordion-item title="Cotización" [headingLevel]="2">
+    <app-accordion
+      [variant]="variant()"
+      [single]="single()"
+      [flush]="flush()"
+      [collapsible]="collapsible()"
+    >
+      @if (mostrarPrimero()) {
+        <app-accordion-item
+          title="Cliente"
+          description="Cliente seleccionado"
+          [icon]="iconoPrimero()"
+          [open]="primeroAbierto()"
+        >
+          <button type="button">Acción cliente</button>
+        </app-accordion-item>
+      }
+      <app-accordion-item
+        title="Cotización"
+        [headingLevel]="2"
+        [open]="segundoAbierto()"
+      >
         Contenido cotización
       </app-accordion-item>
     </app-accordion>

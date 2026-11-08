@@ -42,7 +42,7 @@
    /* Texto sobre fondos oscuros */
    --text-color-on-primary: var(--gray-0);
    /* Texto sobre color primario */
-   --text-color-on-secondary: var(--gray-0);
+   --text-color-on-secondary: var(--brand-secondary-950);
    /* Texto sobre color secundario */
 
    /* === BORDES === */
@@ -71,7 +71,7 @@
    --secondary-color-lighter: var(--brand-secondary-50);
    --secondary-color-dark: var(--brand-secondary-700);
    --secondary-color-darker: var(--brand-secondary-900);
-   --secondary-color-text: var(--brand-secondary-700);
+   --secondary-color-text: var(--brand-secondary-800);
    --secondary-color-hover: var(--brand-secondary-600);
    --secondary-color-active: var(--brand-secondary-700);
 
@@ -206,7 +206,7 @@ html.dark:not([data-theme="brand-dark"]),
    --text-color-placeholder: #6b7280;
    --text-color-inverse: #111827;
    --text-color-on-primary: #ffffff;
-   --text-color-on-secondary: #ffffff;
+   --text-color-on-secondary: var(--brand-secondary-950);
    --text-color-disabled: var(--gray-600);
 
    /* === COLORES DE MARCA (Compartido) === */
@@ -220,7 +220,7 @@ html.dark:not([data-theme="brand-dark"]),
 
    --secondary-color: var(--brand-secondary-400);
    --secondary-color-light: var(--brand-secondary-900);
-   --secondary-color-lighter: rgba(35, 167, 212, 0.15);
+   --secondary-color-lighter: rgba(255, 184, 0, 0.15);
    --secondary-color-dark: var(--brand-secondary-300);
    --secondary-color-darker: var(--brand-secondary-200);
    --secondary-color-text: var(--brand-secondary-300);

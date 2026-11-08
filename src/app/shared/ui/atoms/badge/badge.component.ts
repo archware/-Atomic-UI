@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
-import { NgClass } from '@angular/common';
 
 export type BadgeVariant = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
 export type BadgeSize = 'sm' | 'md' | 'lg';
@@ -30,7 +29,7 @@ export type BadgePosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-
 @Component({
   selector: 'app-badge',
   standalone: true,
-  imports: [NgClass],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './badge.component.html',
   styleUrl: './badge.component.css'

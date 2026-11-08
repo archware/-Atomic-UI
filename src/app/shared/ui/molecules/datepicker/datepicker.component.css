@@ -10,6 +10,12 @@
   cursor: pointer;
 }
 
+.datepicker-trigger:focus,
+.datepicker-trigger:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
 .datepicker-wrapper {
   position: relative;
   margin-top: var(--space-3);

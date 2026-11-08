@@ -9,7 +9,7 @@ import type {
   DataTableStatus,
 } from '../app/shared/ui/organisms/data-table/data-table';
 import { PanelComponent } from '../app/shared/ui/surfaces/panel/panel.component';
-import type { StatusBadgeStatus } from '../app/shared/ui/atoms/status-badge/status-badge.component';
+import type { ChipVariant } from '../app/shared/ui/atoms/chip/chip.component';
 import { TableAction } from '../app/shared/ui/atoms/table-action/table-action';
 
 /*
@@ -51,10 +51,10 @@ const formateadorSoles = new Intl.NumberFormat('es-PE', {
   minimumFractionDigits: 2,
 });
 
-const ESTADO_A_INSIGNIA: Readonly<Record<MovimientoFila['estado'], StatusBadgeStatus>> = {
-  Aplicada: 'active',
-  'En revisión': 'degraded',
-  Anulada: 'inactive',
+const ESTADO_A_INSIGNIA: Readonly<Record<MovimientoFila['estado'], ChipVariant>> = {
+  Aplicada: 'success',
+  'En revisión': 'warning',
+  Anulada: 'error',
 };
 
 /*
@@ -80,7 +80,7 @@ const COLUMNAS: readonly DataTableColumn<MovimientoFila>[] = [
     header: 'Estado',
     width: '10rem',
     isTag: true,
-    tagVariant: (fila: MovimientoFila) => ESTADO_A_INSIGNIA[fila.estado] as any,
+    tagVariant: (fila: MovimientoFila) => ESTADO_A_INSIGNIA[fila.estado],
   },
 ];
 

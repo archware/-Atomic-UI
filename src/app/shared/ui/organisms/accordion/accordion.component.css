@@ -20,6 +20,7 @@ sin borde ni radio se lee como un error de pintado, no como una variante.
   box-shadow: none;
 }
 
-.accordion-flush ::ng-deep app-accordion-item:first-child .accordion-item {
+.accordion-flush ::ng-deep app-accordion-item:first-child .accordion-item,
+.accordion-flush ::ng-deep app-accordion-item + app-accordion-item .accordion-item {
   border-top: none;
 }

@@ -6,11 +6,12 @@ import { PopupService } from '../../../../shared/ui/services/popup.service';
 import { ModalService } from '../../../../shared/ui/services/modal.service';
 import { ButtonComponent } from '../../../../shared/ui/atoms/button/button.component';
 import { TextComponent } from '../../../../shared/ui/atoms/text/text.component';
+import { TooltipDirective } from '../../../../shared/ui/atoms/tooltip/tooltip.directive';
 
 @Component({
   selector: 'app-showcase-feedback',
   standalone: true,
-  imports: [ButtonComponent, TextComponent, Alert],
+  imports: [ButtonComponent, TextComponent, Alert, TooltipDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './showcase-feedback.component.html',
   styleUrl: './showcase-feedback.component.css'

@@ -5,7 +5,7 @@ author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 document_type: 'manual técnico'
 status: 'vigente'
 date: '2026-08-20'
-version: '5.8.4'
+version: '5.22.0'
 owner: 'COTAHA'
 ---
 
@@ -13,8 +13,8 @@ owner: 'COTAHA'
 
 Librería de componentes Angular portables siguiendo **Atomic Design**.
 
-**Última actualización**: agosto de 2026
-**Versión**: 5.8.4
+**Última actualización**: noviembre de 2026
+**Versión**: 5.22.0
 **Angular**: 22
 
 ---
@@ -390,8 +390,8 @@ import { DropdownComponent, ToastComponent, PaginationComponent } from '@shared/
 <app-dropdown [options]="options" formControlName="country"></app-dropdown>
 
 // Toast
-@ViewChild(ToastComponent) toast!: ToastComponent;
-this.toast.show({ message: 'Éxito!', type: 'success' });
+readonly toast = viewChild.required(ToastComponent);
+this.toast().show({ message: 'Éxito!', type: 'success' });
 
 // Pagination
 <app-pagination [total]="100" [pageSize]="10" (pageChange)="onPage($event)"></app-pagination>
@@ -1195,8 +1195,8 @@ export class MyComponent {
 
 ---
 
-📅 **Última actualización**: agosto de 2026
-🏷️ **Versión**: 5.8.4
+📅 **Última actualización**: noviembre de 2026
+🏷️ **Versión**: 5.22.0
 ⚡ **Angular**: 22
 🌐 **i18n**: ngx-translate  
 📚 **Storybook**: Disponible

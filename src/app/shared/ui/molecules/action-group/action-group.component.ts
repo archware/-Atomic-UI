@@ -22,12 +22,12 @@ export interface ActionItem {
   id: string;
   /** Clase de icono FontAwesome, e.g. 'fa-solid fa-eye' */
   icon?: string;
-  /** Nombre semantico del atomo TableAction. */
-  action?: TableActionName;
+  /** Nombre semantico del atomo TableAction o string custom. */
+  action?: TableActionName | string;
   /** Texto del tooltip y label en el menú */
   label: string;
   /** Variante de color */
-  variant?: 'default' | 'primary' | 'secondary' | 'danger' | 'warning' | 'success' | 'info';
+  variant?: 'default' | 'primary' | 'secondary' | 'danger' | 'warning' | 'success' | 'info' | 'tertiary';
   /** Fuerza la acción al menú, aunque todavía exista espacio para acciones directas. */
   isMenuOnly?: boolean;
   /** Si la acción está deshabilitada */
@@ -225,11 +225,11 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
   }
 
   actionIconClass(action: ActionItem): string {
-    return resolveTableActionIcon(action.action ?? 'custom', action.icon);
+    return resolveTableActionIcon((action.action ?? 'custom') as TableActionName, action.icon);
   }
 
   actionVariant(action: ActionItem): string {
-    return action.variant ?? resolveTableActionTone(action.action ?? 'custom');
+    return action.variant ?? resolveTableActionTone((action.action ?? 'custom') as TableActionName);
   }
 
   private visibleLimit(): number {
@@ -272,7 +272,7 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
     this.destroyMenu();
     if (restoreFocus) {
       (this.elementRef.nativeElement.querySelector('.action-btn--more') as HTMLElement | null)
-        ?.focus();
+        ?.focus({ preventScroll: true });
     }
   }
 
@@ -339,8 +339,8 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
         e.stopPropagation();
         e.preventDefault();
         if (!action.disabled && !action.loading) {
-          this.actionClick.emit(action.id);
           this.closeMenu(true);
+          this.actionClick.emit(action.id);
         }
       });
       this.menuListenerCleanups.push(cleanup);
@@ -360,7 +360,7 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
     // Calcular posición
     requestAnimationFrame(() => {
       this.updatePosition();
-      this.enabledMenuItems()[0]?.focus();
+      this.enabledMenuItems()[0]?.focus({ preventScroll: true });
     });
   }
 
@@ -418,7 +418,7 @@ export class ActionGroupComponent implements OnInit, OnDestroy {
 
     if (nextIndex !== null) {
       event.preventDefault();
-      items[nextIndex]?.focus();
+      items[nextIndex]?.focus({ preventScroll: true });
     }
   }
 

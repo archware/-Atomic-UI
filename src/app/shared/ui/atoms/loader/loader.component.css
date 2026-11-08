@@ -1,7 +1,20 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
 .loader-container {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-width: var(--loader-size);
+  min-height: var(--loader-size);
+  --loader-size: var(--space-7);
+  --loader-thickness: var(--border-width-thick);
+  --loader-stroke: 4;
+  --loader-gradient-stroke: 4.5;
   /* Map local variables to global tokens */
   --gradient-1: var(--loader-gradient-1);
   --gradient-2: var(--loader-gradient-2);
@@ -18,9 +31,26 @@
 .gradient-5 { stop-color: var(--gradient-5); }
 
 /* ========== TAMAÑOS ========== */
-.loader-sm { --loader-size: var(--space-5); --loader-thickness: var(--space-1); }
-.loader-container { --loader-size: 2.5rem; --loader-thickness: var(--space-1); }
-.loader-lg { --loader-size: 3.5rem; --loader-thickness: var(--space-1); }
+.loader-container.loader-sm {
+  --loader-size: var(--space-5);
+  --loader-thickness: var(--border-width-medium);
+  --loader-stroke: 3.25;
+  --loader-gradient-stroke: 3.75;
+}
+
+.loader-container.loader-md {
+  --loader-size: var(--space-7);
+  --loader-thickness: var(--border-width-thick);
+  --loader-stroke: 4;
+  --loader-gradient-stroke: 4.5;
+}
+
+.loader-container.loader-lg {
+  --loader-size: var(--space-9);
+  --loader-thickness: var(--space-1);
+  --loader-stroke: 4.75;
+  --loader-gradient-stroke: 5.25;
+}
 
 /* ========== 1. SPINNER CON DEGRADADO ========== */
 .gradient-spinner {
@@ -36,9 +66,13 @@
 
 .spinner-track {
   fill: none;
-  stroke: var(--border-color);
-  stroke-width: 4;
-  opacity: 0.2; /* Más sutil */
+  stroke: var(--loader-border, var(--border-color));
+  stroke-width: var(--loader-stroke);
+  opacity: 0.25;
+}
+
+.spinner-arc {
+  stroke-width: var(--loader-stroke);
 }
 
 @keyframes spin {
@@ -47,13 +81,18 @@
 
 /* ========== 2. DOTS CON DEGRADADO ========== */
 .dots {
-  display: flex;
-  gap: calc(var(--loader-size) * 0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--loader-size);
+  height: var(--loader-size);
+  gap: calc(var(--loader-size) * 0.12);
 }
 
 .dot {
-  width: calc(var(--loader-size) * 0.25);
-  height: calc(var(--loader-size) * 0.25);
+  width: calc(var(--loader-size) * 0.2);
+  height: calc(var(--loader-size) * 0.2);
+  flex-shrink: 0;
   border-radius: 50%;
   animation: dotPulse 1.5s ease-in-out infinite;
   backdrop-filter: blur(var(--space-1)); /* Efecto cristal */
@@ -122,8 +161,10 @@
 
 /* ========== 4. BARRAS CON DEGRADADO ========== */
 .bars {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-width: var(--loader-size);
   gap: calc(var(--loader-size) * 0.08);
   height: var(--loader-size);
 }
@@ -165,6 +206,10 @@
   height: 100%;
 }
 
+.gradient-arc {
+  stroke-width: var(--loader-gradient-stroke);
+}
+
 /* ========== 6. ORBIT (NUEVO) ========== */
 .orbit {
   position: relative;
@@ -175,18 +220,18 @@
 
 .orbit-ring {
   position: absolute;
-  inset: 0;
-  border: var(--space-1) solid var(--gradient-3);
+  inset: 8%;
+  border: var(--loader-thickness) solid var(--gradient-3);
   border-radius: 50%;
   opacity: 0.3;
 }
 
 .orbit-planet {
   position: absolute;
-  top: 0;
+  top: 8%;
   left: 50%;
-  width: calc(var(--loader-size) * 0.3);
-  height: calc(var(--loader-size) * 0.3);
+  width: calc(var(--loader-size) * 0.24);
+  height: calc(var(--loader-size) * 0.24);
   background: var(--gradient-5);
   border-radius: 50%;
   transform: translate(-50%, -50%);

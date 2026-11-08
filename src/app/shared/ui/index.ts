@@ -251,6 +251,7 @@ export type { AvatarGroupItem } from './molecules/avatar-group/avatar-group.comp
 export {
   AccordionComponent,
   AccordionItemComponent,
+  type AccordionVariant,
 } from './organisms/accordion/accordion.component';
 
 export { DenominationCounter } from './organisms/denomination-counter/denomination-counter';

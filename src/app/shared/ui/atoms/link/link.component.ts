@@ -12,7 +12,7 @@ export type LinkVariant = 'primary' | 'secondary' | 'muted' | 'danger';
 })
 export class LinkComponent {
   readonly href = input<string>();
-  readonly routerLink = input<string | any[]>();
+  readonly routerLink = input<string | unknown[]>();
   readonly target = input<string>('_self');
   readonly variant = input<LinkVariant>('primary');
   readonly ariaLabel = input<string>();

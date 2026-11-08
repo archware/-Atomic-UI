@@ -14,12 +14,18 @@
   [subtitle]="subtitulo()"
 />
 
-<app-accordion>
+<app-accordion
+  [variant]="varianteAccordion()"
+  [single]="soloUnoAbierto()"
+  [collapsible]="colapsable()"
+>
   @for (ent of entidades(); track ent.clave) {
     <app-accordion-item
       [title]="ent.titulo"
       [description]="ent.descripcion ?? ''"
+      [icon]="ent.icono ?? ''"
       [open]="ent.abiertoInicial ?? false"
+      [disabled]="ent.deshabilitada ?? false"
     >
       <!-- Barra de búsqueda y acción por entidad -->
       <app-query-toolbar [accessibleLabel]="'Búsqueda y acciones de ' + ent.titulo">
@@ -130,29 +136,36 @@
   </footer>
 </app-crud-dialog>
 
-<!-- Confirmación de baja lógica (igual que Chasis A) -->
-@if (mostrarConfirmacion()) {
-  <div class="pagina-crud-accordion__confirmacion-fondo" (click)="cancelarBaja()">
-    <div
-      class="pagina-crud-accordion__confirmacion"
-      role="alertdialog"
-      aria-labelledby="confirmacion-titulo-acc"
-      (click)="$event.stopPropagation()"
-    >
-      <h3 id="confirmacion-titulo-acc" class="pagina-crud-accordion__confirmacion-titulo">
+<!-- Confirmación de baja lógica mediante el chasis nativo -->
+<app-crud-dialog
+  #dialogoConfirmacion
+  class="pagina-crud-accordion__confirmacion"
+  size="sm"
+  rol="alertdialog"
+  [cerrarAlPulsarFondo]="true"
+  [labelledBy]="idTituloConfirmacion"
+  [describedBy]="idMensajeConfirmacion"
+  (cancelled)="cancelarBaja()"
+>
+  <header class="pagina-crud-accordion__confirmacion-cabecera">
+    <h3 [id]="idTituloConfirmacion" class="pagina-crud-accordion__confirmacion-titulo">
+      @if (mostrarConfirmacion()) {
         {{ confResueltas.titulo(entidadAEliminar()) }}
-      </h3>
-      <p class="pagina-crud-accordion__confirmacion-mensaje">{{ confResueltas.mensaje(entidadAEliminar()) }}</p>
-      <footer class="pagina-crud-accordion__confirmacion-pie">
-        <app-button variant="outline" data-dialog-initial-focus (buttonClick)="cancelarBaja()">
-          {{ confResueltas.etiquetaCancelar }}
-        </app-button>
-        <app-button variant="primary" tone="danger" (buttonClick)="confirmarBaja()">
-          {{ confResueltas.etiquetaConfirmar }}
-        </app-button>
-      </footer>
-    </div>
-  </div>
-}
-
-
+      }
+    </h3>
+    <app-icon-button variant="close" animation="none" ariaLabel="Cerrar confirmación" (clicked)="cancelarBaja()" />
+  </header>
+  <p [id]="idMensajeConfirmacion" class="pagina-crud-accordion__confirmacion-mensaje">
+    @if (mostrarConfirmacion()) {
+      {{ confResueltas.mensaje(entidadAEliminar()) }}
+    }
+  </p>
+  <footer class="pagina-crud-accordion__confirmacion-pie">
+    <app-button variant="outline" data-dialog-initial-focus (buttonClick)="cancelarBaja()">
+      {{ confResueltas.etiquetaCancelar }}
+    </app-button>
+    <app-button variant="primary" tone="danger" (buttonClick)="confirmarBaja()">
+      {{ confResueltas.etiquetaConfirmar }}
+    </app-button>
+  </footer>
+</app-crud-dialog>

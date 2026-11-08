@@ -4,11 +4,11 @@ import {
   signal,
   inject,
   PLATFORM_ID,
-  ViewChild,
   ElementRef,
   ChangeDetectorRef,
   input,
-  output
+  output,
+  viewChild
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -55,7 +55,10 @@ export class FileInputComponent implements ControlValueAccessor {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   readonly inputId = `file-input-${++fileInputSequence}`;
 
-  @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
+  private readonly consultaFileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
+  get fileInputRef(): ElementRef<HTMLInputElement> {
+    return this.consultaFileInput()!;
+  }
 
   readonly label = input('');
   readonly hint = input('');

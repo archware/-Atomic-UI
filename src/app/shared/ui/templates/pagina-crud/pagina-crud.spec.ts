@@ -1,9 +1,11 @@
+import { CrudDialog } from '../../organisms/crud-dialog/crud-dialog';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { PaginaCrud } from './pagina-crud';
 import { provideTranslateService } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { InputComponent } from '../../atoms/input/input.component';
 import { DataTable } from '../../organisms/data-table/data-table';
+import { Select2Component } from '../../molecules/select2/select2.component';
 import { ActionGroupComponent, type ActionItem } from '../../molecules/action-group/action-group.component';
 import { ButtonComponent } from '../../atoms/button/button.component';
 
@@ -35,6 +37,25 @@ describe('PaginaCrud: catálogo compatible', () => {
     fixture.componentRef.setInput('filas', [fila]);
     fixture.componentRef.setInput('estado', 'success');
     fixture.detectChanges();
+  });
+
+  it('publica su host estable como region y propaga el resolvedor a ambos dialogos', async () => {
+    const resolver = () => fixture.componentInstance.obtenerDestinoFocoRetorno();
+    fixture.componentRef.setInput('resolverFocoRetorno', resolver);
+    fixture.detectChanges();
+    const destino = fixture.componentInstance.obtenerDestinoFocoRetorno();
+    expect(destino).toBe(fixture.nativeElement);
+    expect(destino.getAttribute('role')).toBe('region');
+    expect(destino.getAttribute('aria-label')).toBe('Familias');
+    expect(destino.tabIndex).toBe(-1);
+    const dialogos = fixture.debugElement.queryAll(By.directive(CrudDialog));
+    expect(dialogos.length).toBe(2);
+    dialogos.forEach(dialogo => expect((dialogo.componentInstance as CrudDialog).resolverFocoRetorno()).toBe(resolver));
+    fixture.componentRef.setInput('filas', []);
+    fixture.detectChanges();
+    expect(fixture.componentInstance.obtenerDestinoFocoRetorno()).toBe(destino);
+    destino.focus();
+    expect(document.activeElement).toBe(destino);
   });
 
   it('centraliza Ver, Editar y Más; la papelera de baja queda solo en el menú', () => {
@@ -290,5 +311,170 @@ describe('PaginaCrud: catálogo compatible', () => {
     fixture.detectChanges();
     expect(etiquetaFlotante.classList.contains('fl-label--floated')).toBeTrue();
     expect(campoBusqueda.getAttribute('placeholder')).toBeTruthy();
+  });
+
+  it('opcionesBusqueda en cascada: conmuta entre criterios select y texto, limpia el subfiltro y emite alSolicitarPagina', () => {
+    const pagina = jasmine.createSpy('pagina');
+    const cambioTipo = jasmine.createSpy('cambioTipo');
+    fixture.componentInstance.alSolicitarPagina.subscribe(pagina);
+    fixture.componentInstance.alCambiarTipoBusqueda.subscribe(cambioTipo);
+
+    fixture.componentRef.setInput('opcionesBusqueda', [
+      {
+        label: 'Estado',
+        value: 'estado',
+        tipo: 'select',
+        opcionesSelect: [
+          { label: 'Activo', value: 'ACTIVO' },
+          { label: 'Inactivo', value: 'INACTIVO' },
+        ],
+      },
+      {
+        label: 'Categoría',
+        value: 'categoria',
+        tipo: 'select',
+        opcionesSelect: [
+          { label: 'Hardware', value: 'HW' },
+          { label: 'Software', value: 'SW' },
+        ],
+      },
+      {
+        label: 'Nombre',
+        value: 'nombre',
+        tipo: 'texto',
+      },
+    ]);
+    fixture.componentRef.setInput('tipoBusqueda', 'estado');
+    fixture.detectChanges();
+
+    const contenedorCascada = () =>
+      fixture.debugElement.query(By.css('.pagina-crud__filtros-cascada'));
+    let selectores = contenedorCascada().queryAll(By.directive(Select2Component));
+    expect(selectores.length).toBe(2);
+    // El segundo selector no debe elevar la etiqueta por la opción centinela "Seleccionar..."
+    const etiquetaSecundaria = selectores[1].nativeElement.querySelector(
+      '.fl-label--floating',
+    ) as HTMLElement;
+    expect(etiquetaSecundaria.classList.contains('fl-label--floated')).toBeFalse();
+
+    // Selecciona un valor en el subfiltro de Estado
+    const selectEstado = selectores[1].componentInstance as Select2Component;
+    selectEstado.selectOption({ label: 'Activo', value: 'ACTIVO' });
+    fixture.detectChanges();
+    expect(pagina).toHaveBeenCalledWith({
+      pagina: 1,
+      tamano: 10,
+      busqueda: 'ACTIVO',
+    });
+
+    // Cambia el criterio a Categoría: limpia busqueda y actualiza las opciones del segundo select
+    const selectCriterio = selectores[0].componentInstance as Select2Component;
+    selectCriterio.selectOption({ label: 'Categoría', value: 'categoria' });
+    fixture.detectChanges();
+    expect(cambioTipo).toHaveBeenCalledWith('categoria');
+    selectores = contenedorCascada().queryAll(By.directive(Select2Component));
+    const selectCategoria = selectores[1].componentInstance as Select2Component;
+    expect(selectCategoria.options.map((op) => op.value)).toEqual([null, 'HW', 'SW']);
+
+    // Cambia el criterio a Nombre (texto): muestra app-input y emite al buscar
+    selectCriterio.selectOption({ label: 'Nombre', value: 'nombre' });
+    fixture.detectChanges();
+    expect(contenedorCascada().queryAll(By.directive(Select2Component)).length).toBe(1);
+    const inputCascada = contenedorCascada().query(By.directive(InputComponent))
+      ?.componentInstance as InputComponent;
+    expect(inputCascada).toBeTruthy();
+
+    inputCascada.valueChange.emit('Laptop');
+    fixture.detectChanges();
+    expect(pagina).toHaveBeenCalledWith({
+      pagina: 1,
+      tamano: 10,
+      busqueda: 'Laptop',
+    });
+
+    // Restablecer [tipoBusqueda] a null desde el padre oculta el segundo control y limpia busqueda
+    fixture.componentRef.setInput('tipoBusqueda', null);
+    fixture.detectChanges();
+    expect(fixture.componentInstance.tipoBusquedaInterno()).toBeNull();
+    expect(contenedorCascada().query(By.directive(InputComponent))).toBeNull();
+    const tabla: DataTable<{ id: string; nombre: string }> = fixture.debugElement.query(
+      By.directive(DataTable),
+    ).componentInstance;
+    tabla.pageChange.emit(2);
+    expect(pagina).toHaveBeenCalledWith({
+      pagina: 2,
+      tamano: 10,
+      busqueda: '',
+    });
+  });
+
+  it('inicia con un solo select cuando se omite tipoBusqueda, muestra el subfiltro al elegir criterio y lo oculta al volver a Seleccionar...', () => {
+    const cambiado = jasmine.createSpy('cambiado');
+    fixture.componentInstance.alCambiarTipoBusqueda.subscribe(cambiado);
+    fixture.componentRef.setInput('opcionesBusqueda', [
+      {
+        label: 'Estado',
+        value: 'estado',
+        tipo: 'select',
+        opcionesSelect: [
+          { label: 'Activo', value: 'A' },
+          { label: 'Inactivo', value: 'I' },
+        ],
+      },
+      {
+        label: 'Prioridad',
+        value: 'prioridad',
+        tipo: 'select',
+        opcionesSelect: [
+          { label: 'Alta', value: 'A' },
+          { label: 'Baja', value: 'B' },
+        ],
+      },
+    ]);
+    fixture.detectChanges();
+
+    const contenedorCascada = () =>
+      fixture.debugElement.query(By.css('.pagina-crud__filtros-cascada'));
+    let selectores = contenedorCascada().queryAll(By.directive(Select2Component));
+    expect(selectores.length).toBe(1);
+    expect(fixture.componentInstance.tipoBusquedaInterno()).toBeNull();
+    expect((selectores[0].componentInstance as Select2Component).options.map(o => o.value)).toEqual([
+      null,
+      'estado',
+      'prioridad',
+    ]);
+
+    // Al seleccionar un objeto de búsqueda aparece el segundo control de la cascada
+    (selectores[0].componentInstance as Select2Component).selectOption({
+      label: 'Estado',
+      value: 'estado',
+    });
+    fixture.detectChanges();
+    expect(cambiado).toHaveBeenCalledWith('estado');
+    selectores = contenedorCascada().queryAll(By.directive(Select2Component));
+    expect(selectores.length).toBe(2);
+
+    // Selecciona 'A' en Estado y luego cambia a Prioridad (que también tiene un valor 'A')
+    (selectores[1].componentInstance as Select2Component).selectOption({ label: 'Activo', value: 'A' });
+    fixture.detectChanges();
+    expect((selectores[1].componentInstance as Select2Component).selectedOption()?.value).toBe('A');
+
+    (selectores[0].componentInstance as Select2Component).selectOption({
+      label: 'Prioridad',
+      value: 'prioridad',
+    });
+    fixture.detectChanges();
+    selectores = contenedorCascada().queryAll(By.directive(Select2Component));
+    expect((selectores[1].componentInstance as Select2Component).selectedOption()).toBeNull();
+
+    // Al volver a Seleccionar... (null), desaparece el segundo control de la cascada
+    (selectores[0].componentInstance as Select2Component).selectOption({
+      label: 'Seleccionar...',
+      value: null,
+    });
+    fixture.detectChanges();
+    expect(cambiado).toHaveBeenCalledWith(null);
+    expect(fixture.componentInstance.tipoBusquedaInterno()).toBeNull();
+    expect(contenedorCascada().queryAll(By.directive(Select2Component)).length).toBe(1);
   });
 });

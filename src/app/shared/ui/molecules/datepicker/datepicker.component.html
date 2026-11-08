@@ -1,7 +1,7 @@
 <div class="datepicker-container" (clickOutside)="close()">
 
   @if (label() && !flotante()) {
-    <span class="fl-label datepicker-top-label" [id]="labelId">
+    <span class="fl-label datepicker-top-label" [class.fl-label--error]="error()" [class.fl-label--disabled]="isDisabled()" [id]="labelId">
       {{ label() }}
       @if (required()) {
         <span class="field__required fl-label__required" aria-hidden="true">*</span>

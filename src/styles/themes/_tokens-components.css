@@ -164,6 +164,7 @@
    --input-border-focus: var(--info-color);
    --input-placeholder: var(--text-color-placeholder);
    --field-label-color: var(--text-color);
+   --field-label-color-resting: var(--text-color-secondary);
    --field-label-color-floated: var(--info-color-text);
    --field-label-color-error: var(--danger-color-text);
    --input-text: var(--text-color);
@@ -225,6 +226,7 @@
    /* === TOOLTIPS === */
    --tooltip-bg: var(--gray-900);
    --tooltip-text: var(--gray-0);
+   --tooltip-border: var(--gray-800);
    --tooltip-shadow: var(--shadow-lg);
 
    /* === DROPDOWNS / SELECT === */
@@ -335,13 +337,26 @@
    --breadcrumb-hover: var(--primary-color);
 
    /* === PAGINATION === */
+   --pagination-wrapper-bg: var(--surface-section);
+   --pagination-wrapper-border: var(--border-color);
    --pagination-bg: var(--surface-background);
    --pagination-text: var(--text-color);
-   --pagination-hover-bg: var(--hover-background-subtle);
+   --pagination-accent-text: var(--primary-color);
+   --pagination-hover-bg: var(--brand-primary-50);
+   --pagination-hover-text: var(--primary-color);
+   --pagination-hover-border: var(--primary-color);
    --pagination-active-bg: var(--primary-color);
    --pagination-active-text: var(--text-color-on-primary);
-   --pagination-disabled-text: var(--text-color-muted);
-   --pagination-border: var(--border-color);
+   --pagination-active-border: var(--primary-color-dark);
+   --pagination-active-shadow: var(--shadow-glow-primary);
+   --pagination-disabled-bg: var(--input-disabled-bg);
+   --pagination-disabled-text: var(--input-disabled-text);
+   --pagination-border: var(--border-color-strong);
+   --pagination-badge-bg: var(--brand-primary-50);
+   --pagination-badge-border: var(--brand-primary-200);
+   --pagination-card-accent-border: var(--brand-primary-300);
+   --pagination-card-active-bg: var(--brand-primary-600);
+   --pagination-card-active-border: var(--brand-secondary-500);
    --pagination-page-size-inline-size: 6rem;
 
    /* === PROGRESS BAR === */
@@ -471,6 +486,7 @@ html.dark {
    --input-border-focus: var(--info-color);
    --input-placeholder: var(--text-color-placeholder);
    --field-label-color: var(--text-color);
+   --field-label-color-resting: var(--text-color-secondary);
    --field-label-color-floated: var(--info-color-text);
    --field-label-color-error: var(--danger-color-text);
    --input-text: var(--text-color);
@@ -495,9 +511,9 @@ html.dark {
    --button-primary-bg-active: var(--brand-primary-300);
    --button-primary-text: var(--gray-0);
 
-   --button-secondary-bg: var(--brand-secondary-600);
-   --button-secondary-bg-hover: var(--brand-secondary-500);
-   --button-secondary-text: var(--gray-0);
+   --button-secondary-bg: var(--brand-secondary-500);
+   --button-secondary-bg-hover: var(--brand-secondary-400);
+   --button-secondary-text: var(--text-color-on-secondary);
 
    --button-outline-border: var(--border-color-strong);
    --button-outline-text: var(--text-color-secondary);
@@ -530,8 +546,10 @@ html.dark {
    --badge-info-text: var(--info-color-text);
 
    /* === TOOLTIPS === */
-   --tooltip-bg: var(--surface-section);
+   --tooltip-bg: var(--surface-elevated);
    --tooltip-text: var(--text-color);
+   --tooltip-border: var(--border-color-strong);
+   --tooltip-shadow: var(--shadow-lg);
 
    /* === DROPDOWNS / SELECT === */
    --dropdown-bg: var(--surface-elevated);
@@ -611,13 +629,26 @@ html.dark {
    --breadcrumb-hover: var(--primary-color);
 
    /* === PAGINATION === */
+   --pagination-wrapper-bg: var(--surface-section);
+   --pagination-wrapper-border: var(--border-color-strong);
    --pagination-bg: var(--surface-elevated);
    --pagination-text: var(--text-color);
-   --pagination-hover-bg: var(--hover-background-subtle);
-   --pagination-active-bg: var(--brand-primary-600);
+   --pagination-accent-text: var(--brand-primary-200);
+   --pagination-hover-bg: var(--brand-primary-800);
+   --pagination-hover-text: var(--brand-primary-100);
+   --pagination-hover-border: var(--brand-primary-300);
+   --pagination-active-bg: var(--brand-primary-A700);
    --pagination-active-text: var(--gray-0);
-   --pagination-disabled-text: var(--text-color-muted);
-   --pagination-border: var(--border-color);
+   --pagination-active-border: var(--brand-primary-300);
+   --pagination-active-shadow: var(--shadow-glow-primary);
+   --pagination-disabled-bg: var(--input-disabled-bg);
+   --pagination-disabled-text: var(--input-disabled-text);
+   --pagination-border: var(--border-color-strong);
+   --pagination-badge-bg: var(--brand-primary-800);
+   --pagination-badge-border: var(--brand-primary-400);
+   --pagination-card-accent-border: var(--brand-primary-400);
+   --pagination-card-active-bg: var(--purple-700);
+   --pagination-card-active-border: var(--brand-secondary-400);
 
    /* === PROGRESS BAR === */
    --progress-bg: var(--gray-700);
@@ -731,6 +762,7 @@ html.dark {
    --input-border-focus: var(--info-color);
    --input-placeholder: var(--text-color-placeholder);
    --field-label-color: var(--text-color);
+   --field-label-color-resting: var(--text-color-secondary);
    --field-label-color-floated: var(--info-color-text);
    --field-label-color-error: var(--danger-color-text);
    --input-text: var(--text-color);
@@ -752,9 +784,9 @@ html.dark {
    --button-primary-bg-active: var(--brand-primary-300);
    --button-primary-text: var(--gray-0);
 
-   --button-secondary-bg: var(--brand-secondary-600);
-   --button-secondary-bg-hover: var(--brand-secondary-500);
-   --button-secondary-text: var(--gray-0);
+   --button-secondary-bg: var(--brand-secondary-500);
+   --button-secondary-bg-hover: var(--brand-secondary-400);
+   --button-secondary-text: var(--text-color-on-secondary);
 
    --button-outline-border: var(--border-color-strong);
    --button-outline-text: var(--text-color-secondary);
@@ -787,8 +819,10 @@ html.dark {
    --badge-info-text: var(--info-color-text);
 
    /* === TOOLTIPS === */
-   --tooltip-bg: var(--surface-section);
-   --tooltip-text: var(--text-color);
+   --tooltip-bg: var(--surface-elevated);
+   --tooltip-text: var(--gray-50);
+   --tooltip-border: var(--border-color-strong);
+   --tooltip-shadow: var(--shadow-lg);
 
    /* === DROPDOWNS / SELECT === */
    --dropdown-bg: var(--surface-elevated);
@@ -862,13 +896,26 @@ html.dark {
    --breadcrumb-hover: var(--primary-color);
 
    /* === PAGINATION === */
+   --pagination-wrapper-bg: var(--surface-section);
+   --pagination-wrapper-border: var(--border-color-strong);
    --pagination-bg: var(--surface-elevated);
    --pagination-text: var(--text-color);
-   --pagination-hover-bg: var(--hover-background-subtle);
-   --pagination-active-bg: var(--brand-primary-600);
+   --pagination-accent-text: var(--brand-primary-200);
+   --pagination-hover-bg: var(--brand-primary-800);
+   --pagination-hover-text: var(--brand-primary-100);
+   --pagination-hover-border: var(--brand-primary-300);
+   --pagination-active-bg: var(--brand-primary-A700);
    --pagination-active-text: var(--gray-0);
-   --pagination-disabled-text: var(--text-color-muted);
-   --pagination-border: var(--border-color);
+   --pagination-active-border: var(--brand-primary-300);
+   --pagination-active-shadow: var(--shadow-glow-primary);
+   --pagination-disabled-bg: var(--input-disabled-bg);
+   --pagination-disabled-text: var(--input-disabled-text);
+   --pagination-border: var(--border-color-strong);
+   --pagination-badge-bg: var(--brand-primary-800);
+   --pagination-badge-border: var(--brand-primary-400);
+   --pagination-card-accent-border: var(--brand-primary-400);
+   --pagination-card-active-bg: var(--purple-700);
+   --pagination-card-active-border: var(--brand-secondary-400);
 
    /* === PROGRESS BAR === */
    --progress-bg: var(--gray-700);

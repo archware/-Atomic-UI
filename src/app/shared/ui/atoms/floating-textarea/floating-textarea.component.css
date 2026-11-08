@@ -3,10 +3,15 @@
   width: 100%;
 }
 
+:host:has(> .floating-textarea-wrapper.has-custom-width) {
+  width: fit-content;
+  max-width: 100%;
+}
+
 .floating-textarea-wrapper {
   position: relative;
   width: var(--floating-textarea-width, 100%);
-  min-width: var(--fi-min-width, 8rem);
+  min-width: var(--fi-min-width, var(--floating-textarea-width, 8rem));
   margin-top: var(--space-3);
 }
 
@@ -14,17 +19,23 @@
 .floating-textarea {
   width: 100%;
   min-height: calc(var(--control-height, 2.5rem) * 2);
-  padding: calc((var(--control-height, 2.5rem) - 1.5em) / 2) 0.875rem;
+  padding: calc((var(--control-height, 2.5rem) - 1.5em) / 2) var(--space-4);
   line-height: 1.5;
   font-size: 0.875rem;
   color: var(--input-text);
   background: transparent;
   border: none;
   outline: none;
-  transition: all 200ms ease;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
   box-sizing: border-box;
   resize: vertical;
   font-family: inherit;
+}
+
+.floating-textarea:focus,
+.floating-textarea:focus-visible {
+  outline: none;
+  box-shadow: none;
 }
 
 .has-icon .floating-textarea {
@@ -46,12 +57,27 @@
   left: var(--field-label-inset);
   top: calc(var(--control-height) / 2);
   transform: translateY(-50%);
+  max-width: calc(100% - var(--field-label-inset) - var(--space-1));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: var(--field-label-font-size);
-  color: var(--input-placeholder);
+  font-weight: var(--field-label-font-weight);
+  line-height: var(--field-label-line-height);
+  color: var(--field-label-color-resting);
   pointer-events: none;
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    top 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+    font-size 200ms cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: left center;
   z-index: 10;
+}
+
+.has-icon:not(.focused):not(.has-value) .floating-label,
+.has-icon.label-solo-valor:not(.has-value) .floating-label {
+  max-width: calc(100% - var(--space-7) - var(--field-label-inset));
 }
 
 /* Label goes up when focused or has value */
@@ -60,8 +86,8 @@
   top: var(--space-1);
   transform: translateY(0);
   font-size: var(--field-label-floated-font-size);
-  font-weight: var(--font-weight-body);
-  color: var(--info-color-text);
+  font-weight: var(--field-label-floated-font-weight);
+  color: var(--field-label-color-floated);
 }
 
 /* === TEXTAREA LINE (for underline/material) === */
@@ -102,7 +128,8 @@
 .variant-floating .floating-label {
   left: var(--field-label-inset);
   background: var(--input-bg);
-  padding: 0 var(--space-2);
+  padding: var(--field-label-padding);
+  border-radius: var(--radius-sm);
   white-space: nowrap;
 }
 
@@ -110,6 +137,11 @@
 .variant-floating.has-value .floating-label {
   top: 0;
   transform: translateY(-50%);
+}
+
+.variant-floating .floating-textarea,
+.variant-outline .floating-textarea {
+  padding-top: var(--space-4);
 }
 
 .variant-floating.focused .floating-textarea {
@@ -123,19 +155,23 @@
 
 /* === VARIANT: UNDERLINE === */
 .variant-underline .floating-textarea {
-  padding: var(--space-5) 0 0.875rem;
+  padding: var(--space-5) var(--space-4) 0.875rem;
   font-size: 0.875rem;
   border-bottom: 1px solid var(--input-border);
 }
 
+.variant-underline.has-icon .floating-textarea {
+  padding-right: var(--space-8);
+}
+
 .variant-underline .floating-label {
-  left: 0;
+  left: var(--field-label-inset);
+  padding: var(--field-label-padding);
 }
 
 .variant-underline.focused .floating-label,
 .variant-underline.has-value .floating-label {
-  top: calc(-1 * var(--space-1));
-  font-size: var(--space-3);
+  top: var(--space-1);
 }
 
 .variant-underline.focused .floating-textarea,
@@ -149,21 +185,23 @@
 
 /* === VARIANT: MATERIAL === */
 .variant-material .floating-textarea {
-  padding: var(--space-5) 0 0.875rem;
+  padding: var(--space-5) var(--space-4) 0.875rem;
   font-size: 0.875rem;
 }
 
+.variant-material.has-icon .floating-textarea {
+  padding-right: var(--space-8);
+}
+
 .variant-material .floating-label {
-  left: 0;
+  left: var(--field-label-inset);
+  padding: var(--field-label-padding);
   font-size: var(--field-label-font-size);
 }
 
 .variant-material.focused .floating-label,
 .variant-material.has-value .floating-label {
-  top: calc(-1 * var(--space-1));
-  font-size: var(--space-3);
-  color: var(--primary-color);
-  font-weight: var(--font-weight-emphasis);
+  top: var(--space-1);
 }
 
 /* === VARIANT: OUTLINE === */
@@ -178,7 +216,8 @@
 .variant-outline .floating-label {
   top: calc(var(--control-height) / 2);
   background: var(--input-bg);
-  padding: 0 var(--space-2);
+  padding: var(--field-label-padding);
+  border-radius: var(--radius-sm);
   font-size: var(--field-label-font-size);
   white-space: nowrap;
 }
@@ -253,6 +292,17 @@
   color: var(--input-disabled-text);
 }
 
+.disabled .floating-label,
+.disabled.focused .floating-label,
+.disabled.has-value .floating-label {
+  color: var(--input-disabled-text);
+}
+
+.disabled.variant-floating .floating-label,
+.disabled.variant-outline .floating-label {
+  background: var(--input-disabled-bg);
+}
+
 .has-error .floating-textarea {
   border-color: var(--danger-color) !important;
 }
@@ -307,5 +357,6 @@
   top: calc(var(--control-height) / 2);
   transform: translateY(-50%);
   font-size: var(--field-label-font-size);
-  color: var(--input-placeholder);
+  font-weight: var(--field-label-font-weight);
+  color: var(--field-label-color-resting);
 }

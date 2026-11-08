@@ -4,10 +4,15 @@
   position: relative;
 }
 
+:host:has(> .select2-wrapper.has-custom-width) {
+  width: fit-content;
+  max-width: 100%;
+}
+
 .select2-wrapper {
   position: relative;
   width: var(--select2-width, 100%);
-  min-width: var(--select2-min-width, 15rem);
+  min-width: var(--select2-width, var(--select2-min-width, 15rem));
 }
 
 .select2-wrapper.disabled {
@@ -15,7 +20,17 @@
   color: var(--input-disabled-text);
 }
 
-.select2-wrapper.disabled .select2-trigger,
+.select2-wrapper.disabled .select2-trigger {
+  cursor: not-allowed;
+  background: var(--input-disabled-bg);
+  color: var(--input-disabled-text);
+  box-shadow: none;
+}
+
+.select2-wrapper.disabled .select2-value {
+  color: var(--input-disabled-text);
+}
+
 .tag-remove:disabled {
   cursor: not-allowed;
 }
@@ -31,7 +46,7 @@
   align-items: center;
   min-height: var(--control-height);
   height: auto;
-  padding: var(--space-1) var(--space-3);
+  padding: var(--space-1) var(--space-4);
   /* Deja sitio al icono: es un ESPACIO, asi que le toca un paso de la
      escala. Estaba en --space-11, que no es un espacio sino el objetivo
      tactil minimo colado en la escala. Capitulo 10. */
@@ -40,7 +55,7 @@
   border: var(--input-border-width, 1.5px) solid var(--input-border);
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 200ms ease;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
   font-size: var(--text-sm);
   box-sizing: border-box;
   box-shadow: var(--input-shadow);
@@ -49,7 +64,11 @@
 }
 
 .select2-wrapper.has-label .select2-trigger {
-  padding: var(--space-1) var(--space-3);
+  padding: var(--space-1) var(--space-7) var(--space-1) var(--space-4);
+}
+
+.select2-trigger .fl-label--floating:not(.fl-label--floated) {
+  max-width: calc(100% - var(--space-7) - var(--field-label-inset));
 }
 
 /* === FLOATING LABEL ===
@@ -65,12 +84,17 @@
 .select2-wrapper.multiple .select2-trigger {
   min-height: var(--control-height);
   height: auto;
-  padding: var(--space-1) var(--space-3);
+  padding: var(--space-1) var(--space-4);
   /* Deja sitio al icono: es un ESPACIO, asi que le toca un paso de la
      escala. Estaba en --space-11, que no es un espacio sino el objetivo
      tactil minimo colado en la escala. Capitulo 10. */
   padding-right: var(--space-7);
   align-items: center;
+}
+
+.select2-wrapper.has-label.multiple.has-value .select2-trigger {
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-2);
 }
 
 .select2-trigger:hover {
@@ -83,6 +107,7 @@
   box-shadow: var(--input-shadow-focus);
 }
 
+.select2-trigger:focus,
 .select2-trigger:focus-visible {
   outline: none;
   border-color: var(--input-border-focus);

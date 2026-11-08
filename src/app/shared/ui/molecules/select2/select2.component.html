@@ -1,22 +1,23 @@
 
     <div
       class="select2-wrapper"
+      [class.has-custom-width]="tieneAnchoFijo()"
       [class.variant-standard]="!flotante()"
       [class.open]="isOpen()"
       [class.disabled]="disabled"
-      [class.focused]="isOpen()"
+      [class.focused]="isOpen() || triggerFocused()"
       [class.has-value]="hasValue()"
       [class.multiple]="multiple()"
       [class.has-label]="flotante()"
       [appVariablesCss]="{ '--select2-width': width() || null }"
     >
       @if (label() && !flotante()) {
-        <label class="fl-label" [id]="selectId()">
+        <span class="fl-label" [class.fl-label--disabled]="disabled" [id]="selectId()">
           {{ label() }}
           @if (required()) {
             <span class="field__required fl-label__required" aria-hidden="true">*</span>
           }
-        </label>
+        </span>
       }
       <div #disparador class="select2-trigger"
         (click)="$event.stopPropagation(); toggleDropdown()"

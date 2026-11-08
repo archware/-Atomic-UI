@@ -1,0 +1,74 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "spinner",
+  "layer": "atom",
+  "selector": "app-spinner",
+  "export": "SpinnerComponent",
+  "source": "src/app/shared/ui/atoms/spinner/spinner.component.ts",
+  "purpose": "Indicador de carga en línea ligero para botones, controles compactos y estados de acción en curso.",
+  "variants": [
+    {
+      "name": "variant",
+      "values": [
+        { "value": "primary", "meaning": "Tono primario institucional.", "default": true },
+        { "value": "secondary", "meaning": "Tono secundario de marca." },
+        { "value": "white", "meaning": "Trazo claro sobre superficies oscuras o sólidas." },
+        { "value": "current", "meaning": "Hereda currentColor del control contenedor." }
+      ]
+    },
+    {
+      "name": "size",
+      "values": [
+        { "value": "xs", "meaning": "Miniatura de 0.75rem (12px)." },
+        { "value": "sm", "meaning": "Compacto de 1rem (16px) para botones." },
+        { "value": "md", "meaning": "Estándar de 1.5rem (24px).", "default": true },
+        { "value": "lg", "meaning": "Grande de 2rem (32px)." },
+        { "value": "xl", "meaning": "Destacado de 2.5rem (40px)." }
+      ]
+    }
+  ],
+  "inputs": [
+    { "name": "size", "type": "'xs' | 'sm' | 'md' | 'lg' | 'xl'", "default": "md", "meaning": "Escala dimensional del anillo." },
+    { "name": "variant", "type": "'primary' | 'secondary' | 'white' | 'current'", "default": "primary", "meaning": "Variante cromática del trazo." },
+    { "name": "label", "type": "string", "default": "Cargando…", "meaning": "Etiqueta accesible para lectores de pantalla." }
+  ],
+  "outputs": [],
+  "states": [
+    { "name": "spinning", "meaning": "Giro continuo con anuncio accesible polite." }
+  ],
+  "a11y": [
+    "Publica role=status, aria-live=polite y etiqueta accesible configurable.",
+    "Cuando se incrusta dentro de app-button en carga, se marca con aria-hidden=true porque el botón ya anuncia aria-busy."
+  ],
+  "responsive": [
+    "Se comporta como inline-flex sin alterar el flujo de línea de botones ni etiquetas."
+  ],
+  "tokens": [
+    "--border-color",
+    "--border-width-medium",
+    "--border-width-thick",
+    "--border-width-thin",
+    "--gray-0",
+    "--icon-lg",
+    "--icon-md",
+    "--icon-sm",
+    "--icon-xs",
+    "--primary-color",
+    "--primary-color-lighter",
+    "--radius-full",
+    "--secondary-color",
+    "--secondary-color-lighter",
+    "--space-1",
+    "--space-7"
+  ],
+  "story": { "path": "src/stories/ui-spinner.stories.ts", "status": "available" },
+  "test": { "path": null, "status": "missing" },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Empleado internamente por ButtonComponent durante el estado loading."
+    ]
+  },
+  "canonicalFor": ["inline-spinner", "button-spinner"]
+}

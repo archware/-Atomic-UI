@@ -1,12 +1,15 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   contentChild,
   input,
+  inject,
   output,
   signal,
   TemplateRef,
   viewChildren,
+  viewChild,
 } from '@angular/core';
 import { PageHeader } from '../../organisms/page-header/page-header';
 import { QueryToolbar } from '../../organisms/query-toolbar/query-toolbar';
@@ -19,6 +22,7 @@ import { CrudDialog } from '../../organisms/crud-dialog/crud-dialog';
 import {
   AccordionComponent,
   AccordionItemComponent,
+  type AccordionVariant,
 } from '../../organisms/accordion/accordion.component';
 import { TableAction } from '../../atoms/table-action/table-action';
 import { ButtonComponent } from '../../atoms/button/button.component';
@@ -105,6 +109,12 @@ export class PaginaCrudAccordion<T extends object = Record<string, unknown>> {
   // ─── Configuración de la página ──────────────────────────────
   readonly titulo = input.required<string>();
   readonly subtitulo = input<string | null>(null);
+  /** Variante del acordeón (`default`, `multiple`, `single`, `flush`). */
+  readonly varianteAccordion = input<AccordionVariant>('default');
+  /** Cuando es `true`, abrir una entidad cierra automáticamente las demás. */
+  readonly soloUnoAbierto = input(false);
+  /** En modo exclusivo (`single`), indica si el panel activo puede plegarse (`true` por omisión). */
+  readonly colapsable = input(true);
 
   /**
    * Array de configuraciones de entidad. Cada una genera un accordion-item.
@@ -153,6 +163,8 @@ export class PaginaCrudAccordion<T extends object = Record<string, unknown>> {
 
   // ─── Referencias internas ────────────────────────────────────
   protected readonly dialogoCrud = viewChildren<CrudDialog>('dialogoCrud');
+  protected readonly dialogoConfirmacion = viewChild.required<CrudDialog>('dialogoConfirmacion');
+  private readonly detectorCambios = inject(ChangeDetectorRef);
   protected readonly formularioCrud =
     contentChild<TemplateRef<ContextoFormularioCrud<T>>>('formularioCrud');
 
@@ -164,6 +176,8 @@ export class PaginaCrudAccordion<T extends object = Record<string, unknown>> {
 
   private static contadorInstancias = 0;
   protected readonly idTituloDialogo = `accordion-crud-dialogo-${++PaginaCrudAccordion.contadorInstancias}`;
+  protected readonly idTituloConfirmacion = this.idTituloDialogo + '-confirmacion';
+  protected readonly idMensajeConfirmacion = this.idTituloDialogo + '-confirmacion-mensaje';
 
   // ─── Utilidades ──────────────────────────────────────────────
   protected tituloDialogo(): string {
@@ -230,18 +244,21 @@ export class PaginaCrudAccordion<T extends object = Record<string, unknown>> {
     this.claveConfirmacion.set(clave);
     this.entidadAEliminar.set(entidad);
     this.mostrarConfirmacion.set(true);
+    this.detectorCambios.detectChanges();
+    this.dialogoConfirmacion().showModal('[data-dialog-initial-focus] button');
   }
 
   protected confirmarBaja(): void {
     const entidad = this.entidadAEliminar();
     const clave = this.claveConfirmacion();
-    if (entidad && clave) {
+    if (this.mostrarConfirmacion() && entidad && clave) {
+      this.cancelarBaja();
       this.alEliminar.emit({ clave, datos: entidad });
     }
-    this.cancelarBaja();
   }
 
   protected cancelarBaja(): void {
+    this.dialogoConfirmacion().close();
     this.mostrarConfirmacion.set(false);
     this.entidadAEliminar.set(null);
     this.claveConfirmacion.set(null);

@@ -4,6 +4,7 @@ import { expect, userEvent, waitFor, within } from 'storybook/test';
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   computed,
   input,
   signal,
@@ -339,6 +340,8 @@ class CrudDialogFichaStory {
 
       <app-crud-dialog
         size="sm"
+        [rol]="rol()"
+        [cerrarAlPulsarFondo]="cerrarAlPulsarFondo()"
         [labelledBy]="idTitulo"
         [describedBy]="idDescripcion"
         (cancelled)="intentarCerrar()"
@@ -418,6 +421,8 @@ class CrudDialogFichaStory {
   ],
 })
 class CrudDialogBorradoStory {
+  readonly rol = input<'dialog' | 'alertdialog'>('dialog');
+  readonly cerrarAlPulsarFondo = input(false);
   private readonly sufijo = `crud-dialog-borrado-${++secuenciaDemo}`;
   protected readonly idTitulo = `${this.sufijo}-titulo`;
   protected readonly idDescripcion = `${this.sufijo}-descripcion`;
@@ -775,4 +780,48 @@ export const ContenidoQueDesborda: Story = {
     expect(dialogo).toHaveClass('crud-dialog--xl');
     expect(dialogo).toHaveClass('crud-dialog--demo-liquidacion');
   },
+};
+
+export const ConfirmacionConFondo: Story = {
+  render: () => ({
+    template: '<app-story-crud-dialog-borrado rol="alertdialog" [cerrarAlPulsarFondo]="true" />',
+  }),
+  play: async ({ canvasElement }) => {
+    const lienzo = within(canvasElement);
+    await userEvent.click(lienzo.getByRole('button', { name: 'Eliminar cliente…' }));
+    const dialogo = await lienzo.findByRole('alertdialog');
+    await expect(dialogo).toHaveAccessibleName(/¿Eliminar a/);
+    await expect(dialogo).toHaveAccessibleDescription(/Se eliminan también/);
+    const cancelar = within(dialogo).getByRole('button', { name: 'Cancelar' });
+    await expect(cancelar).toHaveFocus();
+    await userEvent.click(cancelar);
+    await waitFor(() => expect(dialogo).not.toHaveAttribute('open'));
+  },
+};
+
+@Component({
+  selector: 'app-story-crud-retorno-estable',
+  imports: [CrudDialog, ButtonComponent],
+  template: `<section #destino role="region" aria-label="Catalogo sintetico estable" tabindex="-1">
+    <p>El catalogo conserva este destino estable tras retirar la fila.</p>
+    @if (filaVisible()) {
+      <app-button (buttonClick)="dialogo.showModal()">Abrir fila sintetica</app-button>
+    }
+    <app-crud-dialog #dialogo labelledBy="titulo-retorno-sintetico" [resolverFocoRetorno]="resolver"
+      (cancelled)="dialogo.close()">
+      <h2 id="titulo-retorno-sintetico">Retorno tras recarga</h2>
+      <p>El destino permanece mientras se retira el disparador.</p>
+      <app-button variant="outline" (buttonClick)="dialogo.close()">Cancelar</app-button>
+      <app-button (buttonClick)="filaVisible.set(false); dialogo.close()">Retirar fila y cerrar</app-button>
+    </app-crud-dialog>
+  </section>`,
+})
+class HistoriaCrudRetornoEstable {
+  readonly destino = viewChild.required<ElementRef<HTMLElement>>('destino');
+  readonly filaVisible = signal(true);
+  readonly resolver = () => this.destino().nativeElement;
+}
+export const RetornoConOrigenRetirado: Story = {
+  decorators: [moduleMetadata({ imports: [HistoriaCrudRetornoEstable] })],
+  render: () => ({ template: '<app-story-crud-retorno-estable />' }),
 };

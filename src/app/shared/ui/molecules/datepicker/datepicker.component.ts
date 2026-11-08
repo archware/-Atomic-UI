@@ -225,7 +225,7 @@ export class DatepickerComponent implements ControlValueAccessor {
         event.preventDefault();
         event.stopPropagation();
         this.close();
-        this.elementRef.nativeElement.querySelector('.datepicker-trigger')?.focus();
+        (this.elementRef.nativeElement.querySelector('.datepicker-trigger') as HTMLElement | null)?.focus({ preventScroll: true });
       }
       return;
     }
@@ -266,7 +266,7 @@ export class DatepickerComponent implements ControlValueAccessor {
         event.preventDefault();
         event.stopPropagation();
         this.close();
-        this.elementRef.nativeElement.querySelector('.datepicker-trigger')?.focus();
+        (this.elementRef.nativeElement.querySelector('.datepicker-trigger') as HTMLElement | null)?.focus({ preventScroll: true });
         break;
     }
   }
@@ -282,8 +282,8 @@ export class DatepickerComponent implements ControlValueAccessor {
     setTimeout(() => {
       const dayEl = this.elementRef.nativeElement.querySelector(
         `.calendar-day[data-date="${date.getDate()}"]:not(.empty)`
-      );
-      if (dayEl) dayEl.focus();
+      ) as HTMLElement | null;
+      if (dayEl) dayEl.focus({ preventScroll: true });
     }, 0);
   }
 

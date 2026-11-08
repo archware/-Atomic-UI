@@ -1,6 +1,5 @@
 import {
   Component,
-  ViewChild,
   ElementRef,
   OnInit,
   OnDestroy,
@@ -8,6 +7,7 @@ import {
   inject,
   signal,
   input,
+  viewChild,
   type InputSignal,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -33,8 +33,14 @@ export class ChartComponent implements OnInit, OnDestroy {
   readonly options: InputSignal<ChartConfiguration['options']> =
     input.required<ChartConfiguration['options']>();
   readonly height = input('18.75rem');
-  @ViewChild('chartContainer') private chartContainer?: ElementRef<HTMLDivElement>;
-  @ViewChild(BaseChartDirective) private chart?: BaseChartDirective;
+  private readonly consultaContenedor = viewChild<ElementRef<HTMLDivElement>>('chartContainer');
+  private readonly consultaGrafico = viewChild(BaseChartDirective);
+  private get chartContainer(): ElementRef<HTMLDivElement> | undefined {
+    return this.consultaContenedor();
+  }
+  private get chart(): BaseChartDirective | undefined {
+    return this.consultaGrafico();
+  }
 
   private platformId = inject(PLATFORM_ID);
   private el = inject<ElementRef<HTMLElement>>(ElementRef);

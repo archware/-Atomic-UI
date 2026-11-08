@@ -285,6 +285,8 @@ describe('ModalComponent', () => {
     });
 
     it('restores focus when the dialog is destroyed', async () => {
+      fixture.destroy();
+      fixture.nativeElement.remove();
       const trigger = document.createElement('button');
       document.body.appendChild(trigger);
       trigger.focus();
@@ -293,6 +295,8 @@ describe('ModalComponent', () => {
       await Promise.resolve();
 
       localFixture.destroy();
+      localFixture.nativeElement.remove();
+      await Promise.resolve();
 
       expect(document.activeElement).toBe(trigger);
       trigger.remove();
@@ -325,6 +329,8 @@ describe('ModalComponent', () => {
     });
 
     it('automates busy, Escape, close-before-toast and error-focus lifecycle', async () => {
+      fixture.destroy();
+      fixture.nativeElement.remove();
       const hostFixture = TestBed.createComponent(ModalAsyncLifecycleHost);
       hostFixture.detectChanges();
       await hostFixture.whenStable();
@@ -375,5 +381,113 @@ describe('ModalComponent', () => {
       expect(document.activeElement).toBe(error);
       hostFixture.destroy();
     });
+  });
+});
+
+describe('Modal destino de retorno por destruccion', () => {
+  let externos: HTMLElement[];
+  beforeEach(() => { externos = []; });
+  afterEach(() => externos.forEach(elemento => elemento.remove()));
+  function boton(): HTMLButtonElement {
+    const elemento = document.createElement('button');
+    document.body.append(elemento);
+    externos.push(elemento);
+    return elemento;
+  }
+  for (const caso of ['destino', 'null', 'excepcion', 'desconectado', 'hidden', 'disabled', 'inert', 'no enfocable']) {
+    it(`restaura tras retirar DOM con ${caso}`, async () => {
+      await TestBed.configureTestingModule({ imports: [ModalComponent] }).compileComponents();
+      const origen = boton();
+      let destino: HTMLElement | null = boton();
+      if (caso === 'null') destino = null;
+      if (caso === 'desconectado') destino!.remove();
+      if (caso === 'hidden') destino!.hidden = true;
+      if (caso === 'disabled') (destino as HTMLButtonElement).disabled = true;
+      if (caso === 'inert') destino!.setAttribute('inert', '');
+      if (caso === 'no enfocable') {
+        destino!.remove();
+        destino = document.createElement('div');
+        destino.textContent = 'Destino sin tabindex';
+        document.body.append(destino);
+        externos.push(destino);
+      }
+      origen.focus();
+      const fixture = TestBed.createComponent(ModalComponent);
+      const resolver = jasmine.createSpy('resolver').and.callFake(() => {
+        expect(fixture.nativeElement.isConnected).toBeFalse();
+        if (caso === 'excepcion') throw new Error('Destino ausente');
+        return destino;
+      });
+      fixture.componentRef.setInput('resolverFocoRetorno', resolver);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      expect(resolver).not.toHaveBeenCalled();
+      const cerrado = jasmine.createSpy('closed');
+      fixture.componentInstance.closed.subscribe(cerrado);
+      if (caso === 'destino') origen.remove();
+      fixture.destroy();
+      fixture.nativeElement.remove();
+      await Promise.resolve();
+      expect(document.activeElement).toBe(caso === 'destino' ? destino : origen);
+      expect(resolver).toHaveBeenCalledTimes(1);
+      expect(cerrado).not.toHaveBeenCalled();
+    });
+  }
+
+  it('devuelve el foco al origen cuando el destino visible declara aria-disabled', async () => {
+    await TestBed.configureTestingModule({ imports: [ModalComponent] }).compileComponents();
+    const origen = boton();
+    const candidato = boton();
+    candidato.setAttribute('aria-disabled', 'true');
+    expect(candidato.isConnected).toBeTrue();
+    expect(candidato.disabled).toBeFalse();
+    expect(candidato.getClientRects().length).toBeGreaterThan(0);
+    origen.focus();
+    expect(document.activeElement).toBe(origen);
+    const fixture = TestBed.createComponent(ModalComponent);
+    fixture.componentRef.setInput('resolverFocoRetorno', () => candidato);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(fixture.nativeElement.contains(document.activeElement)).toBeTrue();
+    fixture.destroy();
+    fixture.nativeElement.remove();
+    await Promise.resolve();
+    expect(document.activeElement).toBe(origen);
+    expect(document.activeElement).not.toBe(candidato);
+  });
+
+  it('no confunde un modal oculto o un dialogo cerrado con otra ventana abierta', async () => {
+    await TestBed.configureTestingModule({ imports: [ModalComponent] }).compileComponents();
+    const destino = boton();
+    const oculto = document.createElement('div');
+    oculto.setAttribute('aria-modal', 'true');
+    oculto.hidden = true;
+    const cerrado = document.createElement('dialog');
+    cerrado.setAttribute('aria-modal', 'true');
+    document.body.append(oculto, cerrado);
+    externos.push(oculto, cerrado);
+    const fixture = TestBed.createComponent(ModalComponent);
+    fixture.componentRef.setInput('resolverFocoRetorno', () => destino);
+    fixture.detectChanges();
+    fixture.destroy();
+    fixture.nativeElement.remove();
+    await Promise.resolve();
+    expect(document.activeElement).toBe(destino);
+  });
+
+  it('no roba foco a un modal nuevo ni ejecuta foco inicial despues de destruir', async () => {
+    await TestBed.configureTestingModule({ imports: [ModalComponent] }).compileComponents();
+    const anterior = TestBed.createComponent(ModalComponent);
+    const resolver = jasmine.createSpy('resolver').and.returnValue(boton());
+    anterior.componentRef.setInput('resolverFocoRetorno', resolver);
+    anterior.detectChanges();
+    anterior.componentInstance.focusError();
+    anterior.destroy();
+      anterior.nativeElement.remove();
+    const nuevo = TestBed.createComponent(ModalComponent);
+    nuevo.detectChanges();
+    await nuevo.whenStable();
+    expect(nuevo.nativeElement.contains(document.activeElement)).toBeTrue();
+    expect(resolver).not.toHaveBeenCalled();
   });
 });

@@ -3,6 +3,9 @@
   class="crud-dialog crud-dialog--{{ size() }} {{ panelClass() }}"
   [attr.aria-labelledby]="labelledBy()"
   [attr.aria-describedby]="describedBy()"
+  [attr.role]="rol()"
+  [attr.aria-modal]="rol() === 'alertdialog' ? 'true' : null"
+  (pointerdown)="alPulsarFondo($event)"
   (cancel)="handleCancel($event)"
   (close)="handleClosed()"
 >

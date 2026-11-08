@@ -82,17 +82,77 @@ import { StepperComponent, Step } from '../../../../shared/ui/organisms/stepper/
 
     <!-- ACCORDION -->
     <app-panel title="Accordion" variant="flat" padding="md" class="showcase-section">
-      <app-accordion>
-        <app-accordion-item title="¿Qué es este sistema?">
-          Este es un sistema de componentes UI reutilizables con soporte para temas claro y oscuro.
-        </app-accordion-item>
-        <app-accordion-item title="¿Cómo cambio el tema?">
-          Usa el componente ThemeSwitcher en la esquina superior derecha para cambiar entre modos.
-        </app-accordion-item>
-        <app-accordion-item title="¿Puedo personalizar los colores?" [open]="true">
-          Sí, todos los colores están definidos como variables CSS en el archivo tokens.css.
-        </app-accordion-item>
-      </app-accordion>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; width: 100%; box-sizing: border-box;">
+        <div style="min-width: 0;">
+          <p style="margin: 0 0 0.75rem; font-size: var(--text-sm); font-weight: var(--font-weight-emphasis); color: var(--text-color);">
+            Variante 1: Selección única (<code>variant="single"</code>)
+          </p>
+          <p style="margin: 0 0 1rem; font-size: var(--text-xs); color: var(--text-color-secondary);">
+            Al abrir un panel, los demás se cierran automáticamente.
+          </p>
+          <app-accordion variant="single">
+            <app-accordion-item
+              title="¿Qué es este sistema?"
+              description="Arquitectura y soporte de temas"
+              icon="fa-solid fa-layer-group"
+              [open]="true"
+            >
+              Este es un sistema de componentes UI reutilizables con soporte para temas claro y oscuro.
+            </app-accordion-item>
+            <app-accordion-item
+              title="¿Cómo cambio el tema?"
+              description="Conmutación entre modo claro y oscuro"
+              icon="fa-solid fa-palette"
+            >
+              Usa el componente ThemeSwitcher en la esquina superior derecha para cambiar entre modos.
+            </app-accordion-item>
+            <app-accordion-item
+              title="¿Puedo personalizar los colores?"
+              description="Variables semánticas y tokens de marca"
+              icon="fa-solid fa-sliders"
+            >
+              Sí, todos los colores están definidos como variables CSS en el archivo tokens.css.
+            </app-accordion-item>
+          </app-accordion>
+        </div>
+
+        <div style="min-width: 0;">
+          <p style="margin: 0 0 0.75rem; font-size: var(--text-sm); font-weight: var(--font-weight-emphasis); color: var(--text-color);">
+            Variante 2: Apertura múltiple (<code>variant="multiple"</code>)
+          </p>
+          <p style="margin: 0 0 1rem; font-size: var(--text-xs); color: var(--text-color-secondary);">
+            Permite mantener varias secciones abiertas simultáneamente para comparar contenido.
+          </p>
+          <app-accordion variant="multiple">
+            <app-accordion-item title="Resumen de facturación" [open]="true">
+              Comprobantes emitidos y estado de envío electrónico del periodo actual.
+            </app-accordion-item>
+            <app-accordion-item title="Condiciones comerciales" [open]="true">
+              Plazos de crédito, descuentos autorizados y límites operativos vigentes.
+            </app-accordion-item>
+            <app-accordion-item title="Historial de auditoría">
+              Registro cronológico de aprobaciones y cambios aplicados al expediente.
+            </app-accordion-item>
+          </app-accordion>
+        </div>
+      </div>
+
+      <div style="margin-top: 2rem; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: var(--space-4); background: var(--surface-background);">
+        <p style="margin: 0 0 0.75rem; font-size: var(--text-sm); font-weight: var(--font-weight-emphasis); color: var(--text-color);">
+          Variante 3: Sin marco e integrado (<code>variant="flush" [single]="true"</code>)
+        </p>
+        <app-accordion variant="flush" [single]="true">
+          <app-accordion-item title="Verificación de identidad" description="Paso 1 completado" [open]="true">
+            Documento validado satisfactoriamente contra el padrón oficial.
+          </app-accordion-item>
+          <app-accordion-item title="Evaluación crediticia" description="Paso 2 en revisión">
+            Cálculo de capacidad de pago y calificación de riesgo del solicitante.
+          </app-accordion-item>
+          <app-accordion-item title="Desembolso final" description="Disponible tras la aprobación" [disabled]="true">
+            Este panel permanece bloqueado hasta completar la evaluación crediticia.
+          </app-accordion-item>
+        </app-accordion>
+      </div>
     </app-panel>
 
     <!-- STEPPER -->

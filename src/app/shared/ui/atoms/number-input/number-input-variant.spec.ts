@@ -58,14 +58,24 @@ describe('NumberInputComponent - modos de etiqueta', () => {
     }
   });
 
-  it('el error queda fuera de la caja y pinta la etiqueta flotante', async () => {
+  it('el error queda fuera de la caja, marca el contenedor y pinta la etiqueta', async () => {
     const fixture = TestBed.createComponent(Anfitrion);
     fixture.componentInstance.variante.set('floating');
     fixture.componentInstance.error = 'Fuera de rango';
     await fixture.whenStable();
     const raiz: HTMLElement = fixture.nativeElement;
+    const wrapper = raiz.querySelector('.number-input-wrapper') as HTMLElement;
+    const etiquetaFlotanteEl = flotante(raiz) as HTMLElement;
+    expect(wrapper.classList.contains('number-input--error')).toBe(true);
     expect(raiz.querySelector('.number-input__error')?.closest('.fl-control')).toBeNull();
-    expect(flotante(raiz)?.classList.contains('fl-label--error')).toBe(true);
+    expect(etiquetaFlotanteEl.classList.contains('fl-label--error')).toBe(true);
+    const colorErrorFlotante = getComputedStyle(etiquetaFlotanteEl).color;
+
+    fixture.componentInstance.variante.set('standard');
+    await fixture.whenStable();
+    const etiquetaSuperior = raiz.querySelector('label.number-input__label') as HTMLElement;
+    expect(etiquetaSuperior.classList.contains('fl-label--error')).toBe(true);
+    expect(getComputedStyle(etiquetaSuperior).color).toBe(colorErrorFlotante);
   });
 
   it('labelHidden conserva la etiqueta como nombre accesible sin ::ng-deep del consumidor', async () => {
@@ -100,6 +110,53 @@ describe('NumberInputComponent - modos de etiqueta', () => {
       expect(flotante(raiz)?.querySelector('.fl-label__required')?.textContent).toBe('*');
       expect(inputEl.getAttribute('aria-required')).toBe('true');
     }
+  });
+
+  it('floating: conserva el alto canonico (--control-height), centra verticalmente los botones sin solapar la etiqueta elevada y elimina divisores verticales', async () => {
+    const fixture = TestBed.createComponent(Anfitrion);
+    fixture.componentInstance.variante.set('standard');
+    await fixture.whenStable();
+    const raiz: HTMLElement = fixture.nativeElement;
+    const control = raiz.querySelector('.number-input__control') as HTMLElement;
+    const altoStandard = control.getBoundingClientRect().height;
+
+    fixture.componentInstance.variante.set('floating');
+    await fixture.whenStable();
+    const inputEl = raiz.querySelector('.number-input__field') as HTMLElement;
+    const botonDecrementar = raiz.querySelector('.number-input__btn') as HTMLElement;
+    const etiquetaEl = flotante(raiz) as HTMLElement;
+    etiquetaEl.style.transition = 'none';
+
+    const estiloInput = getComputedStyle(inputEl);
+    expect(estiloInput.borderLeftWidth).toBe('0px');
+    expect(estiloInput.borderRightWidth).toBe('0px');
+    expect(estiloInput.boxShadow).toBe('none');
+
+    inputEl.focus();
+    inputEl.dispatchEvent(new Event('focus'));
+    await fixture.whenStable();
+    expect(getComputedStyle(inputEl).boxShadow).toBe('none');
+    expect(getComputedStyle(etiquetaEl).fontWeight).toBe('700');
+    expect(parseFloat(getComputedStyle(etiquetaEl).fontSize)).toBeCloseTo(13, 1);
+
+    const rectControl = control.getBoundingClientRect();
+    const rectEtiqueta = etiquetaEl.getBoundingClientRect();
+    const rectBoton = botonDecrementar.getBoundingClientRect();
+
+    expect(rectControl.height).toBeCloseTo(altoStandard, 0);
+    expect(rectBoton.top).toBeGreaterThanOrEqual(rectEtiqueta.bottom);
+    const holguraSuperior = rectBoton.top - rectControl.top;
+    const holguraInferior = rectControl.bottom - rectBoton.bottom;
+    expect(Math.abs(holguraSuperior - holguraInferior)).toBeLessThanOrEqual(1);
+
+    botonDecrementar.focus();
+    await fixture.whenStable();
+    expect(getComputedStyle(botonDecrementar).boxShadow).toBe('none');
+
+    const hojas = Array.from(document.head.querySelectorAll('style'))
+      .map((s) => s.textContent ?? '')
+      .join('\n');
+    expect(hojas).not.toContain('var(--surface-hover, var(--primary-color))');
   });
 });
 

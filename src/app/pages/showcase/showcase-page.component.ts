@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import type { ChipVariant } from '../../shared/ui/atoms/chip/chip.component';
 import { UiShowcaseComponent } from '../../components/ui-showcase/ui-showcase.component';
 import {
   ThemeSwitcherComponent,
@@ -233,7 +234,7 @@ export class ShowcasePageComponent {
       align: 'center', 
       width: '130px', 
       isTag: true, 
-      tagVariant: (row: any) => this.getTagVariantForTable(row.statusVariant),
+      tagVariant: (row: TableRow) => this.getTagVariantForTable(row.statusVariant),
       format: (val) => this.translate.instant(val as string)
     },
     { key: 'col6', header: 'table.headers.type', width: '175px', sortable: true, format: (val) => this.translate.instant(val as string) },
@@ -241,7 +242,7 @@ export class ShowcasePageComponent {
     { key: 'col8', header: 'table.headers.priority', align: 'center', width: '110px', sortable: true, format: (val) => this.translate.instant(val as string) },
   ]);
 
-  private getTagVariantForTable(variant: string): any {
+  private getTagVariantForTable(variant: string): ChipVariant {
     switch (variant) {
       case 'success':
       case 'primary':

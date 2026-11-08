@@ -2,11 +2,11 @@
 title: "Contrato visual de catálogos CRUD y promoción compatible"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-09-28"
-last_updated: "2026-10-22"
+last_updated: "2026-11-03"
 document_type: "contrato visual"
 status: "vigente"
 version: "1.6.0"
-change_id: "ACC-20261022-001"
+change_id: "ATOMIC-20261102-006"
 ---
 
 # Catálogos CRUD: preservar antes de sustituir
@@ -35,6 +35,42 @@ No se copia un formulario de negocio entero al ADN. Tampoco se interpreta
 “sin HTML/CSS suelto” como prohibición de HTML semántico dentro de Atomic:
 la lista de definiciones, estructura del modal y acciones pertenecen al ADN;
 los bindings y campos específicos pertenecen al producto.
+
+## Tipado de PaginaCrud y compatibilidad local (ATOMIC-20261102-003)
+
+La clase declara `PaginaCrud<T extends object = Record<string, unknown>>`.
+Se conserva el constraint `object` y el argumento explícito
+`PaginaCrud<Entidad>`. El runtime, las entradas, las salidas, los métodos y
+los selectores siguen presentes. La referencia desnuda deja de ofrecer las
+operaciones arbitrarias de `any`: un acceso propio de una entidad requiere
+estrechamiento del valor desconocido o un genérico concreto.
+
+Una interfaz de dominio sin firma de índice continúa admitida mediante
+`PaginaCrud<Entidad>`; no se garantiza su asignación al `Record` predeterminado.
+Las plantillas pueden inferir la entidad desde entradas tipadas. La fixture
+Angular estricta ejecutada acredita entidad explícita e inferida y una
+referencia de vista parametrizada. Su caso negativo rechaza con TS2322 asignar
+una propiedad `unknown` de una referencia desnuda a `string`. Esta evidencia
+local no constituye compilación de todos los consumidores.
+
+El ejemplo de migración de una referencia de vista declara la entidad local:
+
+```typescript
+interface EntidadCatalogo {
+  id: string;
+  nombre: string;
+}
+
+readonly chasis = viewChild<PaginaCrud<EntidadCatalogo>>('chasis');
+```
+
+El endurecimiento estático local fue autorizado para corregir los avisos.
+No constituye equivalencia universal con el tipo anterior y no se propaga ni
+publica en esta unidad. Los usos observados en `ventas-cxc`,
+`demo-chasis-front`, `cxc-ventas-front` y `cxc-ventas-front_old` fueron revisados
+de solo lectura; los consumidores externos no quedaron certificados. La
+trazabilidad de compatibilidad y los originales se conservan en el
+[roadmap](../.agent/roadmaps/ROADMAP_ATOMIC-20261102-003_avisos_lint.md).
 
 ## Invariantes visuales del catálogo
 
@@ -122,6 +158,45 @@ traducido del encabezado ni el valor Activo/Inactivo para decidir alineación.
 La corrección vive en la plantilla y hoja externa del organismo, no en CSS
 local del consumidor. No requiere nuevos tokens ni cambios en colores o tamaños.
 
+#### Confirmación nativa del acordeón (ATOMIC-20261102-003)
+
+`CrudDialog` expone `rol: 'dialog' | 'alertdialog'`, con valor predeterminado
+`'dialog'`, y `cerrarAlPulsarFondo: boolean`, con valor predeterminado `false`.
+El rol se aplica al elemento `dialog` nativo. Con el opt-in de fondo, un
+puntero primario fuera de su rectángulo emite el `cancelled` existente; el
+consumidor conserva la decisión de cerrar. Un click interior o sobre el
+padding no equivale a pulsar el fondo.
+
+`PaginaCrudAccordion` utiliza `alertdialog` con nombre y descripción únicos,
+Cancelar como foco inicial, X dentro del cuadro, Escape, fondo optativo,
+modalidad nativa y retorno al disparador. Se conserva la intención
+`{ clave, datos }`, consumida antes de emitir para impedir duplicación
+reentrante. La plantilla no persiste ni anuncia éxito. El modo histórico
+automático cierra una intención sin acreditar el resultado de negocio; esta
+corrección no incorpora el ciclo asíncrono controlado del catálogo.
+
+La modalidad nativa mantiene inoperable el fondo de la página y no permite
+enfocar sus controles mientras la confirmación permanece abierta. El recorrido
+de foco puede alcanzar los controles propios del navegador, como su barra de
+direcciones, según la [técnica H102 de W3C](https://www.w3.org/WAI/WCAG22/Techniques/html/H102).
+La modalidad se conserva mediante el diálogo nativo, sin añadir una trampa
+JavaScript de foco que impida acceder a esos controles del navegador.
+
+La geometría mantiene el límite de 28rem mediante el token del chasis
+`--crud-dialog-max-width-sm` y utiliza sus márgenes nativos. Los cuatro radios
+interiores de cabecera y pie se ajustan mediante
+`calc(var(--radius-lg) - var(--border-width-thin))`. Las capturas definitivas
+de 375 y 1280 CSS px muestran la geometría corregida con radios interiores
+sin puntas; no se afirma identidad píxel a píxel con la caja anterior.
+La historia funcional
+[`ConfirmacionAccesible`](../src/stories/pagina-crud-accordion.stories.ts)
+(`templates-pagina-crud-accordion--confirmacion-accesible`) presenta datos de
+demostración y el rastro de la intención emitida, sin persistencia. El
+navegador definitivo acredita la confirmación con X, Cancelar y foco. Los
+originales de navegador, las capturas y la revisión independiente se
+conservan en el roadmap; una historia compilada no acredita por sí sola el
+teclado real.
+
 ## Coordinación asíncrona
 
 ### Consulta no es edición bloqueada
@@ -171,7 +246,8 @@ Guardar deshabilitado, aunque el formulario siga dirty. La fachada mantiene
 también esta protección contra envíos por teclado o programáticos. Atomic no
 compara DTO, nombres o formularios de negocio.
 
-Atomic no declara éxito ni cierra una confirmación al emitir una intención.
+En el flujo controlado, Atomic no declara éxito ni cierra una confirmación al
+emitir una intención.
 El consumidor mantiene la ventana mientras espera la respuesta, presenta el
 error conservando el contexto y comunica cuándo cerrar tras éxito. Durante
 el envío se bloquean confirmación repetida, X, Cancelar y Escape. La edición
@@ -208,6 +284,13 @@ excepción de presentación y no habilita una operación. El input `detalle` usa
 SummaryList en modo `detail`; la proyección histórica con null es compatibilidad,
 no patrón nuevo.
 
+El modo histórico automático de `PaginaCrud` y `PaginaCrudAccordion` conserva
+el cierre de una intención sin acreditar el resultado de negocio. La
+corrección nativa del acordeón no incorpora el ciclo asíncrono controlado ni
+autoriza describirlo como implementado. Las integraciones nuevas mantienen
+la regla de confirmación controlada anterior; permisos, confirmación del
+servidor y contratos de negocio siguen perteneciendo al consumidor.
+
 - Pruebas del componente, de integración de slots y de estados asíncronos.
 - Catálogo/API, estilos externos, tokens, lint y builds aplicables.
 - Comparación visual a 320, 375, 768 y 1366 CSS px, temas claro/oscuro, texto
@@ -224,3 +307,28 @@ expresa y ADR del consumidor. Es evidencia local, no referencia publicada elegib
 ni propagación certificada. Los invariantes de procedencia y revisión del Guardián
 siguen vigentes: no cambiar hashes, política instalada o versión para aparentar
 cumplimiento. El generador no acredita automáticamente este flujo.
+
+
+## Apertura tras render y retorno estable de foco — ATOMIC-20261102-006
+
+`FormDialog` sincroniza `opened` mediante `afterRenderEffect`: la apertura declarativa se ejecuta después de que los controles proyectados hayan renderizado el valor entregado por su CVA. Se preservan `showModal()` y `close()` imperativos. La modificación no altera `InputComponent`, la restauración legítima de valores al enfocar o desenfocar, ni el modelo de negocio. La regresión mantiene un formulario cerrado con valor inicial 0, asigna 500 y abre en el mismo turno; verifica modelo, valor nativo, foco real, desenfoque, reapertura y conservación de un segundo campo 35.
+
+`CrudDialog`, `FormDialog`, `ModalComponent` y `PaginaCrud` añaden `resolverFocoRetorno = input<(() => HTMLElement | null) | null>(null)`. El callback se evalúa al restaurar, después del cierre efectivo; no se evalúa al abrir. Un destino válido tiene prioridad sobre el origen capturado. Si devuelve `null`, lanza una excepción o no recibe realmente el foco, se intenta el origen. La excepción del callback no se imprime ni bloquea el cierre. Sin callback se conserva el retorno tradicional al origen.
+
+Se admiten únicamente destinos conectados, visibles, del mismo documento y externos a la ventana que se cierra. Se descartan nodos desconectados, ocultos, `disabled`, `aria-disabled`, `aria-hidden` o dentro de un ancestro `inert`/`hidden`. Se verifica `document.activeElement` después de `focus({ preventScroll: true })`, incluida la conexión posterior al evento de foco. El retorno no añade `tabindex` a un destino que no puede enfocarse ni utiliza `body` como sustituto.
+
+`CrudDialog` conserva `closed` como cierre efectivo y programa una única restauración después del siguiente render. La referencia cancelable y la generación de apertura invalidan el retorno pendiente al reabrir o destruir. `cancelled` sigue siendo una intención cuyo cierre decide el consumidor; no cambia el bloqueo de una escritura. `FormDialog` transmite el resolvedor al `CrudDialog` interno y conserva `busy`, `opened` y sus salidas.
+
+`ModalComponent` conserva el cierre por destrucción. Captura el callback y el origen, cancela el foco de error pendiente e invalida el foco inicial pendiente. Una microtarea posterior a retirar su DOM intenta restaurar el foco; no utiliza un injector destruido, no emite `closed` desde `ngOnDestroy` y no duplica la confirmación del consumidor. Ambos componentes evitan restaurar sobre otra ventana modal abierta.
+
+`PaginaCrud.obtenerDestinoFocoRetorno(): HTMLElement` devuelve su propio host, estable durante la recarga de filas. El host declara `role="region"`, nombre accesible derivado de `titulo` y `tabindex="-1"`, sin introducir una parada en la tabulación normal ni estilos nuevos. El callback se transmite a los diálogos CRUD y de confirmación. La decisión de devolverlo al cerrar pertenece al consumidor; el valor predeterminado sigue siendo `null`.
+
+Las historias `AperturaTrasRenderYRetorno`, `RetornoConOrigenRetirado`, `RetornoTrasDestruccion` y `RetornoAlCatalogoTrasRecarga` utilizan componentes reales y datos sintéticos. La capacidad permanece local bajo el congelamiento de publicación. La compilación y las pruebas de la fuente no acreditan su adopción por los consumidores ni autorizan un `atomicRef` nuevo. La integración candidata solo se ensaya en una copia aislada; la propagación requiere la procedencia íntegra autorizada por el Guardián.
+
+
+### Caracterización y cobertura final de las guardas al 2026-11-03
+
+La implementación conserva la exclusión de `aria-disabled` en ambos resolvedores. En la caracterización histórica anterior, la mutación aislada que retiraba exclusivamente esa exclusión en `ModalComponent.restaurarFoco` pasaba las 33 pruebas de Modal (`0/0/0` en limpio/defecto/restaurado). Ese ensayo registró una brecha de cobertura del contrato; en aquella fase no se modificó la fuente ni se añadió una prueba para cerrar la devolución del juez. La misma mutación en `CrudDialog`, y la omisión de la guarda de otra ventana abierta en cada componente, sí producen detección funcional (`0/1/0`). La acreditación se agrupa por responsabilidad y conserva siete categorías de entradas por fase, además de las fuentes, comandos y resultados originales. El roadmap mantiene el estado de revisión y los límites de publicación.
+
+
+La corrección acotada posterior añade únicamente un caso público que acredita el retorno al origen conectado frente a un candidato visible, conectado y nativamente habilitado con `aria-disabled="true"`. Modal pasa 34/34 y la suite completa 801/801. Al retirar exclusivamente esa cláusula en TEMP, el caso falla por foco real en el candidato indebido y vuelve a pasar al restaurar (`0/1/0`). Las siete familias nuevas se repiten con el spec final, conservando las siete categorías de entradas antes y después de cada fase y entre limpio y restaurado, sin reatribuir la evidencia histórica. El código de producción, las historias, el catálogo, los estilos y la API pública permanecen intactos por esta corrección de cobertura; el responsable acreditó el gobierno del origen con código nativo 0 en la sesión 60660. El roadmap registra el dictamen independiente y la procedencia del consumidor continúa sujeta al Guardián y a CI.

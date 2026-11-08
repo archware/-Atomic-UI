@@ -3,11 +3,23 @@ import type { ChartConfiguration } from 'chart.js';
 
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { AvatarComponent } from '../../../../shared/ui/atoms/avatar/avatar.component';
-import { ChipComponent } from '../../../../shared/ui/atoms/chip/chip.component';
+import { ChipComponent, type ChipVariant } from '../../../../shared/ui/atoms/chip/chip.component';
 import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecules/action-group/action-group.component';
 import { DataTable, DataTableColumn } from '../../../../shared/ui/organisms/data-table/data-table';
 import { ChartComponent } from '../../../../shared/ui/organisms/chart/chart.component';
 import { PaginationComponent } from '../../../../shared/ui/molecules/pagination/pagination.component';
+
+interface FilaUsuarioDemostracion {
+  id: number;
+  name: string;
+  role: string;
+  status: string;
+  chipVariant: ChipVariant;
+  date: string;
+  maxVisible: number;
+  compact: boolean;
+  selected: boolean;
+}
 
 @Component({
   selector: 'app-showcase-data-display',
@@ -239,10 +251,10 @@ import { PaginationComponent } from '../../../../shared/ui/molecules/pagination/
   `]
 })
 export class ShowcaseDataDisplayComponent {
-  tableColumns: DataTableColumn<any>[] = [
+  tableColumns: DataTableColumn<FilaUsuarioDemostracion>[] = [
     { key: 'name', header: 'Nombre', width: 'minmax(200px, 1fr)' },
     { key: 'role', header: 'Rol', width: '120px' },
-    { key: 'status', header: 'Estado', width: '120px', isTag: true, tagVariant: (row: any) => row.chipVariant === 'success' ? 'success' : (row.chipVariant === 'warning' ? 'warning' : 'error') },
+    { key: 'status', header: 'Estado', width: '120px', isTag: true, tagVariant: (row: FilaUsuarioDemostracion) => row.chipVariant === 'success' ? 'success' : (row.chipVariant === 'warning' ? 'warning' : 'error') },
     { key: 'date', header: 'Fecha', width: '120px' },
   ];
 
@@ -256,7 +268,7 @@ export class ShowcaseDataDisplayComponent {
   ];
 
   // Table users
-  tableUsers = [
+  tableUsers: FilaUsuarioDemostracion[] = [
     { id: 1, name: 'Juan Pérez', role: 'Desarrollador', status: 'Activo', chipVariant: 'success' as const, date: '2024-01-15', maxVisible: 3, compact: false, selected: false },
     { id: 2, name: 'María García', role: 'Diseñadora', status: 'Ausente', chipVariant: 'warning' as const, date: '2024-02-20', maxVisible: 2, compact: false, selected: true },
     { id: 3, name: 'Carlos López', role: 'Manager', status: 'Inactivo', chipVariant: 'error' as const, date: '2024-03-10', maxVisible: 3, compact: true, selected: false },

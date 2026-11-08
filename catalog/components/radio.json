@@ -41,6 +41,11 @@
   "tokens": [
     "--border-color",
     "--checkbox-size",
+    "--field-label-color",
+    "--field-label-font-size",
+    "--field-label-font-weight",
+    "--field-label-gap",
+    "--field-label-line-height",
     "--font-weight-body",
     "--input-disabled-bg",
     "--input-disabled-text",

@@ -4,7 +4,12 @@
   [class.field--error]="error()"
 >
   @if (tieneEtiqueta() && !flotante()) {
-    <label class="fl-label" [for]="id()">
+    <label
+      class="fl-label"
+      [class.fl-label--error]="error()"
+      [class.fl-label--disabled]="effectiveDisabled()"
+      [for]="id()"
+    >
       {{ label() }}
       @if (required()) {
         <span class="field__required" aria-hidden="true">*</span>

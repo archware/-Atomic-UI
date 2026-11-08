@@ -321,6 +321,20 @@ describe('DataTable', () => {
     expect(renderedCustomers(fixture.nativeElement)).toEqual(['Carla']);
   });
 
+  it('preserves existing rendered rows during loading so reloads do not collapse table height or scroll', async () => {
+    const fixture = await createTable('success');
+    const initialCustomers = renderedCustomers(fixture.nativeElement);
+    expect(initialCustomers).toEqual(['Zeta', 'Álvaro', 'Beatriz']);
+
+    fixture.componentRef.setInput('status', 'loading');
+    await fixture.whenStable();
+
+    const table = fixture.nativeElement.querySelector('table') as HTMLTableElement;
+    expect(table.getAttribute('aria-busy')).toBe('true');
+    expect(renderedCustomers(fixture.nativeElement)).toEqual(['Zeta', 'Álvaro', 'Beatriz']);
+    expect(fixture.nativeElement.querySelector('tbody tr.data-table__state-row')).toBeNull();
+  });
+
   it('shows the empty state automatically for a successful empty result', async () => {
     const fixture = await createTable();
     fixture.componentRef.setInput('rows', []);
@@ -466,9 +480,12 @@ describe('DataTable', () => {
     trigger.click();
     await fixture.whenStable();
 
-    const option20 = Array.from(fixture.nativeElement.querySelectorAll('.select2-option')).find(
-      (el: any) => el.textContent?.trim() === '20'
-    ) as HTMLElement;
+    const raiz = fixture.nativeElement as HTMLElement;
+    const option20 = Array.from(raiz.querySelectorAll<HTMLElement>('.select2-option')).find(
+      el => el.textContent?.trim() === '20'
+    );
+    expect(option20).toBeDefined();
+    if (!option20) throw new Error('No existe la opcion de 20 filas');
     option20.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
 
     const buttons = fixture.nativeElement.querySelectorAll(
@@ -650,4 +667,105 @@ describe('DataTable: el resumen no afirma un recuento que no tiene', () => {
   it('y lo dice cuando de verdad no hay ninguno', async () => {
     expect((await tabla('success'))?.textContent).toContain('registro');
   });
+});
+
+
+describe('DataTable: extraccion compatible de envoltorios', () => {
+  const fila = (origen: string, id = 1, saldo = 10): LoanRow => ({ id, customer: origen, balance: saldo });
+  const casos: readonly { nombre: string; entrada: unknown; esperado: readonly string[] }[] = [
+    { nombre: 'arreglo directo', entrada: [fila('directo')], esperado: ['directo'] },
+    { nombre: 'arreglo directo vacio', entrada: [], esperado: [] },
+    { nombre: 'JSON de arreglo', entrada: JSON.stringify([fila('json')]), esperado: ['json'] },
+    { nombre: 'JSON de envoltorio', entrada: JSON.stringify({ data: [fila('json-data')] }), esperado: ['json-data'] },
+    { nombre: 'JSON invalido', entrada: '{invalido', esperado: [] },
+    ...['$values', 'data', 'items', 'elementos'].map(clave => ({
+      nombre: 'propiedad ' + clave, entrada: { [clave]: [fila(clave)] }, esperado: [clave],
+    })),
+    ...['elementos', 'data'].map(clave => ({
+      nombre: 'propiedad value.' + clave, entrada: { value: { [clave]: [fila('value.' + clave)] } }, esperado: ['value.' + clave],
+    })),
+    ...[null, undefined, 0, false, 'texto'].map(valor => ({
+      nombre: 'value sin propiedades ' + String(valor), entrada: { value: valor }, esperado: [],
+    })),
+    { nombre: 'envoltorio sin arreglo', entrada: { total: 0 }, esperado: [] },
+    { nombre: 'entrada nula', entrada: null, esperado: [] },
+    { nombre: 'primer arreglo raiz por insercion', entrada: { segundo: [fila('primero')], primero: [fila('segundo')] }, esperado: ['primero'] },
+    { nombre: 'primer arreglo anidado por insercion', entrada: { value: { segundo: [fila('anidado-primero')], primero: [fila('anidado-segundo')] } }, esperado: ['anidado-primero'] },
+    { nombre: 'conocido anidado vence raiz arbitraria', entrada: { arbitrario: [fila('raiz')], value: { elementos: [fila('value.elementos')], data: [fila('value.data')] } }, esperado: ['value.elementos'] },
+    { nombre: 'data anidado vence raiz arbitraria', entrada: { arbitrario: [fila('raiz')], value: { data: [fila('value.data')] } }, esperado: ['value.data'] },
+    { nombre: 'raiz arbitraria vence anidado arbitrario', entrada: { arbitrario: [fila('raiz')], value: { otro: [fila('anidado')] } }, esperado: ['raiz'] },
+    { nombre: 'value arreglo con propiedades', entrada: { value: Object.assign([], { elementos: [fila('arreglo-con-propiedades')] }) }, esperado: ['arreglo-con-propiedades'] },
+    { nombre: 'value funcion con propiedades', entrada: { value: Object.assign(() => undefined, { data: [fila('funcion-con-propiedades')] }) }, esperado: ['funcion-con-propiedades'] },
+  ];
+
+  const prioridades = ['$values', 'data', 'items', 'elementos', 'value.elementos', 'value.data'] as const;
+  function competencia(desde: number, vacio: boolean): Record<string, unknown> {
+    const envoltorio: Record<string, unknown> = {};
+    const valorAnidado: Record<string, unknown> = {};
+    prioridades.slice(desde).forEach((clave, indice) => {
+      const filas = vacio && indice === 0 ? [] : [fila(clave)];
+      if (clave.startsWith('value.')) valorAnidado[clave.slice(6)] = filas;
+      else envoltorio[clave] = filas;
+    });
+    envoltorio['arbitrario'] = [fila('raiz-arbitraria')];
+    valorAnidado['arbitrario'] = [fila('anidado-arbitrario')];
+    envoltorio['value'] = valorAnidado;
+    return envoltorio;
+  }
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DataTable, TranslateModule.forRoot()],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
+  });
+
+  async function crear(entrada: unknown, paginacion: 'none' | 'client' = 'none') {
+    const fixture = TestBed.createComponent(DataTable);
+    fixture.componentRef.setInput('caption', 'Extraccion');
+    fixture.componentRef.setInput('columns', columns);
+    fixture.componentRef.setInput('rows', entrada);
+    fixture.componentRef.setInput('pagination', paginacion);
+    await fixture.whenStable();
+    return fixture;
+  }
+
+  for (const caso of casos) {
+    it('renderiza ' + caso.nombre, async () => {
+      const fixture = await crear(caso.entrada);
+      expect(renderedCustomers(fixture.nativeElement)).toEqual([...caso.esperado]);
+    });
+  }
+
+  for (const [indice, prioridad] of prioridades.entries()) {
+    it('prioridad de ' + prioridad + ' frente a todos los siguientes', async () => {
+      const fixture = await crear(competencia(indice, false));
+      expect(renderedCustomers(fixture.nativeElement)).toEqual([prioridad]);
+    });
+    it('arreglo vacio de ' + prioridad + ' impide caer a otra propiedad', async () => {
+      const fixture = await crear(competencia(indice, true));
+      expect(renderedCustomers(fixture.nativeElement)).toEqual([]);
+    });
+  }
+
+  for (const paginacion of ['none', 'client'] as const) {
+    it('ordena datos extraidos de forma estable sin mutarlos con paginacion ' + paginacion, async () => {
+      const originales = [fila('empate-primero', 2, 20), fila('menor', 1, 10), fila('empate-segundo', 3, 20)];
+      const copia = originales.map(filaOriginal => ({ ...filaOriginal }));
+      const envoltorio = { data: originales };
+      const fixture = await crear(envoltorio, paginacion);
+      const raiz = fixture.nativeElement as HTMLElement;
+      const ordenar = raiz.querySelector<HTMLButtonElement>('th[data-column="balance"] button');
+      expect(ordenar).not.toBeNull();
+      if (!ordenar) throw new Error('No existe control de ordenacion');
+      ordenar.click();
+      await fixture.whenStable();
+      expect(renderedCustomers(raiz)).toEqual(['menor', 'empate-primero', 'empate-segundo']);
+      ordenar.click();
+      await fixture.whenStable();
+      expect(renderedCustomers(raiz)).toEqual(['empate-primero', 'empate-segundo', 'menor']);
+      expect(originales).toEqual(copia);
+      expect(envoltorio.data).toBe(originales);
+    });
+  }
 });

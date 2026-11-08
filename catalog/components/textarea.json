@@ -61,6 +61,7 @@
     "--field-label-color",
     "--field-label-color-error",
     "--field-label-color-floated",
+    "--field-label-color-resting",
     "--field-label-duration",
     "--field-label-floated-font-size",
     "--field-label-floated-font-weight",

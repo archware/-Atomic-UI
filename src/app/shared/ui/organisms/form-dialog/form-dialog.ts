@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
+  afterRenderEffect,
   input,
   model,
   output,
@@ -45,6 +45,7 @@ export class FormDialog {
   readonly panelClass = input('');
   readonly opened = model(false);
   readonly busy = input(false);
+  readonly resolverFocoRetorno = input<(() => HTMLElement | null) | null>(null);
   readonly cancelled = output<Event>();
   readonly closed = output<void>();
 
@@ -52,7 +53,7 @@ export class FormDialog {
   protected readonly descriptionId = computed(() => `${this.generatedId}-description`);
 
   constructor() {
-    effect(() => {
+    afterRenderEffect(() => {
       const dialog = this.dialog();
       if (!dialog) {
         return;

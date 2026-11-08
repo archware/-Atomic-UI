@@ -2,22 +2,20 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  ViewChild,
   forwardRef,
   ChangeDetectionStrategy,
   signal,
   computed,
   input,
-  output
+  output,
+  viewChild
 } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
   FIELD_LABEL_VARIANT_DEFAULT,
   FieldLabelVariant,
-  esEtiquetaElevada,
   esEtiquetaFlotante,
-  esMarcadorVisible,
 } from '../form-field/field-label';
 
 /**
@@ -79,7 +77,10 @@ export class NumberInputComponent implements ControlValueAccessor, AfterViewInit
   /** Lo que se ajusto de lo tecleado, para poder decirlo. */
   protected readonly adjustment = signal<string | null>(null);
 
-  @ViewChild('nativeInput') private nativeInput?: ElementRef<HTMLInputElement>;
+  private readonly consultaNativeInput = viewChild<ElementRef<HTMLInputElement>>('nativeInput');
+  private get nativeInput(): ElementRef<HTMLInputElement> | undefined {
+    return this.consultaNativeInput();
+  }
 
   private onChange: (value: number) => void = () => {};
   protected onTouched: () => void = () => {};

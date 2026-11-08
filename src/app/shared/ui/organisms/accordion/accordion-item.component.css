@@ -59,6 +59,20 @@ retira borde y radio: alli las costuras se borran queriendo.
   gap: var(--space-1);
 }
 
+.accordion-title-row {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.accordion-leading-icon {
+  flex: 0 0 auto;
+  color: var(--text-color-secondary);
+  font-size: var(--text-sm);
+  transition: color 150ms ease;
+}
+
 .accordion-title {
   font-size: var(--text-md);
   font-weight: var(--font-weight-emphasis);
@@ -73,6 +87,10 @@ retira borde y radio: alli las costuras se borran queriendo.
 .accordion-item.open .accordion-header {
   border-bottom-color: var(--border-color);
   background: var(--hover-background);
+  color: var(--primary-color);
+}
+
+.accordion-item.open .accordion-leading-icon {
   color: var(--primary-color);
 }
 
@@ -119,6 +137,7 @@ ahora del contenedor de la pagina, que es de donde debe venir.
   overflow: hidden;
   padding-inline: var(--space-4);
   line-height: 1.6;
+  transition: padding-block 200ms ease;
 }
 
 .accordion-item.open .accordion-body {
@@ -127,8 +146,10 @@ ahora del contenedor de la pagina, que es de donde debe venir.
 
 @media (prefers-reduced-motion: reduce) {
   .accordion-header,
+  .accordion-leading-icon,
   .accordion-icon,
-  .accordion-content {
+  .accordion-content,
+  .accordion-body {
     transition: none;
   }
 }

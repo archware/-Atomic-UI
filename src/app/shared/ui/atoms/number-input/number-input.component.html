@@ -2,11 +2,14 @@
       class="number-input-wrapper fl-field"
       [class.fl-field--floating]="flotante()"
       [class.number-input--disabled]="isDisabled()"
+      [class.number-input--error]="error()"
     >
       @if (label() && !flotante()) {
         <label
           class="fl-label number-input__label"
           [class.number-input__label--hidden]="labelHidden()"
+          [class.fl-label--error]="error()"
+          [class.fl-label--disabled]="isDisabled()"
           [attr.for]="inputId()"
         >
           {{ label() }}

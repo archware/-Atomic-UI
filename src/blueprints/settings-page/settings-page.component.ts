@@ -3,6 +3,7 @@ import { Component, inject, signal, computed, OnInit, PLATFORM_ID } from '@angul
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import type { UserMenuAction } from '@shared/ui/molecules/user-menu/user-menu.component';
 import {
   LayoutShellComponent,
   TopbarComponent,
@@ -177,7 +178,7 @@ export class SettingsPageComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  onUserAction(action: any): void {
+  onUserAction(action: UserMenuAction): void {
     if (action.id === 'settings') this.router.navigate(['/settings']);
   }
 

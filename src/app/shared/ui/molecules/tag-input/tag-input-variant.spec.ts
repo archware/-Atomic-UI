@@ -93,13 +93,65 @@ describe('TagInputComponent - modos de etiqueta', () => {
     expect(elevada(fixture.nativeElement)).toBe(false);
   });
 
-  it('el error queda fuera de la caja y marca la etiqueta', async () => {
+  it('el error queda fuera de la caja, marca el contenedor y la etiqueta', async () => {
     const fixture = TestBed.createComponent(Anfitrion);
     fixture.componentInstance.error = 'Requerido';
     await fixture.whenStable();
     const raiz: HTMLElement = fixture.nativeElement;
+    const wrapper = raiz.querySelector('.tag-input-wrapper') as HTMLElement;
+    expect(wrapper.classList.contains('fl-field')).toBe(true);
+    expect(wrapper.classList.contains('tag-input--error')).toBe(true);
     expect(raiz.querySelector('.tag-input__error')?.closest('.fl-control')).toBeNull();
     expect(flotante(raiz)?.classList.contains('fl-label--error')).toBe(true);
+  });
+
+  it('marca tag-input--elevated sin salto vertical al enfocar vacio, centra verticalmente el input vacio y aplica padding superior extra solo cuando hay chips', async () => {
+    const fixture = TestBed.createComponent(Anfitrion);
+    await fixture.whenStable();
+    const raiz: HTMLElement = fixture.nativeElement;
+    const wrapper = raiz.querySelector('.tag-input-wrapper') as HTMLElement;
+    const caja = raiz.querySelector('.tag-input__field') as HTMLElement;
+    const etiquetaEl = flotante(raiz) as HTMLElement;
+    etiquetaEl.style.transition = 'none';
+
+    expect(wrapper.classList.contains('tag-input--elevated')).toBe(false);
+    expect(wrapper.classList.contains('tag-input--has-tags')).toBe(false);
+    const estiloCajaReposo = getComputedStyle(caja);
+    const paddingReposo = parseFloat(estiloCajaReposo.paddingTop);
+    expect(parseFloat(estiloCajaReposo.paddingLeft)).toBeCloseTo(16, 0);
+    const altoReposo = caja.getBoundingClientRect().height;
+
+    campo(raiz).dispatchEvent(new Event('focus'));
+    await fixture.whenStable();
+    expect(wrapper.classList.contains('tag-input--elevated')).toBe(true);
+    expect(wrapper.classList.contains('tag-input--has-tags')).toBe(false);
+    expect(parseFloat(getComputedStyle(caja).paddingTop)).toBeCloseTo(paddingReposo, 0);
+    const rectCajaVacia = caja.getBoundingClientRect();
+    const rectInputVacio = campo(raiz).getBoundingClientRect();
+    expect(rectCajaVacia.height).toBeCloseTo(altoReposo, 0);
+    expect(
+      Math.abs((rectInputVacio.top - rectCajaVacia.top) - (rectCajaVacia.bottom - rectInputVacio.bottom)),
+    ).toBeLessThanOrEqual(1);
+    expect(rectInputVacio.top).toBeGreaterThanOrEqual(etiquetaEl.getBoundingClientRect().bottom);
+
+    campo(raiz).dispatchEvent(new Event('blur'));
+    await fixture.whenStable();
+    expect(caja.getBoundingClientRect().height).toBeCloseTo(altoReposo, 0);
+
+    fixture.componentInstance.etiquetas.set(['tryghhg', 'uhhjjh', 'rtytyytyt']);
+    await fixture.whenStable();
+    await fixture.whenStable();
+    expect(wrapper.classList.contains('tag-input--elevated')).toBe(true);
+    expect(wrapper.classList.contains('tag-input--has-tags')).toBe(true);
+
+    const paddingElevado = parseFloat(getComputedStyle(caja).paddingTop);
+    expect(paddingElevado).toBeGreaterThan(paddingReposo);
+    expect(paddingElevado).toBeGreaterThanOrEqual(16);
+
+    const primerChip = raiz.querySelector('app-chip') as HTMLElement;
+    expect(primerChip.getBoundingClientRect().top).toBeGreaterThanOrEqual(
+      etiquetaEl.getBoundingClientRect().bottom,
+    );
   });
 
   it('muestra asterisco de obligatoriedad y aria-required en modos standard, floating y floating-value cuando required es true, y los omite por defecto', async () => {
@@ -123,6 +175,30 @@ describe('TagInputComponent - modos de etiqueta', () => {
       expect(flotante(raiz)?.querySelector('.fl-label__required')?.textContent).toBe('*');
       expect(campo(raiz).getAttribute('aria-required')).toBe('true');
     }
+  });
+
+  it('suprime anillo interno (box-shadow/outline) en .tag-input__input al enfocar y aplica peso 700 y contraste legible en la etiqueta flotante', async () => {
+    const fixture = TestBed.createComponent(Anfitrion);
+    await fixture.whenStable();
+    const raiz: HTMLElement = fixture.nativeElement;
+    const inputEl = campo(raiz);
+    const etiquetaEl = flotante(raiz) as HTMLElement;
+    etiquetaEl.style.transition = 'none';
+
+    const estiloReposo = getComputedStyle(etiquetaEl);
+    expect(estiloReposo.fontWeight).toBe('700');
+
+    inputEl.focus();
+    inputEl.dispatchEvent(new Event('focus'));
+    await fixture.whenStable();
+
+    const estiloInput = getComputedStyle(inputEl);
+    expect(estiloInput.boxShadow).toBe('none');
+    expect(estiloInput.outlineStyle).toBe('none');
+
+    const estiloElevado = getComputedStyle(etiquetaEl);
+    expect(estiloElevado.fontWeight).toBe('700');
+    expect(parseFloat(estiloElevado.fontSize)).toBeCloseTo(13, 1);
   });
 });
 

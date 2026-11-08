@@ -15,9 +15,9 @@
 }
 
 /* Sizes */
-.badge--sm { font-size: 0.625rem; min-width: var(--space-4); height: var(--space-4); padding: 0 var(--space-1); }
-.badge--md { font-size: var(--text-xs); min-width: var(--space-5); height: var(--space-5); }
-.badge--lg { font-size: var(--text-sm); min-width: var(--space-5); height: var(--space-5); padding: 0 var(--space-2); }
+.badge--sm { font-size: 0.625rem; min-width: var(--space-4); height: var(--space-4); padding: 0 var(--space-2); }
+.badge--md { font-size: var(--text-xs); min-width: var(--space-5); height: var(--space-5); padding: 0 var(--space-2); }
+.badge--lg { font-size: var(--text-sm); min-width: var(--space-5); height: var(--space-5); padding: 0 var(--space-3); }
 
 /* Dot variant */
 .badge--dot { min-width: var(--space-2); height: var(--space-2); padding: 0; border-radius: 50%; }
@@ -43,13 +43,12 @@
    habria conservado el tono pero no el significado: la variante `dot` no tiene texto
    y un punto de 8px en verde palido deja de avisar de nada.
    Lo que se va es el `white` quemado. Sobre un relleno saturado el token es
-   --text-color-on-primary, blanco en los tres temas; --text-color-inverse habria
-   parecido equivalente y no lo es: se invierte con el tema y en oscuro pondria texto
-   casi negro sobre el mismo relleno saturado. */
+   --text-color-on-primary, blanco en los tres temas; en rellenos brillantes
+   (secondary/warning) se emplea --text-color-on-secondary para garantizar contraste. */
 .badge--default   { background: var(--surface-section); color: var(--text-color-secondary); }
 .badge--primary   { background: var(--primary-color); color: var(--text-color-on-primary); }
-.badge--secondary { background: var(--secondary-color); color: var(--text-color-on-primary); }
+.badge--secondary { background: var(--secondary-color); color: var(--text-color-on-secondary); }
 .badge--success   { background: var(--success-color); color: var(--text-color-on-primary); }
-.badge--warning   { background: var(--warning-color); color: var(--text-color-on-primary); }
+.badge--warning   { background: var(--warning-color); color: var(--text-color-on-secondary); }
 .badge--danger    { background: var(--danger-color); color: var(--text-color-on-primary); }
 .badge--info      { background: var(--info-color); color: var(--text-color-on-primary); }

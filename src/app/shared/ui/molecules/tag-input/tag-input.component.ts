@@ -50,9 +50,22 @@ export interface TagInputOption {
     },
   ],
   template: `
-    <div class="tag-input-wrapper" [class.fl-field--floating]="flotante()" [class.tag-input--disabled]="isDisabled()" [class.tag-input--focused]="focused()">
+    <div
+      class="tag-input-wrapper fl-field"
+      [class.fl-field--floating]="flotante()"
+      [class.tag-input--elevated]="elevada()"
+      [class.tag-input--has-tags]="tags().length > 0"
+      [class.tag-input--disabled]="isDisabled()"
+      [class.tag-input--focused]="focused()"
+      [class.tag-input--error]="error()"
+    >
       @if (label() && !flotante()) {
-        <label class="fl-label tag-input__label" [for]="inputId">
+        <label
+          class="fl-label tag-input__label"
+          [class.fl-label--error]="error()"
+          [class.fl-label--disabled]="isDisabled()"
+          [for]="inputId"
+        >
           {{ label() }}
           @if (required()) {
             <span class="field__required fl-label__required" aria-hidden="true">*</span>

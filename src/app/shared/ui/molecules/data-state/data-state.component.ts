@@ -1,6 +1,6 @@
-import { Component, ContentChild, TemplateRef, ChangeDetectionStrategy, input } from '@angular/core';
+import { Component, TemplateRef, ChangeDetectionStrategy, contentChild, input } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { LoaderComponent } from '../../atoms/loader/loader.component';
+import { LoaderComponent, LoaderSize, LoaderVariant } from '../../atoms/loader/loader.component';
 import { ApiError } from '../../services/api.service';
 import { ButtonComponent } from '../../atoms/button/button.component';
 
@@ -62,8 +62,8 @@ import { ButtonComponent } from '../../atoms/button/button.component';
     <!-- Loading State -->
     @if (loading()) {
       <div class="data-state data-state--loading">
-        @if (loadingTemplate) {
-          <ng-container *ngTemplateOutlet="loadingTemplate"></ng-container>
+        @if (loadingTemplate(); as loadingTpl) {
+          <ng-container [ngTemplateOutlet]="loadingTpl"></ng-container>
         } @else {
           <app-loader [variant]="loaderVariant()" [size]="loaderSize()"></app-loader>
           @if (loadingText()) {
@@ -76,8 +76,8 @@ import { ButtonComponent } from '../../atoms/button/button.component';
     <!-- Error State -->
     @else if (error(); as currentError) {
       <div class="data-state data-state--error">
-        @if (errorTemplate) {
-          <ng-container *ngTemplateOutlet="errorTemplate; context: { $implicit: error() }"></ng-container>
+        @if (errorTemplate(); as errorTpl) {
+          <ng-container [ngTemplateOutlet]="errorTpl" [ngTemplateOutletContext]="{ $implicit: currentError }"></ng-container>
         } @else {
           <div class="error-container">
             <div class="error-icon">
@@ -98,8 +98,8 @@ import { ButtonComponent } from '../../atoms/button/button.component';
     <!-- Empty State -->
     @else if (isEmpty()) {
       <div class="data-state data-state--empty">
-        @if (emptyTemplate) {
-          <ng-container *ngTemplateOutlet="emptyTemplate"></ng-container>
+        @if (emptyTemplate(); as emptyTpl) {
+          <ng-container [ngTemplateOutlet]="emptyTpl"></ng-container>
         } @else {
           <div class="empty-container">
             <div class="empty-icon">
@@ -113,8 +113,8 @@ import { ButtonComponent } from '../../atoms/button/button.component';
 
     <!-- Content -->
     @else {
-      @if (contentTemplate) {
-        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+      @if (contentTemplate(); as contentTpl) {
+        <ng-container [ngTemplateOutlet]="contentTpl"></ng-container>
       }
     }
   `,
@@ -127,8 +127,8 @@ export class DataStateComponent {
 
   // Customization
   readonly loadingText = input('');
-  readonly loaderVariant = input<'spinner' | 'dots' | 'pulse' | 'bars'>('spinner');
-  readonly loaderSize = input<'sm' | 'md' | 'lg'>('md');
+  readonly loaderVariant = input<LoaderVariant>('spinner');
+  readonly loaderSize = input<LoaderSize>('md');
   readonly errorTitle = input('Error al cargar');
   readonly emptyText = input('No hay datos disponibles');
   readonly showRetryButton = input(true);
@@ -137,8 +137,8 @@ export class DataStateComponent {
   readonly onRetry = input({ emit: () => { } }); // Simple event pattern
 
   // Templates
-  @ContentChild('content') contentTemplate?: TemplateRef<unknown>;
-  @ContentChild('loadingTemplate') loadingTemplate?: TemplateRef<unknown>;
-  @ContentChild('errorTemplate') errorTemplate?: TemplateRef<unknown>;
-  @ContentChild('emptyTemplate') emptyTemplate?: TemplateRef<unknown>;
+  readonly contentTemplate = contentChild<TemplateRef<unknown>>('content');
+  readonly loadingTemplate = contentChild<TemplateRef<unknown>>('loadingTemplate');
+  readonly errorTemplate = contentChild<TemplateRef<unknown>>('errorTemplate');
+  readonly emptyTemplate = contentChild<TemplateRef<unknown>>('emptyTemplate');
 }

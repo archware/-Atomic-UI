@@ -8,11 +8,11 @@ import {
   OnDestroy,
   OnInit,
   SimpleChanges,
-  ViewChild,
   inject,
   signal,
   input,
-  output
+  output,
+  viewChild
 } from '@angular/core';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
 
@@ -150,7 +150,10 @@ export class ContextMenuComponent implements OnChanges, OnInit, OnDestroy {
   /** Se emite sin incluir el contenido del portapapeles cuando una acción falla. */
   readonly actionError = output<ContextMenuActionError>();
 
-  @ViewChild('menu') private menuRef?: ElementRef<HTMLElement>;
+  private readonly consultaMenu = viewChild<ElementRef<HTMLElement>>('menu');
+  private get menuRef(): ElementRef<HTMLElement> | undefined {
+    return this.consultaMenu();
+  }
 
   readonly isOpen = signal(false);
   readonly position = signal({ left: VIEWPORT_PADDING, top: VIEWPORT_PADDING });

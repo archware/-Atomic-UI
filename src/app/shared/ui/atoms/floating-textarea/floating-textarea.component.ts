@@ -71,6 +71,10 @@ export class FloatingTextareaComponent implements ControlValueAccessor {
       ? this.placeholder() || null
       : null,
   );
+  protected readonly tieneAnchoFijo = computed(() => {
+    const ancho = this.width().trim();
+    return ancho.length > 0 && !ancho.includes('%');
+  });
 
   private static instanceCounter = 0;
   private readonly _textareaId = `floating-textarea-${++FloatingTextareaComponent.instanceCounter}`;

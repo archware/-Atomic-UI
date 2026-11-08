@@ -465,7 +465,7 @@
         </app-text>
       </div>
 
-      <div class="catalog-grid">
+      <div class="catalog-grid catalog-grid--showcase">
         <!-- Sub-bloque A: Superficies Solidas Flat vs Gradient -->
         <article class="variant-tile">
           <div class="tile-header">
@@ -697,11 +697,13 @@
                 >
                   <div class="pdf-demo-list">
                     @for (doc of pdfDemoFiles(); track doc.id) {
-                      <div class="attached-file-row">
-                        <i class="fa-solid fa-file-pdf attached-file-icon" aria-hidden="true"></i>
-                        <div class="attached-file-info">
-                          <app-text variant="caption" weight="bold">{{ doc.name }}</app-text>
-                          <app-text variant="caption" color="secondary">{{ doc.meta }}</app-text>
+                      <div class="attached-file-row attached-file-row--pdf-card">
+                        <div class="attached-file-main">
+                          <i class="fa-solid fa-file-pdf attached-file-icon" aria-hidden="true"></i>
+                          <div class="attached-file-info">
+                            <app-text variant="caption" weight="bold">{{ doc.name }}</app-text>
+                            <app-text variant="caption" color="secondary">{{ doc.meta }}</app-text>
+                          </div>
                         </div>
                         <div class="file-row-inline-controls">
                           <app-floating-input

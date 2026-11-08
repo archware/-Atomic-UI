@@ -1,4 +1,4 @@
-import { Component, signal, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild, HostBinding, input, output } from '@angular/core';
+import { Component, signal, AfterContentInit, ElementRef, HostBinding, input, output, contentChildren, viewChild } from '@angular/core';
 
 
 /**
@@ -60,7 +60,7 @@ export class TabComponent {
     templateUrl: './tabs.component.html'
 })
 export class TabsComponent implements AfterContentInit {
-  @ContentChildren(TabComponent) tabComponents!: QueryList<TabComponent>;
+  readonly tabComponents = contentChildren(TabComponent);
   readonly defaultIndex = input(0);
   /** Accessible name of the tablist; translate it per application. */
   readonly ariaLabel = input('Tabs');
@@ -71,10 +71,13 @@ export class TabsComponent implements AfterContentInit {
   activeIndex = signal(0);
   tabs: TabComponent[] = [];
 
-  @ViewChild('tabsHeader', { static: false }) tabsHeader!: ElementRef<HTMLElement>;
+  private readonly consultaTabsHeader = viewChild<ElementRef<HTMLElement>>('tabsHeader');
+  get tabsHeader(): ElementRef<HTMLElement> {
+    return this.consultaTabsHeader()!;
+  }
 
   ngAfterContentInit() {
-    this.tabs = this.tabComponents.toArray();
+    this.tabs = [...this.tabComponents()];
     this.activeIndex.set(this.defaultIndex());
     this.updateTabs();
   }

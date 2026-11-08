@@ -2,6 +2,8 @@ import { effect, untracked } from '@angular/core';
 import { 
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
+  inject,
   contentChild,
   input,
   output,
@@ -16,7 +18,7 @@ import { DataTable, type DataTableColumn, type DataTableStatus } from '../../org
 import { StepperComponent, type Step } from '../../organisms/stepper/stepper.component';
 import { CrudDialog } from '../../organisms/crud-dialog/crud-dialog';
 import { ActionGroupComponent, type ActionItem } from '../../molecules/action-group/action-group.component';
-import { resolveTableActionIcon, resolveTableActionTone, type TableActionName } from '../../atoms/table-action/table-action';
+import { resolveTableActionIcon, resolveTableActionTone } from '../../atoms/table-action/table-action';
 import { SummaryListComponent, type SummaryListItem } from '../../molecules/summary-list/summary-list.component';
 import { ButtonComponent } from '../../atoms/button/button.component';
 import { InputComponent } from '../../atoms/input/input.component';
@@ -83,6 +85,7 @@ export interface FiltroBusqueda {
 
 @Component({
   selector: 'app-pagina-crud',
+  host: { role: 'region', '[attr.aria-label]': 'titulo()', tabindex: '-1' },
   standalone: true,
   imports: [ FormsModule,
     PageHeader,
@@ -103,8 +106,15 @@ export interface FiltroBusqueda {
   templateUrl: './pagina-crud.html',
   styleUrl: './pagina-crud.scss',
 })
-export class PaginaCrud<T extends object = any> {
+export class PaginaCrud<T extends object = Record<string, unknown>> {
   // ─── Configuración de la página ──────────────────────────────
+  private readonly elementoHost = inject<ElementRef<HTMLElement>>(ElementRef);
+  readonly resolverFocoRetorno = input<(() => HTMLElement | null) | null>(null);
+
+  obtenerDestinoFocoRetorno(): HTMLElement {
+    return this.elementoHost.nativeElement;
+  }
+
   readonly titulo = input.required<string>();
   readonly subtitulo = input<string | null>(null);
   readonly etiquetaNuevo = input('Crear Nuevo');
@@ -114,7 +124,7 @@ export class PaginaCrud<T extends object = any> {
   // Opciones para búsqueda en cascada
   readonly opcionesBusqueda = input<readonly FiltroBusqueda[]>([]);
   readonly tipoBusqueda = input<string | null>(null);
-  readonly alCambiarTipoBusqueda = output<string>();
+  readonly alCambiarTipoBusqueda = output<string | null>();
   readonly placeholderBusqueda = input('Buscar…');
   readonly captionTabla = input('');
 
@@ -127,12 +137,25 @@ export class PaginaCrud<T extends object = any> {
   });
 
   /** Devuelve 'select' o 'texto' según la opción elegida. */
-    constructor() {
+  constructor() {
     effect(() => {
-      const tipo = this.tipoBusqueda();
-      if (tipo !== undefined) {
-        untracked(() => this.tipoBusquedaInterno.set(tipo));
-      }
+      const tipo = this.tipoBusqueda() || null;
+      untracked(() => {
+        if (this.tipoBusquedaInterno() !== tipo) {
+          this.tipoBusquedaInterno.set(tipo);
+          this.busqueda.set('');
+        }
+      });
+    });
+    effect(() => {
+      const opciones = this.opcionesBusqueda();
+      untracked(() => {
+        const actual = this.tipoBusquedaInterno();
+        if (actual !== null && !opciones.some(o => o.value === actual)) {
+          this.tipoBusquedaInterno.set(null);
+          this.busqueda.set('');
+        }
+      });
     });
   }
 
@@ -155,12 +178,18 @@ export class PaginaCrud<T extends object = any> {
     ];
   }
 
+  protected readonly opcionesFiltroSecundario = computed<Select2Option[]>(() => {
+    const tipo = this.tipoBusquedaInterno();
+    if (!tipo) return [];
+    return this.getOpcionesFiltroConVacio(tipo);
+  });
+
   protected readonly opcionesBusquedaParaSelect = computed<Select2Option[]>(() => {
     const opciones = this.opcionesBusqueda();
     if (opciones.length === 0) return [];
     return [
       { label: 'Seleccionar...', value: null },
-      ...opciones.map(o => ({ label: o.label, value: o.value, icon: undefined, disabled: false }))
+      ...opciones.map(o => ({ label: o.label, value: o.value, icon: undefined, disabled: false })),
     ];
   });
 
@@ -294,9 +323,7 @@ export class PaginaCrud<T extends object = any> {
   protected onTipoBusquedaCambiado(valor: string | null): void {
     this.tipoBusquedaInterno.set(valor);
     this.busqueda.set('');
-    if (valor !== null) {
-      this.alCambiarTipoBusqueda.emit(valor);
-    }
+    this.alCambiarTipoBusqueda.emit(valor);
     this.alSolicitarPagina.emit({
       pagina: 1,
       tamano: this.tamanioPagina(),
@@ -537,7 +564,7 @@ export class PaginaCrud<T extends object = any> {
   }
 
   private accionCatalogo(accion: ActionItem): ActionItem {
-    const tipo: TableActionName = accion.action ?? 'custom';
+    const tipo = accion.action ?? 'custom';
     const tono = resolveTableActionTone(tipo, 'catalog');
     return {
       ...accion,

@@ -3,12 +3,12 @@ import {
   Component,
   ElementRef,
   OnDestroy,
-  ViewChild,
   ViewEncapsulation,
   inject,
   input,
   effect,
-  untracked
+  untracked,
+  viewChild
 } from '@angular/core';
 
 type ListenerUnsubscriber = () => void;
@@ -239,11 +239,27 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     return this._disableHorizontal;
   }
 
-  @ViewChild('scrollArea', { static: true }) private scrollAreaRef!: ElementRef<HTMLElement>;
-  @ViewChild('barY', { static: true }) private barYRef!: ElementRef<HTMLElement>;
-  @ViewChild('barX', { static: true }) private barXRef!: ElementRef<HTMLElement>;
-  @ViewChild('thumbY', { static: true }) private thumbYRef!: ElementRef<HTMLElement>;
-  @ViewChild('thumbX', { static: true }) private thumbXRef!: ElementRef<HTMLElement>;
+  private readonly consultaScrollArea = viewChild<ElementRef<HTMLElement>>('scrollArea');
+  private readonly consultaBarY = viewChild<ElementRef<HTMLElement>>('barY');
+  private readonly consultaBarX = viewChild<ElementRef<HTMLElement>>('barX');
+  private readonly consultaThumbY = viewChild<ElementRef<HTMLElement>>('thumbY');
+  private readonly consultaThumbX = viewChild<ElementRef<HTMLElement>>('thumbX');
+
+  private get scrollAreaRef(): ElementRef<HTMLElement> {
+    return this.consultaScrollArea()!;
+  }
+  private get barYRef(): ElementRef<HTMLElement> {
+    return this.consultaBarY()!;
+  }
+  private get barXRef(): ElementRef<HTMLElement> {
+    return this.consultaBarX()!;
+  }
+  private get thumbYRef(): ElementRef<HTMLElement> {
+    return this.consultaThumbY()!;
+  }
+  private get thumbXRef(): ElementRef<HTMLElement> {
+    return this.consultaThumbX()!;
+  }
 
   private readonly listeners: ListenerUnsubscriber[] = [];
   private readonly isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
@@ -1589,5 +1605,35 @@ export class ScrollOverlayComponent implements AfterViewInit, OnDestroy {
     }
     this.dragPointerIdX = undefined;
     this.showBar();
+  }
+
+  /** Returns the active vertical scroll container element. */
+  getScrollElement(): HTMLElement | null {
+    return this.verticalScroller ?? this.consultaScrollArea()?.nativeElement ?? null;
+  }
+
+  /** Reads the current scroll position of the active vertical and horizontal scrollers. */
+  getScrollPosition(): { top: number; left: number } {
+    const vertical = this.verticalScroller ?? this.consultaScrollArea()?.nativeElement ?? null;
+    const horizontal = this.horizontalScroller ?? this.consultaScrollArea()?.nativeElement ?? null;
+    return {
+      top: vertical?.scrollTop ?? 0,
+      left: horizontal?.scrollLeft ?? 0,
+    };
+  }
+
+  /** Sets the scroll position of the active vertical and horizontal scrollers and updates overlay thumbs. */
+  setScrollPosition(position: { top?: number; left?: number }): void {
+    const vertical = this.verticalScroller ?? this.consultaScrollArea()?.nativeElement ?? null;
+    const horizontal = this.horizontalScroller ?? this.consultaScrollArea()?.nativeElement ?? null;
+    if (vertical && typeof position.top === 'number') {
+      vertical.scrollTop = Math.max(0, position.top);
+    }
+    if (horizontal && typeof position.left === 'number') {
+      horizontal.scrollLeft = Math.max(0, position.left);
+    }
+    if (this.hostEl) {
+      this.updateThumbs();
+    }
   }
 }

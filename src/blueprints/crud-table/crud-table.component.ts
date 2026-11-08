@@ -1,5 +1,6 @@
-import { Component, inject, signal, computed, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import type { UserMenuAction } from '@shared/ui/molecules/user-menu/user-menu.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import {
@@ -82,7 +83,7 @@ export class CrudTableComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  onUserAction(action: any): void {
+  onUserAction(action: UserMenuAction): void {
     if (action.id === 'settings') this.router.navigate(['/settings']);
   }
 
@@ -90,7 +91,10 @@ export class CrudTableComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly popup = inject(PopupService);
 
-  @ViewChild(PaginaCrud) readonly paginaCrud!: PaginaCrud<Entity>;
+  private readonly consultaPaginaCrud = viewChild<PaginaCrud<Entity>>(PaginaCrud);
+  get paginaCrud(): PaginaCrud<Entity> {
+    return this.consultaPaginaCrud()!;
+  }
 
   // ============================================
   // PAGINA CRUD CONFIGURATION
@@ -113,13 +117,13 @@ export class CrudTableComponent implements OnInit {
           default: return 'default';
         }
       },
-      format: (val: any) => val === 'active' ? 'Activo' : val === 'pending' ? 'Pendiente' : 'Inactivo'
+      format: (val: unknown) => val === 'active' ? 'Activo' : val === 'pending' ? 'Pendiente' : 'Inactivo'
     },
     {
       key: 'createdAt',
       header: 'Creado',
       sortable: true,
-      format: (val: any) => new Date(val as string).toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric' })
+      format: (val: unknown) => new Date(val as string).toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric' })
     }
   ];
 
@@ -158,13 +162,15 @@ export class CrudTableComponent implements OnInit {
   filas = computed(() => this.listApi.data()?.data ?? []);
   totalRegistros = computed(() => this.listApi.data()?.total ?? 0);
   estadoGrilla = computed<DataTableStatus>(() => {
-    if (this.listApi.loading()) return 'loading';
+    if (this.listApi.loading() && this.filas().length === 0) return 'loading';
     if (this.listApi.hasError()) return 'error';
     if (this.filas().length === 0) return 'empty';
     return 'success';
   });
 
   paginaActual = signal(1);
+  tamanoActual = signal(10);
+  busquedaActual = signal('');
   modoCrud = signal<'crear' | 'editar' | 'ver'>('crear');
   entidadActiva = signal<Entity | null>(null);
 
@@ -182,6 +188,8 @@ export class CrudTableComponent implements OnInit {
 
   cargarPagina(req: { pagina: number; tamano: number; busqueda: string }) {
     this.paginaActual.set(req.pagina);
+    this.tamanoActual.set(req.tamano);
+    this.busquedaActual.set(req.busqueda);
     
     // Simulate filtering
     let filtered = [...FAKE_DB];
@@ -232,7 +240,15 @@ export class CrudTableComponent implements OnInit {
     const check = setInterval(() => {
       if (this.deleteApi.success()) {
         clearInterval(check);
-        this.cargarPagina({ pagina: 1, tamano: 10, busqueda: '' });
+        const pagina =
+          this.filas().length <= 1 && this.paginaActual() > 1
+            ? this.paginaActual() - 1
+            : this.paginaActual();
+        this.cargarPagina({
+          pagina,
+          tamano: this.tamanoActual(),
+          busqueda: this.busquedaActual(),
+        });
       }
     }, 100);
   }
@@ -246,13 +262,14 @@ export class CrudTableComponent implements OnInit {
 
     const val = this.entityForm.getRawValue();
     const curr = this.entidadActiva();
+    const esEdicion = this.modoCrud() === 'editar' && Boolean(curr);
     const data: Entity = {
       id: curr?.id ?? String(idCounter++),
       createdAt: curr?.createdAt ?? new Date().toISOString().split('T')[0],
       ...val
     };
 
-    if (this.modoCrud() === 'editar' && curr) {
+    if (esEdicion && curr) {
       const idx = FAKE_DB.findIndex(e => e.id === curr.id);
       if (idx !== -1) FAKE_DB[idx] = data;
     } else {
@@ -265,7 +282,11 @@ export class CrudTableComponent implements OnInit {
       if (this.saveApi.success()) {
         clearInterval(check);
         this.paginaCrud.cerrarDialogo();
-        this.cargarPagina({ pagina: 1, tamano: 10, busqueda: '' });
+        this.cargarPagina({
+          pagina: esEdicion ? this.paginaActual() : 1,
+          tamano: this.tamanoActual(),
+          busqueda: this.busquedaActual(),
+        });
       }
     }, 100);
   }

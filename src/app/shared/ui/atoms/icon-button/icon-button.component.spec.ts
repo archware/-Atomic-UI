@@ -159,4 +159,84 @@ describe('IconButtonComponent', () => {
     const iconEl2 = fixture.nativeElement.querySelector('i');
     expect(iconEl2.className).toBe('fa-solid fa-times');
   });
+
+  afterEach(() => {
+    document.documentElement.removeAttribute('data-theme');
+    document.documentElement.classList.remove('dark', 'theme-dark', 'theme-light');
+  });
+
+  it('conserva --text-color-on-primary y gradiente de alto contraste (--button-primary-bg) en variante "avatar" (reposo y hover) en los 3 temas sin teñir el icono con el color del fondo', () => {
+    setInput('variant', 'avatar');
+    setInput('icon', 'fa-solid fa-user');
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    const iconEl: HTMLElement = fixture.nativeElement.querySelector('i');
+    expect(button.classList.contains('icon-btn--avatar')).toBe(true);
+    expect(iconEl).not.toBeNull();
+
+    for (const theme of ['light', 'dark', 'brand-dark']) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.classList.toggle('dark', theme !== 'light');
+      document.documentElement.classList.toggle('theme-dark', theme !== 'light');
+      document.documentElement.classList.toggle('theme-light', theme === 'light');
+      for (const anim of ['none', 'grow', 'rotate', 'custom'] as const) {
+        setInput('animation', anim);
+        const restingBtnColor = getComputedStyle(button).color;
+        const restingIconColor = getComputedStyle(iconEl).color;
+        expect(restingIconColor).toBe(restingBtnColor);
+      }
+    }
+
+    // Inspeccionar las reglas CSS compiladas (document.styleSheets y document.adoptedStyleSheets)
+    const allRules: string[] = [];
+    const sheets = [
+      ...Array.from(document.styleSheets),
+      ...Array.from(document.adoptedStyleSheets ?? []),
+    ];
+    for (const sheet of sheets) {
+      try {
+        for (const rule of Array.from(sheet.cssRules)) {
+          allRules.push(rule.cssText);
+        }
+      } catch {
+        // Ignorar hojas externas con restricción CORS si existieran
+      }
+    }
+
+    const baseHoverIdx = allRules.findIndex(
+      (r) =>
+        r.includes('.icon-btn') &&
+        !r.includes('.icon-btn--') &&
+        r.includes(':hover:not(:disabled)')
+    );
+    const avatarRestRule = allRules.find(
+      (r) => r.includes('.icon-btn--avatar') && !r.includes(':hover') && r.includes('linear-gradient')
+    );
+    const avatarHoverIdx = allRules.findIndex(
+      (r) =>
+        r.includes('.icon-btn--avatar') &&
+        r.includes(':hover:not(:disabled)') &&
+        r.includes('linear-gradient')
+    );
+    expect(avatarRestRule).toBeDefined();
+    expect(avatarRestRule).toContain('var(--button-primary-bg');
+    expect(avatarHoverIdx).toBeGreaterThan(baseHoverIdx);
+
+    const avatarHoverRule = allRules[avatarHoverIdx];
+    expect(avatarHoverRule).toContain('var(--text-color-on-primary)');
+    expect(avatarHoverRule).toContain('var(--button-primary-bg');
+    expect(avatarHoverRule).toContain('filter: none');
+
+    const animRules = allRules.filter(
+      (r) =>
+        (r.includes('.icon-anim-none') ||
+          r.includes('.icon-anim-grow') ||
+          r.includes('.icon-anim-rotate')) &&
+        r.includes(':hover')
+    );
+    expect(animRules.length).toBeGreaterThanOrEqual(3);
+    for (const ruleText of animRules) {
+      expect(ruleText).not.toContain('var(--primary-color)');
+    }
+  });
 });

@@ -1,8 +1,9 @@
 import {
   Component, signal, computed, effect, untracked,
-  forwardRef, ChangeDetectionStrategy, ElementRef, ViewChild, inject, PLATFORM_ID,
+  forwardRef, ChangeDetectionStrategy, ElementRef, inject, PLATFORM_ID,
   input,
-  output
+  output,
+  viewChild
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -69,9 +70,20 @@ function normalizeSearch(value: string): string {
     }
   ],
   template: `
-    <div class="combobox" [class.fl-field--floating]="flotante()" [class.combobox-open]="isOpen()" [class.combobox-disabled]="disabled">
+    <div
+      class="combobox"
+      [class.fl-field--floating]="flotante()"
+      [class.combobox-open]="isOpen()"
+      [class.combobox-disabled]="disabled"
+      [class.combobox-error-state]="error()"
+    >
       @if (label() && !flotante()) {
-        <label class="fl-label combobox-label" [for]="inputId">
+        <label
+          class="fl-label combobox-label"
+          [class.fl-label--error]="error()"
+          [class.fl-label--disabled]="disabled"
+          [for]="inputId"
+        >
           {{ label() }}
           @if (required()) {
             <span class="field__required fl-label__required" aria-hidden="true">*</span>
@@ -209,7 +221,10 @@ export class ComboboxComponent implements ControlValueAccessor {
   readonly optionSelected = output<ComboboxOption>();
   readonly inputChange = output<string>();
 
-  @ViewChild('inputRef') inputRef?: ElementRef<HTMLInputElement>;
+  private readonly consultaInputRef = viewChild<ElementRef<HTMLInputElement>>('inputRef');
+  get inputRef(): ElementRef<HTMLInputElement> | undefined {
+    return this.consultaInputRef();
+  }
 
   value: string | number | null = null;
   inputValue = signal('');

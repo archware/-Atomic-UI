@@ -105,12 +105,14 @@ describe('ComboboxComponent - modos de etiqueta', () => {
     expect(elevada(fixture.nativeElement)).toBe(false);
   });
 
-  it('el error queda fuera de la caja del control y marca la etiqueta flotante', async () => {
+  it('el error queda fuera de la caja del control, marca el contenedor y la etiqueta flotante', async () => {
     const fixture = TestBed.createComponent(Anfitrion);
     fixture.componentInstance.error = 'Requerido';
     await fixture.whenStable();
     const raiz: HTMLElement = fixture.nativeElement;
+    const wrapper = raiz.querySelector('.combobox') as HTMLElement;
     const mensaje = raiz.querySelector('.combobox-error');
+    expect(wrapper.classList.contains('combobox-error-state')).toBe(true);
     expect(mensaje?.closest('.fl-control')).toBeNull();
     expect(flotante(raiz)?.classList.contains('fl-label--error')).toBe(true);
   });

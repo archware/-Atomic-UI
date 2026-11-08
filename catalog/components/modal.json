@@ -25,6 +25,12 @@
     }
   ],
   "inputs": [
+    {
+      "name": "resolverFocoRetorno",
+      "type": "(() => HTMLElement | null) | null",
+      "default": null,
+      "meaning": "Resuelve al restaurar un destino conectado, visible y enfocable del mismo documento, externo al diálogo. Tiene prioridad sobre el origen; null, excepción o foco fallido conservan el origen sin modificar tabindex."
+    },
     { "name": "title", "type": "string", "default": "", "meaning": "Título visible que nombra el diálogo." },
     { "name": "size", "type": "'sm' | 'md' | 'lg'", "default": "md", "meaning": "Anchura máxima del panel." },
     { "name": "closeOnBackdrop", "type": "boolean", "default": true, "meaning": "Permite solicitar cierre desde backdrop o Escape cuando busy es false." },
@@ -48,7 +54,7 @@
     "busy bloquea X, Escape y backdrop; la acción principal enlaza Button loading para impedir doble envío.",
     "Un fallo mantiene el modal abierto, actualiza la alerta proyectada y llama focusError directamente; la primitiva resuelve el foco post-render.",
     "Un éxito actualiza el estado de apertura y emite el Toast global después de retirar el overlay.",
-    "La destrucción restaura el foco al elemento que abrió el modal."
+    "Tras destruir y retirar el DOM, una microtarea restaura el destino del callback o el origen; no emite closed ni roba foco a otro modal abierto."
   ],
   "states": [
     { "name": "open", "meaning": "Panel visible con foco confinado." },

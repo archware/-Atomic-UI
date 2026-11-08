@@ -8,9 +8,9 @@ import {
   inject,
   Injector,
   OnDestroy,
-  ViewChild,
   input,
-  output
+  output,
+  viewChild
 } from '@angular/core';
 
 /* orden-dom: es un CONJUNTO de tipos de control equivalentes, no una lista de
@@ -104,13 +104,17 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
   private static instanceCounter = 0;
   readonly titleId = `atomic-modal-title-${++ModalComponent.instanceCounter}`;
 
-  @ViewChild('dialogRef', { read: ElementRef })
-  private dialogRef?: ElementRef<HTMLElement>;
+  private readonly consultaDialogo = viewChild<ElementRef<HTMLElement>>('dialogRef');
+  private get dialogRef(): ElementRef<HTMLElement> | undefined {
+    return this.consultaDialogo();
+  }
 
   private readonly injector = inject(Injector);
   private previouslyFocused: HTMLElement | null = null;
   private pendingErrorFocus?: AfterRenderRef;
+  private destruido = false;
 
+  readonly resolverFocoRetorno = input<(() => HTMLElement | null) | null>(null);
   readonly title = input('');
   readonly size = input<'sm' | 'md' | 'lg' | 'xl'>('md');
   readonly closeOnBackdrop = input(true);
@@ -123,15 +127,40 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
     if (typeof document === 'undefined') return;
     const activeElement = document.activeElement;
     this.previouslyFocused = activeElement instanceof HTMLElement ? activeElement : null;
-    queueMicrotask(() => this.focusInitialControl());
+    queueMicrotask(() => { if (!this.destruido) this.focusInitialControl(); });
   }
 
   ngOnDestroy(): void {
     this.pendingErrorFocus?.destroy();
     this.pendingErrorFocus = undefined;
-    if (this.previouslyFocused?.isConnected) {
-      this.previouslyFocused.focus({ preventScroll: true });
-    }
+    this.destruido = true;
+    const resolver = this.resolverFocoRetorno();
+    const origen = this.previouslyFocused;
+    const dialogo = this.dialogRef?.nativeElement;
+    this.previouslyFocused = null;
+    if (!dialogo) return;
+    queueMicrotask(() => {
+      const otraVentanaAbierta = Array.from(dialogo.ownerDocument.querySelectorAll<HTMLElement>(
+        'dialog[open], [aria-modal="true"]:not(dialog)',
+      )).some(ventana => ventana.getClientRects().length > 0 &&
+        getComputedStyle(ventana).visibility === 'visible' &&
+        !ventana.closest('[hidden], [inert], [aria-hidden="true"]'));
+      if (otraVentanaAbierta) return;
+      let destino: HTMLElement | null = null;
+      try { destino = resolver?.() ?? null; } catch { /* El cierre prevalece. */ }
+      if (!this.restaurarFoco(destino, dialogo)) this.restaurarFoco(origen, dialogo);
+    });
+  }
+
+  private restaurarFoco(destino: HTMLElement | null, dialogo: HTMLElement): boolean {
+    if (!destino || !destino.isConnected || destino.ownerDocument !== dialogo.ownerDocument ||
+        destino === dialogo.ownerDocument.body || dialogo.contains(destino) ||
+        destino.closest('[hidden], [inert], [aria-hidden="true"], [aria-disabled="true"], [disabled]') ||
+        destino.getClientRects().length === 0 || getComputedStyle(destino).visibility !== 'visible') return false;
+    try {
+      destino.focus({ preventScroll: true });
+      return destino.isConnected && destino.ownerDocument.activeElement === destino;
+    } catch { return false; }
   }
 
   onBackdropClick(event?: Event): void {

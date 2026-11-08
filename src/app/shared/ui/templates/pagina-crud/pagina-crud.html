@@ -16,11 +16,11 @@
         [searchable]="false"
       />
     }
-    @if (tipoBusquedaInterno(); as tipo) {
+    @for (tipo of (tipoBusquedaInterno() ? [tipoBusquedaInterno()!] : []); track tipo) {
       @if (getTipoFiltro(tipo) === 'select') {
         <app-select2
           class="pagina-crud__filtro-control"
-          [options]="getOpcionesFiltroConVacio(tipo)"
+          [options]="opcionesFiltroSecundario()"
           [ngModel]="busqueda()"
           (ngModelChange)="alBuscar($event)"
           [label]="labelFiltroSecundario()"
@@ -86,6 +86,7 @@
 @if (interaccionActual() !== 'browser') {
   <app-crud-dialog
     #dialogoCrud
+    [resolverFocoRetorno]="resolverFocoRetorno()"
     [labelledBy]="idTituloDialogo"
     [size]="tamanoDialogo()"
     (cancelled)="cerrarDialogo()"
@@ -130,7 +131,7 @@
 }
 
 <!-- Siempre montado: showModal puede capturar el origen y enfocar Cancelar. -->
-<app-crud-dialog #dialogoConfirmacion [labelledBy]="idTituloConfirmacion"
+<app-crud-dialog [resolverFocoRetorno]="resolverFocoRetorno()" #dialogoConfirmacion [labelledBy]="idTituloConfirmacion"
   [describedBy]="idMensajeConfirmacion" size="sm" (cancelled)="cancelarBaja()">
   <header class="pagina-crud__dialogo-cabecera">
     <h2 [id]="idTituloConfirmacion" class="pagina-crud__dialogo-titulo">

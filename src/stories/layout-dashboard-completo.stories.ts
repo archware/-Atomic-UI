@@ -16,7 +16,7 @@ import type {
   SidebarMenuItem,
   SidebarUser,
 } from '../app/shared/ui/organisms/sidebar/sidebar.component';
-import type { StatusBadgeStatus } from '../app/shared/ui/atoms/status-badge/status-badge.component';
+import type { ChipVariant } from '../app/shared/ui/atoms/chip/chip.component';
 import { TableAction } from '../app/shared/ui/atoms/table-action/table-action';
 import { ThemeSwitcherComponent } from '../app/shared/ui/organisms/theme-switcher/theme-switcher.component';
 import { TopbarComponent } from '../app/shared/ui/organisms/topbar/topbar.component';
@@ -143,10 +143,10 @@ interface ActividadFila {
   readonly estado: 'Aplicada' | 'En revisión' | 'Anulada';
 }
 
-const ESTADO_A_INSIGNIA: Readonly<Record<ActividadFila['estado'], StatusBadgeStatus>> = {
-  Aplicada: 'active',
-  'En revisión': 'degraded',
-  Anulada: 'inactive',
+const ESTADO_A_INSIGNIA: Readonly<Record<ActividadFila['estado'], ChipVariant>> = {
+  Aplicada: 'success',
+  'En revisión': 'warning',
+  Anulada: 'error',
 };
 
 const COLUMNAS_ACTIVIDAD: readonly DataTableColumn<ActividadFila>[] = [
@@ -172,7 +172,7 @@ const COLUMNAS_ACTIVIDAD: readonly DataTableColumn<ActividadFila>[] = [
     header: 'Estado',
     width: '10rem',
     isTag: true,
-    tagVariant: (fila: ActividadFila) => ESTADO_A_INSIGNIA[fila.estado] as any,
+    tagVariant: (fila: ActividadFila) => ESTADO_A_INSIGNIA[fila.estado],
   },
 ];
 

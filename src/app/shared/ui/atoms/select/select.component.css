@@ -10,6 +10,10 @@
   color: var(--input-text);
 }
 
+.field__control .fl-label--floating:not(.fl-label--floated) {
+  max-width: calc(100% - var(--space-7) - var(--field-label-inset));
+}
+
 .field__select {
   display: block;
   width: 100%;

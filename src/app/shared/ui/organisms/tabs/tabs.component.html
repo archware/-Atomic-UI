@@ -6,7 +6,6 @@
         role="tablist"
         [attr.aria-label]="ariaLabel()"
         [attr.aria-orientation]="orientation()"
-        (keydown)="onHeaderKeydown($event)"
       >
         @for (tab of tabs; track tab.label(); let i = $index) {
           <button 
@@ -20,6 +19,7 @@
             [class.active]="activeIndex() === i"
             [class.disabled]="tab.disabled()"
             (click)="!tab.disabled() && selectTab(i, $event)"
+            (keydown)="onHeaderKeydown($event)"
           >
             @if (tab.iconClass()) {
               <i [class]="tab.iconClass()" class="tab-icon" aria-hidden="true"></i>
@@ -39,4 +39,3 @@
         <ng-content></ng-content>
       </div>
     </div>
-  

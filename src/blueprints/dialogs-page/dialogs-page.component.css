@@ -136,8 +136,12 @@
 
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
   gap: var(--space-5);
+}
+
+.catalog-grid--showcase {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
 }
 
 .variant-tile {
@@ -149,6 +153,7 @@
   border: var(--border-width-sm, 0.0625rem) solid var(--border-color);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
+  min-width: 0;
 }
 
 .tile-header {
@@ -165,6 +170,7 @@
   padding: var(--space-4);
   background-color: var(--surface-sunken);
   border-radius: var(--radius-md);
+  min-width: 0;
 }
 
 .relative-anchor {
@@ -284,26 +290,54 @@
   background-color: var(--surface-background);
   border: var(--border-width-sm, 0.0625rem) solid var(--border-color);
   border-radius: var(--radius-sm);
+  min-width: 0;
 }
 
 .attached-file-row {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-2);
+  padding: var(--space-2) var(--space-3);
   background-color: var(--surface-sunken);
   border-radius: var(--radius-sm);
+  min-width: 0;
+}
+
+.attached-file-row--pdf-card {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
+  background-color: var(--surface-background);
+  border: var(--border-width-sm, 0.0625rem) solid var(--border-color-light, var(--border-color));
+  border-left: 0.1875rem solid var(--primary-color);
+  box-shadow: var(--shadow-xs);
+}
+
+.attached-file-main {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  width: 100%;
 }
 
 .attached-file-icon {
   font-size: var(--text-base);
   color: var(--danger-color-text);
+  flex-shrink: 0;
 }
 
 .attached-file-info {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 1 1 0%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.attached-file-row > app-icon-button {
+  flex-shrink: 0;
 }
 
 .showcase-group {
@@ -314,6 +348,7 @@
   background-color: var(--surface-background);
   border: var(--border-width-sm, 0.0625rem) solid var(--border-color);
   border-radius: var(--radius-sm);
+  min-width: 0;
 }
 
 .showcase-button-row {
@@ -325,16 +360,23 @@
 
 .file-row-inline-controls {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: var(--space-2);
-  flex: 0 1 50%;
-  max-width: 15rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .file-row-inline-controls > app-floating-input.pdf-demo-page-input {
-  flex: 1 1 auto;
+  flex: 1 1 0%;
   width: 100%;
-  min-width: 9.5rem;
+  min-width: 0;
+  --fi-min-width: 0;
+}
+
+.file-row-inline-controls > app-icon-button {
+  flex-shrink: 0;
+  margin-top: var(--space-3);
 }
 
 .hanging-inline-demo {
@@ -343,6 +385,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-2) var(--space-4);
+  margin-top: var(--space-2);
   margin-left: var(--space-2);
   margin-right: var(--space-2);
   background-color: var(--surface-sunken);
@@ -367,7 +410,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding-right: var(--space-2);
+  padding-right: var(--space-3);
 }
 
 .about-blueprint-toolbar {

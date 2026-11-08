@@ -384,6 +384,10 @@ export class Select2Component implements ControlValueAccessor {
   protected readonly marcadorVisible = computed(() =>
     esMarcadorVisible(this.variant(), this.tieneEtiqueta(), this.elevada()),
   );
+  protected readonly tieneAnchoFijo = computed(() => {
+    const ancho = this.width().trim();
+    return ancho.length > 0 && !ancho.includes('%');
+  });
 
   hasValue(): boolean {
     return this.multiple() ? this.selectedOptions().length > 0 : this.selectedOption() !== null;
@@ -396,6 +400,9 @@ export class Select2Component implements ControlValueAccessor {
   }
 
   isSelected(option: Select2Option): boolean {
+    if (option.value === null || option.value === '') {
+      return false;
+    }
     if (this.multiple()) {
       return this.selectedOptions().some(o => o.value === option.value);
     }
@@ -477,11 +484,12 @@ export class Select2Component implements ControlValueAccessor {
 
   selectOption(option: Select2Option): void {
     if (this.disabled || option.disabled) return;
+    this.pendingValue = undefined;
     if (this.multiple()) {
       const current = this.selectedOptions();
       if (this.isSelected(option)) {
         this.selectedOptions.set(current.filter(o => o.value !== option.value));
-      } else {
+      } else if (option.value !== null && option.value !== '') {
         this.selectedOptions.set([...current, option]);
       }
       const values = this.selectedOptions().map(o => o.value);
@@ -490,7 +498,7 @@ export class Select2Component implements ControlValueAccessor {
       this.onTouched();
       this.programarPosicionCapa();
     } else {
-      this.selectedOption.set(option);
+      this.selectedOption.set(option.value === null || option.value === '' ? null : option);
       this.onChange(option.value);
       this.valueChange.emit(option.value);
 
@@ -502,6 +510,7 @@ export class Select2Component implements ControlValueAccessor {
   removeTag(option: Select2Option, event: Event): void {
     event.stopPropagation();
     if (this.disabled) return;
+    this.pendingValue = undefined;
     const current = this.selectedOptions();
     this.selectedOptions.set(current.filter(o => o.value !== option.value));
     const values = this.selectedOptions().map(o => o.value);
@@ -521,9 +530,9 @@ export class Select2Component implements ControlValueAccessor {
   }
 
   writeValue(value: unknown): void {
+    this.pendingValue = value;
     if (!this.options.length) {
       // Guarda el valor hasta que lleguen las opciones (carga asíncrona)
-      this.pendingValue = value;
       this.clearSelection();
       return;
     }
@@ -562,15 +571,22 @@ export class Select2Component implements ControlValueAccessor {
   private applyIncomingValue(value: unknown, emit = false): void {
     if (this.multiple()) {
       const values = Array.isArray(value) ? value as (string | number)[] : [];
-      const validOptions = this.options.filter(o => o.value !== null && values.includes(o.value as string | number));
+      const validOptions = this.options.filter(o => o.value !== null && o.value !== '' && values.includes(o.value as string | number));
       this.selectedOptions.set(validOptions);
+      if (validOptions.length > 0 || values.length === 0) {
+        this.pendingValue = undefined;
+      }
       if (emit) {
         this.onChange(validOptions.map(o => o.value));
         this.valueChange.emit(validOptions.map(o => o.value));
       }
     } else {
-      const option = this.options.find(o => o.value === value);
+      const isEmpty = value === null || value === undefined || value === '';
+      const option = !isEmpty ? this.options.find(o => o.value === value) : undefined;
       this.selectedOption.set(option || null);
+      if (isEmpty || option) {
+        this.pendingValue = undefined;
+      }
       if (emit && option) {
         this.onChange(option.value);
         this.valueChange.emit(option.value);

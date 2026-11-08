@@ -88,6 +88,10 @@ export class FloatingInputComponent implements ControlValueAccessor {
       ? this.placeholder() || null
       : null,
   );
+  protected readonly tieneAnchoFijo = computed(() => {
+    const ancho = this.width().trim();
+    return ancho.length > 0 && !ancho.includes('%');
+  });
 
   // Generate unique ID for accessibility (label-for association)
   private static instanceCounter = 0;

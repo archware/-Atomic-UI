@@ -1,0 +1,10 @@
+{
+  "name": "@atomic-ui/compatibilidad-minimatch",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "main": "index.cjs",
+  "dependencies": {
+    "motor-minimatch": "npm:minimatch@11.0.4"
+  }
+}
