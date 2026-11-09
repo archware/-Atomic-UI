@@ -3,6 +3,9 @@ import { SidebarMenuItem } from '../organisms/sidebar/sidebar.component';
 
 export interface ChasisConfig {
   logoText: string;
+  logoSubtitle?: string;
+  logoImageUrl?: string;
+  logoBadgeImages?: string[];
   logoIcon: string;
   logoIconColor: string;
   logoTextColor: string;
@@ -25,8 +28,14 @@ export interface ChasisConfig {
 
 export const defaultChasisConfig: ChasisConfig = {
   logoText: 'Atomic UI',
-  logoIcon: 'fa-solid fa-sack-dollar',
-  logoIconColor: 'var(--purple-500)',
+  logoSubtitle: 'SSIT CONSULTING',
+  logoImageUrl: 'assets/doctrinas/ssit-emblem.jpg',
+  logoBadgeImages: [
+    'assets/doctrinas/doctrina-barracuda-icon.jpg',
+    'assets/doctrinas/doctrina-mangosta-icon.jpg',
+  ],
+  logoIcon: 'fa-solid fa-layer-group',
+  logoIconColor: 'var(--primary-color)',
   logoTextColor: 'var(--text-color)',
   headerBgColor: 'var(--surface-sunken)',
   footerBgColor: 'var(--surface-sunken)',

@@ -4,7 +4,7 @@
    Tokens derivados para componentes específicos de la aplicación.
    Estos tokens utilizan los valores semánticos definidos en _tokens-semantic.css
 
-   📅 Última actualización: Diciembre 2025
+   📅 Última actualización: Noviembre 2026
    ============================================================================= */
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -314,7 +314,7 @@
    --loader-gradient-start: var(--brand-accent-300);
    --loader-gradient-end: var(--brand-accent-500);
 
-   /* Standardized Loader Ramp: Purple (Primary) -> Pink (Accent) -> Amber (Secondary) */
+   /* Standardized Loader Ramp: Sapphire Cobalt (Primary) -> Arctic Teal (Accent) -> Imperial Gold (Secondary) */
    --loader-gradient-1: var(--brand-primary-600);
    --loader-gradient-2: var(--brand-primary-400);
    --loader-gradient-3: var(--brand-accent-500);
@@ -647,7 +647,7 @@ html.dark {
    --pagination-badge-bg: var(--brand-primary-800);
    --pagination-badge-border: var(--brand-primary-400);
    --pagination-card-accent-border: var(--brand-primary-400);
-   --pagination-card-active-bg: var(--purple-700);
+   --pagination-card-active-bg: var(--brand-primary-700);
    --pagination-card-active-border: var(--brand-secondary-400);
 
    /* === PROGRESS BAR === */
@@ -766,9 +766,9 @@ html.dark {
    --field-label-color-floated: var(--info-color-text);
    --field-label-color-error: var(--danger-color-text);
    --input-text: var(--text-color);
-   --input-shadow: 0 0 0 1px rgba(188, 154, 187, 0.18), 0 2px 6px rgba(0, 0, 0, 0.50);
-   /* BRAND-DARK: glow de marca (primary violeta) + sombra profunda */
-   --input-shadow-hover: 0 0 0 2px rgba(188, 154, 187, 0.38), 0 4px 14px rgba(0, 0, 0, 0.60);
+   --input-shadow: 0 0 0 1px rgba(56, 189, 248, 0.18), 0 2px 6px rgba(0, 0, 0, 0.50);
+   /* BRAND-DARK: glow de marca (primary zafiro) + sombra profunda */
+   --input-shadow-hover: 0 0 0 2px rgba(56, 189, 248, 0.38), 0 4px 14px rgba(0, 0, 0, 0.60);
    /* BRAND-DARK: glow primario más fuerte en hover */
    --input-shadow-focus: 0 0 0 3px rgba(10, 132, 255, 0.35);
    /* BRAND-DARK: glow azul al enfocar inputs/selects */
@@ -914,7 +914,7 @@ html.dark {
    --pagination-badge-bg: var(--brand-primary-800);
    --pagination-badge-border: var(--brand-primary-400);
    --pagination-card-accent-border: var(--brand-primary-400);
-   --pagination-card-active-bg: var(--purple-700);
+   --pagination-card-active-bg: var(--brand-primary-700);
    --pagination-card-active-border: var(--brand-secondary-400);
 
    /* === PROGRESS BAR === */

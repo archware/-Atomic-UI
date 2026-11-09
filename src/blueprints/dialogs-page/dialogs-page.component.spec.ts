@@ -104,8 +104,22 @@ describe('DialogsPageComponent — Patrón interactivo de tarjeta de documento P
 
     const host = fixture.nativeElement as HTMLElement;
     expect(fixture.componentInstance.aboutTechStack.map((b) => b.label)).toContain('Angular 22 + Signals');
+    expect(fixture.componentInstance.aboutTechStack.map((b) => b.label)).toContain('Doctrina Mangosta');
+    expect(fixture.componentInstance.aboutTechStack.map((b) => b.label)).toContain('Doctrina Barracuda');
     expect(fixture.componentInstance.aboutTechStack.map((b) => b.label)).not.toContain('Angular 19 + Signals');
+    expect(fixture.componentInstance.aboutCredits.map((c) => c.label)).toContain('Doctrina Mangosta');
+    expect(fixture.componentInstance.aboutCredits.map((c) => c.label)).toContain('Doctrina Barracuda');
     expect(host.textContent).toContain('Angular 22 + Signals');
+    expect(host.textContent).toContain('Doctrina Mangosta');
+    expect(host.textContent).toContain('Doctrina Barracuda');
+    expect(host.textContent).toContain('Creador del Ecosistema @archware');
     expect(host.textContent).not.toContain('Angular 19 + Signals');
+
+    const previewDialog = host.querySelector<HTMLElement>('.about-blueprint-preview app-about-dialog')!;
+    expect(previewDialog).not.toBeNull();
+    const creditItems = Array.from(previewDialog.querySelectorAll<HTMLElement>('.about-credit-item'));
+    const techItems = Array.from(previewDialog.querySelectorAll<HTMLElement>('.about-tech-list__item'));
+    expect(creditItems.length).toBe(6);
+    expect(techItems.length).toBe(7);
   });
 });

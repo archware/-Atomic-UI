@@ -1,7 +1,7 @@
 <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
   <app-sidebar ngProjectAs="[slot=sidebar]" slot="sidebar"
     [menuItems]="menuItems"
-    logoText="Atomic UI" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--primary-color)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }"
+    logoText="Atomic UI" logoSubtitle="SSIT CONSULTING" logoImageUrl="assets/doctrinas/ssit-emblem.jpg" [logoBadgeImages]="['assets/doctrinas/doctrina-barracuda-icon.jpg', 'assets/doctrinas/doctrina-mangosta-icon.jpg']" logoIcon="fa-solid fa-layer-group" logoIconColor="var(--primary-color)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Ing. Havel Contreras', role: 'SSIT CONSULTING E.I.R.L.', initials: 'HC', photo: 'assets/doctrinas/ssit-emblem.jpg' }"
     (navigate)="onSidebarNavigate($event)"
   ></app-sidebar>
 

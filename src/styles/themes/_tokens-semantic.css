@@ -4,7 +4,7 @@
    Este archivo NO se modifica entre proyectos.
    Los colores se derivan automáticamente de los tokens de marca.
 
-   📅 Última actualización: Diciembre 2025
+   📅 Última actualización: Noviembre 2026
    ============================================================================= */
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -118,7 +118,7 @@
    --selected-background: var(--primary-color-lighter);
    --surface-hover: var(--gray-100);
    --focus-ring-color: var(--brand-primary-500);
-   --focus-ring: 0 0 0 3px rgba(95, 41, 92, 0.2);
+   --focus-ring: 0 0 0 3px rgba(3, 105, 161, 0.2);
 
    /* === SOMBRAS === */
    /* Sombras más pronunciadas para mayor profundidad en modo claro */
@@ -134,11 +134,11 @@
      0 12px 24px hsl(var(--shadow-color) / 0.4);
 
    /* Sombras de Focus */
-   --shadow-focus-primary: 0 0 0 3px rgba(95, 41, 92, 0.2);
-   --shadow-focus-secondary: 0 0 0 3px rgba(35, 167, 212, 0.2);
+   --shadow-focus-primary: 0 0 0 3px rgba(3, 105, 161, 0.2);
+   --shadow-focus-secondary: 0 0 0 3px rgba(245, 158, 11, 0.2);
 
    /* Sombras de Glow (para estados activos) */
-   --shadow-glow-primary: 0 4px 12px rgba(95, 41, 92, 0.4);
+   --shadow-glow-primary: 0 4px 12px rgba(3, 105, 161, 0.35);
    --shadow-glow-success: 0 4px 12px rgba(52, 199, 89, 0.4);
 
    /* Sombras de Dropdown/Popover */
@@ -183,8 +183,8 @@
    --color-secondary-lighter: var(--secondary-color-lighter);
    --color-secondary-dark: var(--secondary-color-dark);
    --color-secondary-darker: var(--secondary-color-darker);
-   --shadow-primary: rgba(121, 53, 118, 0.25);
-   --shadow-secondary: rgba(35, 167, 212, 0.2);
+   --shadow-primary: rgba(3, 105, 161, 0.25);
+   --shadow-secondary: rgba(245, 158, 11, 0.2);
    --accent-primary: var(--brand-primary-400);
    --accent-secondary: var(--brand-secondary-400);
 }
@@ -262,12 +262,12 @@ html.dark:not([data-theme="brand-dark"]),
 
    /* === FOCUS (Compartido) === */
    --focus-ring-color: var(--brand-primary-400);
-   --focus-ring: 0 0 0 3px rgba(141, 83, 139, 0.3);
+   --focus-ring: 0 0 0 3px rgba(56, 189, 248, 0.3);
 
    /* === SOMBRAS DE FOCUS/GLOW (Compartido) === */
-   --shadow-focus-primary: 0 0 0 3px rgba(188, 154, 187, 0.3);
-   --shadow-focus-secondary: 0 0 0 3px rgba(35, 167, 212, 0.3);
-   --shadow-glow-primary: 0 0 15px rgba(188, 154, 187, 0.4);
+   --shadow-focus-primary: 0 0 0 3px rgba(56, 189, 248, 0.3);
+   --shadow-focus-secondary: 0 0 0 3px rgba(251, 191, 36, 0.3);
+   --shadow-glow-primary: 0 0 15px rgba(56, 189, 248, 0.4);
    --shadow-glow-success: 0 0 15px rgba(48, 209, 88, 0.4);
    --shadow-dropdown: 0 10px 25px -5px rgba(0, 0, 0, 0.4),
       0 8px 10px -6px rgba(0, 0, 0, 0.3);
@@ -301,8 +301,8 @@ html.dark:not([data-theme="brand-dark"]),
    --color-secondary-lighter: var(--brand-secondary-200);
    --color-secondary-dark: var(--brand-secondary-600);
    --color-secondary-darker: var(--brand-secondary-950);
-   --shadow-primary: rgba(161, 114, 159, 0.3);
-   --shadow-secondary: rgba(75, 191, 229, 0.25);
+   --shadow-primary: rgba(56, 189, 248, 0.3);
+   --shadow-secondary: rgba(251, 191, 36, 0.25);
    --accent-primary: var(--brand-primary-200);
    --accent-secondary: var(--brand-secondary-300);
 }

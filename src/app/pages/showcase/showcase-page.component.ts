@@ -23,7 +23,12 @@ import {
   FiltersComponent,
   DataTable,
   DataTableColumn,
-  PopupService
+  PopupService,
+  ButtonComponent,
+  AboutDialogComponent,
+  type AboutCreditItem,
+  type AboutTechBadge,
+  type AboutLinkItem,
 } from '@shared/ui';
 
 interface TableRow {
@@ -58,6 +63,8 @@ interface TableRow {
     ChipComponent,
     FiltersComponent,
     DataTable,
+    ButtonComponent,
+    AboutDialogComponent,
     TranslatePipe,
   ],
   templateUrl: './showcase-page.component.html',
@@ -291,6 +298,78 @@ export class ShowcasePageComponent {
     });
     this.tableData.set(this.allTableData);
   }
+
+  // ============================================
+  // IDENTIDAD DOCTRINAL & ACERCA DE (SSIT CONSULTING E.I.R.L.)
+  // ============================================
+  readonly isAboutModalOpen = signal(false);
+  readonly isAboutPopupOpen = signal(false);
+
+  readonly aboutCredits: AboutCreditItem[] = [
+    {
+      label: 'Autoría Principal',
+      value: 'Ing. Havel CONTRERAS TAPAHUASCO (@archware) · SSIT CONSULTING E.I.R.L.',
+      subtext:
+        'Arquitecto de Software Full-Stack, firma consultora SSIT CONSULTING E.I.R.L. y creador de herramientas propias de ingeniería, sistemas de diseño y doctrinas de arquitectura empresarial',
+      icon: 'fa-solid fa-user-shield',
+      imageUrl: 'assets/doctrinas/ssit-emblem.jpg',
+      bannerImageUrl: 'assets/doctrinas/merch-desk-setup.jpg',
+      badge: 'Marca Personal',
+    },
+    {
+      label: 'Doctrina Mangosta',
+      value: 'Suite Mangosta — Arquitectura Hexagonal & CQRS Estricto',
+      subtext:
+        'Vertical Slicing, dominio rico en español, persistencia limpia sin micro-ORMs, fronteras IPC/HTTP tipadas y seguridad por diseño',
+      icon: 'fa-solid fa-diagram-project',
+      imageUrl: 'assets/doctrinas/doctrina-mangosta-icon.jpg',
+      bannerImageUrl: 'assets/doctrinas/doctrina-mangosta-banner.jpg',
+      badge: 'Backend Canon',
+    },
+    {
+      label: 'Doctrina Barracuda',
+      value: 'Suite Barracuda — Chasis Frontend Reactivo con Signals',
+      subtext:
+        'Andamiaje modular en Angular 22 + Signals, control flow nativo, plantillas gobernadas, accesibilidad estricta y cero deuda visual',
+      icon: 'fa-solid fa-bolt',
+      imageUrl: 'assets/doctrinas/doctrina-barracuda-icon.jpg',
+      bannerImageUrl: 'assets/doctrinas/doctrina-barracuda-banner.jpg',
+      badge: 'Frontend Canon',
+    },
+    {
+      label: 'Sistema de Diseño',
+      value: 'Atomic UI (@atomic-ui/core v5.22.0) — Signals & OnPush',
+      subtext:
+        'Librería de autor con tokens semánticos puros, desplazamiento gobernado y fidelidad visual anti-alucinación',
+      icon: 'fa-solid fa-cubes',
+      imageUrl: 'assets/doctrinas/barracuda-mangosta-duality-icon.jpg',
+      bannerImageUrl: 'assets/doctrinas/merch-kit-ejecutivo.jpg',
+      badge: 'ADN Visual',
+    },
+  ];
+
+  readonly aboutTechStack: AboutTechBadge[] = [
+    { label: 'Angular 22 + Signals', icon: 'fa-brands fa-angular', variant: 'primary' },
+    { label: 'Atomic UI v5.22.0', icon: 'fa-solid fa-layer-group', variant: 'info' },
+    { label: 'Doctrina Barracuda', icon: 'fa-solid fa-bolt', variant: 'primary' },
+    { label: 'Doctrina Mangosta', icon: 'fa-solid fa-diagram-project', variant: 'secondary' },
+    { label: 'SSIT CONSULTING E.I.R.L.', icon: 'fa-solid fa-building-shield', variant: 'success' },
+  ];
+
+  readonly aboutLinks: AboutLinkItem[] = [
+    {
+      label: 'Portafolio & GitHub @archware',
+      url: 'https://github.com/archware',
+      icon: 'fa-brands fa-github',
+      external: true,
+    },
+    {
+      label: 'Repositorio Atomic UI',
+      url: 'https://github.com/archware/-Atomic-UI',
+      icon: 'fa-solid fa-code-branch',
+      external: true,
+    },
+  ];
 }
 
 

@@ -34,6 +34,8 @@ export interface AboutCreditItem {
   value: string;
   subtext?: string;
   icon?: string;
+  imageUrl?: string;
+  bannerImageUrl?: string;
   badge?: string;
 }
 

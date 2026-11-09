@@ -405,43 +405,75 @@ export class DialogsPageComponent {
   readonly aboutCredits: AboutCreditItem[] = [
     {
       label: 'Autoría Principal',
-      value: 'Ing. Havel CONTRERAS TAPAHUASCO (@archware)',
-      subtext: 'Arquitectura Hexagonal y Gobierno del Sistema de Diseño',
+      value: 'Ing. Havel CONTRERAS TAPAHUASCO (@archware) · SSIT CONSULTING E.I.R.L.',
+      subtext:
+        'Arquitecto de Software Full-Stack, firma consultora SSIT CONSULTING E.I.R.L. y creador de herramientas propias de ingeniería, sistemas de diseño y doctrinas de arquitectura empresarial',
       icon: 'fa-solid fa-user-shield',
-      badge: 'Autor',
+      imageUrl: 'assets/doctrinas/ssit-emblem.jpg',
+      bannerImageUrl: 'assets/doctrinas/merch-desk-setup.jpg',
+      badge: 'Marca Personal',
+    },
+    {
+      label: 'Doctrina Mangosta',
+      value: 'Suite Mangosta — Arquitectura Hexagonal & CQRS Estricto',
+      subtext:
+        'Vertical Slicing, dominio rico en español, persistencia limpia sin micro-ORMs, fronteras IPC/HTTP tipadas y seguridad por diseño',
+      icon: 'fa-solid fa-diagram-project',
+      imageUrl: 'assets/doctrinas/doctrina-mangosta-icon.jpg',
+      bannerImageUrl: 'assets/doctrinas/doctrina-mangosta-banner.jpg',
+      badge: 'Backend Canon',
+    },
+    {
+      label: 'Doctrina Barracuda',
+      value: 'Suite Barracuda — Chasis Frontend Reactivo con Signals',
+      subtext:
+        'Andamiaje modular en Angular 22 + Signals, control flow nativo, plantillas gobernadas, accesibilidad estricta y cero deuda visual',
+      icon: 'fa-solid fa-bolt',
+      imageUrl: 'assets/doctrinas/doctrina-barracuda-icon.jpg',
+      bannerImageUrl: 'assets/doctrinas/doctrina-barracuda-banner.jpg',
+      badge: 'Frontend Canon',
+    },
+    {
+      label: 'Sistema de Diseño',
+      value: 'Atomic UI (@atomic-ui/core v5.22.0) — Signals & OnPush',
+      subtext:
+        'Librería de autor con tokens semánticos puros, desplazamiento gobernado y fidelidad visual anti-alucinación',
+      icon: 'fa-solid fa-cubes',
+      imageUrl: 'assets/doctrinas/barracuda-mangosta-duality-icon.jpg',
+      bannerImageUrl: 'assets/doctrinas/merch-kit-ejecutivo.jpg',
+      badge: 'ADN Visual',
     },
     {
       label: 'Co-Ingeniería IA',
       value: 'Asistencia de IA Agéntica & Orquestación Doctrinal',
-      subtext: 'Compuertas deterministas y verificación automatizada',
+      subtext:
+        'Aceleración de entrega con agentes especializados gobernados por reglas de arquitectura, auditoría adversarial y compuertas deterministas',
       icon: 'fa-solid fa-wand-magic-sparkles',
-      badge: 'IA',
+      badge: 'IA Agéntica',
     },
     {
       label: 'Arquitectura y Seguridad',
       value: 'Procesamiento 100% local en memoria sin subida a servidores',
-      subtext: 'Frontera tipada y privacidad institucional',
+      subtext:
+        'Frontera nativa Tauri + Rust (RespuestaSistemaV1), privacidad institucional absoluta y ejecución de alto rendimiento',
       icon: 'fa-solid fa-shield-halved',
-    },
-    {
-      label: 'Sistema de Diseño',
-      value: 'Atomic UI (@atomic-ui/core) — Signals & OnPush',
-      subtext: 'Tokens semánticos puros sin estilos paralelos',
-      icon: 'fa-solid fa-cubes',
+      badge: 'Privacidad',
     },
   ];
 
   readonly aboutTechStack: AboutTechBadge[] = [
     { label: 'Tauri 1.5 + Rust', icon: 'fa-solid fa-gears', variant: 'primary' },
     { label: 'Angular 22 + Signals', icon: 'fa-brands fa-angular', variant: 'secondary' },
-    { label: 'Atomic UI', icon: 'fa-solid fa-layer-group', variant: 'info' },
+    { label: 'Atomic UI v5.22.0', icon: 'fa-solid fa-layer-group', variant: 'info' },
+    { label: 'Doctrina Mangosta', icon: 'fa-solid fa-diagram-project', variant: 'primary' },
+    { label: 'Doctrina Barracuda', icon: 'fa-solid fa-bolt', variant: 'secondary' },
     { label: 'PDF.js + pdf-lib', icon: 'fa-solid fa-file-pdf', variant: 'warning' },
     { label: '100% Local', icon: 'fa-solid fa-lock', variant: 'success' },
   ];
 
   readonly aboutLinks: AboutLinkItem[] = [
     {
-      label: 'GitHub @archware',
+      label: 'Portafolio & GitHub @archware',
       url: 'https://github.com/archware',
       icon: 'fa-brands fa-github',
       external: true,

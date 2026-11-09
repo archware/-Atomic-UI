@@ -1,6 +1,6 @@
 <app-layout-shell [sidebarVisible]="sidebarVisible()" (closeSidebar)="sidebarVisible.set(false)">
   <!-- Sidebar Slot -->
-  <app-sidebar ngProjectAs="[slot=sidebar]" slot="sidebar" [menuItems]="menuItems" logoText="Atomic UI" logoIcon="fa-solid fa-sack-dollar" logoIconColor="var(--purple-500)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Usuario Demo', role: 'Administrador', initials: 'UD' }" (navigate)="onSidebarNavigate($event)"></app-sidebar>
+  <app-sidebar ngProjectAs="[slot=sidebar]" slot="sidebar" [menuItems]="menuItems" logoText="Atomic UI" logoSubtitle="SSIT CONSULTING" logoImageUrl="assets/doctrinas/ssit-emblem.jpg" [logoBadgeImages]="['assets/doctrinas/doctrina-barracuda-icon.jpg', 'assets/doctrinas/doctrina-mangosta-icon.jpg']" logoIcon="fa-solid fa-layer-group" logoIconColor="var(--primary-color)" logoTextColor="var(--text-color)" headerBgColor="var(--surface-sunken)" footerBgColor="var(--surface-sunken)" [user]="{ name: 'Ing. Havel Contreras', role: 'SSIT CONSULTING E.I.R.L.', initials: 'HC', photo: 'assets/doctrinas/ssit-emblem.jpg' }" (navigate)="onSidebarNavigate($event)"></app-sidebar>
 
   <!-- Topbar Slot -->
   <app-topbar ngProjectAs="[slot=topbar]" slot="topbar" [title]="title() | translate" [userInitials]="'UD'" [userName]="'Usuario con nombre muy largo para probar ellipsis'"
@@ -56,6 +56,106 @@
     </div>
     }
   </div>
+
+  <!-- Identidad Doctrinal & Acerca de (SSIT CONSULTING E.I.R.L.) -->
+  <app-panel
+    title="Identidad Doctrinal · SSIT CONSULTING E.I.R.L. (Barracuda & Mangosta)"
+    variant="elevated"
+    padding="lg"
+    class="info-row"
+  >
+    <app-row gap="0.75rem" wrap="wrap" class="mb-md">
+      <app-button
+        variant="primary"
+        size="sm"
+        iconClass="fa-solid fa-circle-info"
+        (buttonClick)="isAboutModalOpen.set(true)"
+      >
+        Abrir Acerca de (Modal)
+      </app-button>
+      <app-button
+        variant="secondary"
+        size="sm"
+        iconClass="fa-solid fa-up-right-from-square"
+        (buttonClick)="isAboutPopupOpen.set(true)"
+      >
+        Abrir Acerca de (Popup)
+      </app-button>
+    </app-row>
+
+    <app-about-dialog
+      variant="card"
+      size="lg"
+      dialogTitle="Acerca de Atomic UI · Ecosistema @archware"
+      appName="Atomic UI — Suite Barracuda & Mangosta"
+      appSubtitle="Sistema de Diseño Empresarial en Angular 22 + Signals · SSIT CONSULTING E.I.R.L."
+      appDescription="Librería de componentes atómicos de alto rendimiento, tokens semánticos Zafiro Cobalto & Oro Imperial y plantillas gobernadas bajo las doctrinas Barracuda (Frontend) y Mangosta (Backend CQRS)."
+      version="v5.22.0"
+      environment="CANON OFICIAL"
+      runtimeInfo="Angular 22 + Signals"
+      logoIcon="fa-solid fa-layer-group"
+      logoImageUrl="assets/doctrinas/ssit-emblem.jpg"
+      authorName="Ing. Havel CONTRERAS TAPAHUASCO"
+      authorRole="Arquitecto de Software Principal · SSIT CONSULTING E.I.R.L. & Creador del Ecosistema @archware (Atomic UI · Doctrina Barracuda · Doctrina Mangosta)"
+      githubHandle="@archware"
+      githubUrl="https://github.com/archware"
+      aiDisclosure="Desarrollado en co-ingeniería con IA Agéntica por SSIT CONSULTING E.I.R.L. bajo el ecosistema de autor @archware: una suite propia de ingeniería de software que integra Doctrina Mangosta (Arquitectura Hexagonal y CQRS estricto), Doctrina Barracuda (Chasis Frontend reactivo con Signals) y el sistema de diseño Atomic UI (@atomic-ui/core), logrando productos de calidad empresarial verificados por compuertas deterministas."
+      [credits]="aboutCredits"
+      [techStack]="aboutTechStack"
+      [links]="aboutLinks"
+      copyrightText="© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware) · SSIT CONSULTING E.I.R.L. Todos los derechos reservados."
+    />
+
+    <app-about-dialog
+      variant="modal"
+      size="md"
+      [open]="isAboutModalOpen()"
+      dialogTitle="Acerca de Atomic UI · SSIT CONSULTING E.I.R.L."
+      appName="Atomic UI — Suite Barracuda & Mangosta"
+      appSubtitle="Sistema de Diseño Empresarial en Angular 22 + Signals · SSIT CONSULTING E.I.R.L."
+      appDescription="Librería de componentes atómicos de alto rendimiento, tokens semánticos Zafiro Cobalto & Oro Imperial y plantillas gobernadas bajo las doctrinas Barracuda (Frontend) y Mangosta (Backend CQRS)."
+      version="v5.22.0"
+      environment="CANON OFICIAL"
+      runtimeInfo="Angular 22 + Signals"
+      logoIcon="fa-solid fa-layer-group"
+      logoImageUrl="assets/doctrinas/ssit-emblem.jpg"
+      authorName="Ing. Havel CONTRERAS TAPAHUASCO"
+      authorRole="Arquitecto de Software Principal · SSIT CONSULTING E.I.R.L. & Creador del Ecosistema @archware (Atomic UI · Doctrina Barracuda · Doctrina Mangosta)"
+      githubHandle="@archware"
+      githubUrl="https://github.com/archware"
+      aiDisclosure="Desarrollado en co-ingeniería con IA Agéntica por SSIT CONSULTING E.I.R.L. bajo el ecosistema de autor @archware: una suite propia de ingeniería de software que integra Doctrina Mangosta (Arquitectura Hexagonal y CQRS estricto), Doctrina Barracuda (Chasis Frontend reactivo con Signals) y el sistema de diseño Atomic UI (@atomic-ui/core), logrando productos de calidad empresarial verificados por compuertas deterministas."
+      [credits]="aboutCredits"
+      [techStack]="aboutTechStack"
+      [links]="aboutLinks"
+      copyrightText="© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware) · SSIT CONSULTING E.I.R.L. Todos los derechos reservados."
+      (closed)="isAboutModalOpen.set(false)"
+    />
+
+    <app-about-dialog
+      variant="popup"
+      size="md"
+      [open]="isAboutPopupOpen()"
+      dialogTitle="Acerca de Atomic UI (Popup)"
+      appName="Atomic UI — Suite Barracuda & Mangosta"
+      appSubtitle="Sistema de Diseño Empresarial en Angular 22 + Signals · SSIT CONSULTING E.I.R.L."
+      appDescription="Librería de componentes atómicos de alto rendimiento, tokens semánticos Zafiro Cobalto & Oro Imperial y plantillas gobernadas bajo las doctrinas Barracuda (Frontend) y Mangosta (Backend CQRS)."
+      version="v5.22.0"
+      environment="CANON OFICIAL"
+      runtimeInfo="Angular 22 + Signals"
+      logoIcon="fa-solid fa-layer-group"
+      logoImageUrl="assets/doctrinas/ssit-emblem.jpg"
+      authorName="Ing. Havel CONTRERAS TAPAHUASCO"
+      authorRole="Arquitecto de Software Principal · SSIT CONSULTING E.I.R.L. & Creador del Ecosistema @archware (Atomic UI · Doctrina Barracuda · Doctrina Mangosta)"
+      githubHandle="@archware"
+      githubUrl="https://github.com/archware"
+      aiDisclosure="Desarrollado en co-ingeniería con IA Agéntica por SSIT CONSULTING E.I.R.L. bajo el ecosistema de autor @archware: una suite propia de ingeniería de software que integra Doctrina Mangosta (Arquitectura Hexagonal y CQRS estricto), Doctrina Barracuda (Chasis Frontend reactivo con Signals) y el sistema de diseño Atomic UI (@atomic-ui/core), logrando productos de calidad empresarial verificados por compuertas deterministas."
+      [credits]="aboutCredits"
+      [techStack]="aboutTechStack"
+      [links]="aboutLinks"
+      copyrightText="© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware) · SSIT CONSULTING E.I.R.L. Todos los derechos reservados."
+      (closed)="isAboutPopupOpen.set(false)"
+    />
+  </app-panel>
 
   <!-- Information Panels -->
   <app-row columns="repeat(auto-fit, minmax(300px, 1fr))" gap="1rem" class="info-row">

@@ -148,4 +148,34 @@ describe('SidebarComponent', () => {
 
     expect(document.activeElement).toBe(links[1]);
   });
+
+  it('renders logoImageUrl, logoSubtitle, and logoBadgeImages in the sidebar header and hides text/badges when collapsed', () => {
+    fixture.componentRef.setInput('logoText', 'Atomic UI');
+    fixture.componentRef.setInput('logoSubtitle', 'SSIT CONSULTING');
+    fixture.componentRef.setInput('logoImageUrl', 'assets/doctrinas/ssit-emblem.jpg');
+    fixture.componentRef.setInput('logoBadgeImages', [
+      'assets/doctrinas/doctrina-barracuda-icon.jpg',
+      'assets/doctrinas/doctrina-mangosta-icon.jpg',
+    ]);
+    fixture.componentRef.setInput('collapsed', false);
+    fixture.detectChanges();
+
+    const logoImg = fixture.nativeElement.querySelector('.sidebar-logo .logo-img') as HTMLImageElement | null;
+    const logoIcon = fixture.nativeElement.querySelector('.sidebar-logo .logo-icon');
+    const subtitle = fixture.nativeElement.querySelector('.sidebar-logo .logo-subtitle') as HTMLElement | null;
+    const badges = fixture.nativeElement.querySelectorAll('.sidebar-logo .logo-badge-img') as NodeListOf<HTMLImageElement>;
+
+    expect(logoImg).not.toBeNull();
+    expect(logoImg?.getAttribute('src')).toBe('assets/doctrinas/ssit-emblem.jpg');
+    expect(logoIcon).toBeNull();
+    expect(subtitle?.textContent?.trim()).toBe('SSIT CONSULTING');
+    expect(badges.length).toBe(2);
+
+    fixture.componentRef.setInput('collapsed', true);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.sidebar-logo .logo-img')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('.sidebar-logo .logo-subtitle')).toBeNull();
+    expect(fixture.nativeElement.querySelectorAll('.sidebar-logo .logo-badge-img').length).toBe(0);
+  });
 });

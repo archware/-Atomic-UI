@@ -1,8 +1,24 @@
 <div class="sidebar-container" [class.collapsed]="collapsed()">
   <div class="sidebar-logo" [appVariablesCss]="{'--logo-icon-color': logoIconColor() || null, '--logo-text-color': logoTextColor() || null, '--sidebar-header-bg': headerBgColor() || null}">
-    <i [class]="logoIcon() + ' logo-icon'"></i>
+    @if (logoImageUrl()) {
+      <img class="logo-img" [src]="logoImageUrl()" [alt]="logoText()" />
+    } @else {
+      <i [class]="logoIcon() + ' logo-icon'"></i>
+    }
     @if (!collapsed()) {
-      <span class="logo-text">{{ logoText() }}</span>
+      <div class="logo-brand">
+        <span class="logo-text">{{ logoText() }}</span>
+        @if (logoSubtitle()) {
+          <span class="logo-subtitle">{{ logoSubtitle() }}</span>
+        }
+      </div>
+      @if (logoBadgeImages().length > 0) {
+        <div class="logo-badges" aria-hidden="true">
+          @for (badgeUrl of logoBadgeImages(); track badgeUrl) {
+            <img class="logo-badge-img" [src]="badgeUrl" alt="" />
+          }
+        </div>
+      }
     }
   </div>
 

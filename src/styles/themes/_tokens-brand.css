@@ -11,71 +11,71 @@
 
    💡 TIP: Usa https://uicolors.app para generar escalas de color automáticamente
 
-   📅 Última actualización: Diciembre 2025
-   🏢 Marca actual: Lujo / Corporativo (Púrpura + Dorado)
+   📅 Última actualización: Noviembre 2026
+   🏢 Marca actual: SSIT CONSULTING E.I.R.L. · Barracuda & Mangosta (Opción B: Zafiro Cobalto + Oro Imperial)
    ============================================================================= */
 
 :root {
    /* ─────────────────────────────────────────────────────────────────────────
-     🟣 COLOR PRIMARIO DE MARCA (Púrpura Profundo)
-     Base: #5F295C
-     Estilo: Elegante, Serio, Premium
+     🔵 COLOR PRIMARIO DE MARCA (Azul Zafiro Cobalto — Doctrina Barracuda)
+     Base: #0369A1
+     Estilo: Ejecutivo, Tecnológico, Consultoría Corporativa
      ───────────────────────────────────────────────────────────────────────── */
-   --brand-primary-50: #fbf5fb;
-   --brand-primary-100: #f5e6f6;
-   --brand-primary-200: #ecccec;
-   --brand-primary-300: #dfa6df;
-   --brand-primary-400: #bb6bbb;
-   --brand-primary-500: #5F295C;
+   --brand-primary-50: #f0f9ff;
+   --brand-primary-100: #e0f2fe;
+   --brand-primary-200: #bae6fd;
+   --brand-primary-300: #7dd3fc;
+   --brand-primary-400: #38bdf8;
+   --brand-primary-500: #0369A1;
    /* ← COLOR PRINCIPAL */
-   --brand-primary-500-rgb: 95, 41, 92;
+   --brand-primary-500-rgb: 3, 105, 161;
    /* RGB para uso en rgba() */
-   --brand-primary-600: #4a2048;
-   --brand-primary-700: #381836;
-   --brand-primary-800: #261024;
-   --brand-primary-900: #1a0818;
+   --brand-primary-600: #075985;
+   --brand-primary-700: #0c4a6e;
+   --brand-primary-800: #083344;
+   --brand-primary-900: #0b121e;
 
    /* Colores especiales de acento (derivados del primario) */
-   --brand-primary-A100: #e0aaff;
-   --brand-primary-A200: #c77dff;
-   --brand-primary-A400: #9d4edd;
-   --brand-primary-A700: #7b2cbf;
+   --brand-primary-A100: #a5f3fc;
+   --brand-primary-A200: #67e8f9;
+   --brand-primary-A400: #0284c7;
+   --brand-primary-A700: #0277bd;
 
    /* ─────────────────────────────────────────────────────────────────────────
-     🟡 COLOR SECUNDARIO DE MARCA (Dorado / Ámbar)
-     Base: #FFB800
-     Estilo: Contraste, Lujo, Llamativo
+     🟡 COLOR SECUNDARIO DE MARCA (Oro Bronce Imperial — Doctrina Mangosta)
+     Base: #F59E0B / #D97706
+     Estilo: Contraste Ejecutivo, Energía, Precisión
      ───────────────────────────────────────────────────────────────────────── */
-   --brand-secondary-50: #fffbed;
-   --brand-secondary-100: #fff5d6;
-   --brand-secondary-200: #ffe6ad;
-   --brand-secondary-300: #ffd275;
-   --brand-secondary-400: #ffc400;
+   --brand-secondary-50: #fffbeb;
+   --brand-secondary-100: #fef3c7;
+   --brand-secondary-200: #fde68a;
+   --brand-secondary-300: #fcd34d;
+   --brand-secondary-400: #fbbf24;
    /* Ajustado para mejor visibilidad */
-   --brand-secondary-500: #FFB800;
+   --brand-secondary-500: #F59E0B;
    /* ← COLOR SECUNDARIO PRINCIPAL */
-   --brand-secondary-500-rgb: 255, 184, 0;
+   --brand-secondary-500-rgb: 245, 158, 11;
    /* RGB para uso en rgba() */
-   --brand-secondary-600: #e09600;
-   --brand-secondary-700: #b37000;
-   --brand-secondary-800: #8a5200;
-   --brand-secondary-900: #663a00;
-   --brand-secondary-950: #422300;
+   --brand-secondary-600: #d97706;
+   --brand-secondary-700: #b45309;
+   --brand-secondary-800: #92400e;
+   --brand-secondary-900: #78350f;
+   --brand-secondary-950: #291002;
 
    /* ─────────────────────────────────────────────────────────────────────────
-     ✨ COLOR DE ACENTO (Opcional - Rosa suave complementario)
-     Para elementos especiales, CTAs subtiles
+     🩵 COLOR DE ACENTO (Teal Ártico Complementario)
+     Para elementos especiales, telemetría e indicadores analíticos
      ───────────────────────────────────────────────────────────────────────── */
-   --brand-accent-50: #fff0f7;
-   --brand-accent-100: #ffe3f1;
-   --brand-accent-200: #ffc6e3;
-   --brand-accent-300: #ff99ca;
-   --brand-accent-400: #ff5ca5;
-   --brand-accent-500: #f5368a;
-   --brand-accent-600: #d91c6e;
-   --brand-accent-700: #b50f55;
-   --brand-accent-800: #961148;
-   --brand-accent-900: #7d133f;
+   --brand-accent-50: #f0fdfa;
+   --brand-accent-100: #ccfbf1;
+   --brand-accent-200: #99f6e4;
+   --brand-accent-300: #5eead4;
+   --brand-accent-400: #2dd4bf;
+   --brand-accent-500: #0d9488;
+   --brand-accent-600: #0f766e;
+   --brand-accent-700: #115e59;
+   --brand-accent-800: #134e4a;
+   --brand-accent-900: #042f2e;
 
    /* ─────────────────────────────────────────────────────────────────────────
      🏢 METADATOS DE MARCA (para documentación)

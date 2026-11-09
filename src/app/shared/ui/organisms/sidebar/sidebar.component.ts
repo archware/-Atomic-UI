@@ -56,8 +56,17 @@ export class SidebarComponent {
   /** Logo text */
   readonly logoText = input('Atomic UI');
 
+  /** Optional logo subtitle displayed under logoText when expanded */
+  readonly logoSubtitle = input<string>();
+
   /** Logo icon */
   readonly logoIcon = input('fa-solid fa-atom');
+
+  /** Optional logo image URL (rendered instead of logoIcon when provided) */
+  readonly logoImageUrl = input<string>();
+
+  /** Optional badge/doctrine image URLs displayed in the sidebar header when expanded */
+  readonly logoBadgeImages = input<string[]>([]);
 
   /** Logo icon color */
   readonly logoIconColor = input<string>();
