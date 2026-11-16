@@ -403,6 +403,7 @@ class AtomicColoresClaro {
   static const Color stepperActiveHoverIndicatorText = Color(0xFFFFFFFF);
   static const Color stepperCompletedHoverBg = Color(0xFFDCFCE7);
   static const Color stepperCompletedHoverBorder = Color(0xFF22C55E);
+  static const Color stepperCompletedHoverDescription = Color(0xFF166534);
   static const Color stepperCompletedHoverIndicatorBg = Color(0xFF22C55E);
   static const Color stepperCompletedHoverIndicatorBorder = Color(0xFF15803D);
   static const Color stepperCompletedHoverIndicatorText = Color(0xFF111827);
@@ -897,6 +898,7 @@ class AtomicColoresOscuro {
   static const Color stepperActiveHoverIndicatorText = Color(0xFF111827);
   static const Color stepperCompletedHoverBg = Color(0xFF14532D);
   static const Color stepperCompletedHoverBorder = Color(0xFF4ADE80);
+  static const Color stepperCompletedHoverDescription = Color(0xFFBBF7D0);
   static const Color stepperCompletedHoverIndicatorBg = Color(0xFF4ADE80);
   static const Color stepperCompletedHoverIndicatorBorder = Color(0xFFBBF7D0);
   static const Color stepperCompletedHoverIndicatorText = Color(0xFF111827);
@@ -1391,6 +1393,7 @@ class AtomicColoresMarcaOscuro {
   static const Color stepperActiveHoverIndicatorText = Color(0xFF111827);
   static const Color stepperCompletedHoverBg = Color(0xFF14532D);
   static const Color stepperCompletedHoverBorder = Color(0xFF4ADE80);
+  static const Color stepperCompletedHoverDescription = Color(0xFFBBF7D0);
   static const Color stepperCompletedHoverIndicatorBg = Color(0xFF4ADE80);
   static const Color stepperCompletedHoverIndicatorBorder = Color(0xFFBBF7D0);
   static const Color stepperCompletedHoverIndicatorText = Color(0xFF111827);

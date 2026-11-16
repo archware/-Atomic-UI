@@ -21,7 +21,7 @@
     }
   ],
   "recuento": {
-    "colores": 488,
+    "colores": 489,
     "espacios": 11,
     "radios": 5,
     "tamanosDeTexto": 9,
@@ -42,13 +42,13 @@
     },
     {
       "archivo": "src/styles/themes/_tokens-components.css",
-      "sha256": "da0b208d343c9bb829d6ad6f1489c14b456194a8c93b7881583194750a91984c"
+      "sha256": "a13dcf04348995a57e37a048de50d8f177e91c762aabad3e46274dd53fb8eb13"
     }
   ],
   "emitido": [
     {
       "archivo": "lib/src/atomic_colores.g.dart",
-      "sha256": "b08272d4d801fbbdfb302774074da3b1857f6c5436d29638fb6866ab5b9064f5"
+      "sha256": "02ec5e17940bd7aa238512ba301ce32580dbf6eb301c675e2b570438124fbc52"
     },
     {
       "archivo": "lib/src/atomic_dimensiones.g.dart",

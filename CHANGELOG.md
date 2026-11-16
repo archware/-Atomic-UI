@@ -13,6 +13,20 @@ owner: 'COTAHA'
 
 # Registro de cambios
 
+## 5.23.1 - 2026-11-15 (`ATOMIC-20261115-001`) — corrección de navegación por `maxReachableStep`, conector vertical en `:hover` y contraste en descripción completada de `app-stepper`
+
+### Corregido
+
+- **Navegación alcanzable, apilamiento de conector vertical/móvil y descripción completada en `:hover` (`stepper.component.ts`, `stepper.component.css`, `_tokens-components.css`, `check-theme-contrast.mjs`, `catalog/components/stepper.json`, `stepper.component.spec.ts`):**
+  - `StepperComponent.goToStep(index)` delega ahora en `!this.isStepDisabled(index)` (y `isStepDisabled(index)` valida límites de arreglo `0 <= index < steps().length`), corrigiendo el bloqueo silencioso al pulsar pasos habilitados por `maxReachableStep` tras retroceder al paso previo (reproducido en `ShowcaseNavigationComponent` al volver de Paso 1 a Paso 2).
+  - En `stepper.component.css` se añade `position: relative; z-index: 2;` sobre `.stepper__indicator` y `.stepper__content`, y en `.stepper--vertical` / `@media (max-width: 38rem)` se libera `.stepper__button` (`z-index: auto`) elevando `.stepper__item:not(:last-child)::after` a `z-index: 1` para evitar que el fondo sólido en `:hover` oculte la línea conectora vertical y deje un trazo recortado bajo el botón; asimismo se centra verticalmente el conector horizontal con `top: calc(var(--space-2) + (var(--touch-target-min) / 2) - (var(--border-width-medium) / 2))`.
+  - Se define `--stepper-completed-hover-description` (`var(--green-800)` en `light` y `var(--green-200)` en `dark` / `brand-dark`) aplicado a `.stepper__item--completed .stepper__button:not(:disabled):hover .stepper__description` y auditado en `scripts/check-theme-contrast.mjs` (`43` pares por tema).
+  - Se amplía `stepper.component.spec.ts` para verificar clics reales de ida y vuelta con `maxReachableStep` y bloqueo de `goToStep` cuando `disabled` o fuera de rango.
+
+### Distribución
+
+- **Promoción de parche a `5.23.1`:** actualización de versión en manifiestos, documentación viva y pruebas, con regeneración de `dart/atomic_tokens` (`489` colores por tema), `documentation.json` y `distribution/atomic-source-manifest.json` (`345` archivos, SHA-256 `1b428c625386a1c4adb22aab30756c5cfd0dee589918cc0bb528dc7464f2dd1a`).
+
 ## 5.23.0 - 2026-11-15 (`ATOMIC-20261115-001`) — efecto mouse-over cromático en `app-stepper` y consolidación de versión
 
 ### Añadido

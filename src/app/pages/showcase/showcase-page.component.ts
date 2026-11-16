@@ -341,7 +341,7 @@ export class ShowcasePageComponent {
     },
     {
       label: 'Sistema de Diseño',
-      value: 'Atomic UI (@atomic-ui/core v5.23.0) — Signals & OnPush',
+      value: 'Atomic UI (@atomic-ui/core v5.23.1) — Signals & OnPush',
       subtext:
         'Librería de autor con tokens semánticos puros, desplazamiento gobernado y fidelidad visual anti-alucinación',
       icon: 'fa-solid fa-cubes',
@@ -353,7 +353,7 @@ export class ShowcasePageComponent {
 
   readonly aboutTechStack: AboutTechBadge[] = [
     { label: 'Angular 22 + Signals', icon: 'fa-brands fa-angular', variant: 'primary' },
-    { label: 'Atomic UI v5.23.0', icon: 'fa-solid fa-layer-group', variant: 'info' },
+    { label: 'Atomic UI v5.23.1', icon: 'fa-solid fa-layer-group', variant: 'info' },
     { label: 'Artifact Barracuda', icon: 'fa-solid fa-bolt', variant: 'primary' },
     { label: 'Artifact Mangosta', icon: 'fa-solid fa-diagram-project', variant: 'secondary' },
     { label: 'SSIT CONSULTING E.I.R.L.', icon: 'fa-solid fa-building-shield', variant: 'success' },

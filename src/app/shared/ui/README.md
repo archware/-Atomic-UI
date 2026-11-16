@@ -5,7 +5,7 @@ author: 'Ing. Havel CONTRERAS TAPAHUASCO'
 document_type: 'manual técnico'
 status: 'vigente'
 date: '2026-08-20'
-version: '5.23.0'
+version: '5.23.1'
 owner: 'COTAHA'
 ---
 
@@ -14,7 +14,7 @@ owner: 'COTAHA'
 Librería de componentes Angular portables siguiendo **Atomic Design**.
 
 **Última actualización**: noviembre de 2026
-**Versión**: 5.23.0
+**Versión**: 5.23.1
 **Angular**: 22
 
 ---
@@ -1196,7 +1196,7 @@ export class MyComponent {
 ---
 
 📅 **Última actualización**: noviembre de 2026
-🏷️ **Versión**: 5.23.0
+🏷️ **Versión**: 5.23.1
 ⚡ **Angular**: 22
 🌐 **i18n**: ngx-translate  
 📚 **Storybook**: Disponible

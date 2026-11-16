@@ -427,6 +427,7 @@
    --stepper-completed-hover-bg: var(--green-100);
    --stepper-completed-hover-border: var(--green-500);
    --stepper-completed-hover-text: var(--green-900);
+   --stepper-completed-hover-description: var(--green-800);
    --stepper-completed-hover-indicator-bg: var(--green-500);
    --stepper-completed-hover-indicator-border: var(--green-700);
    --stepper-completed-hover-indicator-text: var(--gray-900);
@@ -772,6 +773,7 @@ html.dark:not([data-theme="brand-dark"]) {
    --stepper-completed-hover-bg: var(--green-900);
    --stepper-completed-hover-border: var(--green-400);
    --stepper-completed-hover-text: var(--green-100);
+   --stepper-completed-hover-description: var(--green-200);
    --stepper-completed-hover-indicator-bg: var(--green-400);
    --stepper-completed-hover-indicator-border: var(--green-200);
    --stepper-completed-hover-indicator-text: var(--gray-900);
@@ -1093,6 +1095,7 @@ html.dark:not([data-theme="brand-dark"]) {
    --stepper-completed-hover-bg: var(--green-900);
    --stepper-completed-hover-border: var(--green-400);
    --stepper-completed-hover-text: var(--green-100);
+   --stepper-completed-hover-description: var(--green-200);
    --stepper-completed-hover-indicator-bg: var(--green-400);
    --stepper-completed-hover-indicator-border: var(--green-200);
    --stepper-completed-hover-indicator-text: var(--gray-900);

@@ -263,7 +263,7 @@ const METAS: readonly AvanceDeMeta[] = [
       [sidebarVisible]="menuVisible()"
       (closeSidebar)="menuVisible.set(false)"
       footerCompanyName="Atomic UI"
-      footerVersion="v5.23.0"
+      footerVersion="v5.23.1"
       footerEnvironment="DEMO"
       footerCopyrightText="Plantilla de demostración."
     >

@@ -3,7 +3,7 @@ title: "Atomic UI: sistema de componentes y temas"
 subtitle: "Fuente visual canónica para aplicaciones de escritorio"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-20"
-version: "5.23.0"
+version: "5.23.1"
 ---
 
 # Atomic UI: sistema de componentes y temas
@@ -324,7 +324,7 @@ Este proyecto está bajo la Licencia MIT.
 
 ---
 
-**Versión:** 5.23.0
+**Versión:** 5.23.1
 **Última actualización:** 15 de noviembre de 2026
 **Angular:** 22
 **TypeScript:** 6.0+

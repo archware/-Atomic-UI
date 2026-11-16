@@ -37,7 +37,7 @@ describe('AboutDialogComponent', () => {
     },
     {
       label: 'Sistema de Diseño',
-      value: 'Atomic UI (@atomic-ui/core v5.23.0) — Signals & OnPush',
+      value: 'Atomic UI (@atomic-ui/core v5.23.1) — Signals & OnPush',
       subtext:
         'Librería de autor con tokens semánticos puros, desplazamiento gobernado y fidelidad visual de grado empresarial',
       icon: 'fa-solid fa-cubes',
@@ -64,7 +64,7 @@ describe('AboutDialogComponent', () => {
   const sampleTechStack: AboutTechBadge[] = [
     { label: 'Tauri 1.5 + Rust', icon: 'fa-solid fa-gears', variant: 'primary' },
     { label: 'Angular 22 + Signals', icon: 'fa-brands fa-angular', variant: 'secondary' },
-    { label: 'Atomic UI v5.23.0', icon: 'fa-solid fa-layer-group', variant: 'info' },
+    { label: 'Atomic UI v5.23.1', icon: 'fa-solid fa-layer-group', variant: 'info' },
     { label: 'Artifact Mangosta', icon: 'fa-solid fa-diagram-project', variant: 'primary' },
     { label: 'Artifact Barracuda', icon: 'fa-solid fa-bolt', variant: 'secondary' },
     { label: 'PDF.js + pdf-lib', icon: 'fa-solid fa-file-pdf', variant: 'warning' },
@@ -133,7 +133,7 @@ describe('AboutDialogComponent', () => {
     expect(host.textContent).toContain('Artifact Barracuda');
     expect(host.textContent).toContain('Tauri 1.5 + Rust');
     expect(host.textContent).toContain('Angular 22 + Signals');
-    expect(host.textContent).toContain('Atomic UI v5.23.0');
+    expect(host.textContent).toContain('Atomic UI v5.23.1');
     expect(host.textContent).toContain('Repositorio Atomic UI');
 
     const githubLink = host.querySelector<HTMLAnchorElement>('a.about-github-pill');

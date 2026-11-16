@@ -41,7 +41,7 @@ export class StepperComponent {
   });
 
   goToStep(index: number) {
-    if (index <= this.currentStep() || this.allowSkip()) {
+    if (!this.isStepDisabled(index)) {
       this.currentStep.set(index);
       this.stepChange.emit(index);
     }
@@ -77,7 +77,7 @@ export class StepperComponent {
   }
 
   public isStepDisabled(index: number): boolean {
-    if (this.disabled()) {
+    if (this.disabled() || index < 0 || index >= this.steps().length) {
       return true;
     }
     const reachableStep = Math.max(this.currentStep(), this.maxReachableStep() ?? this.currentStep());

@@ -81,14 +81,28 @@ describe('StepperComponent', () => {
     expect(emitted).toEqual([0]);
   });
 
-  it('debe habilitar pasos hasta maxReachableStep o todos cuando allowSkip es verdadero', () => {
-    fixture.componentRef.setInput('activeStep', 0);
+  it('debe habilitar y permitir navegar hasta maxReachableStep o todos cuando allowSkip es verdadero', () => {
+    fixture.componentRef.setInput('activeStep', 1);
     fixture.componentRef.setInput('maxReachableStep', 2);
     fixture.detectChanges();
+
+    const emitted: number[] = [];
+    fixture.componentInstance.stepChange.subscribe((stepIndex) => emitted.push(stepIndex));
 
     let buttons = getButtons();
     expect(buttons[2].disabled).toBeFalse();
     expect(buttons[3].disabled).toBeTrue();
+
+    buttons[0].click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.currentStep()).toBe(0);
+
+    buttons = getButtons();
+    expect(buttons[2].disabled).toBeFalse();
+    buttons[2].click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.currentStep()).toBe(2);
+    expect(emitted).toEqual([0, 2]);
 
     fixture.componentRef.setInput('allowSkip', true);
     fixture.detectChanges();
@@ -96,19 +110,28 @@ describe('StepperComponent', () => {
     buttons = getButtons();
     expect(buttons[3].disabled).toBeFalse();
 
-    const emitted: number[] = [];
-    fixture.componentInstance.stepChange.subscribe((stepIndex) => emitted.push(stepIndex));
     buttons[3].click();
-    expect(emitted).toEqual([3]);
+    expect(emitted).toEqual([0, 2, 3]);
   });
 
-  it('debe deshabilitar todos los botones cuando disabled es verdadero', () => {
+  it('debe deshabilitar todos los botones e ignorar goToStep cuando disabled es verdadero o fuera de rango', () => {
     fixture.componentRef.setInput('activeStep', 1);
     fixture.componentRef.setInput('allowSkip', true);
     fixture.componentRef.setInput('disabled', true);
     fixture.detectChanges();
 
+    const emitted: number[] = [];
+    fixture.componentInstance.stepChange.subscribe((stepIndex) => emitted.push(stepIndex));
+
     expect(getButtons().every((button) => button.disabled)).toBeTrue();
+    fixture.componentInstance.goToStep(0);
+    fixture.componentRef.setInput('disabled', false);
+    fixture.detectChanges();
+    fixture.componentInstance.goToStep(-1);
+    fixture.componentInstance.goToStep(99);
+
+    expect(emitted).toEqual([]);
+    expect(fixture.componentInstance.currentStep()).toBe(1);
   });
 
   it('debe aplicar la clase vertical y estilos compilados de mouse-over basados en tokens', () => {
@@ -126,6 +149,7 @@ describe('StepperComponent', () => {
     expect(styleNodes).toContain('--stepper-hover-bg');
     expect(styleNodes).toContain('--stepper-hover-border');
     expect(styleNodes).toContain('--stepper-completed-hover-bg');
+    expect(styleNodes).toContain('--stepper-completed-hover-description');
     expect(styleNodes).toContain('--stepper-active-hover-indicator-bg');
   });
 });

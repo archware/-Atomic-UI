@@ -2,11 +2,11 @@
 title: "Continuidad para agentes de Atomic UI"
 author: "Ing. Havel CONTRERAS TAPAHUASCO"
 date: "2026-08-23"
-last_updated: "2026-11-14"
+last_updated: "2026-11-15"
 document_type: "manual de continuidad"
 status: "vigente"
-version: "1.6.2"
-change_id: "ATOMIC-20261114-001"
+version: "1.6.3"
+change_id: "ATOMIC-20261115-001"
 canonical_doctrine: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\DOCTRINA_MAESTRA_UNIFICADA.md"
 document_standard: "C:\\Users\\cotaha\\source\\repos\\.agent\\doctrinas\\ESTANDAR_DOCUMENTAL_AGENTES.md"
 ---
@@ -47,7 +47,7 @@ tools/ y scripts/ -> consulta, generación, auditoría, pruebas negativas y mani
 
 ## Estado doctrinal comprobado
 
-El paquete avanza a la versión `5.23.0` y la hoja [`ROADMAP_20260823_atomic_ui_6_0.md`](../.agents/roadmaps/ROADMAP_20260823_atomic_ui_6_0.md) mantiene tres cortes técnicos validados: contratos Signals, estilos externos y saneamiento de Tailwind, unidades relativas y tokens canónicos. Estado de las seis familias hacia 6.0.0:
+El paquete avanza a la versión `5.23.1` y la hoja [`ROADMAP_20260823_atomic_ui_6_0.md`](../.agents/roadmaps/ROADMAP_20260823_atomic_ui_6_0.md) mantiene tres cortes técnicos validados: contratos Signals, estilos externos y saneamiento de Tailwind, unidades relativas y tokens canónicos. Estado de las seis familias hacia 6.0.0:
 1. **Medidas rígidas:** `[x]` sustituidas por tokens o `rem` en `src/app/shared/ui/` y `src/styles/themes/_utilities.css`, gobernadas por `check:units` y `test:units-gate` (107 hojas auditadas, 0 medidas `px` rígidas prohibidas).
 2. **Tailwind:** `[x]` `tailwind.config.js`, `@tailwind`, dependencias y utilidades residuales retirados en historias, vistas y generador, gobernados por `check:no-tailwind` y `test:no-tailwind-gate` (573 archivos auditados, 0 residuos).
 3. **Aliases:** permanecen 16 alias transitorios `prest-*` acotados en `ALIAS_TRANSITORIOS_DEL_ADN` con selector primario `app-*` obligatorio (`check:selectors` y `test:selectors-gate`, 121 declaraciones verificadas) y retirados de `tools/generate-ui.js`.
@@ -93,9 +93,9 @@ git status --short --branch
 
 > Los cortes históricos anteriores a esta ventana se conservan íntegros en [`BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md`](./BITACORA_CONTINUIDAD_CORTES_HISTORICOS.md).
 
-### 1. Unidad ATOMIC-20261115-001 — efecto mouse-over cromático en `app-stepper` y cierre de versión `5.23.0`
+### 1. Unidad ATOMIC-20261115-001 — efecto mouse-over cromático en `app-stepper` y cierre de versión `5.23.1`
 
-En [`ROADMAP_ATOMIC-20261115-001_stepper_hover_y_cierre_5_23.md`](../.agent/roadmaps/ROADMAP_ATOMIC-20261115-001_stepper_hover_y_cierre_5_23.md) se implementa el efecto de realce al pasar el puntero sobre `StepperComponent` (`stepper.component.css`, `_tokens-components.css` en `light`, `dark` y `brand-dark`) mediante la familia de tokens `--stepper-hover-*`, `--stepper-active-hover-indicator-*` y `--stepper-completed-hover-*`, con contorno interior `--border-width-thin`, contraste WCAG `>= 4.5:1` verificado en `scripts/check-theme-contrast.mjs` (`42` pares por tema), recalibración de conectores en vertical/móvil y respeto a `prefers-reduced-motion`; se añade `stepper.component.spec.ts` (`6` pruebas), se actualiza `catalog/components/stepper.json`, se agrega selección interactiva de paso en `ShowcaseNavigationComponent` y se promueve `@atomic-ui/core` / `atomic-ui` a `5.23.0` regenerando `dart/atomic_tokens`, `documentation.json` y `distribution/atomic-source-manifest.json` (`345` fuentes, SHA-256 `6380fdbf5acfe0b5b0163371157893049bed0b8343627024f295a96b141e2430`).
+En [`ROADMAP_ATOMIC-20261115-001_stepper_hover_y_cierre_5_23.md`](../.agent/roadmaps/ROADMAP_ATOMIC-20261115-001_stepper_hover_y_cierre_5_23.md) se implementa el efecto de realce al pasar el puntero sobre `StepperComponent` (`stepper.component.css`, `_tokens-components.css` en `light`, `dark` y `brand-dark`) mediante la familia de tokens `--stepper-hover-*`, `--stepper-active-hover-indicator-*` y `--stepper-completed-hover-*` (incluido `--stepper-completed-hover-description`), con contorno interior `--border-width-thin`, contraste WCAG `>= 4.5:1` verificado en `scripts/check-theme-contrast.mjs` (`43` pares por tema), paridad `goToStep(index)` / `isStepDisabled(index)` para `maxReachableStep`, apilamiento continuo del conector vertical/móvil en `:hover` y respeto a `prefers-reduced-motion`; se añade `stepper.component.spec.ts`, se actualiza `catalog/components/stepper.json`, se agrega selección interactiva de paso en `ShowcaseNavigationComponent` y se promueve `@atomic-ui/core` / `atomic-ui` a `5.23.1` regenerando `dart/atomic_tokens` (`489` colores por tema), `documentation.json` y `distribution/atomic-source-manifest.json` (`345` fuentes, SHA-256 `1b428c625386a1c4adb22aab30756c5cfd0dee589918cc0bb528dc7464f2dd1a`).
 
 ### 2. Unidad ATOMIC-20261114-001 — títulos centrados, completitud de catálogo (`ConfirmDialog`), auditoría anti-solapamiento y sincronización de 8 consumidores
 

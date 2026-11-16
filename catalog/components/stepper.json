@@ -105,6 +105,7 @@
     "--stepper-active-hover-indicator-text",
     "--stepper-completed-hover-bg",
     "--stepper-completed-hover-border",
+    "--stepper-completed-hover-description",
     "--stepper-completed-hover-indicator-bg",
     "--stepper-completed-hover-indicator-border",
     "--stepper-completed-hover-indicator-text",

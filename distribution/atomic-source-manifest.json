@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageName": "@atomic-ui/core",
-  "packageVersion": "5.23.0",
+  "packageVersion": "5.23.1",
   "distributionStatus": "library-buildable",
   "algorithm": "sha256",
   "contentCanonicalization": {
@@ -10,7 +10,7 @@
     "binary": "identity",
     "unsupportedCleanTransform": "reject"
   },
-  "sourceTreeSha256": "6380fdbf5acfe0b5b0163371157893049bed0b8343627024f295a96b141e2430",
+  "sourceTreeSha256": "1b428c625386a1c4adb22aab30756c5cfd0dee589918cc0bb528dc7464f2dd1a",
   "fileCount": 345,
   "files": [
     {
@@ -21,7 +21,7 @@
     {
       "path": "projects/atomic-ui/package.json",
       "bytes": 837,
-      "sha256": "26ae2a5626046d7588312c30261c57bb4bac61e4beffa0d4065b9401766c292a"
+      "sha256": "103362287017c7059ab20afc16a176101f95a6a4df3399e7826790d511d9887b"
     },
     {
       "path": "projects/atomic-ui/tsconfig.lib.json",
@@ -1315,8 +1315,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/stepper/stepper.component.css",
-      "bytes": 7167,
-      "sha256": "c7cdfc09d1b44caffb75a058f424f8e3cc8772fe7f5fe74106eb44a969927daf"
+      "bytes": 7486,
+      "sha256": "25533882562ac3f2572185e2f640ce77d8cf49a8928ddae6c27a2ecfcd633cf7"
     },
     {
       "path": "src/app/shared/ui/organisms/stepper/stepper.component.html",
@@ -1325,8 +1325,8 @@
     },
     {
       "path": "src/app/shared/ui/organisms/stepper/stepper.component.ts",
-      "bytes": 3201,
-      "sha256": "595f9f2fb81be80c87282dfe0e3b59f9c3a529873e04cbba5b2181db90693008"
+      "bytes": 3226,
+      "sha256": "25e9438450674c31752cfe46a024970ed8c239292e420358089afa82ca4b24e5"
     },
     {
       "path": "src/app/shared/ui/organisms/tabs/tab-component.component.html",
@@ -1650,8 +1650,8 @@
     },
     {
       "path": "src/styles/themes/_tokens-components.css",
-      "bytes": 49169,
-      "sha256": "da0b208d343c9bb829d6ad6f1489c14b456194a8c93b7881583194750a91984c"
+      "bytes": 49349,
+      "sha256": "a13dcf04348995a57e37a048de50d8f177e91c762aabad3e46274dd53fb8eb13"
     },
     {
       "path": "src/styles/themes/_tokens-primitives.css",

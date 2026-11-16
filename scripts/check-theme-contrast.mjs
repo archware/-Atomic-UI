@@ -101,6 +101,7 @@ const CONTRAST_PAIRS = [
   { what: 'indicador de paso hover en stepper', fg: '--stepper-hover-text', bg: '--stepper-hover-indicator-bg' },
   { what: 'indicador de paso activo hover en stepper', fg: '--stepper-active-hover-indicator-text', bg: '--stepper-active-hover-indicator-bg' },
   { what: 'texto de paso completado hover en stepper', fg: '--stepper-completed-hover-text', bg: '--stepper-completed-hover-bg' },
+  { what: 'descripcion de paso completado hover en stepper', fg: '--stepper-completed-hover-description', bg: '--stepper-completed-hover-bg' },
   { what: 'indicador de paso completado hover en stepper', fg: '--stepper-completed-hover-indicator-text', bg: '--stepper-completed-hover-indicator-bg' },
 ];
 

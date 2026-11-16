@@ -39,7 +39,7 @@ const creditsDemo: AboutCreditItem[] = [
   },
   {
     label: 'Sistema de Diseño',
-    value: 'Atomic UI (@atomic-ui/core v5.23.0) — Signals & OnPush',
+    value: 'Atomic UI (@atomic-ui/core v5.23.1) — Signals & OnPush',
     subtext:
       'Sistema de diseño corporativo de autor gobernado por pin criptográfico (ADR-017): tokens semánticos puros, desplazamiento controlado (app-scroll-overlay), cero CSS ad-hoc y acabado visual institucional uniforme',
     icon: 'fa-solid fa-cubes',
@@ -68,7 +68,7 @@ const creditsDemo: AboutCreditItem[] = [
 const techStackDemo: AboutTechBadge[] = [
   { label: 'Tauri 1.5 + Rust', icon: 'fa-solid fa-gears', variant: 'primary' },
   { label: 'Angular 22 + Signals', icon: 'fa-brands fa-angular', variant: 'secondary' },
-  { label: 'Atomic UI v5.23.0', icon: 'fa-solid fa-layer-group', variant: 'info' },
+  { label: 'Atomic UI v5.23.1', icon: 'fa-solid fa-layer-group', variant: 'info' },
   { label: 'Artifact Mangosta', icon: 'fa-solid fa-diagram-project', variant: 'primary' },
   { label: 'Artifact Barracuda', icon: 'fa-solid fa-bolt', variant: 'secondary' },
   { label: 'PDF.js + pdf-lib', icon: 'fa-solid fa-file-pdf', variant: 'warning' },
