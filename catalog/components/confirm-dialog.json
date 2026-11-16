@@ -1,0 +1,193 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "confirm-dialog",
+  "layer": "organism",
+  "selector": "app-confirm-dialog",
+  "export": "ConfirmDialogComponent",
+  "source": "src/app/shared/ui/organisms/confirm-dialog/confirm-dialog.component.ts",
+  "relatedExports": [
+    "ConfirmDialogService",
+    "ConfirmDialogTone",
+    "ConfirmDialogInitialFocus",
+    "ConfirmDialogCloseReason",
+    "ConfirmDialogOptions",
+    "ConfirmDialogResult",
+    "ConfirmDialogViewModel"
+  ],
+  "purpose": "Diálogo nativo de confirmación con role=alertdialog, cabecera centrada y soporte declarativo o mediante ConfirmDialogService.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "open",
+      "type": "boolean",
+      "meaning": "Estado de apertura controlado reactivamente.",
+      "default": false
+    },
+    {
+      "name": "useService",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada useService configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "meaning": "Título principal visible del componente.",
+      "default": "Confirmar operación"
+    },
+    {
+      "name": "subtitle",
+      "type": "string | null",
+      "meaning": "Subtítulo o descripción secundaria opcional.",
+      "default": null
+    },
+    {
+      "name": "message",
+      "type": "string",
+      "meaning": "Propiedad de entrada message configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "confirmLabel",
+      "type": "string",
+      "meaning": "Propiedad de entrada confirmLabel configurada en el componente.",
+      "default": "Confirmar"
+    },
+    {
+      "name": "cancelLabel",
+      "type": "string",
+      "meaning": "Propiedad de entrada cancelLabel configurada en el componente.",
+      "default": "Cancelar"
+    },
+    {
+      "name": "tone",
+      "type": "ConfirmDialogTone",
+      "meaning": "Propiedad de entrada tone configurada en el componente.",
+      "default": "danger"
+    },
+    {
+      "name": "initialFocus",
+      "type": "ConfirmDialogInitialFocus",
+      "meaning": "Propiedad de entrada initialFocus configurada en el componente.",
+      "default": "cancel"
+    },
+    {
+      "name": "closeOnEscape",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada closeOnEscape configurada en el componente.",
+      "default": true
+    },
+    {
+      "name": "closeOnBackdrop",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada closeOnBackdrop configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "meaning": "Activa indicador de carga y bloquea envíos duplicados.",
+      "default": false
+    },
+    {
+      "name": "headerAlign",
+      "type": "'start' | 'center'",
+      "meaning": "Alineación horizontal del encabezado de página ('start' | 'center').",
+      "default": "center"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "confirmed",
+      "type": "ConfirmDialogResult",
+      "meaning": "Evento emitido por el componente (confirmed)."
+    },
+    {
+      "name": "cancelled",
+      "type": "ConfirmDialogResult",
+      "meaning": "Evento emitido por el componente (cancelled)."
+    },
+    {
+      "name": "closed",
+      "type": "ConfirmDialogResult",
+      "meaning": "Evento emitido por el componente (closed)."
+    }
+  ],
+  "states": [
+    {
+      "name": "closed",
+      "meaning": "Diálogo cerrado y oculto fuera del flujo visual."
+    },
+    {
+      "name": "open",
+      "meaning": "Ventana modal abierta con cabecera centrada simétrica, icono semántico, mensaje en ScrollOverlay y botones."
+    },
+    {
+      "name": "loading",
+      "meaning": "Deshabilita acciones y cierre accidental exponiendo aria-busy durante la confirmación."
+    }
+  ],
+  "a11y": [
+    "Implementa <dialog role=\"alertdialog\" aria-modal=\"true\"> vinculado a título y mensaje por aria-labelledby y aria-describedby.",
+    "Incluye trampa de foco Tab/Shift+Tab, enfoque inicial configurable (cancel por defecto) y restauración de foco al cerrar."
+  ],
+  "responsive": [
+    "Ajusta anchura a min(--crud-dialog-max-width-sm, calc(100vw - --space-8)) y centra acciones en móvil."
+  ],
+  "tokens": [
+    "--border-color",
+    "--control-height-sm",
+    "--crud-dialog-max-width-sm",
+    "--danger-color-dark",
+    "--danger-color-light",
+    "--font-family-heading",
+    "--font-weight-title",
+    "--form-row-gap",
+    "--modal-bg",
+    "--modal-border",
+    "--modal-footer-bg",
+    "--modal-header-bg",
+    "--modal-shadow",
+    "--overlay-backdrop",
+    "--primary-color",
+    "--primary-color-lighter",
+    "--radius-full",
+    "--radius-lg",
+    "--shadow-xl",
+    "--space-1",
+    "--space-10",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--space-8",
+    "--surface-background",
+    "--surface-section",
+    "--text-color",
+    "--text-color-secondary",
+    "--text-lg",
+    "--text-sm",
+    "--text-xl",
+    "--warning-color-dark",
+    "--warning-color-light"
+  ],
+  "story": {
+    "path": "src/stories/ui-confirm-dialog.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/organisms/confirm-dialog/confirm-dialog.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "confirm-dialog",
+    "alert-dialog",
+    "destructive-confirmation"
+  ]
+}

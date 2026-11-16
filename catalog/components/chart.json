@@ -1,0 +1,72 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "chart",
+  "layer": "organism",
+  "selector": "app-chart",
+  "export": "ChartComponent",
+  "source": "src/app/shared/ui/organisms/chart/chart.component.ts",
+  "purpose": "Contenedor declarativo de gráficos Chart.js controlado reactivamente por Signals y tokens de tema.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "type",
+      "type": "ChartType",
+      "meaning": "Propiedad de entrada type configurada en el componente.",
+      "default": "line"
+    },
+    {
+      "name": "data",
+      "type": "ChartConfiguration['data']",
+      "meaning": "Propiedad de entrada data configurada en el componente.",
+      "required": true
+    },
+    {
+      "name": "options",
+      "type": "ChartConfiguration['options']",
+      "meaning": "Propiedad de entrada options configurada en el componente.",
+      "required": true
+    },
+    {
+      "name": "height",
+      "type": "string",
+      "meaning": "Propiedad de entrada height configurada en el componente.",
+      "default": "18.75rem"
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "ready",
+      "meaning": "Renderiza tipo, datos y opciones en canvas reactivo sin fugas al destruir."
+    }
+  ],
+  "a11y": [
+    "Permite configurar opciones de tooltips y leyendas accesibles mediante ChartConfiguration."
+  ],
+  "responsive": [
+    "Controla altura mediante --chart-container-height y resize automático del lienzo."
+  ],
+  "tokens": [
+    "--chart-container-height"
+  ],
+  "story": {
+    "path": "src/stories/ui-chart.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "chart",
+    "analytics-chart",
+    "data-visualization"
+  ]
+}

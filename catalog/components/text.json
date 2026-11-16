@@ -1,0 +1,100 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "text",
+  "layer": "atom",
+  "selector": "app-text",
+  "export": "TextComponent",
+  "source": "src/app/shared/ui/atoms/text/text.component.ts",
+  "relatedExports": [
+    "TextVariant",
+    "TextWeight",
+    "TextColor",
+    "TextAlign"
+  ],
+  "purpose": "Átomo tipográfico semántico para encabezados y párrafos alineado estrictamente con la escala del sistema.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "variant",
+      "type": "TextVariant",
+      "meaning": "Variante visual o de comportamiento declarada por el componente.",
+      "default": "body"
+    },
+    {
+      "name": "weight",
+      "type": "TextWeight",
+      "meaning": "Propiedad de entrada weight configurada en el componente.",
+      "default": "normal"
+    },
+    {
+      "name": "color",
+      "type": "TextColor",
+      "meaning": "Propiedad de entrada color configurada en el componente.",
+      "default": "default"
+    },
+    {
+      "name": "align",
+      "type": "TextAlign",
+      "meaning": "Propiedad de entrada align configurada en el componente.",
+      "default": "left"
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Renderiza h1-h4 o p según variant con color, peso y alineación declarados."
+    }
+  ],
+  "a11y": [
+    "Emite jerarquía HTML real de encabezados (h1..h4) y párrafos sin usar estilos de peso sueltos."
+  ],
+  "responsive": [
+    "Escala tamaños de lectura y títulos con variables --text-*."
+  ],
+  "tokens": [
+    "--danger-color-text",
+    "--font-family-heading",
+    "--font-weight-body",
+    "--font-weight-emphasis",
+    "--font-weight-title",
+    "--primary-color",
+    "--space-3",
+    "--space-5",
+    "--space-7",
+    "--space-9",
+    "--success-color-text",
+    "--text-2xl",
+    "--text-3xl",
+    "--text-4xl",
+    "--text-color",
+    "--text-color-inverse",
+    "--text-color-secondary",
+    "--text-lg",
+    "--text-md",
+    "--text-sm",
+    "--text-xl",
+    "--text-xs",
+    "--warning-color-text"
+  ],
+  "story": {
+    "path": "src/stories/ui-text.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/text/text.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "text",
+    "typography",
+    "heading"
+  ]
+}

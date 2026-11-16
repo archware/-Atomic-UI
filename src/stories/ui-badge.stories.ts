@@ -14,7 +14,7 @@ const meta: Meta<BadgeComponent> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'neutral'],
+      options: ['default', 'primary', 'secondary', 'success', 'warning', 'danger', 'info', 'outline', 'neutral'],
       description: 'Color del badge',
     },
     size: {
@@ -84,13 +84,14 @@ export const AllVariants: Story = {
   render: () => ({
     template: `
       <div style="display:flex; flex-wrap:wrap; gap:0.75rem; padding:1rem; align-items:center;">
-        <app-badge [count]="1" variant="primary" [standalone]="true"></app-badge>
-        <app-badge [count]="2" variant="secondary" [standalone]="true"></app-badge>
-        <app-badge [count]="3" variant="success" [standalone]="true"></app-badge>
-        <app-badge [count]="4" variant="warning" [standalone]="true"></app-badge>
-        <app-badge [count]="5" variant="danger" [standalone]="true"></app-badge>
-        <app-badge [count]="6" variant="info" [standalone]="true"></app-badge>
-        <app-badge [count]="7" variant="neutral" [standalone]="true"></app-badge>
+        <app-badge variant="default">Default</app-badge>
+        <app-badge variant="primary">Primary</app-badge>
+        <app-badge variant="secondary">Secondary</app-badge>
+        <app-badge variant="success">Success</app-badge>
+        <app-badge variant="warning">Warning</app-badge>
+        <app-badge variant="danger">Danger</app-badge>
+        <app-badge variant="info">Info</app-badge>
+        <app-badge variant="outline">Outline</app-badge>
       </div>
     `,
   }),
@@ -102,15 +103,15 @@ export const AllSizes: Story = {
       <div style="display:flex; flex-wrap:wrap; gap:1rem; padding:1rem; align-items:center;">
         <div style="display:flex; align-items:center; gap:0.5rem;">
           <span style="font-size:0.75rem; color:#888;">sm:</span>
-          <app-badge [count]="9" variant="danger" size="sm" [standalone]="true"></app-badge>
+          <app-badge [count]="9" variant="danger" size="sm"></app-badge>
         </div>
         <div style="display:flex; align-items:center; gap:0.5rem;">
           <span style="font-size:0.75rem; color:#888;">md:</span>
-          <app-badge [count]="9" variant="danger" size="md" [standalone]="true"></app-badge>
+          <app-badge [count]="9" variant="danger" size="md"></app-badge>
         </div>
         <div style="display:flex; align-items:center; gap:0.5rem;">
           <span style="font-size:0.75rem; color:#888;">lg:</span>
-          <app-badge [count]="9" variant="danger" size="lg" [standalone]="true"></app-badge>
+          <app-badge [count]="9" variant="danger" size="lg"></app-badge>
         </div>
       </div>
     `,

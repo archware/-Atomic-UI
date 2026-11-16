@@ -1,0 +1,144 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "avatar",
+  "layer": "atom",
+  "selector": "app-avatar",
+  "export": "AvatarComponent",
+  "source": "src/app/shared/ui/atoms/avatar/avatar.component.ts",
+  "relatedExports": [
+    "AvatarSize",
+    "AvatarStatus",
+    "AvatarVariant"
+  ],
+  "purpose": "Representación visual de persona o entidad mediante imagen, iniciales o icono con indicador de estado opcional.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "src",
+      "type": "string",
+      "meaning": "Propiedad de entrada src configurada en el componente."
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "meaning": "Propiedad de entrada name configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "initials",
+      "type": "string",
+      "meaning": "Propiedad de entrada initials configurada en el componente."
+    },
+    {
+      "name": "color",
+      "type": "string",
+      "meaning": "Propiedad de entrada color configurada en el componente."
+    },
+    {
+      "name": "size",
+      "type": "AvatarSize",
+      "meaning": "Escala de tamaño dentro del sistema de diseño.",
+      "default": "md"
+    },
+    {
+      "name": "rounded",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada rounded configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "status",
+      "type": "AvatarStatus",
+      "meaning": "Propiedad de entrada status configurada en el componente."
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "meaning": "Propiedad de entrada icon configurada en el componente."
+    },
+    {
+      "name": "variant",
+      "type": "AvatarVariant",
+      "meaning": "Variante visual o de comportamiento declarada por el componente.",
+      "default": "default"
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Muestra imagen cargada, iniciales calculadas o icono de respaldo."
+    },
+    {
+      "name": "online",
+      "meaning": "Presenta indicador semántico de presencia activa."
+    }
+  ],
+  "a11y": [
+    "Aplica texto alternativo descriptivo en la imagen cuando src está disponible.",
+    "Expone iniciales o rol gráfico coherente sin depender únicamente del color para el estado."
+  ],
+  "responsive": [
+    "Ajusta diámetro y tipografía de iniciales mediante size (xs, sm, md, lg, xl)."
+  ],
+  "tokens": [
+    "--avatar-background-color",
+    "--avatar-lg",
+    "--avatar-md",
+    "--avatar-sm",
+    "--avatar-xl",
+    "--avatar-xs",
+    "--danger-color",
+    "--danger-color-lighter",
+    "--danger-color-text",
+    "--font-weight-emphasis",
+    "--info-color-lighter",
+    "--info-color-text",
+    "--primary-color",
+    "--primary-color-dark",
+    "--primary-color-lighter",
+    "--radius-full",
+    "--radius-md",
+    "--secondary-color",
+    "--secondary-color-lighter",
+    "--space-1",
+    "--space-2",
+    "--success-color",
+    "--success-color-lighter",
+    "--success-color-text",
+    "--surface-background",
+    "--surface-elevated",
+    "--surface-section",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-on-primary",
+    "--text-color-secondary",
+    "--text-lg",
+    "--text-sm",
+    "--text-xl",
+    "--text-xs",
+    "--warning-color",
+    "--warning-color-lighter",
+    "--warning-color-text"
+  ],
+  "story": {
+    "path": "src/stories/ui-avatar.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/avatar/avatar.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "avatar",
+    "user-avatar",
+    "profile-badge"
+  ]
+}

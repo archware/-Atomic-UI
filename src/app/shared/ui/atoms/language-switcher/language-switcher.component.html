@@ -1,6 +1,6 @@
 <div class="language-switcher" [class.open]="isOpen()">
-      <button 
-        type="button" 
+      <button
+        type="button"
         class="language-btn"
         (click)="toggle()"
         [attr.aria-expanded]="isOpen()"
@@ -14,7 +14,7 @@
       @if (isOpen()) {
         <div class="language-dropdown" role="listbox">
           @for (lang of languages; track lang.code) {
-            <button 
+            <button
               type="button"
               class="language-option"
               [class.active]="lang.code === currentLanguage().code"

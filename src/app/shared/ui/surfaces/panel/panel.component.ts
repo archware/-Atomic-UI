@@ -53,4 +53,3 @@ export class PanelComponent {
   /** Title text alignment */
   readonly titleAlign = input<PanelTitleAlign>('left');
 }
-

@@ -12,8 +12,8 @@ import { PanelComponent } from '../app/shared/ui/surfaces/panel/panel.component'
 import { QueryToolbar } from '../app/shared/ui/organisms/query-toolbar/query-toolbar';
 import { SelectComponent } from '../app/shared/ui/atoms/select/select.component';
 import type { SelectOption } from '../app/shared/ui/atoms/select/select.component';
-import { StatusBadgeComponent } from '../app/shared/ui/atoms/status-badge/status-badge.component';
-import type { StatusBadgeStatus } from '../app/shared/ui/atoms/status-badge/status-badge.component';
+import { BadgeComponent } from '../app/shared/ui/atoms/badge/badge.component';
+import type { BadgeVariant } from '../app/shared/ui/atoms/badge/badge.component';
 import { TableAction } from '../app/shared/ui/atoms/table-action/table-action';
 import { TableCellComponent } from '../app/shared/ui/atoms/table/table-cell.component';
 import { TableComponent } from '../app/shared/ui/atoms/table/table.component';
@@ -51,10 +51,10 @@ interface ClienteFila {
   readonly estado: 'Activo' | 'En mora' | 'Inactivo';
 }
 
-const ESTADO_A_INSIGNIA: Readonly<Record<ClienteFila['estado'], StatusBadgeStatus>> = {
-  Activo: 'active',
-  'En mora': 'degraded',
-  Inactivo: 'inactive',
+const ESTADO_A_INSIGNIA: Readonly<Record<ClienteFila['estado'], BadgeVariant>> = {
+  Activo: 'success',
+  'En mora': 'warning',
+  Inactivo: 'danger',
 };
 
 const formateadorSoles = new Intl.NumberFormat('es-PE', {
@@ -97,6 +97,7 @@ const CARTERAS: readonly SelectOption[] = [
   selector: 'app-story-vista-crud',
   standalone: true,
   imports: [
+    BadgeComponent,
     ButtonComponent,
     ChoiceControl,
     InputComponent,
@@ -106,7 +107,6 @@ const CARTERAS: readonly SelectOption[] = [
     PanelComponent,
     QueryToolbar,
     SelectComponent,
-    StatusBadgeComponent,
     TableAction,
     TableCellComponent,
     TableComponent,
@@ -243,7 +243,7 @@ const CARTERAS: readonly SelectOption[] = [
                   {{ formatearSoles(fila.saldo) }}
                 </td>
                 <td app-table-cell dataLabel="Estado">
-                  <app-status-badge [status]="insignia(fila.estado)" [label]="fila.estado" />
+                  <app-badge [variant]="insignia(fila.estado)">{{ fila.estado }}</app-badge>
                 </td>
                 <td app-table-cell dataLabel="Acciones">
                   <div class="crud__acciones-fila">
@@ -510,7 +510,7 @@ class VistaCrudStory {
     return formateadorSoles.format(valor);
   }
 
-  protected insignia(estado: ClienteFila['estado']): StatusBadgeStatus {
+  protected insignia(estado: ClienteFila['estado']): BadgeVariant {
     return ESTADO_A_INSIGNIA[estado];
   }
 

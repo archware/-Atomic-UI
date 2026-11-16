@@ -1,0 +1,109 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "pagina-detalle-pestanas",
+  "layer": "template",
+  "selector": "app-pagina-detalle-pestanas",
+  "export": "PaginaDetallePestanas",
+  "source": "src/app/shared/ui/templates/pagina-detalle-pestanas/pagina-detalle-pestanas.ts",
+  "purpose": "Chasis C de vista de detalle con botón de retorno, PageHeader alineable, resumen superior y pestañas dinámicas.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "titulo",
+      "type": "string",
+      "meaning": "Título principal mostrado en el encabezado.",
+      "required": true
+    },
+    {
+      "name": "subtitulo",
+      "type": "string | null",
+      "meaning": "Subtítulo descriptivo opcional bajo el título.",
+      "default": null
+    },
+    {
+      "name": "eyebrow",
+      "type": "string | null",
+      "meaning": "Etiqueta breve de contexto superior al título.",
+      "default": null
+    },
+    {
+      "name": "headerAlign",
+      "type": "PageHeaderAlignment",
+      "meaning": "Alineación horizontal del encabezado de página ('start' | 'center').",
+      "default": "center"
+    },
+    {
+      "name": "etiquetaVolver",
+      "type": "string",
+      "meaning": "Propiedad de entrada etiquetaVolver configurada en el componente.",
+      "default": "Volver"
+    },
+    {
+      "name": "iconoVolver",
+      "type": "string",
+      "meaning": "Propiedad de entrada iconoVolver configurada en el componente.",
+      "default": "fa-solid fa-arrow-left"
+    },
+    {
+      "name": "mostrarBotonVolver",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada mostrarBotonVolver configurada en el componente.",
+      "default": true
+    },
+    {
+      "name": "pestanas",
+      "type": "readonly PestanaDetalle[]",
+      "meaning": "Propiedad de entrada pestanas configurada en el componente.",
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "name": "alVolver",
+      "type": "void",
+      "meaning": "Evento emitido por el componente (alVolver)."
+    },
+    {
+      "name": "alCambiarPestana",
+      "type": "string",
+      "meaning": "Evento emitido por el componente (alCambiarPestana)."
+    }
+  ],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Renderiza cabecera centrada por defecto, plantilla opcional #resumen y pestañas declarativas."
+    }
+  ],
+  "a11y": [
+    "Encabezado h1 único, botón de retorno etiquetado y pestañas accesibles mediante TabsComponent."
+  ],
+  "responsive": [
+    "Ajusta barra de resumen y lista de pestañas en escritorio y pantallas móviles."
+  ],
+  "tokens": [
+    "--space-3",
+    "--space-4",
+    "--space-5"
+  ],
+  "story": {
+    "path": "src/stories/pagina-detalle-pestanas.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "detail-tabs-page",
+    "pagina-detalle-pestanas",
+    "entity-detail"
+  ]
+}

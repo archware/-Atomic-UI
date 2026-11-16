@@ -1,0 +1,80 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "popup",
+  "layer": "molecule",
+  "selector": "app-popup-container",
+  "export": "PopupContainerComponent",
+  "source": "src/app/shared/ui/molecules/popup/popup-container.component.ts",
+  "relatedExports": [
+    "PopupService"
+  ],
+  "purpose": "Contenedor global de avisos y confirmaciones emergentes administrados por PopupService con cabecera centrada y cierre colgante.",
+  "variants": [],
+  "inputs": [],
+  "outputs": [],
+  "states": [
+    {
+      "name": "open",
+      "meaning": "Renderiza cola de popups con icono semántico opcional, mensaje/contenido y botones de respuesta."
+    },
+    {
+      "name": "closing",
+      "meaning": "Ejecuta animación de cierre suave antes de retirar la instancia del servicio."
+    }
+  ],
+  "a11y": [
+    "Asigna role=dialog, aria-modal=true, aria-labelledby al título y cierre seguro con Escape según configuración."
+  ],
+  "responsive": [
+    "Se adapta al 90% del ancho útil limitado por tamaños sm, md, lg y xl con scroll interno controlado."
+  ],
+  "tokens": [
+    "--border-color",
+    "--danger-color-dark",
+    "--danger-color-light",
+    "--font-family-heading",
+    "--font-weight-emphasis",
+    "--info-color-dark",
+    "--info-color-light",
+    "--overlay-backdrop",
+    "--primary-color",
+    "--primary-color-lighter",
+    "--radius-full",
+    "--radius-lg",
+    "--shadow-xl",
+    "--space-10",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--success-color-dark",
+    "--success-color-light",
+    "--surface-background",
+    "--text-2xl",
+    "--text-color",
+    "--text-color-secondary",
+    "--text-lg",
+    "--text-md",
+    "--warning-color-dark",
+    "--warning-color-light"
+  ],
+  "story": {
+    "path": "src/stories/ui-popup.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/molecules/popup/popup-container.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "popup",
+    "alert-popup",
+    "popup-container"
+  ]
+}

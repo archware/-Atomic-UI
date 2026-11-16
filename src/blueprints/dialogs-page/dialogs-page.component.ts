@@ -405,73 +405,85 @@ export class DialogsPageComponent {
   readonly aboutCredits: AboutCreditItem[] = [
     {
       label: 'Autoría Principal',
-      value: 'Ing. Havel CONTRERAS TAPAHUASCO (@archware) · SSIT CONSULTING E.I.R.L.',
+      value: 'Ing. Havel CONTRERAS TAPAHUASCO (COTAHA · @archware)',
       subtext:
-        'Arquitecto de Software Full-Stack, firma consultora SSIT CONSULTING E.I.R.L. y creador de herramientas propias de ingeniería, sistemas de diseño y doctrinas de arquitectura empresarial',
+        'Arquitecto de Software | DIY AI Lab | Creador de Ecosistemas: dirección técnica corporativa enfocada en demostrar que el ecosistema propio de Backend (Artifact Mangosta) y Frontend (Artifact Barracuda + Atomic UI) genera aplicaciones de escritorio Multi-Runtime (Rust/Tauri, Go/Wails, Python/PyWebView) de calidad empresarial',
       icon: 'fa-solid fa-user-shield',
       imageUrl: 'assets/doctrinas/ssit-emblem.jpg',
       bannerImageUrl: 'assets/doctrinas/merch-desk-setup.jpg',
       badge: 'Marca Personal',
     },
     {
-      label: 'Doctrina Mangosta',
-      value: 'Suite Mangosta — Arquitectura Hexagonal & CQRS Estricto',
+      label: 'Artifact Mangosta',
+      value: 'Artifact Mangosta — DDD, Arquitectura Hexagonal & CQRS Estricto',
       subtext:
-        'Vertical Slicing, dominio rico en español, persistencia limpia sin micro-ORMs, fronteras IPC/HTTP tipadas y seguridad por diseño',
+        'Artefacto corporativo de ingeniería Backend (Rust/Tauri, C#/.NET, Java) que garantiza solidez empresarial: aislamiento de dominio, frontera IPC/HTTP determinista (DesktopFacadeService + RespuestaSistemaV1), motor nativo PDF (lopdf/rfd) y compilación limpia sin deuda técnica',
       icon: 'fa-solid fa-diagram-project',
       imageUrl: 'assets/doctrinas/doctrina-mangosta-icon.jpg',
       bannerImageUrl: 'assets/doctrinas/doctrina-mangosta-banner.jpg',
-      badge: 'Backend Canon',
+      badge: 'Backend Artifact',
     },
     {
-      label: 'Doctrina Barracuda',
-      value: 'Suite Barracuda — Chasis Frontend Reactivo con Signals',
+      label: 'Artifact Barracuda',
+      value: 'Artifact Barracuda — Chasis Frontend Reactivo con Signals',
       subtext:
-        'Andamiaje modular en Angular 22 + Signals, control flow nativo, plantillas gobernadas, accesibilidad estricta y cero deuda visual',
+        'Artefacto corporativo de ingeniería Frontend en Angular 22 + Signals y OnPush que entrega interfaces de alta gama: control flow nativo, procesamiento gráfico en memoria (PDF.js + pdf-lib), accesibilidad estricta y calidad respaldada por más de 325 pruebas automatizadas',
       icon: 'fa-solid fa-bolt',
       imageUrl: 'assets/doctrinas/doctrina-barracuda-icon.jpg',
       bannerImageUrl: 'assets/doctrinas/doctrina-barracuda-banner.jpg',
-      badge: 'Frontend Canon',
+      badge: 'Frontend Artifact',
     },
     {
       label: 'Sistema de Diseño',
-      value: 'Atomic UI (@atomic-ui/core v5.22.0) — Signals & OnPush',
+      value: 'Atomic UI (@atomic-ui/core v5.23.0) — Signals & OnPush',
       subtext:
-        'Librería de autor con tokens semánticos puros, desplazamiento gobernado y fidelidad visual anti-alucinación',
+        'Sistema de diseño corporativo de autor gobernado por pin criptográfico (ADR-017): tokens semánticos puros, desplazamiento controlado (app-scroll-overlay), cero CSS ad-hoc y acabado visual institucional uniforme',
       icon: 'fa-solid fa-cubes',
       imageUrl: 'assets/doctrinas/barracuda-mangosta-duality-icon.jpg',
       bannerImageUrl: 'assets/doctrinas/merch-kit-ejecutivo.jpg',
       badge: 'ADN Visual',
     },
     {
-      label: 'Co-Ingeniería IA',
-      value: 'Asistencia de IA Agéntica & Orquestación Doctrinal',
+      label: 'DIY AI Lab & Co-Ingeniería IA',
+      value: 'Laboratorio IA Bare-Metal Local & Orquestación de Agentes',
       subtext:
-        'Aceleración de entrega con agentes especializados gobernados por reglas de arquitectura, auditoría adversarial y compuertas deterministas',
+        'Infraestructura corporativa privada en servidor dedicado Ubuntu Linux con GPU NVIDIA Tesla V100 (32 GB VRAM), inferencia 100% local (Qwen3-Coder / llama.cpp), sistemas RAG (SQLite FTS5), protocolos MCP/ACP y auditoría por compuertas deterministas',
       icon: 'fa-solid fa-wand-magic-sparkles',
-      badge: 'IA Agéntica',
+      badge: 'DIY AI Lab',
     },
     {
       label: 'Arquitectura y Seguridad',
-      value: 'Procesamiento 100% local en memoria sin subida a servidores',
+      value: 'Compilación Multiplataforma CI/CD & Binarios Nativos Autónomos',
       subtext:
-        'Frontera nativa Tauri + Rust (RespuestaSistemaV1), privacidad institucional absoluta y ejecución de alto rendimiento',
+        'Ejecutables generados por cargo build --release en src-tauri/target/release/ y publicados por GitHub Actions en GitHub Releases con firma SHA-256: binario PE64 .exe en Windows (union-pdf-windows-x86_64.exe), Application Bundle nativo union-pdf.app empaquetado en .app.tar.gz en macOS Apple Silicon/Intel (union-pdf-macos-arm64.app.tar.gz y union-pdf-macos-x86_64.app.tar.gz, Mach-O) y binario nativo autónomo ELF empaquetado en .tar.gz en Linux (union-pdf-linux-x86_64.tar.gz), con el frontend embebido y privacidad 100% local',
       icon: 'fa-solid fa-shield-halved',
-      badge: 'Privacidad',
+      badge: 'Multiplataforma CI/CD',
     },
   ];
 
   readonly aboutTechStack: AboutTechBadge[] = [
     { label: 'Tauri 1.5 + Rust', icon: 'fa-solid fa-gears', variant: 'primary' },
     { label: 'Angular 22 + Signals', icon: 'fa-brands fa-angular', variant: 'secondary' },
-    { label: 'Atomic UI v5.22.0', icon: 'fa-solid fa-layer-group', variant: 'info' },
-    { label: 'Doctrina Mangosta', icon: 'fa-solid fa-diagram-project', variant: 'primary' },
-    { label: 'Doctrina Barracuda', icon: 'fa-solid fa-bolt', variant: 'secondary' },
+    { label: 'Atomic UI v5.23.0', icon: 'fa-solid fa-layer-group', variant: 'info' },
+    { label: 'Artifact Mangosta', icon: 'fa-solid fa-diagram-project', variant: 'primary' },
+    { label: 'Artifact Barracuda', icon: 'fa-solid fa-bolt', variant: 'secondary' },
     { label: 'PDF.js + pdf-lib', icon: 'fa-solid fa-file-pdf', variant: 'warning' },
-    { label: '100% Local', icon: 'fa-solid fa-lock', variant: 'success' },
+    { label: 'DIY AI Lab · 100% Local', icon: 'fa-solid fa-lock', variant: 'success' },
   ];
 
   readonly aboutLinks: AboutLinkItem[] = [
+    {
+      label: 'Releases y Ejecutables Compilados (Unión PDF)',
+      url: 'https://github.com/archware/union-pdf/releases',
+      icon: 'fa-solid fa-boxes-packing',
+      external: true,
+    },
+    {
+      label: 'Pipeline CI/CD Multiplataforma (GitHub Actions)',
+      url: 'https://github.com/archware/union-pdf/actions',
+      icon: 'fa-solid fa-gears',
+      external: true,
+    },
     {
       label: 'Portafolio & GitHub @archware',
       url: 'https://github.com/archware',
@@ -479,10 +491,22 @@ export class DialogsPageComponent {
       external: true,
     },
     {
+      label: 'LinkedIn — Ing. Havel Contreras',
+      url: 'https://www.linkedin.com/in/havel-contreras-tapahuasco-70a109167/',
+      icon: 'fa-brands fa-linkedin',
+      external: true,
+    },
+    {
       label: 'Repositorio Atomic UI',
       url: 'https://github.com/archware/-Atomic-UI',
       icon: 'fa-solid fa-code-branch',
       external: true,
+    },
+    {
+      label: 'Contacto (havel363@gmail.com)',
+      url: 'mailto:havel363@gmail.com',
+      icon: 'fa-solid fa-envelope',
+      external: false,
     },
   ];
 

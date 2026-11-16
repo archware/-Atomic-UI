@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
-import { PageHeader } from '../../organisms/page-header/page-header';
+import { PageHeader, PageHeaderAlignment } from '../../organisms/page-header/page-header';
 import { MetricsGridComponent, KpiMetric } from '../../organisms/metrics-grid/metrics-grid.component';
 import { DataStateComponent } from '../../molecules/data-state/data-state.component';
 import { ApiError } from '../../services/api.service';
@@ -22,6 +22,7 @@ export class PaginaDashboardComponent {
   readonly titulo = input.required<string>();
   readonly subtitulo = input<string | null>(null);
   readonly eyebrow = input<string | null>(null);
+  readonly headerAlign = input<PageHeaderAlignment>('center');
 
   // Datos del Dashboard
   readonly metricas = input<readonly KpiMetric[]>([]);

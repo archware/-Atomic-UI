@@ -9,7 +9,7 @@ import type {
   DataTableStatus,
 } from '../app/shared/ui/organisms/data-table/data-table';
 import { PanelComponent } from '../app/shared/ui/surfaces/panel/panel.component';
-import type { ChipVariant } from '../app/shared/ui/atoms/chip/chip.component';
+import type { BadgeVariant } from '../app/shared/ui/atoms/badge/badge.component';
 import { TableAction } from '../app/shared/ui/atoms/table-action/table-action';
 
 /*
@@ -51,10 +51,10 @@ const formateadorSoles = new Intl.NumberFormat('es-PE', {
   minimumFractionDigits: 2,
 });
 
-const ESTADO_A_INSIGNIA: Readonly<Record<MovimientoFila['estado'], ChipVariant>> = {
+const ESTADO_A_INSIGNIA: Readonly<Record<MovimientoFila['estado'], BadgeVariant>> = {
   Aplicada: 'success',
   'En revisión': 'warning',
-  Anulada: 'error',
+  Anulada: 'danger',
 };
 
 /*
@@ -79,8 +79,8 @@ const COLUMNAS: readonly DataTableColumn<MovimientoFila>[] = [
     key: 'estado',
     header: 'Estado',
     width: '10rem',
-    isTag: true,
-    tagVariant: (fila: MovimientoFila) => ESTADO_A_INSIGNIA[fila.estado],
+    isBadge: true,
+    badgeVariant: (fila: MovimientoFila) => ESTADO_A_INSIGNIA[fila.estado],
   },
 ];
 
@@ -526,7 +526,7 @@ export const ListadoConImportes: Story = {
     docs: {
       description: {
         story:
-          'El caso corriente. La columna «Importe» va con `align: "end"`, que además de alinear enciende `tabular-nums`: los soles quedan en columna y se comparan sin leerlos dígito a dígito. «Estado» se declara `isBadge` con su propia función `badgeStatus`, de modo que el tono lo decide el dato y no el texto. `trackBy` va por identificador de operación, no por índice: sin eso, reordenar rehace todas las filas.',
+          'El caso corriente. La columna «Importe» va con `align: "end"`, que además de alinear enciende `tabular-nums`: los soles quedan en columna y se comparan sin leerlos dígito a dígito. «Estado» se declara `isBadge` con su propia función `badgeVariant`, de modo que el tono lo decide el dato y no el texto. `trackBy` va por identificador de operación, no por índice: sin eso, reordenar rehace todas las filas.',
       },
     },
   },

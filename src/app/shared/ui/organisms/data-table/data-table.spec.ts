@@ -71,10 +71,64 @@ describe('DataTable: alineacion de etiquetas de estado', () => {
       const cell = host.querySelector('td[data-column="' + key + '"]') as HTMLElement;
       expect(header.classList.contains('data-table__cell--center')).toBeTrue();
       expect(cell.classList.contains('data-table__cell--center')).toBeTrue();
-      expect(cell.querySelector('app-chip')).not.toBeNull();
+      expect(cell.querySelector('app-badge')).not.toBeNull();
       expect(getComputedStyle(header.querySelector('button')!).justifyContent).toBe('center');
     });
   }
+
+  it('asigna variantes semanticas de badge (success, danger, warning) en columnas de estado', async () => {
+    const fixture = TestBed.createComponent(DataTable);
+    fixture.componentRef.setInput('caption', 'Estados de dominio');
+    fixture.componentRef.setInput('columns', [
+      { key: 'activo', header: 'Activo', isBadge: true },
+      { key: 'registrada', header: 'Registrada', isBadge: true },
+      { key: 'completado', header: 'Completado', isBadge: true },
+      { key: 'pagada', header: 'Pagada', isBadge: true },
+      { key: 'estado', header: 'Estado' },
+      { key: 'cancelado', header: 'Cancelado', isBadge: true },
+      { key: 'eliminado', header: 'Eliminado', isBadge: true },
+      { key: 'rechazado', header: 'Rechazado', isBadge: true },
+      { key: 'revertido', header: 'Revertido', isBadge: true },
+      { key: 'error', header: 'Error', isBadge: true },
+      { key: 'state', header: 'State' },
+      { key: 'vencida', header: 'Vencida', isBadge: true },
+      { key: 'mora', header: 'En mora', isBadge: true },
+      { key: 'atrasado', header: 'Atrasado', isBadge: true },
+      { key: 'espera', header: 'En espera', isBadge: true },
+      { key: 'pending', header: 'Pending', isBadge: true },
+    ]);
+    fixture.componentRef.setInput('rows', [{
+      activo: 'ACTIVA',
+      registrada: 'REGISTRADA',
+      completado: 'COMPLETADO',
+      pagada: 'PAGADA',
+      estado: 'INACTIVA',
+      cancelado: 'CANCELADO',
+      eliminado: 'ELIMINADO',
+      rechazado: 'RECHAZADO',
+      revertido: 'REVERTIDO',
+      error: 'ERROR',
+      state: 'Pendiente',
+      vencida: 'VENCIDA',
+      mora: 'En mora',
+      atrasado: 'Atrasado',
+      espera: 'En espera',
+      pending: 'PENDING',
+    }]);
+    fixture.componentRef.setInput('pagination', 'none');
+    await fixture.whenStable();
+
+    const host = fixture.nativeElement as HTMLElement;
+    for (const col of ['activo', 'registrada', 'completado', 'pagada']) {
+      expect(host.querySelector(`td[data-column="${col}"] .badge--success`)).withContext(col).not.toBeNull();
+    }
+    for (const col of ['estado', 'cancelado', 'eliminado', 'rechazado', 'revertido', 'error']) {
+      expect(host.querySelector(`td[data-column="${col}"] .badge--danger`)).withContext(col).not.toBeNull();
+    }
+    for (const col of ['state', 'vencida', 'mora', 'atrasado', 'espera', 'pending']) {
+      expect(host.querySelector(`td[data-column="${col}"] .badge--warning`)).withContext(col).not.toBeNull();
+    }
+  });
 
   for (const align of ['start', 'center', 'end'] as const) {
     it('respeta una alineacion explicita en etiquetas: ' + align, async () => {
@@ -113,7 +167,7 @@ for (const ancho of [320, 375, 768, 1366]) {
           await destino.fonts.ready;
           await new Promise<void>(resolve => vista.requestAnimationFrame(() => resolve()));
           const celda = destino.querySelector('td[data-column="activo"]') as HTMLElement;
-          const badge = celda.querySelector('.chip') as HTMLElement;
+          const badge = celda.querySelector('.badge') as HTMLElement;
           const estilo = vista.getComputedStyle(celda);
           const caja = celda.getBoundingClientRect();
           const etiqueta = badge.getBoundingClientRect();
@@ -142,7 +196,7 @@ for (const ancho of [320, 375, 768, 1366]) {
     const fixture = await crear([{ key: 'nombre', header: 'Estado' }]);
     const cell = (fixture.nativeElement as HTMLElement).querySelector('td[data-column="nombre"]')!;
     expect(cell.classList.contains('data-table__cell--center')).toBeFalse();
-    expect(cell.querySelector('app-chip')).toBeNull();
+    expect(cell.querySelector('app-badge')).toBeNull();
   });
 });
 

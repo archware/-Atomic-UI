@@ -1,0 +1,191 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "footer",
+  "layer": "organism",
+  "selector": "app-footer",
+  "export": "FooterComponent",
+  "source": "src/app/shared/ui/organisms/footer/footer.component.ts",
+  "relatedExports": [
+    "SocialLink",
+    "LegalLink",
+    "FooterVariant"
+  ],
+  "purpose": "Pie de página institucional con variantes de densidad, enlaces sociales, legales, soporte y versión.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "variant",
+      "type": "FooterVariant",
+      "meaning": "Variante visual o de comportamiento declarada por el componente.",
+      "default": "inline"
+    },
+    {
+      "name": "accessibleLabel",
+      "type": "string",
+      "meaning": "Propiedad de entrada accessibleLabel configurada en el componente.",
+      "default": "Pie de página"
+    },
+    {
+      "name": "companyName",
+      "type": "string",
+      "meaning": "Propiedad de entrada companyName configurada en el componente.",
+      "default": "Suite Barracuda"
+    },
+    {
+      "name": "year",
+      "type": "unknown",
+      "meaning": "Propiedad de entrada year configurada en el componente."
+    },
+    {
+      "name": "copyrightText",
+      "type": "string",
+      "meaning": "Propiedad de entrada copyrightText configurada en el componente.",
+      "default": "Todos los derechos reservados."
+    },
+    {
+      "name": "copyrightSeparator",
+      "type": "string",
+      "meaning": "Propiedad de entrada copyrightSeparator configurada en el componente.",
+      "default": " - "
+    },
+    {
+      "name": "supportText",
+      "type": "string",
+      "meaning": "Propiedad de entrada supportText configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "supportSeparator",
+      "type": "string",
+      "meaning": "Propiedad de entrada supportSeparator configurada en el componente.",
+      "default": "|"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "meaning": "Propiedad de entrada description configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "legalTitle",
+      "type": "string",
+      "meaning": "Propiedad de entrada legalTitle configurada en el componente.",
+      "default": "Enlaces legales"
+    },
+    {
+      "name": "socialTitle",
+      "type": "string",
+      "meaning": "Propiedad de entrada socialTitle configurada en el componente.",
+      "default": "Redes sociales"
+    },
+    {
+      "name": "showVersion",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada showVersion configurada en el componente.",
+      "default": true
+    },
+    {
+      "name": "showBuildDate",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada showBuildDate configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "version",
+      "type": "string",
+      "meaning": "Propiedad de entrada version configurada en el componente.",
+      "default": "v1.0.0"
+    },
+    {
+      "name": "environment",
+      "type": "string",
+      "meaning": "Propiedad de entrada environment configurada en el componente.",
+      "default": "PROD"
+    },
+    {
+      "name": "buildDate",
+      "type": "string",
+      "meaning": "Propiedad de entrada buildDate configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "socialLinks",
+      "type": "SocialLink[]",
+      "meaning": "Propiedad de entrada socialLinks configurada en el componente."
+    },
+    {
+      "name": "legalLinks",
+      "type": "LegalLink[]",
+      "meaning": "Propiedad de entrada legalLinks configurada en el componente."
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "simple",
+      "meaning": "Pie compacto en una fila para shell operativo."
+    },
+    {
+      "name": "minimal",
+      "meaning": "Versión mínima discreta con derechos y versión."
+    },
+    {
+      "name": "detailed",
+      "meaning": "Pie completo con columnas descriptivas, redes sociales y avisos legales."
+    }
+  ],
+  "a11y": [
+    "Envuelve el pie en landmark footer con accessibleLabel y enlaces descriptivos."
+  ],
+  "responsive": [
+    "Reorganiza columnas y enlaces del pie en una columna al bajar de tamaño mediano."
+  ],
+  "tokens": [
+    "--border-color",
+    "--border-width-medium",
+    "--border-width-thin",
+    "--control-height-sm",
+    "--focus-ring-color",
+    "--font-weight-body",
+    "--font-weight-emphasis",
+    "--font-weight-title",
+    "--primary-color",
+    "--radius-full",
+    "--shadow-sm",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-6",
+    "--space-8",
+    "--surface-hover",
+    "--surface-section",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-secondary",
+    "--text-md",
+    "--text-sm",
+    "--text-xl",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-footer.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/organisms/footer/footer.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "footer",
+    "app-footer",
+    "shell-footer"
+  ]
+}

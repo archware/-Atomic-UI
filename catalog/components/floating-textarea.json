@@ -96,8 +96,8 @@
     "--text-color-secondary"
   ],
   "story": {
-    "path": null,
-    "status": "missing"
+    "path": "src/stories/ui-floating-textarea.stories.ts",
+    "status": "available"
   },
   "test": {
     "path": "src/app/shared/ui/atoms/floating-textarea/floating-textarea.component.spec.ts",

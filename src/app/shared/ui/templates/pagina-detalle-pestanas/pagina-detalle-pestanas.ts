@@ -7,7 +7,7 @@ import {
   output,
   TemplateRef,
 } from '@angular/core';
-import { PageHeader } from '../../organisms/page-header/page-header';
+import { PageHeader, PageHeaderAlignment } from '../../organisms/page-header/page-header';
 import { TabsComponent, TabComponent } from '../../organisms/tabs/tabs.component';
 import { ButtonComponent } from '../../atoms/button/button.component';
 import { NgTemplateOutlet } from '@angular/common';
@@ -76,6 +76,7 @@ export class PaginaDetallePestanas {
   readonly titulo = input.required<string>();
   readonly subtitulo = input<string | null>(null);
   readonly eyebrow = input<string | null>(null);
+  readonly headerAlign = input<PageHeaderAlignment>('center');
   readonly etiquetaVolver = input('Volver');
   readonly iconoVolver = input('fa-solid fa-arrow-left');
   readonly mostrarBotonVolver = input(true);

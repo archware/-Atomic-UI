@@ -1,1 +1,1 @@
-:host { display: none; } :host(.active) { display: block; }
+:host { display: none; } :host(.active) { display: block; min-width: 0; }

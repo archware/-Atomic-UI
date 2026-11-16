@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 
+import { BadgeComponent } from '../app/shared/ui/atoms/badge/badge.component';
+import type { BadgeVariant } from '../app/shared/ui/atoms/badge/badge.component';
 import { DataStateComponent } from '../app/shared/ui/molecules/data-state/data-state.component';
 import { TableCellComponent } from '../app/shared/ui/atoms/table/table-cell.component';
 import { TableComponent } from '../app/shared/ui/atoms/table/table.component';
@@ -39,6 +41,12 @@ interface ClienteFila {
   readonly saldo: number;
   readonly estado: 'Al día' | 'En mora' | 'Refinanciado';
 }
+
+const ESTADO_A_BADGE: Readonly<Record<ClienteFila['estado'], BadgeVariant>> = {
+  'Al día': 'success',
+  'En mora': 'warning',
+  Refinanciado: 'info',
+};
 
 const formateadorSoles = new Intl.NumberFormat('es-PE', {
   style: 'currency',
@@ -119,6 +127,7 @@ type ClaveOrden = 'nombre' | 'cartera' | 'saldo';
   selector: 'app-story-tabla-ordenable',
   standalone: true,
   imports: [
+    BadgeComponent,
     TableCellComponent,
     TableComponent,
     TableHeadComponent,
@@ -169,7 +178,9 @@ type ClaveOrden = 'nombre' | 'cartera' | 'saldo';
             <td app-table-cell dataLabel="Cliente" [wrap]="true">{{ fila.nombre }}</td>
             <td app-table-cell dataLabel="Cartera">{{ fila.cartera }}</td>
             <td app-table-cell dataLabel="Saldo" align="right">{{ importe(fila.saldo) }}</td>
-            <td app-table-cell dataLabel="Estado">{{ fila.estado }}</td>
+            <td app-table-cell dataLabel="Estado">
+              <app-badge [variant]="insignia(fila.estado)">{{ fila.estado }}</app-badge>
+            </td>
           </tr>
         }
       </tbody>
@@ -237,6 +248,10 @@ class TablaOrdenableStory {
   protected importe(valor: number): string {
     return formateadorSoles.format(valor);
   }
+
+  protected insignia(estado: ClienteFila['estado']): BadgeVariant {
+    return ESTADO_A_BADGE[estado];
+  }
 }
 
 const meta: Meta<TableHeadComponent> = {
@@ -246,6 +261,7 @@ const meta: Meta<TableHeadComponent> = {
   decorators: [
     moduleMetadata({
       imports: [
+        BadgeComponent,
         DataStateComponent,
         TableCellComponent,
         TableComponent,
@@ -304,7 +320,11 @@ type Story = StoryObj<TableHeadComponent>;
 export const CabeceraDelAdn: Story = {
   name: 'Los dos átomos, montados como toca',
   render: () => ({
-    props: { filas: CLIENTES, importe: (valor: number) => formateadorSoles.format(valor) },
+    props: {
+      filas: CLIENTES,
+      importe: (valor: number) => formateadorSoles.format(valor),
+      insignia: (estado: ClienteFila['estado']) => ESTADO_A_BADGE[estado],
+    },
     template: `
       <app-table ariaLabel="Clientes con saldo vigente">
         <app-table-head>
@@ -319,7 +339,9 @@ export const CabeceraDelAdn: Story = {
               <td app-table-cell dataLabel="Cliente" [wrap]="true">{{ fila.nombre }}</td>
               <td app-table-cell dataLabel="Cartera">{{ fila.cartera }}</td>
               <td app-table-cell dataLabel="Saldo" align="right">{{ importe(fila.saldo) }}</td>
-              <td app-table-cell dataLabel="Estado">{{ fila.estado }}</td>
+              <td app-table-cell dataLabel="Estado">
+                <app-badge [variant]="insignia(fila.estado)">{{ fila.estado }}</app-badge>
+              </td>
             </tr>
           }
         </tbody>
@@ -343,6 +365,7 @@ export const FilaSeleccionada: Story = {
       filas: CLIENTES,
       seleccionada: 'C-1045',
       importe: (valor: number) => formateadorSoles.format(valor),
+      insignia: (estado: ClienteFila['estado']) => ESTADO_A_BADGE[estado],
     },
     template: `
       <app-table ariaLabel="Clientes con saldo vigente" [striped]="true">
@@ -358,7 +381,9 @@ export const FilaSeleccionada: Story = {
               <td app-table-cell dataLabel="Cliente" [wrap]="true">{{ fila.nombre }}</td>
               <td app-table-cell dataLabel="Cartera">{{ fila.cartera }}</td>
               <td app-table-cell dataLabel="Saldo" align="right">{{ importe(fila.saldo) }}</td>
-              <td app-table-cell dataLabel="Estado">{{ fila.estado }}</td>
+              <td app-table-cell dataLabel="Estado">
+                <app-badge [variant]="insignia(fila.estado)">{{ fila.estado }}</app-badge>
+              </td>
             </tr>
           }
         </tbody>
@@ -381,6 +406,7 @@ export const CabeceraFijaAlDesplazar: Story = {
     props: {
       filas: CLIENTES_EN_VOLUMEN,
       importe: (valor: number) => formateadorSoles.format(valor),
+      insignia: (estado: ClienteFila['estado']) => ESTADO_A_BADGE[estado],
     },
     template: `
       <app-table
@@ -401,7 +427,9 @@ export const CabeceraFijaAlDesplazar: Story = {
               <td app-table-cell dataLabel="Cliente" [wrap]="true">{{ fila.nombre }}</td>
               <td app-table-cell dataLabel="Cartera">{{ fila.cartera }}</td>
               <td app-table-cell dataLabel="Saldo" align="right">{{ importe(fila.saldo) }}</td>
-              <td app-table-cell dataLabel="Estado">{{ fila.estado }}</td>
+              <td app-table-cell dataLabel="Estado">
+                <app-badge [variant]="insignia(fila.estado)">{{ fila.estado }}</app-badge>
+              </td>
             </tr>
           }
         </tbody>
@@ -424,6 +452,7 @@ export const ColumnasDeAnchoEstable: Story = {
     props: {
       filas: CLIENTES_EN_VOLUMEN,
       importe: (valor: number) => formateadorSoles.format(valor),
+      insignia: (estado: ClienteFila['estado']) => ESTADO_A_BADGE[estado],
     },
     template: `
       <app-table
@@ -446,7 +475,9 @@ export const ColumnasDeAnchoEstable: Story = {
               <td app-table-cell dataLabel="Cliente">{{ fila.nombre }}</td>
               <td app-table-cell dataLabel="Cartera">{{ fila.cartera }}</td>
               <td app-table-cell dataLabel="Saldo" align="right">{{ importe(fila.saldo) }}</td>
-              <td app-table-cell dataLabel="Estado">{{ fila.estado }}</td>
+              <td app-table-cell dataLabel="Estado">
+                <app-badge [variant]="insignia(fila.estado)">{{ fila.estado }}</app-badge>
+              </td>
             </tr>
           }
         </tbody>

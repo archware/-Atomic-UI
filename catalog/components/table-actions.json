@@ -1,0 +1,68 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "table-actions",
+  "layer": "molecule",
+  "selector": "app-table-actions",
+  "export": "TableActionsComponent",
+  "source": "src/app/shared/ui/molecules/table-actions/table-actions.component.ts",
+  "purpose": "Grupo compacto de botones de fila para operaciones estándar ver, editar y eliminar en tablas.",
+  "variants": [],
+  "inputs": [],
+  "outputs": [
+    {
+      "name": "view",
+      "type": "void",
+      "meaning": "Evento emitido por el componente (view)."
+    },
+    {
+      "name": "edit",
+      "type": "void",
+      "meaning": "Evento emitido por el componente (edit)."
+    },
+    {
+      "name": "delete",
+      "type": "void",
+      "meaning": "Evento emitido por el componente (delete)."
+    }
+  ],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Renderiza iconos de acción homogéneos con emisión tipada de eventos."
+    }
+  ],
+  "a11y": [
+    "Botones independientes con aria-label claro y foco visible por teclado."
+  ],
+  "responsive": [
+    "Espaciado compacto entre controles compatible con celdas estrechas."
+  ],
+  "tokens": [
+    "--danger-color-lighter",
+    "--danger-color-text",
+    "--primary-color",
+    "--primary-color-lighter",
+    "--secondary-color",
+    "--secondary-color-lighter",
+    "--space-2"
+  ],
+  "story": {
+    "path": "src/stories/ui-table-actions.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/molecules/table-actions/table-actions.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "legacy",
+    "notes": [
+      "Se recomienda ActionGroup en tablas gobernadas con desbordamiento automático."
+    ]
+  },
+  "canonicalFor": [
+    "table-actions",
+    "crud-row-buttons"
+  ]
+}

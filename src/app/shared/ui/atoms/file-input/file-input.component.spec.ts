@@ -327,4 +327,3 @@ describe('FileInputComponent', () => {
     expect(clickSpy).not.toHaveBeenCalled();
   });
 });
-

@@ -24,7 +24,7 @@ Tabla de datos completa con paginación, filtros, búsqueda y operaciones CRUD.
 | `Select2Component` | Filtros selectores |
 | `PaginationComponent` | Navegación de páginas |
 | `ModalComponent` | Diálogos modales |
-| `ChipComponent` | Estados/badges |
+| `BadgeComponent` | Estados/badges |
 | `ButtonComponent` | Acciones |
 | `IconButtonComponent` | Botones de tabla |
 | `LoaderComponent` | Estado de carga |
@@ -166,7 +166,7 @@ departmentOptions = [
 
 ### Cambiar diseño de status
 
-Modifica el método `getStatusVariant()` para mapear tus estados a variantes de chip.
+Modifica el método `getStatusVariant()` (`badgeVariant`) para mapear tus estados a variantes de badge (`BadgeVariant`).
 
 ## 📱 Comportamiento Responsive
 

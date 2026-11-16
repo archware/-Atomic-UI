@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { InputComponent } from '../../atoms/input/input.component';
 import { DataTable } from '../../organisms/data-table/data-table';
 import { Select2Component } from '../../molecules/select2/select2.component';
+import { DatepickerComponent } from '../../molecules/datepicker/datepicker.component';
 import { ActionGroupComponent, type ActionItem } from '../../molecules/action-group/action-group.component';
 import { ButtonComponent } from '../../atoms/button/button.component';
 
@@ -343,6 +344,11 @@ describe('PaginaCrud: catálogo compatible', () => {
         value: 'nombre',
         tipo: 'texto',
       },
+      {
+        label: 'Fecha',
+        value: 'fecha',
+        tipo: 'fecha',
+      },
     ]);
     fixture.componentRef.setInput('tipoBusqueda', 'estado');
     fixture.detectChanges();
@@ -390,6 +396,32 @@ describe('PaginaCrud: catálogo compatible', () => {
       pagina: 1,
       tamano: 10,
       busqueda: 'Laptop',
+    });
+
+    // Cambia el criterio a Fecha (fecha): muestra app-datepicker y emite fecha civil ISO yyyy-MM-dd
+    selectCriterio.selectOption({ label: 'Fecha', value: 'fecha' });
+    fixture.detectChanges();
+    expect(cambioTipo).toHaveBeenCalledWith('fecha');
+    expect(contenedorCascada().query(By.directive(InputComponent))).toBeNull();
+    const datepickerCascada = contenedorCascada().query(By.directive(DatepickerComponent))
+      ?.componentInstance as DatepickerComponent;
+    expect(datepickerCascada).toBeTruthy();
+    expect(datepickerCascada.variant()).toBe('floating');
+
+    datepickerCascada.selectDate(new Date(2026, 10, 7));
+    fixture.detectChanges();
+    expect(pagina).toHaveBeenCalledWith({
+      pagina: 1,
+      tamano: 10,
+      busqueda: '2026-11-07',
+    });
+
+    datepickerCascada.clearDate();
+    fixture.detectChanges();
+    expect(pagina).toHaveBeenCalledWith({
+      pagina: 1,
+      tamano: 10,
+      busqueda: '',
     });
 
     // Restablecer [tipoBusqueda] a null desde el padre oculta el segundo control y limpia busqueda

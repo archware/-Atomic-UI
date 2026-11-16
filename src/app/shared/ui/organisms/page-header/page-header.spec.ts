@@ -29,4 +29,18 @@ describe('PageHeader', () => {
       'page-header--compact',
     );
   });
+
+  it('aplica alineacion centrada por defecto y permite cambiar a start', async () => {
+    await TestBed.configureTestingModule({ imports: [PageHeader] }).compileComponents();
+    const fixture = TestBed.createComponent(PageHeader);
+    fixture.componentRef.setInput('title', 'Resumen');
+    fixture.detectChanges();
+
+    const header = fixture.nativeElement.querySelector('header') as HTMLElement;
+    expect(header.classList).toContain('page-header--align-center');
+
+    fixture.componentRef.setInput('align', 'start');
+    fixture.detectChanges();
+    expect(header.classList).toContain('page-header--align-start');
+  });
 });

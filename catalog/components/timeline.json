@@ -1,0 +1,86 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "timeline",
+  "layer": "molecule",
+  "selector": "app-timeline",
+  "export": "TimelineComponent",
+  "source": "src/app/shared/ui/molecules/timeline/timeline.component.ts",
+  "relatedExports": [
+    "TimelineItem",
+    "TimelineItemStatus"
+  ],
+  "purpose": "Línea temporal vertical u horizontal para visualizar hitos, trazabilidad y estados secuenciales.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "items",
+      "type": "TimelineItem[]",
+      "meaning": "Propiedad de entrada items configurada en el componente."
+    },
+    {
+      "name": "orientation",
+      "type": "'vertical' | 'horizontal'",
+      "meaning": "Propiedad de entrada orientation configurada en el componente.",
+      "default": "vertical"
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "vertical",
+      "meaning": "Orden cronológico vertical con nodo de estado, fecha y detalle."
+    },
+    {
+      "name": "horizontal",
+      "meaning": "Disposición lineal horizontal para hitos breves."
+    }
+  ],
+  "a11y": [
+    "Estructura ordenada de hitos sin depender únicamente del color para distinguir estados."
+  ],
+  "responsive": [
+    "Adapta orientación y envoltura de etiquetas sin recorte de texto."
+  ],
+  "tokens": [
+    "--border-color",
+    "--danger-color",
+    "--font-weight-body",
+    "--font-weight-emphasis",
+    "--primary-color",
+    "--primary-color-lighter",
+    "--radius-full",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-5",
+    "--space-6",
+    "--success-color",
+    "--surface-section",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-on-primary",
+    "--text-color-secondary",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-timeline.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "timeline",
+    "activity-log",
+    "status-history"
+  ]
+}

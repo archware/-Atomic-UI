@@ -55,136 +55,137 @@
       <app-text variant="body" color="muted">Cargando ejemplos...</app-text>
     </div>
     }
+
+    <!-- Identidad de Artefactos & Acerca de (SSIT CONSULTING E.I.R.L.) -->
+    <app-panel
+      title="Identidad de Artefactos · SSIT CONSULTING E.I.R.L. (Artifact Barracuda & Artifact Mangosta)"
+      variant="elevated"
+      padding="lg"
+      titleAlign="center"
+      titleWeight="bold"
+    >
+      <app-row gap="0.75rem" wrap="wrap" justify="center" class="mb-4">
+        <app-button
+          variant="primary"
+          size="sm"
+          iconClass="fa-solid fa-circle-info"
+          (buttonClick)="isAboutModalOpen.set(true)"
+        >
+          Abrir Acerca de (Modal)
+        </app-button>
+        <app-button
+          variant="secondary"
+          size="sm"
+          iconClass="fa-solid fa-up-right-from-square"
+          (buttonClick)="isAboutPopupOpen.set(true)"
+        >
+          Abrir Acerca de (Popup)
+        </app-button>
+      </app-row>
+
+      <app-about-dialog
+        variant="card"
+        size="lg"
+        dialogTitle="Acerca de Atomic UI · Ecosistema @archware"
+        appName="Atomic UI — Suite Barracuda & Mangosta"
+        appSubtitle="Sistema de Diseño Empresarial en Angular 22 + Signals · SSIT CONSULTING E.I.R.L."
+        appDescription="Librería de componentes atómicos de alto rendimiento, tokens semánticos Zafiro Cobalto & Oro Imperial y plantillas gobernadas mediante Artifact Barracuda (Frontend) y Artifact Mangosta (Backend CQRS)."
+        version="v5.23.0"
+        environment="CANON OFICIAL"
+        runtimeInfo="Angular 22 + Signals"
+        logoIcon="fa-solid fa-layer-group"
+        logoImageUrl="assets/doctrinas/ssit-emblem.jpg"
+        authorName="Ing. Havel CONTRERAS TAPAHUASCO"
+        authorRole="Arquitecto de Software Principal · SSIT CONSULTING E.I.R.L. & Creador del Ecosistema @archware (Atomic UI · Artifact Barracuda · Artifact Mangosta)"
+        githubHandle="@archware"
+        githubUrl="https://github.com/archware"
+        aiDisclosure="Desarrollado en co-ingeniería con IA Agéntica por SSIT CONSULTING E.I.R.L. bajo el ecosistema de autor @archware: una suite propia de ingeniería de software que integra Artifact Mangosta (Arquitectura Hexagonal y CQRS estricto), Artifact Barracuda (Chasis Frontend reactivo con Signals) y el sistema de diseño Atomic UI (@atomic-ui/core), logrando productos de calidad empresarial verificados por compuertas deterministas."
+        [credits]="aboutCredits"
+        [techStack]="aboutTechStack"
+        [links]="aboutLinks"
+        copyrightText="© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware) · SSIT CONSULTING E.I.R.L. Todos los derechos reservados."
+      />
+    </app-panel>
+
+    <!-- Information Panels -->
+    <app-row columns="repeat(auto-fit, minmax(300px, 1fr))" gap="1rem">
+      <app-panel [title]="'demo.project.title' | translate" variant="plain" padding="md" titleAlign="center"
+        titleWeight="bold">
+        <app-text variant="h3" weight="bold" class="mb-2">{{ 'demo.project.subtitle' | translate }}</app-text>
+        <app-text variant="body" class="mb-4">
+          {{ 'demo.project.description' | translate }}
+        </app-text>
+        <app-panel variant="flat" padding="sm" class="tech-panel">
+          <app-text variant="caption" color="primary">
+            💡 {{ 'demo.project.tech' | translate }}
+          </app-text>
+        </app-panel>
+      </app-panel>
+
+      <app-panel [title]="'demo.components.title' | translate" variant="floating" padding="md" titleAlign="center"
+        titleWeight="bold">
+        <app-text variant="h3" weight="bold" class="mb-2">{{ 'demo.components.subtitle' | translate }}</app-text>
+        <app-text variant="body">
+          {{ 'demo.components.description' | translate }}
+        </app-text>
+        <app-row gap="0.5rem" class="mt-4" wrap="wrap">
+          <app-chip variant="default" size="sm">Atoms</app-chip>
+          <app-chip variant="default" size="sm">Molecules</app-chip>
+          <app-chip variant="default" size="sm">Organisms</app-chip>
+        </app-row>
+      </app-panel>
+    </app-row>
   </div>
 
-  <!-- Identidad Doctrinal & Acerca de (SSIT CONSULTING E.I.R.L.) -->
-  <app-panel
-    title="Identidad Doctrinal · SSIT CONSULTING E.I.R.L. (Barracuda & Mangosta)"
-    variant="elevated"
-    padding="lg"
-    class="info-row"
-  >
-    <app-row gap="0.75rem" wrap="wrap" class="mb-md">
-      <app-button
-        variant="primary"
-        size="sm"
-        iconClass="fa-solid fa-circle-info"
-        (buttonClick)="isAboutModalOpen.set(true)"
-      >
-        Abrir Acerca de (Modal)
-      </app-button>
-      <app-button
-        variant="secondary"
-        size="sm"
-        iconClass="fa-solid fa-up-right-from-square"
-        (buttonClick)="isAboutPopupOpen.set(true)"
-      >
-        Abrir Acerca de (Popup)
-      </app-button>
-    </app-row>
+  <app-about-dialog
+    variant="modal"
+    size="md"
+    [open]="isAboutModalOpen()"
+    dialogTitle="Acerca de Atomic UI · SSIT CONSULTING E.I.R.L."
+    appName="Atomic UI — Suite Barracuda & Mangosta"
+    appSubtitle="Sistema de Diseño Empresarial en Angular 22 + Signals · SSIT CONSULTING E.I.R.L."
+    appDescription="Librería de componentes atómicos de alto rendimiento, tokens semánticos Zafiro Cobalto & Oro Imperial y plantillas gobernadas mediante Artifact Barracuda (Frontend) y Artifact Mangosta (Backend CQRS)."
+    version="v5.23.0"
+    environment="CANON OFICIAL"
+    runtimeInfo="Angular 22 + Signals"
+    logoIcon="fa-solid fa-layer-group"
+    logoImageUrl="assets/doctrinas/ssit-emblem.jpg"
+    authorName="Ing. Havel CONTRERAS TAPAHUASCO"
+    authorRole="Arquitecto de Software Principal · SSIT CONSULTING E.I.R.L. & Creador del Ecosistema @archware (Atomic UI · Artifact Barracuda · Artifact Mangosta)"
+    githubHandle="@archware"
+    githubUrl="https://github.com/archware"
+    aiDisclosure="Desarrollado en co-ingeniería con IA Agéntica por SSIT CONSULTING E.I.R.L. bajo el ecosistema de autor @archware: una suite propia de ingeniería de software que integra Artifact Mangosta (Arquitectura Hexagonal y CQRS estricto), Artifact Barracuda (Chasis Frontend reactivo con Signals) y el sistema de diseño Atomic UI (@atomic-ui/core), logrando productos de calidad empresarial verificados por compuertas deterministas."
+    [credits]="aboutCredits"
+    [techStack]="aboutTechStack"
+    [links]="aboutLinks"
+    copyrightText="© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware) · SSIT CONSULTING E.I.R.L. Todos los derechos reservados."
+    (closed)="isAboutModalOpen.set(false)"
+  />
 
-    <app-about-dialog
-      variant="card"
-      size="lg"
-      dialogTitle="Acerca de Atomic UI · Ecosistema @archware"
-      appName="Atomic UI — Suite Barracuda & Mangosta"
-      appSubtitle="Sistema de Diseño Empresarial en Angular 22 + Signals · SSIT CONSULTING E.I.R.L."
-      appDescription="Librería de componentes atómicos de alto rendimiento, tokens semánticos Zafiro Cobalto & Oro Imperial y plantillas gobernadas bajo las doctrinas Barracuda (Frontend) y Mangosta (Backend CQRS)."
-      version="v5.22.0"
-      environment="CANON OFICIAL"
-      runtimeInfo="Angular 22 + Signals"
-      logoIcon="fa-solid fa-layer-group"
-      logoImageUrl="assets/doctrinas/ssit-emblem.jpg"
-      authorName="Ing. Havel CONTRERAS TAPAHUASCO"
-      authorRole="Arquitecto de Software Principal · SSIT CONSULTING E.I.R.L. & Creador del Ecosistema @archware (Atomic UI · Doctrina Barracuda · Doctrina Mangosta)"
-      githubHandle="@archware"
-      githubUrl="https://github.com/archware"
-      aiDisclosure="Desarrollado en co-ingeniería con IA Agéntica por SSIT CONSULTING E.I.R.L. bajo el ecosistema de autor @archware: una suite propia de ingeniería de software que integra Doctrina Mangosta (Arquitectura Hexagonal y CQRS estricto), Doctrina Barracuda (Chasis Frontend reactivo con Signals) y el sistema de diseño Atomic UI (@atomic-ui/core), logrando productos de calidad empresarial verificados por compuertas deterministas."
-      [credits]="aboutCredits"
-      [techStack]="aboutTechStack"
-      [links]="aboutLinks"
-      copyrightText="© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware) · SSIT CONSULTING E.I.R.L. Todos los derechos reservados."
-    />
-
-    <app-about-dialog
-      variant="modal"
-      size="md"
-      [open]="isAboutModalOpen()"
-      dialogTitle="Acerca de Atomic UI · SSIT CONSULTING E.I.R.L."
-      appName="Atomic UI — Suite Barracuda & Mangosta"
-      appSubtitle="Sistema de Diseño Empresarial en Angular 22 + Signals · SSIT CONSULTING E.I.R.L."
-      appDescription="Librería de componentes atómicos de alto rendimiento, tokens semánticos Zafiro Cobalto & Oro Imperial y plantillas gobernadas bajo las doctrinas Barracuda (Frontend) y Mangosta (Backend CQRS)."
-      version="v5.22.0"
-      environment="CANON OFICIAL"
-      runtimeInfo="Angular 22 + Signals"
-      logoIcon="fa-solid fa-layer-group"
-      logoImageUrl="assets/doctrinas/ssit-emblem.jpg"
-      authorName="Ing. Havel CONTRERAS TAPAHUASCO"
-      authorRole="Arquitecto de Software Principal · SSIT CONSULTING E.I.R.L. & Creador del Ecosistema @archware (Atomic UI · Doctrina Barracuda · Doctrina Mangosta)"
-      githubHandle="@archware"
-      githubUrl="https://github.com/archware"
-      aiDisclosure="Desarrollado en co-ingeniería con IA Agéntica por SSIT CONSULTING E.I.R.L. bajo el ecosistema de autor @archware: una suite propia de ingeniería de software que integra Doctrina Mangosta (Arquitectura Hexagonal y CQRS estricto), Doctrina Barracuda (Chasis Frontend reactivo con Signals) y el sistema de diseño Atomic UI (@atomic-ui/core), logrando productos de calidad empresarial verificados por compuertas deterministas."
-      [credits]="aboutCredits"
-      [techStack]="aboutTechStack"
-      [links]="aboutLinks"
-      copyrightText="© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware) · SSIT CONSULTING E.I.R.L. Todos los derechos reservados."
-      (closed)="isAboutModalOpen.set(false)"
-    />
-
-    <app-about-dialog
-      variant="popup"
-      size="md"
-      [open]="isAboutPopupOpen()"
-      dialogTitle="Acerca de Atomic UI (Popup)"
-      appName="Atomic UI — Suite Barracuda & Mangosta"
-      appSubtitle="Sistema de Diseño Empresarial en Angular 22 + Signals · SSIT CONSULTING E.I.R.L."
-      appDescription="Librería de componentes atómicos de alto rendimiento, tokens semánticos Zafiro Cobalto & Oro Imperial y plantillas gobernadas bajo las doctrinas Barracuda (Frontend) y Mangosta (Backend CQRS)."
-      version="v5.22.0"
-      environment="CANON OFICIAL"
-      runtimeInfo="Angular 22 + Signals"
-      logoIcon="fa-solid fa-layer-group"
-      logoImageUrl="assets/doctrinas/ssit-emblem.jpg"
-      authorName="Ing. Havel CONTRERAS TAPAHUASCO"
-      authorRole="Arquitecto de Software Principal · SSIT CONSULTING E.I.R.L. & Creador del Ecosistema @archware (Atomic UI · Doctrina Barracuda · Doctrina Mangosta)"
-      githubHandle="@archware"
-      githubUrl="https://github.com/archware"
-      aiDisclosure="Desarrollado en co-ingeniería con IA Agéntica por SSIT CONSULTING E.I.R.L. bajo el ecosistema de autor @archware: una suite propia de ingeniería de software que integra Doctrina Mangosta (Arquitectura Hexagonal y CQRS estricto), Doctrina Barracuda (Chasis Frontend reactivo con Signals) y el sistema de diseño Atomic UI (@atomic-ui/core), logrando productos de calidad empresarial verificados por compuertas deterministas."
-      [credits]="aboutCredits"
-      [techStack]="aboutTechStack"
-      [links]="aboutLinks"
-      copyrightText="© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware) · SSIT CONSULTING E.I.R.L. Todos los derechos reservados."
-      (closed)="isAboutPopupOpen.set(false)"
-    />
-  </app-panel>
-
-  <!-- Information Panels -->
-  <app-row columns="repeat(auto-fit, minmax(300px, 1fr))" gap="1rem" class="info-row">
-    <app-panel [title]="'demo.project.title' | translate" variant="plain" padding="md" titleAlign="center"
-      titleWeight="bold">
-      <app-text variant="h3" weight="bold" class="mb-sm">{{ 'demo.project.subtitle' | translate }}</app-text>
-      <app-text variant="body" class="mb-md">
-        {{ 'demo.project.description' | translate }}
-      </app-text>
-      <app-panel variant="flat" padding="sm" class="tech-panel">
-        <app-text variant="caption" color="primary">
-          💡 {{ 'demo.project.tech' | translate }}
-        </app-text>
-      </app-panel>
-    </app-panel>
-
-    <app-panel [title]="'demo.components.title' | translate" variant="floating" padding="md" titleAlign="center"
-      titleWeight="bold">
-      <app-text variant="h3" weight="bold" class="mb-sm">{{ 'demo.components.subtitle' | translate }}</app-text>
-      <app-text variant="body">
-        {{ 'demo.components.description' | translate }}
-      </app-text>
-      <app-row gap="0.5rem" class="mt-md" wrap="wrap">
-        <app-chip variant="default" size="sm">Atoms</app-chip>
-        <app-chip variant="default" size="sm">Molecules</app-chip>
-        <app-chip variant="default" size="sm">Organisms</app-chip>
-      </app-row>
-    </app-panel>
-  </app-row>
+  <app-about-dialog
+    variant="popup"
+    size="md"
+    [open]="isAboutPopupOpen()"
+    dialogTitle="Acerca de Atomic UI (Popup)"
+    appName="Atomic UI — Suite Barracuda & Mangosta"
+    appSubtitle="Sistema de Diseño Empresarial en Angular 22 + Signals · SSIT CONSULTING E.I.R.L."
+    appDescription="Librería de componentes atómicos de alto rendimiento, tokens semánticos Zafiro Cobalto & Oro Imperial y plantillas gobernadas mediante Artifact Barracuda (Frontend) y Artifact Mangosta (Backend CQRS)."
+    version="v5.23.0"
+    environment="CANON OFICIAL"
+    runtimeInfo="Angular 22 + Signals"
+    logoIcon="fa-solid fa-layer-group"
+    logoImageUrl="assets/doctrinas/ssit-emblem.jpg"
+    authorName="Ing. Havel CONTRERAS TAPAHUASCO"
+    authorRole="Arquitecto de Software Principal · SSIT CONSULTING E.I.R.L. & Creador del Ecosistema @archware (Atomic UI · Artifact Barracuda · Artifact Mangosta)"
+    githubHandle="@archware"
+    githubUrl="https://github.com/archware"
+    aiDisclosure="Desarrollado en co-ingeniería con IA Agéntica por SSIT CONSULTING E.I.R.L. bajo el ecosistema de autor @archware: una suite propia de ingeniería de software que integra Artifact Mangosta (Arquitectura Hexagonal y CQRS estricto), Artifact Barracuda (Chasis Frontend reactivo con Signals) y el sistema de diseño Atomic UI (@atomic-ui/core), logrando productos de calidad empresarial verificados por compuertas deterministas."
+    [credits]="aboutCredits"
+    [techStack]="aboutTechStack"
+    [links]="aboutLinks"
+    copyrightText="© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware) · SSIT CONSULTING E.I.R.L. Todos los derechos reservados."
+    (closed)="isAboutPopupOpen.set(false)"
+  />
 </app-layout-shell>
 
  

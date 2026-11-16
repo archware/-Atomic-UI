@@ -11,7 +11,7 @@ import {
   viewChildren,
   viewChild,
 } from '@angular/core';
-import { PageHeader } from '../../organisms/page-header/page-header';
+import { PageHeader, PageHeaderAlignment } from '../../organisms/page-header/page-header';
 import { QueryToolbar } from '../../organisms/query-toolbar/query-toolbar';
 import {
   DataTable,
@@ -109,6 +109,7 @@ export class PaginaCrudAccordion<T extends object = Record<string, unknown>> {
   // ─── Configuración de la página ──────────────────────────────
   readonly titulo = input.required<string>();
   readonly subtitulo = input<string | null>(null);
+  readonly headerAlign = input<PageHeaderAlignment>('center');
   /** Variante del acordeón (`default`, `multiple`, `single`, `flush`). */
   readonly varianteAccordion = input<AccordionVariant>('default');
   /** Cuando es `true`, abrir una entidad cierra automáticamente las demás. */

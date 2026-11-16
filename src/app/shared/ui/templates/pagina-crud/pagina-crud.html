@@ -1,6 +1,6 @@
 <!-- Chasis de catálogo: la estructura visual pertenece al ADN. -->
 @if (!embedded()) {
-  <app-page-header [title]="titulo()" [subtitle]="subtitulo()" />
+  <app-page-header [title]="titulo()" [subtitle]="subtitulo()" [align]="headerAlign()" />
 }
 
 <app-query-toolbar accessibleLabel="Búsqueda y acciones de {{ titulo() }}">
@@ -26,6 +26,14 @@
           [label]="labelFiltroSecundario()"
           variant="floating"
           [searchable]="false"
+        />
+      } @else if (getTipoFiltro(tipo) === 'fecha') {
+        <app-datepicker
+          class="pagina-crud__filtro-control"
+          [ngModel]="busqueda() || null"
+          (ngModelChange)="alBuscar($event)"
+          [label]="labelFiltroSecundario()"
+          variant="floating"
         />
       } @else {
         <app-input
@@ -157,8 +165,3 @@
     </app-button>
   </footer>
 </app-crud-dialog>
-
-
-
-
-

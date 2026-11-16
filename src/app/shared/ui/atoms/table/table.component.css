@@ -57,6 +57,10 @@
 .so-root[data-so-table][data-so-sync-columns]
   .atomic-table
   tbody
+  td[app-table-cell]:has(> app-badge:only-child),
+.so-root[data-so-table][data-so-sync-columns]
+  .atomic-table
+  tbody
   td[app-table-cell]:has(> app-chip:only-child) {
   display: flex;
   align-items: center;

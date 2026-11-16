@@ -41,7 +41,10 @@ export type CardSize = 'sm' | 'md' | 'lg';
 
       <!-- Header -->
       @if (title() || subtitle() || icon()) {
-        <header class="card__header">
+        <header
+          class="card__header"
+          [class.card__header--center]="headerAlign() === 'center'"
+        >
           @if (icon()) {
             <span class="card__icon"><i [class]="icon()"></i></span>
           }
@@ -90,6 +93,9 @@ export class CardComponent {
 
   /** Horizontal layout (image on side) */
   readonly horizontal = input(false);
+
+  /** Horizontal alignment of the card header */
+  readonly headerAlign = input<'start' | 'center'>('start');
 
   /** Click event for interactive cards */
   readonly cardClick = output<void>();

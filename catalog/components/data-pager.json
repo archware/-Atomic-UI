@@ -1,0 +1,99 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "data-pager",
+  "layer": "organism",
+  "selector": "app-data-pager",
+  "export": "DataPagerComponent",
+  "source": "src/app/shared/ui/organisms/data-pager/data-pager.component.ts",
+  "purpose": "Barra independiente de paginación con rango visible de registros y selector de tamaño de página.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "total",
+      "type": "number",
+      "meaning": "Propiedad de entrada total configurada en el componente.",
+      "default": 0
+    },
+    {
+      "name": "page",
+      "type": "number",
+      "meaning": "Propiedad de entrada page configurada en el componente.",
+      "default": 1
+    },
+    {
+      "name": "pageSize",
+      "type": "number",
+      "meaning": "Propiedad de entrada pageSize configurada en el componente.",
+      "default": 10
+    },
+    {
+      "name": "pageSizeOptions",
+      "type": "unknown",
+      "meaning": "Propiedad de entrada pageSizeOptions configurada en el componente."
+    }
+  ],
+  "outputs": [
+    {
+      "name": "pageChange",
+      "type": "number",
+      "meaning": "Evento emitido por el componente (pageChange)."
+    },
+    {
+      "name": "pageSizeChange",
+      "type": "number",
+      "meaning": "Evento emitido por el componente (pageSizeChange)."
+    }
+  ],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Calcula total de páginas y rango actual emitiendo pageChange y pageSizeChange."
+    },
+    {
+      "name": "boundary",
+      "meaning": "Deshabilita retroceso o avance al alcanzar la primera o última página."
+    }
+  ],
+  "a11y": [
+    "Controles de paginación y selector con etiquetas claras en español."
+  ],
+  "responsive": [
+    "Reorganiza controles de tamaño y navegación en múltiples líneas en pantallas compactas."
+  ],
+  "tokens": [
+    "--border-color",
+    "--border-width-thin",
+    "--control-height-sm",
+    "--font-weight-emphasis",
+    "--radius-lg",
+    "--radius-sm",
+    "--shadow-sm",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--surface-background",
+    "--text-sm"
+  ],
+  "story": {
+    "path": "src/stories/ui-data-pager.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "data-pager",
+    "table-pager",
+    "server-pagination"
+  ]
+}

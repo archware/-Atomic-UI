@@ -12,6 +12,14 @@ describe('App', () => {
     }).compileComponents();
   });
 
+  afterEach(() => {
+    document.documentElement.removeAttribute('data-theme');
+    document.documentElement.classList.remove('dark', 'theme-dark', 'theme-light');
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.removeItem('app-theme');
+    }
+  });
+
   it('should create the app', () => {
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;

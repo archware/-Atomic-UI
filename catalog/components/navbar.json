@@ -1,0 +1,122 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "navbar",
+  "layer": "organism",
+  "selector": "app-navbar",
+  "export": "NavBarComponent",
+  "source": "src/app/shared/ui/organisms/navbar/navbar.component.ts",
+  "relatedExports": [
+    "NavBarItem",
+    "NavBarBrand"
+  ],
+  "purpose": "Barra de navegación superior para sitios y aplicaciones con marca, menú adaptativo y ranura derecha.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "brand",
+      "type": "NavBarBrand",
+      "meaning": "Propiedad de entrada brand configurada en el componente."
+    },
+    {
+      "name": "items",
+      "type": "NavBarItem[]",
+      "meaning": "Propiedad de entrada items configurada en el componente."
+    },
+    {
+      "name": "activeId",
+      "type": "string",
+      "meaning": "Propiedad de entrada activeId configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "sticky",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada sticky configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "variant",
+      "type": "'light' | 'dark' | 'primary' | 'transparent'",
+      "meaning": "Variante visual o de comportamiento declarada por el componente.",
+      "default": "light"
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "meaning": "Etiqueta accesible explícita para lectores de pantalla.",
+      "default": "Navegación principal"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "navigate",
+      "type": "NavBarItem",
+      "meaning": "Evento emitido por el componente (navigate)."
+    }
+  ],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Muestra marca, enlaces activos y menú móvil colapsable."
+    },
+    {
+      "name": "sticky",
+      "meaning": "Fija la barra en el borde superior durante el desplazamiento."
+    }
+  ],
+  "a11y": [
+    "Usa nav con ariaLabel configurable, elemento activo marcado y alternador accesible en móvil."
+  ],
+  "responsive": [
+    "Colapsa enlaces en un menú desplegable bajo puntos de corte estrechos."
+  ],
+  "tokens": [
+    "--border-color",
+    "--brand-primary-500",
+    "--font-weight-emphasis",
+    "--gray-0",
+    "--gray-800",
+    "--navbar-dark-surface",
+    "--navbar-inverse-active",
+    "--navbar-inverse-hover",
+    "--navbar-inverse-text",
+    "--navbar-primary-surface",
+    "--primary-color-light",
+    "--primary-color-text",
+    "--radius-md",
+    "--shadow-md",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-6",
+    "--surface-background",
+    "--surface-hover",
+    "--text-color",
+    "--text-color-on-primary",
+    "--text-color-secondary",
+    "--text-lg",
+    "--text-md",
+    "--text-sm"
+  ],
+  "story": {
+    "path": "src/stories/ui-navbar.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "navbar",
+    "top-navigation",
+    "app-navbar"
+  ]
+}

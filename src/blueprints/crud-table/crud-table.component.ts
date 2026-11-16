@@ -103,17 +103,17 @@ export class CrudTableComponent implements OnInit {
   readonly columnas: DataTableColumn<Entity>[] = [
     { key: 'name', header: 'Nombre', sortable: true },
     { key: 'email', header: 'Email', sortable: true },
-    { key: 'role', header: 'Rol', sortable: true, isTag: true, tagVariant: () => 'default' },
+    { key: 'role', header: 'Rol', sortable: true, isBadge: true, badgeVariant: () => 'default' },
     {
       key: 'status',
       header: 'Estado',
       sortable: true,
-      isTag: true,
-      tagVariant: (row: Entity) => {
+      isBadge: true,
+      badgeVariant: (row: Entity) => {
         switch (row.status) {
           case 'active': return 'success';
           case 'pending': return 'warning';
-          case 'inactive': return 'error';
+          case 'inactive': return 'danger';
           default: return 'default';
         }
       },

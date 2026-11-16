@@ -1,0 +1,83 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "divider",
+  "layer": "atom",
+  "selector": "app-divider",
+  "export": "DividerComponent",
+  "source": "src/app/shared/ui/atoms/divider/divider.component.ts",
+  "purpose": "Separador visual horizontal o vertical para delimitar bloques y secciones con texto opcional.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "text",
+      "type": "string",
+      "meaning": "Propiedad de entrada text configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "meaning": "Propiedad de entrada label configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "variant",
+      "type": "'default' | 'light' | 'strong' | 'dashed'",
+      "meaning": "Variante visual o de comportamiento declarada por el componente.",
+      "default": "default"
+    },
+    {
+      "name": "orientation",
+      "type": "'horizontal' | 'vertical'",
+      "meaning": "Propiedad de entrada orientation configurada en el componente.",
+      "default": "horizontal"
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "horizontal",
+      "meaning": "Separador de bloque con línea continua o discontinua y etiqueta centrada opcional."
+    },
+    {
+      "name": "vertical",
+      "meaning": "Divisor en línea entre grupos horizontales de controles."
+    }
+  ],
+  "a11y": [
+    "Usa semántica de separador visual sin interferir con el orden de tabulación."
+  ],
+  "responsive": [
+    "Adapta su longitud al contenedor padre en orientación horizontal o vertical."
+  ],
+  "tokens": [
+    "--border-color",
+    "--font-weight-body",
+    "--space-1",
+    "--space-3",
+    "--space-5",
+    "--space-6",
+    "--text-color-secondary",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-divider.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "divider",
+    "separator",
+    "section-divider"
+  ]
+}

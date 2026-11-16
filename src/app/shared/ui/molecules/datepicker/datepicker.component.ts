@@ -43,7 +43,10 @@ export class DatepickerComponent implements ControlValueAccessor {
   readonly triggerFocused = signal(false);
   private readonly sincronizarFocoInterno = effect(() => {
     const activo = this.isOpen() || this.triggerFocused();
-    this.campoInterno()?.isFocused.set(activo);
+    const interno = this.campoInterno();
+    if (interno && interno.isFocused() !== activo) {
+      interno.isFocused.set(activo);
+    }
   });
 
   // State
@@ -165,7 +168,8 @@ export class DatepickerComponent implements ControlValueAccessor {
   }
 
   // Selection Methods
-  selectDate(date: Date) {
+  selectDate(date: Date, e?: Event) {
+    e?.stopPropagation();
     if (this.isDisabled() || !Number.isFinite(date.getTime())) return;
     this.value.set(date);
     this.onChange(date);
@@ -173,7 +177,24 @@ export class DatepickerComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
-  selectMonth(monthIndex: number) {
+  selectToday(e?: Event): void {
+    e?.stopPropagation();
+    if (this.isDisabled()) return;
+    const hoy = new Date();
+    this.selectDate(new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate()));
+  }
+
+  clearDate(e?: Event): void {
+    e?.stopPropagation();
+    if (this.isDisabled()) return;
+    this.value.set(null);
+    this.onChange(null);
+    this.isOpen.set(false);
+    this.onTouched();
+  }
+
+  selectMonth(monthIndex: number, e?: Event) {
+    e?.stopPropagation();
     const d = new Date(this.currentViewDate());
     d.setDate(1);
     d.setMonth(monthIndex);
@@ -181,28 +202,25 @@ export class DatepickerComponent implements ControlValueAccessor {
     this.currentView.set('day');
   }
 
-  selectYear(year: number) {
+  selectYear(year: number, e?: Event) {
+    e?.stopPropagation();
     const d = new Date(this.currentViewDate());
     d.setDate(1);
     d.setFullYear(year);
     this.currentViewDate.set(d);
-    this.currentView.set('month'); // Go to month selection after year, or day? Let's go to day for faster flow.
-    // Actually, usually Year -> Month -> Day. Let's send to Month view to be safe/granular, or Day if month is assumed.
-    // Let's go to Month view as it allows refining the month.
     this.currentView.set('month');
-    // Wait, user might want to keep the same month. Let's go to 'day' view directly to check the date?
-    // Standard pattern: Year > Month > Date. If I select 2025, I likely want to select the month next. 
-    // But if I already had a month selected, maybe I just updated the year.
-    // Let's stick to Month view for now so user confirms month.
   }
 
   onKeyDown(event: KeyboardEvent, day?: Date): void {
-    if (this.isDisabled()) return;
+    if (this.isDisabled() || event.defaultPrevented) return;
 
     if (!this.isOpen()) {
       if (event.key === 'Enter' || event.key === ' ') {
         this.toggle();
         event.preventDefault();
+      } else if ((event.key === 'Backspace' || event.key === 'Delete') && !this.required() && this.value()) {
+        event.preventDefault();
+        this.clearDate(event);
       }
       return;
     }
@@ -306,7 +324,12 @@ export class DatepickerComponent implements ControlValueAccessor {
   // Click Outside Handling
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    if (!this.elementRef.nativeElement.contains(event.target)) {
+    if (!this.isOpen()) return;
+    const path = typeof event.composedPath === 'function' ? event.composedPath() : [];
+    const dentro =
+      path.includes(this.elementRef.nativeElement) ||
+      this.elementRef.nativeElement.contains(event.target as Node | null);
+    if (!dentro) {
       this.close();
     }
   }

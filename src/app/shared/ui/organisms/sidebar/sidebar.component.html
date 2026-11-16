@@ -8,17 +8,21 @@
     @if (!collapsed()) {
       <div class="logo-brand">
         <span class="logo-text">{{ logoText() }}</span>
-        @if (logoSubtitle()) {
-          <span class="logo-subtitle">{{ logoSubtitle() }}</span>
+        @if (logoSubtitle() || logoBadgeImages().length > 0) {
+          <div class="logo-subtitle-row">
+            @if (logoSubtitle()) {
+              <span class="logo-subtitle">{{ logoSubtitle() }}</span>
+            }
+            @if (logoBadgeImages().length > 0) {
+              <div class="logo-badges" aria-hidden="true">
+                @for (badgeUrl of logoBadgeImages(); track badgeUrl) {
+                  <img class="logo-badge-img" [src]="badgeUrl" alt="" />
+                }
+              </div>
+            }
+          </div>
         }
       </div>
-      @if (logoBadgeImages().length > 0) {
-        <div class="logo-badges" aria-hidden="true">
-          @for (badgeUrl of logoBadgeImages(); track badgeUrl) {
-            <img class="logo-badge-img" [src]="badgeUrl" alt="" />
-          }
-        </div>
-      }
     }
   </div>
 

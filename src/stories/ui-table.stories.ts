@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { expect, within } from 'storybook/test';
+import { BadgeComponent } from '../app/shared/ui/atoms/badge/badge.component';
 import { TableCellComponent } from '../app/shared/ui/atoms/table/table-cell.component';
 import { TableRowComponent } from '../app/shared/ui/atoms/table/table-row.component';
 import { TableComponent } from '../app/shared/ui/atoms/table/table.component';
@@ -39,7 +40,7 @@ const meta: Meta<TableComponent> = {
   component: TableComponent,
   tags: ['autodocs'],
   decorators: [
-    moduleMetadata({ imports: [TableComponent, TableRowComponent, TableCellComponent] }),
+    moduleMetadata({ imports: [TableComponent, TableRowComponent, TableCellComponent, BadgeComponent] }),
   ],
   args: {
     mobileScrollMode: 'page',
@@ -99,7 +100,11 @@ const renderTable: NonNullable<Story['render']> = (args) => ({
             <td app-table-cell dataLabel="Nombre" [wrap]="true">{{ row.name }}</td>
             <td app-table-cell dataLabel="Email">{{ row.email }}</td>
             <td app-table-cell dataLabel="Rol">{{ row.role }}</td>
-            <td app-table-cell dataLabel="Estado">{{ row.status }}</td>
+            <td app-table-cell dataLabel="Estado">
+              <app-badge [variant]="row.status === 'Activo' ? 'success' : row.status === 'Pendiente' ? 'warning' : 'danger'">
+                {{ row.status }}
+              </app-badge>
+            </td>
           </tr>
         }
       </tbody>

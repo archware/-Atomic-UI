@@ -37,7 +37,7 @@
 
   <!-- Popup Calendar -->
   @if (isOpen()) {
-  <div class="datepicker-popup" role="grid" [attr.aria-label]="(currentViewDate() | date:'MMMM yyyy')">
+  <div class="datepicker-popup" role="grid" [attr.aria-label]="(currentViewDate() | date:'MMMM yyyy')" (keydown)="onKeyDown($event)">
     <!-- Header -->
     <div class="calendar-header">
       <button type="button" class="nav-btn" (click)="prev($event)" aria-label="Mes anterior">
@@ -82,7 +82,7 @@
       <!-- Days -->
       @for (day of daysInMonth(); track $index) {
       <div class="calendar-day" [class.today]="isToday(day)" [class.selected]="isSelected(day)"
-        [attr.data-date]="day.getDate()" (click)="selectDate(day)" (keydown)="onKeyDown($event, day)" tabindex="0"
+        [attr.data-date]="day.getDate()" (click)="selectDate(day, $event)" (keydown)="onKeyDown($event, day)" tabindex="0"
         role="gridcell" [attr.aria-selected]="isSelected(day)" [attr.aria-label]="(day | date:'fullDate')">
         {{ day.getDate() }}
       </div>
@@ -95,7 +95,7 @@
     <div class="month-grid">
       @for (month of months; track $index) {
       <button type="button" class="calendar-option" [class.selected]="currentViewDate().getMonth() === $index"
-        (click)="selectMonth($index)">
+        (click)="selectMonth($index, $event)">
         {{ month.slice(0, 3) }}
       </button>
       }
@@ -107,12 +107,19 @@
     <div class="year-grid">
       @for (year of yearsList(); track year) {
       <button type="button" class="calendar-option" [class.selected]="currentViewDate().getFullYear() === year"
-        (click)="selectYear(year)">
+        (click)="selectYear(year, $event)">
         {{ year }}
       </button>
       }
     </div>
     }
+
+    <div class="datepicker-footer">
+      <button type="button" class="datepicker-footer__btn" (click)="selectToday($event)">Hoy</button>
+      @if (value() && !required()) {
+      <button type="button" class="datepicker-footer__btn datepicker-footer__btn--clear" (click)="clearDate($event)">Limpiar</button>
+      }
+    </div>
   </div>
   }
 </div>

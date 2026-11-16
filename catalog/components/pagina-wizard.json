@@ -1,0 +1,173 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "pagina-wizard",
+  "layer": "template",
+  "selector": "app-pagina-wizard",
+  "export": "PaginaWizardComponent",
+  "source": "src/app/shared/ui/templates/pagina-wizard/pagina-wizard.ts",
+  "purpose": "Plantilla guiada paso a paso con PageHeader alineable, Stepper integrado, título de paso centrado opcional y pie de navegación.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "titulo",
+      "type": "string",
+      "meaning": "Título principal mostrado en el encabezado.",
+      "required": true
+    },
+    {
+      "name": "subtitulo",
+      "type": "string | null",
+      "meaning": "Subtítulo descriptivo opcional bajo el título.",
+      "default": null
+    },
+    {
+      "name": "headerAlign",
+      "type": "PageHeaderAlignment",
+      "meaning": "Alineación horizontal del encabezado de página ('start' | 'center').",
+      "default": "center"
+    },
+    {
+      "name": "stepTitle",
+      "type": "string | null",
+      "meaning": "Propiedad de entrada stepTitle configurada en el componente.",
+      "default": null
+    },
+    {
+      "name": "stepSubtitle",
+      "type": "string | null",
+      "meaning": "Propiedad de entrada stepSubtitle configurada en el componente.",
+      "default": null
+    },
+    {
+      "name": "steps",
+      "type": "Step[]",
+      "meaning": "Propiedad de entrada steps configurada en el componente.",
+      "required": true
+    },
+    {
+      "name": "activeStep",
+      "type": "number",
+      "meaning": "Propiedad de entrada activeStep configurada en el componente.",
+      "default": 0
+    },
+    {
+      "name": "allowSkip",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada allowSkip configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "meaning": "Activa indicador de carga y bloquea envíos duplicados.",
+      "default": false
+    },
+    {
+      "name": "nextEnabled",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada nextEnabled configurada en el componente.",
+      "default": true
+    },
+    {
+      "name": "etiquetaCancelar",
+      "type": "string",
+      "meaning": "Propiedad de entrada etiquetaCancelar configurada en el componente.",
+      "default": "Cancelar"
+    },
+    {
+      "name": "etiquetaAtras",
+      "type": "string",
+      "meaning": "Propiedad de entrada etiquetaAtras configurada en el componente.",
+      "default": "Atrás"
+    },
+    {
+      "name": "etiquetaSiguiente",
+      "type": "string",
+      "meaning": "Propiedad de entrada etiquetaSiguiente configurada en el componente.",
+      "default": "Siguiente"
+    },
+    {
+      "name": "etiquetaFinalizar",
+      "type": "string",
+      "meaning": "Propiedad de entrada etiquetaFinalizar configurada en el componente.",
+      "default": "Guardar / Finalizar"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "stepChange",
+      "type": "number",
+      "meaning": "Evento emitido por el componente (stepChange)."
+    },
+    {
+      "name": "cancelled",
+      "type": "void",
+      "meaning": "Evento emitido por el componente (cancelled)."
+    },
+    {
+      "name": "nextClicked",
+      "type": "void",
+      "meaning": "Evento emitido por el componente (nextClicked)."
+    },
+    {
+      "name": "backClicked",
+      "type": "void",
+      "meaning": "Evento emitido por el componente (backClicked)."
+    },
+    {
+      "name": "finished",
+      "type": "void",
+      "meaning": "Evento emitido por el componente (finished)."
+    }
+  ],
+  "states": [
+    {
+      "name": "step-active",
+      "meaning": "Presenta encabezado centrado, stepper interactivo, cabecera opcional del paso y contenido."
+    },
+    {
+      "name": "loading",
+      "meaning": "Deshabilita avance final y muestra indicador de carga en el botón finalizar."
+    }
+  ],
+  "a11y": [
+    "Envuelve el paso activo en role=region etiquetado con el nombre del paso y botón cerrar accesible."
+  ],
+  "responsive": [
+    "En 48rem o menos reduce relleno a --space-4 y apila controles del pie centrados."
+  ],
+  "tokens": [
+    "--border-color",
+    "--font-family-heading",
+    "--form-row-gap",
+    "--primary-color",
+    "--radius-lg",
+    "--shadow-sm",
+    "--space-2",
+    "--space-4",
+    "--space-5",
+    "--surface-background",
+    "--text-color-secondary",
+    "--text-sm"
+  ],
+  "story": {
+    "path": "src/stories/pagina-wizard.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/templates/pagina-wizard/pagina-wizard.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "wizard-page",
+    "pagina-wizard",
+    "multi-step-form"
+  ]
+}

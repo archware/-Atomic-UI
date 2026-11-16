@@ -39,8 +39,10 @@
       <form [formGroup]="form" class="wizard-form-content">
         @if (currentStep() === 0) {
           <div class="step-content">
-            <app-text variant="h3">Layout 1 Columna</app-text>
-            <app-text variant="body" color="secondary" class="mb-4">Ejemplo de distribución en 1 columna (columns="1").</app-text>
+            <div class="wizard-step-header">
+              <app-text variant="h3">Layout 1 Columna</app-text>
+              <app-text variant="body" color="secondary">Ejemplo de distribución en 1 columna (columns="1").</app-text>
+            </div>
 
             <div class="single-column-wrapper">
               <app-row columns="1" variant="form">
@@ -72,8 +74,10 @@
 
         @if (currentStep() === 1) {
           <div class="step-content">
-            <app-text variant="h3">Layout 2 Columnas</app-text>
-            <app-text variant="body" color="secondary" class="mb-4">Ejemplo de distribución en 2 columnas (columns="2").</app-text>
+            <div class="wizard-step-header">
+              <app-text variant="h3">Layout 2 Columnas</app-text>
+              <app-text variant="body" color="secondary">Ejemplo de distribución en 2 columnas (columns="2").</app-text>
+            </div>
 
             <app-row columns="2" variant="form">
               <app-select2
@@ -108,8 +112,10 @@
 
         @if (currentStep() === 2) {
           <div class="step-content">
-            <app-text variant="h3">Layout 3 Columnas</app-text>
-            <app-text variant="body" color="secondary" class="mb-4">Ejemplo de distribución en 3 columnas (columns="3").</app-text>
+            <div class="wizard-step-header">
+              <app-text variant="h3">Layout 3 Columnas</app-text>
+              <app-text variant="body" color="secondary">Ejemplo de distribución en 3 columnas (columns="3").</app-text>
+            </div>
 
             <app-row columns="3" variant="form">
               <app-floating-input
@@ -153,8 +159,10 @@
 
         @if (currentStep() === 3) {
           <div class="step-content">
-            <app-text variant="h3">Layout 4 Columnas</app-text>
-            <app-text variant="body" color="secondary" class="mb-4">Ejemplo de distribución en 4 columnas (columns="4").</app-text>
+            <div class="wizard-step-header">
+              <app-text variant="h3">Layout 4 Columnas</app-text>
+              <app-text variant="body" color="secondary">Ejemplo de distribución en 4 columnas (columns="4").</app-text>
+            </div>
 
             <app-row columns="4" variant="form">
               <app-floating-input

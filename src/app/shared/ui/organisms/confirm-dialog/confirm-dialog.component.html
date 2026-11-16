@@ -1,0 +1,73 @@
+<dialog
+  #nativeDialog
+  class="confirm-dialog"
+  [class.confirm-dialog--warning]="resolvedViewModel().tone === 'warning'"
+  [class.confirm-dialog--danger]="resolvedViewModel().tone === 'danger'"
+  role="alertdialog"
+  aria-modal="true"
+  [attr.aria-labelledby]="titleId"
+  [attr.aria-describedby]="messageId"
+  [attr.aria-busy]="loading() ? 'true' : null"
+  (cancel)="onNativeCancel($event)"
+  (click)="onDialogClick($event)"
+  (keydown)="onDialogKeydown($event)"
+>
+  @if (isOpen()) {
+    @let vm = resolvedViewModel();
+    <div class="confirm-dialog__surface">
+      <header
+        class="confirm-dialog__header"
+        [class.confirm-dialog__header--center]="vm.headerAlign === 'center'"
+      >
+        <div class="confirm-dialog__heading">
+          <h2 class="confirm-dialog__title" [id]="titleId">{{ vm.title }}</h2>
+          @if (vm.subtitle) {
+            <p class="confirm-dialog__subtitle">{{ vm.subtitle }}</p>
+          }
+        </div>
+        <div class="confirm-dialog__close">
+          <app-icon-button
+            variant="close"
+            animation="none"
+            ariaLabel="Cerrar confirmación"
+            [disabled]="loading()"
+            (clicked)="onCloseButtonClick()"
+          />
+        </div>
+      </header>
+
+      <app-scroll-overlay
+        class="so-block confirm-dialog__scroll"
+        [skipTableDetection]="true"
+        [disableHorizontal]="true"
+      >
+        <div class="confirm-dialog__body">
+          <div class="confirm-dialog__badge" aria-hidden="true">
+            <i [class]="toneIconClass()"></i>
+          </div>
+          <p class="confirm-dialog__message" [id]="messageId">{{ vm.message }}</p>
+        </div>
+      </app-scroll-overlay>
+
+      <footer class="confirm-dialog__footer">
+        <app-button
+          class="confirm-dialog__cancel-btn"
+          variant="outline"
+          [disabled]="loading()"
+          (buttonClick)="onCancelClick()"
+        >
+          {{ vm.cancelLabel }}
+        </app-button>
+        <app-button
+          class="confirm-dialog__confirm-btn"
+          [variant]="confirmButtonVariant()"
+          [loading]="loading()"
+          [disabled]="loading()"
+          (buttonClick)="onConfirmClick()"
+        >
+          {{ vm.confirmLabel }}
+        </app-button>
+      </footer>
+    </div>
+  }
+</dialog>

@@ -1,0 +1,61 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "setting-item",
+  "layer": "molecule",
+  "selector": "app-setting-item",
+  "export": "SettingItemComponent",
+  "source": "src/app/shared/ui/molecules/setting-item/setting-item.component.ts",
+  "purpose": "Fila estructurada de configuración con título, descripción explicativa y ranura derecha para un control.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "title",
+      "type": "string",
+      "meaning": "Título principal visible del componente.",
+      "default": ""
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "meaning": "Propiedad de entrada description configurada en el componente.",
+      "default": ""
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Presenta etiqueta descriptiva a la izquierda y control proyectado a la derecha."
+    }
+  ],
+  "a11y": [
+    "Mantiene asociación visual inmediata entre la descripción de la preferencia y su control interactivo."
+  ],
+  "responsive": [
+    "Distribuye etiqueta y control con ajuste flexible en tarjetas estrechas."
+  ],
+  "tokens": [
+    "--space-3",
+    "--space-4"
+  ],
+  "story": {
+    "path": "src/stories/ui-setting-item.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "setting-item",
+    "preference-row",
+    "configuration-item"
+  ]
+}

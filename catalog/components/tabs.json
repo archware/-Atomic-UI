@@ -1,0 +1,123 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "tabs",
+  "layer": "organism",
+  "selector": "app-tabs, app-tab",
+  "export": "TabsComponent",
+  "source": "src/app/shared/ui/organisms/tabs/tabs.component.ts",
+  "relatedExports": [
+    "TabComponent"
+  ],
+  "purpose": "Contenedor de pestañas horizontales o verticales (TabsComponent) compuesto por paneles declarativos TabComponent.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "label",
+      "type": "string",
+      "meaning": "Propiedad de entrada label configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "meaning": "Propiedad de entrada icon configurada en el componente."
+    },
+    {
+      "name": "iconClass",
+      "type": "string",
+      "meaning": "Propiedad de entrada iconClass configurada en el componente."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "meaning": "Deshabilita la interacción del usuario cuando es true.",
+      "default": false
+    },
+    {
+      "name": "defaultIndex",
+      "type": "number",
+      "meaning": "Propiedad de entrada defaultIndex configurada en el componente.",
+      "default": 0
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "meaning": "Etiqueta accesible explícita para lectores de pantalla.",
+      "default": "Tabs"
+    },
+    {
+      "name": "orientation",
+      "type": "'horizontal' | 'vertical'",
+      "meaning": "Propiedad de entrada orientation configurada en el componente.",
+      "default": "horizontal"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "tabChange",
+      "type": "number",
+      "meaning": "Evento emitido por el componente (tabChange)."
+    }
+  ],
+  "states": [
+    {
+      "name": "active",
+      "meaning": "Pestaña seleccionada visible con su contenido proyectado activo."
+    },
+    {
+      "name": "disabled",
+      "meaning": "Pestaña no seleccionable excluida de la activación."
+    }
+  ],
+  "a11y": [
+    "Roles tablist, tab y tabpanel con aria-selected, aria-controls y navegación por teclado."
+  ],
+  "responsive": [
+    "Desplaza o ajusta encabezados de pestañas evitando cortes en contenedores angostos."
+  ],
+  "tokens": [
+    "--border-color",
+    "--border-color-strong",
+    "--font-weight-body",
+    "--font-weight-emphasis",
+    "--hover-background-subtle",
+    "--primary-color",
+    "--radius-md",
+    "--radius-sm",
+    "--shadow-color",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--surface-background",
+    "--surface-ground",
+    "--surface-section",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-secondary",
+    "--text-lg",
+    "--text-md",
+    "--text-sm"
+  ],
+  "story": {
+    "path": "src/stories/ui-tabs.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/organisms/tabs/tabs.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "tabs",
+    "tab-panel",
+    "tab-group"
+  ]
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { TabsComponent, TabComponent } from '../../../../shared/ui/organisms/tabs/tabs.component';
@@ -158,11 +158,22 @@ import { StepperComponent, Step } from '../../../../shared/ui/organisms/stepper/
     <!-- STEPPER -->
     <app-panel title="Stepper" variant="flat" padding="md" class="showcase-section">
       <p style="margin-bottom: 1rem; color: var(--text-color-secondary);">Horizontal Stepper:</p>
-      <app-stepper [steps]="stepperSteps" [activeStep]="1"></app-stepper>
+      <app-stepper
+        [steps]="stepperSteps"
+        [activeStep]="currentStep()"
+        [maxReachableStep]="1"
+        (stepChange)="currentStep.set($event)"
+      ></app-stepper>
 
       <div style="margin-top: 2rem;">
         <p style="margin-bottom: 1rem; color: var(--text-color-secondary);">Vertical Stepper:</p>
-        <app-stepper [steps]="stepperSteps" [activeStep]="1" [vertical]="true"></app-stepper>
+        <app-stepper
+          [steps]="stepperSteps"
+          [activeStep]="currentStep()"
+          [maxReachableStep]="1"
+          [vertical]="true"
+          (stepChange)="currentStep.set($event)"
+        ></app-stepper>
       </div>
     </app-panel>
   `,
@@ -201,7 +212,7 @@ export class ShowcaseNavigationComponent {
     { label: 'Confirmación', description: 'Revisar pedido' }
   ];
 
-  readonly currentStep = 1;
+  readonly currentStep = signal(1);
 }
 
 

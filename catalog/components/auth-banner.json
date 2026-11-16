@@ -1,0 +1,52 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "auth-banner",
+  "layer": "molecule",
+  "selector": "app-auth-banner",
+  "export": "AuthBannerComponent",
+  "source": "src/app/shared/ui/molecules/auth-banner/auth-banner.component.ts",
+  "purpose": "Superficie visual promocional e institucional para la columna lateral de vistas de autenticación.",
+  "variants": [],
+  "inputs": [],
+  "outputs": [],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Muestra el contenido proyectado sobre fondo degradado de marca con formas decorativas."
+    }
+  ],
+  "a11y": [
+    "Los elementos decorativos permanecen aislados del lector de pantalla respetando contraste de texto blanco."
+  ],
+  "responsive": [
+    "Se integra dentro de AuthLayoutComponent adaptándose a escritorio y ocultándose o apilándose en móvil."
+  ],
+  "tokens": [
+    "--gray-0",
+    "--gray-1000",
+    "--primary-color",
+    "--secondary-color",
+    "--space-8",
+    "--text-color-on-primary"
+  ],
+  "story": {
+    "path": "src/stories/ui-auth-banner.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "auth-banner",
+    "login-hero",
+    "brand-panel"
+  ]
+}

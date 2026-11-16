@@ -80,6 +80,28 @@ const CONTRAST_PAIRS = [
   { what: 'texto de boton de paginacion en reposo', fg: '--pagination-text', bg: '--pagination-bg' },
   { what: 'texto de boton de paginacion activo', fg: '--pagination-active-text', bg: '--pagination-active-bg' },
   { what: 'texto de boton de paginacion deshabilitado', fg: '--pagination-disabled-text', bg: '--pagination-disabled-bg' },
+  { what: 'texto de badge default', fg: '--badge-default-text', bg: '--badge-default-bg' },
+  { what: 'texto de badge primary', fg: '--badge-primary-text', bg: '--badge-primary-bg' },
+  { what: 'texto de badge secondary', fg: '--badge-secondary-text', bg: '--badge-secondary-bg' },
+  { what: 'texto de badge success', fg: '--badge-success-text', bg: '--badge-success-bg' },
+  { what: 'texto de badge warning', fg: '--badge-warning-text', bg: '--badge-warning-bg' },
+  { what: 'texto de badge danger', fg: '--badge-danger-text', bg: '--badge-danger-bg' },
+  { what: 'texto de badge info', fg: '--badge-info-text', bg: '--badge-info-bg' },
+  { what: 'texto de badge outline', fg: '--badge-outline-text', bg: '--surface-background' },
+  { what: 'texto de chip default', fg: '--chip-default-text', bg: '--chip-default-bg' },
+  { what: 'texto de chip primary', fg: '--chip-primary-text', bg: '--chip-primary-bg' },
+  { what: 'texto de chip secondary', fg: '--chip-secondary-text', bg: '--chip-secondary-bg' },
+  { what: 'texto de chip success', fg: '--chip-success-text', bg: '--chip-success-bg' },
+  { what: 'texto de chip warning', fg: '--chip-warning-text', bg: '--chip-warning-bg' },
+  { what: 'texto de chip error', fg: '--chip-error-text', bg: '--chip-error-bg' },
+  { what: 'texto de chip info', fg: '--chip-info-text', bg: '--chip-info-bg' },
+  { what: 'texto de chip outline', fg: '--chip-outline-text', bg: '--surface-background' },
+  { what: 'texto de paso hover en stepper', fg: '--stepper-hover-text', bg: '--stepper-hover-bg' },
+  { what: 'descripcion de paso hover en stepper', fg: '--stepper-hover-description', bg: '--stepper-hover-bg' },
+  { what: 'indicador de paso hover en stepper', fg: '--stepper-hover-text', bg: '--stepper-hover-indicator-bg' },
+  { what: 'indicador de paso activo hover en stepper', fg: '--stepper-active-hover-indicator-text', bg: '--stepper-active-hover-indicator-bg' },
+  { what: 'texto de paso completado hover en stepper', fg: '--stepper-completed-hover-text', bg: '--stepper-completed-hover-bg' },
+  { what: 'indicador de paso completado hover en stepper', fg: '--stepper-completed-hover-indicator-text', bg: '--stepper-completed-hover-indicator-bg' },
 ];
 
 const failures = [];
@@ -210,7 +232,7 @@ for (const theme of REACHABLE_THEMES) {
 // --- Referencias colgantes ------------------------------------------------
 // Solo familias gobernadas por los ficheros de tema: fuera de ellas hay tokens
 // legitimos definidos en el propio componente o inyectados por [style].
-const GOVERNED = /^--(?:text-(?:2xs|xs|sm|md|lg|xl|2xl|3xl|4xl)|input-|surface-|gray-|letter-spacing-|border-width-|tooltip-|pagination-)/;
+const GOVERNED = /^--(?:text-(?:2xs|xs|sm|md|lg|xl|2xl|3xl|4xl)|input-|surface-|gray-|letter-spacing-|border-width-|tooltip-|pagination-|badge-|chip-|stepper-)/;
 
 const defined = new Set();
 for (const theme of [...REACHABLE_THEMES, 'brand-dark', 'brand-light']) {

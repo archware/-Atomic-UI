@@ -1,0 +1,116 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "version",
+  "layer": "atom",
+  "selector": "app-version",
+  "export": "VersionComponent",
+  "source": "src/app/shared/ui/atoms/version/version.component.ts",
+  "relatedExports": [
+    "VersionVariant"
+  ],
+  "purpose": "Distintivo informativo de versión de aplicación, entorno de ejecución y fecha de compilación opcional.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "version",
+      "type": "string",
+      "meaning": "Propiedad de entrada version configurada en el componente.",
+      "default": "v1.1.0"
+    },
+    {
+      "name": "appName",
+      "type": "string",
+      "meaning": "Propiedad de entrada appName configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "environment",
+      "type": "string",
+      "meaning": "Propiedad de entrada environment configurada en el componente.",
+      "default": "BETA"
+    },
+    {
+      "name": "variant",
+      "type": "VersionVariant",
+      "meaning": "Variante visual o de comportamiento declarada por el componente.",
+      "default": "badge"
+    },
+    {
+      "name": "showBuildDate",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada showBuildDate configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "buildDate",
+      "type": "string",
+      "meaning": "Propiedad de entrada buildDate configurada en el componente.",
+      "default": ""
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Presenta número de versión y distintivo visual del entorno activo."
+    }
+  ],
+  "a11y": [
+    "Expone texto legible con contraste suficiente para pie de página y barra lateral."
+  ],
+  "responsive": [
+    "Permite modos badge, text y full adaptables al espacio del footer o diálogo Acerca de."
+  ],
+  "tokens": [
+    "--alert-info-text",
+    "--alert-success-text",
+    "--alert-warning-text",
+    "--border-color",
+    "--border-width-thin",
+    "--font-family-base",
+    "--font-weight-body",
+    "--font-weight-title",
+    "--info-color",
+    "--info-color-light",
+    "--info-color-lighter",
+    "--radius-full",
+    "--radius-sm",
+    "--space-1",
+    "--space-2",
+    "--success-color",
+    "--success-color-light",
+    "--success-color-lighter",
+    "--surface-background",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-secondary",
+    "--version-dot",
+    "--version-qa-border",
+    "--version-qa-fill",
+    "--version-qa-surface",
+    "--version-qa-text",
+    "--warning-color",
+    "--warning-color-light",
+    "--warning-color-lighter"
+  ],
+  "story": {
+    "path": "src/stories/ui-version.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "version-badge",
+    "build-info",
+    "app-version"
+  ]
+}

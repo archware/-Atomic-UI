@@ -16,11 +16,18 @@
         }
 
         <div class="alert__body">
-          @if (title()) {
-            <strong class="alert__title">{{ title() }}</strong>
+          @if (title() || (collapsible() && collapsed())) {
+            <strong class="alert__title">{{ title() || collapsedTitle() }}</strong>
           }
-          <div class="alert__message"><ng-content /></div>
+          <div class="alert__message" [class.alert__message--collapsed]="collapsible() && collapsed()" [hidden]="collapsible() && collapsed()"><ng-content /></div>
         </div>
+
+        @if (collapsible()) {
+          <app-table-action class="alert__toggle" action="custom"
+            [iconClass]="collapsed() ? 'fa-chevron-down' : 'fa-chevron-up'"
+            [label]="collapsed() ? 'Expandir mensaje' : 'Contraer mensaje'"
+            tone="neutral" size="sm" (triggered)="toggleCollapsed()" />
+        }
 
         @if (closable()) {
           <app-table-action class="alert__close" action="custom" iconClass="fa-xmark"

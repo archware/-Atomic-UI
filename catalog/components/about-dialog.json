@@ -114,7 +114,7 @@
     {
       "name": "authorRole",
       "type": "string",
-      "default": "Arquitectura y Desarrollo Principal",
+      "default": "Arquitecto de Software | DIY AI Lab | Creador de Ecosistemas",
       "meaning": "Rol o cargo del autor principal."
     },
     {

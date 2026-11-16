@@ -11,6 +11,9 @@ describe('Alert', () => {
       providers: [provideZonelessChangeDetection()],
     }).compileComponents();
 
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.removeItem('alert.spec.cerrada');
+    }
     fixture = TestBed.createComponent(Alert);
   });
 
@@ -69,7 +72,7 @@ describe('Alert', () => {
       'success': 'fa-circle-check',
       'warning': 'fa-triangle-exclamation'
     };
-    
+
     for (const kind of ['info', 'success', 'warning'] as const) {
       fixture.componentRef.setInput('kind', kind);
       await fixture.whenStable();
@@ -87,6 +90,79 @@ describe('Alert', () => {
     expect(icon).withContext('danger debe tener icono').not.toBeNull();
     expect(icon.classList).toContain('fa-xmark');
     expect(icon.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('aplica modo compacto y permite colapsar a una linea', async () => {
+    fixture.componentRef.setInput('compact', true);
+    fixture.componentRef.setInput('collapsible', true);
+    fixture.componentRef.setInput('startCollapsed', true);
+    await fixture.whenStable();
+
+    const panel = fixture.nativeElement.querySelector('.alert') as HTMLElement;
+    const message = fixture.nativeElement.querySelector('.alert__message') as HTMLElement;
+    expect(panel.classList).toContain('alert--compact');
+    expect(panel.classList).toContain('alert--collapsed');
+    expect(message.classList).toContain('alert__message--collapsed');
+    expect(message.hidden).toBe(true);
+    expect(fixture.nativeElement.querySelector('.alert__title')?.textContent?.trim()).toBe(
+      'Nota informativa',
+    );
+
+    (fixture.nativeElement.querySelector('.alert__toggle button') as HTMLButtonElement).click();
+    await fixture.whenStable();
+    expect(panel.classList).not.toContain('alert--collapsed');
+    expect(message.classList).not.toContain('alert__message--collapsed');
+    expect(message.hidden).toBe(false);
+  });
+
+  it('restaura ocultamiento persistido y respeta autoHide dinamico', async () => {
+    fixture.componentRef.setInput('rememberClosedKey', 'alert.spec.cerrada');
+    fixture.componentRef.setInput('closable', true);
+    await fixture.whenStable();
+    (fixture.nativeElement.querySelector('.alert__close button') as HTMLButtonElement).click();
+    await fixture.whenStable();
+    expect(window.localStorage.getItem('alert.spec.cerrada')).toBe('1');
+    expect(fixture.nativeElement.querySelector('.alert')).toBeNull();
+
+    const fixtureNueva = TestBed.createComponent(Alert);
+    fixtureNueva.componentRef.setInput('rememberClosedKey', 'alert.spec.cerrada');
+    await fixtureNueva.whenStable();
+    expect(fixtureNueva.nativeElement.querySelector('.alert')).toBeNull();
+
+    const fixtureAuto = TestBed.createComponent(Alert);
+    jasmine.clock().install();
+    try {
+      fixtureAuto.componentRef.setInput('autoHideMs', 100);
+      fixtureAuto.detectChanges();
+      expect(fixtureAuto.nativeElement.querySelector('.alert')).not.toBeNull();
+      jasmine.clock().tick(110);
+      fixtureAuto.detectChanges();
+      expect(fixtureAuto.nativeElement.querySelector('.alert')).toBeNull();
+    } finally {
+      jasmine.clock().uninstall();
+    }
+  });
+
+  it('reabre la alerta cerrada cuando cambia reopenToken y restaura startCollapsed', async () => {
+    fixture.componentRef.setInput('closable', true);
+    fixture.componentRef.setInput('collapsible', true);
+    fixture.componentRef.setInput('startCollapsed', true);
+    fixture.componentRef.setInput('reopenToken', 'corte-1');
+    await fixture.whenStable();
+
+    (fixture.nativeElement.querySelector('.alert__toggle button') as HTMLButtonElement).click();
+    await fixture.whenStable();
+    expect((fixture.nativeElement.querySelector('.alert__message') as HTMLElement).hidden).toBe(false);
+
+    (fixture.nativeElement.querySelector('.alert__close button') as HTMLButtonElement).click();
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('.alert')).toBeNull();
+
+    fixture.componentRef.setInput('reopenToken', 'corte-2');
+    await fixture.whenStable();
+    const reopenedMsg = fixture.nativeElement.querySelector('.alert__message') as HTMLElement;
+    expect(reopenedMsg).not.toBeNull();
+    expect(reopenedMsg.hidden).toBe(true);
   });
 
   it('usa acento lateral y lectura neutra en los cuatro tonos', async () => {

@@ -18,10 +18,8 @@ import {
 import { TranslatePipe } from '@ngx-translate/core';
 import { Alert } from '../../molecules/alert/alert.component';
 import { ButtonComponent } from '../../atoms/button/button.component';
-import {
-  ChipComponent,
-  ChipVariant,
-} from '../../atoms/chip/chip.component';
+import { BadgeComponent, BadgeVariant } from '../../atoms/badge/badge.component';
+
 import { ScrollOverlayComponent } from '../scroll-overlay/scroll-overlay.component';
 import { VariablesCssDirective } from '../../directives/variables-css.directive';
 import { Select2Component, Select2Option } from '../../molecules/select2/select2.component';
@@ -39,8 +37,10 @@ export interface DataTableColumn<T extends object = Record<string, unknown>> {
   readonly sortable?: boolean;
   readonly align?: DataTableAlignment;
   readonly width?: string;
+  readonly isBadge?: boolean;
+  readonly badgeVariant?: (row: T) => BadgeVariant;
   readonly isTag?: boolean;
-  readonly tagVariant?: (row: T) => ChipVariant;
+  readonly tagVariant?: (row: T) => BadgeVariant;
   readonly value?: (row: T) => unknown;
   readonly format?: (value: unknown, row: T) => string;
   readonly sortValue?: (row: T) => unknown;
@@ -84,7 +84,7 @@ function trackByIdentity<T extends object>(_index: number, row: T): T {
     ButtonComponent,
     NgTemplateOutlet,
     ScrollOverlayComponent,
-    ChipComponent,
+    BadgeComponent,
     VariablesCssDirective,
     Select2Component,
     FormsModule,
@@ -380,22 +380,44 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
   }
 
   protected isTagColumn(column: DataTableColumn<T>): boolean {
-    return !!column.isTag || ['stateLabel', 'state', 'status', 'estado'].includes(column.key);
+    return (
+      !!column.isBadge ||
+      !!column.isTag ||
+      ['stateLabel', 'state', 'status', 'estado'].includes(column.key)
+    );
   }
 
   protected columnAlignment(column: DataTableColumn<T>): DataTableAlignment {
     return column.align ?? (this.isTagColumn(column) ? 'center' : 'start');
   }
 
-  protected getTagVariant(column: DataTableColumn<T>, row: T): ChipVariant {
-    if (column.tagVariant) {
-      return column.tagVariant(row);
+  protected getTagVariant(column: DataTableColumn<T>, row: T): BadgeVariant {
+    const customVariant = column.badgeVariant ?? column.tagVariant;
+    if (customVariant) {
+      return customVariant(row);
     }
-    const val = String(this.columnValue(column, row) ?? '').toLowerCase();
+    const val = String(this.columnValue(column, row) ?? '').trim().toLowerCase();
     if (
       val === 'activo' ||
+      val === 'activa' ||
       val === 'active' ||
       val === 'vigente' ||
+      val === 'completado' ||
+      val === 'completada' ||
+      val === 'completed' ||
+      val === 'pagado' ||
+      val === 'pagada' ||
+      val === 'paid' ||
+      val === 'registrado' ||
+      val === 'registrada' ||
+      val === 'emitido' ||
+      val === 'emitida' ||
+      val === 'aplicado' ||
+      val === 'aplicada' ||
+      val === 'aprobado' ||
+      val === 'aprobada' ||
+      val === 'al día' ||
+      val === 'al dia' ||
       val === 'true' ||
       val === '1'
     ) {
@@ -403,14 +425,42 @@ export class DataTable<T extends object = Record<string, unknown>> implements Af
     }
     if (
       val === 'inactivo' ||
+      val === 'inactiva' ||
       val === 'inactive' ||
       val === 'bloqueado' ||
+      val === 'bloqueada' ||
+      val === 'anulada' ||
+      val === 'anulado' ||
+      val === 'cancelado' ||
+      val === 'cancelada' ||
+      val === 'cancelled' ||
+      val === 'canceled' ||
+      val === 'eliminado' ||
+      val === 'eliminada' ||
+      val === 'rechazado' ||
+      val === 'rechazada' ||
+      val === 'revertido' ||
+      val === 'revertida' ||
+      val === 'error' ||
       val === 'false' ||
       val === '0'
     ) {
-      return 'error';
+      return 'danger';
     }
-    if (val.includes('incidencia') || val.includes('degradado') || val.includes('vencido')) {
+    if (
+      val.includes('incidencia') ||
+      val.includes('degradado') ||
+      val.includes('vencid') ||
+      val.includes('mora') ||
+      val.includes('atrasad') ||
+      val.includes('parcial') ||
+      val.includes('pendiente') ||
+      val.includes('pending') ||
+      val.includes('ausente') ||
+      val.includes('revisión') ||
+      val.includes('revision') ||
+      val.includes('en espera')
+    ) {
       return 'warning';
     }
     return 'default';

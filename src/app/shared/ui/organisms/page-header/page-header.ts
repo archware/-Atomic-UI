@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 export type PageHeaderDensity = 'comfortable' | 'compact';
+export type PageHeaderAlignment = 'start' | 'center';
 
 /**
  * Encabezado canónico de página. Mantiene la jerarquía de título, contexto y
@@ -20,6 +21,7 @@ export class PageHeader {
   readonly subtitle = input<string | null>(null);
   readonly eyebrow = input<string | null>(null);
   readonly density = input<PageHeaderDensity>('comfortable');
+  readonly align = input<PageHeaderAlignment>('center');
   readonly headingId = input(this.generatedHeadingId);
   readonly actionsLabel = input('Acciones de la página');
 }

@@ -4,7 +4,7 @@
 }
 
 /* Form variant: add margin-bottom for form spacing */
-:host:has(.row--variant-form) {
+:host:has(.row--variant-form):not(:last-child) {
   margin-bottom: var(--space-5); /* 24px vertical */
 }
 

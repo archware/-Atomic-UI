@@ -58,7 +58,7 @@ La doctrina maestra prevalece y la política Atomic puede añadir compuertas má
 
 ## Ciclo documental obligatorio
 
-1. Antes de editar se crea o actualiza una hoja de ruta bajo `.agent/roadmaps/` o `.agents/roadmaps/` con identificador, baseline, alcance, exclusiones, aceptación, validación y rollback.
+1. Antes de editar se crea o actualiza una hoja de ruta bajo `.agent/roadmaps/` (conservando `.agents/roadmaps/` solo como archivo histórico de lectura) con identificador, baseline, alcance, exclusiones, aceptación, validación y rollback.
 2. La unidad se implementa primero en esta fuente, se cataloga, prueba y valida; después se propaga con procedencia exacta o adaptación decidida.
 3. Al cerrar se actualizan `CHANGELOG.md`, [`LESSONS_LEARNED.md`](./LESSONS_LEARNED.md), el manifiesto y [`docs/CONTINUIDAD_AGENTES.md`](./docs/CONTINUIDAD_AGENTES.md) (manteniendo la ventana deslizante de 3 cortes).
 4. Se ejecutan las compuertas de [`docs/CONTINUIDAD_AGENTES.md`](./docs/CONTINUIDAD_AGENTES.md), se revisa el diff completo y se registra el estado Git exacto.

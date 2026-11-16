@@ -1,6 +1,12 @@
 :host {
   display: block;
   min-width: 0;
+  margin-block-end: var(--space-5);
+}
+
+:host-context(.form-dialog__body),
+:host:last-child {
+  margin-block-end: 0;
 }
 
 .query-toolbar {
@@ -24,7 +30,7 @@
 
 .query-toolbar__filters {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 15rem));
 }
 
 .query-toolbar__actions {
@@ -69,6 +75,10 @@
   .query-toolbar--auto .query-toolbar__filters,
   .query-toolbar--auto .query-toolbar__actions {
     flex-basis: auto;
+  }
+
+  .query-toolbar--auto .query-toolbar__filters {
+    grid-template-columns: 1fr;
   }
 
   .query-toolbar--auto .query-toolbar__actions {

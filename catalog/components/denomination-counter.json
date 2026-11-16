@@ -1,0 +1,184 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "denomination-counter",
+  "layer": "organism",
+  "selector": "app-denomination-counter, prest-denomination-counter",
+  "export": "DenominationCounter",
+  "source": "src/app/shared/ui/organisms/denomination-counter/denomination-counter.ts",
+  "relatedExports": [
+    "DenominationCount",
+    "DenominationCounterRow",
+    "DenominationCounterState",
+    "DenominationDefinition"
+  ],
+  "purpose": "Organismo especializado para arqueo y conteo de billetes o monedas por denominación con totales formateados.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "id",
+      "type": "unknown",
+      "meaning": "Propiedad de entrada id configurada en el componente."
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "meaning": "Título principal visible del componente.",
+      "default": "Desglose de efectivo"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "meaning": "Propiedad de entrada description configurada en el componente.",
+      "default": "Registre la cantidad por denominación."
+    },
+    {
+      "name": "totalLabel",
+      "type": "string",
+      "meaning": "Propiedad de entrada totalLabel configurada en el componente.",
+      "default": "Total contado"
+    },
+    {
+      "name": "calculationNotice",
+      "type": "string",
+      "meaning": "Propiedad de entrada calculationNotice configurada en el componente.",
+      "default": "Total referencial. El backend conserva la autoridad sobre el monto definitivo."
+    },
+    {
+      "name": "emptyMessage",
+      "type": "string",
+      "meaning": "Propiedad de entrada emptyMessage configurada en el componente.",
+      "default": "No hay denominaciones disponibles."
+    },
+    {
+      "name": "optional",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada optional configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "state",
+      "type": "DenominationCounterState",
+      "meaning": "Propiedad de entrada state configurada en el componente.",
+      "default": "empty"
+    },
+    {
+      "name": "suggestionActionLabel",
+      "type": "string",
+      "meaning": "Propiedad de entrada suggestionActionLabel configurada en el componente.",
+      "default": "Confirmar desglose sugerido"
+    },
+    {
+      "name": "open",
+      "type": "boolean",
+      "meaning": "Estado de apertura controlado reactivamente.",
+      "default": false
+    },
+    {
+      "name": "maxQuantity",
+      "type": "number",
+      "meaning": "Propiedad de entrada maxQuantity configurada en el componente.",
+      "default": 9999
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "meaning": "Propiedad de entrada locale configurada en el componente.",
+      "default": "es-PE"
+    },
+    {
+      "name": "currency",
+      "type": "string",
+      "meaning": "Propiedad de entrada currency configurada en el componente.",
+      "default": "PEN"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "meaning": "Deshabilita la interacción del usuario cuando es true.",
+      "default": false
+    },
+    {
+      "name": "value",
+      "type": "readonly DenominationCount[] | null | undefined",
+      "meaning": "Propiedad de entrada value configurada en el componente."
+    },
+    {
+      "name": "denominations",
+      "type": "readonly DenominationDefinition[] | null | undefined",
+      "meaning": "Propiedad de entrada denominations configurada en el componente."
+    }
+  ],
+  "outputs": [
+    {
+      "name": "valueChange",
+      "type": "readonly DenominationCount[]",
+      "meaning": "Evento emitido por el componente (valueChange)."
+    },
+    {
+      "name": "totalChange",
+      "type": "number",
+      "meaning": "Evento emitido por el componente (totalChange)."
+    },
+    {
+      "name": "openChange",
+      "type": "boolean",
+      "meaning": "Evento emitido por el componente (openChange)."
+    }
+  ],
+  "states": [
+    {
+      "name": "collapsed",
+      "meaning": "Resumen plegado mostrando el total contabilizado."
+    },
+    {
+      "name": "expanded",
+      "meaning": "Lista editable de denominaciones con validación de máximo y estado ok/warning/error."
+    },
+    {
+      "name": "disabled",
+      "meaning": "Bloquea edición conservando visualización de importes."
+    }
+  ],
+  "a11y": [
+    "Etiquetas numéricas descriptivas, anuncios claros del total calculado y contraste de estados."
+  ],
+  "responsive": [
+    "Ajusta filas de denominación en columnas legibles sin recorte de cifras."
+  ],
+  "tokens": [
+    "--border-color",
+    "--font-weight-emphasis",
+    "--primary-color",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--success-color-text",
+    "--text-color",
+    "--text-color-muted",
+    "--text-md",
+    "--text-sm",
+    "--text-xs",
+    "--warning-color-text"
+  ],
+  "story": {
+    "path": "src/stories/ui-denomination-counter.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/organisms/denomination-counter/denomination-counter.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "denomination-counter",
+    "cash-counter",
+    "cash-drawer-tally"
+  ]
+}

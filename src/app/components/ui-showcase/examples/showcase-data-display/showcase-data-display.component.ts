@@ -3,7 +3,8 @@ import type { ChartConfiguration } from 'chart.js';
 
 import { PanelComponent } from '../../../../shared/ui/surfaces/panel/panel.component';
 import { AvatarComponent } from '../../../../shared/ui/atoms/avatar/avatar.component';
-import { ChipComponent, type ChipVariant } from '../../../../shared/ui/atoms/chip/chip.component';
+import { BadgeComponent, type BadgeVariant } from '../../../../shared/ui/atoms/badge/badge.component';
+import { ChipComponent } from '../../../../shared/ui/atoms/chip/chip.component';
 import { ActionGroupComponent, ActionItem } from '../../../../shared/ui/molecules/action-group/action-group.component';
 import { DataTable, DataTableColumn } from '../../../../shared/ui/organisms/data-table/data-table';
 import { ChartComponent } from '../../../../shared/ui/organisms/chart/chart.component';
@@ -14,7 +15,7 @@ interface FilaUsuarioDemostracion {
   name: string;
   role: string;
   status: string;
-  chipVariant: ChipVariant;
+  badgeVariant: BadgeVariant;
   date: string;
   maxVisible: number;
   compact: boolean;
@@ -27,6 +28,7 @@ interface FilaUsuarioDemostracion {
   imports: [
     PanelComponent,
     AvatarComponent,
+    BadgeComponent,
     ChipComponent,
     ActionGroupComponent,
     ChartComponent,
@@ -127,13 +129,13 @@ interface FilaUsuarioDemostracion {
     <section class="showcase-section">
       <h3 class="section-title">Badges</h3>
       <div class="badge-container">
-        <span class="badge">Default</span>
-        <span class="badge badge-primary">Primary</span>
-        <span class="badge badge-secondary">Secondary</span>
-        <span class="badge badge-success">Success</span>
-        <span class="badge badge-warning">Warning</span>
-        <span class="badge badge-danger">Danger</span>
-        <span class="badge badge-outline">Outline</span>
+        <app-badge variant="default">Default</app-badge>
+        <app-badge variant="primary">Primary</app-badge>
+        <app-badge variant="secondary">Secondary</app-badge>
+        <app-badge variant="success">Success</app-badge>
+        <app-badge variant="warning">Warning</app-badge>
+        <app-badge variant="danger">Danger</app-badge>
+        <app-badge variant="outline">Outline</app-badge>
       </div>
     </section>
 
@@ -160,7 +162,7 @@ interface FilaUsuarioDemostracion {
         Componente <code>&lt;app-pagination&gt;</code> con 4 variantes: <code>standard</code>, <code>minimal</code>, <code>rounded</code>, <code>cards</code>.
       </p>
 
-      <app-panel title="Variante: standard" style="margin-bottom: 1rem;">
+      <app-panel title="Variante: standard" class="mb-4">
         <app-pagination
           [total]="100"
           [pageSize]="10"
@@ -170,7 +172,7 @@ interface FilaUsuarioDemostracion {
         </app-pagination>
       </app-panel>
 
-      <app-panel title="Variante: minimal" style="margin-bottom: 1rem;">
+      <app-panel title="Variante: minimal" class="mb-4">
         <app-pagination
           [total]="100"
           [pageSize]="10"
@@ -180,7 +182,7 @@ interface FilaUsuarioDemostracion {
         </app-pagination>
       </app-panel>
 
-      <app-panel title="Variante: rounded" style="margin-bottom: 1rem;">
+      <app-panel title="Variante: rounded" class="mb-4">
         <app-pagination
           [total]="100"
           [pageSize]="10"
@@ -190,7 +192,7 @@ interface FilaUsuarioDemostracion {
         </app-pagination>
       </app-panel>
 
-      <app-panel title="Variante: cards" style="margin-bottom: 1rem;">
+      <app-panel title="Variante: cards" class="mb-4">
         <app-pagination
           [total]="100"
           [pageSize]="10"
@@ -224,14 +226,7 @@ interface FilaUsuarioDemostracion {
     .avatar-grid, .chip-grid { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
 
     /* Badges styles */
-    .badge-container { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .badge { padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: var(--font-weight-emphasis); background: var(--surface-hover); color: var(--text-color); }
-    .badge-primary { background: var(--primary-color); color: white; }
-    .badge-secondary { background: var(--secondary-color); color: white; }
-    .badge-success { background: var(--success-color); color: white; }
-    .badge-warning { background: var(--warning-color); color: white; }
-    .badge-danger { background: var(--danger-color); color: white; }
-    .badge-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); }
+    .badge-container { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
 
     /* Action variants */
     .action-variants { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1rem; }
@@ -254,7 +249,7 @@ export class ShowcaseDataDisplayComponent {
   tableColumns: DataTableColumn<FilaUsuarioDemostracion>[] = [
     { key: 'name', header: 'Nombre', width: 'minmax(200px, 1fr)' },
     { key: 'role', header: 'Rol', width: '120px' },
-    { key: 'status', header: 'Estado', width: '120px', isTag: true, tagVariant: (row: FilaUsuarioDemostracion) => row.chipVariant === 'success' ? 'success' : (row.chipVariant === 'warning' ? 'warning' : 'error') },
+    { key: 'status', header: 'Estado', width: '120px', isBadge: true, badgeVariant: (row: FilaUsuarioDemostracion) => row.badgeVariant },
     { key: 'date', header: 'Fecha', width: '120px' },
   ];
 
@@ -269,14 +264,14 @@ export class ShowcaseDataDisplayComponent {
 
   // Table users
   tableUsers: FilaUsuarioDemostracion[] = [
-    { id: 1, name: 'Juan Pérez', role: 'Desarrollador', status: 'Activo', chipVariant: 'success' as const, date: '2024-01-15', maxVisible: 3, compact: false, selected: false },
-    { id: 2, name: 'María García', role: 'Diseñadora', status: 'Ausente', chipVariant: 'warning' as const, date: '2024-02-20', maxVisible: 2, compact: false, selected: true },
-    { id: 3, name: 'Carlos López', role: 'Manager', status: 'Inactivo', chipVariant: 'error' as const, date: '2024-03-10', maxVisible: 3, compact: true, selected: false },
-    { id: 4, name: 'Ana Martínez', role: 'Analista', status: 'Activo', chipVariant: 'success' as const, date: '2024-04-05', maxVisible: 3, compact: false, selected: false },
-    { id: 5, name: 'Roberto Sánchez', role: 'QA Engineer', status: 'Activo', chipVariant: 'success' as const, date: '2024-04-18', maxVisible: 2, compact: false, selected: false },
-    { id: 6, name: 'Laura Torres', role: 'DevOps', status: 'Pendiente', chipVariant: 'warning' as const, date: '2024-05-02', maxVisible: 3, compact: false, selected: false },
-    { id: 7, name: 'Diego Ramírez', role: 'Backend Dev', status: 'Activo', chipVariant: 'success' as const, date: '2024-05-20', maxVisible: 3, compact: false, selected: false },
-    { id: 8, name: 'Sofía Hernández', role: 'Frontend Dev', status: 'Inactivo', chipVariant: 'error' as const, date: '2024-06-08', maxVisible: 3, compact: true, selected: false }
+    { id: 1, name: 'Juan Pérez', role: 'Desarrollador', status: 'Activo', badgeVariant: 'success', date: '2024-01-15', maxVisible: 3, compact: false, selected: false },
+    { id: 2, name: 'María García', role: 'Diseñadora', status: 'Ausente', badgeVariant: 'warning', date: '2024-02-20', maxVisible: 2, compact: false, selected: true },
+    { id: 3, name: 'Carlos López', role: 'Manager', status: 'Inactivo', badgeVariant: 'danger', date: '2024-03-10', maxVisible: 3, compact: true, selected: false },
+    { id: 4, name: 'Ana Martínez', role: 'Analista', status: 'Activo', badgeVariant: 'success', date: '2024-04-05', maxVisible: 3, compact: false, selected: false },
+    { id: 5, name: 'Roberto Sánchez', role: 'QA Engineer', status: 'Activo', badgeVariant: 'success', date: '2024-04-18', maxVisible: 2, compact: false, selected: false },
+    { id: 6, name: 'Laura Torres', role: 'DevOps', status: 'Pendiente', badgeVariant: 'warning', date: '2024-05-02', maxVisible: 3, compact: false, selected: false },
+    { id: 7, name: 'Diego Ramírez', role: 'Backend Dev', status: 'Activo', badgeVariant: 'success', date: '2024-05-20', maxVisible: 3, compact: false, selected: false },
+    { id: 8, name: 'Sofía Hernández', role: 'Frontend Dev', status: 'Inactivo', badgeVariant: 'danger', date: '2024-06-08', maxVisible: 3, compact: true, selected: false }
   ];
 
   onAction(actionId: string, userName: string): void {

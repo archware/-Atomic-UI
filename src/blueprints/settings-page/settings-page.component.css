@@ -1,0 +1,7 @@
+:host {
+  display: block;
+}
+
+.settings-tab-panel {
+  padding: var(--space-5);
+}

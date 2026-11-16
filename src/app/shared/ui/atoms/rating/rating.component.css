@@ -59,7 +59,7 @@
   color: var(--text-color-secondary);
 }
 
-/* 
+/*
  * Dark mode se maneja automáticamente via tokens semánticos.
  * --rating-star-empty/filled/hover ya tienen valores apropiados
  * para temas oscuros.

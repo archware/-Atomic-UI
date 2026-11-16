@@ -58,7 +58,8 @@
 
 /* Header */
 .popup-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--space-10) minmax(0, 1fr) var(--space-10);
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-5);
@@ -66,6 +67,7 @@
 }
 
 .popup-icon {
+  grid-column: 1;
   font-size: var(--text-2xl);
   display: flex;
   align-items: center;
@@ -83,12 +85,21 @@
 .popup-icon-confirm { background: var(--primary-color-lighter); color: var(--primary-color); }
 
 .popup-title {
-  flex: 1;
+  grid-column: 2;
+  text-align: center;
   margin: 0;
   font-family: var(--font-family-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-weight-emphasis);
   color: var(--text-color);
+}
+
+.popup-header:not(:has(.popup-icon)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.popup-header:not(:has(.popup-icon)) .popup-title {
+  grid-column: 1;
 }
 
 
@@ -119,5 +130,3 @@
   padding: var(--space-4) var(--space-5);
   border-top: 1px solid var(--border-color);
 }
-
-

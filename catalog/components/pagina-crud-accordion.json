@@ -1,0 +1,219 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "pagina-crud-accordion",
+  "layer": "template",
+  "selector": "app-pagina-crud-accordion",
+  "export": "PaginaCrudAccordion",
+  "source": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.ts",
+  "relatedExports": [
+    "EventoEntidadAccordion"
+  ],
+  "purpose": "Chasis CRUD multi-entidad agrupado en acordeones con encabezados y diálogos ópticamente centrados.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "titulo",
+      "type": "string",
+      "meaning": "Título principal mostrado en el encabezado.",
+      "required": true
+    },
+    {
+      "name": "subtitulo",
+      "type": "string | null",
+      "meaning": "Subtítulo descriptivo opcional bajo el título.",
+      "default": null
+    },
+    {
+      "name": "headerAlign",
+      "type": "PageHeaderAlignment",
+      "meaning": "Alineación horizontal del encabezado de página ('start' | 'center').",
+      "default": "center"
+    },
+    {
+      "name": "varianteAccordion",
+      "type": "AccordionVariant",
+      "meaning": "Propiedad de entrada varianteAccordion configurada en el componente.",
+      "default": "default"
+    },
+    {
+      "name": "soloUnoAbierto",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada soloUnoAbierto configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "colapsable",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada colapsable configurada en el componente.",
+      "default": true
+    },
+    {
+      "name": "entidades",
+      "type": "readonly EntidadAccordion[]",
+      "meaning": "Propiedad de entrada entidades configurada en el componente.",
+      "required": true
+    },
+    {
+      "name": "columnasPorEntidad",
+      "type": "Readonly<Record<string, readonly DataTableColumn<T>[]>>",
+      "meaning": "Propiedad de entrada columnasPorEntidad configurada en el componente.",
+      "required": true
+    },
+    {
+      "name": "filasPorEntidad",
+      "type": "Readonly<Record<string, readonly T[]>>",
+      "meaning": "Propiedad de entrada filasPorEntidad configurada en el componente.",
+      "required": true
+    },
+    {
+      "name": "estadoPorEntidad",
+      "type": "Readonly<Record<string, DataTableStatus>>",
+      "meaning": "Propiedad de entrada estadoPorEntidad configurada en el componente."
+    },
+    {
+      "name": "totalPorEntidad",
+      "type": "Readonly<Record<string, number>>",
+      "meaning": "Propiedad de entrada totalPorEntidad configurada en el componente."
+    },
+    {
+      "name": "paginaPorEntidad",
+      "type": "Readonly<Record<string, number>>",
+      "meaning": "Propiedad de entrada paginaPorEntidad configurada en el componente."
+    },
+    {
+      "name": "acciones",
+      "type": "AccionesCrud",
+      "meaning": "Propiedad de entrada acciones configurada en el componente."
+    },
+    {
+      "name": "confirmacionBaja",
+      "type": "ConfiguracionConfirmacion",
+      "meaning": "Propiedad de entrada confirmacionBaja configurada en el componente."
+    },
+    {
+      "name": "claveEntidadActiva",
+      "type": "string | null",
+      "meaning": "Propiedad de entrada claveEntidadActiva configurada en el componente.",
+      "default": null
+    },
+    {
+      "name": "modoCrud",
+      "type": "ModoCrud",
+      "meaning": "Propiedad de entrada modoCrud configurada en el componente.",
+      "default": "crear"
+    },
+    {
+      "name": "entidadActiva",
+      "type": "T | null",
+      "meaning": "Propiedad de entrada entidadActiva configurada en el componente.",
+      "default": null
+    },
+    {
+      "name": "guardando",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada guardando configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "errorOperacion",
+      "type": "string | null",
+      "meaning": "Propiedad de entrada errorOperacion configurada en el componente.",
+      "default": null
+    }
+  ],
+  "outputs": [
+    {
+      "name": "alSolicitarPagina",
+      "type": "EventoEntidadAccordion<SolicitudPagina>",
+      "meaning": "Evento emitido por el componente (alSolicitarPagina)."
+    },
+    {
+      "name": "alCrear",
+      "type": "string",
+      "meaning": "Evento emitido por el componente (alCrear)."
+    },
+    {
+      "name": "alVer",
+      "type": "EventoEntidadAccordion<T>",
+      "meaning": "Evento emitido por el componente (alVer)."
+    },
+    {
+      "name": "alEditar",
+      "type": "EventoEntidadAccordion<T>",
+      "meaning": "Evento emitido por el componente (alEditar)."
+    },
+    {
+      "name": "alEliminar",
+      "type": "EventoEntidadAccordion<T>",
+      "meaning": "Evento emitido por el componente (alEliminar)."
+    },
+    {
+      "name": "alGuardar",
+      "type": "void",
+      "meaning": "Evento emitido por el componente (alGuardar)."
+    },
+    {
+      "name": "alCerrarDialogo",
+      "type": "void",
+      "meaning": "Evento emitido por el componente (alCerrarDialogo)."
+    },
+    {
+      "name": "alReintentar",
+      "type": "string",
+      "meaning": "Evento emitido por el componente (alReintentar)."
+    }
+  ],
+  "states": [
+    {
+      "name": "listing",
+      "meaning": "Presenta cabecera centrada y paneles de acordeón independientes o exclusivos."
+    },
+    {
+      "name": "dialog-open",
+      "meaning": "Abre diálogo de formulario o confirmación con cabecera simétrica de 3 columnas."
+    }
+  ],
+  "a11y": [
+    "Sincroniza focus y etiquetas ARIA en acordeones, tablas y diálogos modales de alta/baja."
+  ],
+  "responsive": [
+    "Ajusta diálogos, acordeones y barras de herramientas sin desbordamiento horizontal."
+  ],
+  "tokens": [
+    "--border-color",
+    "--border-width-thin",
+    "--control-height-sm",
+    "--font-family-heading",
+    "--font-weight-title",
+    "--modal-border",
+    "--modal-footer-bg",
+    "--modal-header-bg",
+    "--radius-lg",
+    "--shadow-lg",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--text-color-secondary",
+    "--text-lg"
+  ],
+  "story": {
+    "path": "src/stories/pagina-crud-accordion.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/templates/pagina-crud-accordion/pagina-crud-accordion.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "crud-accordion-page",
+    "multi-entity-crud",
+    "pagina-crud-accordion"
+  ]
+}

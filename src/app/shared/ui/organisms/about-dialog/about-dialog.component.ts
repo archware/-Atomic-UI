@@ -127,7 +127,7 @@ export class AboutDialogComponent implements OnDestroy {
   readonly authorName = input<string>('Ing. Havel CONTRERAS TAPAHUASCO');
 
   /** Rol o cargo del autor principal. */
-  readonly authorRole = input<string>('Arquitectura y Desarrollo Principal');
+  readonly authorRole = input<string>('Arquitecto de Software | DIY AI Lab | Creador de Ecosistemas');
 
   /** Identificador de cuenta en GitHub (ej. `'@archware'`). */
   readonly githubHandle = input<string>('@archware');
@@ -188,6 +188,10 @@ export class AboutDialogComponent implements OnDestroy {
 
   get resolvedLogoIcon(): string {
     return normalizeFontAwesomeIconClass(this.logoIcon() || 'fa-solid fa-layer-group');
+  }
+
+  get normalizedCopyrightText(): string {
+    return this.copyrightText().trim().replace(/^(?:©|\(c\))\s*/i, '');
   }
 
   resolveIconClass(icon?: string, fallback = 'fa-solid fa-circle-check'): string {

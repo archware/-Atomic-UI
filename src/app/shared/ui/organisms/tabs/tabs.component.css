@@ -44,7 +44,7 @@
   /* El color de la sombra sale de --shadow-color, que es el mismo canal del que
      derivan --shadow-xs..xl; el negro fijo mantenia la sombra clara del tema claro
      cuando el resto de la elevacion ya se habia oscurecido. */
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--primary-color), transparent 30%), 
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--primary-color), transparent 30%),
               0 1px var(--space-1) hsl(var(--shadow-color) / 0.2);
 }
 
@@ -73,14 +73,14 @@
 }
 
 .tabs-content {
-  padding: var(--space-4);
+  padding: var(--space-5);
   background: var(--surface-background);
   border-radius: 0 0 var(--radius-md) var(--radius-md);
   border: 1px solid var(--border-color);
   border-top: none;
 }
 
-/* 
+/*
  * Dark mode se maneja automáticamente via tokens semánticos.
  * --surface-ground, --surface-background, --border-color, --primary-color
  * ya tienen valores apropiados para temas oscuros.

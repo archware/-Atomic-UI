@@ -26,6 +26,12 @@
       "meaning": "Descripción opcional."
     },
     {
+      "name": "headerAlign",
+      "type": "PageHeaderAlignment",
+      "default": "center",
+      "meaning": "Alineación del encabezado de página ('start' | 'center')."
+    },
+    {
       "name": "etiquetaNuevo",
       "type": "string",
       "meaning": "Etiqueta del alta."

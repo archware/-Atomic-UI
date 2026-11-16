@@ -6,6 +6,7 @@
   <app-page-header
     [title]="titulo()"
     [subtitle]="subtitulo()"
+    [align]="headerAlign()"
   >
     <div page-header-actions>
       <app-icon-button class="pagina-wizard__btn-cerrar" variant="close" animation="none" aria-label="Cerrar" (clicked)="handleCancel()">
@@ -26,6 +27,16 @@
 
     <!-- Contenido del Paso Actual Proyectado -->
     <div class="pagina-wizard__content" role="region" [attr.aria-label]="steps()[activeStep()]?.label">
+      @if (stepTitle() || stepSubtitle()) {
+        <header class="pagina-wizard__step-header">
+          @if (stepTitle()) {
+            <h2 class="pagina-wizard__step-title">{{ stepTitle() }}</h2>
+          }
+          @if (stepSubtitle()) {
+            <p class="pagina-wizard__step-subtitle">{{ stepSubtitle() }}</p>
+          }
+        </header>
+      }
       <ng-content></ng-content>
     </div>
     <!-- Pie de Acciones -->

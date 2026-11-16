@@ -1,0 +1,48 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "form-actions",
+  "layer": "molecule",
+  "selector": "app-form-actions",
+  "export": "FormActionsComponent",
+  "source": "src/app/shared/ui/molecules/form-actions/form-actions.component.ts",
+  "purpose": "Pie estructural de formulario con separación superior e interespaciado homogéneo para botones de acción.",
+  "variants": [],
+  "inputs": [],
+  "outputs": [],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Alinea y separa los botones proyectados en el cierre del formulario."
+    }
+  ],
+  "a11y": [
+    "Preserva el orden semántico y de foco de los botones proyectados."
+  ],
+  "responsive": [
+    "Envuelve acciones automáticamente cuando el ancho horizontal es insuficiente."
+  ],
+  "tokens": [
+    "--border-color",
+    "--space-4"
+  ],
+  "story": {
+    "path": "src/stories/ui-form-actions.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "form-actions",
+    "form-footer",
+    "action-bar"
+  ]
+}

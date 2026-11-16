@@ -6,6 +6,7 @@ import { DividerComponent } from '../../../../shared/ui/atoms/divider/divider.co
 import { RowComponent } from '../../../../shared/ui/atoms/row/row.component';
 import { ScrollOverlayComponent } from '../../../../shared/ui/organisms/scroll-overlay/scroll-overlay.component';
 import { IconButtonComponent } from '../../../../shared/ui/atoms/icon-button/icon-button.component';
+import { BadgeComponent } from '../../../../shared/ui/atoms/badge/badge.component';
 
 @Component({
   selector: 'app-showcase-structure',
@@ -16,7 +17,8 @@ import { IconButtonComponent } from '../../../../shared/ui/atoms/icon-button/ico
     DividerComponent,
     RowComponent,
     ScrollOverlayComponent,
-    IconButtonComponent
+    IconButtonComponent,
+    BadgeComponent
 ],
   template: `
     <!-- SCROLL OVERLAY DEMO -->
@@ -208,7 +210,7 @@ import { IconButtonComponent } from '../../../../shared/ui/atoms/icon-button/ico
           </div>
           <p class="card-content">Tu proceso se ha completado exitosamente.</p>
           <div class="card-footer">
-            <span class="badge badge-success">Activo</span>
+            <app-badge variant="success">Activo</app-badge>
           </div>
         </div>
       </div>
@@ -243,8 +245,6 @@ import { IconButtonComponent } from '../../../../shared/ui/atoms/icon-button/ico
     .card-icon { font-size: 1.5rem; }
     .card-title { font-weight: var(--font-weight-emphasis); margin: 0; }
     .card-content { color: var(--text-color-secondary); margin-bottom: 1.5rem; line-height: 1.5; }
-    .badge { padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: var(--font-weight-emphasis); background: var(--surface-hover); }
-    .badge-success { background: var(--success-color); color: white; }
 
     /* Helper buttons for card demo */
     .btn { padding: 0.5rem 1rem; border-radius: 0.375rem; border: none; cursor: pointer; }

@@ -71,15 +71,18 @@
 }
 
 .modal-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--control-height-sm) minmax(0, 1fr) var(--control-height-sm);
   align-items: center;
-  justify-content: space-between;
+  gap: var(--space-3);
   padding: var(--space-4) var(--space-5);
   background: var(--modal-header-bg, var(--surface-section));
   border-bottom: 1px solid var(--modal-border, var(--border-color));
 }
 
 .modal-title {
+  grid-column: 2;
+  text-align: center;
   font-family: var(--font-family-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-weight-emphasis);
@@ -87,29 +90,9 @@
   margin: 0;
 }
 
-app-icon-button.modal-close {
-  ::ng-deep .icon-btn {
-    border-radius: var(--radius-full, 50%);
-    background-color: var(--surface-hover);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  ::ng-deep .icon-btn:hover {
-    background-color: var(--danger-color) !important;
-    transform: scale(1.1) !important;
-    box-shadow: var(--shadow-sm) !important;
-  }
-
-  ::ng-deep .icon-btn:hover i,
-  ::ng-deep .icon-btn:hover svg {
-    color: var(--text-color-on-primary) !important;
-  }
-
-  ::ng-deep .icon-btn:active {
-    background-color: var(--danger-color-dark) !important;
-    transform: scale(0.9) !important;
-    box-shadow: var(--shadow-xs) !important;
-  }
+.modal-close {
+  grid-column: 3;
+  justify-self: end;
 }
 
 .modal-body-scroll {
@@ -118,6 +101,9 @@ app-icon-button.modal-close {
 }
 
 .modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
   padding: var(--space-4) var(--space-5);
 }
 
@@ -141,4 +127,3 @@ app-icon-button.modal-close {
  * --surface-background, --overlay-backdrop, --surface-hover
  * ya tienen valores apropiados para temas oscuros.
  */
-

@@ -201,4 +201,3 @@ describe('TagInputComponent - modos de etiqueta', () => {
     expect(parseFloat(estiloElevado.fontSize)).toBeCloseTo(13, 1);
   });
 });
-

@@ -1,0 +1,112 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "pagina-dashboard",
+  "layer": "template",
+  "selector": "app-pagina-dashboard",
+  "export": "PaginaDashboardComponent",
+  "source": "src/app/shared/ui/templates/pagina-dashboard/pagina-dashboard.ts",
+  "purpose": "Plantilla operativa de tablero con PageHeader alineable, grilla de métricas KPI y estados de carga o error.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "titulo",
+      "type": "string",
+      "meaning": "Título principal mostrado en el encabezado.",
+      "required": true
+    },
+    {
+      "name": "subtitulo",
+      "type": "string | null",
+      "meaning": "Subtítulo descriptivo opcional bajo el título.",
+      "default": null
+    },
+    {
+      "name": "eyebrow",
+      "type": "string | null",
+      "meaning": "Etiqueta breve de contexto superior al título.",
+      "default": null
+    },
+    {
+      "name": "headerAlign",
+      "type": "PageHeaderAlignment",
+      "meaning": "Alineación horizontal del encabezado de página ('start' | 'center').",
+      "default": "center"
+    },
+    {
+      "name": "metricas",
+      "type": "readonly KpiMetric[]",
+      "meaning": "Propiedad de entrada metricas configurada en el componente."
+    },
+    {
+      "name": "cargando",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada cargando configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "error",
+      "type": "ApiError | null",
+      "meaning": "Propiedad de entrada error configurada en el componente.",
+      "default": null
+    },
+    {
+      "name": "vacio",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada vacio configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "textoVacio",
+      "type": "string",
+      "meaning": "Propiedad de entrada textoVacio configurada en el componente.",
+      "default": "No hay datos suficientes para mostrar el dashboard."
+    },
+    {
+      "name": "alReintentar",
+      "type": "unknown",
+      "meaning": "Propiedad de entrada alReintentar configurada en el componente."
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "ready",
+      "meaning": "Renderiza métricas KPI y contenido analítico proyectado bajo el encabezado."
+    },
+    {
+      "name": "loading-error-empty",
+      "meaning": "Delega estados de espera, fallo reintentable o vacío a DataStateComponent."
+    }
+  ],
+  "a11y": [
+    "Preserva un h1 único mediante PageHeader y regiones claras para métricas y gráficos."
+  ],
+  "responsive": [
+    "Combina rejilla fluida de métricas y paneles adaptables a cualquier resolución."
+  ],
+  "tokens": [
+    "--space-4",
+    "--space-6",
+    "--space-8"
+  ],
+  "story": {
+    "path": "src/stories/template-pagina-dashboard.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "dashboard-page",
+    "pagina-dashboard",
+    "kpi-overview"
+  ]
+}

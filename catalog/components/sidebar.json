@@ -1,0 +1,164 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "sidebar",
+  "layer": "organism",
+  "selector": "app-sidebar",
+  "export": "SidebarComponent",
+  "source": "src/app/shared/ui/organisms/sidebar/sidebar.component.ts",
+  "relatedExports": [
+    "SidebarUser",
+    "SidebarMenuItem"
+  ],
+  "purpose": "Barra lateral de navegación del chasis con identidad de marca, badges institucionales no truncados, árbol colapsable y usuario.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "menuItems",
+      "type": "SidebarMenuItem[]",
+      "meaning": "Propiedad de entrada menuItems configurada en el componente."
+    },
+    {
+      "name": "user",
+      "type": "SidebarUser | null",
+      "meaning": "Propiedad de entrada user configurada en el componente."
+    },
+    {
+      "name": "collapsed",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada collapsed configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "logoText",
+      "type": "string",
+      "meaning": "Propiedad de entrada logoText configurada en el componente.",
+      "default": "Atomic UI"
+    },
+    {
+      "name": "logoSubtitle",
+      "type": "string",
+      "meaning": "Propiedad de entrada logoSubtitle configurada en el componente."
+    },
+    {
+      "name": "logoIcon",
+      "type": "string",
+      "meaning": "Propiedad de entrada logoIcon configurada en el componente.",
+      "default": "fa-solid fa-atom"
+    },
+    {
+      "name": "logoImageUrl",
+      "type": "string",
+      "meaning": "Propiedad de entrada logoImageUrl configurada en el componente."
+    },
+    {
+      "name": "logoBadgeImages",
+      "type": "string[]",
+      "meaning": "Propiedad de entrada logoBadgeImages configurada en el componente."
+    },
+    {
+      "name": "logoIconColor",
+      "type": "string",
+      "meaning": "Propiedad de entrada logoIconColor configurada en el componente."
+    },
+    {
+      "name": "logoTextColor",
+      "type": "string",
+      "meaning": "Propiedad de entrada logoTextColor configurada en el componente."
+    },
+    {
+      "name": "headerBgColor",
+      "type": "string",
+      "meaning": "Propiedad de entrada headerBgColor configurada en el componente."
+    },
+    {
+      "name": "footerBgColor",
+      "type": "string",
+      "meaning": "Propiedad de entrada footerBgColor configurada en el componente."
+    }
+  ],
+  "outputs": [
+    {
+      "name": "navigate",
+      "type": "SidebarMenuItem",
+      "meaning": "Evento emitido por el componente (navigate)."
+    }
+  ],
+  "states": [
+    {
+      "name": "expanded",
+      "meaning": "Muestra emblema, logoText a ancho completo, fila logo-subtitle-row con logoBadges, menú jerárquico y perfil."
+    },
+    {
+      "name": "collapsed",
+      "meaning": "Modo compacto con solo iconos y emblema principal centrado."
+    }
+  ],
+  "a11y": [
+    "Navegación por teclado con flechas arriba/abajo entre enlaces visibles e indicación de ruta activa."
+  ],
+  "responsive": [
+    "Integra ScrollOverlay en la lista de navegación y responde al estado collapsed en móvil."
+  ],
+  "tokens": [
+    "--avatar-md",
+    "--border-color",
+    "--border-color-light",
+    "--danger-color",
+    "--font-weight-body",
+    "--font-weight-emphasis",
+    "--font-weight-title",
+    "--hover-background-subtle",
+    "--icon-md",
+    "--icon-sm",
+    "--logo-icon-color",
+    "--logo-text-color",
+    "--primary-color",
+    "--primary-color-dark",
+    "--primary-color-light",
+    "--primary-color-lighter",
+    "--radius-full",
+    "--radius-md",
+    "--radius-sm",
+    "--secondary-color-text",
+    "--shadow-xs",
+    "--sidebar-bg",
+    "--sidebar-footer-bg",
+    "--sidebar-footer-border",
+    "--sidebar-header-bg",
+    "--sidebar-header-border",
+    "--sidebar-icon-color",
+    "--sidebar-item-icon-color",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-6",
+    "--text-color",
+    "--text-color-on-primary",
+    "--text-color-secondary",
+    "--text-md",
+    "--text-sm",
+    "--text-xl",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-sidebar.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/organisms/sidebar/sidebar.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "sidebar",
+    "side-navigation",
+    "app-sidebar"
+  ]
+}

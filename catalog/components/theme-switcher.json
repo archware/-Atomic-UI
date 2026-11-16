@@ -1,0 +1,56 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "theme-switcher",
+  "layer": "organism",
+  "selector": "app-theme-switcher",
+  "export": "ThemeSwitcherComponent",
+  "source": "src/app/shared/ui/organisms/theme-switcher/theme-switcher.component.ts",
+  "purpose": "Interruptor reactivo entre tema claro y oscuro coordinado con ThemeService.",
+  "variants": [],
+  "inputs": [],
+  "outputs": [],
+  "states": [
+    {
+      "name": "light",
+      "meaning": "Tema claro activo mostrando icono de cambio a modo oscuro."
+    },
+    {
+      "name": "dark",
+      "meaning": "Tema oscuro activo mostrando icono de retorno a modo claro."
+    }
+  ],
+  "a11y": [
+    "Botón accesible con descripción clara del tema al que conmuta."
+  ],
+  "responsive": [
+    "Tamaño compacto compatible con cualquier topbar o barra de utilidades."
+  ],
+  "tokens": [
+    "--icon-moon-color",
+    "--icon-sun-color",
+    "--primary-color",
+    "--space-1",
+    "--space-2",
+    "--text-xl",
+    "--warning-color"
+  ],
+  "story": {
+    "path": "src/stories/ui-theme-switcher.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "theme-switcher",
+    "dark-mode-toggle"
+  ]
+}

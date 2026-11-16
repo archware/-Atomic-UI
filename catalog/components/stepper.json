@@ -1,0 +1,147 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "stepper",
+  "layer": "organism",
+  "selector": "app-stepper",
+  "export": "StepperComponent",
+  "source": "src/app/shared/ui/organisms/stepper/stepper.component.ts",
+  "relatedExports": [
+    "Step"
+  ],
+  "purpose": "Indicador interactivo de pasos lineales en disposición horizontal o vertical con control de alcance.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "steps",
+      "type": "Step[]",
+      "meaning": "Propiedad de entrada steps configurada en el componente."
+    },
+    {
+      "name": "allowSkip",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada allowSkip configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "vertical",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada vertical configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "meaning": "Deshabilita la interacción del usuario cuando es true.",
+      "default": false
+    },
+    {
+      "name": "maxReachableStep",
+      "type": "number | null",
+      "meaning": "Propiedad de entrada maxReachableStep configurada en el componente.",
+      "default": null
+    },
+    {
+      "name": "accessibleLabel",
+      "type": "string",
+      "meaning": "Propiedad de entrada accessibleLabel configurada en el componente.",
+      "default": "Progreso del formulario"
+    },
+    {
+      "name": "idPrefix",
+      "type": "string",
+      "meaning": "Propiedad de entrada idPrefix configurada en el componente.",
+      "default": "stepper"
+    },
+    {
+      "name": "activeStep",
+      "type": "number",
+      "meaning": "Propiedad de entrada activeStep configurada en el componente.",
+      "default": 0
+    }
+  ],
+  "outputs": [
+    {
+      "name": "stepChange",
+      "type": "number",
+      "meaning": "Evento emitido por el componente (stepChange)."
+    }
+  ],
+  "states": [
+    {
+      "name": "active",
+      "meaning": "Destaca el paso vigente y marca pasos completados o bloqueados según maxReachableStep."
+    },
+    {
+      "name": "disabled",
+      "meaning": "Deshabilita la conmutación manual conservando el estado visual."
+    }
+  ],
+  "a11y": [
+    "Lista de pasos semántica con accessibleLabel, aria-current en el paso actual y control disabled."
+  ],
+  "responsive": [
+    "Soporta orientación vertical y adaptación horizontal en formularios guiados."
+  ],
+  "tokens": [
+    "--border-width-medium",
+    "--border-width-thin",
+    "--button-primary-bg",
+    "--button-primary-text",
+    "--focus-ring",
+    "--focus-ring-color",
+    "--font-weight-display",
+    "--font-weight-title",
+    "--gray-900",
+    "--input-border",
+    "--radius-md",
+    "--radius-sm",
+    "--shadow-xs",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-6",
+    "--stepper-active-hover-indicator-bg",
+    "--stepper-active-hover-indicator-text",
+    "--stepper-completed-hover-bg",
+    "--stepper-completed-hover-border",
+    "--stepper-completed-hover-indicator-bg",
+    "--stepper-completed-hover-indicator-border",
+    "--stepper-completed-hover-indicator-text",
+    "--stepper-completed-hover-text",
+    "--stepper-hover-bg",
+    "--stepper-hover-border",
+    "--stepper-hover-description",
+    "--stepper-hover-indicator-bg",
+    "--stepper-hover-indicator-border",
+    "--stepper-hover-text",
+    "--success-color",
+    "--surface-background",
+    "--surface-sunken",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-secondary",
+    "--text-md",
+    "--text-sm",
+    "--touch-target-min"
+  ],
+  "story": {
+    "path": "src/stories/ui-stepper.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/organisms/stepper/stepper.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "stepper",
+    "step-indicator",
+    "wizard-steps"
+  ]
+}

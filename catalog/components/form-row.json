@@ -1,0 +1,62 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "form-row",
+  "layer": "atom",
+  "selector": "app-form-row",
+  "export": "FormRowComponent",
+  "source": "src/app/shared/ui/atoms/form-row/form-row.component.ts",
+  "purpose": "Contenedor de rejilla heredado para distribuir campos de formulario por número de columnas.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "columns",
+      "type": "string",
+      "meaning": "Propiedad de entrada columns configurada en el componente.",
+      "default": "1fr 1fr"
+    },
+    {
+      "name": "gap",
+      "type": "string",
+      "meaning": "Propiedad de entrada gap configurada en el componente.",
+      "default": "var(--space-7)"
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Distribuye sus controles proyectados en columnas uniformes."
+    }
+  ],
+  "a11y": [
+    "Conserva el orden natural de lectura y tabulación del DOM proyectado."
+  ],
+  "responsive": [
+    "Colapsa columnas automáticamente en pantallas pequeñas mediante variables CSS de rejilla."
+  ],
+  "tokens": [
+    "--form-row-columns",
+    "--form-row-gap",
+    "--space-5",
+    "--space-7"
+  ],
+  "story": {
+    "path": "src/stories/ui-form-row.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "legacy",
+    "notes": [
+      "Se recomienda RowComponent con variant=\"form\" en nuevos desarrollos."
+    ]
+  },
+  "canonicalFor": [
+    "form-row",
+    "legacy-form-grid"
+  ]
+}

@@ -9,7 +9,10 @@
   (closed)="handleClosed()"
 >
   <article class="form-dialog" [attr.aria-busy]="busy()">
-    <header class="form-dialog__header">
+    <header
+      class="form-dialog__header"
+      [class.form-dialog__header--center]="headerAlign() === 'center'"
+    >
       <div class="form-dialog__heading">
         @if (eyebrow()) {
           <p class="form-dialog__eyebrow">{{ eyebrow() }}</p>

@@ -7,7 +7,7 @@
 .content-sections {
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: var(--form-row-gap, 2.25rem);
 }
 
 .content-sections > * {
@@ -17,8 +17,4 @@
 .loading-placeholder {
   padding: 2rem;
   text-align: center;
-}
-
-.info-row {
-  margin-top: 0;
 }

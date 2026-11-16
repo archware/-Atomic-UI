@@ -33,4 +33,19 @@ describe('SummaryListComponent', () => {
     fixture.detectChanges();
     expect(valor.style.getPropertyValue('--summary-value-color')).toBe('');
   });
+
+  it('aplica grilla multicolor de columnas cuando se indica columns > 1', () => {
+    const fixture = TestBed.createComponent(SummaryListComponent);
+    fixture.componentRef.setInput('layout', 'detail');
+    fixture.componentRef.setInput('columns', 3);
+    fixture.componentRef.setInput('items', [
+      { label: 'Cliente', value: 'QAMKA' },
+      { label: 'Saldo total', value: 'S/ 150.00' },
+      { label: 'Por vencer', value: 'S/ 50.00' },
+    ]);
+    fixture.detectChanges();
+    const lista: HTMLElement = fixture.nativeElement.querySelector('dl');
+    expect(lista.classList).toContain('summary-list--grid');
+    expect(lista.style.getPropertyValue('--summary-columns')).toBe('repeat(3, minmax(0, 1fr))');
+  });
 });

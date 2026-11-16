@@ -73,13 +73,54 @@
       "type": "AlertSpacing",
       "default": "default",
       "meaning": "Separación vertical simétrica en el flujo."
+    },
+    {
+      "name": "compact",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Reduce padding, separación interna e icono para mensajes compactos en una o pocas líneas."
+    },
+    {
+      "name": "collapsible",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Muestra acción para contraer o expandir el cuerpo del aviso conservando su título."
+    },
+    {
+      "name": "startCollapsed",
+      "type": "boolean",
+      "default": false,
+      "meaning": "Inicia el aviso colapsado cuando collapsible está activo y al reabrir con reopenToken."
+    },
+    {
+      "name": "autoHideMs",
+      "type": "number | null",
+      "default": null,
+      "meaning": "Tiempo en milisegundos para ocultar automáticamente el aviso sin persistir el cierre."
+    },
+    {
+      "name": "rememberClosedKey",
+      "type": "string",
+      "default": "",
+      "meaning": "Clave de localStorage para recordar el cierre manual entre renderizados."
+    },
+    {
+      "name": "reopenToken",
+      "type": "unknown",
+      "default": null,
+      "meaning": "Token reactivo cuyo cambio vuelve a mostrar el aviso cerrado y restaura startCollapsed."
     }
   ],
   "outputs": [
     {
       "name": "closed",
       "type": "void",
-      "meaning": "Se emite después de ocultar el aviso con el botón cerrar."
+      "meaning": "Se emite después de ocultar el aviso con el botón cerrar o autoHideMs."
+    },
+    {
+      "name": "collapsedChange",
+      "type": "boolean",
+      "meaning": "Se emite con el nuevo estado colapsado cada vez que el usuario alterna el toggle."
     }
   ],
   "slots": [
@@ -93,6 +134,18 @@
     {
       "name": "visible",
       "meaning": "Aviso renderizado: danger usa alert, el resto status."
+    },
+    {
+      "name": "compact",
+      "meaning": "Modo visual denso activado por la entrada compact."
+    },
+    {
+      "name": "collapsible",
+      "meaning": "Expone control de colapso para alternar el cuerpo del mensaje."
+    },
+    {
+      "name": "collapsed",
+      "meaning": "Cuerpo del mensaje oculto conservando icono, título y acciones."
     },
     {
       "name": "dismissible",

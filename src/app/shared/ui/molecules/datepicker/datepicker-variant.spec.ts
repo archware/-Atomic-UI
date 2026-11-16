@@ -66,6 +66,11 @@ describe('DatepickerComponent - modos de etiqueta', () => {
     await fixture.whenStable();
     expect(caja(raiz).classList.contains('focused')).toBe(true);
 
+    const inputInterno = interno(raiz).querySelector('input.floating-input') as HTMLInputElement;
+    inputInterno.dispatchEvent(new Event('blur'));
+    await fixture.whenStable();
+    expect(caja(raiz).classList.contains('focused')).toBe(true);
+
     disparador.click();
     await fixture.whenStable();
     expect(caja(raiz).classList.contains('focused')).toBe(false);
@@ -138,4 +143,3 @@ describe('DatepickerComponent - modos de etiqueta', () => {
     expect(estiloDisparador.outlineStyle).toBe('none');
   });
 });
-

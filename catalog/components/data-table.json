@@ -104,7 +104,7 @@
       "name": "columns",
       "type": "readonly DataTableColumn<T>[]",
       "required": true,
-      "meaning": "Columnas tipadas con key/header y format, sortable, isTag, tagVariant, width o align opcionales. align explícito prevalece."
+      "meaning": "Columnas tipadas con key/header y format, sortable, isBadge, badgeVariant, isTag, tagVariant, width o align opcionales. align explícito prevalece."
     },
     {
       "name": "rows",
@@ -294,8 +294,8 @@
   ],
   "behavior": [
     "El orden local es estable y usa Intl.Collator es-PE con numeric y sensibilidad base.",
-    "DataTableColumn puede derivar value, format, sortValue, compare y tagVariant sin lógica de dominio interna.",
-    "isTag y las keys stateLabel, state, status y estado se presentan como Chip, sin inferir estado desde el encabezado traducido.",
+    "DataTableColumn puede derivar value, format, sortValue, compare, badgeVariant y tagVariant sin lógica de dominio interna.",
+    "isBadge, isTag y las keys stateLabel, state, status y estado se presentan como Badge, sin inferir estado desde el encabezado traducido.",
     "Las columnas de etiquetas centran encabezado y valor por omisión; align explícito prevalece. Las columnas ordinarias conservan su presentación."
   ],
   "states": [

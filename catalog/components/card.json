@@ -48,7 +48,8 @@
     { "name": "subtitle", "type": "string", "default": "", "meaning": "Descripción opcional." },
     { "name": "icon", "type": "string", "default": "", "meaning": "Clases del icono de encabezado." },
     { "name": "clickable", "type": "boolean", "default": false, "meaning": "Habilita semántica y evento de activación." },
-    { "name": "horizontal", "type": "boolean", "default": false, "meaning": "Coloca imagen y contenido lado a lado." }
+    { "name": "horizontal", "type": "boolean", "default": false, "meaning": "Coloca imagen y contenido lado a lado." },
+    { "name": "headerAlign", "type": "'start' | 'center'", "default": "start", "meaning": "Alineación del encabezado de la tarjeta ('start' | 'center')." }
   ],
   "outputs": [
     { "name": "cardClick", "type": "void", "meaning": "Activación por clic, Enter o Space; solo emite si clickable." }

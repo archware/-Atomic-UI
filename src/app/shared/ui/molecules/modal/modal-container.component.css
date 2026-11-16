@@ -57,20 +57,28 @@
 
 /* Header */
 .modal-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--control-height-sm) minmax(0, 1fr) var(--control-height-sm);
   align-items: center;
-  justify-content: space-between;
+  gap: var(--space-3);
   padding: var(--space-4) var(--space-5);
   background: var(--modal-header-bg, var(--surface-section));
   border-bottom: 1px solid var(--modal-border, var(--border-color));
 }
 
 .modal-title {
+  grid-column: 2;
+  text-align: center;
   margin: 0;
   font-family: var(--font-family-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-weight-emphasis);
   color: var(--text-color);
+}
+
+.modal-close {
+  grid-column: 3;
+  justify-self: end;
 }
 
 

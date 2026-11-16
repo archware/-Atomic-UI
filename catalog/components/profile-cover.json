@@ -1,0 +1,87 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "profile-cover",
+  "layer": "molecule",
+  "selector": "app-profile-cover",
+  "export": "ProfileCoverComponent",
+  "source": "src/app/shared/ui/molecules/profile-cover/profile-cover.component.ts",
+  "purpose": "Encabezado visual de perfil de usuario con fondo de marca, avatar destacado, estado de carga y datos de rol.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "loading",
+      "type": "boolean",
+      "meaning": "Activa indicador de carga y bloquea envíos duplicados.",
+      "default": false
+    },
+    {
+      "name": "initials",
+      "type": "string",
+      "meaning": "Propiedad de entrada initials configurada en el componente.",
+      "default": "U"
+    },
+    {
+      "name": "firstName",
+      "type": "string",
+      "meaning": "Propiedad de entrada firstName configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "lastName",
+      "type": "string",
+      "meaning": "Propiedad de entrada lastName configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "role",
+      "type": "string",
+      "meaning": "Propiedad de entrada role configurada en el componente.",
+      "default": ""
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "ready",
+      "meaning": "Muestra nombre completo, iniciales en AvatarComponent y cargo del usuario."
+    },
+    {
+      "name": "loading",
+      "meaning": "Activa placeholders SkeletonComponent mientras llegan datos remotos."
+    }
+  ],
+  "a11y": [
+    "Jerarquía de texto clara y contraste verificado sobre el fondo de marca."
+  ],
+  "responsive": [
+    "Ajusta espaciado y apilamiento fluido en paneles laterales y vistas móviles."
+  ],
+  "tokens": [
+    "--primary-color",
+    "--radius-lg",
+    "--secondary-color",
+    "--space-3",
+    "--space-4",
+    "--space-6"
+  ],
+  "story": {
+    "path": "src/stories/ui-profile-cover.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "profile-cover",
+    "user-header",
+    "account-banner"
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "row",
+  "layer": "atom",
+  "selector": "app-row",
+  "export": "RowComponent",
+  "source": "src/app/shared/ui/atoms/row/row.component.ts",
+  "relatedExports": [
+    "RowAlign",
+    "RowVerticalAlign",
+    "RowJustify",
+    "RowVariant"
+  ],
+  "purpose": "Primitiva canónica de rejilla responsiva basada en tokens para formularios, tarjetas y paneles.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "columns",
+      "type": "string",
+      "meaning": "Propiedad de entrada columns configurada en el componente."
+    },
+    {
+      "name": "gap",
+      "type": "string",
+      "meaning": "Propiedad de entrada gap configurada en el componente.",
+      "default": "var(--space-7)"
+    },
+    {
+      "name": "align",
+      "type": "RowAlign",
+      "meaning": "Propiedad de entrada align configurada en el componente.",
+      "default": "stretch"
+    },
+    {
+      "name": "verticalAlign",
+      "type": "RowVerticalAlign",
+      "meaning": "Propiedad de entrada verticalAlign configurada en el componente.",
+      "default": "stretch"
+    },
+    {
+      "name": "justify",
+      "type": "RowJustify",
+      "meaning": "Propiedad de entrada justify configurada en el componente.",
+      "default": "start"
+    },
+    {
+      "name": "variant",
+      "type": "RowVariant",
+      "meaning": "Variante visual o de comportamiento declarada por el componente.",
+      "default": "default"
+    },
+    {
+      "name": "responsive",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada responsive configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "minColumnWidth",
+      "type": "string",
+      "meaning": "Propiedad de entrada minColumnWidth configurada en el componente.",
+      "default": "12.5rem"
+    },
+    {
+      "name": "wrap",
+      "type": "'nowrap' | 'wrap'",
+      "meaning": "Propiedad de entrada wrap configurada en el componente.",
+      "default": "nowrap"
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Organiza columnas según columns o minColumnWidth usando tokens --row-gap."
+    }
+  ],
+  "a11y": [
+    "Mantiene intacto el flujo lógico de foco y lectura del contenido proyectado."
+  ],
+  "responsive": [
+    "Reduce columnas progresivamente en puntos de corte responsivos cuando responsive está activo."
+  ],
+  "tokens": [
+    "--row-columns",
+    "--row-gap",
+    "--space-5",
+    "--space-7"
+  ],
+  "story": {
+    "path": "src/stories/ui-row.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/row/row.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "row",
+    "grid-layout",
+    "form-grid"
+  ]
+}

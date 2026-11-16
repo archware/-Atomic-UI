@@ -6,7 +6,7 @@ import { PopupService, PopupItem } from '../../services/popup.service';
  * Contenedor de popups global.
  * Debe colocarse en el nivel raíz del app (app.component o app.html).
  * Lee los popups del PopupService y los renderiza como modales.
- * 
+ *
  * @example
  * ```html
  * <!-- En app.html o app.component -->
@@ -24,8 +24,8 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @for (popup of popupService.popups(); track popup.id) {
-      <div 
-        class="popup-overlay" 
+      <div
+        class="popup-overlay"
         [class.popup-closing]="popup.closing"
         (click)="onBackdropClick(popup)"
         (keydown.escape)="onEscape(popup, $event)"
@@ -34,8 +34,8 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
         aria-modal="true"
         [attr.aria-labelledby]="'popup-title-' + popup.id"
       >
-        <div 
-          class="popup" 
+        <div
+          class="popup"
           [class]="'popup-' + popup.size + ' popup-type-' + popup.type + (popup.layout ? ' popup-layout-' + popup.layout : '')"
           (click)="$event.stopPropagation()"
           (keydown)="onPopupKeydown($event, popup)"
@@ -75,7 +75,7 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
           @if (popup.buttons && popup.buttons.length > 0) {
             <div class="popup-footer">
               @for (button of popup.buttons; track button.label) {
-                <app-button 
+                <app-button
                   class="popup-btn"
                   [variant]="button.variant || 'primary'"
                   [attr.data-autofocus]="button.autofocus ? '' : null"

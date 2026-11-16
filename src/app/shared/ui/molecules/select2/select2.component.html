@@ -25,7 +25,7 @@
         (focus)="triggerFocused.set(true)"
         (blur)="triggerFocused.set(false)"
         [attr.aria-labelledby]="label() ? selectId() : null"
-        [attr.aria-label]="label() ? null : ariaLabel() || placeholder()"
+        [attr.aria-label]="ariaLabel() || (label() ? null : placeholder())"
         [attr.aria-required]="required() ? 'true' : null"
         [attr.aria-controls]="listboxId()"
         [attr.aria-activedescendant]="isOpen() && highlightedIndex() >= 0 ? optionId(highlightedIndex()) : null"

@@ -89,11 +89,13 @@ describe('DatepickerComponent — fechas civiles', () => {
   });
 
   it('deshabilitado no acepta una selección programática', () => {
-    const cambiar = jasmine.createSpy('cambiar');
-    component.registerOnChange(cambiar);
+    let llamado = false;
+    component.registerOnChange(() => {
+      llamado = true;
+    });
     component.setDisabledState(true);
     component.selectDate(new Date(2026, 9, 7));
-    expect(cambiar).not.toHaveBeenCalled();
+    expect(llamado).toBe(false);
   });
 
   it('sus botones no envían el formulario anfitrión', () => {
@@ -121,10 +123,92 @@ describe('DatepickerComponent — fechas civiles', () => {
       const evento = new KeyboardEvent('keydown', { key: 'Escape', cancelable: true });
       component.onKeyDown(evento);
 
-      expect(evento.defaultPrevented)
-        .withContext(`vista ${vista}`)
-        .toBeTrue();
-      expect(component.isOpen()).toBeFalse();
+      expect(evento.defaultPrevented).toBe(true);
+      expect(component.isOpen()).toBe(false);
+    }
+  });
+
+  it('permite seleccionar Hoy y limpiar una fecha no obligatoria desde el pie o con Delete/Backspace', () => {
+    const emitidos: (Date | null)[] = [];
+    component.registerOnChange((val) => emitidos.push(val));
+
+    component.isOpen.set(true);
+    component.selectToday();
+    expect(component.isOpen()).toBe(false);
+    expect(component.value()).not.toBeNull();
+    const hoy = new Date();
+    expect(component.value()!.getFullYear()).toBe(hoy.getFullYear());
+    expect(component.value()!.getMonth()).toBe(hoy.getMonth());
+    expect(component.value()!.getDate()).toBe(hoy.getDate());
+    expect(emitidos.at(-1)).toEqual(component.value());
+
+    const borrarTeclado = new KeyboardEvent('keydown', { key: 'Backspace', cancelable: true });
+    component.onKeyDown(borrarTeclado);
+    expect(borrarTeclado.defaultPrevented).toBe(true);
+    expect(component.value()).toBeNull();
+    expect(emitidos.at(-1)).toBeNull();
+  });
+
+  it('mantiene abierto el calendario al elegir año y mes mediante clic real en el DOM y no marca touched si se pulsa fuera estando cerrado', () => {
+    const fixture = TestBed.createComponent(DatepickerComponent);
+    const comp = fixture.componentInstance;
+    let touchedCalls = 0;
+    comp.registerOnTouched(() => {
+      touchedCalls += 1;
+    });
+    comp.currentViewDate.set(new Date(2026, 0, 15));
+    fixture.detectChanges();
+
+    document.body.click();
+    expect(touchedCalls).toBe(0);
+
+    const trigger = fixture.nativeElement.querySelector('.datepicker-trigger') as HTMLElement;
+    trigger.click();
+    fixture.detectChanges();
+    expect(comp.isOpen()).toBe(true);
+
+    const btnAnio = fixture.nativeElement.querySelector('button[aria-label="Cambiar año"]') as HTMLButtonElement;
+    btnAnio.click();
+    fixture.detectChanges();
+    expect(comp.isOpen()).toBe(true);
+    expect(comp.currentView()).toBe('year');
+
+    const opcionAnio = Array.from(
+      fixture.nativeElement.querySelectorAll('.year-grid .calendar-option') as NodeListOf<HTMLButtonElement>
+    ).find((b) => b.textContent?.trim() === '2025')!;
+    opcionAnio.click();
+    fixture.detectChanges();
+    expect(comp.isOpen()).toBe(true);
+    expect(comp.currentView()).toBe('month');
+    expect(comp.currentViewDate().getFullYear()).toBe(2025);
+
+    const opcionMes = fixture.nativeElement.querySelectorAll('.month-grid .calendar-option')[3] as HTMLButtonElement;
+    opcionMes.click();
+    fixture.detectChanges();
+    expect(comp.isOpen()).toBe(true);
+    expect(comp.currentView()).toBe('day');
+    expect(comp.currentViewDate().getMonth()).toBe(3);
+  });
+
+  it('intercepta Escape disparado desde botones internos del popup en vistas day, month y year y devuelve el foco al trigger', () => {
+    const fixture = TestBed.createComponent(DatepickerComponent);
+    const comp = fixture.componentInstance;
+    fixture.componentRef.setInput('label', 'Fecha');
+    fixture.componentRef.setInput('variant', 'floating');
+
+    for (const vista of ['day', 'month', 'year'] as const) {
+      comp.isOpen.set(true);
+      comp.currentView.set(vista);
+      fixture.detectChanges();
+
+      const botonInterno = fixture.nativeElement.querySelector('.datepicker-popup button') as HTMLButtonElement;
+      expect(botonInterno).not.toBeNull();
+      const evento = new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true });
+      botonInterno.dispatchEvent(evento);
+      fixture.detectChanges();
+
+      expect(evento.defaultPrevented).toBe(true);
+      expect(comp.isOpen()).toBe(false);
     }
   });
 });

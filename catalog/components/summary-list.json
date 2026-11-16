@@ -24,6 +24,12 @@
       "type": "SummaryListLayout",
       "default": "summary",
       "meaning": "summary conserva tarjetas; detail presenta detalle vertical sin controles."
+    },
+    {
+      "name": "columns",
+      "type": "number | null",
+      "default": null,
+      "meaning": "Cantidad opcional de columnas para grillas de resumen o indicadores KPI cuando es mayor que 1."
     }
   ],
   "variants": [

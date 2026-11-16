@@ -178,4 +178,18 @@ describe('FormDialog propagacion del retorno', () => {
     fixture.componentInstance.showModal();
     expect(resolver).not.toHaveBeenCalled();
   });
+
+  it('centra el encabezado por defecto y permite alineacion start', async () => {
+    await TestBed.configureTestingModule({ imports: [FormDialog] }).compileComponents();
+    const fixture = TestBed.createComponent(FormDialog);
+    fixture.componentRef.setInput('title', 'Registro');
+    fixture.detectChanges();
+
+    const header = fixture.nativeElement.querySelector('.form-dialog__header') as HTMLElement;
+    expect(header.classList).toContain('form-dialog__header--center');
+
+    fixture.componentRef.setInput('headerAlign', 'start');
+    fixture.detectChanges();
+    expect(header.classList).not.toContain('form-dialog__header--center');
+  });
 });

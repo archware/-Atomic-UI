@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
+import { BadgeComponent } from '../app/shared/ui/atoms/badge/badge.component';
 import { TableAction } from '../app/shared/ui/atoms/table-action/table-action';
 import { TableCellComponent } from '../app/shared/ui/atoms/table/table-cell.component';
 import { TableComponent } from '../app/shared/ui/atoms/table/table.component';
@@ -54,6 +55,7 @@ const meta: Meta<TableAction> = {
   decorators: [
     moduleMetadata({
       imports: [
+        BadgeComponent,
         TableAction,
         TableComponent,
         TableHeadComponent,
@@ -301,7 +303,11 @@ export const EnUnaFilaDeTabla: Story = {
               <td app-table-cell dataLabel="Código">{{ credito.codigo }}</td>
               <td app-table-cell dataLabel="Cliente">{{ credito.cliente }}</td>
               <td app-table-cell dataLabel="Saldo" align="right">{{ credito.saldo }}</td>
-              <td app-table-cell dataLabel="Estado">{{ credito.estado }}</td>
+              <td app-table-cell dataLabel="Estado">
+                <app-badge [variant]="credito.estado === 'Vigente' ? 'success' : credito.estado === 'Atrasado' ? 'warning' : 'danger'">
+                  {{ credito.estado }}
+                </app-badge>
+              </td>
               <td app-table-cell dataLabel="Acciones">
                 <span style="display: inline-flex; gap: var(--space-1);">
                   <app-table-action

@@ -1,0 +1,100 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "print-document-panel",
+  "layer": "organism",
+  "selector": "app-print-document-panel, prest-print-document-panel",
+  "export": "PrintDocumentPanel",
+  "source": "src/app/shared/ui/organisms/print-document-panel/print-document-panel.ts",
+  "relatedExports": [
+    "PrintDocumentField",
+    "PrintDocumentPage",
+    "PrintDocumentSection",
+    "PrintDocumentTable",
+    "PrintDocumentTableColumn"
+  ],
+  "purpose": "Panel de previsualización e impresión multi-documento con secciones estructuradas y tablas de detalle.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "title",
+      "type": "string",
+      "meaning": "Título principal visible del componente.",
+      "default": "Documentos"
+    },
+    {
+      "name": "titleId",
+      "type": "unknown",
+      "meaning": "Propiedad de entrada titleId configurada en el componente."
+    },
+    {
+      "name": "subtitle",
+      "type": "string",
+      "meaning": "Subtítulo o descripción secundaria opcional.",
+      "default": ""
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string | null",
+      "meaning": "Etiqueta accesible explícita para lectores de pantalla.",
+      "default": null
+    },
+    {
+      "name": "documents",
+      "type": "readonly PrintDocumentPage[]",
+      "meaning": "Propiedad de entrada documents configurada en el componente."
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "ready",
+      "meaning": "Renderiza páginas de documento tipadas con estilo apto para pantalla e impresión."
+    }
+  ],
+  "a11y": [
+    "Región etiquetada con ariaLabel o título vinculado y tablas con encabezados semánticos."
+  ],
+  "responsive": [
+    "Permite lectura en pantalla estrecha manteniendo reglas @media print limpias."
+  ],
+  "tokens": [
+    "--font-weight-emphasis",
+    "--font-weight-title",
+    "--letter-spacing-wide",
+    "--print-document-accent",
+    "--print-document-background",
+    "--print-document-border",
+    "--print-document-detail-background",
+    "--print-document-shadow",
+    "--radius-lg",
+    "--radius-md",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--text-color",
+    "--text-color-muted",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-print-document-panel.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/organisms/print-document-panel/print-document-panel.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "print-document-panel",
+    "printable-document",
+    "statement-preview"
+  ]
+}

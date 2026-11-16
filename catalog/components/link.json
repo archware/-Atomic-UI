@@ -1,0 +1,96 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "link",
+  "layer": "atom",
+  "selector": "app-link",
+  "export": "LinkComponent",
+  "source": "src/app/shared/ui/atoms/link/link.component.ts",
+  "relatedExports": [
+    "LinkVariant"
+  ],
+  "purpose": "Enlace tipográfico unificado para navegación interna por routerLink o referencias externas con href.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "href",
+      "type": "string",
+      "meaning": "Propiedad de entrada href configurada en el componente."
+    },
+    {
+      "name": "routerLink",
+      "type": "string | unknown[]",
+      "meaning": "Propiedad de entrada routerLink configurada en el componente."
+    },
+    {
+      "name": "target",
+      "type": "string",
+      "meaning": "Propiedad de entrada target configurada en el componente.",
+      "default": "_self"
+    },
+    {
+      "name": "variant",
+      "type": "LinkVariant",
+      "meaning": "Variante visual o de comportamiento declarada por el componente.",
+      "default": "primary"
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "meaning": "Etiqueta accesible explícita para lectores de pantalla."
+    },
+    {
+      "name": "rel",
+      "type": "string",
+      "meaning": "Propiedad de entrada rel configurada en el componente."
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Enlace en reposo con variante semántica primary, secondary, muted o danger."
+    },
+    {
+      "name": "hover-focus",
+      "meaning": "Subrayado e indicador de foco visible mediante teclado."
+    }
+  ],
+  "a11y": [
+    "Soporta ariaLabel opcional y aplica atributos rel seguros cuando se abre en nueva pestaña."
+  ],
+  "responsive": [
+    "Se adapta al flujo de texto en línea sin desbordamientos."
+  ],
+  "tokens": [
+    "--danger-color-dark",
+    "--danger-color-text",
+    "--font-weight-body",
+    "--font-weight-emphasis",
+    "--primary-color",
+    "--primary-color-dark",
+    "--secondary-color",
+    "--secondary-color-dark",
+    "--text-color-muted",
+    "--text-color-secondary"
+  ],
+  "story": {
+    "path": "src/stories/ui-link.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/link/link.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "link",
+    "anchor",
+    "router-link"
+  ]
+}

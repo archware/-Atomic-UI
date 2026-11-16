@@ -3,7 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import type { ChipVariant } from '../../shared/ui/atoms/chip/chip.component';
+import type { BadgeVariant } from '../../shared/ui/atoms/badge/badge.component';
 import { UiShowcaseComponent } from '../../components/ui-showcase/ui-showcase.component';
 import {
   ThemeSwitcherComponent,
@@ -218,7 +218,7 @@ export class ShowcasePageComponent {
   ];
   private estados = [
     'data.status.active', 'data.status.pending', 'data.status.completed',
-    'data.status.review', 'data.status.approved',
+    'data.status.review', 'data.status.approved', 'data.status.inactive',
   ];
   private tipos = [
     'data.type.invoice', 'data.type.receipt', 'data.type.order',
@@ -240,8 +240,8 @@ export class ShowcasePageComponent {
       header: 'table.headers.status', 
       align: 'center', 
       width: '130px', 
-      isTag: true, 
-      tagVariant: (row: TableRow) => this.getTagVariantForTable(row.statusVariant),
+      isBadge: true,
+      badgeVariant: (row: TableRow) => this.getTagVariantForTable(row.statusVariant),
       format: (val) => this.translate.instant(val as string)
     },
     { key: 'col6', header: 'table.headers.type', width: '175px', sortable: true, format: (val) => this.translate.instant(val as string) },
@@ -249,16 +249,19 @@ export class ShowcasePageComponent {
     { key: 'col8', header: 'table.headers.priority', align: 'center', width: '110px', sortable: true, format: (val) => this.translate.instant(val as string) },
   ]);
 
-  private getTagVariantForTable(variant: string): ChipVariant {
+  private getTagVariantForTable(variant: string): BadgeVariant {
     switch (variant) {
       case 'success':
-      case 'primary':
         return 'success';
+      case 'primary':
+        return 'primary';
       case 'warning':
-      case 'secondary':
         return 'warning';
+      case 'secondary':
+        return 'secondary';
       case 'error':
-        return 'error';
+      case 'danger':
+        return 'danger';
       default:
         return 'default';
     }
@@ -300,7 +303,7 @@ export class ShowcasePageComponent {
   }
 
   // ============================================
-  // IDENTIDAD DOCTRINAL & ACERCA DE (SSIT CONSULTING E.I.R.L.)
+  // IDENTIDAD DE ARTEFACTOS & ACERCA DE (SSIT CONSULTING E.I.R.L.)
   // ============================================
   readonly isAboutModalOpen = signal(false);
   readonly isAboutPopupOpen = signal(false);
@@ -310,35 +313,35 @@ export class ShowcasePageComponent {
       label: 'Autoría Principal',
       value: 'Ing. Havel CONTRERAS TAPAHUASCO (@archware) · SSIT CONSULTING E.I.R.L.',
       subtext:
-        'Arquitecto de Software Full-Stack, firma consultora SSIT CONSULTING E.I.R.L. y creador de herramientas propias de ingeniería, sistemas de diseño y doctrinas de arquitectura empresarial',
+        'Arquitecto de Software Full-Stack, firma consultora SSIT CONSULTING E.I.R.L. y creador de herramientas propias de ingeniería, sistemas de diseño y artefactos de arquitectura empresarial',
       icon: 'fa-solid fa-user-shield',
       imageUrl: 'assets/doctrinas/ssit-emblem.jpg',
       bannerImageUrl: 'assets/doctrinas/merch-desk-setup.jpg',
       badge: 'Marca Personal',
     },
     {
-      label: 'Doctrina Mangosta',
-      value: 'Suite Mangosta — Arquitectura Hexagonal & CQRS Estricto',
+      label: 'Artifact Mangosta',
+      value: 'Artifact Mangosta — DDD, Arquitectura Hexagonal & CQRS Estricto',
       subtext:
         'Vertical Slicing, dominio rico en español, persistencia limpia sin micro-ORMs, fronteras IPC/HTTP tipadas y seguridad por diseño',
       icon: 'fa-solid fa-diagram-project',
       imageUrl: 'assets/doctrinas/doctrina-mangosta-icon.jpg',
       bannerImageUrl: 'assets/doctrinas/doctrina-mangosta-banner.jpg',
-      badge: 'Backend Canon',
+      badge: 'Backend Artifact',
     },
     {
-      label: 'Doctrina Barracuda',
-      value: 'Suite Barracuda — Chasis Frontend Reactivo con Signals',
+      label: 'Artifact Barracuda',
+      value: 'Artifact Barracuda — Chasis Frontend Reactivo con Signals',
       subtext:
         'Andamiaje modular en Angular 22 + Signals, control flow nativo, plantillas gobernadas, accesibilidad estricta y cero deuda visual',
       icon: 'fa-solid fa-bolt',
       imageUrl: 'assets/doctrinas/doctrina-barracuda-icon.jpg',
       bannerImageUrl: 'assets/doctrinas/doctrina-barracuda-banner.jpg',
-      badge: 'Frontend Canon',
+      badge: 'Frontend Artifact',
     },
     {
       label: 'Sistema de Diseño',
-      value: 'Atomic UI (@atomic-ui/core v5.22.0) — Signals & OnPush',
+      value: 'Atomic UI (@atomic-ui/core v5.23.0) — Signals & OnPush',
       subtext:
         'Librería de autor con tokens semánticos puros, desplazamiento gobernado y fidelidad visual anti-alucinación',
       icon: 'fa-solid fa-cubes',
@@ -350,9 +353,9 @@ export class ShowcasePageComponent {
 
   readonly aboutTechStack: AboutTechBadge[] = [
     { label: 'Angular 22 + Signals', icon: 'fa-brands fa-angular', variant: 'primary' },
-    { label: 'Atomic UI v5.22.0', icon: 'fa-solid fa-layer-group', variant: 'info' },
-    { label: 'Doctrina Barracuda', icon: 'fa-solid fa-bolt', variant: 'primary' },
-    { label: 'Doctrina Mangosta', icon: 'fa-solid fa-diagram-project', variant: 'secondary' },
+    { label: 'Atomic UI v5.23.0', icon: 'fa-solid fa-layer-group', variant: 'info' },
+    { label: 'Artifact Barracuda', icon: 'fa-solid fa-bolt', variant: 'primary' },
+    { label: 'Artifact Mangosta', icon: 'fa-solid fa-diagram-project', variant: 'secondary' },
     { label: 'SSIT CONSULTING E.I.R.L.', icon: 'fa-solid fa-building-shield', variant: 'success' },
   ];
 

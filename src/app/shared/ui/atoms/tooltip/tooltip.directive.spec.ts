@@ -69,6 +69,7 @@ class TooltipTestHostComponent {}
 describe('TooltipDirective', () => {
   afterEach(() => {
     document.documentElement.removeAttribute('data-theme');
+    document.documentElement.classList.remove('dark', 'theme-dark', 'theme-light');
     document.querySelectorAll('.tooltip').forEach((el) => el.remove());
   });
 
@@ -125,6 +126,7 @@ describe('TooltipDirective', () => {
 
     for (const theme of ['light', 'dark', 'brand-dark'] as const) {
       document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.classList.toggle('dark', theme !== 'light');
       appBtn.dispatchEvent(new MouseEvent('mouseenter'));
 
       const tipEl = document.body.querySelector('.tooltip') as HTMLElement;

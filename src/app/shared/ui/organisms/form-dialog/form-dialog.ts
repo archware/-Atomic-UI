@@ -41,6 +41,7 @@ export class FormDialog {
   readonly eyebrow = input<string | null>(null);
   readonly title = input.required<string>();
   readonly description = input<string | null>(null);
+  readonly headerAlign = input<'start' | 'center'>('center');
   readonly size = input<'sm' | 'md' | 'lg' | 'xl'>('md');
   readonly panelClass = input('');
   readonly opened = model(false);

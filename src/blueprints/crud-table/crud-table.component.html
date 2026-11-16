@@ -31,7 +31,7 @@
     (alReintentar)="cargarPagina({ pagina: 1, tamano: 10, busqueda: '' })"
   >
     <ng-template #formularioCrud let-ctx>
-      <form [formGroup]="entityForm" style="display: flex; flex-direction: column; gap: 1rem;">
+      <form [formGroup]="entityForm" class="crud-entity-form">
         <app-floating-input 
           label="Nombre" 
           formControlName="name" 

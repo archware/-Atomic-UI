@@ -1,0 +1,111 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "comparison-chart",
+  "layer": "molecule",
+  "selector": "app-comparison-chart",
+  "export": "ComparisonChartComponent",
+  "source": "src/app/shared/ui/molecules/comparison-chart/comparison-chart.component.ts",
+  "relatedExports": [
+    "ComparisonChartItem"
+  ],
+  "purpose": "Gráfico comparativo de barras horizontales pareadas para contrastar dos series por categoría o período.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "items",
+      "type": "ComparisonChartItem[]",
+      "meaning": "Propiedad de entrada items configurada en el componente."
+    },
+    {
+      "name": "labelA",
+      "type": "string",
+      "meaning": "Propiedad de entrada labelA configurada en el componente.",
+      "default": "Ingresos"
+    },
+    {
+      "name": "labelB",
+      "type": "string",
+      "meaning": "Propiedad de entrada labelB configurada en el componente.",
+      "default": "Egresos"
+    },
+    {
+      "name": "prefixA",
+      "type": "string",
+      "meaning": "Propiedad de entrada prefixA configurada en el componente.",
+      "default": "Ing."
+    },
+    {
+      "name": "prefixB",
+      "type": "string",
+      "meaning": "Propiedad de entrada prefixB configurada en el componente.",
+      "default": "Egr."
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "meaning": "Etiqueta accesible explícita para lectores de pantalla.",
+      "default": "Evolución comparativa"
+    },
+    {
+      "name": "formatType",
+      "type": "'currency' | 'number'",
+      "meaning": "Propiedad de entrada formatType configurada en el componente.",
+      "default": "currency"
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "populated",
+      "meaning": "Renderiza parejas de barras proporcionales con formato numérico o monetario."
+    }
+  ],
+  "a11y": [
+    "Incluye ariaLabel descriptivo, leyenda de series A/B y etiquetas de valores legibles."
+  ],
+  "responsive": [
+    "Ajusta anchos proporcionales por porcentaje de fila sin desbordar en pantallas pequeñas."
+  ],
+  "tokens": [
+    "--border-color",
+    "--comparison-width",
+    "--font-weight-emphasis",
+    "--gray-500",
+    "--gray-600",
+    "--info-color",
+    "--info-color-light",
+    "--radius-full",
+    "--radius-md",
+    "--radius-sm",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-6",
+    "--surface-hover",
+    "--text-color",
+    "--text-muted",
+    "--text-sm",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-comparison-chart.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/molecules/comparison-chart/comparison-chart.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "comparison-chart",
+    "series-comparison",
+    "metric-bars"
+  ]
+}

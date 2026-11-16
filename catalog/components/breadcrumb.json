@@ -1,0 +1,70 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "breadcrumb",
+  "layer": "atom",
+  "selector": "app-breadcrumb",
+  "export": "BreadcrumbComponent",
+  "source": "src/app/shared/ui/atoms/breadcrumb/breadcrumb.component.ts",
+  "relatedExports": [
+    "BreadcrumbItem"
+  ],
+  "purpose": "Ruta jerárquica de navegación con enlaces navegables y marcador del nodo actual.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "items",
+      "type": "BreadcrumbItem[]",
+      "meaning": "Propiedad de entrada items configurada en el componente."
+    },
+    {
+      "name": "separator",
+      "type": "string",
+      "meaning": "Propiedad de entrada separator configurada en el componente.",
+      "default": "/"
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Muestra la secuencia de niveles desde el origen hasta la vista actual."
+    }
+  ],
+  "a11y": [
+    "Envuelve la ruta en un elemento nav semántico con aria-label de navegación.",
+    "El elemento final o activo identifica la ubicación vigente para tecnologías de asistencia."
+  ],
+  "responsive": [
+    "Permite ajuste horizontal fluido con separadores flexibles en anchos estrechos."
+  ],
+  "tokens": [
+    "--color-primary",
+    "--font-weight-body",
+    "--primary-color-hover",
+    "--space-1",
+    "--space-2",
+    "--text-color",
+    "--text-color-muted",
+    "--text-color-secondary",
+    "--text-sm"
+  ],
+  "story": {
+    "path": "src/stories/ui-breadcrumb.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "breadcrumb",
+    "navigation-trail"
+  ]
+}

@@ -104,22 +104,54 @@ describe('DialogsPageComponent — Patrón interactivo de tarjeta de documento P
 
     const host = fixture.nativeElement as HTMLElement;
     expect(fixture.componentInstance.aboutTechStack.map((b) => b.label)).toContain('Angular 22 + Signals');
-    expect(fixture.componentInstance.aboutTechStack.map((b) => b.label)).toContain('Doctrina Mangosta');
-    expect(fixture.componentInstance.aboutTechStack.map((b) => b.label)).toContain('Doctrina Barracuda');
+    expect(fixture.componentInstance.aboutTechStack.map((b) => b.label)).toContain('Artifact Mangosta');
+    expect(fixture.componentInstance.aboutTechStack.map((b) => b.label)).toContain('Artifact Barracuda');
     expect(fixture.componentInstance.aboutTechStack.map((b) => b.label)).not.toContain('Angular 19 + Signals');
-    expect(fixture.componentInstance.aboutCredits.map((c) => c.label)).toContain('Doctrina Mangosta');
-    expect(fixture.componentInstance.aboutCredits.map((c) => c.label)).toContain('Doctrina Barracuda');
+    expect(fixture.componentInstance.aboutCredits.map((c) => c.label)).toContain('Artifact Mangosta');
+    expect(fixture.componentInstance.aboutCredits.map((c) => c.label)).toContain('Artifact Barracuda');
+    expect(fixture.componentInstance.aboutCredits.map((c) => c.value)).toContain(
+      'Compilación Multiplataforma CI/CD & Binarios Nativos Autónomos',
+    );
+    expect(fixture.componentInstance.aboutLinks.length).toBe(6);
+    expect(fixture.componentInstance.aboutLinks.map((l) => l.url)).toContain(
+      'https://github.com/archware/union-pdf/releases',
+    );
+    expect(fixture.componentInstance.aboutLinks.map((l) => l.url)).toContain(
+      'https://github.com/archware/union-pdf/actions',
+    );
     expect(host.textContent).toContain('Angular 22 + Signals');
-    expect(host.textContent).toContain('Doctrina Mangosta');
-    expect(host.textContent).toContain('Doctrina Barracuda');
-    expect(host.textContent).toContain('Creador del Ecosistema @archware');
+    expect(host.textContent).toContain('Artifact Mangosta');
+    expect(host.textContent).toContain('Artifact Barracuda');
+    expect(host.textContent).toContain('Compilación Multiplataforma CI/CD & Binarios Nativos Autónomos');
+    expect(host.textContent).toContain('union-pdf-windows-x86_64.exe');
+    expect(host.textContent).toContain('union-pdf-macos-arm64.app.tar.gz');
+    expect(host.textContent).toContain('union-pdf-macos-x86_64.app.tar.gz');
+    expect(host.textContent).toContain('union-pdf-linux-x86_64.tar.gz');
+    expect(host.textContent).toContain('union-pdf.app');
+    expect(host.textContent).toContain('Creador de Ecosistemas');
     expect(host.textContent).not.toContain('Angular 19 + Signals');
 
     const previewDialog = host.querySelector<HTMLElement>('.about-blueprint-preview app-about-dialog')!;
     expect(previewDialog).not.toBeNull();
     const creditItems = Array.from(previewDialog.querySelectorAll<HTMLElement>('.about-credit-item'));
     const techItems = Array.from(previewDialog.querySelectorAll<HTMLElement>('.about-tech-list__item'));
+    const heroLogoImg = previewDialog.querySelector<HTMLImageElement>('.about-hero__logo-img');
+    const creditIcons = Array.from(previewDialog.querySelectorAll<HTMLImageElement>('.about-credit-item__img'));
+    const creditBanners = Array.from(previewDialog.querySelectorAll<HTMLImageElement>('.about-credit-item__banner'));
     expect(creditItems.length).toBe(6);
     expect(techItems.length).toBe(7);
+    expect(heroLogoImg?.getAttribute('src')).toBe('assets/doctrinas/ssit-emblem.jpg');
+    expect(creditIcons.map((img) => img.getAttribute('src'))).toEqual([
+      'assets/doctrinas/ssit-emblem.jpg',
+      'assets/doctrinas/doctrina-mangosta-icon.jpg',
+      'assets/doctrinas/doctrina-barracuda-icon.jpg',
+      'assets/doctrinas/barracuda-mangosta-duality-icon.jpg',
+    ]);
+    expect(creditBanners.map((img) => img.getAttribute('src'))).toEqual([
+      'assets/doctrinas/merch-desk-setup.jpg',
+      'assets/doctrinas/doctrina-mangosta-banner.jpg',
+      'assets/doctrinas/doctrina-barracuda-banner.jpg',
+      'assets/doctrinas/merch-kit-ejecutivo.jpg',
+    ]);
   });
 });

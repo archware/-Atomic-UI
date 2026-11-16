@@ -1,5 +1,5 @@
 import { effect, untracked } from '@angular/core';
-import { 
+import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -12,7 +12,7 @@ import {
   TemplateRef,
   viewChild,
 } from '@angular/core';
-import { PageHeader } from '../../organisms/page-header/page-header';
+import { PageHeader, PageHeaderAlignment } from '../../organisms/page-header/page-header';
 import { QueryToolbar } from '../../organisms/query-toolbar/query-toolbar';
 import { DataTable, type DataTableColumn, type DataTableStatus } from '../../organisms/data-table/data-table';
 import { StepperComponent, type Step } from '../../organisms/stepper/stepper.component';
@@ -23,11 +23,12 @@ import { SummaryListComponent, type SummaryListItem } from '../../molecules/summ
 import { ButtonComponent } from '../../atoms/button/button.component';
 import { InputComponent } from '../../atoms/input/input.component';
 import { Select2Component, type Select2Option } from '../../molecules/select2/select2.component';
+import { DatepickerComponent } from '../../molecules/datepicker/datepicker.component';
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
 import { NgTemplateOutlet } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Alert } from '../../molecules/alert/alert.component';
-import { 
+import {
   type AccionesCrud,
   ACCIONES_CRUD_DEFECTO,
   type ModoCrud,
@@ -79,7 +80,7 @@ import {
 export interface FiltroBusqueda {
   label: string;
   value: string;
-  tipo?: 'texto' | 'select';
+  tipo?: 'texto' | 'select' | 'fecha';
   opcionesSelect?: Select2Option[];
 }
 
@@ -94,6 +95,7 @@ export interface FiltroBusqueda {
     ButtonComponent,
     InputComponent,
     Select2Component,
+    DatepickerComponent,
     IconButtonComponent,
     NgTemplateOutlet,
     Alert,
@@ -117,6 +119,7 @@ export class PaginaCrud<T extends object = Record<string, unknown>> {
 
   readonly titulo = input.required<string>();
   readonly subtitulo = input<string | null>(null);
+  readonly headerAlign = input<PageHeaderAlignment>('center');
   readonly etiquetaNuevo = input('Crear Nuevo');
   readonly embedded = input(false);
   readonly iconoNuevo = input('fa-solid fa-plus');
@@ -159,9 +162,11 @@ export class PaginaCrud<T extends object = Record<string, unknown>> {
     });
   }
 
-  protected getTipoFiltro(tipo: string): 'select' | 'texto' {
+  protected getTipoFiltro(tipo: string): 'select' | 'fecha' | 'texto' {
     const filtro = this.opcionesBusqueda().find(o => o.value === tipo);
-    return filtro?.tipo === 'select' ? 'select' : 'texto';
+    if (filtro?.tipo === 'select') return 'select';
+    if (filtro?.tipo === 'fecha') return 'fecha';
+    return 'texto';
   }
 
   /** Devuelve las opciones del select secundario. */
@@ -233,7 +238,6 @@ export class PaginaCrud<T extends object = Record<string, unknown>> {
   readonly guardarHabilitado = input(true);
   readonly errorOperacion = input<string | null>(null);
 
-  
   // ─── Configuración de Interacción (Wizard/Browser/Popup) ──────
   readonly interaccionCrear = input<'popup' | 'stepper' | 'browser'>('popup');
   readonly interaccionEditar = input<'popup' | 'stepper' | 'browser'>('popup');
@@ -331,8 +335,16 @@ export class PaginaCrud<T extends object = Record<string, unknown>> {
     });
   }
 
-  protected alBuscar(termino: string | null): void {
-    const term = termino || '';
+  protected alBuscar(termino: string | Date | null): void {
+    let term = '';
+    if (termino instanceof Date && !Number.isNaN(termino.getTime())) {
+      const anio = termino.getFullYear();
+      const mes = String(termino.getMonth() + 1).padStart(2, '0');
+      const dia = String(termino.getDate()).padStart(2, '0');
+      term = `${anio}-${mes}-${dia}`;
+    } else if (typeof termino === 'string') {
+      term = termino;
+    }
     this.busqueda.set(term);
     this.alSolicitarPagina.emit({
       pagina: 1,
@@ -383,7 +395,7 @@ export class PaginaCrud<T extends object = Record<string, unknown>> {
   // ─── Baja lógica con confirmación (Doctrina §7 y §12) ───────
   protected solicitarBaja(entidad: T): void {
     if (this.interaccionEliminar() === 'browser') {
-      // Si el modo es browser, omitimos el popup de confirmación interno 
+      // Si el modo es browser, omitimos el popup de confirmación interno
       // y delegamos la acción al consumidor (quien debe hacer la navegación o confirmación)
       this.alEliminar.emit(entidad);
     } else {

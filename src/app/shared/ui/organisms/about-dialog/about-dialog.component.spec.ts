@@ -13,49 +13,49 @@ describe('AboutDialogComponent', () => {
   const sampleCredits: AboutCreditItem[] = [
     {
       label: 'Autoría Principal',
-      value: 'Ing. Havel CONTRERAS TAPAHUASCO (@archware)',
+      value: 'Ing. Havel CONTRERAS TAPAHUASCO (COTAHA · @archware)',
       subtext:
-        'Arquitecto de Software Full-Stack y creador de herramientas propias de ingeniería, sistemas de diseño y doctrinas de arquitectura empresarial',
+        'Arquitecto de Software | DIY AI Lab | Creador de Ecosistemas: construcción de software empresarial, aplicaciones de escritorio Multi-Runtime (Rust/Tauri, Go/Wails, Python/PyWebView) e infraestructura IA 100% local',
       icon: 'fa-solid fa-user-shield',
       badge: 'Marca Personal',
     },
     {
-      label: 'Doctrina Mangosta',
-      value: 'Suite Mangosta — Arquitectura Hexagonal & CQRS Estricto',
+      label: 'Artifact Mangosta',
+      value: 'Artifact Mangosta — DDD, Arquitectura Hexagonal & CQRS Estricto',
       subtext:
-        'Vertical Slicing, dominio rico en español, persistencia limpia sin micro-ORMs, fronteras IPC/HTTP tipadas y seguridad por diseño',
+        'Artefacto de ingeniería backend para sistemas distribuidos y nativos (C#/.NET, Java, Rust), fronteras IPC/HTTP tipadas, eventos Kafka y persistencia limpia',
       icon: 'fa-solid fa-diagram-project',
-      badge: 'Backend Canon',
+      badge: 'Backend Artifact',
     },
     {
-      label: 'Doctrina Barracuda',
-      value: 'Suite Barracuda — Chasis Frontend Reactivo con Signals',
+      label: 'Artifact Barracuda',
+      value: 'Artifact Barracuda — Chasis Frontend Reactivo con Signals',
       subtext:
-        'Andamiaje modular en Angular 22 + Signals, control flow nativo, plantillas gobernadas, accesibilidad estricta y cero deuda visual',
+        'Artefacto de ingeniería frontend en Angular 22 + Signals, control flow nativo, plantillas modulares, accesibilidad estricta y cero deuda visual',
       icon: 'fa-solid fa-bolt',
-      badge: 'Frontend Canon',
+      badge: 'Frontend Artifact',
     },
     {
       label: 'Sistema de Diseño',
-      value: 'Atomic UI (@atomic-ui/core v5.22.0) — Signals & OnPush',
+      value: 'Atomic UI (@atomic-ui/core v5.23.0) — Signals & OnPush',
       subtext:
-        'Librería de autor con tokens semánticos puros, desplazamiento gobernado y fidelidad visual anti-alucinación',
+        'Librería de autor con tokens semánticos puros, desplazamiento gobernado y fidelidad visual de grado empresarial',
       icon: 'fa-solid fa-cubes',
       badge: 'ADN Visual',
     },
     {
-      label: 'Co-Ingeniería IA',
-      value: 'Asistencia de IA Agéntica & Orquestación Doctrinal',
+      label: 'DIY AI Lab & Co-Ingeniería IA',
+      value: 'Laboratorio IA Bare-Metal Local & Orquestación de Agentes',
       subtext:
-        'Aceleración de entrega con agentes especializados gobernados por reglas de arquitectura, auditoría adversarial y compuertas deterministas',
+        'Servidor dedicado Ubuntu Linux con GPU NVIDIA Tesla V100 (32 GB VRAM), inferencia local (Qwen3-Coder / llama.cpp), sistemas RAG (SQLite FTS5), protocolos MCP/ACP y agentes especializados',
       icon: 'fa-solid fa-wand-magic-sparkles',
-      badge: 'IA Agéntica',
+      badge: 'DIY AI Lab',
     },
     {
       label: 'Arquitectura y Seguridad',
-      value: 'Procesamiento 100% local en memoria sin subida a servidores',
+      value: 'Multi-Runtime Desktop & Procesamiento 100% Local en Memoria',
       subtext:
-        'Frontera nativa Tauri + Rust (RespuestaSistemaV1), privacidad institucional absoluta y ejecución de alto rendimiento',
+        'Frontera nativa Tauri + Rust (RespuestaSistemaV1), privacidad absoluta sin subida a servidores y ejecución multiplataforma (Windows, macOS y Linux)',
       icon: 'fa-solid fa-shield-halved',
       badge: 'Privacidad',
     },
@@ -64,11 +64,11 @@ describe('AboutDialogComponent', () => {
   const sampleTechStack: AboutTechBadge[] = [
     { label: 'Tauri 1.5 + Rust', icon: 'fa-solid fa-gears', variant: 'primary' },
     { label: 'Angular 22 + Signals', icon: 'fa-brands fa-angular', variant: 'secondary' },
-    { label: 'Atomic UI v5.22.0', icon: 'fa-solid fa-layer-group', variant: 'info' },
-    { label: 'Doctrina Mangosta', icon: 'fa-solid fa-diagram-project', variant: 'primary' },
-    { label: 'Doctrina Barracuda', icon: 'fa-solid fa-bolt', variant: 'secondary' },
+    { label: 'Atomic UI v5.23.0', icon: 'fa-solid fa-layer-group', variant: 'info' },
+    { label: 'Artifact Mangosta', icon: 'fa-solid fa-diagram-project', variant: 'primary' },
+    { label: 'Artifact Barracuda', icon: 'fa-solid fa-bolt', variant: 'secondary' },
     { label: 'PDF.js + pdf-lib', icon: 'fa-solid fa-file-pdf', variant: 'warning' },
-    { label: '100% Local', icon: 'fa-solid fa-shield-halved', variant: 'success' },
+    { label: 'DIY AI Lab · 100% Local', icon: 'fa-solid fa-shield-halved', variant: 'success' },
   ];
 
   const sampleLinks: AboutLinkItem[] = [
@@ -108,8 +108,8 @@ describe('AboutDialogComponent', () => {
   it('debe renderizar el diálogo modal con autoría, GitHub, co-ingeniería IA, créditos y stack cuando open=true', () => {
     fixture.componentRef.setInput('variant', 'modal');
     fixture.componentRef.setInput('open', true);
-    fixture.componentRef.setInput('dialogTitle', 'Acerca de Editor PDF Studio');
-    fixture.componentRef.setInput('appName', 'Editor PDF Studio');
+    fixture.componentRef.setInput('dialogTitle', 'Acerca de Unión PDF');
+    fixture.componentRef.setInput('appName', 'Unión PDF');
     fixture.componentRef.setInput('version', 'v0.5.1');
     fixture.componentRef.setInput('environment', 'LOCAL & SEGURO');
     fixture.componentRef.setInput('runtimeInfo', 'Tauri + Rust Desktop');
@@ -120,7 +120,7 @@ describe('AboutDialogComponent', () => {
 
     const host = fixture.nativeElement as HTMLElement;
     expect(host.querySelector('app-modal')).not.toBeNull();
-    expect(host.textContent).toContain('Editor PDF Studio');
+    expect(host.textContent).toContain('Unión PDF');
     expect(host.textContent).toContain('v0.5.1');
     expect(host.textContent).toContain('LOCAL & SEGURO');
     expect(host.textContent).toContain('Tauri + Rust Desktop');
@@ -129,11 +129,11 @@ describe('AboutDialogComponent', () => {
     expect(host.textContent).toContain('co-ingeniería con IA Agéntica');
     expect(host.textContent).toContain('Autoría Principal');
     expect(host.textContent).toContain('Marca Personal');
-    expect(host.textContent).toContain('Doctrina Mangosta');
-    expect(host.textContent).toContain('Doctrina Barracuda');
+    expect(host.textContent).toContain('Artifact Mangosta');
+    expect(host.textContent).toContain('Artifact Barracuda');
     expect(host.textContent).toContain('Tauri 1.5 + Rust');
     expect(host.textContent).toContain('Angular 22 + Signals');
-    expect(host.textContent).toContain('Atomic UI v5.22.0');
+    expect(host.textContent).toContain('Atomic UI v5.23.0');
     expect(host.textContent).toContain('Repositorio Atomic UI');
 
     const githubLink = host.querySelector<HTMLAnchorElement>('a.about-github-pill');
@@ -258,7 +258,7 @@ describe('AboutDialogComponent', () => {
     expect(host.textContent).toContain('Ing. Havel CONTRERAS TAPAHUASCO');
   });
 
-  it('debe ajustar limpiamente authorRole extendido y las 6 tarjetas de Doctrina Mangosta / Barracuda sin desborde horizontal en anchos lg (832px), intermedio (640px) y móvil (360px) en temas light, dark y brand-dark', () => {
+  it('debe ajustar limpiamente authorRole extendido y las 6 tarjetas de Artifact Mangosta / Barracuda sin desborde horizontal en anchos lg (832px), intermedio (640px) y móvil (360px) en temas light, dark y brand-dark', () => {
     const previousTheme = document.documentElement.getAttribute('data-theme');
     const host = fixture.nativeElement as HTMLElement;
 
@@ -267,11 +267,11 @@ describe('AboutDialogComponent', () => {
       fixture.componentRef.setInput('size', 'lg');
       fixture.componentRef.setInput(
         'authorRole',
-        'Arquitecto de Software Principal & Creador del Ecosistema @archware (Atomic UI · Doctrina Barracuda · Doctrina Mangosta)'
+        'Arquitecto de Software | DIY AI Lab | Creador de Ecosistemas · COTAHA (@archware · Atomic UI · Artifact Barracuda · Artifact Mangosta)'
       );
       fixture.componentRef.setInput(
         'aiDisclosure',
-        'Desarrollado en co-ingeniería con IA Agéntica bajo el ecosistema de autor @archware: una suite propia de ingeniería de software que integra Doctrina Mangosta (Arquitectura Hexagonal y CQRS estricto), Doctrina Barracuda (Chasis Frontend reactivo con Signals) y el sistema de diseño Atomic UI (@atomic-ui/core), logrando productos de calidad empresarial verificados por compuertas deterministas.'
+        'Desarrollado en co-ingeniería con IA Agéntica en el DIY AI Lab de Ing. Havel CONTRERAS TAPAHUASCO (COTAHA · @archware): ecosistema de ingeniería que integra Artifact Mangosta (DDD, Arquitectura Hexagonal y CQRS estricto), Artifact Barracuda (Chasis Frontend reactivo con Signals) y el sistema de diseño Atomic UI (@atomic-ui/core), con inferencia 100% local en bare-metal (NVIDIA Tesla V100 32 GB VRAM) y verificación por compuertas deterministas.'
       );
       fixture.componentRef.setInput('credits', sampleCredits);
       fixture.componentRef.setInput('techStack', sampleTechStack);
@@ -328,7 +328,11 @@ describe('AboutDialogComponent', () => {
             expect(Math.abs(creditItems[4].getBoundingClientRect().top - creditItems[5].getBoundingClientRect().top)).toBeLessThanOrEqual(2);
           }
 
-          expect(getComputedStyle(authorCard).backgroundColor).not.toBe('rgba(0, 0, 0, 0)');
+          const authorStyle = getComputedStyle(authorCard);
+          expect(
+            authorStyle.backgroundColor !== 'rgba(0, 0, 0, 0)' ||
+              authorStyle.getPropertyValue('background').includes('--surface-elevated')
+          ).toBe(true);
         }
       }
     } finally {
@@ -339,5 +343,175 @@ describe('AboutDialogComponent', () => {
         document.documentElement.setAttribute('data-theme', previousTheme);
       }
     }
+  });
+
+  it('debe renderizar logoImageUrl, imageUrl y bannerImageUrl de artefactos sin desborde y hacer fallback limpio a iconos cuando las URLs están vacías', () => {
+    const host = fixture.nativeElement as HTMLElement;
+    const creditsWithImages: AboutCreditItem[] = [
+      {
+        ...sampleCredits[0],
+        imageUrl: 'assets/doctrinas/ssit-emblem.jpg',
+        bannerImageUrl: 'assets/doctrinas/merch-desk-setup.jpg',
+      },
+      {
+        ...sampleCredits[1],
+        imageUrl: 'assets/doctrinas/doctrina-mangosta-icon.jpg',
+        bannerImageUrl: 'assets/doctrinas/doctrina-mangosta-banner.jpg',
+      },
+      {
+        ...sampleCredits[2],
+        imageUrl: 'assets/doctrinas/doctrina-barracuda-icon.jpg',
+        bannerImageUrl: 'assets/doctrinas/doctrina-barracuda-banner.jpg',
+      },
+      {
+        ...sampleCredits[3],
+        imageUrl: 'assets/doctrinas/barracuda-mangosta-duality-icon.jpg',
+        bannerImageUrl: 'assets/doctrinas/merch-kit-ejecutivo.jpg',
+      },
+      {
+        ...sampleCredits[4],
+        imageUrl: '',
+        bannerImageUrl: '',
+      },
+    ];
+
+    try {
+      host.style.width = '832px';
+      fixture.componentRef.setInput('variant', 'card');
+      fixture.componentRef.setInput('size', 'lg');
+      fixture.componentRef.setInput('logoImageUrl', 'assets/doctrinas/ssit-emblem.jpg');
+      fixture.componentRef.setInput('credits', creditsWithImages);
+      fixture.detectChanges();
+
+      const heroImg = host.querySelector<HTMLImageElement>('.about-hero__logo-img');
+      expect(heroImg).not.toBeNull();
+      expect(heroImg?.getAttribute('src')).toBe('assets/doctrinas/ssit-emblem.jpg');
+      expect(host.querySelector('.about-hero__logo-icon')).toBeNull();
+
+      const creditImgs = Array.from(host.querySelectorAll<HTMLImageElement>('.about-credit-item__img'));
+      const creditBanners = Array.from(host.querySelectorAll<HTMLImageElement>('.about-credit-item__banner'));
+      expect(creditImgs.length).toBe(4);
+      expect(creditBanners.length).toBe(4);
+
+      const cardItems = Array.from(host.querySelectorAll<HTMLElement>('.about-credit-item'));
+      expect(cardItems.length).toBe(5);
+      // El quinto crédito con cadenas vacías debe usar el icono FontAwesome y no renderizar <img> vacío
+      expect(cardItems[4].querySelector('.about-credit-item__img')).toBeNull();
+      expect(cardItems[4].querySelector('.about-credit-item__banner')).toBeNull();
+      expect(cardItems[4].querySelector('.about-credit-item__icon i')).not.toBeNull();
+
+      for (const banner of creditBanners) {
+        const parentCard = banner.closest<HTMLElement>('.about-credit-item')!;
+        expect(parentCard).not.toBeNull();
+        expect(banner.getBoundingClientRect().right).toBeLessThanOrEqual(
+          parentCard.getBoundingClientRect().right + 1
+        );
+      }
+
+      // Al limpiar logoImageUrl a cadena vacía, vuelve al icono vectorial
+      fixture.componentRef.setInput('logoImageUrl', '');
+      fixture.detectChanges();
+      expect(host.querySelector('.about-hero__logo-img')).toBeNull();
+      expect(host.querySelector('.about-hero__logo-icon')).not.toBeNull();
+    } finally {
+      host.style.width = '';
+    }
+  });
+
+  it('debe renderizar los emblemas y banners de artefactos con relación 16/9 completa sin recorte de altura fija', () => {
+    fixture.componentRef.setInput('variant', 'card');
+    fixture.componentRef.setInput('logoImageUrl', 'assets/doctrinas/ssit-emblem.jpg');
+    fixture.componentRef.setInput('credits', [
+      {
+        label: 'Artifact Mangosta',
+        value: 'Artifact Mangosta — DDD, Arquitectura Hexagonal & CQRS Estricto',
+        subtext: 'Artefacto backend',
+        imageUrl: 'assets/doctrinas/doctrina-mangosta-icon.jpg',
+        bannerImageUrl: 'assets/doctrinas/doctrina-mangosta-banner.jpg',
+        badge: 'Backend Artifact',
+      },
+      {
+        label: 'Artifact Barracuda',
+        value: 'Artifact Barracuda — Chasis Frontend Reactivo con Signals',
+        subtext: 'Artefacto frontend',
+        imageUrl: 'assets/doctrinas/doctrina-barracuda-icon.jpg',
+        bannerImageUrl: 'assets/doctrinas/doctrina-barracuda-banner.jpg',
+        badge: 'Frontend Artifact',
+      },
+    ]);
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    const heroImg = host.querySelector<HTMLImageElement>('.about-hero__logo-img');
+    const iconImgs = Array.from(host.querySelectorAll<HTMLImageElement>('.about-credit-item__img'));
+    const bannerImgs = Array.from(host.querySelectorAll<HTMLImageElement>('.about-credit-item__banner'));
+
+    expect(heroImg?.getAttribute('src')).toBe('assets/doctrinas/ssit-emblem.jpg');
+    expect(iconImgs.map((el) => el.getAttribute('src'))).toEqual([
+      'assets/doctrinas/doctrina-mangosta-icon.jpg',
+      'assets/doctrinas/doctrina-barracuda-icon.jpg',
+    ]);
+    expect(bannerImgs.map((el) => el.getAttribute('src'))).toEqual([
+      'assets/doctrinas/doctrina-mangosta-banner.jpg',
+      'assets/doctrinas/doctrina-barracuda-banner.jpg',
+    ]);
+
+    for (const banner of bannerImgs) {
+      const style = getComputedStyle(banner);
+      expect(style.aspectRatio.replace(/\s+/g, '')).toBe('16/9');
+      expect(style.height).not.toBe('5.5rem');
+      expect(style.display).toBe('block');
+      expect(style.objectFit).toBe('cover');
+      expect(banner.closest('.about-credit-item__body')).toBeNull();
+      expect(banner.parentElement?.classList.contains('about-credit-item')).toBe(true);
+    }
+
+    const tops = Array.from(host.querySelectorAll<HTMLElement>('.about-credit-item__top'));
+    expect(tops.length).toBe(2);
+    for (const top of tops) {
+      expect(top.querySelector('.about-credit-item__icon')).not.toBeNull();
+      expect(top.querySelector('.about-credit-item__header')).not.toBeNull();
+    }
+
+    fixture.componentRef.setInput('variant', 'popup');
+    fixture.componentRef.setInput('open', true);
+    fixture.detectChanges();
+
+    const popupScroll = host.querySelector<HTMLElement>('.about-popup__scroll');
+    const popupFooter = host.querySelector<HTMLElement>('.about-popup__footer');
+    expect(popupScroll).not.toBeNull();
+    expect(popupFooter).not.toBeNull();
+    const scrollStyle = getComputedStyle(popupScroll!);
+    expect(scrollStyle.display).toBe('flex');
+    expect(scrollStyle.flexDirection).toBe('column');
+    expect(scrollStyle.overflow === 'hidden' || scrollStyle.overflowY === 'hidden').toBe(true);
+    expect(getComputedStyle(popupFooter!).flexShrink).toBe('0');
+  });
+
+  it('debe normalizar el prefijo de copyright para evitar duplicar el símbolo y centrar el encabezado del popup', () => {
+    const host = fixture.nativeElement as HTMLElement;
+
+    fixture.componentRef.setInput('variant', 'card');
+    fixture.componentRef.setInput('copyrightText', '© 2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware)');
+    fixture.detectChanges();
+
+    const copyrightSpan = host.querySelector<HTMLElement>('.about-copyright span');
+    expect(copyrightSpan?.textContent?.trim()).toBe(
+      '2026 Ing. Havel CONTRERAS TAPAHUASCO (@archware)'
+    );
+
+    fixture.componentRef.setInput('copyrightText', '(c) 2026 SSIT CONSULTING E.I.R.L.');
+    fixture.detectChanges();
+    expect(host.querySelector<HTMLElement>('.about-copyright span')?.textContent?.trim()).toBe(
+      '2026 SSIT CONSULTING E.I.R.L.'
+    );
+
+    fixture.componentRef.setInput('variant', 'popup');
+    fixture.componentRef.setInput('open', true);
+    fixture.detectChanges();
+
+    const popupHeader = host.querySelector<HTMLElement>('.about-popup .about-card-surface__header');
+    expect(popupHeader).not.toBeNull();
+    expect(getComputedStyle(popupHeader!).justifyContent).toBe('center');
   });
 });

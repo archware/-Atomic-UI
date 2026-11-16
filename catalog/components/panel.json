@@ -1,0 +1,139 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "panel",
+  "layer": "surface",
+  "selector": "app-panel",
+  "export": "PanelComponent",
+  "source": "src/app/shared/ui/surfaces/panel/panel.component.ts",
+  "relatedExports": [
+    "PanelVariant",
+    "PanelPadding",
+    "PanelTitleSize",
+    "PanelTitleWeight",
+    "PanelTitleAlign"
+  ],
+  "purpose": "Superficie estructural versátil con variantes visuales, relleno y cabecera alineable configurable.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "variant",
+      "type": "PanelVariant",
+      "meaning": "Variante visual o de comportamiento declarada por el componente.",
+      "default": "default"
+    },
+    {
+      "name": "padding",
+      "type": "PanelPadding",
+      "meaning": "Propiedad de entrada padding configurada en el componente.",
+      "default": "md"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "meaning": "Título principal visible del componente.",
+      "default": ""
+    },
+    {
+      "name": "icon",
+      "type": "string",
+      "meaning": "Propiedad de entrada icon configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "iconClass",
+      "type": "string",
+      "meaning": "Propiedad de entrada iconClass configurada en el componente.",
+      "default": ""
+    },
+    {
+      "name": "showHeader",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada showHeader configurada en el componente.",
+      "default": true
+    },
+    {
+      "name": "fullWidth",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada fullWidth configurada en el componente.",
+      "default": true
+    },
+    {
+      "name": "titleSize",
+      "type": "PanelTitleSize",
+      "meaning": "Propiedad de entrada titleSize configurada en el componente.",
+      "default": "md"
+    },
+    {
+      "name": "titleWeight",
+      "type": "PanelTitleWeight",
+      "meaning": "Propiedad de entrada titleWeight configurada en el componente.",
+      "default": "semibold"
+    },
+    {
+      "name": "titleAlign",
+      "type": "PanelTitleAlign",
+      "meaning": "Propiedad de entrada titleAlign configurada en el componente.",
+      "default": "left"
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Muestra cabecera opcional según showHeader y cuerpo proyectado."
+    }
+  ],
+  "a11y": [
+    "Separa título de sección con tipografía controlada mediante tokens y alineación declarativa."
+  ],
+  "responsive": [
+    "Espaciado interno ajustable por padding (none, sm, md, lg) y soporte fullWidth."
+  ],
+  "tokens": [
+    "--border-color",
+    "--border-color-light",
+    "--border-width-thin",
+    "--font-weight-body",
+    "--font-weight-emphasis",
+    "--font-weight-title",
+    "--radius-lg",
+    "--shadow-lg",
+    "--shadow-md",
+    "--shadow-sm",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--space-6",
+    "--space-8",
+    "--surface-background",
+    "--surface-section",
+    "--text-color-secondary",
+    "--text-lg",
+    "--text-md",
+    "--text-sm",
+    "--text-xl",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-panel.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "panel",
+    "surface-container",
+    "section-panel"
+  ]
+}

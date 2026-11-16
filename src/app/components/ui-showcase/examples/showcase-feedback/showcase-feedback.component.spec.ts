@@ -72,6 +72,7 @@ class TooltipPositionHostComponent {}
 describe('ShowcaseFeedback: misma alerta y tooltip que el consumidor', () => {
   afterEach(() => {
     document.documentElement.removeAttribute('data-theme');
+    document.documentElement.classList.remove('dark', 'theme-dark', 'theme-light');
     document.querySelectorAll('.tooltip').forEach((el) => el.remove());
   });
 
@@ -170,6 +171,7 @@ describe('ShowcaseFeedback: misma alerta y tooltip que el consumidor', () => {
 
     for (const theme of ['light', 'dark', 'brand-dark'] as const) {
       document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.classList.toggle('dark', theme !== 'light');
       hostEl.dispatchEvent(new MouseEvent('mouseenter'));
 
       const tooltipEl = document.body.querySelector('.tooltip') as HTMLElement;

@@ -1,0 +1,82 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "filters",
+  "layer": "organism",
+  "selector": "app-filters",
+  "export": "FiltersComponent",
+  "source": "src/app/shared/ui/organisms/filters/filters.component.ts",
+  "purpose": "Panel contenedor de filtros de consulta con acciones unificadas de aplicar y limpiar criterios.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "title",
+      "type": "string",
+      "meaning": "Título principal visible del componente.",
+      "default": "Filtros"
+    },
+    {
+      "name": "filterLabel",
+      "type": "string",
+      "meaning": "Propiedad de entrada filterLabel configurada en el componente.",
+      "default": "Filtrar"
+    },
+    {
+      "name": "clearLabel",
+      "type": "string",
+      "meaning": "Propiedad de entrada clearLabel configurada en el componente.",
+      "default": "Limpiar"
+    },
+    {
+      "name": "showClear",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada showClear configurada en el componente.",
+      "default": false
+    }
+  ],
+  "outputs": [
+    {
+      "name": "filter",
+      "type": "void",
+      "meaning": "Evento emitido por el componente (filter)."
+    },
+    {
+      "name": "clear",
+      "type": "void",
+      "meaning": "Evento emitido por el componente (clear)."
+    }
+  ],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Muestra campos proyectados y botones de filtrar y limpiar."
+    }
+  ],
+  "a11y": [
+    "Botones de acción explícitos con texto configurable para filtrar y restablecer filtros."
+  ],
+  "responsive": [
+    "Agrupa criterios proyectados adaptándose al ancho de tarjetas o barras de consulta."
+  ],
+  "tokens": [
+    "--space-2"
+  ],
+  "story": {
+    "path": "src/stories/ui-filters.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "filters-panel",
+    "search-filters"
+  ]
+}

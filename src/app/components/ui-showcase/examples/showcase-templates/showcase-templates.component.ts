@@ -21,11 +21,11 @@ interface FilaProductoDemostracion {
   imports: [PaginaCrud, PaginaCrudAccordion, PaginaWizardComponent, PanelComponent, InputComponent],
   template: `
     <app-panel title="Templates (Pagina CRUD y Variantes)" variant="flat" padding="md" class="showcase-section">
-      <p style="color: var(--text-color-secondary); margin-bottom: 1rem; font-size: 0.875rem;">
+      <p class="showcase-description">
         Demostración de los templates de alto nivel, incluyendo Búsqueda en Cascada y variantes de CRUD.
       </p>
 
-      <div style="margin-bottom: 2rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden;">
+      <div class="showcase-preview-card showcase-preview-card--mb">
         <app-pagina-crud
           titulo="Búsqueda en Cascada (Pagina CRUD)"
           [columnas]="columnasCrud"
@@ -37,7 +37,7 @@ interface FilaProductoDemostracion {
           (alSolicitarPagina)="onSolicitarPagina($event)"
         >
           <ng-template #formularioCrud let-ctx>
-            <div style="display: grid; gap: 1rem;">
+            <div class="showcase-form-grid">
               <app-input label="Nombre"></app-input>
               <app-input label="Categoría"></app-input>
             </div>
@@ -45,7 +45,7 @@ interface FilaProductoDemostracion {
         </app-pagina-crud>
       </div>
 
-      <div style="border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden;">
+      <div class="showcase-preview-card">
         <app-pagina-crud-accordion
           titulo="Variante: CRUD Accordion"
           varianteAccordion="single"
@@ -54,13 +54,13 @@ interface FilaProductoDemostracion {
           [filasPorEntidad]="filasAccordion"
         >
           <ng-template #formularioCrud let-ctx>
-            <div style="display: grid; gap: 1rem;">
+            <div class="showcase-form-grid">
               <app-input label="Dato"></app-input>
             </div>
           </ng-template>
         </app-pagina-crud-accordion>
       </div>
-      <div style="border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; margin-top: 2rem;">
+      <div class="showcase-preview-card showcase-preview-card--mt">
         <app-pagina-wizard
           titulo="Variante: CRUD Wizard"
           subtitulo="Paso a paso"
@@ -72,16 +72,14 @@ interface FilaProductoDemostracion {
           (nextClicked)="wizardActiveStep.set(wizardActiveStep() + 1)"
           (finished)="wizardActiveStep.set(0)"
         >
-          <div style="padding: 1rem;">
+          <div class="showcase-wizard-step">
             <p>Contenido del paso {{ wizardActiveStep() + 1 }}</p>
           </div>
         </app-pagina-wizard>
       </div>
     </app-panel>
   `,
-  styles: [`
-    .showcase-section { margin-bottom: 2rem; display: block; }
-  `]
+  styleUrl: './showcase-templates.component.css',
 })
 export class ShowcaseTemplatesComponent {
   // --- Búsqueda en Cascada (Pagina CRUD) ---

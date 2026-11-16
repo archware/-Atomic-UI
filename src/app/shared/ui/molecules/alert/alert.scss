@@ -25,11 +25,25 @@
   line-height: 1.5;
 }
 
+.alert--compact {
+  gap: var(--space-2);
+  padding: var(--space-3);
+  line-height: 1.35;
+}
+
+.alert--collapsed {
+  align-items: center;
+}
+
 .alert__icon {
   flex: 0 0 auto;
   color: var(--alert-symbol);
   font-size: var(--text-lg);
   line-height: inherit;
+}
+
+.alert--compact .alert__icon {
+  font-size: var(--text-sm);
 }
 
 .alert__body {
@@ -46,6 +60,14 @@
 .alert__message {
   display: inline;
   overflow-wrap: anywhere;
+}
+
+.alert__message--collapsed {
+  display: none;
+}
+
+.alert__toggle {
+  flex: 0 0 auto;
 }
 
 .alert__close { flex: 0 0 auto; }

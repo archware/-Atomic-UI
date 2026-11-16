@@ -14,6 +14,13 @@
         { "value": "comfortable", "meaning": "Título fluido y separación estándar.", "default": true },
         { "value": "compact", "meaning": "Título y separación reducidos para pantallas operativas." }
       ]
+    },
+    {
+      "name": "align",
+      "values": [
+        { "value": "center", "meaning": "Centra ópticamente título, eyebrow y subtítulo manteniendo acciones a la derecha.", "default": true },
+        { "value": "start", "meaning": "Alinea el bloque de encabezado al inicio frente al grupo de acciones." }
+      ]
     }
   ],
   "inputs": [
@@ -21,6 +28,7 @@
     { "name": "subtitle", "type": "string | null", "default": null, "meaning": "Descripción opcional de hasta 68ch." },
     { "name": "eyebrow", "type": "string | null", "default": null, "meaning": "Contexto breve anterior al título." },
     { "name": "density", "type": "PageHeaderDensity", "default": "comfortable", "meaning": "Escala vertical del encabezado." },
+    { "name": "align", "type": "PageHeaderAlignment", "default": "center", "meaning": "Alineación horizontal del bloque de encabezado ('start' | 'center')." },
     { "name": "headingId", "type": "string", "default": "generated per instance", "meaning": "Id del h1 usado por aria-labelledby." },
     { "name": "actionsLabel", "type": "string", "default": "Acciones de la página", "meaning": "Nombre accesible del grupo de acciones." }
   ],
@@ -40,7 +48,8 @@
   ],
   "responsive": [
     "El título comfortable usa clamp entre --text-2xl y --text-3xl.",
-    "A 40rem o menos apila contenido y acciones, alineándolas al inicio."
+    "Con align='center' colapsa a 1fr en 48rem o menos y cuando el slot de acciones está vacío.",
+    "A 40rem o menos apila contenido y acciones cuando usa align='start'."
   ],
   "tokens": [
     "--primary-color",

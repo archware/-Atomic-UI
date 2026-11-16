@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { PageHeader } from '../../organisms/page-header/page-header';
+import { PageHeader, PageHeaderAlignment } from '../../organisms/page-header/page-header';
 import { StepperComponent, Step } from '../../organisms/stepper/stepper.component';
 import { ButtonComponent } from '../../atoms/button/button.component';
 import { IconButtonComponent } from '../../atoms/icon-button/icon-button.component';
@@ -21,6 +21,9 @@ export class PaginaWizardComponent {
   // Configuración de Cabecera
   readonly titulo = input.required<string>();
   readonly subtitulo = input<string | null>(null);
+  readonly headerAlign = input<PageHeaderAlignment>('center');
+  readonly stepTitle = input<string | null>(null);
+  readonly stepSubtitle = input<string | null>(null);
 
   // Configuración del Stepper
   readonly steps = input.required<Step[]>();

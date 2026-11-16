@@ -69,6 +69,10 @@ td {
   vertical-align: middle;
 }
 
+.data-table__region--compact .data-table__viewport {
+  min-height: 0;
+}
+
 .data-table__region--compact th,
 .data-table__region--compact td {
   padding: var(--space-3);
@@ -175,10 +179,12 @@ tbody tr:last-child td {
 }
 
 // En tarjetas móviles, centrar el valor sin desplazar su etiqueta ::before.
+.data-table__cell--center > app-badge,
 .data-table__cell--center > app-chip {
   justify-self: center;
 }
 
+.data-table__cell--end > app-badge,
 .data-table__cell--end > app-chip {
   justify-self: end;
 }

@@ -170,6 +170,12 @@ describe('SidebarComponent', () => {
     expect(logoIcon).toBeNull();
     expect(subtitle?.textContent?.trim()).toBe('SSIT CONSULTING');
     expect(badges.length).toBe(2);
+    expect(
+      fixture.nativeElement.querySelector('.sidebar-logo .logo-subtitle-row .logo-badges'),
+    ).not.toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('.sidebar-logo .logo-brand .logo-text')?.textContent?.trim(),
+    ).toBe('Atomic UI');
 
     fixture.componentRef.setInput('collapsed', true);
     fixture.detectChanges();

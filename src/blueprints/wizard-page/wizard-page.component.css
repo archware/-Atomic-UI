@@ -1,18 +1,23 @@
 .wizard-page-container {
   padding: var(--space-6);
   background-color: transparent;
-  overflow: visible !important;
+  overflow: visible;
 }
 
 .wizard-form-content {
   display: flex;
   flex-direction: column;
-  overflow: visible !important;
+  overflow: visible;
 }
 
 .step-content {
   width: 100%;
-  overflow: visible !important;
+  overflow: visible;
+}
+
+.wizard-step-header {
+  text-align: center;
+  margin-bottom: var(--space-4);
 }
 
 .mb-4 {

@@ -1,0 +1,47 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "pagina-ajustes",
+  "layer": "template",
+  "selector": "app-pagina-ajustes",
+  "export": "PaginaAjustesComponent",
+  "source": "src/app/shared/ui/templates/pagina-ajustes/pagina-ajustes.component.ts",
+  "purpose": "Plantilla estructural de dos columnas para páginas de preferencias y configuración de cuenta.",
+  "variants": [],
+  "inputs": [],
+  "outputs": [],
+  "states": [
+    {
+      "name": "default",
+      "meaning": "Distribuye panel lateral de resumen ([ajustes-aside]) junto a las tarjetas de ajustes."
+    }
+  ],
+  "a11y": [
+    "Usa landmarks semantic aside y main respetando el flujo natural de teclado."
+  ],
+  "responsive": [
+    "Apila la columna lateral sobre el contenido principal en anchos reducidos."
+  ],
+  "tokens": [
+    "--space-6"
+  ],
+  "story": {
+    "path": "src/stories/pagina-ajustes.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "settings-page",
+    "pagina-ajustes",
+    "preferences-layout"
+  ]
+}

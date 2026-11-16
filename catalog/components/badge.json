@@ -1,0 +1,153 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "badge",
+  "layer": "atom",
+  "selector": "app-badge",
+  "export": "BadgeComponent",
+  "source": "src/app/shared/ui/atoms/badge/badge.component.ts",
+  "relatedExports": [
+    "BadgeVariant",
+    "BadgeSize",
+    "BadgePosition"
+  ],
+  "purpose": "Indicador numérico o de estado compacto acoplable como superposición sobre otros elementos o en línea.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "count",
+      "type": "number | null",
+      "meaning": "Propiedad de entrada count configurada en el componente.",
+      "default": null
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "meaning": "Propiedad de entrada max configurada en el componente.",
+      "default": 99
+    },
+    {
+      "name": "variant",
+      "type": "BadgeVariant",
+      "meaning": "Variante visual o de comportamiento declarada por el componente.",
+      "default": "danger"
+    },
+    {
+      "name": "size",
+      "type": "BadgeSize",
+      "meaning": "Escala de tamaño dentro del sistema de diseño.",
+      "default": "md"
+    },
+    {
+      "name": "dot",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada dot configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "overlay",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada overlay configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "position",
+      "type": "BadgePosition",
+      "meaning": "Propiedad de entrada position configurada en el componente.",
+      "default": "top-right"
+    },
+    {
+      "name": "visible",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada visible configurada en el componente.",
+      "default": true
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string",
+      "meaning": "Etiqueta accesible explícita para lectores de pantalla.",
+      "default": ""
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "visible",
+      "meaning": "Renderiza conteo acotado por max o punto indicador cuando visible es true."
+    },
+    {
+      "name": "hidden",
+      "meaning": "Oculta el distintivo cuando visible es false o no hay conteo aplicable."
+    }
+  ],
+  "a11y": [
+    "Permite definir ariaLabel para anunciar el significado del contador en lectores de pantalla.",
+    "Garantiza contraste institucional mediante tokens --badge-*-bg y --badge-*-text."
+  ],
+  "responsive": [
+    "Escala tamaño entre variantes sm, md y lg manteniendo forma de píldora legible."
+  ],
+  "tokens": [
+    "--badge-danger-bg",
+    "--badge-danger-border",
+    "--badge-danger-text",
+    "--badge-default-bg",
+    "--badge-default-border",
+    "--badge-default-text",
+    "--badge-info-bg",
+    "--badge-info-border",
+    "--badge-info-text",
+    "--badge-outline-bg",
+    "--badge-outline-border",
+    "--badge-outline-text",
+    "--badge-primary-bg",
+    "--badge-primary-border",
+    "--badge-primary-text",
+    "--badge-secondary-bg",
+    "--badge-secondary-border",
+    "--badge-secondary-text",
+    "--badge-success-bg",
+    "--badge-success-border",
+    "--badge-success-text",
+    "--badge-warning-bg",
+    "--badge-warning-border",
+    "--badge-warning-text",
+    "--border-width-thin",
+    "--danger-color",
+    "--font-weight-title",
+    "--info-color",
+    "--primary-color",
+    "--radius-full",
+    "--secondary-color",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-5",
+    "--success-color",
+    "--surface-background",
+    "--text-color-secondary",
+    "--text-sm",
+    "--text-xs",
+    "--warning-color"
+  ],
+  "story": {
+    "path": "src/stories/ui-badge.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/atoms/badge/badge.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "badge",
+    "notification-counter",
+    "status-pill"
+  ]
+}

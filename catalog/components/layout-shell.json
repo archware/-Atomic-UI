@@ -1,0 +1,141 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "layout-shell",
+  "layer": "template",
+  "selector": "app-layout-shell",
+  "export": "LayoutShellComponent",
+  "source": "src/app/shared/ui/templates/layout-shell/layout-shell.component.ts",
+  "purpose": "Carcasa maestra de aplicación con barra lateral, barra superior, enlace de salto, área principal y pie.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "sidebarVisible",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada sidebarVisible configurada en el componente.",
+      "default": true
+    },
+    {
+      "name": "sidebarWidth",
+      "type": "string",
+      "meaning": "Propiedad de entrada sidebarWidth configurada en el componente.",
+      "default": "16.25rem"
+    },
+    {
+      "name": "footerVisible",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada footerVisible configurada en el componente.",
+      "default": true
+    },
+    {
+      "name": "footerCompanyName",
+      "type": "string",
+      "meaning": "Propiedad de entrada footerCompanyName configurada en el componente.",
+      "default": "Suite Barracuda"
+    },
+    {
+      "name": "footerYear",
+      "type": "unknown",
+      "meaning": "Propiedad de entrada footerYear configurada en el componente."
+    },
+    {
+      "name": "footerCopyrightText",
+      "type": "string",
+      "meaning": "Propiedad de entrada footerCopyrightText configurada en el componente.",
+      "default": "Todos los derechos reservados."
+    },
+    {
+      "name": "footerShowVersion",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada footerShowVersion configurada en el componente.",
+      "default": true
+    },
+    {
+      "name": "footerVersion",
+      "type": "string",
+      "meaning": "Propiedad de entrada footerVersion configurada en el componente.",
+      "default": "v1.0.0"
+    },
+    {
+      "name": "footerEnvironment",
+      "type": "string",
+      "meaning": "Propiedad de entrada footerEnvironment configurada en el componente.",
+      "default": "PROD"
+    },
+    {
+      "name": "skipLinkLabel",
+      "type": "string",
+      "meaning": "Propiedad de entrada skipLinkLabel configurada en el componente.",
+      "default": "Saltar al contenido principal"
+    },
+    {
+      "name": "sidebarLabel",
+      "type": "string",
+      "meaning": "Propiedad de entrada sidebarLabel configurada en el componente.",
+      "default": "Navegación principal"
+    },
+    {
+      "name": "compactViewportQuery",
+      "type": "unknown",
+      "meaning": "Propiedad de entrada compactViewportQuery configurada en el componente."
+    }
+  ],
+  "outputs": [
+    {
+      "name": "closeSidebar",
+      "type": "void",
+      "meaning": "Evento emitido por el componente (closeSidebar)."
+    }
+  ],
+  "states": [
+    {
+      "name": "desktop",
+      "meaning": "Muestra barra lateral y topbar persistentes junto al área de contenido desplazable."
+    },
+    {
+      "name": "compact",
+      "meaning": "Convierte el menú lateral en cajón superpuesto con respaldo y cierre externo."
+    }
+  ],
+  "a11y": [
+    "Incluye enlace de salto (skipLinkLabel) hacia el contenido principal y sidebarLabel accesible."
+  ],
+  "responsive": [
+    "Evalúa compactViewportQuery para alternar entre sidebar acoplado y superpuesto."
+  ],
+  "tokens": [
+    "--border-color",
+    "--brand-primary-500",
+    "--card-bg",
+    "--overlay-backdrop",
+    "--radius-md",
+    "--shadow-lg",
+    "--sidebar-bg",
+    "--sidebar-width",
+    "--space-2",
+    "--space-3",
+    "--space-5",
+    "--surface-section",
+    "--text-color",
+    "--topbar-height"
+  ],
+  "story": {
+    "path": "src/stories/ui-layout-shell.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/templates/layout-shell/layout-shell.component.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "layout-shell",
+    "app-shell",
+    "dashboard-frame"
+  ]
+}

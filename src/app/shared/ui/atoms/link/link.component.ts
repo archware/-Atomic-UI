@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 export type LinkVariant = 'primary' | 'secondary' | 'muted' | 'danger';
@@ -8,7 +8,8 @@ export type LinkVariant = 'primary' | 'secondary' | 'muted' | 'danger';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './link.component.html',
-  styleUrl: './link.component.css'
+  styleUrl: './link.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LinkComponent {
   readonly href = input<string>();

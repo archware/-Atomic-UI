@@ -31,7 +31,7 @@ import { ShowcaseTemplatesComponent } from './examples/showcase-templates/showca
     ShowcaseTemplatesComponent
 ],
   template: `
-    <app-panel title="UI Components Showcase (Refactorizado)" variant="elevated" padding="lg">
+    <app-panel title="UI Components Showcase (Refactorizado)" variant="elevated" padding="lg" titleAlign="center">
 
       <!-- 1. Navigation & Layout Examples -->
       <app-showcase-navigation></app-showcase-navigation>
@@ -72,7 +72,6 @@ import { ShowcaseTemplatesComponent } from './examples/showcase-templates/showca
   styles: [`
     :host {
       display: block;
-      padding: 1rem;
     }
   `]
 })

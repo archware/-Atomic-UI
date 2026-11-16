@@ -3,104 +3,81 @@
   "schemaVersion": 1,
   "id": "modal",
   "layer": "molecule",
-  "selector": "app-modal",
-  "export": "ModalComponent",
-  "source": "src/app/shared/ui/molecules/modal/modal.component.ts",
-  "purpose": "Diálogo modal proyectable con foco confinado, restauración de foco y protección de acciones asíncronas.",
-  "variants": [
+  "selector": "app-modal-container, app-modal",
+  "export": "ModalContainerComponent",
+  "source": "src/app/shared/ui/molecules/modal/modal-container.component.ts",
+  "relatedExports": [
+    "ModalComponent",
+    "ModalService"
+  ],
+  "relatedSources": [
+    "src/app/shared/ui/molecules/modal/modal.component.ts"
+  ],
+  "purpose": "Sistema de modales declarativos (ModalComponent) y contenedor global por servicio (ModalContainerComponent) con cabecera centrada.",
+  "variants": [],
+  "inputs": [],
+  "outputs": [],
+  "states": [
     {
-      "name": "size",
-      "values": [
-        { "value": "sm", "meaning": "Confirmación o captura breve." },
-        { "value": "md", "meaning": "Contenido modal estándar.", "default": true },
-        { "value": "lg", "meaning": "Contenido amplio." }
-      ]
+      "name": "open",
+      "meaning": "Overlay visible con cabecera simétrica de título centrado, cuerpo desplazable y pie opcional."
     },
     {
-      "name": "busy",
-      "values": [
-        { "value": false, "meaning": "Permite solicitar cierre.", "default": true },
-        { "value": true, "meaning": "Expone aria-busy y bloquea X, Escape y backdrop." }
-      ]
+      "name": "closing",
+      "meaning": "Transición de salida ordenada antes de desmontar y restaurar foco."
     }
   ],
-  "inputs": [
-    {
-      "name": "resolverFocoRetorno",
-      "type": "(() => HTMLElement | null) | null",
-      "default": null,
-      "meaning": "Resuelve al restaurar un destino conectado, visible y enfocable del mismo documento, externo al diálogo. Tiene prioridad sobre el origen; null, excepción o foco fallido conservan el origen sin modificar tabindex."
-    },
-    { "name": "title", "type": "string", "default": "", "meaning": "Título visible que nombra el diálogo." },
-    { "name": "size", "type": "'sm' | 'md' | 'lg'", "default": "md", "meaning": "Anchura máxima del panel." },
-    { "name": "closeOnBackdrop", "type": "boolean", "default": true, "meaning": "Permite solicitar cierre desde backdrop o Escape cuando busy es false." },
-    { "name": "hasFooter", "type": "boolean", "default": true, "meaning": "Renderiza el slot footer." },
-    { "name": "busy", "type": "boolean", "default": false, "meaning": "Anuncia progreso y bloquea todos los mecanismos de cierre iniciados por la persona usuaria." }
-  ],
-  "outputs": [
-    { "name": "closed", "type": "void", "meaning": "Solicitud de cierre emitida únicamente cuando busy es false." }
-  ],
-  "methods": [
-    { "name": "requestClose", "type": "() => void", "meaning": "Emite closed si el diálogo no está ocupado." },
-    { "name": "focusError", "type": "() => boolean", "meaning": "Enfoca data-modal-error, data-dialog-error, role=alert o aria-invalid. Retorna si el foco fue inmediato y, si el destino aún no existe, reintenta una vez después del render." }
-  ],
-  "slots": [
-    { "name": "default", "type": "projected content", "meaning": "Contenido y feedback local del diálogo." },
-    { "name": "[slot=footer]", "type": "projected content", "meaning": "Acciones Atomic principales y secundarias." }
-  ],
-  "behavior": [
-    "El foco inicial prioriza data-modal-initial-focus y luego el primer control disponible.",
-    "Tab y Shift+Tab permanecen confinados dentro del panel.",
-    "busy bloquea X, Escape y backdrop; la acción principal enlaza Button loading para impedir doble envío.",
-    "Un fallo mantiene el modal abierto, actualiza la alerta proyectada y llama focusError directamente; la primitiva resuelve el foco post-render.",
-    "Un éxito actualiza el estado de apertura y emite el Toast global después de retirar el overlay.",
-    "Tras destruir y retirar el DOM, una microtarea restaura el destino del callback o el origen; no emite closed ni roba foco a otro modal abierto."
-  ],
-  "states": [
-    { "name": "open", "meaning": "Panel visible con foco confinado." },
-    { "name": "busy", "meaning": "Operación pendiente y cierre bloqueado." },
-    { "name": "error", "meaning": "Modal abierto con feedback local enfocado." },
-    { "name": "closed", "meaning": "Overlay retirado y foco restaurado al disparador." }
-  ],
   "a11y": [
-    "El panel usa role=dialog, aria-modal y aria-labelledby con identificador único.",
-    "busy se anuncia mediante aria-busy y aplica disabled nativo al botón X.",
-    "focusError admite tabindex=-1 para enfocar una alerta sin añadirla al orden de tabulación.",
-    "Los iconos del cierre permanecen decorativos mediante aria-hidden."
+    "Aplica role=dialog, aria-modal=true, aria-labelledby hacia el título, trampa de foco Tab y retorno de foco al cierre.",
+    "ModalComponent incorpora busy (aria-busy) para impedir cierres accidentales durante operaciones."
   ],
   "responsive": [
-    "En escritorio el panel se centra y limita su altura con scroll interno.",
-    "En móvil se ancla al borde inferior, ocupa todo el ancho y respeta el área segura."
+    "Escala tamaños sm, md, lg y xl y se ancla al pie en pantallas menores a 30rem."
   ],
   "tokens": [
     "--border-color",
     "--control-height-sm",
-    "--focus-ring",
+    "--font-family-heading",
+    "--font-weight-emphasis",
+    "--modal-bg",
+    "--modal-border",
+    "--modal-footer-bg",
+    "--modal-header-bg",
+    "--modal-shadow",
     "--overlay-backdrop",
     "--radius-lg",
-    "--radius-md",
     "--shadow-xl",
     "--size-dialog-wide",
+    "--space-1",
     "--space-3",
     "--space-4",
     "--space-5",
     "--space-6",
     "--space-8",
     "--surface-background",
-    "--surface-hover",
-    "--text-2xl",
+    "--surface-section",
     "--text-color",
-    "--text-color-muted",
     "--text-color-secondary",
-    "--text-lg"
+    "--text-lg",
+    "--text-md"
   ],
-  "story": { "path": "src/stories/ui-modal.stories.ts", "status": "available" },
-  "test": { "path": "src/app/shared/ui/molecules/modal/modal.component.spec.ts", "status": "available" },
+  "story": {
+    "path": "src/stories/ui-modal.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/molecules/modal/modal.component.spec.ts",
+    "status": "available"
+  },
   "stability": {
     "status": "stable",
     "notes": [
-      "El consumidor conserva la promesa, el mensaje de dominio y el estado que decide el cierre."
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
     ]
   },
-  "canonicalFor": ["modal", "confirmation-dialog", "async-dialog"]
+  "canonicalFor": [
+    "modal",
+    "modal-container",
+    "modal-dialog"
+  ]
 }

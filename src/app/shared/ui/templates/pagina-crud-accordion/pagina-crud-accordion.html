@@ -12,6 +12,7 @@
 <app-page-header
   [title]="titulo()"
   [subtitle]="subtitulo()"
+  [align]="headerAlign()"
 />
 
 <app-accordion
@@ -36,6 +37,7 @@
             [ngModel]="busquedaDeEntidad(ent.clave)"
             (ngModelChange)="alBuscarEntidad(ent.clave, $event)"
             label="Buscar"
+            variant="floating"
           />
         </div>
         <div query-actions>
@@ -153,7 +155,7 @@
         {{ confResueltas.titulo(entidadAEliminar()) }}
       }
     </h3>
-    <app-icon-button variant="close" animation="none" ariaLabel="Cerrar confirmación" (clicked)="cancelarBaja()" />
+    <app-icon-button class="pagina-crud-accordion__confirmacion-cerrar" variant="close" animation="none" ariaLabel="Cerrar confirmación" (clicked)="cancelarBaja()" />
   </header>
   <p [id]="idMensajeConfirmacion" class="pagina-crud-accordion__confirmacion-mensaje">
     @if (mostrarConfirmacion()) {

@@ -1,0 +1,116 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "receipt-panel",
+  "layer": "organism",
+  "selector": "app-receipt-panel, prest-receipt-panel",
+  "export": "ReceiptPanel",
+  "source": "src/app/shared/ui/organisms/receipt-panel/receipt-panel.ts",
+  "relatedExports": [
+    "ReceiptPanelField"
+  ],
+  "purpose": "Panel de comprobante estructurado de operación para pantalla e impresión térmica o estándar.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "title",
+      "type": "string",
+      "meaning": "Título principal visible del componente.",
+      "default": "Comprobante"
+    },
+    {
+      "name": "titleId",
+      "type": "unknown",
+      "meaning": "Propiedad de entrada titleId configurada en el componente."
+    },
+    {
+      "name": "eyebrow",
+      "type": "string",
+      "meaning": "Etiqueta breve de contexto superior al título.",
+      "default": "Operación confirmada"
+    },
+    {
+      "name": "subtitle",
+      "type": "string",
+      "meaning": "Subtítulo o descripción secundaria opcional.",
+      "default": ""
+    },
+    {
+      "name": "ariaLabel",
+      "type": "string | null",
+      "meaning": "Etiqueta accesible explícita para lectores de pantalla.",
+      "default": null
+    },
+    {
+      "name": "formatLabel",
+      "type": "string",
+      "meaning": "Propiedad de entrada formatLabel configurada en el componente.",
+      "default": "Tiquetera térmica de 58 mm"
+    },
+    {
+      "name": "fields",
+      "type": "readonly ReceiptPanelField[]",
+      "meaning": "Propiedad de entrada fields configurada en el componente."
+    },
+    {
+      "name": "printText",
+      "type": "string",
+      "meaning": "Propiedad de entrada printText configurada en el componente.",
+      "default": ""
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "ready",
+      "meaning": "Presenta cabecera de comprobante, pares clave-valor y nota de impresión."
+    }
+  ],
+  "a11y": [
+    "Asocia el panel mediante titleId y ariaLabel descriptivo para lectores de pantalla."
+  ],
+  "responsive": [
+    "Formato compacto adaptable al ancho de diálogo, página o ticket imprimible."
+  ],
+  "tokens": [
+    "--font-weight-emphasis",
+    "--font-weight-title",
+    "--letter-spacing-wide",
+    "--primary-color",
+    "--radius-lg",
+    "--radius-md",
+    "--receipt-panel-background",
+    "--receipt-panel-border",
+    "--receipt-panel-detail-background",
+    "--receipt-panel-emphasis",
+    "--receipt-panel-shadow",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--space-4",
+    "--space-6",
+    "--text-color",
+    "--text-color-muted",
+    "--text-lg",
+    "--text-xs"
+  ],
+  "story": {
+    "path": "src/stories/ui-receipt-panel.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": "src/app/shared/ui/organisms/receipt-panel/receipt-panel.spec.ts",
+    "status": "available"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "receipt-panel",
+    "voucher-preview",
+    "ticket-panel"
+  ]
+}

@@ -1,6 +1,16 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 
-export type BadgeVariant = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
+export type BadgeVariant =
+  | 'default'
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'error'
+  | 'info'
+  | 'outline'
+  | 'neutral';
 export type BadgeSize = 'sm' | 'md' | 'lg';
 export type BadgePosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
 
@@ -69,8 +79,14 @@ export class BadgeComponent {
   }
 
   get badgeClasses(): Record<string, boolean> {
+    const variant = this.variant();
+    const isDanger = variant === 'danger' || variant === 'error';
+    const isDefault = variant === 'default' || variant === 'neutral';
     return {
-      [`badge--${this.variant()}`]: true,
+      [`badge--${variant}`]: true,
+      'badge--danger': isDanger,
+      'badge--error': isDanger,
+      'badge--default': isDefault,
       [`badge--${this.size()}`]: true,
       'badge--dot': this.dot(),
       'badge--overlay': this.overlay(),

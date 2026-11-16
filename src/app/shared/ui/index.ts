@@ -74,6 +74,9 @@ export type {
   FloatingInputVariant,
 } from './atoms/floating-input/floating-input.component';
 
+export { FloatingTextareaComponent } from './atoms/floating-textarea/floating-textarea.component';
+export type { FloatingTextareaVariant } from './atoms/floating-textarea/floating-textarea.component';
+
 export { FormErrorComponent } from './atoms/form-error/form-error.component';
 export { FormRowComponent } from './atoms/form-row/form-row.component';
 
@@ -100,6 +103,9 @@ export type { FieldLabelVariant } from './atoms/form-field/field-label';
 
 export { LanguageSwitcherComponent } from './atoms/language-switcher/language-switcher.component';
 export type { Language } from './atoms/language-switcher/language-switcher.component';
+
+export { LinkComponent } from './atoms/link/link.component';
+export type { LinkVariant } from './atoms/link/link.component';
 
 export { LoaderComponent } from './atoms/loader/loader.component';
 export type { LoaderVariant, LoaderSize } from './atoms/loader/loader.component';
@@ -167,6 +173,9 @@ export type {
 } from './atoms/table-action/table-action';
 
 export { TooltipDirective } from './atoms/tooltip/tooltip.directive';
+
+export { VariablesCssDirective } from './directives/variables-css.directive';
+export type { VariablesCss, ValorVariableCss } from './directives/variables-css.directive';
 
 // ============================================
 // MOLECULES - Combinación de átomos
@@ -305,7 +314,18 @@ export { CrudDialog } from './organisms/crud-dialog/crud-dialog';
 export { FormDialog, FormDialogActions } from './organisms/form-dialog/form-dialog';
 
 export { PageHeader } from './organisms/page-header/page-header';
-export type { PageHeaderDensity } from './organisms/page-header/page-header';
+export type { PageHeaderAlignment, PageHeaderDensity } from './organisms/page-header/page-header';
+
+export { ConfirmDialogComponent } from './organisms/confirm-dialog/confirm-dialog.component';
+export { ConfirmDialogService } from './organisms/confirm-dialog/confirm-dialog.service';
+export type {
+  ConfirmDialogCloseReason,
+  ConfirmDialogInitialFocus,
+  ConfirmDialogOptions,
+  ConfirmDialogResult,
+  ConfirmDialogTone,
+  ConfirmDialogViewModel,
+} from './organisms/confirm-dialog/confirm-dialog.models';
 
 export { QueryToolbar } from './organisms/query-toolbar/query-toolbar';
 export type {

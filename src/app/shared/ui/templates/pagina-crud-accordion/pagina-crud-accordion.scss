@@ -16,18 +16,26 @@ app-query-toolbar {
 
 /* ─── Diálogo CRUD ───────────────────────────────────────── */
 .pagina-crud-accordion__dialogo-cabecera {
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--control-height-sm) minmax(0, 1fr) var(--control-height-sm);
   align-items: center;
-  justify-content: space-between;
+  gap: var(--space-3);
   padding: var(--space-4) var(--space-5);
   border-block-end: var(--border-width-thin) solid var(--border-color);
 }
 
 .pagina-crud-accordion__dialogo-titulo {
+  grid-column: 2;
   margin: 0;
+  text-align: center;
   font-family: var(--font-family-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-weight-title);
+}
+
+.pagina-crud-accordion__btn-cerrar {
+  grid-column: 3;
+  justify-self: end;
 }
 
 .pagina-crud-accordion__dialogo-error {
@@ -56,9 +64,9 @@ app-query-toolbar {
 .pagina-crud-accordion__confirmacion-cabecera {
   border-start-start-radius: calc(var(--radius-lg) - var(--border-width-thin));
   border-start-end-radius: calc(var(--radius-lg) - var(--border-width-thin));
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--control-height-sm) minmax(0, 1fr) var(--control-height-sm);
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-3);
   padding: var(--space-4) var(--space-5);
   border-bottom: var(--border-width-thin) solid var(--modal-border);
@@ -66,10 +74,17 @@ app-query-toolbar {
 }
 
 .pagina-crud-accordion__confirmacion-titulo {
+  grid-column: 2;
   margin: 0;
+  text-align: center;
   font-family: var(--font-family-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-weight-title);
+}
+
+.pagina-crud-accordion__confirmacion-cerrar {
+  grid-column: 3;
+  justify-self: end;
 }
 
 .pagina-crud-accordion__confirmacion-mensaje {

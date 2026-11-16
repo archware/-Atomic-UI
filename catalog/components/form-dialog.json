@@ -58,6 +58,12 @@
       "meaning": "Descripción visible y aria-describedby."
     },
     {
+      "name": "headerAlign",
+      "type": "'start' | 'center'",
+      "default": "center",
+      "meaning": "Alineación simétrica del encabezado del diálogo ('start' | 'center')."
+    },
+    {
       "name": "size",
       "type": "'sm' | 'md' | 'lg' | 'xl'",
       "default": "md",

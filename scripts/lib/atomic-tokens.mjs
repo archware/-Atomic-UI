@@ -91,7 +91,7 @@ export function tokensForTheme(theme) {
   const values = new Map();
   for (const { css } of themeSources()) {
     for (const { selector, body } of topLevelBlocks(css)) {
-      const lower = selector.toLowerCase();
+      const lower = selector.toLowerCase().replace(/:not\([^)]*\)/g, '');
       const isRootDefault = lower.includes(':root');
       const isThisTheme = lower.includes(`[data-theme="${theme}"]`);
       if (!isRootDefault && !isThisTheme) continue;

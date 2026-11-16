@@ -159,4 +159,3 @@ describe('NumberInputComponent - modos de etiqueta', () => {
     expect(hojas).not.toContain('var(--surface-hover, var(--primary-color))');
   });
 });
-

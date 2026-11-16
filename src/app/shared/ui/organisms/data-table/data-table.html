@@ -200,11 +200,11 @@
                   [class.data-table__cell--end]="columnAlignment(column) === 'end'"
                 >
                   @if (isTagColumn(column)) {
-                    <app-chip
+                    <app-badge
                       [variant]="getTagVariant(column, row)"
                     >
                       {{ displayValue(column, row) }}
-                    </app-chip>
+                    </app-badge>
                   } @else {
                     {{ displayValue(column, row) }}
                   }

@@ -58,7 +58,7 @@ h1, h2, h3, h4, p {
 .color-danger { color: var(--danger-color-text); }
 .color-white { color: var(--text-color-inverse); }
 
-/* 
+/*
  * Dark mode se maneja automáticamente via tokens semánticos.
  * --text-color, --primary-color, etc. ya tienen valores apropiados
  * para temas oscuros.

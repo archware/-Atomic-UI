@@ -11,4 +11,3 @@ import { ScrollOverlayComponent } from '../../organisms/scroll-overlay/scroll-ov
   styleUrl: './auth-layout.component.css'
 })
 export class AuthLayoutComponent { }
-

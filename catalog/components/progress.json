@@ -1,0 +1,106 @@
+{
+  "$schema": "../schemas/component.schema.json",
+  "schemaVersion": 1,
+  "id": "progress",
+  "layer": "atom",
+  "selector": "app-progress",
+  "export": "ProgressComponent",
+  "source": "src/app/shared/ui/atoms/progress/progress.component.ts",
+  "relatedExports": [
+    "ProgressVariant",
+    "ProgressSize"
+  ],
+  "purpose": "Barra de progreso lineal determinista o indeterminada con etiqueta porcentual y tono semántico.",
+  "variants": [],
+  "inputs": [
+    {
+      "name": "value",
+      "type": "number",
+      "meaning": "Propiedad de entrada value configurada en el componente.",
+      "default": 0
+    },
+    {
+      "name": "variant",
+      "type": "ProgressVariant",
+      "meaning": "Variante visual o de comportamiento declarada por el componente.",
+      "default": "primary"
+    },
+    {
+      "name": "size",
+      "type": "ProgressSize",
+      "meaning": "Escala de tamaño dentro del sistema de diseño.",
+      "default": "md"
+    },
+    {
+      "name": "showLabel",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada showLabel configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "indeterminate",
+      "type": "boolean",
+      "meaning": "Propiedad de entrada indeterminate configurada en el componente.",
+      "default": false
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "meaning": "Propiedad de entrada label configurada en el componente.",
+      "default": ""
+    }
+  ],
+  "outputs": [],
+  "states": [
+    {
+      "name": "determinate",
+      "meaning": "Refleja porcentualmente value entre 0 y 100."
+    },
+    {
+      "name": "indeterminate",
+      "meaning": "Anima progreso continuo cuando se desconoce la duración exacta."
+    }
+  ],
+  "a11y": [
+    "Expone progreso accesible con role progressbar, aria-valuenow y label configurable."
+  ],
+  "responsive": [
+    "Ocupa todo el ancho disponible de su contenedor en tamaños sm, md y lg."
+  ],
+  "tokens": [
+    "--danger-color",
+    "--font-weight-body",
+    "--primary-color",
+    "--progress-bar-width",
+    "--progress-bg",
+    "--radius-full",
+    "--space-1",
+    "--space-2",
+    "--space-3",
+    "--success-color",
+    "--text-color",
+    "--text-color-muted",
+    "--text-sm",
+    "--text-xs",
+    "--warning-color"
+  ],
+  "story": {
+    "path": "src/stories/ui-progress.stories.ts",
+    "status": "available"
+  },
+  "test": {
+    "path": null,
+    "status": "missing"
+  },
+  "stability": {
+    "status": "stable",
+    "notes": [
+      "Implementado con Angular Signals, ChangeDetectionStrategy.OnPush, estilos externos y tokens semánticos."
+    ]
+  },
+  "canonicalFor": [
+    "progress-bar",
+    "linear-progress",
+    "completion-meter"
+  ]
+}

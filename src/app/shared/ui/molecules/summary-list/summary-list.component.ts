@@ -15,7 +15,16 @@ export interface SummaryListItem {
   standalone: true,
   imports: [VariablesCssDirective],
   template: `
-    <dl class="summary-list" [class.data-list]="layout() === 'detail'" [class.summary-list--featured]="featured()" [class.summary-list--detail]="layout() === 'detail'">
+    <dl
+      class="summary-list"
+      [class.data-list]="layout() === 'detail'"
+      [class.summary-list--featured]="featured()"
+      [class.summary-list--detail]="layout() === 'detail'"
+      [class.summary-list--grid]="columns() !== null && (columns() ?? 0) > 1"
+      [appVariablesCss]="{
+        '--summary-columns': columns() !== null && (columns() ?? 0) > 1 ? 'repeat(' + columns() + ', minmax(0, 1fr))' : null
+      }"
+    >
       @for (item of items(); track item.label) {
         <div>
           <dt>
@@ -37,4 +46,6 @@ export class SummaryListComponent {
   readonly featured = input(false);
   /** Detalle semántico sin controles ni estilos del consumidor. */
   readonly layout = input<SummaryListLayout>('summary');
+  /** Cantidad opcional de columnas para grillas de resumen/KPI. */
+  readonly columns = input<number | null>(null);
 }
